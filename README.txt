@@ -375,4 +375,4 @@ Fixed: CURL Request fail fixed
 * Alot of Minor Bug Fixes
 
 = 1.0.0 - May 9th, 2016 =
-* Initial Release
+* Initial Release 1
