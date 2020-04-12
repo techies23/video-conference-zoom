@@ -7,6 +7,8 @@ Overriding the template means to change the layout of how the content is display
 
 To override, copy files from `wp-admin/plugins/video-conferencing-with-zoom-api/templates/` folder to `wp-content/yourtheme/video-conferencing-zoom/` folder.
 
+**Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=730" target="_blank">video documentation</a> if you want to see basic live demo on Template Overrides.**
+
 ### Content not showing?
 
 If you are facing an issue with content not being shown on your single meetings page i.e **yourwesite/zoom-meetings/your-meetings** page then follow below steps:

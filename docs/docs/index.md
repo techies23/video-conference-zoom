@@ -18,6 +18,12 @@ Download Plugin from <a href="https://wordpress.org/plugins/video-conferencing-w
 
 A simple plugin which gives you the extensive functionality to manage zoom meetings, users, reports from your WordPress Dashboard. Now, with capabitly to add your own post as a meeting. Create posts as meetings directly from your WordPress dashboard to show in the frontend as a meeting page. Allow users to directly join via that page with click of a button.
 
+### Video Documentation
+
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/5Z2Ii0PnHRQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Sorry for the fan noise in the video !
+
 ### Compatibility 
 
 * Enables direct integration of Zoom into WordPress.

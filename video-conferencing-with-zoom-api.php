@@ -44,3 +44,10 @@ if ( ! class_exists( 'Video_Conferencing_With_Zoom' ) ) {
 add_action( 'plugins_loaded', array( 'Video_Conferencing_With_Zoom', 'instance' ), 99 );
 register_activation_hook( __FILE__, array( 'Video_Conferencing_With_Zoom', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Video_Conferencing_With_Zoom', 'deactivate' ) );
+
+
+function preint( $val ) {
+	echo '<pre>';
+	print_r( $val );
+	echo '</pre>';
+}

@@ -1,5 +1,7 @@
 Here below are the steps to integrate zoom plugin into WordPress. There are no complicated processes. Just the basic steps.
 
+**Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=41" target="_blank">video documentation</a> if you want to see live demo.**
+
 <p style="color:red;"><strong>NOTE: if you recently getting an error called "API_CREDENTIALS_NOT_FOUDN" this is an error from zoom side. Please contact zoom support in this case.</strong></p>
 
 ## Generating API keys and Secret Keys

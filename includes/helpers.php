@@ -277,11 +277,15 @@ function video_conferencing_zoom_api_status() {
 		?>
         <div class="zoom-status-notice notice notice-warning is-dismissible">
             <h3><?php _e( 'ZOOM SERVICES STATUS', 'video-conferencing-with-zoom-api' ); ?></h3>
-            <p>Experiencing issues with the join via Browser ? This is because Zoom webSDK part is under maintenance, due to which 403 error is
+            <p>Experiencing issues with the join via Browser ? This is because Zoom webSDK part is under maintenance,
+                due to which 403 error is
                 showing when you try to join the meeting i.e in console of the browser. Check
-                <a href="https://devforum.zoom.us/t/in-progress-web-sdk-web-client-from-browser-403-forbidden/10782/107">in this thread</a> as well as
-                official <a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web">SDK page</a> for more details. This message will be removed in
-                the next update after the webSDK fix. <a href="<?php echo add_query_arg( 'vczapi_dismiss_again', 1 ) ?>" class="is-dismissible">Don't
+                <a href="https://devforum.zoom.us/t/in-progress-web-sdk-web-client-from-browser-403-forbidden/10782/107">in
+                    this thread</a> as well as
+                official <a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web">SDK page</a> for more details.
+                This message will be removed in
+                the next update after the webSDK fix. <a href="<?php echo add_query_arg( 'vczapi_dismiss_again', 1 ) ?>"
+                                                         class="is-dismissible">Don't
                     show again !</a></p>
 
         </div>
@@ -307,7 +311,8 @@ function video_conferencing_zoom_api_show_like_popup() {
 				printf( esc_html__( 'Please consider giving a %s if you found this useful at wordpress.org or ', 'video-conferencing-with-zoom-api' ), '<a href="https://wordpress.org/support/plugin/video-conferencing-with-zoom-api/reviews/#new-post">5 star thumbs up</a>' );
 				printf( esc_html__( 'check %s for shortcode references.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">settings</a>.' );
 				?>
-                <a href="<?php echo add_query_arg( 'vczapi_dismiss', 1 ) ?>" class="is-dismissible">I already rated you ! Don't show again !</a>
+                <a href="<?php echo add_query_arg( 'vczapi_dismiss', 1 ) ?>" class="is-dismissible">I already rated you
+                    ! Don't show again !</a>
             </p>
         </div>
 		<?php
@@ -323,11 +328,14 @@ function video_conferencing_zoom_api_new_api_notice() {
 		?>
         <div id="message" class="notice notice-warning is-dismissible">
             <h3><?php esc_html_e( 'New Zoom Changes Notice !!', 'video-conferencing-with-zoom-api' ); ?></h3>
-            <p>With new Zoom update, join links require for password. To fix on old meetings please update the meetings to allow direct join. Please
-                update your old meetings and that should do the trick in making compatible with new password change. Please report to me if you have
+            <p>With new Zoom update, join links require for password. To fix on old meetings please update the meetings
+                to allow direct join. Please
+                update your old meetings and that should do the trick in making compatible with new password change.
+                Please report to me if you have
                 any issues !!!!</p>
             <p>
-                <a href="javascript:void(0);" class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
+                <a href="javascript:void(0);"
+                   class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
             </p>
         </div>
 		<?php
@@ -346,7 +354,8 @@ function video_conferencing_zoom_api_show_api_notice() {
                 <strong><?php _e( "Do not get confused here !!", "video-conferencing-with-zoom-api" ); ?></strong>
             <p>
                 <strong><?php _e( "Please read !!! These below meetings are directly from your zoom.us account via API connection. Meetings added from here won't show up on your Post Type list. This will only create meeting in your zoom.us account !", "video-conferencing-with-zoom-api" ); ?></strong>
-                <a href="javascript:void(0);" class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
+                <a href="javascript:void(0);"
+                   class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
             </p></div>
 		<?php
 	}
@@ -355,7 +364,7 @@ function video_conferencing_zoom_api_show_api_notice() {
 /**
  * Get the template
  *
- * @param $template_name
+ * @param      $template_name
  * @param bool $load
  * @param bool $require_once
  *
@@ -387,7 +396,7 @@ function vczapi_get_template( $template_name, $load = false, $require_once = tru
 /**
  * Get Template Parts
  *
- * @param $slug
+ * @param        $slug
  * @param string $name
  *
  * @since  3.0.0
@@ -504,8 +513,8 @@ if ( ! function_exists( 'vczapi_get_browser_agent_type' ) ) {
 /**
  * Get Browser join links
  *
- * @param $post_id
- * @param $meeting_id
+ * @param      $post_id
+ * @param      $meeting_id
  * @param bool $password
  *
  * @return string
@@ -520,14 +529,15 @@ function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false
 	} else {
 		return '<a target="_blank" rel="nofollow" href="' . esc_url( $link ) . '?join=' . $encrypt_meeting_id . '&type=meeting" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczoom_join_meeting_via_app_text', __( 'Join via Web Browser', 'vczapi-woo-addon' ) ) . '</a>';
 	}
+
 }
 
 /**
  * Join via Shortcode
  *
- * @param $meeting_id
+ * @param      $meeting_id
  * @param bool $password
- * @param $link_only
+ * @param      $link_only
  *
  * @return string
  */

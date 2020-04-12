@@ -1,5 +1,9 @@
 Previously, shortcode had to be written in complex way that some people would not feel reliable for this specific plugin. With new update its pretty easy to remember.
 
+**Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=453" target="_blank">video documentation</a> if you want to see live demo.**
+
+With new version you can grab your shortcode with just a click.
+
 ### Types
 
 1. `[zoom_api_link meeting_id="" link_only="no"]`

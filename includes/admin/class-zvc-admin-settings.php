@@ -11,7 +11,17 @@ class Zoom_Video_Conferencing_Admin_Views {
 	public static $message = '';
 	public $settings;
 
+	public $oauth_ins;
+	public $oauth_user_ins;
+
 	public function __construct() {
+
+		// initiate a handler for oauth
+		$this->oauth_ins      = new ZoomAuth();
+		$this->oauth_user_ins = new ZoomUser();
+
+		add_action( 'init', array( $this->oauth_user_ins, 'init_logic' ) );
+
 		add_action( 'admin_menu', array( $this, 'zoom_video_conference_menus' ) );
 	}
 
@@ -24,7 +34,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 	 * @author  Deepen Bajracharya <dpen.connectify@gmail.com>
 	 */
 	public function zoom_video_conference_menus() {
-		if ( get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients() ) {
+		#if ( get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients() ) {
 			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Live Meetings', 'video-conferencing-with-zoom-api' ), __( 'Live Meetings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing', array(
 				'Zoom_Video_Conferencing_Admin_Meetings',
 				'list_meetings'
@@ -62,7 +72,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					'assign_host_id'
 				) );
 			}
-		}
+		#}
 
 		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Settings', 'video-conferencing-with-zoom-api' ), __( 'Settings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-settings', array(
 			$this,
@@ -90,13 +100,17 @@ class Zoom_Video_Conferencing_Admin_Views {
         <div class="wrap">
             <h1><?php _e( 'Zoom Integration Settings', 'video-conferencing-with-zoom-api' ); ?></h1>
             <h2 class="nav-tab-wrapper">
-                <a href="<?php echo add_query_arg( array( 'tab' => 'api-settings' ) ); ?>" class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a href="<?php echo add_query_arg( array( 'tab' => 'api-settings' ) ); ?>"
+                   class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'API Settings', 'vczapi-woo-addon' ); ?>
                 </a>
-                <a style="background: #bf5252;color: #fff;" href="<?php echo add_query_arg( array( 'tab' => 'shortcode' ) ); ?>" class="nav-tab <?php echo ( 'shortcode' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a style="background: #bf5252;color: #fff;"
+                   href="<?php echo add_query_arg( array( 'tab' => 'shortcode' ) ); ?>"
+                   class="nav-tab <?php echo ( 'shortcode' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Shortcode', 'vczapi-woo-addon' ); ?>
                 </a>
-                <a href="<?php echo add_query_arg( array( 'tab' => 'support' ) ); ?>" class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a href="<?php echo add_query_arg( array( 'tab' => 'support' ) ); ?>"
+                   class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Support', 'vczapi-woo-addon' ); ?>
                 </a>
             </h2>
@@ -105,6 +119,9 @@ class Zoom_Video_Conferencing_Admin_Views {
 				if ( isset( $_POST['save_zoom_settings'] ) ) {
 					//Nonce
 					check_admin_referer( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' );
+
+					$zoom_connection_opt = sanitize_text_field( filter_input( INPUT_POST, 'zoom_connection_opt' ) );
+
 					$zoom_api_key     = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 					$zoom_api_secret  = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 					$vanity_url       = esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) );
@@ -114,6 +131,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$going_to_start   = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_goingtostart_text' ) );
 					$ended_mtg        = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_ended_text' ) );
 
+					update_option( 'zoom_connection_opt', $zoom_connection_opt );
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
 					update_option( 'zoom_vanity_url', $vanity_url );
@@ -136,6 +154,12 @@ class Zoom_Video_Conferencing_Admin_Views {
 				}
 
 				//Defining Varaibles
+				$zoom_oauth_url       = $this->oauth_ins->get_zoom_request_user_authorization_url();
+				$zoom_oauth_user_info = $this->oauth_user_ins->get_stored_zoom_user_info();
+				$live_id = $this->oauth_user_ins->live_id;
+
+				$zoom_connection_opt = get_option( 'zoom_connection_opt' );
+
 				$zoom_api_key        = get_option( 'zoom_api_key' );
 				$zoom_api_secret     = get_option( 'zoom_api_secret' );
 				$zoom_vanity_url     = get_option( 'zoom_vanity_url' );

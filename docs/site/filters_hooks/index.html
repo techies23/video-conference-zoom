@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>WooCommerce Bookings (Addon) - Video Conferencing with Zoom API Plugin Documentation</title>
+  <title>Filter Hooks - Video Conferencing with Zoom API Plugin Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "WooCommerce Bookings (Addon)";
-    var mkdocs_page_input_path = "woocommerce-booking.md";
+    var mkdocs_page_name = "Filter Hooks";
+    var mkdocs_page_input_path = "filters_hooks.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -88,9 +88,36 @@
     <a class="" href="../join_links/">Join Links</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../filters_hooks/">Filter Hooks</a>
+    <a class="current" href="./">Filter Hooks</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#before-create-a-zoom-user">Before Create a Zoom User</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-listing-a-zoom-user">Before Listing a Zoom User</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-getting-a-zoom-user">Before getting a Zoom User</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-listing-a-meeting">Before listing a meeting</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-creating-a-meeting">Before Creating a meeting</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-updating-a-meeting">Before Updating a meeting</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-getting-a-meeting">Before Getting a meeting</a></li>
+    
+
+    <li class="toctree-l2"><a href="#before-getting-daily-reports-data">Before getting daily reports data</a></li>
+    
+
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -103,37 +130,9 @@
     <a class="" href="../woocommerce/">WooCommerce (Addon)</a>
 	    </li>
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href="./">WooCommerce Bookings (Addon)</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#prerequisite">Prerequisite</a></li>
-    
-
-    <li class="toctree-l2"><a href="#introduction">Introduction</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#demo-video-of-implementation">Demo Video of Implementation</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#features">Features</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#create-automated-zoom-meetings-without-configurations">Create Automated zoom meetings without configurations</a></li>
-        
-            <li><a class="toctree-l3" href="#manually-select-which-host-to-assign-for-the-booking">Manually Select which host to assign for the Booking</a></li>
-        
-            <li><a class="toctree-l3" href="#join-links-and-start-links-in-email-as-well-as-your-frontend-my-account-section">Join links and start links in email as well as your frontend my-account section.</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../woocommerce-booking/">WooCommerce Bookings (Addon)</a>
 	    </li>
           
         </ul>
@@ -158,7 +157,7 @@
     
       
     
-    <li>WooCommerce Bookings (Addon)</li>
+    <li>Filter Hooks</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -168,30 +167,51 @@
           <div role="main">
             <div class="section">
               
-                <p><strong>This Addon is for WooCommerce Booking Plugin</strong> which acts as an automation process in creating zoom meetings which is available <a href="https://www.codemanas.com/downloads/zoom-integration-for-woocommerce-booking/">here</a>.</p>
-<h2 id="prerequisite">Prerequisite</h2>
-<ol>
-<li>Free version of <a href="https://wordpress.org/plugins/video-conferencing-with-zoom-api/">Video Conferencing with Zoom API </a></li>
-<li>WooCommerce <a href="https://wordpress.org/plugins/woocommerce/">Download Here</a></li>
-<li>WooCommerce Bookings <a href="https://woocommerce.com/products/woocommerce-bookings/">Download Here</a></li>
-</ol>
-<h2 id="introduction">Introduction</h2>
-<p>Zoom Integration for WooCommerce Booking allows you to automate your zoom meetings directly from your WordPress dashboard by linking zoom meetings to your WooCommerce Booking products automatically when a Booking Product is created. Users will receive join links in their booking confirmation emails. Admin can directly start meetings from wp-admin &gt; Bookings list page.</p>
-<h3 id="demo-video-of-implementation">Demo Video of Implementation</h3>
-<iframe src="https://www.youtube.com/embed/lozhBjjIZTw" width="100%" height="300" allowfullscreen="allowfullscreen"></iframe>
-
-<p>Implementaion of the plugin video above.</p>
-<h2 id="features">Features</h2>
-<p>Below are few features listed.</p>
-<h3 id="create-automated-zoom-meetings-without-configurations">Create Automated zoom meetings without configurations</h3>
-<p>With this plugin, your zoom meetings are automated when a booking product is booked. A zoom meeting is created once a booking is booked from a customer side. It happens automatically without any configurations.</p>
-<p><img src="https://www.codemanas.com/wp-content/uploads/edd/2020/02/zoom-wordpress.jpg" alt="Zoom and WooCommerce"></p>
-<h3 id="manually-select-which-host-to-assign-for-the-booking">Manually Select which host to assign for the Booking</h3>
-<p>When you create a booking product, you'll be able to select which host to assign that booking product so that the host can manually start the meeting when a booking is booked.</p>
-<p><img src="https://www.codemanas.com/wp-content/uploads/edd/2020/02/selection-of-host.jpg" alt="Zoom and WooCommerce"></p>
-<h3 id="join-links-and-start-links-in-email-as-well-as-your-frontend-my-account-section">Join links and start links in email as well as your frontend my-account section.</h3>
-<p>After a booking is done. Users will be able to join their bookings from email link. Zoom meeting will be included in the booking email as well as inside the users my-account &gt; bookings frontend table section.</p>
-<p><img src="https://www.codemanas.com/wp-content/uploads/edd/2020/02/My-account-WooCommerce.jpg" alt="Zoom and WooCommerce"></p>
+                <p>This page shows you the few filters you can use in this plugin. I won't go in full detail here but yes there are few filters which you can extend this plugin into yours.</p>
+<p><strong>How to use ?</strong> </p>
+<p><code>add_filter('vczapi_hook', function($data) {
+    return $data;
+});</code></p>
+<h4 id="before-create-a-zoom-user">Before Create a Zoom User</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_createAUser', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for creating a user on Zoom.</p>
+<h4 id="before-listing-a-zoom-user">Before Listing a Zoom User</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_listUsers', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for listing users from zoom.</p>
+<h4 id="before-getting-a-zoom-user">Before getting a Zoom User</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_getUserInfo', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for getting a specific HOST ID info.</p>
+<h4 id="before-listing-a-meeting">Before listing a meeting</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_listMeetings', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for getting list of meetings for a Zoom User.</p>
+<h4 id="before-creating-a-meeting">Before Creating a meeting</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_createAmeeting', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for posting your own data when creating a Meeting.</p>
+<h4 id="before-updating-a-meeting">Before Updating a meeting</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_updateMeetingInfo', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for posting your own data when updating a Meeting.</p>
+<h4 id="before-getting-a-meeting">Before Getting a meeting</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_getMeetingInfo', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for getting a meeting info.</p>
+<h4 id="before-getting-daily-reports-data">Before getting daily reports data</h4>
+<ul>
+<li><code>apply_filters( 'vczapi_getDailyReport', $data );</code> </li>
+</ul>
+<p><strong>Usage:</strong> Used when doing API call for when pulling in reports data.</p>
               
             </div>
           </div>
@@ -199,8 +219,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../assign_host/" class="btn btn-neutral float-right" title="Assign Host Page">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href="../woocommerce/" class="btn btn-neutral" title="WooCommerce (Addon)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../join_links/" class="btn btn-neutral" title="Join Links"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -226,8 +248,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../woocommerce/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../join_links/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../assign_host/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

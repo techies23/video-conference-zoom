@@ -8,6 +8,7 @@ nav:
   - Template Override: template_override.md
   - Meeting Types: meeting_types.md
   - Join Links: join_links.md
+  - Filter Hooks: filters_hooks.md
   - Assign Host Page: assign_host.md
   - WooCommerce (Addon): woocommerce.md
   - WooCommerce Bookings (Addon): woocommerce-booking.md

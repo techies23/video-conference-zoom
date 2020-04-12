@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-//Check if any transient by name is available
 $users = video_conferencing_zoom_api_get_user_transients();
+
 
 if ( isset( $_GET['host_id'] ) ) {
 	$encoded_meetings = zoom_conference()->listMeetings( $_GET['host_id'] );

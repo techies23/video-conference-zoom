@@ -104,6 +104,13 @@ class Video_Conferencing_With_Zoom {
 	 * @author   Deepen Bajracharya
 	 */
 	protected function load_dependencies() {
+
+		// Include the Oauth Main class
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-oauth.php';
+
+		// Include the Oauth Main User class
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-oauth-users.php';
+
 		//Include the Main Class
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-v2.php';
 

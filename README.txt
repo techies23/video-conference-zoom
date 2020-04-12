@@ -102,7 +102,7 @@ As an extension of the Zoom browser client, this SDK is intended for implementat
 
 **QUICK DEMO:**
 
-[youtube https://www.youtube.com/watch?v=KNuasepxwfE]
+[youtube https://www.youtube.com/watch?v=5Z2Ii0PnHRQ]
 
 Any additional features, suggestions related to translations, contact me via [email](https://deepenbajracharya.com.np/say-hello/ "Deepen Bajracharya"). Send me your wordpress.org username handle as well if you are willing to contribute in translations.
 
@@ -164,7 +164,7 @@ However, even though meeting is created and you are not seeing countdown timer t
 * Fixed: Shortcode bug not outputting multiple shortcodes when called.
 
 = 3.3.0 April 6th, 2020 =
-* German Translation Added: Thanks to Peter Ginser <a href="https://wordpress.org/support/users/ginspet/>@ginspet</a>
+* German Translation Added: Thanks to Peter Ginser <a href="https://wordpress.org/support/users/ginspet/">@ginspet</a>
 * Slovak Translation Added: Thanks to Branislav Ďorď
 * Fixed: New shortcode to embed that allows you to directly or start join via page or post. See shortcode section in details page for details.
 * Added: Start or End meeting manually which allows users to end meeting ahead of time and disallowing anyone to join it.

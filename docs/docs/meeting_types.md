@@ -1,3 +1,5 @@
+**Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=126" target="_blank">video documentation</a> if you want to see live demo.**
+
 ### Basic Information
 
 Technically, every meeting created from the Video conferencing with zoom api plugin is live meetings but, i have divided the term into two different categories:
