@@ -35,43 +35,43 @@ class Zoom_Video_Conferencing_Admin_Views {
 	 */
 	public function zoom_video_conference_menus() {
 		#if ( get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients() ) {
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Live Meetings', 'video-conferencing-with-zoom-api' ), __( 'Live Meetings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing', array(
-				'Zoom_Video_Conferencing_Admin_Meetings',
-				'list_meetings'
-			) );
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Live Meetings', 'video-conferencing-with-zoom-api' ), __( 'Live Meetings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing', array(
+			'Zoom_Video_Conferencing_Admin_Meetings',
+			'list_meetings'
+		) );
 
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Add Live Meeting', 'video-conferencing-with-zoom-api' ), __( 'Add Live Meeting', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-add-meeting', array(
-				'Zoom_Video_Conferencing_Admin_Meetings',
-				'add_meeting'
-			) );
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Add Live Meeting', 'video-conferencing-with-zoom-api' ), __( 'Add Live Meeting', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-add-meeting', array(
+			'Zoom_Video_Conferencing_Admin_Meetings',
+			'add_meeting'
+		) );
 
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Zoom Users', 'video-conferencing-with-zoom-api' ), __( 'Zoom Users', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-list-users', array(
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Zoom Users', 'video-conferencing-with-zoom-api' ), __( 'Zoom Users', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-list-users', array(
+			'Zoom_Video_Conferencing_Admin_Users',
+			'list_users'
+		) );
+
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', 'Add Users', __( 'Add Users', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-add-users', array(
+			'Zoom_Video_Conferencing_Admin_Users',
+			'add_zoom_users'
+		) );
+
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Reports', 'video-conferencing-with-zoom-api' ), __( 'Reports', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-reports', array(
+			'Zoom_Video_Conferencing_Reports',
+			'zoom_reports'
+		) );
+
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Addons', 'video-conferencing-with-zoom-api' ), __( 'Addons', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-addons', array(
+			'Zoom_Video_Conferencing_Admin_Addons',
+			'render'
+		) );
+
+		//Only for developers. So this is hidden !
+		if ( defined( 'VIDEO_CONFERENCING_HOST_ASSIGN_PAGE' ) ) {
+			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Assign Host ID', 'video-conferencing-with-zoom-api' ), __( 'Assign Host ID', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-host-id-assign', array(
 				'Zoom_Video_Conferencing_Admin_Users',
-				'list_users'
+				'assign_host_id'
 			) );
-
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', 'Add Users', __( 'Add Users', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-add-users', array(
-				'Zoom_Video_Conferencing_Admin_Users',
-				'add_zoom_users'
-			) );
-
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Reports', 'video-conferencing-with-zoom-api' ), __( 'Reports', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-reports', array(
-				'Zoom_Video_Conferencing_Reports',
-				'zoom_reports'
-			) );
-
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Addons', 'video-conferencing-with-zoom-api' ), __( 'Addons', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-addons', array(
-				'Zoom_Video_Conferencing_Admin_Addons',
-				'render'
-			) );
-
-			//Only for developers. So this is hidden !
-			if ( defined( 'VIDEO_CONFERENCING_HOST_ASSIGN_PAGE' ) ) {
-				add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Assign Host ID', 'video-conferencing-with-zoom-api' ), __( 'Assign Host ID', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-host-id-assign', array(
-					'Zoom_Video_Conferencing_Admin_Users',
-					'assign_host_id'
-				) );
-			}
+		}
 		#}
 
 		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Settings', 'video-conferencing-with-zoom-api' ), __( 'Settings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-settings', array(
@@ -156,7 +156,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				//Defining Varaibles
 				$zoom_oauth_url       = $this->oauth_ins->get_zoom_request_user_authorization_url();
 				$zoom_oauth_user_info = $this->oauth_user_ins->get_stored_zoom_user_info();
-				$live_id = $this->oauth_user_ins->live_id;
+				$live_id              = $this->oauth_user_ins->live_id;
 
 				$zoom_connection_opt = get_option( 'zoom_connection_opt' );
 

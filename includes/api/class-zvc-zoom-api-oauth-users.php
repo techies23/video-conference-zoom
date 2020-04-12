@@ -36,7 +36,7 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 
 		$this->init_logic();
 
-		$this->check_access_token_expiry();
+		//$this->check_access_token_expiry();
 	}
 
 	/**
@@ -206,4 +206,38 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 
 		}
 	}
+	public function refresh_and_save_access_token() {
+
+		$stored = $this->get_stored_zoom_user_info();
+
+		if ( isset( $stored['vczapi_oauth_zoom_user_token_info'] ) && ! empty( $stored['vczapi_oauth_zoom_user_token_info'] ) ) {
+			//var_dump($stored['vczapi_oauth_zoom_user_token_info']['refresh_token']);
+			// $access_token is expired, so get a new one
+			$refreshed_access_tokens = $this->refresh_access_token( $stored['vczapi_oauth_zoom_user_token_info']['refresh_token'] );
+
+			if ( isset( $refreshed_access_tokens['success'] )
+			     && ! empty( $refreshed_access_tokens['success'] )
+			) {
+
+				// Immediately store the newly refreshed token info in the database else you will miss the window
+				// If you miss one refresh then - old refresh token will be invalid and you will miss to save new refresh token
+				// You will be in limbo
+				// Also, convert to array from object before storing
+				$refreshed_access_tokens_arr = json_decode( json_encode( $refreshed_access_tokens['vczapi_oauth_zoom_user_token_info'] ), true );
+
+				$this->store_zoom_user_token_info( $refreshed_access_tokens_arr );
+				$stored = $this->get_stored_zoom_user_info();
+				// now to verify, again try to get the zoom user infos with this new $refreshed access_token
+				$zoom_user_info = $this->get_zoom_user_info_with_access_token( $stored['vczapi_oauth_zoom_user_token_info']['token_type'], $stored['vczapi_oauth_zoom_user_token_info']['access_token'] );
+
+				if ( $zoom_user_info['success'] ) {
+					$zoom_user_info = json_decode( $zoom_user_info['vczapi_oauth_zoom_user_info'] );
+					$this->store_zoom_user_info( $zoom_user_info['vczapi_oauth_zoom_user_info'] );
+				}
+			}
+
+		}
+	}
+
+
 }

@@ -128,8 +128,19 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				$details = json_decode( $response_body );
 				//check if thee error code for expired access token
 				if ( isset( $details->code ) && $details->code == 124 ) {
-					$zoomOauth = VCZAPIZoomOauth::get_instance();
-					$zoomOauth->refresh_access_token( $stored['refresh_token'] );
+					$zoomOauthUser = VCZAPIZoomUser::get_instance();
+					//Refresh tokens expire after 15 years. The latest refresh token must always be used for the next refresh request.
+					//https://marketplace.zoom.us/docs/guides/auth/oauth
+					//https://marketplace.zoom.us/docs/guides/auth/oauth#refreshing
+					$zoomOauthUser->refresh_and_save_access_token( $stored['refresh_token'] );
+					$stored = get_option( 'vczapi_oauth_zoom_user_token_info' );
+					$args = array(
+						'headers' => array(
+							'Authorization' => $stored['token_type'] . ' ' . $stored['access_token'],
+						),
+					);
+					$response      = $this->getRequestResponse( $request, $request_url, $args );
+					$response_body = wp_remote_retrieve_body( $response );
 				}
 			}
 //			dump($response);
