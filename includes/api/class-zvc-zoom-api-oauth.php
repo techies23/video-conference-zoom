@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Class ZoomAuth
+ * Class VCZAPIZoomOauth
  *
  * No need to create an instance or object of this class
  * It will only be extended in other classes
  */
-class ZoomAuth {
+class VCZAPIZoomOauth {
 	private static $instance = null;
 
 	//	Codemanas Development Credentials
@@ -242,7 +242,7 @@ class ZoomAuth {
 	 *
 	 * @return void
 	 */
-	public function deauthorize( $user_id ) {
+	public function deauthorize() {
 
 		// get access token of current live user
 		$tokens = get_option( 'vczapi_oauth_zoom_user_token_info' );

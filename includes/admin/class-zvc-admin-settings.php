@@ -17,8 +17,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 	public function __construct() {
 
 		// initiate a handler for oauth
-		$this->oauth_ins      = new ZoomAuth();
-		$this->oauth_user_ins = new ZoomUser();
+		$this->oauth_ins      = new VCZAPIZoomOauth();
+		$this->oauth_user_ins = new VCZAPIZoomUser();
 
 		add_action( 'init', array( $this->oauth_user_ins, 'init_logic' ) );
 

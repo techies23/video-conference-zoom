@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Class ZoomUser
+ * Class VCZAPIZoomUser
  */
-class ZoomUser extends ZoomAuth {
+class VCZAPIZoomUser extends VCZAPIZoomOauth {
 
 	private static $instance = null;
-
-	public $live_user = null;
 
 	// this will be always fetched from the oauth request so that we know token is expired or not
 	// if this is set, access token is either good or refreshed automatically
@@ -60,9 +58,9 @@ class ZoomUser extends ZoomAuth {
 		// check for any other params
 		if ( isset( $_GET['revoke_access'] ) && $_GET['revoke_access'] == 'true' ) {
 
-			$this->deauthorize( $this->live_user->ID );
+			$this->deauthorize();
 			// also dont forget to remove the user token and user info from user meta
-			$this->remove_stored_zoom_user_info( $this->live_user->ID );
+			$this->remove_stored_zoom_user_info();
 
 			// finally redirect without the revoke access param
 			wp_redirect( $this->site_redirect_url );
@@ -140,7 +138,7 @@ class ZoomUser extends ZoomAuth {
 	 */
 	public function get_stored_zoom_user_info() {
 		$zoom_user_info       = get_option( 'vczapi_oauth_zoom_user_info' );
-		$zoom_user_token_info = get_option(  'vczapi_oauth_zoom_user_token_info' );
+		$zoom_user_token_info = get_option( 'vczapi_oauth_zoom_user_token_info' );
 
 		return array(
 			'vczapi_oauth_zoom_user_info'       => $zoom_user_info,
@@ -153,7 +151,7 @@ class ZoomUser extends ZoomAuth {
 	 *
 	 * @return void
 	 */
-	public function remove_stored_zoom_user_info( $user_id ) {
+	public function remove_stored_zoom_user_info() {
 
 		delete_option( 'vczapi_oauth_zoom_user_info' );
 		delete_option( 'vczapi_oauth_zoom_user_token_info' );
@@ -199,16 +197,12 @@ class ZoomUser extends ZoomAuth {
 
 							$zoom_user_info = json_decode( $zoom_user_infos['vczapi_oauth_zoom_user_info'] );
 							$this->store_zoom_user_info( $this->live_user->ID, $zoom_user_info['vczapi_oauth_zoom_user_info'] );
-							$this->live_id = $zoom_user_infos['vczapi_oauth_zoom_user_info']['id'];
-
 						}
 					}
 				}
 			} else { // direct success to get the zoom user info with stored access token
 
 				$this->store_zoom_user_info( $this->live_user->ID, $zoom_user_infos['vczapi_oauth_zoom_user_info'] );
-				$this->live_id = $zoom_user_infos['vczapi_oauth_zoom_user_info']['id'];
-
 			}
 
 		}
