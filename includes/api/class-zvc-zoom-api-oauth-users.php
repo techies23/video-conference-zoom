@@ -85,7 +85,6 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 
 			if ( $response['success'] ) {
 
-				$current_user = wp_get_current_user();
 				$this->store_zoom_user_info( $response['vczapi_oauth_zoom_user_info'] );
 				$this->store_zoom_user_token_info( $response['vczapi_oauth_zoom_user_token_info'] );
 

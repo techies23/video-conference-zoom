@@ -237,23 +237,6 @@ class VCZAPIZoomOauth {
 		}
 	}
 
-	public function save_refreshed_access_token() {
-		$refreshed_access_tokens_arr = json_decode( json_encode( $refreshed_access_tokens['vczapi_oauth_zoom_user_token_info'] ), true );
-
-		$this->store_zoom_user_token_info( $refreshed_access_tokens_arr );
-
-		$stored = $this->get_stored_zoom_user_info();
-
-		// now to verify, again try to get the zoom user infos with this new $refreshed access_token
-		$zoom_user_info = $this->get_zoom_user_info_with_access_token( $stored['vczapi_oauth_zoom_user_token_info']['token_type'], $stored['vczapi_oauth_zoom_user_token_info']['access_token'] );
-
-		if ( $zoom_user_info['success'] ) {
-
-			$zoom_user_info = json_decode( $zoom_user_infos['vczapi_oauth_zoom_user_info'] );
-			$this->store_zoom_user_info( $zoom_user_info['vczapi_oauth_zoom_user_info'] );
-		}
-	}
-
 	/**
 	 * Revokes a users access token
 	 *

@@ -100,10 +100,10 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		protected function sendRequest( $calledFunction, $data, $request = "GET" ) {
 			$request_url = $this->api_url . $calledFunction;
 
+			$zoom_connection_opt = get_option( 'zoom_connection_opt' );
+			$stored              = get_option( 'vczapi_oauth_zoom_user_token_info' );
 
-			$stored = get_option( 'vczapi_oauth_zoom_user_token_info' );
-
-			if ( "" != $stored ) {
+				if ( "" != $stored && $zoom_connection_opt == 'oauth' ) {
 
 				$args = array(
 					'headers' => array(
@@ -137,6 +137,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 					$args          = array(
 						'headers' => array(
 							'Authorization' => $stored['token_type'] . ' ' . $stored['access_token'],
+							'Content-Type'  => 'application/json'
 						),
 					);
 					$response      = $this->getRequestResponse( $request, $request_url, $data, $args );
