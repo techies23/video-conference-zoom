@@ -67,7 +67,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$this->zoom_api_secret = $zoom_api_secret;
 		}
 
-		protected function getRequestResponse( $request, $request_url, $args ) {
+		protected function getRequestResponse( $request, $request_url, $data, $args ) {
 			if ( $request == "GET" ) {
 				$args['body'] = ! empty( $data ) ? $data : array();
 				$response     = wp_remote_get( $request_url, $args );
@@ -108,6 +108,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				$args = array(
 					'headers' => array(
 						'Authorization' => $stored['token_type'] . ' ' . $stored['access_token'],
+						'Content-Type'  => 'application/json'
 					),
 				);
 
@@ -120,9 +121,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 					)
 				);
 
-			}
-
-			$response      = $this->getRequestResponse( $request, $request_url, $args );
+			};
+			$response      = $this->getRequestResponse( $request, $request_url, $data, $args );
 			$response_body = wp_remote_retrieve_body( $response );
 			if ( ! empty( $stored ) ) {
 				$details = json_decode( $response_body );
@@ -132,14 +132,14 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 					//Refresh tokens expire after 15 years. The latest refresh token must always be used for the next refresh request.
 					//https://marketplace.zoom.us/docs/guides/auth/oauth
 					//https://marketplace.zoom.us/docs/guides/auth/oauth#refreshing
-					$zoomOauthUser->refresh_and_save_access_token( $stored['refresh_token'] );
-					$stored = get_option( 'vczapi_oauth_zoom_user_token_info' );
-					$args = array(
+					$zoomOauthUser->refresh_and_save_access_token();
+					$stored        = get_option( 'vczapi_oauth_zoom_user_token_info' );
+					$args          = array(
 						'headers' => array(
 							'Authorization' => $stored['token_type'] . ' ' . $stored['access_token'],
 						),
 					);
-					$response      = $this->getRequestResponse( $request, $request_url, $args );
+					$response      = $this->getRequestResponse( $request, $request_url, $data, $args );
 					$response_body = wp_remote_retrieve_body( $response );
 				}
 			}

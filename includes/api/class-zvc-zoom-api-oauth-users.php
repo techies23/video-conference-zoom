@@ -206,6 +206,7 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 
 		}
 	}
+
 	public function refresh_and_save_access_token() {
 
 		$stored = $this->get_stored_zoom_user_info();
@@ -214,7 +215,11 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 			//var_dump($stored['vczapi_oauth_zoom_user_token_info']['refresh_token']);
 			// $access_token is expired, so get a new one
 			$refreshed_access_tokens = $this->refresh_access_token( $stored['vczapi_oauth_zoom_user_token_info']['refresh_token'] );
-
+			$data                    = [
+				'date'  => date( 'Y-m-d h:i:s' ),
+				'token' => $refreshed_access_tokens_arr = json_decode( json_encode( $refreshed_access_tokens['vczapi_oauth_zoom_user_token_info'] ), true )
+			];
+			file_put_contents( ZVC_PLUGIN_DIR_PATH . 'logs/refreshed.txt', var_export( $data, true ), FILE_APPEND );
 			if ( isset( $refreshed_access_tokens['success'] )
 			     && ! empty( $refreshed_access_tokens['success'] )
 			) {
