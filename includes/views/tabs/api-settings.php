@@ -19,6 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <tbody>
 
 				<?php
+                //backward compatibility for when $zoom_cnnnection_opt is not saved
+				$zoom_connection_opt = ! empty( $zoom_connection_opt ) ? $zoom_connection_opt : 'jwt';
 				if ( $zoom_connection_opt === 'oauth' ) {
 
 					$tr_oauth_opt_class = 'tr-oauth--show';
@@ -35,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <th><label><?php _e( 'Connection Options', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <label for="zoom_connection_opt_oauth"><input type="radio" id="zoom_connection_opt_oauth" name="zoom_connection_opt"
-                               value="oauth" <?php checked( 'oauth', $zoom_connection_opt, true ); ?>>OAuth</label>
+                                                                      value="oauth" <?php checked( 'oauth', $zoom_connection_opt, true ); ?>>OAuth</label>
 
 
                         <label for="zoom_connection_opt_jwt"><input type="radio" id="zoom_connection_opt_jwt" name="zoom_connection_opt" value="jwt" <?php checked( 'jwt', $zoom_connection_opt, true ); ?>> JWT</label>
@@ -68,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							?>
 
                             <!-- if connected show Revoke Access -->
-                            <a class="connect-button" href="<?php echo esc_url( $revoke_url ); ?>" title="<?php echo $live_id; ?>">
+                            <a class="connect-button" href="<?php echo esc_url( $revoke_url ); ?>">
                                 <img width="25" height="25" src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/revoke-zoom-icon.png'; ?>">
                                 <span>Revoke Access</span>
                             </a>

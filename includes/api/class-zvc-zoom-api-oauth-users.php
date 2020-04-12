@@ -86,8 +86,8 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 			if ( $response['success'] ) {
 
 				$current_user = wp_get_current_user();
-				$this->store_zoom_user_info( $current_user->ID, $response['vczapi_oauth_zoom_user_info'] );
-				$this->store_zoom_user_token_info( $current_user->ID, $response['vczapi_oauth_zoom_user_token_info'] );
+				$this->store_zoom_user_info( $response['vczapi_oauth_zoom_user_info'] );
+				$this->store_zoom_user_token_info( $response['vczapi_oauth_zoom_user_token_info'] );
 
 			} else {
 
@@ -106,12 +106,11 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 	 * i.e. sometimes only one of them is to be updated and passing both params was less ideal
 	 * Therefore, have separated these two functions store_zoom_user_info | store_zoom_user_token_info
 	 *
-	 * @param int   $user_id        current user id.
 	 * @param array $zoom_user_info zoom user info to be stored.
 	 *
 	 * @return void
 	 */
-	public function store_zoom_user_info( $user_id, $zoom_user_info ) {
+	public function store_zoom_user_info( $zoom_user_info ) {
 
 		update_option( 'vczapi_oauth_zoom_user_info', $zoom_user_info ); // update zoom user info
 
@@ -125,7 +124,7 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 	 *
 	 * @return void
 	 */
-	public function store_zoom_user_token_info( $user_id, $zoom_user_token_info ) {
+	public function store_zoom_user_token_info( $zoom_user_token_info ) {
 
 		update_option( 'vczapi_oauth_zoom_user_token_info', $zoom_user_token_info ); // update zoom user token info
 
@@ -186,23 +185,23 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 						// Also, convert to array from object before storing
 						$refreshed_access_tokens_arr = json_decode( json_encode( $refreshed_access_tokens['vczapi_oauth_zoom_user_token_info'] ), true );
 
-						$this->store_zoom_user_token_info( $this->live_user->ID, $refreshed_access_tokens_arr );
+						$this->store_zoom_user_token_info( $refreshed_access_tokens_arr );
 
 						$stored = $this->get_stored_zoom_user_info();
 
 						// now to verify, again try to get the zoom user infos with this new $refreshed access_token
 						$zoom_user_info = $this->get_zoom_user_info_with_access_token( $stored['vczapi_oauth_zoom_user_token_info']['token_type'], $stored['vczapi_oauth_zoom_user_token_info']['access_token'] );
 
-						if ( $zoom_user_infos['success'] ) {
+						if ( $zoom_user_info['success'] ) {
 
 							$zoom_user_info = json_decode( $zoom_user_infos['vczapi_oauth_zoom_user_info'] );
-							$this->store_zoom_user_info( $this->live_user->ID, $zoom_user_info['vczapi_oauth_zoom_user_info'] );
+							$this->store_zoom_user_info( $zoom_user_info['vczapi_oauth_zoom_user_info'] );
 						}
 					}
 				}
 			} else { // direct success to get the zoom user info with stored access token
 
-				$this->store_zoom_user_info( $this->live_user->ID, $zoom_user_infos['vczapi_oauth_zoom_user_info'] );
+				$this->store_zoom_user_info( $zoom_user_infos['vczapi_oauth_zoom_user_info'] );
 			}
 
 		}

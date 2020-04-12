@@ -67,6 +67,27 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$this->zoom_api_secret = $zoom_api_secret;
 		}
 
+		protected function getRequestResponse( $request, $request_url, $args ) {
+			if ( $request == "GET" ) {
+				$args['body'] = ! empty( $data ) ? $data : array();
+				$response     = wp_remote_get( $request_url, $args );
+			} else if ( $request == "DELETE" ) {
+				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
+				$args['method'] = "DELETE";
+				$response       = wp_remote_request( $request_url, $args );
+			} else if ( $request == "PATCH" ) {
+				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
+				$args['method'] = "PATCH";
+				$response       = wp_remote_request( $request_url, $args );
+			} else {
+				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
+				$args['method'] = "POST";
+				$response       = wp_remote_post( $request_url, $args );
+			}
+
+			return $response;
+		}
+
 		/**
 		 * Send request to API
 		 *
@@ -101,32 +122,24 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 			}
 
-			if ( $request == "GET" ) {
-				$args['body'] = ! empty( $data ) ? $data : array();
-				$response     = wp_remote_get( $request_url, $args );
-			} else if ( $request == "DELETE" ) {
-				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
-				$args['method'] = "DELETE";
-				$response       = wp_remote_request( $request_url, $args );
-			} else if ( $request == "PATCH" ) {
-				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
-				$args['method'] = "PATCH";
-				$response       = wp_remote_request( $request_url, $args );
-			} else {
-				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
-				$args['method'] = "POST";
-				$response       = wp_remote_post( $request_url, $args );
+			$response      = $this->getRequestResponse( $request, $request_url, $args );
+			$response_body = wp_remote_retrieve_body( $response );
+			if ( ! empty( $stored ) ) {
+				$details = json_decode( $response_body );
+				//check if thee error code for expired access token
+				if ( isset( $details->code ) && $details->code == 124 ) {
+					$zoomOauth = VCZAPIZoomOauth::get_instance();
+					$zoomOauth->refresh_access_token( $stored['refresh_token'] );
+				}
 			}
-
-			$response = wp_remote_retrieve_body( $response );
 //			dump($response);
 //			die;
 
-			if ( ! $response ) {
+			if ( ! $response_body ) {
 				return false;
 			}
 
-			return $response;
+			return $response_body;
 		}
 
 		//function to generate JWT
