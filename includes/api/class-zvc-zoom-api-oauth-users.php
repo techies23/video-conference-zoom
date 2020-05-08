@@ -87,7 +87,8 @@ class VCZAPIZoomUser extends VCZAPIZoomOauth {
 
 				$this->store_zoom_user_info( $response['vczapi_oauth_zoom_user_info'] );
 				$this->store_zoom_user_token_info( $response['vczapi_oauth_zoom_user_token_info'] );
-
+				update_option( 'zoom_connection_opt', 'oauth' );
+				video_conferencing_zoom_api_delete_user_cache();
 			} else {
 
 				echo $response['message'];
