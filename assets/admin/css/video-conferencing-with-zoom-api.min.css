@@ -1,6 +1,5 @@
-.zvc-row{display:-ms-flexbox;display:flex}tr.tr-connection-opt label{margin-right:20px}
-tr.tr-jwt,tr.tr-oauth{display:none}tr.tr-oauth.tr-oauth--show{display:table-row}tr.tr-jwt.tr-jwt--show{display:table-row}
-a.connect-button{background:#007cba;display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;padding:5px 15px;border-radius:4px;text-decoration:none;color:#fff}
+.zvc-row{display:-ms-flexbox;display:flex}tr.tr-connection-opt th{padding-bottom:0}
+tr.tr-oauth td{padding-left:0}a.connect-button{background:#007cba;display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;padding:5px 15px;border-radius:4px;text-decoration:none;color:#fff}
 a.connect-button span{margin-left:10px}a.connect-button:hover{background:#0071a1;border-color:#0071a1}
 .zvc_listing_table{margin-top:20px}.select_zvc_user_listings_wrapp{margin:20px 0}
 .zvc-text-left{text-align:left}.zvc-text-center{text-align:center}#zvc-cover{background:url("../../images/ajax-loader.gif") no-repeat scroll center center #f1f1f1;position:absolute;height:100%;width:100%;z-index:1;opacity:.5}

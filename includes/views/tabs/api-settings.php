@@ -21,40 +21,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php
                 //backward compatibility for when $zoom_cnnnection_opt is not saved
 				$zoom_connection_opt = ! empty( $zoom_connection_opt ) ? $zoom_connection_opt : 'jwt';
-				if ( $zoom_connection_opt === 'oauth' ) {
-
-					$tr_oauth_opt_class = 'tr-oauth--show';
-					$tr_jwt_opt_class   = '';
-
-				} else if ( $zoom_connection_opt === 'jwt' ) {
-
-					$tr_oauth_opt_class = '';
-					$tr_jwt_opt_class   = 'tr-jwt--show';
-				}
+//
 				?>
 
                 <tr class="tr-connection-opt">
-                    <th><label><?php _e( 'Connection Options', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <label for="zoom_connection_opt_oauth"><input type="radio" id="zoom_connection_opt_oauth" name="zoom_connection_opt"
-                                                                      value="oauth" <?php checked( 'oauth', $zoom_connection_opt, true ); ?>>OAuth</label>
-
-
-                        <label for="zoom_connection_opt_jwt"><input type="radio" id="zoom_connection_opt_jwt" name="zoom_connection_opt" value="jwt" <?php checked( 'jwt', $zoom_connection_opt, true ); ?>> JWT</label>
-
-                    </td>
+                    <th colspan="2">
+                        <label><?php _e( 'Connect with Zoom OAuth', 'video-conferencing-with-zoom-api' ); ?></label>
+                    </th>
                 </tr>
 
                 <!-- Oauth Form -->
-
-                <tr class="tr-oauth <?php echo $tr_oauth_opt_class; ?>">
-                    <th colspan="2">
+                <tr class="tr-oauth">
+                    <td colspan="2">
 
 						<?php
 
 						if ( '' == $zoom_oauth_user_info['vczapi_oauth_zoom_user_token_info'] ) { ?>
 
                             <!-- if not connected show Connect with Zoom -->
+                            <small><?php _e( 'Please click on the button below to connect with your zoom account.', 'video-conferencing-with-zoom-api'); ?></small><br><br>
                             <a class="connect-button" href="<?php echo esc_url( $zoom_oauth_url ); ?>">
                                 <img width="25" height="25" src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/connect-zoom-icon.png'; ?>">
                                 <span>Connect Zoom</span>
@@ -76,25 +61,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </a>
 						<?php } ?>
 
-                    </th>
+                    </td>
                 </tr>
                 <!-- Oauth Form Ends -->
 
-                <!-- JWT Form -->
-                <tr class="tr-jwt <?php echo $tr_jwt_opt_class; ?>">
-                    <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key"
-                               value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
-                </tr>
-                <tr class="tr-jwt <?php echo $tr_jwt_opt_class; ?>">
-                    <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret"
-                               value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
-                </tr>
                 <tr class="enabled-vanity-url tr-jwt <?php echo $tr_jwt_opt_class; ?>">
                     <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
@@ -106,7 +76,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 URLs', 'video-conferencing-with-zoom-api' ); ?></a>
                     </td>
                 </tr>
-                <!-- JWT Form Ends -->
 
                 <tr class="enabled-join-links-after-mtg-end">
                     <th><label><?php _e( 'Show Past Join Link ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
@@ -151,7 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </tr>
                 </tbody>
             </table>
-            <h3 class="description" style="color:red;"><?php _e( 'After you enter your keys. Do save changes before doing "Check API Connection".', 'video-conferencing-with-zoom-api' ); ?></h3>
+
             <p class="submit">
                 <input type="submit" name="save_zoom_settings" id="submit" class="button button-primary"
                        value="<?php esc_html_e( 'Save Changes', 'video-conferencing-with-zoom-api' ); ?>">

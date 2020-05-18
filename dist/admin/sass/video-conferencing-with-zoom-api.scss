@@ -8,22 +8,12 @@
   display: flex;
 }
 
-tr.tr-connection-opt {
-  label {
-    margin-right: 20px;
-  }
+tr.tr-connection-opt th {
+  padding-bottom: 0;
 }
 
-tr.tr-jwt, tr.tr-oauth {
-  display: none;
-}
-
-tr.tr-oauth.tr-oauth--show {
-  display: table-row;
-}
-
-tr.tr-jwt.tr-jwt--show {
-  display: table-row;
+tr.tr-oauth td {
+  padding-left: 0;
 }
 
 a.connect-button {

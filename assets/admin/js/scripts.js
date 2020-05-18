@@ -20,9 +20,6 @@
         },
         setupDOM: function () {
 
-            $dom.oauthConnectionOpt = $('#zoom_connection_opt_oauth');
-            $dom.oauthConnectionJwt = $('#zoom_connection_opt_jwt');
-
             $dom.select2 = $('.zvc-hacking-select');
             $dom.dateTimePicker = $('#datetimepicker');
             $dom.reportsDatePicker = $('#reports_date');
@@ -39,10 +36,6 @@
             $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error');
         },
         eventListeners: function () {
-
-
-            $dom.oauthConnectionOpt.on('click', this.showOauthRow );
-            $dom.oauthConnectionJwt.on('click', this.showJwtRow );
 
             //Check All Table Elements for Meetings List
             $dom.meetingListTableCheck.find('#checkall').on('click', this.meetingListTableCheck);
@@ -73,17 +66,6 @@
 
             //End and Resume Meetings
             $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this));
-        },
-
-        showOauthRow: function() {
-            $('tr.tr-oauth').addClass("tr-oauth--show");
-            $('tr.tr-jwt').removeClass("tr-jwt--show");
-
-        },
-
-        showJwtRow: function() {
-            $('tr.tr-jwt').addClass("tr-jwt--show");
-            $('tr.tr-oauth').removeClass("tr-oauth--show");
         },
 
         initializeDependencies: function () {
