@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
         <h3><?php _e( 'Please follow', 'video-conferencing-with-zoom-api' ) ?>
             <a target="_blank"
-               href="<?php echo ZVC_PLUGIN_AUTHOR; ?>/zoom-conference-wp-plugin-documentation/"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
+               href="<?php echo 'https://zoomdocs.codemanas.com/oauth/'; ?>"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
         </h3>
 
         <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST">
@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						if ( '' == $zoom_oauth_user_info['vczapi_oauth_zoom_user_token_info'] ) { ?>
 
                             <!-- if not connected show Connect with Zoom -->
-                            <small><?php _e( 'Please click on the button below to connect with your zoom account.', 'video-conferencing-with-zoom-api'); ?></small><br><br>
+                            <small><?php _e( 'Please click on the button below to connect with your Zoom account.', 'video-conferencing-with-zoom-api'); ?></small><br><br>
                             <a class="connect-button" href="<?php echo esc_url( $zoom_oauth_url ); ?>">
                                 <img width="25" height="25" src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/connect-zoom-icon.png'; ?>">
                                 <span>Connect Zoom</span>
