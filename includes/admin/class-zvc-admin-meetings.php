@@ -86,8 +86,8 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 		);
 
 		$meeting_updated = json_decode( zoom_conference()->updateMeetingInfo( $update_meeting_arr ) );
-		if ( ! empty( $meeting_updated->error ) ) {
-			self::set_message( 'error', $meeting_updated->error->message );
+		if ( ! empty( $meeting_updated->code ) ) {
+			self::set_message( 'error', $meeting_updated->message );
 		} else {
 			self::set_message( 'updated', __( "Updated meeting.", "video-conferencing-with-zoom-api" ) );
 		}
@@ -126,9 +126,7 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 		);
 
 		$meeting_created = json_decode( zoom_conference()->createAMeeting( $create_meeting_arr ) );
-		if ( ! empty( $meeting_created->error ) ) {
-			self::set_message( 'error', $meeting_created->error->message );
-		} else if ( ! empty( $meeting_created->code ) && $meeting_created->code == 1113 ) {
+		if ( ! empty( $meeting_created->code ) ) {
 			self::set_message( 'error', $meeting_created->message );
 		} else {
 			self::set_message( 'updated', sprintf( __( "Created meeting %s at %s. Join %s", "video-conferencing-with-zoom-api" ), $meeting_created->topic, $meeting_created->created_at, "<a target='_blank' href='" . $meeting_created->join_url . "'>Here</a>" ) );
