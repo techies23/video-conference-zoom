@@ -23,10 +23,10 @@ if ( ! empty( $meetings['join_uri'] ) ) {
 <?php } ?>
 
 <?php if ( ! empty( $meetings['browser_url'] ) ) { ?>
-    <tr>
-        <td><?php _e( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ); ?></td>
+  <!--  <tr style="display:none;">
+        <td><?php /*_e( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ); */?></td>
         <td>
-            <a class="btn-join-link-shortcode" target="_blank" href="<?php echo $meetings['browser_url']; ?>" title="Join via Browser"><?php _e( 'Join', 'video-conferencing-with-zoom-api' ); ?></a>
+            <a class="btn-join-link-shortcode" target="_blank" href="<?php /*echo $meetings['browser_url']; */?>" title="Join via Browser"><?php /*_e( 'Join', 'video-conferencing-with-zoom-api' ); */?></a>
         </td>
-    </tr>
+    </tr>-->
 <?php } ?>

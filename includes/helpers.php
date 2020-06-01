@@ -524,11 +524,11 @@ function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false
 	$encrypt_pwd        = vczapi_encrypt_decrypt( 'encrypt', $password );
 	$encrypt_meeting_id = vczapi_encrypt_decrypt( 'encrypt', $meeting_id );
 
-	if ( ! empty( $password ) ) {
-		return '<a target="_blank" rel="nofollow" href="' . esc_url( $link ) . '?pak=' . $encrypt_pwd . '&join=' . $encrypt_meeting_id . '&type=meeting" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczoom_join_meeting_via_app_text', __( 'Join via Web Browser', 'vczapi-woo-addon' ) ) . '</a>';
-	} else {
-		return '<a target="_blank" rel="nofollow" href="' . esc_url( $link ) . '?join=' . $encrypt_meeting_id . '&type=meeting" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczoom_join_meeting_via_app_text', __( 'Join via Web Browser', 'vczapi-woo-addon' ) ) . '</a>';
-	}
+//	if ( ! empty( $password ) ) {
+//		return '<a target="_blank" rel="nofollow" href="' . esc_url( $link ) . '?pak=' . $encrypt_pwd . '&join=' . $encrypt_meeting_id . '&type=meeting" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczoom_join_meeting_via_app_text', __( 'Join via Web Browser', 'vczapi-woo-addon' ) ) . '</a>';
+//	} else {
+//		return '<a target="_blank" rel="nofollow" href="' . esc_url( $link ) . '?join=' . $encrypt_meeting_id . '&type=meeting" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczoom_join_meeting_via_app_text', __( 'Join via Web Browser', 'vczapi-woo-addon' ) ) . '</a>';
+//	}
 
 }
 
