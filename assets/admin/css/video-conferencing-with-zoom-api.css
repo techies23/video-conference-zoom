@@ -1,4 +1,6 @@
 /** Deepen @since  1.0.0 @modified 3.0.0 */
+.vczapi-hide { display: none; }
+
 .zvc-row { display: -webkit-box; display: -ms-flexbox; display: flex; }
 
 tr.tr-connection-opt th { padding-bottom: 0; }

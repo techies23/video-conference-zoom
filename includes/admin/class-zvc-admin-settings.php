@@ -134,6 +134,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$locale_format                      = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_date_time_format' ) );
 					$embed_pwd_in_join_link             = sanitize_text_field( filter_input( INPUT_POST, 'embed_password_join_link' ) );
 					$hide_join_links_non_loggedin_users = sanitize_text_field( filter_input( INPUT_POST, 'hide_join_links_non_loggedin_users' ) );
+					$zoom_connection_opt = sanitize_text_field( filter_input( INPUT_POST, 'zoom_connection_opt' ) );
 
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
@@ -146,6 +147,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_date_time_format', $locale_format );
 					update_option( 'zoom_api_embed_pwd_join_link', $embed_pwd_in_join_link );
 					update_option( 'zoom_api_hide_shortcode_join_links', $hide_join_links_non_loggedin_users );
+					update_option( 'zoom_connection_opt', $zoom_connection_opt );
 
 					//After user has been created delete this transient in order to fetch latest Data.
 					video_conferencing_zoom_api_delete_user_cache();

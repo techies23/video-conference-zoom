@@ -17,27 +17,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
             <table class="form-table">
                 <tbody>
-
 				<?php
                 //backward compatibility for when $zoom_cnnnection_opt is not saved
 				$zoom_connection_opt = ! empty( $zoom_connection_opt ) ? $zoom_connection_opt : 'jwt';
-//
 				?>
+                <tr class="zoom_connection_row">
+                    <th> Select Connection Types</th>
+                    <td>
+                        <label><input type="radio" name="zoom_connection_opt" value="oauth"
+                            <?php checked($zoom_connection_opt,'oauth',true); ?>
+                            >OAuth</label>
+                        <label><input type="radio" name="zoom_connection_opt" value="jwt" <?php checked($zoom_connection_opt,'jwt',true); ?>>JWT</label>
+                    </td>
+                </tr>
 
-                <tr class="tr-connection-opt">
+                <tr class="zoom-jwt <?php echo ($zoom_connection_opt != 'jwt') ? 'vczapi-hide':''; ?>">
+                    <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
+                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
+                </tr>
+                <tr class="zoom-jwt <?php echo ($zoom_connection_opt != 'jwt') ? 'vczapi-hide':''; ?>">
+                    <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
+                        <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
+                </tr>
+
+                <tr class="zoom-oauth <?php echo ($zoom_connection_opt != 'oauth') ? 'vczapi-hide':''; ?>">
                     <th colspan="2">
                         <label><?php _e( 'Connect with Zoom OAuth', 'video-conferencing-with-zoom-api' ); ?></label>
                     </th>
                 </tr>
 
                 <!-- Oauth Form -->
-                <tr class="tr-oauth">
+                <tr class="tr-oauth zoom-oauth <?php echo ($zoom_connection_opt != 'oauth') ? 'vczapi-hide':''; ?>">
                     <td colspan="2">
 
 						<?php
 
 						if ( '' == $zoom_oauth_user_info['vczapi_oauth_zoom_user_token_info'] ) { ?>
-
                             <!-- if not connected show Connect with Zoom -->
                             <small><?php _e( 'Please click on the button below to connect with your Zoom account.', 'video-conferencing-with-zoom-api'); ?></small><br><br>
                             <a class="connect-button" href="<?php echo esc_url( $zoom_oauth_url ); ?>">

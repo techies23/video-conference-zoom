@@ -20,8 +20,7 @@
         },
         setupDOM: function () {
 
-            $dom.oauthConnectionOpt = $('#zoom_connection_opt_oauth');
-            $dom.oauthConnectionJwt = $('#zoom_connection_opt_jwt');
+            $dom.oauthConnectionOpt = $('input[name="zoom_connection_opt"]');
 
             $dom.select2 = $('.zvc-hacking-select');
             $dom.dateTimePicker = $('#datetimepicker');
@@ -41,8 +40,7 @@
         eventListeners: function () {
 
 
-            $dom.oauthConnectionOpt.on('click', this.showOauthRow );
-            $dom.oauthConnectionJwt.on('click', this.showJwtRow );
+            $dom.oauthConnectionOpt.on('click', this.showConnectionOption );
 
             //Check All Table Elements for Meetings List
             $dom.meetingListTableCheck.find('#checkall').on('click', this.meetingListTableCheck);
@@ -73,6 +71,16 @@
 
             //End and Resume Meetings
             $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this));
+        },
+        showConnectionOption: function(){
+            var $connectionSelected = $('input[name="zoom_connection_opt"]:checked').val();
+            if($connectionSelected === 'jwt'){
+                $('.zoom-jwt').show();
+                $('.zoom-oauth').hide();
+            }else{
+                $('.zoom-oauth').show();
+                $('.zoom-jwt').hide();
+            }
         },
 
         initializeDependencies: function () {
