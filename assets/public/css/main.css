@@ -57,7 +57,7 @@
 
 #zvc-cover { background: url(../../images/ajax-loader.gif) no-repeat scroll center center #adadad; position: absolute; height: 100%; width: 100%; z-index: 5; opacity: .9; }
 
-#dpen-zoom-browser-meeting { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1; }
+#dpen-zoom-browser-meeting { position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); z-index: 1; }
 
 #dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form input[type=text], #dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form input[type=password], #dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form button[type=submit] { width: 400px; height: 40px; border-radius: 0; }
 
@@ -84,7 +84,7 @@
 
 .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-string { font-size: 0.45em; width: 100%; text-transform: uppercase; }
 
-.vczapi-list-zoom-meetings--items { display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; }
+.vczapi-list-zoom-meetings--items { display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; }
 
 .vczapi-list-zoom-meetings--item { width: 100%; margin-bottom: 20px; }
 
@@ -96,10 +96,10 @@
 @media screen and (min-width: 1200px) { .vczapi-list-zoom-meetings--item { width: 25%; }
   .vczapi-list-zoom-meetings--item { margin-right: 5%; } }
 
-.vczapi-list-zoom-meetings--item__image { box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); }
+.vczapi-list-zoom-meetings--item__image { -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); }
 
 .vczapi-list-zoom-meetings--item__details, .vczapi-list-zoom-meetings--item__details p { font-size: 1em; }
 
 .vczapi-list-zoom-meetings--item__details h1, .vczapi-list-zoom-meetings h2, .vczapi-list-zoom-meetings h3, .vczapi-list-zoom-meetings h4, .vczapi-list-zoom-meetings h5, .vczapi-list-zoom-meetings h6 { font-size: 1.3em; margin-bottom: 5px; }
 
-.vczapi-list-zoom-meetings--item__details__meta .meta { display: -ms-flexbox; display: flex; -ms-flex-direction: column; flex-direction: column; margin-bottom: 5px; }
+.vczapi-list-zoom-meetings--item__details__meta .meta { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; margin-bottom: 5px; }
