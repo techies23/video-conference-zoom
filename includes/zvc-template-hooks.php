@@ -29,3 +29,8 @@ add_action( 'vczoom_meeting_join_links', 'video_conference_zoom_meeting_join_lin
 //Shortcode Hooks
 add_action( 'vczoom_meeting_before_shortcode', 'video_conference_zoom_shortcode_table', 10 );
 add_action( 'vczoom_meeting_shortcode_join_links', 'video_conference_zoom_shortcode_join_link', 10 );
+add_action( 'vczoom_meeting_shortcode_join_links_webinar', 'video_conference_zoom_shortcode_join_link_webinar', 10 );
+
+//JBH Hooks
+add_action( 'vczoom_jbh_before_content', 'video_conference_zoom_before_jbh_html', 10 );
+add_action( 'vczoom_jbh_after_content', 'video_conference_zoom_after_jbh_html', 10 );

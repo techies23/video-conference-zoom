@@ -6,6 +6,14 @@ This page shows you the few filters you can use in this plugin. I won't go in fu
     return $data;
 });`
 
+#### Rename "zoom-meetings" Slug
+
+Add below to your functions.php file in your theme. Change "your-slug-name" to the slug you want. Then flush your permalink from **wp-adming > settings > permalink** and save.
+
+`add_filter('vczapi_cpt_slug', function() {
+    return 'your-slug-name';
+});`
+
 #### Before Create a Zoom User
 
 * `apply_filters( 'vczapi_createAUser', $data );` 

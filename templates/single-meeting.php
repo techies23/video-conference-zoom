@@ -23,11 +23,8 @@ do_action( 'vczoom_before_main_content' );
 
 while ( have_posts() ) {
 	the_post();
-	if ( video_conference_zoom_check_login() ) {
-		vczapi_get_template_part( 'content', 'single-meeting' );
-	} else {
-		echo "<h3>" . __( 'You do not have enough priviledge to access this page. Please login to continue or contact administrator.', 'video-conferencing-with-zoom-api' ) . "</h3>";
-	}
+
+	vczapi_get_template_part( 'content', 'single-meeting' );
 }
 
 /**

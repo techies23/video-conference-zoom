@@ -32,24 +32,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	$show_host = apply_filters( 'vczapi_admin_show_host_selection', true );
 	if ( $show_host ) {
-		?>
-        <tr class="zoom-host-id-selection-admin">
-            <th scope="row"><label for="userId"><?php _e( 'Meeting Host *', 'video-conferencing-with-zoom-api' ); ?></label></th>
-            <td>
-				<?php if ( ! empty( $users ) ) { ?>
-                    <select name="userId" required class="zvc-hacking-select">
-                        <option value=""><?php _e( 'Select a Host', 'video-conferencing-with-zoom-api' ); ?></option>
-						<?php foreach ( $users as $user ) { ?>
-                            <option value="<?php echo $user->id; ?>" <?php ! empty( $meeting_fields['userId'] ) ? selected( esc_attr( $meeting_fields['userId'] ), $user->id ) : false; ?> ><?php echo esc_html( $user->first_name ) . ' ( ' . esc_html( $user->email ) . ' )'; ?></option>
-						<?php } ?>
-                    </select>
-				<?php } else {
-					printf( __( 'Did not find any hosts here ? Please %scheck here%s to verify your API keys are working correctly.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">', '</a>' );
-				} ?>
-                <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
-            </td>
-        </tr>
-	<?php } ?>
+		if ( ! empty( $meeting_details ) && ! empty( $meeting_details->id ) && $post->post_status === 'publish' ) { ?>
+            <tr class="zoom-host-id-selection-admin">
+                <th scope="row"><label for="userId"><?php _e( 'Meeting Host *', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                <td>
+					<?php
+					if ( ! empty( $users ) ) {
+						foreach ( $users as $user ) {
+							if ( $meeting_details->host_id === $user->id ) {
+								echo '<input type="hidden" name="userId" value="' . $user->id . '">';
+								echo esc_html( $user->first_name ) . ' ( ' . esc_html( $user->email ) . ' )';
+								break;
+							}
+						}
+					} else {
+						printf( __( 'Did not find any hosts here ? Please %scheck here%s to verify your API keys are working correctly.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">', '</a>' );
+					} ?>
+                    <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
+                </td>
+            </tr>
+			<?php
+		} else {
+			?>
+            <tr class="zoom-host-id-selection-admin">
+                <th scope="row"><label for="userId"><?php _e( 'Meeting Host *', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                <td>
+					<?php if ( ! empty( $users ) ) { ?>
+                        <select name="userId" required class="zvc-hacking-select">
+                            <option value=""><?php _e( 'Select a Host', 'video-conferencing-with-zoom-api' ); ?></option>
+							<?php foreach ( $users as $user ) { ?>
+                                <option value="<?php echo $user->id; ?>" <?php ! empty( $meeting_fields['userId'] ) ? selected( esc_attr( $meeting_fields['userId'] ), $user->id ) : false; ?> ><?php echo esc_html( $user->first_name ) . ' ( ' . esc_html( $user->email ) . ' )'; ?></option>
+							<?php } ?>
+                        </select>
+					<?php } else {
+						printf( __( 'Did not find any hosts here ? Please %scheck here%s to verify your API keys are working correctly.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">', '</a>' );
+					} ?>
+                    <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
+                </td>
+            </tr>
+		<?php }
+	}
+	?>
     <tr>
         <th scope="row"><label for="start_date"><?php _e( 'Start Date/Time *', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
@@ -57,6 +80,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p class="description" id="start_date-description"><?php _e( 'Starting Date and Time of the Meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
         </td>
     </tr>
+
+	<?php do_action( 'vczapi_admin_before_additional_fields' ); ?>
+
     <tr>
         <th scope="row"><label for="timezone"><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
@@ -82,7 +108,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <tr>
         <th scope="row"><label for="password"><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td class="zvc-meetings-form">
-            <input type="text" name="password" required maxlength="10" data-maxlength="10" class="regular-text" value="<?php echo ! empty( $meeting_details->password ) ? esc_attr( $meeting_details->password ) : false; ?>">
+            <input type="text" name="password" maxlength="10" data-maxlength="10" class="regular-text" value="<?php echo ! empty( $meeting_details->password ) ? esc_attr( $meeting_details->password ) : false; ?>">
             <p class="description" id="email-description"><?php _e( 'Password to join the meeting. Password may only contain the following characters: [a-z A-Z 0-9]. Max of 10 characters.( Leave blank for auto generate )', 'video-conferencing-with-zoom-api' ); ?></p>
         </td>
     </tr>

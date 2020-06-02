@@ -1,8 +1,8 @@
 <img src="https://ps.w.org/video-conferencing-with-zoom-api/assets/banner-772x250.png?rev=2198028">
 
-<h2>This documentation is only for First Ever created Zoom WordPress integration plugin (actively maintained) which you can get from <a href="https://wordpress.org/plugins/video-conferencing-with-zoom-api/">WordPress.org</a>.</h2>
+<h2>This documentation is only for Video Conferencing with Zoom WordPress integration plugin which you can get from <a href="https://wordpress.org/plugins/video-conferencing-with-zoom-api/">WordPress.org</a>.</h2>
 
-<h3>Verify your plugin download before following throught this documentation!!!!</h3>
+<h3>Verify your plugin download before following through this documentation!!!!</h3>
 
 ## Installation
 
@@ -13,6 +13,10 @@
 OR
 
 Download Plugin from <a href="https://wordpress.org/plugins/video-conferencing-with-zoom-api/">WordPress.org</a> repository.
+
+## Reviews
+
+
 
 ## About Plugin
 

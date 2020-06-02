@@ -87,31 +87,44 @@ $users = video_conferencing_zoom_api_get_user_transients();
             <tr>
                 <th scope="row"><label for="join_before_host"><?php _e( 'Join Before Host', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <p class="description" id="join_before_host-description"><input type="checkbox" name="join_before_host" value="1" class="regular-text"><?php _e( 'Join meeting before host start the meeting. Only for scheduled or recurring meetings.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="description" id="join_before_host-description">
+                        <input type="checkbox" name="join_before_host" value="1" class="regular-text"><?php _e( 'Join meeting before host start the meeting. Only for scheduled or recurring meetings.', 'video-conferencing-with-zoom-api' ); ?>
+                    </p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="option_host_video"><?php _e( 'Host join start', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <p class="description" id="option_host_video-description"><input type="checkbox" name="option_host_video" value="1" class="regular-text"><?php _e( 'Start video when host join meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="description" id="option_host_video-description">
+                        <input type="checkbox" name="option_host_video" value="1" class="regular-text"><?php _e( 'Start video when host join meeting.', 'video-conferencing-with-zoom-api' ); ?>
+                    </p>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="option_participants_video"><?php _e( 'Participants Video', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                <th scope="row">
+                    <label for="option_participants_video"><?php _e( 'Participants Video', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <p class="description" id="option_participants_video-description"><input type="checkbox" name="option_participants_video" value="1" class="regular-text"><?php _e( 'Start video when participants join meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="description" id="option_participants_video-description">
+                        <input type="checkbox" name="option_participants_video" value="1" class="regular-text"><?php _e( 'Start video when participants join meeting.', 'video-conferencing-with-zoom-api' ); ?>
+                    </p>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="option_mute_participants_upon_entry"><?php _e( 'Mute Participants upon entry', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                <th scope="row">
+                    <label for="option_mute_participants_upon_entry"><?php _e( 'Mute Participants upon entry', 'video-conferencing-with-zoom-api' ); ?></label>
+                </th>
                 <td>
-                    <p class="description" id="option_mute_participants_upon_entry"><input type="checkbox" name="option_mute_participants" value="1" class="regular-text"><?php _e( 'Mutes Participants when entering the meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="description" id="option_mute_participants_upon_entry">
+                        <input type="checkbox" name="option_mute_participants" value="1" class="regular-text"><?php _e( 'Mutes Participants when entering the meeting.', 'video-conferencing-with-zoom-api' ); ?>
+                    </p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="option_enforce_login"><?php _e( 'Enforce Login', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <p class="description" id="option_enforce_login-description"><input type="checkbox" name="option_enforce_login" value="1" class="regular-text"><?php _e( 'Only signed-in users can join this meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="description" id="option_enforce_login-description">
+                        <input type="checkbox" name="option_enforce_login" value="1" class="regular-text"><?php _e( 'Only signed-in users can join this meeting.', 'video-conferencing-with-zoom-api' ); ?>
+                    </p>
                 </td>
             </tr>
             <tr>
@@ -126,7 +139,8 @@ $users = video_conferencing_zoom_api_get_user_transients();
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="settings_alternative_hosts"><?php _e( 'Alternative Hosts', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                <th scope="row">
+                    <label for="settings_alternative_hosts"><?php _e( 'Alternative Hosts', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
                     <select name="alternative_host_ids[]" multiple class="zvc-hacking-select">
                         <option value=""><?php _e( 'Select a Host', 'video-conferencing-with-zoom-api' ); ?></option>

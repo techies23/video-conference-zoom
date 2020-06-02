@@ -91,8 +91,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		/**
 		 * Send request to API
 		 *
-		 * @param        $calledFunction
-		 * @param        $data
+		 * @param $calledFunction
+		 * @param $data
 		 * @param string $request
 		 *
 		 * @return array|bool|string|WP_Error
@@ -424,6 +424,47 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$postData['page_size'] = 300;
 
 			return $this->sendRequest( 'users/' . $userId . '/webinars', $postData, "GET" );
+		}
+
+		/**
+		 * Create Webinar
+		 *
+		 * @param $userID
+		 * @param array $data
+		 *
+		 * @return array|bool|string|void|WP_Error
+		 */
+		public function createAWebinar( $userID, $data = array() ) {
+			$postData = apply_filters( 'vczapi_createAwebinar', $data );
+
+			return $this->sendRequest( 'users/' . $userID . '/webinars', $postData, "POST" );
+		}
+
+		/**
+		 * Update Webinar
+		 *
+		 * @param $webinar_id
+		 * @param array $data
+		 *
+		 * @return array|bool|string|void|WP_Error
+		 */
+		public function updateWebinar( $webinar_id, $data = array() ) {
+			$postData = apply_filters( 'vczapi_updateWebinar', $data );
+
+			return $this->sendRequest( 'webinars/' . $webinar_id, $postData, "PATCH" );
+		}
+
+		/**
+		 * Get Webinar Info
+		 *
+		 * @param $id
+		 *
+		 * @return array|bool|string|WP_Error
+		 */
+		public function getWebinarInfo( $id ) {
+			$getMeetingInfoArray = array();
+
+			return $this->sendRequest( 'webinars/' . $id, $getMeetingInfoArray, "GET" );
 		}
 
 		/**

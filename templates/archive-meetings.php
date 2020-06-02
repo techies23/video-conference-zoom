@@ -22,6 +22,8 @@ get_header();
 
 				vczapi_get_template_part( 'content', 'meeting' );
 			}
+		} else {
+			echo "<p>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
 		?>
     </div>

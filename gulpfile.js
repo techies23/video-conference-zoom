@@ -36,6 +36,7 @@ var adminStyleDestination = './assets/admin/css/';
 
 var jsSrc = './dist/public/js/public.js';
 var jsSrcBrowser = './dist/public/js/join-via-browser.js';
+var shortcodeJSSrc = './dist/public/js/shortcode.js';
 var jsDestination = './assets/public/js/';
 var jsSrcVendor = './dist/public/vendor/**/*.js';
 
@@ -187,6 +188,24 @@ gulp.task('browserJS', function () {
     // .pipe( notify( { message: 'TASK: "customJs" Completed!', onLast: true } ) );
 });
 
+
+
+gulp.task('shortcodeJS', function () {
+    gulp.src(shortcodeJSSrc)
+        .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(concat('shortcode.js'))
+        .pipe(gulp.dest(jsDestination))
+        .pipe(rename({
+            basename: 'shortcode',
+            suffix: '.min'
+        }))
+        .pipe(uglify())
+        .pipe(gulp.dest(jsDestination))
+    // .pipe( notify( { message: 'TASK: "customJs" Completed!', onLast: true } ) );
+});
+
 // Public JS
 gulp.task('vendorJS', function () {
     gulp.src(jsSrcVendor)
@@ -222,10 +241,10 @@ gulp.task('adminJS', function () {
 });
 
 // Default task
-gulp.task('default', ['styles', 'stylesAdmin', 'publicJS', 'browserJS', 'vendorJS', 'adminJS', 'vendor'], function () {
+gulp.task('default', ['styles', 'stylesAdmin', 'publicJS', 'browserJS', 'shortcodeJS', 'vendorJS', 'adminJS', 'vendor'], function () {
     gulp.watch('./dist/public/sass/*.scss', ['styles']);
     gulp.watch('./dist/admin/sass/*.scss', ['stylesAdmin']);
-    gulp.watch('./dist/public/js/*.js', ['publicJS']);
+    gulp.watch('./dist/public/js/*.js', ['publicJS','shortcodeJS']);
     gulp.watch('./dist/public/vendor/*.js', ['vendorJS']);
     gulp.watch('./dist/admin/js/*.js', ['adminJS']);
 });

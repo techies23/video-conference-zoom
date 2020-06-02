@@ -26,7 +26,7 @@
 .dpn-zvc-shortcode-op-wrapper table tr:nth-of-type(odd) td .small-description{font-size:12px;font-style:italic}
 #zvc-cover{background:url(../../images/ajax-loader.gif) no-repeat scroll center center #adadad;position:absolute;height:100%;width:100%;z-index:5;opacity:.9}
 #dpen-zoom-browser-meeting{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1}
-#dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form input[type=text],#dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form button[type=submit]{width:400px;height:40px;border-radius:0}
+#dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form input[type=text],#dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form input[type=password],#dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form button[type=submit]{width:400px;height:40px;border-radius:0}
 #dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form button[type=submit]{background-color:#2d8cff;color:#fff}
 #dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--meeting-form .form-group{margin-bottom:10px}
 #dpen-zoom-browser-meeting .dpen-zoom-browser-meeting--info{background:#fff;padding:20px 30px;margin-bottom:10px;width:400px}

@@ -20,7 +20,7 @@ if ( ! is_object( $zoom_meetings ) && ! ( $zoom_meetings instanceof \WP_Query ) 
 ?>
 <div class="vczapi-list-zoom-meetings">
     <div class="vczapi-list-zoom-meetings--items">
-		<?php
+        <?php
 		while ( $zoom_meetings->have_posts() ) {
 			$zoom_meetings->the_post();
 

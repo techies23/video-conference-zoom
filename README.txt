@@ -1,18 +1,18 @@
 === Video Conferencing with Zoom ===
-Contributors: j__3rk, digamberpradhan, codemanas
+Contributors: j__3rk, codemanas, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.4
-Stable tag: 3.3.3
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Gives you the power to manage Zoom Meetings, check reports and create users from your WordPress dashboard.
+Gives you the power to manage Zoom Meetings, Webinars, check reports and create users directly from your WordPress dashboard.
 
 == Description ==
 
-Only simple plugin which gives you the extensive functionality to manage zoom meetings, users, reports from your WordPress Dashboard. Now, with capability to add your own post as a meeting. Create posts as meetings directly from your WordPress dashboard to show in the frontend as a meeting page. Allow users to directly join via that page with click of a button.
+Simple plugin which gives you the extensive functionality to manage zoom meetings, webinars, users, reports from your WordPress Dashboard. Now, with capability to add your own post as a meeting. Create posts as meetings directly from your WordPress dashboard to show in the frontend as a meeting page. Allow users to directly join via that page with click of a button.
 
 Now, from 3.2.0 allows you to Join meetings directly from Browser without Zoom App using Zoom WebSDK. For audio/video issues check FAQ section. Check here on how it <a target="_blank" href="https://deepenbajracharya.com.np/joining-meetings-in-zoom-directly-from-browser">Works</a>
 
@@ -29,6 +29,7 @@ Now, from 3.2.0 allows you to Join meetings directly from Browser without Zoom A
 * Allow posts to be only shown to logged in users. ( NEW from 3.0.0+ )
 * Start time and join links are shown according to local time compared with zoom timezone.
 * Manage Live Zoom Meetings.
+* Display Webinars via Shortcode
 * Listing Users.
 * Developer Friendly
 * Daily and Account Reports
@@ -54,6 +55,7 @@ REFER FAQ to override page templates!
 **EXTEND OTHER FEATURES:**
 
 Addon: **[WooCommerce Integration](https://www.codemanas.com/downloads/zoom-meetings-for-woocommerce/ "WooCommerce Integration")** for:
+Addon: **[WCFM Integration](https://www.codemanas.com/downloads/wcfm-integration-for-zoom/ "WCFM Integration")** for:
 Addon: **[WooCommerce Booking Integration](https://www.codemanas.com/downloads/zoom-integration-for-woocommerce-booking/ "WooCommerce Booking Integration")** for:
 
 * Integration with WooCommerce and Zoom Meetings Countdown page.
@@ -65,8 +67,8 @@ Addon: **[WooCommerce Booking Integration](https://www.codemanas.com/downloads/z
 * Individual Booking Product Meetings
 * Individual Booking Product Hosts
 * Individual Booking product meeting links for each bookings.
-
-> NOTE: This integrates to both WooCommerce as well as WooCommerce Booking plugin as well.
+* Integration with WCFM
+* Integration with WooCommerce Product Vendors
 
 & more functionalities and integrations are on its way!
 
@@ -77,7 +79,6 @@ You can find more information on the Pro version on website: **[codemanas.com](h
 * Enables direct integration of Zoom into WordPress.
 * Compatible with LearnPress, LearnDash 3.
 * Enables most of the settings from zoom via admin panel.
-* Fully Compatible with Zoom API.
 * Provides Shortcode to conduct the meeting via any WordPress page/post or custom post type pages
 * Separate Admin area to manage all meetings.
 * Can add meeting links via shortcode to your WooCommerce product pages as well.
@@ -88,17 +89,17 @@ The Web SDK enables the development of video applications powered by Zoom’s co
 
 As an extension of the Zoom browser client, this SDK is intended for implementations where the end user has a low-bandwidth environment, is behind a network firewall, or has restrictions on their machine which would prevent them from installing the Zoom Desktop or Mobile Clients.
 
-**LIMITATIONS:**
-
-* Webinar module not integrated
-
 **SHORTCODE:**
 
 **You can get your shorcodes from individual meetings after creating certain meeting. (From version 3.1.8+)**
 
 * [zoom_api_link meeting_id="123456789" link_only="no"] - Just enter your meeting ID and you are good to show your meeting in any page. Adding link_only="yes" would show join link only. See [Usage Documentation](https://techies23.github.io/video-conference-zoom/ "Usage Documentation") for more detail on usage.
 
+* [zoom_api_webinar webinar_id="YOUR_WEBINAR_ID" link_only="no"] - Show webinar details based on webinar ID.
+
 * [zoom_list_meetings per_page="5" category="test,test2,test3" order="DESC"] - Show list of meetings in frontend via category, Edit shortcode template for table view.
+
+* [zoom_list_host_meetings host="your_host_id"] - Show list of meetings in frontend for specific HOST ID.
 
 **QUICK DEMO:**
 
@@ -150,6 +151,54 @@ However, even though meeting is created and you are not seeing countdown timer t
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.4.0 May 27th, 2020 =
+* Added: Webinar Support Added with Shortcode for showing webinars.
+* Added: Elementor Widgets for Listing Meetings and Meeting Display Output.
+* Added: Webinar Shortcodes
+* Minor Bug Fixes
+
+= 3.3.13 May 23rd, 2020 =
+* Bug Fixed: All join links were being hidden when setting was not checked in Zoom Meeting > Seetings page "Hide Join Links for Non-Loggedin ?".
+
+= 3.3.12 May 22nd, 2020 =
+* Updated: [zoom_list_meetings] - Upcoming meetings are shown based on WordPress timezone settings.
+* Added: Hide join links for non-loggedin users for shortcode.
+* Updated: Checking "Requires Login?" from Zoom Meetings > Add New page will not hide join links to non-logged in users.
+* Added: Meeting Password field for Join via Browser
+
+= 3.3.11 May 11th, 2020 =
+* Fixed: Shortcode category listing
+* Updated: Meeting Password Links fixed according to new Zoom Meeting password change policy.
+
+= 3.3.10 May 6th, 2020 =
+* Added: Shortcode [zoom_list_host_meetings host="your_host_id"] for showing list of meetings based on HOST ID.
+* Added: Date Localization based on WordPress Locale.
+* Updated: Zoom WebSDK to version 1.7.7
+
+= 3.3.9 May 1st, 2020 =
+* Added: Spanish Translation. Thanks to <a href="https://wordpress.org/support/users/clickening/">@clickening</a>
+* Added: Russian Translation. Thanks to the <a href="https://translate.wordpress.org/locale/ru/default/wp-plugins/video-conferencing-with-zoom-api/">Translation team</a>.
+
+= 3.3.8 April 23rd, 2020 =
+* Fixed: Normal shortcode meeting start time not showing due to recurring check script.
+
+= 3.3.7 April 22nd, 2020 =
+* Fixed: Shortcode Join Links
+* Updated: Zoom WEBSDK to version 1.7.6
+
+= 3.3.6 April 20th, 2020 =
+* Fixed: Archive page not loading when no meetings existed.
+
+= 3.3.5 April 20th, 2020 =
+* Fixed: add_query_args when joining via browser occured a blank page or 404 page in some cases.
+* Removed: Host selection when editing the meeting after created
+* Fixed: Minor bug Fixes
+
+= 3.3.4 April 15th, 2020 =
+* Fixed: Category for Shortcode
+* Slovak Translation Updated: Thanks to <a href="https://profiles.wordpress.org/branike/">Branislav Ďorď</a>
+* Added: Meeting Type for [zoom_list_meetings type="upcoming"] shortcode.
 
 = 3.3.3 April 10th, 2020 =
 * Fix: Static resources JS and CSS file version number changes according to update. Reported by <a href="https://wordpress.org/support/users/bencoates/">bencoates</a>

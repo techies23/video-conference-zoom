@@ -42,7 +42,12 @@ jQuery(function ($) {
                             var display_name = $('#display_name');
                             if (!display_name.val()) {
                                 alert("Name is required to enter the meeting !");
+                                $("#zvc-cover").remove();
                                 return false;
+                            }
+
+                            if (!PASSWD && $('#meeting_password').length > 0) {
+                                PASSWD = $('#meeting_password').val();
                             }
 
                             var meetConfig = {

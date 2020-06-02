@@ -62,13 +62,14 @@ if ( ! empty( $meeting_info ) ) {
                     <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
-            <tr>
+            <tr <?php echo $meeting_info->type === 3 ? 'style="display:none;"' : 'style="display:table-row;"'; ?>>
                 <th scope="row"><label for="start_date"><?php _e( 'Start Date/Time *', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
 					<?php
-					$timezone = ! empty( $meeting_info->timezone ) ? $meeting_info->timezone : "America/Los_Angeles";
-					$tz       = new DateTimeZone( $timezone );
-					$date     = new DateTime( $meeting_info->start_time );
+					$start_time = ! empty( $meeting_info->start_time ) ? $meeting_info->start_time : false;
+					$timezone   = ! empty( $meeting_info->timezone ) ? $meeting_info->timezone : "America/Los_Angeles";
+					$tz         = new DateTimeZone( $timezone );
+					$date       = new DateTime( $start_time );
 					$date->setTimezone( $tz );
 					?>
                     <input type="text" name="start_date" id="datetimepicker" data-existingdate="<?php echo $date->format( 'Y-m-d H:i:s' ); ?>" required class="regular-text">
@@ -90,7 +91,7 @@ if ( ! empty( $meeting_info ) ) {
             <tr>
                 <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="number" name="duration" class="regular-text" value="<?php echo $meeting_info->duration ? $meeting_info->duration : null; ?>">
+                    <input type="number" name="duration" class="regular-text" value="<?php echo !empty($meeting_info->duration) && $meeting_info->duration ? $meeting_info->duration : 40; ?>">
                     <p class="description" id="duration-description"><?php _e( 'Meeting duration (minutes). (optional)', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
@@ -149,13 +150,13 @@ if ( ! empty( $meeting_info ) ) {
                 <td>
                     <select id="option_auto_recording" name="option_auto_recording">
                         <option value="none" <?php echo ! empty( $meeting_info->settings->auto_recording ) && $meeting_info->settings->auto_recording == "none" ? "selected" : false; ?>>
-	                        <?php _e( 'No Recordings', 'video-conferencing-with-zoom-api' ); ?>
+							<?php _e( 'No Recordings', 'video-conferencing-with-zoom-api' ); ?>
                         </option>
                         <option value="local" <?php echo ! empty( $meeting_info->settings->auto_recording ) && $meeting_info->settings->auto_recording == "local" ? "selected" : false; ?>>
-	                        <?php _e( 'Local', 'video-conferencing-with-zoom-api' ); ?>
+							<?php _e( 'Local', 'video-conferencing-with-zoom-api' ); ?>
                         </option>
                         <option value="cloud" <?php echo ! empty( $meeting_info->settings->auto_recording ) && $meeting_info->settings->auto_recording == "cloud" ? "selected" : false; ?>>
-	                        <?php _e( 'Cloud', 'video-conferencing-with-zoom-api' ); ?>
+							<?php _e( 'Cloud', 'video-conferencing-with-zoom-api' ); ?>
                         </option>
                     </select>
                     <p class="description" id="option_auto_recording_description"><?php _e( 'Set what type of auto recording feature you want to add. Default is none.', 'video-conferencing-with-zoom-api' ); ?></p>
@@ -177,7 +178,7 @@ if ( ! empty( $meeting_info ) ) {
                             <option value="<?php echo $user->id; ?>" <?php echo $user_found ? 'selected' : null; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
 						<?php endforeach; ?>
                     </select>
-                    <p class="description" id="settings_alternative_hosts"><?php _e( 'Alternative hosts IDs. Multiple value separated by comma.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="description" id="settings_alternative_hosts"><?php _e( 'Paid Zoom Account is required for this !! Alternative hosts IDs. Multiple value separated by comma.', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
             </tbody>

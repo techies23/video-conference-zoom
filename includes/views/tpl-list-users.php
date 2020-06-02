@@ -6,8 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 video_conferencing_zoom_api_show_like_popup();
-$users = video_conferencing_zoom_api_get_user_transients();
 
+$users = video_conferencing_zoom_api_get_user_transients();
 ?>
 <div class="wrap">
     <h2><?php _e( "Users", "video-conferencing-with-zoom-api" ); ?></h2>

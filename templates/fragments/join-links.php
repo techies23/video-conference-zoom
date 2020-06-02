@@ -8,9 +8,9 @@
  * @created_on 11/19/19
  */
 
-global $zoom_meeting;
+global $zoom;
 
-if ( ! empty( $zoom_meeting ) ) {
+if ( ! empty( $zoom ) ) {
 	?>
     <div class="dpn-zvc-sidebar-box">
         <div class="join-links">
@@ -20,11 +20,11 @@ if ( ! empty( $zoom_meeting ) ) {
 			 *
 			 * @video_conference_zoom_meeting_join_link - 10
 			 */
-			do_action( 'vczoom_meeting_join_links', $zoom_meeting );
+			do_action( 'vczoom_meeting_join_links', $zoom );
 			?>
 
-			<?php if ( ! empty( $zoom_meeting->start_url ) && vczapi_check_author( $post_id ) ) { ?>
-                <a target="_blank" href="<?php echo esc_url( $zoom_meeting->start_url ); ?>" class="btn btn-start-link"><?php _e( 'Start Meeting', 'video-conferencing-with-zoom-api' ); ?></a>
+			<?php if ( ! empty( $zoom->start_url ) && vczapi_check_author( $post_id ) ) { ?>
+                <a target="_blank" href="<?php echo esc_url( $zoom->start_url ); ?>" class="btn btn-start-link"><?php _e( 'Start Meeting', 'video-conferencing-with-zoom-api' ); ?></a>
 			<?php } ?>
         </div>
     </div>

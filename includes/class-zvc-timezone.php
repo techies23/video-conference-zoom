@@ -66,9 +66,10 @@ class Zoom_Video_Conferencing_Timezone {
 	 *
 	 */
 	private function output_join_links_page( $post_id ) {
-		unset( $GLOBALS['zoom_meeting'] );
+		unset( $GLOBALS['zoom'] );
 		unset( $GLOBALS['vanity_enabled'] );
-		$GLOBALS['zoom_meeting']   = get_post_meta( $post_id, '_meeting_zoom_details', true );
+		$GLOBALS['zoom']           = get_post_meta( $post_id, '_meeting_zoom_details', true );
+		$GLOBALS['zoom']->post_id  = $post_id;
 		$GLOBALS['vanity_enabled'] = get_option( 'zoom_vanity_url' );
 
 		ob_start(); //Init the output buffering

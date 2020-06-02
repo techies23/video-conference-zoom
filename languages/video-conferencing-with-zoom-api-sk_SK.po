@@ -9,31 +9,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-04-05 11:46+0000\n"
+"PO-Revision-Date: 2020-04-10 16:20+0200\n"
 "Language-Team: Slovak\n"
-"X-Generator: Loco https://localise.biz/\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 "Last-Translator: Deepen Bajracharya\n"
 "Language: sk_SK\n"
-"X-Loco-Version: 2.3.1; wp-5.4"
+"X-Loco-Version: 2.3.1; wp-5.4\n"
 
 #: includes/zvc-template-functions.php:81 includes/class-zvc-init.php:176
 msgid ""
 "Are you sure you want to end this meeting ? Users won't be able to join this "
 "meeting shown from the shortcode."
 msgstr ""
+"Naozaj chcete ukončiť toto stretnutie? Používatelia sa nebudú môcť pripojiť "
+"k tejto schôdzi zobrazenej v skrátenom kóde."
 
 #: includes/zvc-template-functions.php:88
 msgid "End Meeting ?"
-msgstr ""
+msgstr "Ukončiť schôdzu?"
 
 #: includes/zvc-template-functions.php:90
 msgid "Enable Meeting Join ?"
-msgstr ""
+msgstr "Povoliť pripojenie k stretnutiu?"
 
 #: includes/zvc-template-functions.php:92
 msgid "You are seeing this because you are the author of this post."
-msgstr ""
+msgstr "Toto sa zobrazuje, pretože ste autorom tohto príspevku."
 
 #: includes/zvc-template-functions.php:138
 msgid "Join Meeting via Zoom App"
@@ -64,11 +66,11 @@ msgstr "Na zmenu stavu je potrebné obnoviť."
 
 #: includes/zvc-template-functions.php:219
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: includes/zvc-template-functions.php:220
 msgid "Recurring Meeting"
-msgstr ""
+msgstr "Opakujúce sa schôdze"
 
 #: includes/zvc-template-functions.php:223
 #: includes/zvc-template-functions.php:242
@@ -96,18 +98,20 @@ msgstr "Trvanie"
 #: includes/class-zvc-init.php:89
 msgid "Meeting Has Started ! Click below join button to join meeting now !"
 msgstr ""
+"Stretnutie sa začalo! Kliknutím na tlačidlo Pripojiť sa nižšie sa pripojíte "
+"k stretnutiu!"
 
 #: includes/class-zvc-init.php:90
 msgid "Click join button below to join the meeting now !"
-msgstr ""
+msgstr "Kliknutím na tlačidlo dole nižšie sa pripojte k schôdzke teraz!"
 
 #: includes/class-zvc-init.php:91
 msgid "This meeting has been ended by the host."
-msgstr ""
+msgstr "Toto stretnutie bolo ukončené hostiteľom."
 
 #: includes/helpers.php:242
 msgid "ZOOM SERVICES STATUS"
-msgstr ""
+msgstr "ŠTATÚT ZOOMOVÝCH SLUŽIEB"
 
 #: includes/helpers.php:245
 #, php-format
@@ -115,6 +119,8 @@ msgid ""
 "Experiencing issues with the Zoom meeting window? Please check the status of "
 "Zoom services under Zoom Website -> Web Client %1$s"
 msgstr ""
+"Máte problémy s oknom stretnutia Zoom? Skontrolujte stav služieb Zoom v "
+"časti Zoom Web -> Webový klient %1$s"
 
 #: includes/helpers.php:264
 msgid "Like this plugin ?"
@@ -152,33 +158,35 @@ msgstr "Rozumiem! Nezobrazovať to znova!"
 
 #: includes/class-zvc-shortcodes.php:70 includes/class-zvc-shortcodes.php:191
 msgid "ERROR: "
-msgstr ""
+msgstr "Chyba: "
 
 #: includes/class-zvc-shortcodes.php:70 includes/class-zvc-shortcodes.php:191
 msgid "No meeting id set in the shortcode"
-msgstr ""
+msgstr "V skrátenom kóde nie je nastavené žiadne stretnutie"
 
 #: includes/class-zvc-shortcodes.php:98
 #, php-format
 msgid ""
-"Please try again ! Some error occured while trying to fetch meeting with id: "
-" %d"
+"Please try again ! Some error occured while trying to fetch meeting with "
+"id:  %d"
 msgstr ""
 "Prosím, skúste to znova! Pri pokuse o načítanie schôdze s ID %d sa vyskytla "
 "chyba"
 
 #: includes/class-zvc-shortcodes.php:197
 msgid "Restricted access, please login to continue."
-msgstr ""
+msgstr "Obmedzený prístup. Ak chcete pokračovať, prihláste sa."
 
 #: includes/class-zvc-shortcodes.php:258
 msgid ""
 "Note: If you are having trouble joining the meeting below, enter Meeting ID: "
 msgstr ""
+"Poznámka: Ak máte ťažkosti s pripojením sa na nasledujúcu schôdzu, zadajte "
+"ID schôdzky: "
 
 #: includes/class-zvc-shortcodes.php:258
 msgid "and join via Zoom App."
-msgstr ""
+msgstr "a pripojte sa pomocou aplikácie Zoom."
 
 #: includes/class-zvc-shortcodes.php:261 templates/shortcode/join-links.php:14
 msgid "Join via Zoom App"
@@ -186,11 +194,11 @@ msgstr "Pripojiť sa cez zoom Applikáciu"
 
 #: includes/class-zvc-shortcodes.php:262
 msgid "Download App from Store"
-msgstr ""
+msgstr "Stiahnite si aplikáciu z obchodu"
 
 #: includes/class-zvc-shortcodes.php:263
 msgid "Download from Zoom"
-msgstr ""
+msgstr "Stiahnuť z Zoom"
 
 #: includes/class-zvc-shortcodes.php:279
 #: templates/fragments/countdown-timer.php:21
@@ -214,29 +222,31 @@ msgstr "sekundy"
 
 #: includes/class-zvc-shortcodes.php:306
 msgid "Your name"
-msgstr ""
+msgstr "Vaše meno"
 
 #: includes/class-zvc-shortcodes.php:308
 msgid "Join Meeting"
-msgstr ""
+msgstr "Pripojiť sa k schôdzi"
 
 #: includes/class-zvc-shortcodes.php:315
 msgid "JOIN MEETING VIA ALTERNATIVE WAY"
-msgstr ""
+msgstr "PRIPOJIŤ SA K SCHÔDZI PROSTREDNÍCTVOM ALTERNATÍVNEHO SPÔSOBU"
 
 #: includes/class-zvc-shortcodes.php:323
 msgid ""
 "If the meeting is not started yet you have to click the below button as a "
 "HOST to start the meeting, once started you can join from the window below."
 msgstr ""
+"Ak sa schôdza ešte nezačala, musíte kliknúť na tlačidlo nižšie ako HOST, aby "
+"ste začali schôdzku. Po jej začatí sa môžete pripojiť z nasledujúceho okna."
 
 #: includes/class-zvc-shortcodes.php:324
 msgid "START MEETING AS HOST"
-msgstr ""
+msgstr "SPUSTIŤ SCHÔDZU AKO HOSTITEĽ"
 
 #: includes/class-zvc-shortcodes.php:333
 msgid "ALERT: "
-msgstr ""
+msgstr "Upozornenie: "
 
 #: includes/class-zvc-shortcodes.php:333
 msgid ""
@@ -244,6 +254,9 @@ msgid ""
 "install a valid SSL certificate on your site to allow participants use audio "
 "and video during Zoom meeting: "
 msgstr ""
+"Schôdza Audio a Video pre Zoom nebude fungovať na webe, ktorý nie je HTTPS. "
+"Nainštalujte si na svoje stránky platný certifikát SSL, ktorý umožní "
+"účastníkom používať audio a video počas stretnutia Zoom: "
 
 #: includes/class-zvc-timezone.php:51
 msgid "This meeting is no longer valid and cannot be joined !"
@@ -251,11 +264,11 @@ msgstr "Táto schôdza už nie je platná a nedá sa spojiť!"
 
 #: templates/join-web-browser.php:19
 msgid "This meeting has been ended by host."
-msgstr ""
+msgstr "Toto stretnutie bolo ukončené hostiteľom."
 
 #: templates/join-web-browser.php:40
 msgid "!!!ALERT!!!: "
-msgstr ""
+msgstr "!!!Upozornenie!!!: "
 
 #: templates/join-web-browser.php:40
 msgid ""
@@ -263,6 +276,10 @@ msgid ""
 "meeting will not work on a non HTTPS site, please install a valid SSL "
 "certificate to allow audio and video in your Meetings via browser."
 msgstr ""
+"Prehliadač nezistil platný certifikát SSL. Schôdza Audio and Video pre Zoom "
+"nebude fungovať na webe, ktorý nie je HTTPS, nainštalujte prosím platný "
+"certifikát SSL, ktorý umožní zvuk a video na vašich stretnutiach "
+"prostredníctvom prehliadača."
 
 #: templates/join-web-browser.php:51 templates/shortcode/join-links.php:16
 #: templates/shortcode/join-links.php:22
@@ -344,7 +361,7 @@ msgstr "Nastavenia"
 
 #: includes/admin/class-zvc-admin-settings.php:93
 msgid "Zoom Integration Settings"
-msgstr ""
+msgstr "Nastavenia integrácie Zoom"
 
 #: includes/admin/class-zvc-admin-settings.php:132
 msgid "Successfully Updated. Please refresh this page."
@@ -357,27 +374,30 @@ msgstr "Skryť toto upozornenie."
 #: includes/admin/class-zvc-admin-post-type.php:41
 #: includes/views/tpl-list-meetings.php:65
 msgid "Meeting State"
-msgstr ""
+msgstr "Stav schôdze"
 
 #: includes/admin/class-zvc-admin-post-type.php:59
 #: includes/views/tpl-list-meetings.php:120
 msgid "Disable Join"
-msgstr ""
+msgstr "Zakázať pripojiť"
 
 #: includes/admin/class-zvc-admin-post-type.php:62
 msgid ""
 "Restrict users to join this meeting before the start time or after the "
 "meeting is completed."
 msgstr ""
+"Obmedzte používateľov, aby sa pripojili k tejto schôdzi pred začiatkom alebo "
+"po ukončení schôdzky."
 
 #: includes/admin/class-zvc-admin-post-type.php:65
 #: includes/views/tpl-list-meetings.php:126
 msgid "Enable Join"
-msgstr ""
+msgstr "Povoliť pripojenie"
 
 #: includes/admin/class-zvc-admin-post-type.php:68
 msgid "Resuming this will enable users to join this meeting."
 msgstr ""
+"Obnovenie tohto postupu umožní používateľom pripojiť sa k tejto schôdzi."
 
 #: includes/admin/class-zvc-admin-post-type.php:87
 msgctxt "Zoom Meetings"
@@ -447,7 +467,7 @@ msgstr "Podrobnosti o schôdzi"
 
 #: includes/admin/class-zvc-admin-post-type.php:157
 msgid "Debug Log"
-msgstr ""
+msgstr "Protokol zoznamu chýb"
 
 #: includes/admin/class-zvc-admin-post-type.php:162
 msgid "WooCommerce Integration?"
@@ -474,7 +494,7 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:245
 msgid "Enable Debug?"
-msgstr ""
+msgstr "Povoliť ladenie?"
 
 #: includes/admin/class-zvc-admin-meetings.php:92
 msgid "Updated meeting."
@@ -519,7 +539,7 @@ msgstr "Kliknite pre kopírovanie shortcode!"
 
 #: includes/views/tpl-list-meetings.php:87
 msgid "Start via Browser"
-msgstr ""
+msgstr "Spustiť cez prehliadač"
 
 #: includes/views/tpl-list-meetings.php:90
 msgid "Trash"
@@ -527,19 +547,23 @@ msgstr "Kôš"
 
 #: includes/views/tpl-list-meetings.php:91
 msgid "Start via App"
-msgstr ""
+msgstr "Pripojiť sa cez zoom Applikáciu"
 
 #: includes/views/tpl-list-meetings.php:123
 msgid ""
 "Ending this will disable users to join this meeting. Applies to any "
 "shortcode output only."
 msgstr ""
+"Ukončenie tejto akcie zakáže používateľom pripojiť sa k tejto schôdzi. "
+"Vzťahuje sa iba na akýkoľvek výstup s krátkym kódom."
 
 #: includes/views/tpl-list-meetings.php:129
 msgid ""
 "Resuming this will enable users to join this meeting. Applies to any "
 "shortcode output only."
 msgstr ""
+"Obnovenie tohto postupu umožní používateľom pripojiť sa k tejto schôdzi. "
+"Vzťahuje sa iba na akýkoľvek výstup s krátkym kódom."
 
 #: includes/views/tpl-reports.php:13
 msgid "1. Daily Report"
@@ -551,20 +575,24 @@ msgstr "2. Prehľad účtu"
 
 #: includes/views/tpl-reports.php:18
 msgid "ATTENTION: Zoom Account & Setting Prerequisites for Reports Section"
-msgstr ""
+msgstr "POZOR: Zoom účet a nastavenie predpokladov pre sekciu Prehľady"
 
 #: includes/views/tpl-reports.php:21
 msgid "Pro, Business, Enterprise, Education, or API Account. Check more"
-msgstr ""
+msgstr "Účet Pro, Business, Enterprise, Education alebo API. Skontrolujte viac"
 
 #: includes/views/tpl-reports.php:24
 msgid ""
 "Account owner or admin permissions to access Usage Reports for all users."
 msgstr ""
+"Povolenia vlastníka účtu alebo správcu na prístup k prehľadom použitia pre "
+"všetkých používateľov."
 
 #: includes/views/tpl-reports.php:25
 msgid "Account Owner or a user is given the User activities reports."
 msgstr ""
+"Majiteľovi účtu alebo používateľovi sa poskytujú správy o činnosti "
+"používateľa."
 
 #: includes/views/tpl-reports.php:48
 msgid "Enter the date to check:"
@@ -603,12 +631,10 @@ msgid "Total Participants Involved: "
 msgstr "Celkový počet zúčastnených účastníkov: "
 
 #: includes/views/tpl-reports.php:109
-#, fuzzy
 msgid "Total Meeting Minutes Combined: "
-msgstr "Celkový počet minút schôdze v kombinácii:"
+msgstr "Celkový počet minút schôdze v kombinácii: "
 
 #: includes/views/tpl-reports.php:117
-#, fuzzy
 msgid "Get account report for a specified period."
 msgstr "Získajte výkaz kont pre zadané obdobie."
 
@@ -810,15 +836,15 @@ msgstr "Automatické nahrávanie"
 
 #: includes/views/tpl-edit-meeting.php:152
 msgid "No Recordings"
-msgstr ""
+msgstr "Žiadne nahrávky"
 
 #: includes/views/tpl-edit-meeting.php:155
 msgid "Local"
-msgstr ""
+msgstr "Lokálne"
 
 #: includes/views/tpl-edit-meeting.php:158
 msgid "Cloud"
-msgstr ""
+msgstr "Cloud"
 
 #: includes/views/tpl-edit-meeting.php:161
 #: includes/views/tpl-add-meetings.php:125
@@ -846,15 +872,15 @@ msgstr "Pridať používateľa"
 
 #: includes/views/tpl-add-user.php:12
 msgid "What does this do ? Check out"
-msgstr ""
+msgstr "Čo to robí? Vysúšaj"
 
 #: includes/views/tpl-add-user.php:13
 msgid "website"
-msgstr ""
+msgstr "webové stránky"
 
 #: includes/views/tpl-add-user.php:13
 msgid "Please note this may require a PRO account."
-msgstr ""
+msgstr "Upozorňujeme, že si to môže vyžadovať účet PRO."
 
 #: includes/views/tpl-add-user.php:22
 msgid "Action (Required)."
@@ -886,6 +912,10 @@ msgid ""
 "email. User will then need to click this link to activate their account to "
 "the Zoom service. The user can set or change their password in Zoom."
 msgstr ""
+"Používateľ dostane e-mail odoslaný z programu Zoom. V tomto e-maile je odkaz "
+"na potvrdenie. Používateľ potom bude musieť kliknúť na tento odkaz, aby si "
+"aktivoval svoj účet v službe Zoom. Užívateľ môže nastaviť alebo zmeniť svoje "
+"heslo v Zoom."
 
 #: includes/views/tpl-add-user.php:37
 msgid ""
@@ -894,12 +924,18 @@ msgid ""
 "creating a user who does not belong to your domain without notifying the "
 "user."
 msgstr ""
+"Táto akcia je poskytnutá pre podnikového zákazníka, ktorý má spravovanú "
+"doménu. Táto funkcia je v predvolenom nastavení vypnutá z dôvodu "
+"bezpečnostného rizika pri vytváraní používateľa, ktorý nepatrí do vašej "
+"domény bez toho, aby ste o tom upovedomili používateľa."
 
 #: includes/views/tpl-add-user.php:41
 msgid ""
 "This action is provided for API partner only. User created in this way has "
 "no password and is not able to log into the Zoom web site or client."
 msgstr ""
+"Táto akcia sa poskytuje iba pre partnera API. Takto vytvorený užívateľ nemá "
+"žiadne heslo a nemôže sa prihlásiť na webovú stránku alebo klienta Zoom."
 
 #: includes/views/tpl-add-user.php:45
 msgid ""
@@ -909,6 +945,12 @@ msgid ""
 "provisioning email. If user name or pmi is invalid or occupied, will use "
 "random number/random personal vanity URL."
 msgstr ""
+"Táto akcia je k dispozícii pre povolenú možnosť „Predbežne zadávajúci "
+"používateľ SSO“. Takto vytvorený používateľ nemá žiadne heslo. Ak nejde o "
+"obyčajného používateľa, vygeneruje adresu URL osobnej márnosti pomocou "
+"používateľského mena (bez domény) e-mailu poskytujúceho informácie. Ak je "
+"používateľské meno alebo adresa PMI neplatná alebo obsadená, použije sa "
+"náhodné číslo / náhodná adresa URL s osobným menom."
 
 #: includes/views/tpl-add-user.php:50
 msgid "Email Address"
@@ -951,29 +993,35 @@ msgid ""
 "This section allows you to assign \"Zoom\" host ID to your users from "
 "WordPress"
 msgstr ""
+"Táto sekcia vám umožňuje priradiť ID hostiteľa „Priblížiť“ svojim "
+"používateľom z WordPress"
 
 #: includes/views/tpl-assign-host-id.php:18
 msgid "In order to pull HOST ID from user meta just do"
-msgstr ""
+msgstr "Za účelom vytiahnutia HOST ID od užívateľa meta stačí urobiť"
 
 #: includes/views/tpl-assign-host-id.php:20
 msgid "THIS FEATURE IS INTENTED FOR DEVLEOPERS AND DEVELOPMENT PURPOSE ONLY"
-msgstr ""
+msgstr "TÁTO FUNKCIA JE URČENÁ IBA PRE VÝVOJÁROV A NA ÚČEL VÝVOJA"
 
 #: includes/views/tpl-assign-host-id.php:25
 msgid "ATTENTION: Zoom Account Prerequisites for User Management"
-msgstr ""
+msgstr "POZOR: Požiadavky Zoom účtu na správu používateľov"
 
 #: includes/views/tpl-assign-host-id.php:27
 msgid ""
 "Free with Credit Card, Pro, Business, Education, or Enterprise account. Make "
-"sure you are able to access <a target=\"_blank\" href=\"https://zoom."
-"us/account/user\">this area</a> if you are using a Free Zoom account."
+"sure you are able to access <a target=\"_blank\" href=\"https://zoom.us/"
+"account/user\">this area</a> if you are using a Free Zoom account."
 msgstr ""
+"Zadarmo s kreditnou kartou, profesionálnym, obchodným, vzdelávacím alebo "
+"firemným účtom. Uistite sa, že máte prístup  <a target=\"_blank\" href="
+"\"https://zoom.us/account/user\">k tejto oblasti</a>ak používate účet "
+"zadarmo Zoom."
 
 #: includes/views/tpl-assign-host-id.php:28
 msgid "Owner or admin privileges."
-msgstr ""
+msgstr "Oprávnenia vlastníka alebo správcu."
 
 #: includes/views/tpl-assign-host-id.php:47
 #: includes/views/tpl-list-users.php:29
@@ -1060,47 +1108,54 @@ msgstr "Pozrieť viac"
 
 #: includes/views/tabs/shortcode.php:12
 msgid "Using Shortcode Example"
-msgstr ""
+msgstr "Použitie shortcode príklad"
 
 #: includes/views/tabs/shortcode.php:13
 msgid ""
 "Below are few examples of how you can add shortcodes manually into your "
 "posts."
 msgstr ""
+"Nižšie uvádzame niekoľko príkladov, ako môžete do svojich príspevkov "
+"manuálne pridávať krátke kódy."
 
 #: includes/views/tabs/shortcode.php:16
 msgid "Basic Usage"
-msgstr ""
+msgstr "Základné použitie"
 
 #: includes/views/tabs/shortcode.php:19 includes/views/tabs/shortcode.php:34
 #: includes/views/tabs/shortcode.php:49
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: includes/views/tabs/shortcode.php:20
 msgid ""
 "Show a list with meeting details for a specific meeting ID with join links."
 msgstr ""
+"Zobraziť zoznam s podrobnosťami o schôdzke pre konkrétne ID schôdzky s "
+"odkazmi na pripojenie."
 
 #: includes/views/tabs/shortcode.php:21 includes/views/tabs/shortcode.php:37
 #: includes/views/tabs/shortcode.php:52
 msgid "Parameters"
-msgstr ""
+msgstr "Parametre"
 
 #: includes/views/tabs/shortcode.php:31
 msgid "Listing Zoom Meetings"
-msgstr ""
+msgstr "Zoznam stretnutí so zoomom"
 
 #: includes/views/tabs/shortcode.php:35
 msgid ""
-"Shows a list of meetings with start time, date and link to the meetings page."
-" This is customizable by overriding from your\n"
+"Shows a list of meetings with start time, date and link to the meetings "
+"page. This is customizable by overriding from your\n"
 "                        theme folder."
 msgstr ""
+"Zobrazí zoznam stretnutí s časom začiatku, dátumom a odkazom na stránku "
+"stretnutí. Toto je prispôsobiteľné prepísaním z vášho\n"
+"                         priečinok s témou."
 
 #: includes/views/tabs/shortcode.php:46
 msgid "Embed Zoom Meeting into Browser"
-msgstr ""
+msgstr "Vložiť zoom Meeting do prehliadača"
 
 #: includes/views/tabs/shortcode.php:50
 msgid ""
@@ -1108,6 +1163,9 @@ msgid ""
 "join meeting or start it from the page where you added\n"
 "                        this shortcode. Remember this is an IFRAME window !"
 msgstr ""
+"Vložte na svoju stránku alebo príspevok stretnutie so zoomom. To vám umožní "
+"priamo sa pripojiť k schôdzke alebo ju začať zo stránky, kde ste pridali\n"
+"                         tento krátky kód. Pamätajte, že toto je okno IFRAME!"
 
 #: includes/views/tabs/api-settings.php:11
 msgid "Please follow"
@@ -1138,12 +1196,16 @@ msgid ""
 "If you are using Zoom Vanity URL then please insert it here else leave it "
 "empty."
 msgstr ""
+"Ak používate webovú adresu Zoom Vanity, vložte ju sem, inak ju nechajte "
+"prázdnu."
 
 #: includes/views/tabs/api-settings.php:36
 msgid ""
 "Read more about Vanity\n"
 "                                URLs"
 msgstr ""
+"Prečítajte si viac o Vanity\n"
+"                                 URL"
 
 #: includes/views/tabs/api-settings.php:41
 msgid "Show Past Join Link ?"
@@ -1159,25 +1221,27 @@ msgstr ""
 
 #: includes/views/tabs/api-settings.php:48
 msgid "Show Zoom Author ?"
-msgstr ""
+msgstr "Zobraziť autora Zoom?"
 
 #: includes/views/tabs/api-settings.php:51
 msgid ""
 "Checking this show Zoom original Author in single meetings page which are "
 "created from"
 msgstr ""
+"Zaškrtnutím tejto možnosti zobrazíte pôvodného autora Zoom na jednu stránku "
+"stretnutí, z ktorej sú vytvorené"
 
 #: includes/views/tabs/api-settings.php:56
 msgid "Meeting Started Text"
-msgstr ""
+msgstr "Text že sa začalo stretnutie"
 
 #: includes/views/tabs/api-settings.php:61
 msgid "Meeting going to start Text"
-msgstr ""
+msgstr "Text, že stretnutie začne"
 
 #: includes/views/tabs/api-settings.php:66
 msgid "Meeting Ended Text"
-msgstr ""
+msgstr "Text ukončenia stretnutia"
 
 #: includes/views/tabs/api-settings.php:72
 msgid ""
