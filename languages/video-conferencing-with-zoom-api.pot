@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2020-12-18 10:04+0000\n"
+"POT-Creation-Date: 2020-12-29 07:34+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -43,9 +43,9 @@ msgid ""
 "Account owner or admin permissions to access Usage Reports for all users."
 msgstr ""
 
-#: templates/shortcode/zoom-recordings.php:21
+#: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
-#: includes/views/live/tpl-list-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:26
 msgid "Action"
 msgstr ""
 
@@ -243,6 +243,8 @@ msgid ""
 "frontend."
 msgstr ""
 
+#: includes/admin/class-zvc-admin-recordings.php:79
+#: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
 msgstr ""
@@ -481,10 +483,10 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: templates/shortcode/zoom-recordings.php:41
+#: includes/Shortcodes/Recordings.php:54 includes/Shortcodes/Recordings.php:55
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:53
 #: includes/views/live/tpl-list-recordings.php:54
+#: includes/views/live/tpl-list-recordings.php:55
 msgid "Download"
 msgstr ""
 
@@ -499,11 +501,11 @@ msgstr ""
 #: includes/template-functions.php:397
 #: templates/fragments/meeting-details.php:47
 #: templates/shortcode/zoom-webinar.php:98
-#: templates/shortcode/zoom-recordings.php:18
+#: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
 #: includes/views/live/tpl-edit-meeting.php:92
-#: includes/views/live/tpl-list-recordings.php:22
+#: includes/views/live/tpl-list-recordings.php:23
 #: includes/views/live/tpl-add-meetings.php:74
 #: includes/views/post-type/tpl-meeting-fields.php:166
 msgid "Duration"
@@ -583,6 +585,7 @@ msgstr ""
 msgid "Enter a value to Check..."
 msgstr ""
 
+#: includes/admin/class-zvc-admin-recordings.php:78
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
 msgstr ""
@@ -610,11 +613,13 @@ msgid ""
 "Zoom Meetings you have."
 msgstr ""
 
-#: includes/views/live/tpl-list-recordings.php:48
+#: includes/Shortcodes/Recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:49
 msgid "File Size"
 msgstr ""
 
-#: includes/views/live/tpl-list-recordings.php:46
+#: includes/Shortcodes/Recordings.php:50
+#: includes/views/live/tpl-list-recordings.php:47
 msgid "File Type"
 msgstr ""
 
@@ -718,12 +723,12 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:45
+#: includes/Shortcodes/Recordings.php:94
 msgid ""
 "Invalid HOST ID. Please define a host ID to show recordings based on host."
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:107
+#: includes/Shortcodes/Recordings.php:167
 msgid "Invalid Meeting ID."
 msgstr ""
 
@@ -756,8 +761,8 @@ msgstr ""
 msgid "Join via App"
 msgstr ""
 
-#: includes/helpers.php:590 includes/helpers.php:594 includes/helpers.php:618
-#: includes/helpers.php:622 templates/shortcode/join-links.php:27
+#: includes/helpers.php:589 includes/helpers.php:593 includes/helpers.php:617
+#: includes/helpers.php:621 templates/shortcode/join-links.php:27
 #: templates/shortcode/webinar-join-links.php:27
 msgid "Join via Web Browser"
 msgstr ""
@@ -809,6 +814,10 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-settings.php:28
 msgid "Live Webinars"
+msgstr ""
+
+#: includes/Shortcodes/Recordings.php:110
+msgid "Loading recordings.. Please wait.."
 msgstr ""
 
 #: includes/views/webinars/tpl-edit-webinar.php:113
@@ -883,12 +892,12 @@ msgstr ""
 #: includes/template-functions.php:296
 #: includes/admin/class-zvc-admin-post-type.php:125
 #: templates/shortcode/zoom-webinar.php:21
-#: templates/shortcode/zoom-recordings.php:16
+#: templates/shortcode/zoom-recordings.php:22
 #: templates/shortcode/zoom-recordings-by-meeting.php:42
 #: includes/Elementor/Widgets/EmbedMeetings.php:96
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:95
 #: includes/views/live/tpl-list-meetings.php:58
-#: includes/views/live/tpl-list-recordings.php:20
+#: includes/views/live/tpl-list-recordings.php:21
 msgid "Meeting ID"
 msgstr ""
 
@@ -1022,7 +1031,7 @@ msgstr ""
 msgid "Next Occurrence"
 msgstr ""
 
-#: includes/helpers.php:703
+#: includes/helpers.php:702
 msgid "Next Results"
 msgstr ""
 
@@ -1070,8 +1079,8 @@ msgstr ""
 msgid "No Recordings"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:79 includes/Shortcodes/Recordings.php:83
-#: includes/Shortcodes/Recordings.php:162
+#: includes/Shortcodes/Recordings.php:143
+#: includes/Shortcodes/Recordings.php:218
 msgid "No recordings found."
 msgstr ""
 
@@ -1165,10 +1174,10 @@ msgstr ""
 msgid "Personal Meeting Room"
 msgstr ""
 
-#: templates/shortcode/zoom-recordings.php:39
+#: includes/Shortcodes/Recordings.php:52
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:50
 #: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:52
 msgid "Play"
 msgstr ""
 
@@ -1257,17 +1266,13 @@ msgid ""
 "                                URLs"
 msgstr ""
 
-#: templates/shortcode/zoom-recordings.php:19
-#: includes/views/live/tpl-list-recordings.php:23
+#: templates/shortcode/zoom-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:24
 msgid "Recorded"
 msgstr ""
 
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:88
 msgid "Recording by Meeting"
-msgstr ""
-
-#: includes/views/live/tpl-list-recordings.php:56
-msgid "Recording Type"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-settings.php:58
@@ -1384,7 +1389,11 @@ msgstr ""
 msgid "Select a Meeting"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-recordings.php:63 includes/views/sync.php:20
+#: templates/shortcode/zoom-recordings.php:15
+msgid "Select a month to filter:"
+msgstr ""
+
+#: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:20
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
@@ -1479,9 +1488,9 @@ msgstr ""
 msgid "Showing all"
 msgstr ""
 
-#: templates/shortcode/zoom-recordings.php:20
+#: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
-#: includes/views/live/tpl-list-recordings.php:24
+#: includes/views/live/tpl-list-recordings.php:25
 msgid "Size"
 msgstr ""
 
@@ -1621,6 +1630,15 @@ msgstr ""
 msgid "The fields cannot be Empty !!"
 msgstr ""
 
+#: includes/views/live/tpl-list-recordings.php:11
+msgid ""
+"The maximum range can be a month. If no value is provided for this field, "
+"the default will be current date. For example, if you make the API request "
+"on June 30, 2020, without providing the “from” parameter, by default the "
+"value of ‘from’ field will be “2020-05-30” and the value of the ‘to’ field "
+"will be “2020-06-30”."
+msgstr ""
+
 #: includes/views/live/tpl-add-user.php:40
 msgid ""
 "This action is provided for API partner only. User created in this way has "
@@ -1736,11 +1754,11 @@ msgstr ""
 #: includes/Shortcodes/Meetings.php:236
 #: templates/fragments/meeting-details.php:27
 #: templates/shortcode/zoom-webinar.php:25
-#: templates/shortcode/zoom-recordings.php:17
+#: templates/shortcode/zoom-recordings.php:23
 #: templates/shortcode/zoom-recordings-by-meeting.php:43
 #: includes/views/webinars/tpl-list-webinars.php:59
 #: includes/views/live/tpl-list-meetings.php:60
-#: includes/views/live/tpl-list-recordings.php:21
+#: includes/views/live/tpl-list-recordings.php:22
 msgid "Topic"
 msgstr ""
 
@@ -1868,6 +1886,10 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:252
 msgid "View meetings"
+msgstr ""
+
+#: templates/shortcode/zoom-recordings.php:41
+msgid "View Recordings"
 msgstr ""
 
 #: includes/template-functions.php:308
