@@ -21,8 +21,8 @@ foreach ( $zoom_recordings as $zoom_recording ) {
 		}
 		?>
         <tr>
-            <td><?php echo vczapi_dateConverter( $recording->recording_start, $zoom_recording->timezone, 'F j, Y, g:i a' ); ?></td>
-            <td><?php echo vczapi_dateConverter( $recording->recording_end, $zoom_recording->timezone, 'F j, Y, g:i a' ); ?></td>
+            <td><?php echo vczapi_dateConverter( $recording->recording_start, $zoom_recording->timezone ); ?></td>
+            <td><?php echo vczapi_dateConverter( $recording->recording_end, $zoom_recording->timezone ); ?></td>
             <td><?php echo vczapi_filesize_converter( $recording->file_size ); ?></td>
             <td>
                 <a href="<?php echo $recording->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a>

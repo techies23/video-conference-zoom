@@ -75,7 +75,7 @@ Where,
 
 **NOTE: Added in version 3.4.0**
 
-### 6. Show Specific Webinar Detail
+### 6. Show List of Webinars
 
 Use: `[zoom_list_host_webinars host="YOUR_HOST_ID"]`
 

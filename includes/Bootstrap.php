@@ -188,8 +188,8 @@ final class Bootstrap {
 		wp_register_script( 'video-conferencing-with-zoom-api-timepicker-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/dtimepicker/jquery.datetimepicker.full.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', array( 'jquery' ), $this->plugin_version, true );
 
-		if ( $hook === $pg . "video-conferencing-reports" ) {
-			wp_enqueue_style( 'jquery-ui-datepicker-zvc', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
+		if ( $hook === $pg . "video-conferencing-reports" || $hook === $pg . "video-conferencing-recordings" ) {
+			wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css',false, $this->plugin_version );
 		}
 
 		//Plugin Scripts

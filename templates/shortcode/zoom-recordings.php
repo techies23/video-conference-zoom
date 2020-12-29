@@ -10,6 +10,12 @@
 
 global $zoom_recordings;
 ?>
+    <div class="vczapi-recordings-range-selector-wrap">
+        <form action="" class="vczapi-recording-range-selector" method="GET">
+            <label><?php _e( 'Select a month to filter:', 'video-conferencing-with-zoom-api' ); ?></label>
+            <input type="text" name="date" id="vczapi-check-recording-date" class="vczapi-check-recording-date" value="<?php echo isset( $_GET['date'] ) ? esc_html( $_GET['date'] ) : date( 'F Y' ); ?>"/> <input type="submit" name="fetch_recordings" value="<?php _e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
+        </form>
+    </div>
     <table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table vczapi-user-meeting-list">
         <thead>
         <tr>
@@ -29,7 +35,7 @@ global $zoom_recordings;
                 <td><?php echo $recording->id; ?></td>
                 <td><?php echo $recording->topic; ?></td>
                 <td><?php echo $recording->duration; ?></td>
-                <td><?php echo date( 'F j, Y, g:i a', strtotime( $recording->start_time ) ); ?></td>
+                <td><?php echo vczapi_dateConverter( $recording->start_time, $recording->timezone ); ?></td>
                 <td><?php echo vczapi_filesize_converter( $recording->total_size ); ?></td>
                 <td>
                     <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo $recording->id; ?>"><?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>

@@ -177,8 +177,9 @@ Join our facebook group which we have created in order to stay up to date with u
 
 == Changelog ==
 
-= 3.6.20 December 24th, 2020 =
+= 3.6.20 December 29th, 2020 =
 * Added: Viewing recordings in modal view.
+* Added: Recordings search via date.
 
 = 3.6.19 December 23rd, 2020 =
 * Updated: WebSDK to verion 1.8.5

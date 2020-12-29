@@ -33,7 +33,6 @@
             $dom.changeMeetingState = $('.vczapi-meeting-state-change');
 
             $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error');
-            this.adminHostSelectPostType = $('.vczapi-admin-post-type-host-selector');
         },
         eventListeners: function () {
             //Check All Table Elements for Meetings List
@@ -64,6 +63,76 @@
 
             //End and Resume Meetings
             $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this));
+        },
+
+        datePickers: function () {
+            //For Datepicker
+            if ($dom.dateTimePicker.length > 0) {
+                var d = new Date();
+                var month = d.getMonth() + 1;
+                var day = d.getDate();
+                var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                var output = d.getFullYear() + '-' +
+                    (month < 10 ? '0' : '') + month + '-' +
+                    (day < 10 ? '0' : '') + day + ' ' + time;
+                var start_date_check = $dom.dateTimePicker.data('existingdate');
+                if (start_date_check) {
+                    output = start_date_check;
+                }
+                $dom.dateTimePicker.datetimepicker({
+                    value: output,
+                    step: 15,
+                    minDate: 0,
+                    format: 'Y-m-d H:i'
+                });
+            }
+
+            //For Reports Section
+            if ($dom.reportsDatePicker.length > 0) {
+                $dom.reportsDatePicker.datepicker({
+                    changeMonth: true,
+                    changeYear: false,
+                    showButtonPanel: true,
+                    dateFormat: 'MM yy'
+                }).focus(function () {
+                    var thisCalendar = $(this);
+                    $('.ui-datepicker-calendar').detach();
+                    $('.ui-datepicker-close').click(function () {
+                        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                        var year = $("#ui-datepicker-div .ui-datepicker-year").html();
+                        thisCalendar.datepicker('setDate', new Date(year, month, 1));
+                    });
+                });
+            }
+
+            if ($('#vczapi-check-recording-date').length > 0) {
+                $('#vczapi-check-recording-date').datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    showButtonPanel: true,
+                    dateFormat: 'MM yy',
+                    beforeShow: function (input, inst) {
+                        setTimeout(function () {
+                            inst.dpDiv.css({
+                                top: $('#vczapi-check-recording-date').offset().top + 35,
+                                left: $('#vczapi-check-recording-date').offset().left
+                            });
+                        }, 0);
+                    }
+                }).focus(function () {
+                    var thisCalendar = $(this);
+                    $('.ui-datepicker-calendar').detach();
+                    $('.ui-datepicker-close').click(function () {
+                        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                        thisCalendar.datepicker('setDate', new Date(year, month, 1));
+                    });
+                });
+            }
+
+            if ($dom.zoomAccountDatepicker.length > 0) {
+                $dom.zoomAccountDatepicker.datepicker({dateFormat: "yy-mm-dd"});
+            }
         },
 
         initializeDependencies: function () {
@@ -116,51 +185,6 @@
                     placeholder: "Select a WordPress User",
                     width: '300px'
                 });
-            }
-        },
-
-        datePickers: function () {
-            //For Datepicker
-            if ($dom.dateTimePicker.length > 0) {
-                var d = new Date();
-                var month = d.getMonth() + 1;
-                var day = d.getDate();
-                var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-                var output = d.getFullYear() + '-' +
-                    (month < 10 ? '0' : '') + month + '-' +
-                    (day < 10 ? '0' : '') + day + ' ' + time;
-                var start_date_check = $dom.dateTimePicker.data('existingdate');
-                if (start_date_check) {
-                    output = start_date_check;
-                }
-                $dom.dateTimePicker.datetimepicker({
-                    value: output,
-                    step: 15,
-                    minDate: 0,
-                    format: 'Y-m-d H:i'
-                });
-            }
-
-            //For Reports Section
-            if ($dom.reportsDatePicker.length > 0) {
-                $dom.reportsDatePicker.datepicker({
-                    changeMonth: true,
-                    changeYear: false,
-                    showButtonPanel: true,
-                    dateFormat: 'MM yy'
-                }).focus(function () {
-                    var thisCalendar = $(this);
-                    $('.ui-datepicker-calendar').detach();
-                    $('.ui-datepicker-close').click(function () {
-                        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                        var year = $("#ui-datepicker-div .ui-datepicker-year").html();
-                        thisCalendar.datepicker('setDate', new Date(year, month, 1));
-                    });
-                });
-            }
-
-            if ($dom.zoomAccountDatepicker.length > 0) {
-                $dom.zoomAccountDatepicker.datepicker({dateFormat: "yy-mm-dd"});
             }
         },
 

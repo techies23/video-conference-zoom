@@ -160,8 +160,8 @@
 
 .vczapi-modal .vczapi-modal-header { padding: 2px 16px; color: white; }
 
-.vczapi-modal .vczapi-modal-body { padding: 2px 16px; }
+.vczapi-modal .vczapi-modal-body { padding: 2px 16px; max-height: 500px; overflow: auto; }
 
-.vczapi-modal .vczapi-modal-list { padding: 40px; list-style: none; margin: 0; border-bottom: 1px solid #efefef; }
+.vczapi-modal .vczapi-modal-list { padding: 20px; list-style: none; margin: 0; border-bottom: 1px solid #efefef; }
 
 .vczapi-modal-loader { text-align: center; color: #424242; background: #fff; width: 400px; margin: 0 auto; padding: 20px; border-radius: 20px; }

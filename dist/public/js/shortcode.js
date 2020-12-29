@@ -38,7 +38,7 @@
         },
     };
 
-    var vczAPIGenerateModal = {
+    var vczAPIRecordingsGenerateModal = {
         init: function () {
             this.cacheDOM();
             this.evntHandlers();
@@ -47,10 +47,36 @@
             this.$modal = $('.vczapi-modal');
             this.$modalContent = $('.vczapi-modal-content');
             this.$triggerModal = $('.vczapi-view-recording');
+            this.$recordingsDatePicker = $('.vczapi-check-recording-date');
         },
         evntHandlers: function () {
             this.$triggerModal.on('click', this.openModal.bind(this));
             $(document).on('click', '.vczapi-modal-close', this.closeModal.bind(this));
+
+            if ($(this.$recordingsDatePicker).length > 0) {
+                this.$recordingsDatePicker.datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    showButtonPanel: true,
+                    dateFormat: 'MM yy',
+                    beforeShow: function (input, inst) {
+                        setTimeout(function () {
+                            inst.dpDiv.css({
+                                top: $('.vczapi-check-recording-date').offset().top + 35,
+                                left: $('.vczapi-check-recording-date').offset().left
+                            });
+                        }, 0);
+                    }
+                }).focus(function () {
+                    var thisCalendar = $(this);
+                    $('.ui-datepicker-calendar').detach();
+                    $('.ui-datepicker-close').click(function () {
+                        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                        thisCalendar.datepicker('setDate', new Date(year, month, 1));
+                    });
+                });
+            }
         },
         closeModal: function (e) {
             e.preventDefault();
@@ -77,7 +103,7 @@
     $(function () {
         vczAPIMeetingFilter.init();
         vczAPIListUserMeetings.init();
-        vczAPIGenerateModal.init();
+        vczAPIRecordingsGenerateModal.init();
     });
 
 })(jQuery);

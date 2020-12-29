@@ -45,10 +45,12 @@
 
   .vczapi-modal-body {
     padding: 2px 16px;
+    max-height: 500px;
+    overflow: auto;
   }
 
   .vczapi-modal-list {
-    padding: 40px;
+    padding: 20px;
     list-style: none;
     margin: 0;
     border-bottom: 1px solid #efefef;
