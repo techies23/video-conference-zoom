@@ -35,7 +35,7 @@ global $zoom_recordings;
                 <td><?php echo $recording->id; ?></td>
                 <td><?php echo $recording->topic; ?></td>
                 <td><?php echo $recording->duration; ?></td>
-                <td><?php echo vczapi_dateConverter( $recording->start_time, $recording->timezone ); ?></td>
+                <td data-sort="<?php echo strtotime( $recording->start_time ); ?>"><?php echo vczapi_dateConverter( $recording->start_time, $recording->timezone ); ?></td>
                 <td><?php echo vczapi_filesize_converter( $recording->total_size ); ?></td>
                 <td>
                     <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo $recording->id; ?>"><?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>

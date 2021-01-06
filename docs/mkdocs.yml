@@ -12,6 +12,7 @@ nav:
       - Meeting Types: meeting_types.md
       - Webinars: webinars.md
       - Shortcode: shortcode.md
+      - PRO Version Shortcode: pro-shortcode.md
       - Change DateTime: date_types.md
       - Join via Browser: join_links.md
       - Vanity URL: vanity_url.md
