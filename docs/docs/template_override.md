@@ -24,11 +24,11 @@ Like said above, you'll need to find out the div structure from your theme. You 
 
 You Should see below image on your screen now.
 
-<img src="https://www.codemanas.com/wp-content/uploads/2020/04/plugin-template-override-guideline.png" alt="Plugin Override">
+![Zoom WooCommerce Appointments](img/plugin-template-override-guideline.png)
 
 Match the classes accordingly in the file **content-single-meeting.php** now. Replacing the `"dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>"` usually does the trick !!
 
-<img src="https://www.codemanas.com/wp-content/uploads/2020/04/plugin-overrride-guide.png" alt="Plugin Override">
+![Zoom WooCommerce Appointments](img/plugin-overrride-guide.png)
 
 Hope this helps !
 

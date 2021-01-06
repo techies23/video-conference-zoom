@@ -14,7 +14,7 @@ This allows you to view your meeting by styling your frontend pages by overridin
 
 Basically, this will create a Meeting on your Zoom Account and a Post in your WordPress site which is linked. So, if you create a Meeting from here you'll be able to show a countdown timer in the frontend.
 
-<img src="https://www.codemanas.com/wp-content/uploads/2020/04/post-type-meetings.png" alt="Post Type Meeting">
+![Post Type Meeting Type](img/post-type-meetings.png)
 
 ## Actual Live Meetings
 

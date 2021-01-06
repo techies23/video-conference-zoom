@@ -158,11 +158,7 @@ Please check this thread: https://wordpress.org/support/topic/conflict-with-form
 
 = Do i need a Zoom Account ? =
 
-Yes, you should be registered in Zoom. Also, on the plan you are using there depends the number of hosts and users you can add.
-
-= Questions/ Follow ups ? =
-
-Join our facebook group which we have created in order to stay up to date with updates and common issues faced. [Join here](https://www.facebook.com/groups/zoomwp/ "Join here")
+Yes, you should be registered in Zoom. Also, depending on the zoom account plan you are using - Number of hosts/users will vary.
 
 == Screenshots ==
 1. Join via browser
