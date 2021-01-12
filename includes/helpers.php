@@ -23,16 +23,22 @@ if ( ! function_exists( 'zvc_get_timezone_offset_wp' ) ) {
 			return $tz;
 		}
 		$offset  = get_option( 'gmt_offset' );
+		//correction for system sending Azores when timezone was set to zero
+		//bail early is offset is 0
+		if(empty($tz) && $offset == 0){
+			return 'UTC';
+		}
 		$hours   = (int) $offset;
 		$minutes = abs( ( $offset - (int) $offset ) * 60 );
 		$offset  = sprintf( '%+03d:%02d', $hours, $minutes );
 		// Calculate seconds from offset
 		list( $hours, $minutes ) = explode( ':', $offset );
 		$seconds = $hours * 60 * 60 + $minutes * 60;
-		$tz      = timezone_name_from_abbr( '', $seconds, 1 );
-		if ( $tz === false ) {
-			$tz = timezone_name_from_abbr( '', $seconds, 0 );
+	
+		if(empty($tz)){
+			$tz      = timezone_name_from_abbr( '', $seconds, 0 );
 		}
+		
 		if ( $tz == 'Asia/Katmandu' ) {
 			$tz = 'Asia/Kathmandu';
 		}
