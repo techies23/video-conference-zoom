@@ -81,6 +81,27 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </td>
                 </tr>
                 <tr>
+                    <th><label><?php _e( 'Default Language for Join via browser page ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <select name="meeting-lang">
+                            <option value="all" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'all' ) : false; ?>><?php _e( 'Show All', 'video-conferencing-with-zoom-api' ); ?></option>
+                            <option value="en-US" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'en-US' ) : false; ?>>English</option>
+                            <option value="de-DE" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'de-DE' ) : false; ?>>German Deutsch</option>
+                            <option value="es-ES" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'es-ES' ) : false; ?>>Spanish Español</option>
+                            <option value="fr-FR" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'fr-FR' ) : false; ?>>French Français</option>
+                            <option value="jp-JP" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'jp-JP' ) : false; ?>>Japanese 日本語</option>
+                            <option value="pt-PT" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'pt-PT' ) : false; ?>>Portuguese Portuguese</option>
+                            <option value="ru-RU" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'ru-RU' ) : false; ?>>Russian Русский</option>
+                            <option value="zh-CN" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'zh-CN' ) : false; ?>>Chinese 简体中文</option>
+                            <option value="zh-TW" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'zh-TW' ) : false; ?>>Chinese 繁体中文</option>
+                            <option value="ko-KO" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'ko-KO' ) : false; ?>>Korean 한국어</option>
+                            <option value="vi-VN" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'vi-VN' ) : false; ?>>Vietnamese Tiếng Việt</option>
+                            <option value="it-IT" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'it-IT' ) : false; ?>>Italian italiano</option>
+                        </select>
+                        <p class="description"><?php _e( 'Select a default language for your join meeting via browser page.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    </td>
+                </tr>
+                <tr>
                     <th><label><?php _e( 'Meeting Started Text', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="text" style="width: 400px;" name="zoom_api_meeting_started_text" id="zoom_api_meeting_started_text" value="<?php echo ! empty( $zoom_started ) ? esc_html( $zoom_started ) : ''; ?>" placeholder="Leave empty for default text">
@@ -118,13 +139,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                         </div>
                         <div style="padding-top:10px;">
                             <input type="radio" value="custom" <?php echo ! empty( $locale_format ) ? checked( $locale_format, 'custom', false ) : ''; ?>name="zoom_api_date_time_format" class="zoom_api_date_time_format"> Custom
-                            <input type="text" class="regular-text" name="zoom_api_custom_date_time_format" placeholder="Y-m-d" value="<?php echo !empty($custom_date_time_format) ? $custom_date_time_format: ''; ?>">
+                            <input type="text" class="regular-text" name="zoom_api_custom_date_time_format" placeholder="Y-m-d" value="<?php echo ! empty( $custom_date_time_format ) ? $custom_date_time_format : ''; ?>">
                         </div>
                         <p class="description"><?php _e( 'Change date time formats according to your choice. Please edit this properly. Failure to correctly put value will result in failure to show date in frontend.', 'video-conferencing-with-zoom-api' ); ?></p>
                         <p class="description">
-                            <?php
-                           printf(__('Please see %s on how to format date','video-conferencing-with-zoom-api'),'<a href="https://www.php.net/manual/en/datetime.format.php" target="_blank" rel="nofollow noopener">https://www.php.net/manual/en/datetime.format.php</a>');
-                            ?>
+							<?php
+							printf( __( 'Please see %s on how to format date', 'video-conferencing-with-zoom-api' ), '<a href="https://www.php.net/manual/en/datetime.format.php" target="_blank" rel="nofollow noopener">https://www.php.net/manual/en/datetime.format.php</a>' );
+							?>
                         </p>
                     </td>
                 </tr>

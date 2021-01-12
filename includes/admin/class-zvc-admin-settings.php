@@ -139,6 +139,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$hide_join_links_non_loggedin_users = sanitize_text_field( filter_input( INPUT_POST, 'hide_join_links_non_loggedin_users' ) );
 					$hide_email_jvb                     = sanitize_text_field( filter_input( INPUT_POST, 'meeting_show_email_field' ) );
 					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
+					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
 
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
@@ -156,6 +157,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_hide_shortcode_join_links', $hide_join_links_non_loggedin_users );
 					update_option( 'zoom_api_hide_in_jvb', $hide_email_jvb );
 					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
+					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
 
 					//After user has been created delete this transient in order to fetch latest Data.
 					video_conferencing_zoom_api_delete_user_cache();
@@ -187,6 +189,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				$hide_join_link_nloggedusers = get_option( 'zoom_api_hide_shortcode_join_links' );
 				$hide_email_jvb              = get_option( 'zoom_api_hide_in_jvb' );
 				$disable_jvb                 = get_option( 'zoom_api_disable_jvb' );
+				$default_jvb_lang            = get_option( 'zoom_api_default_lang_jvb' );
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';

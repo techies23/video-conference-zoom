@@ -142,7 +142,7 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
 	if ( ! empty( $zoom_meeting->join_url ) && ! $disable_app_join ) {
 		$join_url = ! empty( $zoom_meeting->encrypted_password ) ? vczapi_get_pwd_embedded_join_link( $zoom_meeting->join_url, $zoom_meeting->encrypted_password ) : $zoom_meeting->join_url;
 		?>
-        <a target="_blank" href="<?php echo esc_url( $join_url ); ?>" class="btn btn-join-link btn-join-via-app"><?php echo apply_filters( 'vczoom_join_meeting_via_app_text', __( 'Join Meeting via Zoom App', 'video-conferencing-with-zoom-api' ) ); ?></a>
+        <a target="_blank" href="<?php echo esc_url( $join_url ); ?>" class="btn btn-join-link btn-join-via-app"><?php echo apply_filters( 'vczapi_join_meeting_via_app_text', __( 'Join Meeting via Zoom App', 'video-conferencing-with-zoom-api' ) ); ?></a>
 		<?php
 	}
 

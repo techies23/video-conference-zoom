@@ -2,7 +2,11 @@
 
 This shortcode can be used to list all author meeting list in frontend and to view registrants for those meeting.
 
+<<<<<<< HEAD
 Use: `[vczapi_pro_author_meeting]`
+=======
+Use: `[vczapi_pro_author_registrants]`
+>>>>>>> 0cccaae5774609a1f123e4016cec3ab0bcdfb303
 
 ### 2. Show calendar view
 

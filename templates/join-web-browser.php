@@ -64,27 +64,33 @@ if ( video_conference_zoom_check_login() ) {
 
 				$bypass_lang = apply_filters( 'vczapi_api_bypass_lang', false );
 				if ( ! $bypass_lang ) {
-					?>
-                    <div class="form-group">
-                        <select id="meeting_lang" name="meeting-lang" class="form-control">
-                            <option value="en-US">English</option>
-                            <option value="de-DE">German Deutsch</option>
-                            <option value="es-ES">Spanish Español</option>
-                            <option value="fr-FR">French Français</option>
-                            <option value="jp-JP">Japanese 日本語</option>
-                            <option value="pt-PT">Portuguese Portuguese</option>
-                            <option value="ru-RU">Russian Русский</option>
-                            <option value="zh-CN">Chinese 简体中文</option>
-                            <option value="zh-TW">Chinese 繁体中文</option>
-                            <option value="ko-KO">Korean 한국어</option>
-                            <option value="vi-VN">Vietnamese Tiếng Việt</option>
-                            <option value="it-IT">Italian italiano</option>
-                        </select>
-                    </div>
-					<?php
+					$default_jvb_lang = get_option( 'zoom_api_default_lang_jvb' );
+					if ( ! empty( $default_jvb_lang ) && $default_jvb_lang !== "all" ) {
+						?>
+                        <input name="meeting-lang" id="meeting_lang" type="hidden" value="<?php echo esc_html( $default_jvb_lang ); ?>">
+						<?php
+					} else {
+						?>
+                        <div class="form-group">
+                            <select id="meeting_lang" name="meeting-lang" class="form-control">
+                                <option value="en-US">English</option>
+                                <option value="de-DE">German Deutsch</option>
+                                <option value="es-ES">Spanish Español</option>
+                                <option value="fr-FR">French Français</option>
+                                <option value="jp-JP">Japanese 日本語</option>
+                                <option value="pt-PT">Portuguese Portuguese</option>
+                                <option value="ru-RU">Russian Русский</option>
+                                <option value="zh-CN">Chinese 简体中文</option>
+                                <option value="zh-TW">Chinese 繁体中文</option>
+                                <option value="ko-KO">Korean 한국어</option>
+                                <option value="vi-VN">Vietnamese Tiếng Việt</option>
+                                <option value="it-IT">Italian italiano</option>
+                            </select>
+                        </div>
+						<?php
+					}
 				}
 				?>
-
                 <button type="submit" class="btn btn-primary" id="vczapi-zoom-browser-meeting-join-mtg">
 					<?php _e( 'Join', 'video-conferencing-with-zoom-api' ); ?>
                 </button>

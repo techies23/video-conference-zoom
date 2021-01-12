@@ -15,7 +15,7 @@
     
     
       
-        <title>Assign Host Page - Video Conferencing with Zoom Documentation</title>
+        <title>PRO Version Shortcode - Video Conferencing with Zoom Documentation</title>
       
     
     
@@ -57,6 +57,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#1-list-meeting-registrants" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,7 +88,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Assign Host Page
+              PRO Version Shortcode
             
           </span>
         </div>
@@ -314,11 +319,52 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../pro-shortcode/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        PRO Version Shortcode
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       PRO Version Shortcode
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-list-meeting-registrants" class="md-nav__link">
+    1. List meeting registrants
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-show-calendar-view" class="md-nav__link">
+    2. Show calendar view
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -398,18 +444,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../assign_host/" class="md-nav__link">
       Assign Host Page
     </a>
-    
   </li>
 
         
@@ -559,21 +598,67 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-list-meeting-registrants" class="md-nav__link">
+    1. List meeting registrants
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-show-calendar-view" class="md-nav__link">
+    2. Show calendar view
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/assign_host.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/pro-shortcode.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Assign Host Page</h1>
+                  <h1>PRO Version Shortcode</h1>
                 
-                <p>This allows you to link your Users to your WordPress site using the <code>get_user_meta</code> function.</p>
-<p><strong>I won't go in detail here for the explanation. This is intended for Developers only.</strong></p>
-<p>Just define <code>define("VIDEO_CONFERENCING_HOST_ASSIGN_PAGE", true);</code> into your wp-config.php file to enable this menu in wp-admin side.</p>
+                <h3 id="1-list-meeting-registrants">1. List meeting registrants</h3>
+<p>This shortcode can be used to list all author meeting list in frontend and to view registrants for those meeting.</p>
+<p>Use: <code>[vczapi_pro_author_registrants]</code></p>
+<h3 id="2-show-calendar-view">2. Show calendar view</h3>
+<p>You can find more information for this in <a href="/vczapi-pro/#calendar-widget">PRO version widget documentation.</a>.</p>
+<p>Use: <code>[vczapi_zoom_calendar author="" show="" calendar_default_view="dayGridMonth" show_calendar_views="yes"]</code></p>
+<p>Where,</p>
+<ul>
+<li><strong>class</strong> = Ability to add custom css classes to modify design of calendar</li>
+<li><strong>author</strong> = The user id of an Author, will show only the meetings/webinars of that particular author</li>
+<li><strong>show</strong> = use "meeting" or "webinar" to either show only meetings or only webinars leave empty or do not use if you want to show all.</li>
+<li><strong>calendar_default_view</strong> = options =&gt; dayGridMonth,timeGridWeek,timeGridDay,listWeek</li>
+<li><strong>show_calendar_views</strong> = give ability to user to see calendar in different views - default value is "no", use "yes" to show other views</li>
+</ul>
                 
               
               
@@ -592,7 +677,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../import-meetings/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../shortcode/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -601,19 +686,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Import Meeting
+                Shortcode
               </div>
             </div>
           </a>
         
         
-          <a href="../vczapi-pro/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../date_types/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Video Conferencing with Zoom Pro
+                Change DateTime
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
