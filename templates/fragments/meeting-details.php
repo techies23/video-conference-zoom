@@ -23,32 +23,32 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
 
 	    <?php do_action('vczapi_html_before_meeting_details'); ?>
 
-        <div class="dpn-zvc-sidebar-content-list">
+        <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-topic-wrap">
             <span><strong><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong></span> <span><?php the_title(); ?></span>
         </div>
-        <div class="dpn-zvc-sidebar-content-list">
+        <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-list-wrap">
             <span><strong><?php _e( 'Hosted By', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
             <span><?php echo esc_html( $zoom['host_name'] ); ?></span>
         </div>
 		<?php if ( ! empty( $zoom['api']->start_time ) ) { ?>
-            <div class="dpn-zvc-sidebar-content-list">
+            <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-start-time-wrap">
                 <span><strong><?php _e( 'Start', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
                 <span class="sidebar-start-time"><?php echo vczapi_dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
             </div>
 		<?php } ?>
 		<?php if ( ! empty( $zoom['terms'] ) ) { ?>
-            <div class="dpn-zvc-sidebar-content-list">
+            <div class="dpn-zvc-sidebar-content-list vczapi-category-wrap">
                 <span><strong><?php _e( 'Category', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
                 <span class="sidebar-category"><?php echo implode( ', ', $zoom['terms'] ); ?></span>
             </div>
 		<?php } ?>
 		<?php if ( ! empty( $zoom['api']->duration ) ) { ?>
-            <div class="dpn-zvc-sidebar-content-list">
+            <div class="dpn-zvc-sidebar-content-list vczapi-duration-wrap">
                 <span><strong><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
                 <span><?php echo $zoom['api']->duration; ?></span>
             </div>
 		<?php } ?> <?php if ( ! empty( $zoom['api']->timezone ) ) { ?>
-            <div class="dpn-zvc-sidebar-content-list">
+            <div class="dpn-zvc-sidebar-content-list vczapi-timezone-wrap">
                 <span><strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
                 <span><?php echo $zoom['api']->timezone; ?></span>
             </div>

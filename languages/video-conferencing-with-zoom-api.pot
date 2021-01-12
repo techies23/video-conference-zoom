@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2020-12-29 07:34+0000\n"
+"POT-Creation-Date: 2021-01-12 07:30+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -93,11 +93,11 @@ msgstr ""
 msgid "Add Users"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:167
+#: includes/views/tabs/api-settings.php:188
 msgid "Addons"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:147
+#: includes/views/tabs/api-settings.php:168
 msgid ""
 "After you enter your keys. Do save changes before doing \"Check API "
 "Connection\"."
@@ -236,7 +236,7 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:123
+#: includes/views/tabs/api-settings.php:144
 msgid ""
 "Change date time formats according to your choice. Please edit this properly."
 " Failure to correctly put value will result in failure to show date in "
@@ -254,7 +254,7 @@ msgstr ""
 msgid "check %s for shortcode references."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:150
+#: includes/views/tabs/api-settings.php:171
 msgid "Check API Connection"
 msgstr ""
 
@@ -272,11 +272,11 @@ msgid ""
 "loggedin users."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:135
+#: includes/views/tabs/api-settings.php:156
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:142
+#: includes/views/tabs/api-settings.php:163
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
@@ -320,7 +320,7 @@ msgstr ""
 msgid "Cloud"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:163
+#: includes/views/tabs/api-settings.php:184
 msgid "Contact for additional Support"
 msgstr ""
 
@@ -398,7 +398,7 @@ msgstr ""
 msgid "Date field cannot be Empty !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:102
+#: includes/views/tabs/api-settings.php:123
 msgid "DateTime Format"
 msgstr ""
 
@@ -408,6 +408,10 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:299
 msgid "Debug Log"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:84
+msgid "Default Language for Join via browser page ?"
 msgstr ""
 
 #: templates/fragments/filters.php:32
@@ -437,7 +441,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:165
+#: includes/views/tabs/api-settings.php:186
 msgid "Developer"
 msgstr ""
 
@@ -471,7 +475,7 @@ msgstr ""
 msgid "Disable Join via browser ?"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:166
+#: includes/admin/class-zvc-admin-settings.php:168
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -479,7 +483,7 @@ msgstr ""
 msgid "Do not get confused here !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:160
+#: includes/views/tabs/api-settings.php:181
 msgid "Documentation"
 msgstr ""
 
@@ -599,7 +603,7 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:157
+#: includes/views/tabs/api-settings.php:178
 msgid "Facebook Group"
 msgstr ""
 
@@ -732,7 +736,7 @@ msgstr ""
 msgid "Invalid Meeting ID."
 msgstr ""
 
-#: templates/join-web-browser.php:89 templates/shortcode/join-links.php:20
+#: templates/join-web-browser.php:95 templates/shortcode/join-links.php:20
 #: templates/shortcode/join-links.php:29
 #: templates/shortcode/webinar-join-links.php:20
 #: templates/shortcode/webinar-join-links.php:29
@@ -856,11 +860,11 @@ msgstr ""
 msgid "Meeting duration (minutes). (optional)"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:96
+#: includes/views/tabs/api-settings.php:117
 msgid "Meeting Ended Text"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:90
+#: includes/views/tabs/api-settings.php:111
 msgid "Meeting going to start Text"
 msgstr ""
 
@@ -934,7 +938,7 @@ msgid ""
 "password."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:84
+#: includes/views/tabs/api-settings.php:105
 msgid "Meeting Started Text"
 msgstr ""
 
@@ -1217,7 +1221,7 @@ msgid ""
 "list. This will only create meeting in your zoom.us account !"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:126
+#: includes/views/tabs/api-settings.php:147
 #, php-format
 msgid "Please see %s on how to format date"
 msgstr ""
@@ -1341,7 +1345,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:149
+#: includes/views/tabs/api-settings.php:170
 msgid "Save Changes"
 msgstr ""
 
@@ -1371,6 +1375,10 @@ msgstr ""
 
 #: includes/views/live/tpl-reports.php:80
 msgid "Select a Date to Check"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:101
+msgid "Select a default language for your join meeting via browser page."
 msgstr ""
 
 #: includes/views/webinars/tpl-edit-webinar.php:124
@@ -1436,6 +1444,10 @@ msgstr ""
 #: includes/views/webinars/tpl-list-webinars.php:58
 #: includes/views/live/tpl-list-meetings.php:59
 msgid "Shortcode"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:87
+msgid "Show All"
 msgstr ""
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:108
@@ -1610,7 +1622,7 @@ msgstr ""
 msgid "Successfully imported meeting with ID"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:164
+#: includes/admin/class-zvc-admin-settings.php:166
 msgid "Successfully Updated. Please refresh this page."
 msgstr ""
 
@@ -1803,7 +1815,7 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:181
+#: includes/views/tabs/api-settings.php:202
 msgid "Try inactive logout"
 msgstr ""
 
@@ -1837,11 +1849,11 @@ msgstr ""
 msgid "Updated Webinar."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:132
+#: includes/views/tabs/api-settings.php:153
 msgid "Use 24-hour format"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:139
+#: includes/views/tabs/api-settings.php:160
 msgid "Use full month label format ?"
 msgstr ""
 
@@ -1999,7 +2011,7 @@ msgid ""
 "issues."
 msgstr ""
 
-#: templates/join-web-browser.php:100
+#: templates/join-web-browser.php:106
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
