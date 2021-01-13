@@ -27,7 +27,6 @@ jQuery(function ($) {
                 var mtgState = clock.data('state');
 
                 // var dateFormat = moment(valueDate).format('MMM D, YYYY HH:mm:ss');
-
                 var user_timezone = moment.tz.guess();
                 if (user_timezone === 'Asia/Katmandu') {
                     user_timezone = 'Asia/Kathmandu';
@@ -46,6 +45,7 @@ jQuery(function ($) {
                 var lang = document.documentElement.lang;
                 var dateFormat = zvc_strings.date_format !== "" ? zvc_strings.date_format : 'LLLL';
                 $('.sidebar-start-time').html(moment.parseZone(convertedTimezonewithoutFormat).locale(lang).format(dateFormat));
+                $('.vczapi-single-meeting-timezone').html(user_timezone);
 
                 var second = 1000,
                     minute = second * 60,

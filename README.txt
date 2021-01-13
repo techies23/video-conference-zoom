@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.21
+Stable tag: 3.6.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,6 +172,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.22 January 13th, 2021 =
+* Fixed: Helper function to get time according to DST.
+* Fixed: Single meeting page timezone showing in backend timezone instead of local timezone.
 
 = 3.6.21 January 12th, 2021 =
 * Added: Default language selector option for join via browser page.

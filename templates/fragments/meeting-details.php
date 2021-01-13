@@ -21,7 +21,7 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
     </div>
     <div class="dpn-zvc-sidebar-content">
 
-	    <?php do_action('vczapi_html_before_meeting_details'); ?>
+		<?php do_action( 'vczapi_html_before_meeting_details' ); ?>
 
         <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-topic-wrap">
             <span><strong><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong></span> <span><?php the_title(); ?></span>
@@ -49,12 +49,12 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
             </div>
 		<?php } ?> <?php if ( ! empty( $zoom['api']->timezone ) ) { ?>
             <div class="dpn-zvc-sidebar-content-list vczapi-timezone-wrap">
-                <span><strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                <span><?php echo $zoom['api']->timezone; ?></span>
+                <span><strong><?php _e( 'Current Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
+                <span class="vczapi-single-meeting-timezone"><?php echo $zoom['api']->timezone; ?></span>
             </div>
 		<?php } ?>
 
-	    <?php do_action('vczapi_html_after_meeting_details'); ?>
+		<?php do_action( 'vczapi_html_after_meeting_details' ); ?>
 
         <p class="dpn-zvc-display-or-hide-localtimezone-notice"><?php printf( __( '%sNote%s: Countdown time is shown based on your local timezone.', 'video-conferencing-with-zoom-api' ), '<strong>', '</strong>' ); ?></p>
     </div>

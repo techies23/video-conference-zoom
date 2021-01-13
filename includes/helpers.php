@@ -22,10 +22,10 @@ if ( ! function_exists( 'zvc_get_timezone_offset_wp' ) ) {
 		if ( ! empty( $tz ) ) {
 			return $tz;
 		}
-		$offset  = get_option( 'gmt_offset' );
+		$offset = get_option( 'gmt_offset' );
 		//correction for system sending Azores when timezone was set to zero
 		//bail early is offset is 0
-		if(empty($tz) && $offset == 0){
+		if ( empty( $tz ) && $offset == 0 ) {
 			return 'UTC';
 		}
 		$hours   = (int) $offset;
@@ -34,11 +34,10 @@ if ( ! function_exists( 'zvc_get_timezone_offset_wp' ) ) {
 		// Calculate seconds from offset
 		list( $hours, $minutes ) = explode( ':', $offset );
 		$seconds = $hours * 60 * 60 + $minutes * 60;
-	
-		if(empty($tz)){
-			$tz      = timezone_name_from_abbr( '', $seconds, 0 );
+		if ( empty( $tz ) ) {
+			$tz = timezone_name_from_abbr( '', $seconds, 0 );
 		}
-		
+
 		if ( $tz == 'Asia/Katmandu' ) {
 			$tz = 'Asia/Kathmandu';
 		}
@@ -493,7 +492,7 @@ function vczapi_dateConverter( $start_time, $tz, $format = 'F j, Y, g:i a ( T )'
 				case 'L LT':
 					return date_i18n( 'm/d/Y ' . $time_indicator, $start_timestamp );
 				case 'l LT':
-					return date_i18n('n/j/Y ' .$time_indicator, $start_timestamp);
+					return date_i18n( 'n/j/Y ' . $time_indicator, $start_timestamp );
 					break;
 				case 'llll':
 					return date_i18n( 'D, ' . $full_month_indicator . ' j, Y ' . $time_indicator, $start_timestamp );

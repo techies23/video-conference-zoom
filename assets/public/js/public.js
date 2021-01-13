@@ -43,6 +43,7 @@ jQuery(function ($) {
         var lang = document.documentElement.lang;
         var dateFormat = zvc_strings.date_format !== "" ? zvc_strings.date_format : 'LLLL';
         $('.sidebar-start-time').html(moment.parseZone(convertedTimezonewithoutFormat).locale(lang).format(dateFormat));
+        $('.vczapi-single-meeting-timezone').html(user_timezone);
         var second = 1000,
             minute = second * 60,
             hour = minute * 60,
