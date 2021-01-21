@@ -23,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/*test */
 define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
 define( 'ZVC_PLUGIN_VERSION', '3.4.0' );
 define( 'ZVC_PLUGIN_AUTHOR', 'https://deepenbajracharya.com.np' );
