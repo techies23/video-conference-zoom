@@ -127,6 +127,7 @@ final class Bootstrap {
 	protected function load_dependencies() {
 		//Include the Main Class
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-v2.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/Oauth.php';
 
 		//Loading Includes
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';

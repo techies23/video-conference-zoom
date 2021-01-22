@@ -77,11 +77,13 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		protected function sendRequest( $calledFunction, $data, $request = "GET" ) {
 			$request_url = $this->api_url . $calledFunction;
 			$args        = array(
-				'headers' => array(
+				'headers' => apply_filters('vczapi_core_api_request_headers',array(
 					'Authorization' => 'Bearer ' . $this->generateJWTKey(),
 					'Content-Type'  => 'application/json'
-				)
+				))
 			);
+
+			
 
 			if ( $request == "GET" ) {
 				$args['body'] = ! empty( $data ) ? $data : array();
@@ -105,6 +107,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}
 
 			$response = wp_remote_retrieve_body( $response );
+			do_action('vczapi_check_oauth_response',$response);
 			/*dump($response);
 			die;*/
 
@@ -182,6 +185,10 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$getUserInfoArray = apply_filters( 'vczapi_getUserInfo', $getUserInfoArray );
 
 			return $this->sendRequest( 'users/' . $user_id, $getUserInfoArray );
+		}
+
+		public function getMyInfo(){
+			return $this->sendRequest( 'users/me', [] );
 		}
 
 		/**

@@ -1,5 +1,6 @@
 <?php
-
+use Codemanas\Zoom\Core\Oauth;
+$oauth = Codemanas\Zoom\Core\Oauth::get_instance();
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -12,6 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a target="_blank" href="<?php echo ZVC_PLUGIN_AUTHOR; ?>/zoom-conference-wp-plugin-documentation/"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
         </h3>
 
+        <?php $oauth->maybe_connected_to_zoom_html(); ?>
+
+        <?php if( current_user_can('manage_options')): ?>
         <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST">
 			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
             <table class="form-table">
@@ -171,6 +175,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <a href="javascript:void(0);" class="button button-primary check-api-connection"><?php esc_html_e( 'Check API Connection', 'video-conferencing-with-zoom-api' ); ?></a>
             </p>
         </form>
+        <?php endif; ?>
     </div>
     <div class="zvc-position-floater-right">
         <ul class="zvc-information-sec">

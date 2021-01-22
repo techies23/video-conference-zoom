@@ -79,7 +79,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 			) );
 		}
 
-		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Settings', 'video-conferencing-with-zoom-api' ), __( 'Settings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-settings', array(
+		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Settings', 'video-conferencing-with-zoom-api' ), __( 'Settings', 'video-conferencing-with-zoom-api' ), 'edit_posts', 'zoom-video-conferencing-settings', array(
 			$this,
 			'zoom_video_conference_api_zoom_settings'
 		) );
