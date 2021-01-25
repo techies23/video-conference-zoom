@@ -1,7 +1,7 @@
 <?php
 namespace Codemanas\Zoom\Core;
-
-class Oauth{
+use \Zoom_Video_Conferencing_Api;
+class Oauth extends Zoom_Video_Conferencing_Api{
     public static $_instance = null;
     private $authorization_header = '';
     private $client_id = 'LhF1UQO0SKuuBFUH69iyrw';
@@ -31,10 +31,16 @@ class Oauth{
 
     public function __construct(){
         $this->set_required_fields();
+        parent::__construct();
         add_action('admin_init',[$this,'request_or_remove_access_token']);
         add_filter('vczapi_core_api_request_headers',[$this,'change_request_headers']);
         //currently workig under the assumption that once connected only connected user is used - and not any accounts they may have under those user
         add_filter('vczapi_users_list',[$this,'set_zoom_user']);
+        add_action('vczapi_check_oauth_response',array($this,'check_refresh_token_and_resend_request'),10,4);
+    }
+
+    public function getMyInfo(){
+        return $this->sendRequest( 'users/me', [] );
     }
 
     public function connect_zoom_page_for_authors(){
@@ -60,12 +66,7 @@ class Oauth{
             <?php
         } 
         else{
-            $connected_user_info = json_decode( zoom_conference()->getMyInfo() );
-            
-            if( !empty(filter_input(INPUT_GET,'code'))){
-                $vczpai_connected_user_info = json_decode( zoom_conference()->getMyInfo() );
-                update_user_meta($user_id,'vczapi_connected_user_info',$vczpai_connected_user_info);
-            }
+            $connected_user_info = json_decode( $this->getMyInfo() );
             ?>
             <h4><?php _e('You are Connected to Zoom','video-conferencing-with-zoom-api'); ?></h4>
             <div class="" style="display:flex;flex-wrap:wrap;">
@@ -118,7 +119,7 @@ class Oauth{
         if( empty($code) ){
             return;
         }
-        $user_id = get_current_user_id();
+        
         $request_access_token_url = add_query_arg(
             [
                 'grant_type'   => 'authorization_code',
@@ -130,7 +131,7 @@ class Oauth{
         
         $header_args = [
             'headers' => [
-                'Authorization' => $this->authorization_header = 'Basic ' . base64_encode( $this->client_id . ':' . $this->secret_id ),
+                'Authorization' => $this->authorization_header,
             ],
         ];
 
@@ -138,7 +139,13 @@ class Oauth{
        $response_body = json_decode( wp_remote_retrieve_body($post_response) );
         
        if( !isset($response_body->error)){
-         update_user_meta($user_id,'vczapi_zoom_oauth',$response_body);
+         //update user oauth data first or else getting connected user info will be wrong
+         update_user_meta($this->current_user_id,'vczapi_zoom_oauth',$response_body);
+         $this->user_oauth_data = $response_body;
+         
+         $vczpai_connected_user_info = json_decode( $this->getMyInfo() );
+         update_user_meta($this->current_user_id,'vczapi_connected_user_info',$vczpai_connected_user_info);
+         $this->connected_user_info = $vczpai_connected_user_info;
          wp_redirect($this->zoom_verify_listener);
          exit;
        }
@@ -183,12 +190,59 @@ class Oauth{
     }   
 
     public function set_zoom_user($users){
-            if(!empty($this->connected_user_info)){
-                $users = [$this->connected_user_info];
-            }
+        
+        if(!empty($this->connected_user_info)){
+            $users = [$this->connected_user_info];
+        }
             
-            return $users;
+        return $users;
     }
-}
 
+    public function check_refresh_token_and_resend_request($response,$calledFunction, $data, $request){
+        //** remove filter so we don't end up in a loop */
+        remove_filter('vczapi_check_oauth_response',[$this,'refresh_token_and_resend_request'],10);
+        $response_check = json_decode($response);
+        if(isset($response_check->code) && $response_check->code == '124'){
+            $response_body = $this->regenerate_access_token();
+            if(isset($response_body->access_token)){
+               $response = zoom_conference()->sendRequest($calledFunction, $data, $request);
+            }
+        }
+        return $response;
+    }
+
+    public function regenerate_access_token(){
+        $this->access_token_url;
+        if(isset($this->user_oauth_data->refresh_token) && !empty($this->user_oauth_data->refresh_token)){
+            $regen_access_token_url = add_query_arg(
+                [
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $this->user_oauth_data->refresh_token
+                ],
+                $this->access_token_url
+             );
+             
+            $header_args = [
+                'headers' => [
+                    'Authorization' => $this->authorization_header,
+                ],
+            ];
+
+            $response = wp_remote_post($regen_access_token_url,$header_args);
+            
+            $response_body = json_decode ( wp_remote_retrieve_body($response) );
+            if( !isset($response_body->error)){
+                //update user oauth data first or else getting connected user info will be wrong
+                update_user_meta($this->current_user_id ,'vczapi_zoom_oauth',$response_body);
+                $this->user_oauth_data = $response_body;
+                $vczpai_connected_user_info = json_decode( $this->getMyInfo() );
+                update_user_meta($this->current_user_id ,'vczapi_connected_user_info',$vczpai_connected_user_info);
+                $this->connected_user_info = $vczpai_connected_user_info;
+                \file_put_contents(\get_stylesheet_directory().'/access_token_regenerated.txt',var_export($response_body,true));
+            }
+
+            return $response_body;
+        }    
+    }   
+}
 Oauth::get_instance();

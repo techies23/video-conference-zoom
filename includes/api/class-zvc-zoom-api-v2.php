@@ -107,7 +107,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}
 
 			$response = wp_remote_retrieve_body( $response );
-			do_action('vczapi_check_oauth_response',$response);
+			
+			$response = apply_filters('vczapi_check_oauth_response',$response,$calledFunction, $data, $request);
 			/*dump($response);
 			die;*/
 
@@ -187,9 +188,6 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			return $this->sendRequest( 'users/' . $user_id, $getUserInfoArray );
 		}
 
-		public function getMyInfo(){
-			return $this->sendRequest( 'users/me', [] );
-		}
 
 		/**
 		 * Delete a User
