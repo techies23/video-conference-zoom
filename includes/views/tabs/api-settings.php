@@ -16,17 +16,81 @@ if ( ! defined( 'ABSPATH' ) ) {
         <?php $oauth->maybe_connected_to_zoom_html(); ?>
 
         <?php if( current_user_can('manage_options')): ?>
-        <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST">
+        <style>
+            .vczapi-client-key, .vczapi-client-secret{
+                    display: <?php echo ($vczapi_enable_join_via_browser == 'yes')?'table-row':'none'; ?>
+            }
+        </style>
+        <script>
+        (function($){
+            var vczapiToggleJWT = {
+                init: function(){
+                    this.$vczapiForm = $('#vczapi-settings-form');
+                    if(this.$vczapiForm.length < 1){
+                        return;
+                    }
+                    this.$enableToggle = this.$vczapiForm.find('#vczapi_enable_join_via_browser');
+                    this.$clientKey = this.$vczapiForm.find('.vczapi-client-key');
+                    this.$clientSecret = this.$vczapiForm.find('.vczapi-client-secret');
+                    
+                    this.$enableToggle.on('click',this.isChecked.bind(this));
+                },
+                isChecked: function(e){
+                    $target = $(e.target);
+                    if ( $target.is(':checked') ){
+                        this.$clientKey.show();
+                        this.$clientSecret.show();
+                    }else{
+                        this.$clientKey.hide();
+                        this.$clientSecret.hide();
+                    }
+                }
+
+            };
+            $(function(){
+                vczapiToggleJWT.init();  
+            });
+        
+        })(jQuery);
+        </script>
+        <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST" id="vczapi-settings-form">
 			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
             <table class="form-table">
                 <tbody>
                 <tr>
+                    <th>
+                        <label>
+                        <?php _e('Save Globally','video-conferencing-with-zoom-api'); ?>
+                        </label>
+                    </th>
+                    <td>
+                        <input type="checkbox" id="vczapi_enable_oauth_global_use" name="vczapi_enable_oauth_global_use" value="yes"  <?php checked($vczapi_enable_oauth_global_use,'yes'); ?>>
+                        <span class="description"><?php _e('This option will allow other users logged into this site to create Zoom Meetings using the connected account'); ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="vczapi_enable_join_via_browser"><?php _e( 'Enable join via browser', 'video-conferencing-with-zoom-api' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="checkbox" 
+                        name="vczapi_enable_join_via_browser" 
+                        id="vczapi_enable_join_via_browser" 
+                        value="yes" 
+                        <?php checked($vczapi_enable_join_via_browser,'yes'); ?>
+                        >
+                        <span class="description">
+                        <?php _e('Enabling join via browser requires some extra configuration, so please check this box if you want users to be able to join Zoom meetings via your site.','video-conferencing-with-zoom-api') ?>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="vczapi-client-key">
                     <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
                         <a href="javascript:void(0);" class="toggle-api">Show</a></td>
                 </tr>
-                <tr>
+                <tr class="vczapi-client-secret">
                     <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">

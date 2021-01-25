@@ -1,6 +1,7 @@
 <?php
 namespace Codemanas\Zoom\Core;
 use \Zoom_Video_Conferencing_Api;
+require_once(ZVC_PLUGIN_INCLUDES_PATH.'\helpers.php');
 class Oauth extends Zoom_Video_Conferencing_Api{
     public static $_instance = null;
     private $authorization_header = '';
@@ -39,6 +40,14 @@ class Oauth extends Zoom_Video_Conferencing_Api{
         add_action('vczapi_check_oauth_response',array($this,'check_refresh_token_and_resend_request'),10,4);
     }
 
+    public function OauthConnected(){
+        if( !empty($this->user_oauth_data) && !empty($this->connected_user_info)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function getMyInfo(){
         return $this->sendRequest( 'users/me', [] );
     }
@@ -55,8 +64,10 @@ class Oauth extends Zoom_Video_Conferencing_Api{
         $this->zoom_verify_listener = admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' );
         $this->authorization_header = 'Basic ' . base64_encode( $this->client_id . ':' . $this->secret_id );
         $this->current_user_id = get_current_user_id();
-        $this->user_oauth_data = get_user_meta($this->current_user_id,'vczapi_zoom_oauth',true);
-        $this->connected_user_info = get_user_meta($this->current_user_id,'vczapi_connected_user_info',true);
+        
+        
+        $this->user_oauth_data = (!vczapi_is_oauth_used_globally()) ? get_user_meta($this->current_user_id,'vczapi_zoom_oauth',true) : get_option('vczapi_global_zoom_oauth');
+        $this->connected_user_info = (!vczapi_is_oauth_used_globally()) ? get_user_meta($this->current_user_id,'vczapi_connected_user_info',true):get_option('vczapi_global_connected_user_info');
     }
 
     public function maybe_connected_to_zoom_html(){
@@ -68,7 +79,14 @@ class Oauth extends Zoom_Video_Conferencing_Api{
         else{
             $connected_user_info = json_decode( $this->getMyInfo() );
             ?>
-            <h4><?php _e('You are Connected to Zoom','video-conferencing-with-zoom-api'); ?></h4>
+            <h4>
+            <?php 
+             if( \vczapi_is_oauth_used_globally() ){
+                _e('This is the site wide Zoom Account','video-conferencing-with-zoom-api');
+             }else{
+                _e('You are Connected to Zoom','video-conferencing-with-zoom-api');     
+             }
+             ?></h4>
             <div class="" style="display:flex;flex-wrap:wrap;">
                 <div class="" style="">
                     <img src="<?php echo $connected_user_info->pic_url; ?>" style="border-radius:50%;">
@@ -81,7 +99,18 @@ class Oauth extends Zoom_Video_Conferencing_Api{
                 </ul>
                 </div>
                 <div style="padding-left:20px">
-                <a href="<?php echo $this->zoom_verify_listener.'&revoke_access_token=true'; ?>" class="button button-hero button-primary" style="margin-top:10px;">Disconnect your account</a>
+                <?php
+                    if( \vczapi_is_oauth_used_globally() && !\current_user_can('manage_options') ){
+                        ?>
+                        <style>
+                        #vczapi-remove-oauth-access{
+                            display:none;
+                        }
+                        </style>
+                        <?php
+                    }
+                ?>
+                <a id="vczapi-remove-oauth-access" href="<?php echo $this->zoom_verify_listener.'&revoke_access_token=true'; ?>" class="button button-hero button-primary" style="margin-top:10px;">Disconnect your account</a>
                 </div>
                 
             </div>
@@ -146,6 +175,13 @@ class Oauth extends Zoom_Video_Conferencing_Api{
          $vczpai_connected_user_info = json_decode( $this->getMyInfo() );
          update_user_meta($this->current_user_id,'vczapi_connected_user_info',$vczpai_connected_user_info);
          $this->connected_user_info = $vczpai_connected_user_info;
+
+         if( \vczapi_is_oauth_used_globally() ){
+            update_option('vczapi_global_zoom_oauth',$response_body);
+            update_option('vczapi_global_connected_user_info',$vczapi_connected_user_info);
+        }
+         
+
          wp_redirect($this->zoom_verify_listener);
          exit;
        }
@@ -177,6 +213,12 @@ class Oauth extends Zoom_Video_Conferencing_Api{
 
         delete_user_meta($this->current_user_id,'vczapi_zoom_oauth');
         delete_user_meta($this->current_user_id,'vczapi_connected_user_info');
+
+        if( \vczapi_is_oauth_used_globally() ){
+            delete_option('vczapi_global_zoom_oauth');
+			delete_option('vczapi_global_connected_user_info');
+        }
+        
         wp_redirect($this->zoom_verify_listener);
         exit;
 
@@ -191,7 +233,7 @@ class Oauth extends Zoom_Video_Conferencing_Api{
 
     public function set_zoom_user($users){
         
-        if(!empty($this->connected_user_info)){
+        if(!vczapi_is_oauth_used_globally() &&  !empty($this->connected_user_info)){
             $users = [$this->connected_user_info];
         }
             
