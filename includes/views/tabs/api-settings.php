@@ -30,20 +30,49 @@ if ( ! defined( 'ABSPATH' ) ) {
                         return;
                     }
                     this.$enableToggle = this.$vczapiForm.find('#vczapi_enable_join_via_browser');
-                    this.$clientKey = this.$vczapiForm.find('.vczapi-client-key');
-                    this.$clientSecret = this.$vczapiForm.find('.vczapi-client-secret');
-                    
+                    this.$clientKeyRow = this.$vczapiForm.find('.vczapi-client-key');
+                    this.$clientSecretRow = this.$vczapiForm.find('.vczapi-client-secret');
+                    this.$verifyJWTKeyButton = this.$vczapiForm.find('#vzcpia-verify-jwt-key');
+
                     this.$enableToggle.on('click',this.isChecked.bind(this));
+                    this.$verifyJWTKeyButton.on('click',this.verifyJWT.bind(this));
                 },
                 isChecked: function(e){
                     $target = $(e.target);
                     if ( $target.is(':checked') ){
-                        this.$clientKey.show();
-                        this.$clientSecret.show();
+                        this.$clientKeyRow.show();
+                        this.$clientSecretRow.show();
                     }else{
-                        this.$clientKey.hide();
-                        this.$clientSecret.hide();
+                        this.$clientKeyRow.hide();
+                        this.$clientSecretRow.hide();
                     }
+                },
+                verifyJWT: function(e){
+                    e.preventDefault();
+                    
+                    this.clientAPIKey    = this.$clientKeyRow.find('#zoom_api_key').val();
+                    this.clientSecretKey = this.$clientSecretRow.find('#zoom_api_secret').val();
+                    
+                    $.ajax({
+                       type: 'POST',
+                       url: ajaxurl,
+                       data:{
+                           action:'vczapi_verify_jwt_keys',
+                           api_key:this.clientAPIKey,
+                           secret_key:this.clientSecretKey
+                        }, 
+                       context:this,
+                       beforeSend:function(){
+                           this.$verifyJWTKeyButton.val('Verifying...');
+                       },
+                       success: function(response){
+
+                       },
+                       error: function(XMLHttpRequest, textStatus, errorThrown){
+                        console.log(errorThrown);
+                       }
+                    });
+
                 }
 
             };
@@ -95,6 +124,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <td>
                         <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
                         <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
+                </tr>
+                <tr class="vczapi-client-secret">
+                    <th>
+                        <input type="button"
+                         class="button button-primary" 
+                         value="<?php _e('Verify Zoom JWT Keys for Enable Join via Browser','video-conferencing-with-zoom-api'); ?>"
+                         id="vzcpia-verify-jwt-key"
+                         >
+                    </th>
                 </tr>
                 <tr class="enabled-vanity-url">
                     <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
