@@ -15,7 +15,7 @@
     
     
       
-        <title>API Keys Integration - Video Conferencing with Zoom Documentation</title>
+        <title>WebHooks - Video Conferencing with Zoom Documentation</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#generating-api-keys-and-secret-keys" class="md-skip">
+        <a href="#what-is-web-hook" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +88,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              API Keys Integration
+              WebHooks
             
           </span>
         </div>
@@ -198,12 +198,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
       Installation
@@ -221,72 +219,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        API Keys Integration
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../integration/" class="md-nav__link">
       API Keys Integration
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#generating-api-keys-and-secret-keys" class="md-nav__link">
-    Generating API keys and Secret Keys
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#first-step-choost-app" class="md-nav__link">
-    First Step ( Choost App )
-  </a>
-  
-    <nav class="md-nav" aria-label="First Step ( Choost App )">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#second-step-get-keys" class="md-nav__link">
-    Second Step ( Get keys )
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#copying-into-the-plugin" class="md-nav__link">
-    Copying into the plugin
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -323,10 +260,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
     <label class="md-nav__link" for="nav-3">
       Usage
@@ -476,11 +415,73 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../webhooks/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        WebHooks
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       WebHooks
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-web-hook" class="md-nav__link">
+    What is Web Hook ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-endpoint-urls" class="md-nav__link">
+    Getting Endpoint URLs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automate-meeting-flow" class="md-nav__link">
+    Automate Meeting Flow
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -645,36 +646,37 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#generating-api-keys-and-secret-keys" class="md-nav__link">
-    Generating API keys and Secret Keys
+  <a href="#what-is-web-hook" class="md-nav__link">
+    What is Web Hook ?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#first-step-choost-app" class="md-nav__link">
-    First Step ( Choost App )
-  </a>
-  
-    <nav class="md-nav" aria-label="First Step ( Choost App )">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#second-step-get-keys" class="md-nav__link">
-    Second Step ( Get keys )
+  <a href="#requirements" class="md-nav__link">
+    Requirements
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#copying-into-the-plugin" class="md-nav__link">
-    Copying into the plugin
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    Initial Setup
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#getting-endpoint-urls" class="md-nav__link">
+    Getting Endpoint URLs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automate-meeting-flow" class="md-nav__link">
+    Automate Meeting Flow
+  </a>
   
 </li>
       
@@ -690,49 +692,62 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/integration.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/webhooks.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>API Keys Integration</h1>
+                  <h1>WebHooks</h1>
                 
-                <p>Here below are the steps to integrate zoom plugin into WordPress. There are no complicated processes. Just the basic steps.</p>
-<p><strong>Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=41" target="_blank">video documentation</a> if you want to see live demo.</strong></p>
-<p style="color:red;"><strong>NOTE: if you recently getting an error called "API_CREDENTIALS_NOT_FOUDN" this is an error from zoom side. Please contact zoom support in this case.</strong></p>
-
-<h2 id="generating-api-keys-and-secret-keys">Generating API keys and Secret Keys</h2>
-<p>For this plugin you’ll be using JWT token method to make the API connection. Please note, this method is only account level connection.</p>
-<h2 id="first-step-choost-app">First Step ( Choost App )</h2>
+                <p><strong><em>PLEASE READ: Webhook feature is currently in beta stage. So, we are gathering your feedbacks. Currently, only certain events are allowed to be used. We'll increase this as time goes by.</em></strong></p>
+<h3 id="what-is-web-hook">What is Web Hook ?</h3>
+<p>Zoom utilizes webhooks as a medium to notify this plugin (consumer application) about events that occur in a Zoom account. Instead of making repeated calls to pull data frequently from the Zoom API, you can use webhooks to get information on events that happen in a Zoom account.</p>
+<p>In simple terms, webhook functionality can be used to notify your WordPress site to do something when a certain event is triggered in Zoom website. For example: if a user creates a meeting in Zoom website, it will be automatically created on your WordPress site as well.</p>
+<h3 id="requirements">Requirements</h3>
 <ol>
 <li>
-<p>First goto <a href="https://marketplace.zoom.us/develop/create">Create Page</a></p>
+<p>This requires <a target="_blank" href="https://www.codemanas.com/downloads/video-conferencing-with-zoom-pro/">PRO version</a> of <a href="https://wordpress.org/plugins/video-conferencing-with-zoom-api/" target="_blank">Video Conferencing with Zoom</a> plugin.</p>
 </li>
 <li>
-<p>Click on Develop on top of the page and build app page if you directly did not go into <a href="https://marketplace.zoom.us/develop/create">Create Page</a></p>
-</li>
-<li>
-<p>Click JWT and "Create"</p>
+<p>Some Events might need a <a target="_blank" href="https://zoom.us/pricing">Zoom PRO</a> account as well. For example webinars, recurrings and PMI features.</p>
 </li>
 </ol>
-<p><img src="https://deepenbajracharya.com.np/wp-content/uploads/2019/05/App-Marketplace-1024x520.png"></p>
-<h3 id="second-step-get-keys">Second Step ( Get keys )</h3>
-<ol>
+<h3 id="initial-setup">Initial Setup</h3>
+<ul>
 <li>
-<p>On the next screen you should see Information, App Credentials, Feature and Activation menus</p>
+<p>This section assumes that you have succesfully created a JWT token and API Keys have been added and succesfully connected to your WordPress site. If you have not created JWT token yet then please visit this <a href="/integration">tutorial</a>.</p>
 </li>
 <li>
-<p>Fill in your basic information about the App.</p>
+<p>Copy Verification Token Key.</p>
 </li>
-<li>
-<p>On the Credentials Page. Copy both <code>API key and API Secret</code> after you have filled all the details in information page.</p>
-</li>
-</ol>
-<p><img src="https://deepenbajracharya.com.np/wp-content/uploads/2017/01/Credentials-1024x698.png"></p>
-<h3 id="copying-into-the-plugin">Copying into the plugin</h3>
-<p>Now, copy these credentials and go into WordPress Zoom Meetings settings page.</p>
-<p><img src="https://deepenbajracharya.com.np/wp-content/uploads/2019/05/Settings-%E2%80%B9-Plugin-Tester-%E2%80%94-WordPress-1024x520.png"></p>
-<p><strong>Click on <code>Check API connection</code> button to check if your API connection is good !</strong></p>
+</ul>
+<p><img alt="Verification Key" src="verification-key-zoom.png" title="Verification Key" /></p>
+<ul>
+<li><strong><em>Event Subscriptions</em></strong> should be turned on from JWT app page inside "<strong><em>Features</em></strong>" section</li>
+</ul>
+<p><img alt="Event Subscriptions" src="event-subscriptions.png" title="Event Subscriptions" /></p>
+<ul>
+<li>After that click on <strong>Add new Event Subscription button</strong></li>
+</ul>
+<h3 id="getting-endpoint-urls">Getting Endpoint URLs</h3>
+<p>Goto <strong>wp-admin &gt; Zoom Meetings &gt; Settings &gt; Webhooks</strong></p>
+<p>Each endpoint for certain events are defined in this page. All you need to do is copy it from here to Zoom side. See below for where to copy these URLs.</p>
+<p><img alt="Webhooks" src="settings.png" title="Webhooks" /></p>
+<h3 id="automate-meeting-flow">Automate Meeting Flow</h3>
+<ul>
+<li>Click on <strong>Add new Event Subscription button</strong></li>
+<li>Add Subscription name to <strong>Meeting</strong> or something that would make you remember the purpose of this.</li>
+<li>In <strong>Event notification endpoint URL</strong> text box area. Copy URL your <strong>wp-admin &gt; Zoom Meetings &gt; Settings &gt; Webhooks &gt; Meetings</strong>. For example it should be something like <strong>https://yoursite.com/wp-json/vczapi/v1/meeting</strong> to <strong>Event notification endpoint URL</strong> text area.</li>
+</ul>
+<p><img alt="Event URL" src="events-url.png" title="Event URL" /></p>
+<ul>
+<li>Click on <strong>Add Events</strong></li>
+</ul>
+<p><img alt="Meeting Event Types" src="meeting-event-types.png" title="Meeting Event Types" /></p>
+<ul>
+<li>Select 5 events which are <strong><code>"Meeting has been created", "Meeting has been updated", "Meeting has been deleted", "Meeting has been recovered" and "Meeting has been permanently deleted"</code></strong></li>
+</ul>
+<p>Please note that choosing any additional events will not work.</p>
                 
               
               
@@ -751,7 +766,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../assign_host/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -760,19 +775,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Getting Started
+                Assign Host Page
               </div>
             </div>
           </a>
         
         
-          <a href="../oauth/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../vczapi-pro/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                OAuth Connection
+                Video Conferencing with Zoom Pro
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
