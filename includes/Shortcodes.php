@@ -2,10 +2,10 @@
 
 namespace Codemanas\VczApi;
 
-use Codemanas\VczApi\Shortcodes\Helpers;
 use Codemanas\VczApi\Shortcodes\Meetings;
 use Codemanas\VczApi\Shortcodes\Recordings;
 use Codemanas\VczApi\Shortcodes\Webinars;
+use DateTimeZone;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -139,7 +139,7 @@ class Shortcodes {
 		} else {
 			$meeting = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
 		}
-		$meeting = apply_filters('vczapi_join_via_browser_shortcode_meetings',$meeting);
+		$meeting = apply_filters( 'vczapi_join_via_browser_shortcode_meetings', $meeting );
 
 		$zoom_states = get_option( 'zoom_api_meeting_options' );
 		if ( empty( $zoom_vanity_url ) ) {
@@ -152,7 +152,13 @@ class Shortcodes {
 			echo $meeting->message;
 		} else {
 			if ( ! empty( $meeting ) ) {
-				$meeting_time = date( 'Y-m-d h:i a', strtotime( $meeting->start_time ) );
+				if ( ! empty( $meeting->type ) && ( $meeting->type === 9 || $meeting->type === 8 ) && ! empty( $meeting->occurrences ) ) {
+					$occurrences  = ( isset( $meeting->occurrences ) && is_array( $meeting->occurrences ) ) ? $meeting->occurrences : '';
+					$meeting_time = is_array( $occurrences ) ? $occurrences[0]->start_time : date( 'Y-m-d h:i a', time() );
+				} else {
+					$meeting_time = date( 'Y-m-d h:i a', strtotime( $meeting->start_time ) );
+				}
+
 				try {
 					$meeting_timezone_time = vczapi_dateConverter( 'now', $meeting->timezone, false );
 					$meeting_time_check    = vczapi_dateConverter( $meeting_time, $meeting->timezone, false );

@@ -20,6 +20,7 @@ nav:
       - Filter Hooks: filters_hooks.md
       - Import Meeting: import-meetings.md
       - Assign Host Page: assign_host.md
+      - WebHooks: webhooks.md
   - Addons:
     - Video Conferencing with Zoom Pro: vczapi-pro.md
     - WooCommerce (Addon): woocommerce.md
