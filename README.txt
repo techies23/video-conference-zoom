@@ -175,6 +175,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 3.6.23 January 13th, 2021 =
 * Updated: Duration selector when creating meeting.
+* Added: Invite button remove from join via browser through settings page.
 
 = 3.6.22 January 13th, 2021 =
 * Fixed: Helper function to get time according to DST.

@@ -496,14 +496,14 @@ function video_conference_zoom_after_jbh_html() {
 		'redirect_page' => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( home_url( '/' ) ) ),
 		'meeting_id'    => absint( vczapi_encrypt_decrypt( 'decrypt', $_GET['join'] ) ),
 		'meeting_pwd'   => ! empty( $_GET['pak'] ) ? sanitize_text_field( vczapi_encrypt_decrypt( 'decrypt', $_GET['pak'] ) ) : false,
-	    'disableInvite' => ( get_option( 'vczapi_disable_invite' ) == 'yes' ) ? true : false
-    );
+		'disableInvite' => ( get_option( 'vczapi_disable_invite' ) == 'yes' ) ? true : false
+	);
 	?>
     <script id='video-conferencing-with-zoom-api-browser-js-extra'>
         var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
     </script>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/jquery.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-<?php if ( defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
+<?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react.production.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react-dom.production.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
