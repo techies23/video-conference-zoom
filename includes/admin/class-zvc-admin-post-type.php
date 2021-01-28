@@ -222,7 +222,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	public function register_taxonomy() {
 		// Add new taxonomy, make it hierarchical (like categories)
 		$labels = array(
-			'name'          => _x( 'Category', 'Zoom Category Name', 'video-conferencing-with-zoom-api' ),
+			'name' => _x( 'Category', 'Zoom Category Name', 'video-conferencing-with-zoom-api' ),
 		);
 
 		$args = array(
@@ -467,12 +467,15 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 		$pwd                = sanitize_text_field( filter_input( INPUT_POST, 'password' ) );
 		$pwd                = ! empty( $pwd ) ? $pwd : $post_id;
+		$duration_hour      = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_hour' ) );
+		$duration_minutes   = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_minutes' ) );
+		$duration           = ! empty( $duration_hour ) || ! empty( $duration_minutes ) ? vczapi_convert_to_minutes( $duration_hour, $duration_minutes ) : 40;
 		$create_meeting_arr = array(
 			'userId'                 => sanitize_text_field( filter_input( INPUT_POST, 'userId' ) ),
 			'meeting_type'           => absint( sanitize_text_field( filter_input( INPUT_POST, 'meeting_type' ) ) ),
 			'start_date'             => sanitize_text_field( filter_input( INPUT_POST, 'start_date' ) ),
 			'timezone'               => sanitize_text_field( filter_input( INPUT_POST, 'timezone' ) ),
-			'duration'               => sanitize_text_field( filter_input( INPUT_POST, 'duration' ) ),
+			'duration'               => $duration,
 			'password'               => $pwd,
 			'meeting_authentication' => filter_input( INPUT_POST, 'meeting_authentication' ),
 			'option_host_video'      => filter_input( INPUT_POST, 'option_host_video' ),

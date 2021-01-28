@@ -874,6 +874,44 @@ function vczapi_convertPHPToMomentFormat( $format ) {
 	return $momentFormat;
 }
 
+/**
+ * Get Final Minutes after converting to hours
+ *
+ * @param $hour
+ * @param $minute
+ *
+ * @return float|int
+ */
+function vczapi_convert_to_minutes( $hour, $minute ) {
+	$hour   = $hour * 60;
+	$result = $hour + $minute;
+
+	return $result;
+}
+
+/**
+ * Convert minutes to hour and minute format
+ *
+ * @param $minutes
+ * @param string $format
+ *
+ * @return array|bool|string
+ */
+function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
+	if ( $minutes < 1 ) {
+		return false;
+	}
+
+	$hours   = floor( $minutes / 60 );
+	$minutes = ( $minutes % 60 );
+
+	if ( $format ) {
+		return sprintf( $format, $hours, $minutes );
+	}
+
+	return array( 'hr' => $hours, 'min' => $minutes );
+}
+
 function vczapi_is_jwt_enabled(){
 	$join_via_browser_enabled = get_option('vczapi_enable_join_via_browser');
 	$jwt_keys_added = !empty( get_option( 'zoom_api_key' )) &&  !empty( get_option( 'zoom_api_secret' ));

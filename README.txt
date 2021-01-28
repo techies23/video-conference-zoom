@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.22
+Stable tag: 3.6.23
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,6 +172,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.23 January 13th, 2021 =
+* Updated: Duration selector when creating meeting.
 
 = 3.6.22 January 13th, 2021 =
 * Fixed: Helper function to get time according to DST.

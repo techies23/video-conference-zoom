@@ -165,8 +165,22 @@ if ( ! defined( 'ABSPATH' ) ) {
     <tr>
         <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
-            <input type="number" name="duration" class="regular-text" value="<?php echo ! empty( $meeting_fields['duration'] ) ? esc_html( $meeting_fields['duration'] ) : '40'; ?>">
-            <p class="description" id="duration-description"><?php _e( 'Meeting duration (minutes). (optional)', 'video-conferencing-with-zoom-api' ); ?></p>
+			<?php $duration = ! empty( $meeting_fields['duration'] ) ? vczapi_convertMinutesToHM( $meeting_fields['duration'], false ) : vczapi_convertMinutesToHM( 40, false ); ?>
+            <label>
+                <select class="option_duration_hour" name="option_duration_hour">
+					<?php for ( $hr = 0; $hr <= 24; $hr ++ ) { ?>
+                        <option value="<?php echo $hr; ?>" <?php echo $duration['hr'] == $hr ? 'selected' : ''; ?>><?php echo $hr; ?></option>
+					<?php } ?>
+                </select> hr
+            </label>
+            <label style="margin-left:10px;">
+                <select class="option_duration_minutes" name="option_duration_minutes">
+                    <option value="0" <?php echo $duration['min'] == 0 ? 'selected' : ''; ?>>0</option>
+                    <option value="15" <?php echo $duration['min'] == 15 ? 'selected' : ''; ?>>15</option>
+                    <option value="30" <?php echo $duration['min'] == 30 ? 'selected' : ''; ?>>30</option>
+                    <option value="40" <?php echo $duration['min'] == 40 ? 'selected' : ''; ?>>40</option>
+                </select> min
+            </label>
         </td>
     </tr>
     <tr>
