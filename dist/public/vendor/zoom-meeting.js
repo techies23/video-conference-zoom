@@ -86,10 +86,10 @@ jQuery(function ($) {
                             if (window.location !== window.parent.location) {
                                 REDIRECTION = window.location.href;
                             }
-
                             ZoomMtg.init({
                                 leaveUrl: REDIRECTION,
                                 isSupportAV: true,
+                                disableInvite: zvc_ajx.disableInvite,
                                 success: function () {
                                     ZoomMtg.i18n.load(meetConfig.lang);
                                     ZoomMtg.i18n.reload(meetConfig.lang);

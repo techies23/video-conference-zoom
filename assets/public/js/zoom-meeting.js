@@ -85,6 +85,7 @@ jQuery(function ($) {
               ZoomMtg.init({
                 leaveUrl: REDIRECTION,
                 isSupportAV: true,
+                disableInvite: zvc_ajx.disableInvite,
                 success: function success() {
                   ZoomMtg.i18n.load(meetConfig.lang);
                   ZoomMtg.i18n.reload(meetConfig.lang);

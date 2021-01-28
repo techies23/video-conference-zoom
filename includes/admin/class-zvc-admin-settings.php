@@ -123,8 +123,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 				if ( isset( $_POST['save_zoom_settings'] ) ) {
 					//Nonce
 					check_admin_referer( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' );
-					$vczapi_enable_join_via_browser 	= sanitize_text_field(filter_input(INPUT_POST,'vczapi_enable_join_via_browser'));
-					$vczapi_enable_oauth_global_use 	= sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_oauth_global_use' ) );
+					$vczapi_enable_join_via_browser     = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_join_via_browser' ) );
+					$vczapi_enable_oauth_global_use     = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_oauth_global_use' ) );
 					$zoom_api_key                       = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 					$zoom_api_secret                    = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 					$vanity_url                         = esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) );
@@ -140,12 +140,13 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$embed_pwd_in_join_link             = sanitize_text_field( filter_input( INPUT_POST, 'embed_password_join_link' ) );
 					$hide_join_links_non_loggedin_users = sanitize_text_field( filter_input( INPUT_POST, 'hide_join_links_non_loggedin_users' ) );
 					$hide_email_jvb                     = sanitize_text_field( filter_input( INPUT_POST, 'meeting_show_email_field' ) );
+					$vczapi_disable_invite              = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_disable_invite' ) );
 					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
 					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
-					
 
-					update_option('vczapi_enable_join_via_browser',$vczapi_enable_join_via_browser);
-					update_option('vczapi_enable_oauth_global_use',$vczapi_enable_oauth_global_use);
+
+					update_option( 'vczapi_enable_join_via_browser', $vczapi_enable_join_via_browser );
+					update_option( 'vczapi_enable_oauth_global_use', $vczapi_enable_oauth_global_use );
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
 					update_option( 'zoom_vanity_url', $vanity_url );
@@ -161,17 +162,18 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_embed_pwd_join_link', $embed_pwd_in_join_link );
 					update_option( 'zoom_api_hide_shortcode_join_links', $hide_join_links_non_loggedin_users );
 					update_option( 'zoom_api_hide_in_jvb', $hide_email_jvb );
+					update_option( 'vczapi_disable_invite', $vczapi_disable_invite );
 					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
 					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
 					$user_id = get_current_user_id();
-					if($vczapi_enable_oauth_global_use){
-						$zoom_oauth = get_user_meta($user_id,'vczapi_zoom_oauth',true);
-						$vczapi_connected_user_info = get_user_meta($user_id,'vczapi_connected_user_info',true);
-						update_option('vczapi_global_zoom_oauth',$zoom_oauth);
-						update_option('vczapi_global_connected_user_info',$vczapi_connected_user_info);
-					}else{
-						delete_option('vczapi_global_zoom_oauth');
-						delete_option('vczapi_global_connected_user_info');
+					if ( $vczapi_enable_oauth_global_use ) {
+						$zoom_oauth                 = get_user_meta( $user_id, 'vczapi_zoom_oauth', true );
+						$vczapi_connected_user_info = get_user_meta( $user_id, 'vczapi_connected_user_info', true );
+						update_option( 'vczapi_global_zoom_oauth', $zoom_oauth );
+						update_option( 'vczapi_global_connected_user_info', $vczapi_connected_user_info );
+					} else {
+						delete_option( 'vczapi_global_zoom_oauth' );
+						delete_option( 'vczapi_global_connected_user_info' );
 					}
 
 					//After user has been created delete this transient in order to fetch latest Data.
@@ -187,27 +189,28 @@ class Zoom_Video_Conferencing_Admin_Views {
 				}
 
 				//Defining Varaibles
-				
-				$vczapi_enable_join_via_browser = get_option('vczapi_enable_join_via_browser');
-				$vczapi_enable_oauth_global_use = get_option('vczapi_enable_oauth_global_use');
-				$zoom_api_key                	= get_option( 'zoom_api_key' );
-				$zoom_api_secret             	= get_option( 'zoom_api_secret' );
-				$zoom_vanity_url             	= get_option( 'zoom_vanity_url' );
-				$past_join_links             	= get_option( 'zoom_past_join_links' );
-				$zoom_author_show            	= get_option( 'zoom_show_author' );
-				$zoom_started                	= get_option( 'zoom_started_meeting_text' );
-				$zoom_going_to_start         	= get_option( 'zoom_going_tostart_meeting_text' );
-				$zoom_ended                  	= get_option( 'zoom_ended_meeting_text' );
-				$locale_format               	= get_option( 'zoom_api_date_time_format' );
-				$custom_date_time_format     	= get_option( 'zoom_api_custom_date_time_format' );
-				$twentyfour_format           	= get_option( 'zoom_api_twenty_fourhour_format' );
-				$full_month_format           	= get_option( 'zoom_api_full_month_format' );
-				$embed_password_join_link    	= get_option( 'zoom_api_embed_pwd_join_link' );
-				$embed_password_join_link    	= get_option( 'zoom_api_embed_pwd_join_link' );
-				$hide_join_link_nloggedusers 	= get_option( 'zoom_api_hide_shortcode_join_links' );
-				$hide_email_jvb              	= get_option( 'zoom_api_hide_in_jvb' );
-				$disable_jvb                 	= get_option( 'zoom_api_disable_jvb' );
-				$default_jvb_lang            	= get_option( 'zoom_api_default_lang_jvb' );
+
+				$vczapi_enable_join_via_browser = get_option( 'vczapi_enable_join_via_browser' );
+				$vczapi_enable_oauth_global_use = get_option( 'vczapi_enable_oauth_global_use' );
+				$zoom_api_key                   = get_option( 'zoom_api_key' );
+				$zoom_api_secret                = get_option( 'zoom_api_secret' );
+				$zoom_vanity_url                = get_option( 'zoom_vanity_url' );
+				$past_join_links                = get_option( 'zoom_past_join_links' );
+				$zoom_author_show               = get_option( 'zoom_show_author' );
+				$zoom_started                   = get_option( 'zoom_started_meeting_text' );
+				$zoom_going_to_start            = get_option( 'zoom_going_tostart_meeting_text' );
+				$zoom_ended                     = get_option( 'zoom_ended_meeting_text' );
+				$locale_format                  = get_option( 'zoom_api_date_time_format' );
+				$custom_date_time_format        = get_option( 'zoom_api_custom_date_time_format' );
+				$twentyfour_format              = get_option( 'zoom_api_twenty_fourhour_format' );
+				$full_month_format              = get_option( 'zoom_api_full_month_format' );
+				$embed_password_join_link       = get_option( 'zoom_api_embed_pwd_join_link' );
+				$embed_password_join_link       = get_option( 'zoom_api_embed_pwd_join_link' );
+				$hide_join_link_nloggedusers    = get_option( 'zoom_api_hide_shortcode_join_links' );
+				$hide_email_jvb                 = get_option( 'zoom_api_hide_in_jvb' );
+				$vczapi_disable_invite          = get_option( 'vczapi_disable_invite' );
+				$disable_jvb                    = get_option( 'zoom_api_disable_jvb' );
+				$default_jvb_lang               = get_option( 'zoom_api_default_lang_jvb' );
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';
