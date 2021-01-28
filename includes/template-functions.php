@@ -495,8 +495,9 @@ function video_conference_zoom_after_jbh_html() {
 		'zvc_security'  => wp_create_nonce( "_nonce_zvc_security" ),
 		'redirect_page' => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( home_url( '/' ) ) ),
 		'meeting_id'    => absint( vczapi_encrypt_decrypt( 'decrypt', $_GET['join'] ) ),
-		'meeting_pwd'   => ! empty( $_GET['pak'] ) ? sanitize_text_field( vczapi_encrypt_decrypt( 'decrypt', $_GET['pak'] ) ) : false
-	);
+		'meeting_pwd'   => ! empty( $_GET['pak'] ) ? sanitize_text_field( vczapi_encrypt_decrypt( 'decrypt', $_GET['pak'] ) ) : false,
+	    'disableInvite' => ( get_option( 'vczapi_disable_invite' ) == 'yes' ) ? true : false
+    );
 	?>
     <script id='video-conferencing-with-zoom-api-browser-js-extra'>
         var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;

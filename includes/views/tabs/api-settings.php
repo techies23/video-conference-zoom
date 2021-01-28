@@ -81,6 +81,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </td>
                 </tr>
                 <tr>
+                    <th><label for="vczapi_disable_invite"><?php _e( 'Disable Invite field when join via browser ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" id="vczapi_disable_invite" name="vczapi_disable_invite" value="yes" <?php ! empty( $vczapi_disable_invite ) ? checked( $vczapi_disable_invite, 'yes' ) : false; ?>>
+                        <span class="description"><?php _e( 'Checking this will disable invite button when user joins meeting via Join via Browser window.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr>
                     <th><label><?php _e( 'Default Language for Join via browser page ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <select name="meeting-lang">
