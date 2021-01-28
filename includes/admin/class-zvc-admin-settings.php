@@ -138,6 +138,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$embed_pwd_in_join_link             = sanitize_text_field( filter_input( INPUT_POST, 'embed_password_join_link' ) );
 					$hide_join_links_non_loggedin_users = sanitize_text_field( filter_input( INPUT_POST, 'hide_join_links_non_loggedin_users' ) );
 					$hide_email_jvb                     = sanitize_text_field( filter_input( INPUT_POST, 'meeting_show_email_field' ) );
+					$vczapi_disable_invite              = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_disable_invite' ) );
 					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
 					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
 
@@ -156,6 +157,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_embed_pwd_join_link', $embed_pwd_in_join_link );
 					update_option( 'zoom_api_hide_shortcode_join_links', $hide_join_links_non_loggedin_users );
 					update_option( 'zoom_api_hide_in_jvb', $hide_email_jvb );
+					update_option( 'vczapi_disable_invite', $vczapi_disable_invite );
 					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
 					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
 
@@ -188,6 +190,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				$embed_password_join_link    = get_option( 'zoom_api_embed_pwd_join_link' );
 				$hide_join_link_nloggedusers = get_option( 'zoom_api_hide_shortcode_join_links' );
 				$hide_email_jvb              = get_option( 'zoom_api_hide_in_jvb' );
+				$vczapi_disable_invite       = get_option( 'vczapi_disable_invite' );
 				$disable_jvb                 = get_option( 'zoom_api_disable_jvb' );
 				$default_jvb_lang            = get_option( 'zoom_api_default_lang_jvb' );
 
