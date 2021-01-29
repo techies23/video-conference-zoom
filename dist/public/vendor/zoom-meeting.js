@@ -86,10 +86,19 @@ jQuery(function ($) {
                             if (window.location !== window.parent.location) {
                                 REDIRECTION = window.location.href;
                             }
+
                             ZoomMtg.init({
                                 leaveUrl: REDIRECTION,
                                 isSupportAV: true,
+                                meetingInfo: zvc_ajx.meetingInfo,
                                 disableInvite: zvc_ajx.disableInvite,
+                                disableRecord: zvc_ajx.disableRecord,
+                                disableJoinAudio: zvc_ajx.disableJoinAudio,
+                                isSupportChat: zvc_ajx.isSupportChat,
+                                isSupportQA: zvc_ajx.isSupportQA,
+                                isSupportBreakout: zvc_ajx.isSupportBreakout,
+                                isSupportCC: zvc_ajx.isSupportCC,
+                                screenShare: zvc_ajx.screenShare,
                                 success: function () {
                                     ZoomMtg.i18n.load(meetConfig.lang);
                                     ZoomMtg.i18n.reload(meetConfig.lang);

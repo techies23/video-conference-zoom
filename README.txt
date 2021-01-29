@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.23
+Stable tag: 3.6.24
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -173,7 +173,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.6.23 January 13th, 2021 =
+= 3.6.23 January 29th, 2021 =
+* Added filter hook to show or enable different views in join via browser window. See https://zoom.codemanas.com/filters_hooks/#join-via-browser-show-fields
+
+= 3.6.23 January 28th, 2021 =
 * Updated: Duration selector when creating meeting.
 * Added: Invite button remove from join via browser through settings page.
 

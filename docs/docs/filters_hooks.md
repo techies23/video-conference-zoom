@@ -72,5 +72,32 @@ Add below code to your functions.php file
 
 * `add_filter( 'vczapi_cpt_show_in_rest', '__return_true' );` 
 
+### Join via browser show fields
 
+If you want to show extra fields or hide them, add below code to your functions.php in your theme.
 
+<pre>add_filter('vczapi_api_join_via_browser_params', 'vczapi_jvb_fields');
+function vczapi_jvb_fields( $fields ) {
+    $fields = [
+        'meetingInfo'       => [
+            'topic',
+            'host',
+            #'mn',
+            #'pwd',
+            #'telPwd',
+            #'invite',
+            #'participant',
+            #'dc',
+            #'enctype',
+            #'report'
+        ],
+        'disableRecord'     => false,
+        'disableJoinAudio'  => false,
+        'isSupportChat'     => true, //Enable or disable chat
+        'isSupportQA'       => true, //Enable or disable QA
+        'isSupportBreakout' => true, //Enable or disable breakout rooms
+        'isSupportCC'       => true, //Enable or disable CC
+        'screenShare'       => true //Enable or disable Screenshare
+    ];
+    return $fields;
+}</pre>
