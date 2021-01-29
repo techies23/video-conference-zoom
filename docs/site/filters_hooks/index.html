@@ -484,6 +484,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#join-via-browser-show-fields" class="md-nav__link">
+    Join via browser show fields
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -764,6 +771,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#join-via-browser-show-fields" class="md-nav__link">
+    Join via browser show fields
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -840,6 +854,33 @@
 <ul>
 <li><code>add_filter( 'vczapi_cpt_show_in_rest', '__return_true' );</code> </li>
 </ul>
+<h3 id="join-via-browser-show-fields">Join via browser show fields</h3>
+<p>If you want to show extra fields or hide them, add below code to your functions.php in your theme.</p>
+<pre>add_filter('vczapi_api_join_via_browser_params', 'vczapi_jvb_fields');
+function vczapi_jvb_fields( $fields ) {
+    $fields = [
+        'meetingInfo'       => [
+            'topic',
+            'host',
+            #'mn',
+            #'pwd',
+            #'telPwd',
+            #'invite',
+            #'participant',
+            #'dc',
+            #'enctype',
+            #'report'
+        ],
+        'disableRecord'     => false,
+        'disableJoinAudio'  => false,
+        'isSupportChat'     => true, //Enable or disable chat
+        'isSupportQA'       => true, //Enable or disable QA
+        'isSupportBreakout' => true, //Enable or disable breakout rooms
+        'isSupportCC'       => true, //Enable or disable CC
+        'screenShare'       => true //Enable or disable Screenshare
+    ];
+    return $fields;
+}</pre>
                 
               
               
