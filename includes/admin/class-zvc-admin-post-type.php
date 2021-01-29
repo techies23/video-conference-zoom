@@ -637,12 +637,14 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			$GLOBALS['zoom'] = get_post_meta( $post->ID, '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
 			$meeting_details = get_post_meta( $post->ID, '_meeting_zoom_details', true );
 
-			$meeting_author = get_the_author();
 			if ( ! empty( $show_zoom_author_name ) ) {
-				$meeting_author = vczapi_get_meeting_author( $post->ID, $meeting_details, $meeting_author );
+				$meeting_author = vczapi_get_meeting_author( $post->ID, $meeting_details );
+			} else {
+				$meeting_author = get_userdata( $post->post_author );
+				$meeting_author = ! empty( $meeting_author ) && ! empty( $meeting_author->first_name ) ? $meeting_author->first_name . ' ' . $meeting_author->last_name : $meeting_author->display_name;
 			}
-			$GLOBALS['zoom']['host_name'] = $meeting_author;
 
+			$GLOBALS['zoom']['host_name'] = $meeting_author;
 			if ( ! empty( $meeting_details ) ) {
 				$GLOBALS['zoom']['api'] = get_post_meta( $post->ID, '_meeting_zoom_details', true );
 			}
