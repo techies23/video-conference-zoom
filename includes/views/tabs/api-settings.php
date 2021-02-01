@@ -98,13 +98,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tbody>
                     <tr>
                         <th>
-                            <label>
-								<?php _e( 'Save Globally', 'video-conferencing-with-zoom-api' ); ?>
+                            <label for="vczapi_enable_oauth_individual_use">
+								<?php _e( 'Individual Accounts', 'video-conferencing-with-zoom-api' ); ?>
                             </label>
                         </th>
                         <td>
-                            <input type="checkbox" id="vczapi_enable_oauth_global_use" name="vczapi_enable_oauth_global_use" value="yes" <?php checked( $vczapi_enable_oauth_global_use, 'yes' ); ?>>
-                            <span class="description"><?php _e( 'This option will allow other users logged into this site to create Zoom Meetings using the connected account' ); ?></span>
+                            <input type="checkbox" id="vczapi_enable_oauth_individual_use" name="vczapi_enable_oauth_individual_use" value="yes" <?php checked( $vczapi_enable_oauth_individual_use, 'yes' ); ?>>
+                            <span class="description"><?php _e( 'This option will allow other users logged into this site to create Zoom Meetings using their own Zoom accounts' ); ?></span>
                         </td>
                     </tr>
                     <tr>

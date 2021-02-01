@@ -124,7 +124,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					//Nonce
 					check_admin_referer( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' );
 					$vczapi_enable_join_via_browser     = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_join_via_browser' ) );
-					$vczapi_enable_oauth_global_use     = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_oauth_global_use' ) );
+					$vczapi_enable_oauth_individual_use     = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_oauth_individual_use' ) );
 					$zoom_api_key                       = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 					$zoom_api_secret                    = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 					$vanity_url                         = esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) );
@@ -146,7 +146,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 
 
 					update_option( 'vczapi_enable_join_via_browser', $vczapi_enable_join_via_browser );
-					update_option( 'vczapi_enable_oauth_global_use', $vczapi_enable_oauth_global_use );
+					update_option( 'vczapi_enable_oauth_individual_use', $vczapi_enable_oauth_individual_use );
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
 					update_option( 'zoom_vanity_url', $vanity_url );
@@ -166,7 +166,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
 					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
 					$user_id = get_current_user_id();
-					if ( $vczapi_enable_oauth_global_use ) {
+					if ( $vczapi_enable_oauth_individual_use ) {
 						$zoom_oauth                 = get_user_meta( $user_id, 'vczapi_zoom_oauth', true );
 						$vczapi_connected_user_info = get_user_meta( $user_id, 'vczapi_connected_user_info', true );
 						update_option( 'vczapi_global_zoom_oauth', $zoom_oauth );
@@ -191,7 +191,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				//Defining Varaibles
 
 				$vczapi_enable_join_via_browser = get_option( 'vczapi_enable_join_via_browser' );
-				$vczapi_enable_oauth_global_use = get_option( 'vczapi_enable_oauth_global_use' );
+				$vczapi_enable_oauth_individual_use = get_option( 'vczapi_enable_oauth_individual_use' );
 				$zoom_api_key                   = get_option( 'zoom_api_key' );
 				$zoom_api_secret                = get_option( 'zoom_api_secret' );
 				$zoom_vanity_url                = get_option( 'zoom_vanity_url' );

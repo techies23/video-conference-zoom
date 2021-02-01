@@ -45,6 +45,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		return self::$_instance;
 	}
 
+	/**
+	 * Oauth constructor.
+	 */
 	public function __construct() {
 		$this->set_required_fields();
 		parent::__construct();
@@ -55,8 +58,12 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		add_action( 'vczapi_check_oauth_response', [ $this, 'check_refresh_token_and_resend_request' ], 10, 4 );
 
 		add_action( 'wp_ajax_vczapi_verify_jwt_keys', [ $this, 'verify_jwt_keys' ] );
+		add_action( 'pre_get_posts', [ $this, 'show_only_own_zoom_meetings' ] );
 	}
 
+	/**
+	 * Set Required Variables for Oauth to work properly
+	 */
 	public function set_required_fields() {
 		$this->zoom_verify_listener = admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' );
 		$this->authorization_header = 'Basic ' . base64_encode( $this->client_id . ':' . $this->secret_id );
@@ -66,7 +73,31 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		$this->connected_user_info = ( ! vczapi_is_oauth_used_globally() ) ? get_user_meta( $this->current_user_id, 'vczapi_connected_user_info', true ) : get_option( 'vczapi_global_connected_user_info' );
 	}
 
-	//function to generate JWT
+	/**
+	 * @param \WP_Query $wp_query
+	 */
+	public function show_only_own_zoom_meetings( \WP_Query $wp_query ) {
+		if ( vczapi_is_oauth_used_globally() ) {
+			return;
+		}
+		if ( $wp_query->is_main_query() && is_admin() && $wp_query->get( 'post_type' ) == 'zoom-meetings' ) {
+			$screen = get_current_screen();
+			if ( $screen->id == 'edit-zoom-meetings' ) {
+				$wp_query->set( 'author', $this->current_user_id );
+				add_filter( 'views_edit-zoom-meetings', '__return_false' );
+			}
+
+		}
+
+	}
+
+	/**
+	 * @param false $key
+	 * @param false $secret
+	 *
+	 * @return string
+	 * Overridden to check key using passed $key and $secret
+	 */
 	private function generateJWTKey( $key = false, $secret = false ) {
 		if ( empty( $key ) || empty( $secret ) ) {
 			$key    = $this->zoom_api_key;
@@ -82,7 +113,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		return JWT::encode( $token, $secret );
 	}
 
-
+	/**
+	 * Verify JWT Keys
+	 */
 	public function verify_jwt_keys() {
 		$api_key    = filter_input( INPUT_POST, 'api_key' );
 		$secret_key = filter_input( INPUT_POST, 'secret_key' );
@@ -90,17 +123,29 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		//so lets generate the JWT Keys first
 		$this->temp_jwt_key = $this->generateJWTKey( $api_key, $secret_key );
 		remove_filter( 'vczapi_core_api_request_headers', [ $this, 'change_request_headers' ], 10 );
-		add_filter( 'vczapi_core_api_request_headers', [ $this, 'set_temp_jwt_key_for_header' ],20 );
+		add_filter( 'vczapi_core_api_request_headers', [ $this, 'set_temp_jwt_key_for_header' ], 20 );
 		$response = $this->listUsers();
 		wp_send_json( json_decode( $response ) );
 	}
 
+	/**
+	 * @param $headers
+	 *
+	 * @return mixed
+	 * Set temporary JWT key to verify JWT keys
+	 */
 	public function set_temp_jwt_key_for_header( $headers ) {
-	    $headers['Authorization'] = 'Bearer ' . $this->temp_jwt_key;
+		$headers['Authorization'] = 'Bearer ' . $this->temp_jwt_key;
 
 		return $headers;
 	}
 
+	/**
+	 * @param false $user_id
+	 *
+	 * @return false|mixed|void
+	 * Purpose of this is to allow 3rd Party extensions to get Oauth Data and use it to create meetings
+	 */
 	public function get_oauth_data( $user_id = false ) {
 		$oauth_data = false;
 		if ( $user_id != false ) {
@@ -118,7 +163,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		return $oauth_data;
 	}
 
-
+	/**
+	 * @return array|bool|string|\WP_Error
+	 */
 	public function getMyInfo() {
 		return $this->sendRequest( 'users/me', [] );
 	}
@@ -184,6 +231,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	}
 
+	/**
+	 * @return string return Authentication URL
+	 */
 	public function get_request_user_authentication_url() {
 		return add_query_arg( [
 			'response_type' => 'code',
@@ -192,6 +242,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		], $this->authorize_uri );
 	}
 
+	/**
+	 * Handler to check if you should revoke or request new access token
+	 */
 	public function request_or_remove_access_token() {
 		global $pagenow;
 
@@ -206,6 +259,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	}
 
+	/**
+	 * Request Access Token according to code returned
+	 */
 	public function requestAccessToken() {
 		$code = filter_input( INPUT_GET, 'code' );
 		if ( empty( $code ) ) {
@@ -239,7 +295,7 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 			update_user_meta( $this->current_user_id, 'vczapi_connected_user_info', $vczpai_connected_user_info );
 			$this->connected_user_info = $vczpai_connected_user_info;
 
-			if ( \vczapi_is_oauth_used_globally() ) {
+			if ( vczapi_is_oauth_used_globally() ) {
 				update_option( 'vczapi_global_zoom_oauth', $response_body );
 				update_option( 'vczapi_global_connected_user_info', $vczpai_connected_user_info );
 			}
@@ -250,6 +306,9 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		}
 	}
 
+	/**
+	 * Revoke Access Token when requested.
+	 */
 	public function revokeAccessToken() {
 
 		$revoke = filter_input( INPUT_GET, 'revoke_access_token' );
@@ -287,6 +346,11 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	}
 
+	/**
+	 * @param $headers
+	 *
+	 * @return mixed
+	 */
 	public function change_request_headers( $headers ) {
 		if ( ! empty( $this->user_oauth_data ) ) {
 			$headers['Authorization'] = 'Bearer ' . $this->user_oauth_data->access_token;
@@ -295,15 +359,31 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		return $headers;
 	}
 
+	/**
+	 * @param $users
+	 *
+	 * @return mixed|null[]
+	 */
 	public function set_zoom_user( $users ) {
 
 		if ( ! vczapi_is_oauth_used_globally() && ! empty( $this->connected_user_info ) ) {
 			$users = [ $this->connected_user_info ];
+		} else if ( ! vczapi_is_oauth_used_globally() && empty( $this->connected_user_info ) ) {
+			$users = null;
 		}
 
 		return $users;
 	}
 
+	/**
+	 * @param $response
+	 * @param $calledFunction
+	 * @param $data
+	 * @param $request
+	 *
+	 * @return array|bool|mixed|string|\WP_Error
+	 * Uses refresh token if required and resends / re-dos request
+	 */
 	public function check_refresh_token_and_resend_request( $response, $calledFunction, $data, $request ) {
 		//** remove filter so we don't end up in a loop */
 		remove_filter( 'vczapi_check_oauth_response', [ $this, 'refresh_token_and_resend_request' ], 10 );
@@ -318,6 +398,10 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		return $response;
 	}
 
+	/**
+	 * @return mixed|null
+	 * Regenerate Access Token
+	 */
 	public function regenerate_access_token() {
 		$this->access_token_url;
 		if ( isset( $this->user_oauth_data->refresh_token ) && ! empty( $this->user_oauth_data->refresh_token ) ) {
