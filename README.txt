@@ -19,6 +19,8 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 **FEATURES:**
 
 * Manage WordPress posts and link them to Live Zoom meetings and Zoom Webinars.
+* Create Recurring meetings and Webinars ( PRO VERSION )
+* Enable registrations ( PRO VERSION )
 * Override single and archive page templates via your theme.
 * JOIN DIRECTLY VIA WEB BROWSER FROM FRONTEND !
 * Start Links for post authors.
@@ -26,6 +28,7 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 * Start time and join links are shown according to local time compared with zoom timezone.
 * Show user recordings based on Zoom Account.
 * Display Webinars via Shortcode
+* Use PMI ( PRO VERSION )
 * WCFM Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Appointments Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
