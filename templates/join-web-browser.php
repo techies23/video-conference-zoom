@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $zoom;
+global $current_user;
 
 if ( video_conference_zoom_check_login() ) {
 	if ( ! empty( $zoom['api']->state ) && $zoom['api']->state === "ended" ) {
@@ -43,17 +44,24 @@ if ( video_conference_zoom_check_login() ) {
                 </div>
 			<?php } ?>
             <form class="vczapi-zoom-browser-meeting--meeting-form" id="vczapi-zoom-browser-meeting-join-form" action="">
+				<?php $full_name = ! empty( $current_user->first_name ) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name; ?>
                 <div class="form-group">
-                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="" placeholder="Your Name Here" class="form-control" required>
+                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo $full_name; ?>" placeholder="Your Name Here" class="form-control" required>
                 </div>
 				<?php
 				$hide_email = get_option( 'zoom_api_hide_in_jvb' );
 				if ( empty( $hide_email ) ) {
-					?>
-                    <div class="form-group">
-                        <input type="email" name="display_email" id="vczapi-jvb-email" value="" placeholder="Your Email Here" class="form-control">
-                    </div>
-				<?php }
+					if ( ! empty( $current_user ) && ! empty( $current_user->user_email ) ) {
+						?>
+                        <input type="hidden" name="display_email" id="vczapi-jvb-email" value="<?php echo $current_user->user_email; ?>">
+						<?php
+					} else {
+						?>
+                        <div class="form-group">
+                            <input type="email" name="display_email" id="vczapi-jvb-email" value="<?php echo $current_user->user_email; ?>" placeholder="Your Email Here" class="form-control">
+                        </div>
+					<?php }
+				}
 
 				if ( ! isset( $_GET['pak'] ) ) { ?>
                     <div class="form-group">

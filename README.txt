@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.25
+Stable tag: 3.6.26
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,6 +172,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.26 February 2nd, 2021 =
+* Updated: WebSDK library to 1.9.0 which supports gallery view
+* Updated: Join via browser ( If logged-in user, automatically fills out email and name )
 
 = 3.6.25 January 29th, 2021 =
 * Fixed: Post Author Name not showing in single meeting page.
