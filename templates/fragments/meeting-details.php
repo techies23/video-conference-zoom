@@ -42,12 +42,23 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
                 <span class="sidebar-category"><?php echo implode( ', ', $zoom['terms'] ); ?></span>
             </div>
 		<?php } ?>
-		<?php if ( ! empty( $zoom['api']->duration ) ) { ?>
+		<?php if ( ! empty( $zoom['api']->duration ) ) {
+			$duration = vczapi_convertMinutesToHM( $zoom['api']->duration, false );
+			?>
             <div class="dpn-zvc-sidebar-content-list vczapi-duration-wrap">
                 <span><strong><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                <span><?php echo $zoom['api']->duration; ?></span>
+                <span>
+                    <?php
+                    if ( ! empty( $duration['hr'] ) ) {
+	                    echo _n( $duration['hr'] . ' hour', $duration['hr'] . ' hours', absint( $duration['hr'] ), 'video-conferencing-with-zoom-api' ) . ' ' . _n( $duration['min'] . ' minute', $duration['min'] . ' minutes', absint( $duration['min'] ), 'video-conferencing-with-zoom-api' );
+                    } else {
+	                    echo _n( $duration['min'] . ' minute', $duration['min'] . ' minutes', absint( $duration['min'] ), 'video-conferencing-with-zoom-api' );
+                    }
+                    ?>
+                </span>
             </div>
-		<?php } ?> <?php if ( ! empty( $zoom['api']->timezone ) ) { ?>
+		<?php } ?>
+		<?php if ( ! empty( $zoom['api']->timezone ) ) { ?>
             <div class="dpn-zvc-sidebar-content-list vczapi-timezone-wrap">
                 <span><strong><?php _e( 'Current Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
                 <span class="vczapi-single-meeting-timezone"><?php echo $zoom['api']->timezone; ?></span>

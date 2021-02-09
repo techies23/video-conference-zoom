@@ -169,6 +169,8 @@ class Recordings {
 			return false;
 		}
 
+		$meeting_id = absint( $atts['meeting_id'] );
+
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable' );
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
@@ -182,20 +184,21 @@ class Recordings {
 		ob_start();
 		unset( $GLOBALS['zoom_recordings'] );
 		unset( $GLOBALS['zoom_recordings_is_downloadable'] );
-		if ( ! empty( $cached_recordings ) && isset( $cached_recordings[ $atts['meeting_id'] ] ) && $flush_cache != 'yes' ) {
+
+		if ( ! empty( $cached_recordings ) && isset( $cached_recordings[ $meeting_id ] ) && $flush_cache != 'yes' ) {
 			//if cached recordings exist use that
-			$recordings = $cached_recordings[ $atts['meeting_id'] ];
+			$recordings = $cached_recordings[ $meeting_id ];
 		} else {
-			$all_past_meetings = json_decode( zoom_conference()->getPastMeetingDetails( $atts['meeting_id'] ) );
+			$all_past_meetings = json_decode( zoom_conference()->getPastMeetingDetails( $meeting_id ) );
 			if ( isset( $all_past_meetings->meetings ) && ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
 				//loop through all instance of past / completed meetings and get recordings
 				foreach ( $all_past_meetings->meetings as $meeting ) {
 					$recordings[] = json_decode( zoom_conference()->recordingsByMeeting( $meeting->uuid ) );
 				}
-				Helpers::set_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id', [ $atts['meeting_id'] => $recordings ], 86400 );
+				Helpers::set_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id', [ $meeting_id => $recordings ], 86400 );
 			} else {
-				$recordings[] = json_decode( zoom_conference()->recordingsByMeeting( $atts['meeting_id'] ) );
-				Helpers::set_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id', [ $atts['meeting_id'] => $recordings ], 86400 );
+				$recordings[] = json_decode( zoom_conference()->recordingsByMeeting( $meeting_id ) );
+				Helpers::set_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id', [ $meeting_id => $recordings ], 86400 );
 			}
 		}
 

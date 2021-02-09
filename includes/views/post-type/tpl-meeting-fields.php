@@ -25,7 +25,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         <tr>
             <th scope="row"><label for="meeting-shortcode">Shortcode</label></th>
             <td>
-                <input class="text regular-text" id="meeting-shortcode" type="text" readonly value='[zoom_api_link meeting_id="<?php echo $meeting_details->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
+				<?php if ( $meeting_fields['meeting_type'] == "1" ) { ?>
+                    <input class="text regular-text" id="meeting-shortcode" type="text" readonly value='[zoom_api_link meeting_id="<?php echo $meeting_details->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
+				<?php } else { ?>
+                    <input class="text regular-text" id="meeting-shortcode" type="text" readonly value='[zoom_api_webinar webinar_id="<?php echo $meeting_details->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
+				<?php } ?>
                 <p class="description">
 					<?php _e( 'If you need to show this meeting on another page or post please use this shortcode', 'video-conferencing-with-zoom-api' ); ?>
                 </p>
