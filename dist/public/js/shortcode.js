@@ -44,14 +44,23 @@
             this.evntHandlers();
         },
         cacheDOM: function () {
-            this.$modal = $('.vczapi-modal');
-            this.$modalContent = $('.vczapi-modal-content');
-            this.$triggerModal = $('.vczapi-view-recording');
             this.$recordingsDatePicker = $('.vczapi-check-recording-date');
         },
         evntHandlers: function () {
-            this.$triggerModal.on('click', this.openModal.bind(this));
+            $(document).on('click', '.vczapi-view-recording', this.openModal.bind(this));
             $(document).on('click', '.vczapi-modal-close', this.closeModal.bind(this));
+
+            if ($('.vczapi-recordings-list-table').length > 0) {
+                $('.vczapi-recordings-list-table').DataTable({
+                    responsive: true,
+                    order: [3, "desc"],
+                    columnDefs: [
+                        {
+                            orderable: false, targets: [2, 5]
+                        }
+                    ],
+                });
+            }
 
             if ($(this.$recordingsDatePicker).length > 0) {
                 this.$recordingsDatePicker.datepicker({
@@ -80,12 +89,11 @@
         },
         closeModal: function (e) {
             e.preventDefault();
-            $(this.$modalContent).remove();
-            $(this.$modal).hide();
+            $('.vczapi-modal-content').remove();
+            $('.vczapi-modal').hide();
         },
         openModal: function (e) {
             e.preventDefault();
-            var that = this;
             var recording_id = $(e.currentTarget).data('recording-id');
             var postData = {
                 recording_id: recording_id,
@@ -93,9 +101,9 @@
                 downlable: vczapi_ajax.downloadable
             };
 
-            $(that.$modal).html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading + '</p>').show();
+            $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading + '</p>').show();
             $.get(vczapi_ajax.ajaxurl, postData).done(function (response) {
-                $(that.$modal).html(response.data).show();
+                $('.vczapi-modal').html(response.data).show();
             });
         }
     };

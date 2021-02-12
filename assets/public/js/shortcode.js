@@ -45,14 +45,22 @@
       this.evntHandlers();
     },
     cacheDOM: function cacheDOM() {
-      this.$modal = $('.vczapi-modal');
-      this.$modalContent = $('.vczapi-modal-content');
-      this.$triggerModal = $('.vczapi-view-recording');
       this.$recordingsDatePicker = $('.vczapi-check-recording-date');
     },
     evntHandlers: function evntHandlers() {
-      this.$triggerModal.on('click', this.openModal.bind(this));
+      $(document).on('click', '.vczapi-view-recording', this.openModal.bind(this));
       $(document).on('click', '.vczapi-modal-close', this.closeModal.bind(this));
+
+      if ($('.vczapi-recordings-list-table').length > 0) {
+        $('.vczapi-recordings-list-table').DataTable({
+          responsive: true,
+          order: [3, "desc"],
+          columnDefs: [{
+            orderable: false,
+            targets: [2, 5]
+          }]
+        });
+      }
 
       if ($(this.$recordingsDatePicker).length > 0) {
         this.$recordingsDatePicker.datepicker({
@@ -81,21 +89,20 @@
     },
     closeModal: function closeModal(e) {
       e.preventDefault();
-      $(this.$modalContent).remove();
-      $(this.$modal).hide();
+      $('.vczapi-modal-content').remove();
+      $('.vczapi-modal').hide();
     },
     openModal: function openModal(e) {
       e.preventDefault();
-      var that = this;
       var recording_id = $(e.currentTarget).data('recording-id');
       var postData = {
         recording_id: recording_id,
         action: 'get_recording',
         downlable: vczapi_ajax.downloadable
       };
-      $(that.$modal).html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading + '</p>').show();
+      $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading + '</p>').show();
       $.get(vczapi_ajax.ajaxurl, postData).done(function (response) {
-        $(that.$modal).html(response.data).show();
+        $('.vczapi-modal').html(response.data).show();
       });
     }
   };

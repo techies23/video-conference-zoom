@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.27
+Stable tag: 3.6.28
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -175,6 +175,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.28 February 12th, 2021 =
+* Fixed: View recordings button not working when recordings exceed 10 entries.
+* Added: Recordings list view sorting removed for action and duration
 
 = 3.6.27 February 9th, 2021 =
 * Fixed: Showing hour and minutes in frontend meeting details page.
