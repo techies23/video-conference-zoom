@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.29
+Stable tag: 3.6.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,8 @@ There’s a [GIT repository](https://github.com/techies23/video-conference-zoom 
 
 Please consider giving a 5 star thumbs up if you found this useful.
 
+Lastly, Thank you all to those contributors who have contributed for this plugin in one or the other way. Taking from language translations to minor or major suggestions. We appreciate your input in every way !!
+
 **QUICK DEMO:**
 
 [youtube https://www.youtube.com/watch?v=5Z2Ii0PnHRQ]
@@ -175,6 +177,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.30 February 23rd, 2021 =
+* Added: Dutch translation file added - Thanks to "Gijsbert van Luinen" for providing the translation files.
 
 = 3.6.29 February 15th, 2021 =
 * Fixed: Recordings list shortcode pulled via UUID for recurring meeting fix.
