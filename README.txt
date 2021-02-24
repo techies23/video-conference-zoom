@@ -178,8 +178,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.6.30 February 23rd, 2021 =
+= 3.6.30 February 24th, 2021 =
 * Added: Dutch translation file added - Thanks to "Gijsbert van Luinen" for providing the translation files.
+* Fixed: Width for join via browser fields when browser info is removed.
+* Added: Show meetings after the event date has passed for about 30 minutes more. This can be done by adding "show_on_past" in [zoom_list_meetings] or [zoom_list_webinars] - By default this is set to true.
 
 = 3.6.29 February 15th, 2021 =
 * Fixed: Recordings list shortcode pulled via UUID for recurring meeting fix.

@@ -26,8 +26,10 @@ Use: `[vczapi_list_meetings per_page="5" category="test,test2,test3" order="ASC"
 
 Where,
 
+* **author** = Author ID of the posts to display.
 * **per_page** = Number of posts per page
 * **category** = Show assigned category lists
 * **order** = Show order of posts "DESC" or "ASC"
 * **type** = options => upcoming or past
 * **show** = options => meeting or webinar
+* **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.

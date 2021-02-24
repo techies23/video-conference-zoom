@@ -77,13 +77,15 @@
 
 #vczapi-zoom-browser-meeting { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1; }
 
+#vczapi-zoom-browser-meeting--container { width: 400px; }
+
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form input[type=text], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form input[type=password], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form button[type=submit], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form input[type=email], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form select { height: 40px; border-radius: 0; }
 
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form button[type=submit] { background-color: #2d8cff; width: 100%; color: #fff; }
 
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form .form-group { margin-bottom: 10px; }
 
-#vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--info { background: #fff; padding: 20px 30px; margin-bottom: 10px; width: 400px; }
+#vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--info { background: #fff; padding: 20px 30px; margin-bottom: 10px; }
 
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--info ul { list-style: none; padding: 0; margin: 0; }
 

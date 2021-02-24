@@ -33,11 +33,13 @@ Use: `[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" t
 
 Where,
 
+* **author** = Author ID of the posts to display.
 * **per_page** = Number of posts to show per page
 * **category** = Which categories to show in the list
 * **order** = ASC or DESC based on post created time.
-* **type** = "upcoming" or "past" - To show only upcoming meeting based on start time (Update to meeting is required for old post type meetings). Do not add to show all meetings.
+* **type** = "upcoming" or "past" - To show only upcoming meeting based on start time. (Remove this option to show all meetings).
 * **filter** = "yes" or "no" - Shows filter option for the list.
+* **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.
 
 **NOTE: This was added in version 3.3.4 so, old meetings which were created might need to be updated in order for this shortcode to work properly.**
 
@@ -47,11 +49,13 @@ Use: `[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" t
 
 Where,
 
+* **author** = Author ID of the posts to display.
 * **per_page** = Number of posts to show per page
 * **category** = Which categories to show in the list
 * **order** = ASC or DESC based on post created time.
-* **type** = "upcoming" or "past" - To show only upcoming meeting based on start time (Update to meeting is required for old post type meetings). Do not add to show all meetings.
+* **type** = "upcoming" or "past" - To show only upcoming webinars based on start time. (Remove this option to show all webinars).
 * **filter** = "yes" or "no" - Shows filter option for the list.
+* **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show webinars for 30 minutes after the past date, if upcoming type is defined.
 
 ### 4. List Meetings based on HOST ID
 
