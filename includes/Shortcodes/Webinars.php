@@ -179,12 +179,13 @@ class Webinars {
 	public function list_cpt_webinars( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'author'   => '',
-				'per_page' => 5,
-				'category' => '',
-				'order'    => 'DESC',
-				'type'     => '',
-				'filter'   => 'yes'
+				'author'       => '',
+				'per_page'     => 5,
+				'category'     => '',
+				'order'        => 'DESC',
+				'type'         => '',
+				'filter'       => 'yes',
+				'show_on_past' => 'yes'
 			),
 			$atts, 'zoom_list_webinars'
 		);
