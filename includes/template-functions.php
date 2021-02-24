@@ -478,6 +478,7 @@ function video_conference_zoom_before_jbh_html( $zoom ) {
         <link rel='stylesheet' type="text/css" href="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/bootstrap.css?ver=' . ZVC_PLUGIN_VERSION; ?>" media='all'>
         <link rel='stylesheet' type="text/css" href="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react-select.css?ver=' . ZVC_PLUGIN_VERSION; ?>" media='all'>
         <link rel='stylesheet' type="text/css" href="<?php echo ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.min.css?ver=' . ZVC_PLUGIN_VERSION; ?>" media='all'>
+        <link rel='stylesheet' type="text/css" href="<?php echo get_stylesheet_uri(); ?>" media='all'>
     </head><body class="join-via-browser-body">
 	<?php
 	ob_end_flush();
