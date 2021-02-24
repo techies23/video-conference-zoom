@@ -24,11 +24,8 @@ If you login as a vendor - you will be first shown a Zoom Meeting section on the
 
 1. Zoom Menu dashboard link
 2. From this menu item vendors can create and mange Zoom Meetings. Vendors will oonly be able to see their own meetings. The vendors will only be able to see and attach meetings they create via their own dashboard. i.e they will not be able to see other users Meetings.
-3. After meeting is created, the created meeting can be then attached to a product. Below screenshot show hot the Zoom option should be shown on the frontend. 
+3. After meeting is created, the created meeting can be then attached to a product. Below screenshot show how the Zoom option should be shown on the frontend. 
     
 ![WCFM_Product](img/wcfm-product-dash.png "Zoom WCFM Product Option")
 
 ---
-
-##In Development
-Before purchase it should be noted that Zoom Integration for WCFM is currently only available for WooCommerce Integration and Bookings is not supported yet.
