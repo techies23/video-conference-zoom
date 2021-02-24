@@ -173,7 +173,7 @@ class WebinarList extends Widget_Base {
 			'show_on_past',
 			[
 				'name'        => 'show_on_past',
-				'label'       => __( 'Meeting Display Threshold', 'video-conferencing-with-zoom-api' ),
+				'label'       => __( 'Webinar Display Threshold', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'label_block' => true,
 				'options'     => [
