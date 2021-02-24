@@ -1,6 +1,6 @@
 <?php
 /**
- * @link              http://www.deepenbajracharya.com.np
+ * @link              https://www.deepenbajracharya.com.np
  * @since             1.0.0
  * @package           Video Conferencing with Zoom
  *
@@ -9,9 +9,9 @@
  * Description:       Video Conferencing with Zoom Meetings and Webinars plugin provides you with great functionality of managing Zoom meetings, Webinar scheduling options, and users directly from your WordPress dashboard.
  * Version:           3.6.30
  * Author:            Deepen Bajracharya
- * Author URI:        http://www.deepenbajracharya.com.np
+ * Author URI:        https://www.deepenbajracharya.com.np
  * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       video-conferencing-with-zoom-api
  * Requires PHP:      5.6
  * Domain Path:       /languages

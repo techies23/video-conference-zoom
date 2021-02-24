@@ -850,22 +850,26 @@
 <p>Use: <code>[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]</code></p>
 <p>Where,</p>
 <ul>
+<li><strong>author</strong> = Author ID of the posts to display.</li>
 <li><strong>per_page</strong> = Number of posts to show per page</li>
 <li><strong>category</strong> = Which categories to show in the list</li>
 <li><strong>order</strong> = ASC or DESC based on post created time.</li>
-<li><strong>type</strong> = "upcoming" or "past" - To show only upcoming meeting based on start time (Update to meeting is required for old post type meetings). Do not add to show all meetings.</li>
+<li><strong>type</strong> = "upcoming" or "past" - To show only upcoming meeting based on start time. (Remove this option to show all meetings).</li>
 <li><strong>filter</strong> = "yes" or "no" - Shows filter option for the list.</li>
+<li><strong>show_on_past</strong> = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.</li>
 </ul>
 <p><strong>NOTE: This was added in version 3.3.4 so, old meetings which were created might need to be updated in order for this shortcode to work properly.</strong></p>
 <h3 id="3-list-upcoming-or-past-webinars">3. List Upcoming or Past Webinars</h3>
 <p>Use: <code>[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]</code></p>
 <p>Where,</p>
 <ul>
+<li><strong>author</strong> = Author ID of the posts to display.</li>
 <li><strong>per_page</strong> = Number of posts to show per page</li>
 <li><strong>category</strong> = Which categories to show in the list</li>
 <li><strong>order</strong> = ASC or DESC based on post created time.</li>
-<li><strong>type</strong> = "upcoming" or "past" - To show only upcoming meeting based on start time (Update to meeting is required for old post type meetings). Do not add to show all meetings.</li>
+<li><strong>type</strong> = "upcoming" or "past" - To show only upcoming webinars based on start time. (Remove this option to show all webinars).</li>
 <li><strong>filter</strong> = "yes" or "no" - Shows filter option for the list.</li>
+<li><strong>show_on_past</strong> = "yes" or "no" - Default is "yes", this parameter will show webinars for 30 minutes after the past date, if upcoming type is defined.</li>
 </ul>
 <h3 id="4-list-meetings-based-on-host-id">4. List Meetings based on HOST ID</h3>
 <p>Use: <code>[zoom_list_host_meetings host="YOUR_HOST_ID"]</code></p>
