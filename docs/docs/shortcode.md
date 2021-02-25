@@ -5,8 +5,8 @@ With new version you can grab your shortcode with just a click.
 ### Types
 
 1. `[zoom_api_link meeting_id="" link_only="no"]`
-2. `[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming"]` 
-3. `[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming"]` 
+2. `[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
+3. `[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
 4. `[zoom_list_host_meetings host="YOUR_HOST_ID"]`
 5. `[zoom_api_webinar meeting_id="YOUR_WEBINAR_ID" link_only="no"]`
 6. `[zoom_list_host_webinars host="YOUR_HOST_ID"]`
@@ -29,7 +29,7 @@ Your frontend page should look like:
 
 ### 2. List Upcoming or Past Meetings
 
-Use: `[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]`
+Use: `[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]`
 
 Where,
 
@@ -40,12 +40,13 @@ Where,
 * **type** = "upcoming" or "past" - To show only upcoming meeting based on start time. (Remove this option to show all meetings).
 * **filter** = "yes" or "no" - Shows filter option for the list.
 * **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.
+* **cols** = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.
 
 **NOTE: This was added in version 3.3.4 so, old meetings which were created might need to be updated in order for this shortcode to work properly.**
 
 ### 3. List Upcoming or Past Webinars 
 
-Use: `[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]`
+Use: `[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]`
 
 Where,
 
@@ -56,6 +57,7 @@ Where,
 * **type** = "upcoming" or "past" - To show only upcoming webinars based on start time. (Remove this option to show all webinars).
 * **filter** = "yes" or "no" - Shows filter option for the list.
 * **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show webinars for 30 minutes after the past date, if upcoming type is defined.
+* **cols** = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.
 
 ### 4. List Meetings based on HOST ID
 
