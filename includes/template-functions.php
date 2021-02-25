@@ -530,6 +530,7 @@ function video_conference_zoom_after_jbh_html() {
         var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
     </script>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/jquery.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react.production.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
     <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react-dom.production.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
@@ -546,6 +547,7 @@ function video_conference_zoom_after_jbh_html() {
     <script src="<?php echo 'https://source.zoom.us/zoom-meeting-' . ZVC_ZOOM_WEBSDK_VERSION . '.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
 <?php } ?>
     <script src="<?php echo ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/zoom-meeting.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+<?php do_action( 'vczapi_join_via_browser_after_script_load' ); ?>
     </body>
     </html>
 	<?php
@@ -556,6 +558,7 @@ function video_conference_zoom_after_jbh_html() {
  * Before POST LOOP hook
  */
 function video_conference_zoom_before_post_loop() {
+	global $zoom_meetings;
 	unset( $GLOBALS['zoom'] );
 	$post_id               = get_the_id();
 	$show_zoom_author_name = get_option( 'zoom_show_author' );
@@ -575,5 +578,25 @@ function video_conference_zoom_before_post_loop() {
 			$set_terms[] = $term->name;
 		}
 		$GLOBALS['zoom']['terms'] = $set_terms;
+	}
+
+	if ( ! empty( $zoom_meetings ) && ! empty( $zoom_meetings->columns ) ) {
+		$columns = 'vczapi-col-4';
+		switch ( $zoom_meetings->columns ) {
+			case 3:
+				$columns = 'vczapi-col-4';
+				break;
+			case 2:
+				$columns = 'vczapi-col-6';
+				break;
+			case 4:
+				$columns = 'vczapi-col-3';
+				break;
+			case 1:
+				$columns = 'vczapi-col-12';
+				break;
+		}
+
+		$GLOBALS['zoom']['columns'] = $columns;
 	}
 }

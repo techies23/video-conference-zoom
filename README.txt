@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.30
+Stable tag: 3.6.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,11 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.31 February 25th, 2021 =
+* Added: 'vczapi_join_via_browser_after_script_load' action hook for additional scripts to be added in join via browser page.
+* Added: Column parameter for [zoom_list_meetings] and [zoom_list_webinars] shortcodes.
+* Changed: CSS Grid layout for Meeting list page and shortcode listing pages.
 
 = 3.6.30 February 24th, 2021 =
 * Added: Dutch translation file added - Thanks to "Gijsbert van Luinen" for providing the translation files.

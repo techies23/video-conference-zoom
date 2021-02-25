@@ -26,6 +26,10 @@
   padding-bottom: 1.5em;
 }
 
+.vczapi-pb-3 {
+  padding-bottom: 3em;
+}
+
 .vczapi-pt {
   padding-top: 1.5em;
 }
@@ -50,8 +54,8 @@
 .vczapi-col-12 {
   position: relative;
   width: 100%;
-  padding-right: 5px;
-  padding-left: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .vczapi-form-control {
@@ -78,6 +82,27 @@
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 25%;
+  }
+
+  .vczapi-col-6 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .vczapi-col-8 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+
+  .vczapi-col-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 

@@ -187,6 +187,23 @@ class MeetingList extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'cols',
+			[
+				'name'        => 'cols',
+				'label'       => __( 'Column Layout', 'video-conferencing-with-zoom-api' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'label_block' => true,
+				'options'     => [
+					1 => '1 column layout',
+					2 => '2 column layout',
+					3 => '3 column layout',
+					4 => '4 column layout',
+				],
+				'default'     => 3
+			]
+		);
+
 		$this->end_controls_section();
 
 	}
@@ -232,8 +249,9 @@ class MeetingList extends Widget_Base {
 		$filter       = ! empty( $settings['filter'] ) ? $settings['filter'] : 'no';
 		$author_id    = ! empty( $settings['author_id'] ) ? 'author=' . $settings['author_id'] : '';
 		$show_on_past = ! empty( $settings['show_on_past'] ) ? $settings['show_on_past'] : 'yes';
+		$columns      = ! empty( $settings['cols'] ) ? 'cols=' . $settings['cols'] : 3;
 
-		echo do_shortcode( '[zoom_list_meetings ' . $author_id . ' show_on_past="' . esc_attr( $show_on_past ) . '" filter="' . esc_attr( $filter ) . '" per_page="' . esc_attr( $count ) . '" category="' . esc_attr( $category ) . '" order="' . esc_attr( $order ) . '" type="' . esc_attr( $type ) . '"]' );
+		echo do_shortcode( '[zoom_list_meetings ' . $author_id . ' show_on_past="' . esc_attr( $show_on_past ) . '" filter="' . esc_attr( $filter ) . '" per_page="' . esc_attr( $count ) . '" ' . $columns . ' category="' . esc_attr( $category ) . '" order="' . esc_attr( $order ) . '" type="' . esc_attr( $type ) . '"]' );
 	}
 
 	/**

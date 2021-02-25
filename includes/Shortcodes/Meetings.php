@@ -111,7 +111,8 @@ class Meetings {
 				'order'        => 'DESC',
 				'type'         => '',
 				'filter'       => 'yes',
-				'show_on_past' => 'yes'
+				'show_on_past' => 'yes',
+				'cols'         => 3
 			),
 			$atts, 'zoom_list_meetings'
 		);
@@ -152,7 +153,7 @@ class Meetings {
 		}
 
 		if ( ! empty( $atts['type'] ) && ! empty( $query_args['meta_query'] ) ) {
-		    //NOTE !!!! When using this filter please correctly send minutes or hours otherwise it will output error
+			//NOTE !!!! When using this filter please correctly send minutes or hours otherwise it will output error
 			$threshold_limit = apply_filters( 'vczapi_list_cpt_meetings_threshold', '30 minutes' );
 			if ( $atts['show_on_past'] === "yes" && ! empty( $threshold_limit ) ) {
 				$threshold = ( $atts['type'] === "upcoming" ) ? vczapi_dateConverter( 'now -' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false ) : vczapi_dateConverter( 'now +' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false );
@@ -187,7 +188,8 @@ class Meetings {
 		$content       = '';
 
 		unset( $GLOBALS['zoom_meetings'] );
-		$GLOBALS['zoom_meetings'] = $zoom_meetings;
+		$GLOBALS['zoom_meetings']          = $zoom_meetings;
+		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
 		vczapi_get_template( 'shortcode-listing.php', true, false );
 		$content .= ob_get_clean();

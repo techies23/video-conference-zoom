@@ -104,17 +104,9 @@
 
 .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-string { font-size: 0.45em; width: 100%; text-transform: uppercase; }
 
-.vczapi-list-zoom-meetings--items { display: flex; flex-wrap: wrap; }
-
-.vczapi-list-zoom-meetings--item { width: 100%; margin-bottom: 20px; }
+.vczapi-list-zoom-meetings--item { margin-bottom: 20px; margin-left: 0; margin-right: 0 !important; }
 
 .vczapi-list-zoom-meetings--item__image { margin-bottom: 20px; }
-
-@media screen and (min-width: 767px) { .vczapi-list-zoom-meetings--item { width: 45%; }
-  .vczapi-list-zoom-meetings--item { margin-right: 5%; } }
-
-@media screen and (min-width: 1200px) { .vczapi-list-zoom-meetings--item { width: 25%; }
-  .vczapi-list-zoom-meetings--item { margin-right: 5%; } }
 
 .vczapi-list-zoom-meetings--item__image { box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); }
 
@@ -134,18 +126,23 @@
 
 .vczapi-pb { padding-bottom: 1.5em; }
 
+.vczapi-pb-3 { padding-bottom: 3em; }
+
 .vczapi-pt { padding-top: 1.5em; }
 
 .vczapi-pl { padding-left: 1.5em; }
 
 .vczapi-pr { padding-right: 1.5em; }
 
-.vczapi-col-2, .vczapi-col-3, .vczapi-col-4, .vczapi-col-5, .vczapi-col-6, .vczapi-col-8, .vczapi-col-9, .vczapi-col-10, .vczapi-col-11, .vczapi-col-12 { position: relative; width: 100%; padding-right: 5px; padding-left: 5px; }
+.vczapi-col-2, .vczapi-col-3, .vczapi-col-4, .vczapi-col-5, .vczapi-col-6, .vczapi-col-8, .vczapi-col-9, .vczapi-col-10, .vczapi-col-11, .vczapi-col-12 { position: relative; width: 100%; padding-right: 10px; padding-left: 10px; }
 
 .vczapi-form-control { padding: .75em; height: auto; border-width: 1px; border-style: solid; border-color: #eaeaea; border-radius: 2px; background: #fafafa; box-shadow: none; box-sizing: border-box; transition: all .2s linear; }
 
 @media (min-width: 768px) { .vczapi-col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-  .vczapi-col-3 { flex: 0 0 25%; max-width: 25%; } }
+  .vczapi-col-3 { flex: 0 0 25%; max-width: 25%; }
+  .vczapi-col-6 { flex: 0 0 50%; max-width: 50%; }
+  .vczapi-col-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .vczapi-col-12 { flex: 0 0 100%; max-width: 100%; } }
 
 .clearfix { clear: both; }
 

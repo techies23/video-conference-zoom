@@ -185,7 +185,8 @@ class Webinars {
 				'order'        => 'DESC',
 				'type'         => '',
 				'filter'       => 'yes',
-				'show_on_past' => 'yes'
+				'show_on_past' => 'yes',
+				'cols'         => 3
 			),
 			$atts, 'zoom_list_webinars'
 		);
@@ -257,7 +258,8 @@ class Webinars {
 		$content       = '';
 
 		unset( $GLOBALS['zoom_meetings'] );
-		$GLOBALS['zoom_meetings'] = $zoom_meetings;
+		$GLOBALS['zoom_meetings']          = $zoom_meetings;
+		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
 		vczapi_get_template( 'shortcode-listing.php', true );
 		$content .= ob_get_clean();

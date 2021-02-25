@@ -28,7 +28,7 @@ if ( ! is_object( $zoom_meetings ) && ! ( $zoom_meetings instanceof \WP_Query ) 
 	do_action( 'vczapi_before_shortcode_content_post_loop', $zoom_meetings );
 	?>
 
-    <div class="vczapi-list-zoom-meetings--items">
+    <div class="vczapi-wrap">
 		<?php
 		if ( $zoom_meetings->have_posts() ) {
 			while ( $zoom_meetings->have_posts() ) {

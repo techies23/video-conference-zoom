@@ -17,8 +17,9 @@ if ( ! vczapi_pro_version_active() && ( $zoom['api']->type === 8 || $zoom['api']
 
 do_action( 'vczapi_before_loop_zoom_listing_shortcode' );
 
+$columns = ! empty( $zoom['columns'] ) ? $zoom['columns'] : 'vczapi-col-4';
 ?>
-    <div class="vczapi-list-zoom-meetings--item">
+    <div class="<?php echo $columns; ?> vczapi-pb-3">
 		<?php if ( has_post_thumbnail() ) { ?>
             <div class="vczapi-list-zoom-meetings--item__image">
 				<?php the_post_thumbnail(); ?>
