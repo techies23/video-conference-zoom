@@ -15,6 +15,10 @@
   transform: translate(-50%, -50%);
   z-index: 1;
 
+  &--container {
+    width: 400px;
+  }
+
   .vczapi-zoom-browser-meeting--meeting-form {
     input[type=text],
     input[type=password],
@@ -40,7 +44,6 @@
     background: #fff;
     padding: 20px 30px;
     margin-bottom: 10px;
-    width: 400px;
 
     ul {
       list-style: none;

@@ -276,7 +276,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 				'title',
 				'editor',
 				'author',
-				'thumbnail',
+				'thumbnail'
 			),
 			'rewrite'            => array( 'slug' => apply_filters( 'vczapi_cpt_slug', $this->post_type ) ),
 		);

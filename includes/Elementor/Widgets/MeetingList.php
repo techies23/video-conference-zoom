@@ -91,6 +91,17 @@ class MeetingList extends Widget_Base {
 		);
 
 		$this->add_control(
+			'author_id',
+			[
+				'name'        => 'Author ID',
+				'label'       => __( 'Author ID', 'video-conferencing-with-zoom-api' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'label_block' => true,
+				'description' => __( 'Show meeting posts based on Author ID', 'video-conferencing-with-zoom-api' )
+			]
+		);
+
+		$this->add_control(
 			'category',
 			[
 				'name'        => 'category',
@@ -160,6 +171,39 @@ class MeetingList extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_on_past',
+			[
+				'name'        => 'show_on_past',
+				'label'       => __( 'Meeting Display Threshold', 'video-conferencing-with-zoom-api' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'label_block' => true,
+				'options'     => [
+					'yes' => 'Yes',
+					'no'  => 'No'
+				],
+				'default'     => 'yes',
+				'description' => __( 'Setting this to yes will display meetings for 30 minutes more after the meeting date has passed. This will only work if Meeting Type is defined.', 'video-conferencing-with-zoom-api' )
+			]
+		);
+
+		$this->add_control(
+			'cols',
+			[
+				'name'        => 'cols',
+				'label'       => __( 'Column Layout', 'video-conferencing-with-zoom-api' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'label_block' => true,
+				'options'     => [
+					1 => '1 column layout',
+					2 => '2 column layout',
+					3 => '3 column layout',
+					4 => '4 column layout',
+				],
+				'default'     => 3
+			]
+		);
+
 		$this->end_controls_section();
 
 	}
@@ -198,13 +242,16 @@ class MeetingList extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$count    = ! empty( $settings['count'] ) ? $settings['count'] : 5;
-		$category = ! empty( $settings['category'] ) ? implode( ',', $settings['category'] ) : '';
-		$type     = ! empty( $settings['type'] ) ? $settings['type'] : '';
-		$order    = ! empty( $settings['order'] ) ? $settings['order'] : 'DESC';
-		$filter   = ! empty( $settings['filter'] ) ? $settings['filter'] : 'no';
+		$count        = ! empty( $settings['count'] ) ? $settings['count'] : 5;
+		$category     = ! empty( $settings['category'] ) ? implode( ',', $settings['category'] ) : '';
+		$type         = ! empty( $settings['type'] ) ? $settings['type'] : '';
+		$order        = ! empty( $settings['order'] ) ? $settings['order'] : 'DESC';
+		$filter       = ! empty( $settings['filter'] ) ? $settings['filter'] : 'no';
+		$author_id    = ! empty( $settings['author_id'] ) ? 'author=' . $settings['author_id'] : '';
+		$show_on_past = ! empty( $settings['show_on_past'] ) ? $settings['show_on_past'] : 'yes';
+		$columns      = ! empty( $settings['cols'] ) ? 'cols=' . $settings['cols'] : 3;
 
-		echo do_shortcode( '[zoom_list_meetings filter="' . esc_attr( $filter ) . '" per_page="' . esc_attr( $count ) . '" category="' . esc_attr( $category ) . '" order="' . esc_attr( $order ) . '" type="' . esc_attr( $type ) . '"]' );
+		echo do_shortcode( '[zoom_list_meetings ' . $author_id . ' show_on_past="' . esc_attr( $show_on_past ) . '" filter="' . esc_attr( $filter ) . '" per_page="' . esc_attr( $count ) . '" ' . $columns . ' category="' . esc_attr( $category ) . '" order="' . esc_attr( $order ) . '" type="' . esc_attr( $type ) . '"]' );
 	}
 
 	/**

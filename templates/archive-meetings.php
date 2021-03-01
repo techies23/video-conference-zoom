@@ -32,7 +32,7 @@ do_action( 'vczapi_before_main_archive_content' );
 		if ( have_posts() ) {
 			?>
             <div class="vczapi-list-zoom-meetings">
-                <div class="vczapi-list-zoom-meetings--items">
+                <div class="vczapi-wrap">
 					<?php
 					// Start the Loop.
 					while ( have_posts() ) {

@@ -17,7 +17,7 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
 	return;
 }
 ?>
-<div class="vczapi-list-zoom-meetings--item">
+<div class="vczapi-col-3 vczapi-pb-3">
 	<?php if ( has_post_thumbnail() ) { ?>
         <div class="vczapi-list-zoom-meetings--item__image">
             <?php the_post_thumbnail(); ?>

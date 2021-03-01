@@ -179,11 +179,14 @@ class Webinars {
 	public function list_cpt_webinars( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'per_page' => 5,
-				'category' => '',
-				'order'    => 'DESC',
-				'type'     => '',
-				'filter'   => 'yes'
+				'author'       => '',
+				'per_page'     => 5,
+				'category'     => '',
+				'order'        => 'DESC',
+				'type'         => '',
+				'filter'       => 'yes',
+				'show_on_past' => 'yes',
+				'cols'         => 3
 			),
 			$atts, 'zoom_list_webinars'
 		);
@@ -215,11 +218,23 @@ class Webinars {
 			)
 		);
 
+		if ( ! empty( $atts['author'] ) ) {
+			$query_args['author'] = absint( $atts['author'] );
+		}
+
 		if ( ! empty( $atts['type'] ) && ! empty( $query_args['meta_query'] ) ) {
+			//NOTE !!!! When using this filter please correctly send minutes or hours otherwise it will output error
+			$threshold_limit = apply_filters( 'vczapi_list_cpt_meetings_threshold', '30 minutes' );
+			if ( $atts['show_on_past'] === "yes" && ! empty( $threshold_limit ) ) {
+				$threshold = ( $atts['type'] === "upcoming" ) ? vczapi_dateConverter( 'now -' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false ) : vczapi_dateConverter( 'now +' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false );
+			} else {
+				$threshold = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
+			}
+
 			$type       = ( $atts['type'] === "upcoming" ) ? '>=' : '<=';
 			$meta_query = array(
 				'key'     => '_meeting_field_start_date_utc',
-				'value'   => vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false ),
+				'value'   => $threshold,
 				'compare' => $type,
 				'type'    => 'DATETIME'
 			);
@@ -243,7 +258,8 @@ class Webinars {
 		$content       = '';
 
 		unset( $GLOBALS['zoom_meetings'] );
-		$GLOBALS['zoom_meetings'] = $zoom_meetings;
+		$GLOBALS['zoom_meetings']          = $zoom_meetings;
+		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
 		vczapi_get_template( 'shortcode-listing.php', true );
 		$content .= ob_get_clean();

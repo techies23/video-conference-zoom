@@ -1,32 +1,12 @@
 .vczapi-list-zoom-meetings {
-  &--items {
-    display: flex;
-    flex-wrap: wrap;
-  }
 
   &--item {
-    width: 100%;
     margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0 !important;
 
     &__image {
       margin-bottom: 20px;
-    }
-  }
-
-  @media screen and (min-width: 767px) {
-    &--item {
-      width: 45%;
-    }
-    &--item {
-      margin-right: 5%;
-    }
-  }
-  @media screen and (min-width: 1200px) {
-    &--item {
-      width: 25%;
-    }
-    &--item {
-      margin-right: 5%;
     }
   }
 

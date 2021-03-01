@@ -20,14 +20,17 @@ Where,
 
 ### 3. List Meetings with Register Now button
 
-Use: `[vczapi_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" show="meeting"]`
+Use: `[vczapi_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" show="meeting" cols="3"]`
 
 **NOTE: This shortcode will show register now button if a meeting is enabled registration.**
 
 Where,
 
+* **author** = Author ID of the posts to display.
 * **per_page** = Number of posts per page
 * **category** = Show assigned category lists
 * **order** = Show order of posts "DESC" or "ASC"
 * **type** = options => upcoming or past
 * **show** = options => meeting or webinar
+* **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.
+* **cols** = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.

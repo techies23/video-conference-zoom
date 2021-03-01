@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 3.6.29
+Stable tag: 3.6.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,8 @@ There’s a [GIT repository](https://github.com/techies23/video-conference-zoom 
 
 Please consider giving a 5 star thumbs up if you found this useful.
 
+Lastly, Thank you all to those contributors who have contributed for this plugin in one or the other way. Taking from language translations to minor or major suggestions. We appreciate your input in every way !!
+
 **QUICK DEMO:**
 
 [youtube https://www.youtube.com/watch?v=5Z2Ii0PnHRQ]
@@ -175,6 +177,17 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.31 March 1st, 2021 =
+* Added: 'vczapi_join_via_browser_after_script_load' action hook for additional scripts to be added in join via browser page.
+* Added: Column parameter for [zoom_list_meetings] and [zoom_list_webinars] shortcodes.
+* Changed: CSS Grid layout for Meeting list page and shortcode listing pages.
+
+= 3.6.30 February 24th, 2021 =
+* Added: Dutch translation file added - Thanks to "Gijsbert van Luinen" for providing the translation files.
+* Fixed: Width for join via browser fields when browser info is removed.
+* Added: Show meetings after the event date has passed for about 30 minutes more. This can be done by adding "show_on_past" in [zoom_list_meetings] or [zoom_list_webinars] - By default this is set to true.
+* Added: Theme style enqueued in join via browser pages for additional css changes.
 
 = 3.6.29 February 15th, 2021 =
 * Fixed: Recordings list shortcode pulled via UUID for recurring meeting fix.
