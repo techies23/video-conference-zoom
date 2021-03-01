@@ -15,7 +15,7 @@
     
     
       
-        <title>Dokan (Addon) - Video Conferencing with Zoom Documentation</title>
+        <title>Dokan Integration for Zoom (Addon) - Video Conferencing with Zoom Documentation</title>
       
     
     
@@ -88,7 +88,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Dokan (Addon)
+              Dokan Integration for Zoom (Addon)
             
           </span>
         </div>
@@ -404,7 +404,7 @@
 
   <li class="md-nav__item">
     <a href="../assign_host/" class="md-nav__link">
-      Assign Host Page
+      Host to WP
     </a>
   </li>
 
@@ -522,12 +522,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Dokan (Addon)
+        Dokan Integration for Zoom (Addon)
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      Dokan (Addon)
+      Dokan Integration for Zoom (Addon)
     </a>
     
       
@@ -570,9 +570,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#in-development" class="md-nav__link">
-    In Development
+  <a href="#woocommerce-booking-integration" class="md-nav__link">
+    WooCommerce Booking Integration
   </a>
+  
+    <nav class="md-nav" aria-label="WooCommerce Booking Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-settings" class="md-nav__link">
+    Basic Settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -686,9 +712,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#in-development" class="md-nav__link">
-    In Development
+  <a href="#woocommerce-booking-integration" class="md-nav__link">
+    WooCommerce Booking Integration
   </a>
+  
+    <nav class="md-nav" aria-label="WooCommerce Booking Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-settings" class="md-nav__link">
+    Basic Settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -709,7 +761,7 @@
                   </a>
                 
                 
-                  <h1>Dokan (Addon)</h1>
+                  <h1>Dokan Integration for Zoom (Addon)</h1>
                 
                 <p><strong>This Addon is for Dokan</strong> you can get it <a href="https://wordpress.org/plugins/dokan-lite/">here</a>.</p>
 <h2 id="prerequisite">Prerequisite</h2>
@@ -733,15 +785,22 @@
 <p><img alt="Dokan_Product" src="../img/dokan/connect-meeting.png" title="Dokan connect Product to meeting" /></p>
 <hr />
 <h2 id="assign-host-to-vendor">Assign Host to Vendor</h2>
-<p>At the moment it is not possible for vendors to add their own Zoom Account - they have to be added under the admins Zoom Account.
- The admin of the site or the account used to connect to Zoom on the site should be a paid account. Only then will the site admin be able to add users under their Zoom account. This becomes useful when you want your vendors to be able to use different zoom accounts.  </p>
-<p>By default, Vendors will be able to select all the hosts under a Zoom Account. 
-If you want the vendors to be only be able to create meetings with a particular Host then you will need to go to 
-Zoom Meetings &gt; Dokan Vendors 
+<p>At the moment it is not possible for vendors to add their own Zoom Account - they have to be added under the admins Zoom Account. The admin of the site or the account used to connect to Zoom on the site should be a paid account. Only then will the site admin be able to add users under their Zoom account. This becomes useful when you want your vendors to be able to use different zoom accounts.</p>
+<p>By default, Vendors will be able to select all the hosts under a Zoom Account. If you want the vendors to be only be able to create meetings with a particular Host then you will need to go to Zoom Meetings &gt; Dokan Vendors
 <img alt="Assign_Vendors" src="../img/dokan/assign-vendors.png" title="Assing Vendors" /></p>
 <hr />
-<h2 id="in-development">In Development</h2>
-<p>Before purchase, it should be noted that Dokan Integration for Zoom is currently only available for core WooCommerce. WooCommerce Bookings is not supported yet.</p>
+<h2 id="woocommerce-booking-integration">WooCommerce Booking Integration</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>These plugins are required before Zoom can be enable with Dokan + WooCommerce Bookings.</p>
+<ul>
+<li><a href="https://woocommerce.com/products/woocommerce-bookings/">WooCommerce Bookings</a></li>
+<li>Either Dokan Pro Module with WC Booking Integration enabled <a href="https://wedevs.com/dokan/pricing]">Dokan Business</a> or <a href="https://wedevs.com/dokan/extensions/woocommerce-booking-integration/">WooCommerce Booking Integration Module</a></li>
+<li><a href="https://www.codemanas.com/downloads/zoom-integration-for-woocommerce-booking/">Zoom Integration for WooCommerce Bookings</a> </li>
+</ul>
+<h4 id="basic-settings">Basic Settings</h4>
+<p>After all of the required plugins are installed. Vendors will now see a new field when creating their Bookable Products.
+<img alt="Enable Zoom Meeting for Bookable Product" src="../img/dokan/enable-zoom-meetings.png" />
+Enabling Zoom Meeting here for a product will create a Zoom Meeting when the bookable product is booked. For more information of how it works please check out  <a href="woocoommerce-bookings.md">Zoom Integration for WooCommerce Bookings Documentation</a>.</p>
                 
               
               
