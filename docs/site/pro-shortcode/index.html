@@ -698,7 +698,7 @@
 <li><strong>show_calendar_views</strong> = give ability to user to see calendar in different views - default value is "no", use "yes" to show other views</li>
 </ul>
 <h3 id="3-list-meetings-with-register-now-button">3. List Meetings with Register Now button</h3>
-<p>Use: <code>[vczapi_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" show="meeting"]</code></p>
+<p>Use: <code>[vczapi_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" show="meeting" cols="3"]</code></p>
 <p><strong>NOTE: This shortcode will show register now button if a meeting is enabled registration.</strong></p>
 <p>Where,</p>
 <ul>
@@ -709,6 +709,7 @@
 <li><strong>type</strong> = options =&gt; upcoming or past</li>
 <li><strong>show</strong> = options =&gt; meeting or webinar</li>
 <li><strong>show_on_past</strong> = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.</li>
+<li><strong>cols</strong> = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.</li>
 </ul>
                 
               

@@ -93,7 +93,7 @@ Where,
 
 Embeds your meeting in an IFRAME for any page or post you insert this shortcode into.
 
-<strong style="color:red;">Although this embed feature is here. I do no garauntee this would work properly as this is not natively supported by Zoom itself. This is here only because of user requests. USE THIS AT OWN RISK !!</strong>
+<strong style="color:red;">Although this embed feature is here there are alot of known issues with ZoomWebSDK at the moment. USE THIS AT OWN RISK !!</strong>
 
 Use: `[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes" passcode="1232132121" webinar="no"]`
 

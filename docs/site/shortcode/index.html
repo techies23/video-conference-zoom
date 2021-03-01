@@ -828,8 +828,8 @@
 <h3 id="types">Types</h3>
 <ol>
 <li><code>[zoom_api_link meeting_id="" link_only="no"]</code></li>
-<li><code>[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming"]</code> </li>
-<li><code>[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming"]</code> </li>
+<li><code>[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]</code> </li>
+<li><code>[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]</code> </li>
 <li><code>[zoom_list_host_meetings host="YOUR_HOST_ID"]</code></li>
 <li><code>[zoom_api_webinar meeting_id="YOUR_WEBINAR_ID" link_only="no"]</code></li>
 <li><code>[zoom_list_host_webinars host="YOUR_HOST_ID"]</code></li>
@@ -847,7 +847,7 @@
 <p>Your frontend page should look like:</p>
 <p><img src="https://deepenbajracharya.com.np/wp-content/uploads/2019/11/Meetings-%E2%80%93-Plugin-Tester-1024x520.png"></p>
 <h3 id="2-list-upcoming-or-past-meetings">2. List Upcoming or Past Meetings</h3>
-<p>Use: <code>[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]</code></p>
+<p>Use: <code>[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]</code></p>
 <p>Where,</p>
 <ul>
 <li><strong>author</strong> = Author ID of the posts to display.</li>
@@ -857,10 +857,11 @@
 <li><strong>type</strong> = "upcoming" or "past" - To show only upcoming meeting based on start time. (Remove this option to show all meetings).</li>
 <li><strong>filter</strong> = "yes" or "no" - Shows filter option for the list.</li>
 <li><strong>show_on_past</strong> = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.</li>
+<li><strong>cols</strong> = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.</li>
 </ul>
 <p><strong>NOTE: This was added in version 3.3.4 so, old meetings which were created might need to be updated in order for this shortcode to work properly.</strong></p>
 <h3 id="3-list-upcoming-or-past-webinars">3. List Upcoming or Past Webinars</h3>
-<p>Use: <code>[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]</code></p>
+<p>Use: <code>[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]</code></p>
 <p>Where,</p>
 <ul>
 <li><strong>author</strong> = Author ID of the posts to display.</li>
@@ -870,6 +871,7 @@
 <li><strong>type</strong> = "upcoming" or "past" - To show only upcoming webinars based on start time. (Remove this option to show all webinars).</li>
 <li><strong>filter</strong> = "yes" or "no" - Shows filter option for the list.</li>
 <li><strong>show_on_past</strong> = "yes" or "no" - Default is "yes", this parameter will show webinars for 30 minutes after the past date, if upcoming type is defined.</li>
+<li><strong>cols</strong> = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.</li>
 </ul>
 <h3 id="4-list-meetings-based-on-host-id">4. List Meetings based on HOST ID</h3>
 <p>Use: <code>[zoom_list_host_meetings host="YOUR_HOST_ID"]</code></p>
