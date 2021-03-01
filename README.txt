@@ -178,7 +178,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.6.31 February 25th, 2021 =
+= 3.6.31 March 1st, 2021 =
 * Added: 'vczapi_join_via_browser_after_script_load' action hook for additional scripts to be added in join via browser page.
 * Added: Column parameter for [zoom_list_meetings] and [zoom_list_webinars] shortcodes.
 * Changed: CSS Grid layout for Meeting list page and shortcode listing pages.
