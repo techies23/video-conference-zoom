@@ -28,16 +28,23 @@ After successfully installing all the required plugins. If you log in as a vendo
 
 ## Assign Host to Vendor
 
-At the moment it is not possible for vendors to add their own Zoom Account - they have to be added under the admins Zoom Account.
- The admin of the site or the account used to connect to Zoom on the site should be a paid account. Only then will the site admin be able to add users under their Zoom account. This becomes useful when you want your vendors to be able to use different zoom accounts.  
+At the moment it is not possible for vendors to add their own Zoom Account - they have to be added under the admins Zoom Account. The admin of the site or the account used to connect to Zoom on the site should be a paid account. Only then will the site admin be able to add users under their Zoom account. This becomes useful when you want your vendors to be able to use different zoom accounts.
 
-By default, Vendors will be able to select all the hosts under a Zoom Account. 
-If you want the vendors to be only be able to create meetings with a particular Host then you will need to go to 
-Zoom Meetings > Dokan Vendors 
+By default, Vendors will be able to select all the hosts under a Zoom Account. If you want the vendors to be only be able to create meetings with a particular Host then you will need to go to Zoom Meetings > Dokan Vendors
 ![Assign_Vendors](img/dokan/assign-vendors.png"Assing Vendors")
 
 ---
 
-## In Development
+## WooCommerce Booking Integration
 
-Before purchase, it should be noted that Dokan Integration for Zoom is currently only available for core WooCommerce. WooCommerce Bookings is not supported yet.
+### Prerequisites
+These plugins are required before Zoom can be enable with Dokan + WooCommerce Bookings.
+
+- [WooCommerce Bookings](https://woocommerce.com/products/woocommerce-bookings/)
+- Either Dokan Pro Module with WC Booking Integration enabled [Dokan Business](https://wedevs.com/dokan/pricing]) or [WooCommerce Booking Integration Module](https://wedevs.com/dokan/extensions/woocommerce-booking-integration/)
+- [Zoom Integration for WooCommerce Bookings](https://www.codemanas.com/downloads/zoom-integration-for-woocommerce-booking/) 
+
+#### Basic Settings
+After all of the required plugins are installed. Vendors will now see a new field when creating their Bookable Products.
+![Enable Zoom Meeting for Bookable Product](img/dokan/enable-zoom-meetings.png)
+Enabling Zoom Meeting here for a product will create a Zoom Meeting when the bookable product is booked. For more information of how it works please check out  [Zoom Integration for WooCommerce Bookings Documentation](woocoommerce-bookings.md).
