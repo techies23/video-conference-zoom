@@ -422,6 +422,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#join-via-browser-show-fields" class="md-nav__link">
+    Join via browser show fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatically-allow-users-to-join-meeting-from-browser" class="md-nav__link">
+    Automatically allow users to join meeting from browser
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#show-cutom-roles-in-host-to-wp-page" class="md-nav__link">
+    Show cutom roles in "HOST TO WP" page.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#before-create-a-zoom-user" class="md-nav__link">
     Before Create a Zoom User
   </a>
@@ -480,13 +501,6 @@
         <li class="md-nav__item">
   <a href="#enable-gutenberg-support-for-zoom-meeting-edit-page-on-backend" class="md-nav__link">
     Enable Gutenberg Support for Zoom Meeting edit page on backend.
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#join-via-browser-show-fields" class="md-nav__link">
-    Join via browser show fields
   </a>
   
 </li>
@@ -721,6 +735,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#join-via-browser-show-fields" class="md-nav__link">
+    Join via browser show fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatically-allow-users-to-join-meeting-from-browser" class="md-nav__link">
+    Automatically allow users to join meeting from browser
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#show-cutom-roles-in-host-to-wp-page" class="md-nav__link">
+    Show cutom roles in "HOST TO WP" page.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#before-create-a-zoom-user" class="md-nav__link">
     Before Create a Zoom User
   </a>
@@ -783,13 +818,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#join-via-browser-show-fields" class="md-nav__link">
-    Join via browser show fields
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -821,6 +849,41 @@
 <h3 id="rename-zoom-meetings-slug">Rename "zoom-meetings" Slug</h3>
 <p>Add below to your functions.php file in your theme. Change "your-slug-name" to the slug you want. Then flush your permalink from <strong>wp-adming &gt; settings &gt; permalink</strong> and save.</p>
 <p><a href="https://gist.github.com/techies23/377f019396c3eaf0903f193a9c0b5251">View Implementation</a></p>
+<h3 id="join-via-browser-show-fields">Join via browser show fields</h3>
+<p>If you want to show extra fields or hide them, add below code to your functions.php in your theme.</p>
+<pre>add_filter('vczapi_api_join_via_browser_params', 'vczapi_jvb_fields');
+function vczapi_jvb_fields( $fields ) {
+    $fields = [
+        'meetingInfo'       => [
+            'topic',
+            'host',
+            #'mn',
+            #'pwd',
+            #'telPwd',
+            #'invite',
+            #'participant',
+            #'dc',
+            #'enctype',
+            #'report'
+        ],
+        'disableRecord'     => false,
+        'disableJoinAudio'  => false,
+        'isSupportChat'     => true, //Enable or disable chat
+        'isSupportQA'       => true, //Enable or disable QA
+        'isSupportBreakout' => true, //Enable or disable breakout rooms
+        'isSupportCC'       => true, //Enable or disable CC
+        'screenShare'       => true //Enable or disable Screenshare
+    ];
+    return $fields;
+}</pre>
+
+<h3 id="automatically-allow-users-to-join-meeting-from-browser">Automatically allow users to join meeting from browser</h3>
+<p>This below code allows you to redirect your users to meeting without needing to click join button manually.</p>
+<p><strong>Please NOTE: If user is not logged in, this code will not work because when joining a meeting from browser - User name is a required field and since this below code directly triggers the join button on load. Users will not be able to join the meeting without a name.</strong></p>
+<p><strong>The reason this would work with logged in users is because username is already selected in the join via browser page if a user is logged in.</strong></p>
+<p><a href="https://gist.github.com/techies23/02aee51835fd785896e97567113b95d3" target="_blank">View Implementation</a></p>
+<h3 id="show-cutom-roles-in-host-to-wp-page">Show cutom roles in "HOST TO WP" page.</h3>
+<p><a href="https://gist.github.com/techies23/685bb40d5fd6d09b9debe6e6726ccb4e" target="_blank">View Implementation</a></p>
 <h3 id="before-create-a-zoom-user">Before Create a Zoom User</h3>
 <ul>
 <li><code>apply_filters( 'vczapi_createAUser', $data );</code> </li>
@@ -866,33 +929,6 @@
 <ul>
 <li><code>add_filter( 'vczapi_cpt_show_in_rest', '__return_true' );</code> </li>
 </ul>
-<h3 id="join-via-browser-show-fields">Join via browser show fields</h3>
-<p>If you want to show extra fields or hide them, add below code to your functions.php in your theme.</p>
-<pre>add_filter('vczapi_api_join_via_browser_params', 'vczapi_jvb_fields');
-function vczapi_jvb_fields( $fields ) {
-    $fields = [
-        'meetingInfo'       => [
-            'topic',
-            'host',
-            #'mn',
-            #'pwd',
-            #'telPwd',
-            #'invite',
-            #'participant',
-            #'dc',
-            #'enctype',
-            #'report'
-        ],
-        'disableRecord'     => false,
-        'disableJoinAudio'  => false,
-        'isSupportChat'     => true, //Enable or disable chat
-        'isSupportQA'       => true, //Enable or disable QA
-        'isSupportBreakout' => true, //Enable or disable breakout rooms
-        'isSupportCC'       => true, //Enable or disable CC
-        'screenShare'       => true //Enable or disable Screenshare
-    ];
-    return $fields;
-}</pre>
                 
               
               
