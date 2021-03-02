@@ -131,6 +131,7 @@ final class Bootstrap {
 
 		//Loading Includes
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/Datastore.php';
 
 		//AJAX CALLS SCRIPTS
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-ajax.php';
@@ -190,7 +191,7 @@ final class Bootstrap {
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', array( 'jquery' ), $this->plugin_version, true );
 
 		if ( $hook === $pg . "video-conferencing-reports" || $hook === $pg . "video-conferencing-recordings" ) {
-			wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css',false, $this->plugin_version );
+			wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css', false, $this->plugin_version );
 		}
 
 		//Plugin Scripts

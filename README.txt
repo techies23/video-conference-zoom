@@ -181,6 +181,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 = 3.6.32 March 2nd, 2021 =
 * Added: Plugin settings menu
 * Added: 'vczapi_admin_meeting_fields' filter hook to filter results when create/update post type.
+* Added: Filter upcoming or past meetings in wp-admin
 
 = 3.6.31 March 1st, 2021 =
 * Added: 'vczapi_join_via_browser_after_script_load' action hook for additional scripts to be added in join via browser page.

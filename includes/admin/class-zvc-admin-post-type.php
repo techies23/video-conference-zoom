@@ -67,6 +67,73 @@ class Zoom_Video_Conferencing_Admin_PostType {
 		add_filter( 'manage_' . $this->post_type . '_posts_columns', array( $this, 'add_columns' ), 20 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'column_data' ), 20, 2 );
 		add_action( 'manage_edit-' . $this->post_type . '_sortable_columns', array( $this, 'sortable_data' ), 30 );
+		add_filter( 'views_edit-' . $this->post_type, [ $this, 'addFiltersOnSubSubSub' ] );
+		add_filter( 'pre_get_posts', [ $this, 'filter_posts' ] );
+	}
+
+	/**
+	 * Filter posts based on query strings
+	 *
+	 * @param $query
+	 *
+	 * @return mixed
+	 */
+	public function filter_posts( $query ) {
+		global $pagenow;
+
+		if ( 'edit.php' != $pagenow || ! $query->is_admin || $query->query['post_type'] != $this->post_type ) {
+			return $query;
+		}
+
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'zoom-meetings' && $query->query['post_type'] === $this->post_type ) {
+			$type = isset( $_GET['type'] ) ? $_GET['type'] : false;
+			$now  = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
+			if ( $type === "upcoming" ) {
+				$meta_query = [
+					[
+						'key'     => '_meeting_field_start_date_utc',
+						'value'   => $now,
+						'compare' => '>=',
+						'type'    => 'DATETIME'
+					]
+				];
+
+				$query->set( 'meta_query', $meta_query );
+			} else if ( $type === "past" ) {
+				$meta_query = [
+					[
+						'key'     => '_meeting_field_start_date_utc',
+						'value'   => $now,
+						'compare' => '<=',
+						'type'    => 'DATETIME'
+					]
+				];
+
+				$query->set( 'meta_query', $meta_query );
+			}
+		}
+
+		return $query;
+	}
+
+	/**
+	 * Add Filters on SUB SUB SUB column
+	 *
+	 * @param $views
+	 *
+	 * @return mixed
+	 */
+	public function addFiltersOnSubSubSub( $views ) {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] !== "zoom-meetings" ) {
+			return $views;
+		}
+
+		$upcoming          = isset( $_GET['type'] ) && $_GET['type'] === "upcoming" ? 'class="current"' : '';
+		$past              = isset( $_GET['type'] ) && $_GET['type'] === "past" ? 'class="current"' : '';
+		$views['upcoming'] = sprintf( '<a href="%s" ' . $upcoming . '>' . __( "Upcoming", "video-conferencing-with-zoom-api" ) . '</a>', admin_url( '/edit.php?post_type=zoom-meetings&type=upcoming' ) );
+		$views['past']     = sprintf( '<a href="%s" ' . $past . '>' . __( "Past", "video-conferencing-with-zoom-api" ) . '</a>', admin_url( '/edit.php?post_type=zoom-meetings&type=past' ) );
+
+		return $views;
 	}
 
 	/**
@@ -83,7 +150,6 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			unset( $submenu['edit.php?post_type=zoom-meetings'][10] );
 			unset( $submenu['edit.php?post_type=zoom-meetings'][15] );
 		}
-
 	}
 
 	/**
@@ -351,7 +417,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 				if ( ! empty( $meeting_details->code ) && ! empty( $meeting_details->message ) ) {
 					?>
                     <p>
-                        <strong>Meeting has not been created for this post yet. Publish your meeting or hit update to create a new one for this post !</strong>
+                        <strong><?php _e( 'Meeting has not been created for this post yet. Publish your meeting or hit update to create a new one for this post !', 'video-conferencing-with-zoom-api' ) ?></strong>
                     </p>
 					<?php
 					echo '<p style="color:red;font-size:18px;"><strong>Zoom Error:</strong> ' . $meeting_details->message . '</p>';
@@ -362,10 +428,10 @@ class Zoom_Video_Conferencing_Admin_PostType {
 					$join_url = ! empty( $meeting_details->encrypted_password ) ? vczapi_get_pwd_embedded_join_link( $meeting_details->join_url, $meeting_details->encrypted_password ) : $meeting_details->join_url;
 					?>
                     <div class="zoom-metabox-content">
-                        <p><a target="_blank" href="<?php echo esc_url( $meeting_details->start_url ); ?>" title="Start URL">Start Meeting</a></p>
-                        <p><a target="_blank" href="<?php echo esc_url( $join_url ); ?>" title="Start URL">Join Meeting</a></p>
-                        <p><a target="_blank" href="<?php echo esc_url( $zoom_host_url ); ?>" title="Start URL">Start via Browser</a></p>
-                        <p><strong>Meeting ID:</strong> <?php echo $meeting_details->id; ?></p>
+                        <p><a target="_blank" href="<?php echo esc_url( $meeting_details->start_url ); ?>" title="Start URL"><?php _e( 'Start Meeting', 'video-conferencing-with-zoom-api' ) ?></a></p>
+                        <p><a target="_blank" href="<?php echo esc_url( $join_url ); ?>" title="Start URL"><?php _e( 'Join Meeting', 'video-conferencing-with-zoom-api' ) ?></a></p>
+                        <p><a target="_blank" href="<?php echo esc_url( $zoom_host_url ); ?>" title="Start URL"><?php _e( 'Start via Browser', 'video-conferencing-with-zoom-api' ) ?></a></p>
+                        <p><strong><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ) ?>:</strong> <?php echo $meeting_details->id; ?></p>
 						<?php do_action( 'vczapi_meeting_details_admin', $meeting_details ); ?>
                     </div>
                     <hr>
