@@ -47,6 +47,7 @@ final class Bootstrap {
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
 	}
 
 	public function autoloader() {
@@ -249,5 +250,29 @@ final class Bootstrap {
 		update_option( '_zvc_user_lists_expiry_time', '' );
 
 		flush_rewrite_rules();
+	}
+
+	/**
+	 * Add Action links to plugins page.
+	 *
+	 * @param $actions
+	 * @param $plugin_file
+	 *
+	 * @return array
+	 */
+	public function action_link( $actions, $plugin_file ) {
+		static $plugin;
+
+		if ( ! isset( $plugin ) ) {
+			$plugin = ZVC_PLUGIN_ABS_NAME;
+		}
+
+		if ( $plugin == $plugin_file ) {
+			$settings = array( 'settings' => '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">' . __( 'Settings', 'video-conferencing-with-zoom-api' ) . '</a>' );
+
+			$actions = array_merge( $settings, $actions );
+		}
+
+		return $actions;
 	}
 }

@@ -516,6 +516,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			update_post_meta( $post_id, '_meeting_field_start_date_utc', $e->getMessage() );
 		}
 
+		$create_meeting_arr = apply_filters( 'vczapi_admin_meeting_fields', $create_meeting_arr );
+
 		//Create Zoom Meeting Now
 		$meeting_id = get_post_meta( $post_id, '_meeting_zoom_meeting_id', true );
 		if ( empty( $meeting_id ) ) {
