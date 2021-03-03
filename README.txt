@@ -3,7 +3,7 @@ Contributors: j__3rk, codemanas, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: 3.6.32
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
