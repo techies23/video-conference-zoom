@@ -122,6 +122,7 @@ function video_conference_zoom_meeting_join() {
 			'post_id'    => $post_id,
 			'page'       => 'single-meeting'
 		);
+		$data               = apply_filters( 'vczapi_single_meeting_localized_data', $data );
 		wp_localize_script( 'video-conferencing-with-zoom-api', 'mtg_data', $data );
 	} else {
 		echo "<p>" . __( 'Please login to join this meeting.', 'video-conferencing-with-zoom-api' ) . "</p>";

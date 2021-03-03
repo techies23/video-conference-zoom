@@ -32,12 +32,12 @@ class Timezone {
 		$start_date    = filter_input( INPUT_POST, 'start_date' );
 		$type          = filter_input( INPUT_POST, 'type' );
 
-		$user_meeting_time = vczapi_dateConverter( $start_date, $user_timezone, false );
+		$start_time        = vczapi_dateConverter( $start_date, $user_timezone, false );
 		$current_user_time = vczapi_dateConverter( 'now -1 hour', $user_timezone, false );
 		$show_defined_post = apply_filters( 'vczapi_show_join_links_specific_postID', array() );
 		$past_join_links   = get_option( 'zoom_past_join_links' );
 		$post_id           = absint( filter_input( INPUT_POST, 'post_id' ) );
-		if ( $current_user_time <= $user_meeting_time || $past_join_links || in_array( $post_id, $show_defined_post ) ) {
+		if ( $start_time >= $current_user_time || $past_join_links || in_array( $post_id, $show_defined_post ) ) {
 			if ( $type === "page" ) {
 				wp_send_json_success( $this->output_join_links_page( $post_id ) );
 			} else {
