@@ -104,8 +104,6 @@
 
 .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-string { font-size: 0.45em; width: 100%; text-transform: uppercase; }
 
-.vczapi-list-zoom-meetings--item { margin-bottom: 20px; margin-left: 0; margin-right: 0 !important; }
-
 .vczapi-list-zoom-meetings--item__image { margin-bottom: 20px; }
 
 .vczapi-list-zoom-meetings--item__image { box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); }
