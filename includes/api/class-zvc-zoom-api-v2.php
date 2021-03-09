@@ -454,7 +454,11 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 */
 		public function updateWebinar( $webinar_id, $data = array() ) {
 			$postData = apply_filters( 'vczapi_updateWebinar', $data );
-
+			//https://devforum.zoom.us/t/is-there-a-size-limit-for-the-agenda-field/11199
+			//data sanitization for agenda field - remove html tags and make sure it's only 2000 characters.
+			$agenda = strip_tags( html_entity_decode($data['agenda']),null );
+			$data['agenda'] = substr($agenda, 0,1999);
+			
 			return $this->sendRequest( 'webinars/' . $webinar_id, $postData, "PATCH" );
 		}
 
