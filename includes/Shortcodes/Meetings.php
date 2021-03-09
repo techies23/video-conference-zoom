@@ -47,7 +47,7 @@ class Meetings {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 
 		extract( shortcode_atts( array(
-			'meeting_id' => 'javascript:void(0);',
+			'meeting_id' => '',
 			'link_only'  => 'no',
 		), $atts ) );
 
@@ -87,6 +87,93 @@ class Meetings {
 				} else {
 					printf( __( 'Please try again ! Some error occured while trying to fetch meeting with id:  %d', 'video-conferencing-with-zoom-api' ), $meeting_id );
 				}
+			}
+		}
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Show Meeting based on POST ID
+	 *
+	 * @param $atts
+	 *
+	 * @return bool|false|string|void
+	 * @author Deepen
+	 *
+	 * @since  3.6.4
+	 */
+	public function show_meeting_by_postTypeID( $atts ) {
+	    extract( shortcode_atts( array(
+			'post_id' => ''
+		), $atts ) );
+
+		ob_start();
+
+		if ( empty( $post_id ) ) {
+			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . __( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . __( 'No post id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
+
+			return false;
+		}
+
+		unset( $GLOBALS['zoom'] );
+
+		wp_enqueue_style( 'video-conferencing-with-zoom-api' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
+
+		$date_format = get_option( 'zoom_api_date_time_format' );
+		if ( $date_format == 'custom' ) {
+			$date_format = get_option( 'zoom_api_custom_date_time_format' );
+			$date_format = vczapi_convertPHPToMomentFormat( $date_format );
+		}
+
+		$zoom_started        = get_option( 'zoom_started_meeting_text' );
+		$zoom_going_to_start = get_option( 'zoom_going_tostart_meeting_text' );
+		$zoom_ended          = get_option( 'zoom_ended_meeting_text' );
+		$translation_array   = apply_filters( 'vczapi_meeting_event_text', array(
+			'meeting_started'  => ! empty( $zoom_started ) ? $zoom_started : __( 'Meeting Has Started ! Click below join button to join meeting now !', 'video-conferencing-with-zoom-api' ),
+			'meeting_starting' => ! empty( $zoom_going_to_start ) ? $zoom_going_to_start : __( 'Click join button below to join the meeting now !', 'video-conferencing-with-zoom-api' ),
+			'meeting_ended'    => ! empty( $zoom_ended ) ? $zoom_ended : __( 'This meeting has been ended by the host.', 'video-conferencing-with-zoom-api' ),
+			'date_format'      => $date_format
+		) );
+		wp_localize_script( 'video-conferencing-with-zoom-api', 'zvc_strings', $translation_array );
+
+		$meeting = new \WP_Query( [ 'p' => $post_id, 'post_type' => $this->post_type ] );
+		if ( $meeting->have_posts() ) {
+			while ( $meeting->have_posts() ) {
+				$meeting->the_post();
+
+				$show_zoom_author_name = get_option( 'zoom_show_author' );
+				$GLOBALS['zoom']       = get_post_meta( get_the_id(), '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
+				$meeting_details       = get_post_meta( get_the_id(), '_meeting_zoom_details', true );
+
+				if ( ! empty( $show_zoom_author_name ) ) {
+					$meeting_author = vczapi_get_meeting_author( get_the_id(), $meeting_details );
+				} else {
+					$meeting_author = get_the_author();
+				}
+
+				$GLOBALS['zoom']['host_name'] = $meeting_author;
+				if ( ! empty( $meeting_details ) ) {
+					$GLOBALS['zoom']['api'] = get_post_meta( get_the_id(), '_meeting_zoom_details', true );
+				}
+
+				$terms = get_the_terms( get_the_id(), 'zoom-meeting' );
+				if ( ! empty( $terms ) ) {
+					$set_terms = array();
+					foreach ( $terms as $term ) {
+						$set_terms[] = $term->name;
+					}
+					$GLOBALS['zoom']['terms'] = $set_terms;
+				}
+
+				//Set flag that this is coming from shortcode instance
+				$GLOBALS['zoom']['shortcode'] = true;
+
+				vczapi_get_template_part( 'content', 'single-meeting' );
 			}
 		}
 

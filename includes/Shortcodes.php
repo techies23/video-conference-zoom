@@ -37,6 +37,7 @@ class Shortcodes {
 		$recordings       = Recordings::get_instance();
 		$this->shortcodes = array(
 			'zoom_api_link'              => array( $meetings, 'show_meeting_by_ID' ),
+			'zoom_meeting_post'          => array( $meetings, 'show_meeting_by_postTypeID' ),
 			'zoom_list_meetings'         => array( $meetings, 'list_cpt_meetings' ),
 			'zoom_list_host_meetings'    => array( $meetings, 'list_live_host_meetings' ),
 

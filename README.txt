@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.7
-Stable tag: 3.6.33
+Stable tag: 3.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,8 +19,9 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 **FEATURES:**
 
 * Manage WordPress posts and link them to Live Zoom meetings and Zoom Webinars.
-* Create Recurring meetings and Webinars ( PRO VERSION )
-* Enable registrations ( PRO VERSION )
+* Create Recurring meetings and Webinars (PRO)
+* Enable registrations (PRO)
+* Webhooks (PRO)
 * Override single and archive page templates via your theme.
 * JOIN DIRECTLY VIA WEB BROWSER FROM FRONTEND !
 * Start Links for post authors.
@@ -28,7 +29,7 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 * Start time and join links are shown according to local time compared with zoom timezone.
 * Show user recordings based on Zoom Account.
 * Display Webinars via Shortcode
-* Use PMI ( PRO VERSION )
+* Use PMI (PRO)
 * WCFM Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Appointments Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
@@ -41,8 +42,11 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 
 **DOCUMENTATION LINKS:**
 
+* [Installation](https://zoom.codemanas.com/integration/ "Installation")
+* [Full Shortcode Documentation](https://zoom.codemanas.com/shortcode/ "Shortcodes")
 * [Full Documentation](https://zoom.codemanas.com/ "Usage Documentation")
 * [Usage Documentation /w WP](https://deepenbajracharya.com.np/zoom-api-integration-with-wordpress/ "Usage Documentation")
+* [Webhooks](https://zoom.codemanas.com/webhooks/ "Webhooks")
 
 **EXTENDING AND MAKING MEETINGS PURCHASABLE:**
 
@@ -93,21 +97,7 @@ As an extension of the Zoom browser client, this SDK is intended for implementat
 
 **SHORTCODE:**
 
-**You can get your shorcodes from individual meetings after creating certain meeting. (From version 3.1.8+)**
-
-* [zoom_api_link meeting_id="123456789" link_only="no"] - Just enter your meeting ID and you are good to show your meeting in any page. Adding link_only="yes" would show join link only. See [Usage Documentation](https://techies23.github.io/video-conference-zoom/ "Usage Documentation") for more detail on usage.
-
-* [zoom_api_webinar webinar_id="YOUR_WEBINAR_ID" link_only="no"] - Show webinar details based on webinar ID.
-
-* [zoom_list_meetings per_page="5" category="test,test2,test3" order="DESC" filter="no"] - Show list of meetings in frontend via category, Edit shortcode template for table view.
-
-* [zoom_list_webinars per_page="5" category="test,test2,test3" order="DESC" filter="no"] - Show list of webinars in frontend via category, Edit shortcode template for table view.
-
-* [zoom_list_host_meetings host="your_host_id"] - Show list of meetings in frontend for specific HOST ID.
-
-* [zoom_recordings host_id="YOUR_HOST_ID" downloadable="yes"] - Show list of recordings based on HOST ID. By default downloadable is set to false.
-
-* [zoom_recordings_by_meeting meeting_id="MEETING_ID" downloadable="yes"] - which shows recordings based on meeting ID.
+[Full Shortcode Documentation](https://zoom.codemanas.com/shortcode/ "Shortcodes")
 
 **CONTRIBUTING**
 
@@ -177,6 +167,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.6.4 March 9th, 2021 =
+* Fixed: Validation for Agenda.
+* Added: Shortcode for displaying post type counter post. [zoom_meeting_post post_id="YOUR_POST_ID"]
 
 = 3.6.33 March 4th, 2021 =
 * Changed: CSS class re-added for backwards compatibility.
