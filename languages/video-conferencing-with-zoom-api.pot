@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2021-03-10 05:50+0000\n"
+"POT-Creation-Date: 2021-03-10 06:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
 #: templates/fragments/meeting-details.php:53
-#: templates/shortcode/zoom-post-type-meeting.php:91
 msgid " hour"
 msgid_plural " hours"
 msgstr[0] ""
@@ -26,8 +25,6 @@ msgstr[1] ""
 
 #: templates/fragments/meeting-details.php:53
 #: templates/fragments/meeting-details.php:55
-#: templates/shortcode/zoom-post-type-meeting.php:91
-#: templates/shortcode/zoom-post-type-meeting.php:93
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] ""
@@ -38,7 +35,6 @@ msgid "!!!ALERT!!!: "
 msgstr ""
 
 #: templates/fragments/meeting-details.php:70
-#: templates/shortcode/zoom-post-type-meeting.php:108
 #, php-format
 msgid "%sNote%s: Countdown time is shown based on your local timezone."
 msgstr ""
@@ -70,7 +66,7 @@ msgstr ""
 msgid "Action (Required)."
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:338
+#: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:340
 msgid "Actions"
 msgstr ""
 
@@ -255,7 +251,6 @@ msgid "By"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:41
-#: templates/shortcode/zoom-post-type-meeting.php:79
 msgid "Category"
 msgstr ""
 
@@ -363,7 +358,7 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:129 includes/Shortcodes/Meetings.php:325
+#: includes/Shortcodes/Webinars.php:129 includes/Shortcodes/Meetings.php:327
 msgid "Could not retrieve meetings, check Host ID"
 msgstr ""
 
@@ -416,7 +411,6 @@ msgid "Created webinar %s at %s. Join %s"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:63
-#: templates/shortcode/zoom-post-type-meeting.php:101
 msgid "Current Timezone"
 msgstr ""
 
@@ -442,7 +436,6 @@ msgid "DateTime Format"
 msgstr ""
 
 #: includes/Shortcodes.php:204 templates/fragments/countdown-timer.php:30
-#: templates/shortcode/zoom-post-type-meeting.php:33
 msgid "days"
 msgstr ""
 
@@ -478,7 +471,6 @@ msgid "Deleted Meeting with ID"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:20
-#: templates/shortcode/zoom-post-type-meeting.php:59
 msgid "Details"
 msgstr ""
 
@@ -550,7 +542,6 @@ msgstr ""
 #: includes/template-functions.php:398
 #: templates/fragments/meeting-details.php:49
 #: templates/shortcode/zoom-webinar.php:98
-#: templates/shortcode/zoom-post-type-meeting.php:87
 #: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
@@ -719,7 +710,7 @@ msgstr ""
 msgid "Host ID"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:107 includes/Shortcodes/Meetings.php:306
+#: includes/Shortcodes/Webinars.php:107 includes/Shortcodes/Meetings.php:308
 msgid "Host ID should be given when defining this shortcode."
 msgstr ""
 
@@ -738,7 +729,6 @@ msgid "Host Video"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:30
-#: templates/shortcode/zoom-post-type-meeting.php:68
 msgid "Hosted By"
 msgstr ""
 
@@ -747,7 +737,6 @@ msgid "Hosted By:"
 msgstr ""
 
 #: includes/Shortcodes.php:210 templates/fragments/countdown-timer.php:36
-#: templates/shortcode/zoom-post-type-meeting.php:39
 msgid "hours"
 msgstr ""
 
@@ -810,11 +799,10 @@ msgid ""
 msgstr ""
 
 #: includes/template-functions.php:146
-#: templates/shortcode/zoom-post-type-meeting.php:118
 msgid "Join Meeting via Zoom App"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:369
+#: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:371
 msgid "Join via App"
 msgstr ""
 
@@ -1006,7 +994,7 @@ msgstr ""
 msgid "Meeting State"
 msgstr ""
 
-#: includes/template-functions.php:305 includes/Shortcodes/Meetings.php:335
+#: includes/template-functions.php:305 includes/Shortcodes/Meetings.php:337
 msgid "Meeting Status"
 msgstr ""
 
@@ -1058,7 +1046,6 @@ msgid "Meetings Type"
 msgstr ""
 
 #: includes/Shortcodes.php:216 templates/fragments/countdown-timer.php:42
-#: templates/shortcode/zoom-post-type-meeting.php:45
 msgid "minutes"
 msgstr ""
 
@@ -1321,7 +1308,6 @@ msgid "Pro User"
 msgstr ""
 
 #: templates/fragments/countdown-timer.php:17
-#: templates/shortcode/zoom-post-type-meeting.php:7
 msgid "PRO version is required for this meeting to be displayed."
 msgstr ""
 
@@ -1435,7 +1421,6 @@ msgid "Searching From: "
 msgstr ""
 
 #: includes/Shortcodes.php:222 templates/fragments/countdown-timer.php:48
-#: templates/shortcode/zoom-post-type-meeting.php:51
 msgid "seconds"
 msgstr ""
 
@@ -1611,7 +1596,6 @@ msgstr ""
 
 #: templates/content-meeting.php:63 templates/fragments/meeting-details.php:35
 #: templates/shortcode/zoom-listing.php:66
-#: templates/shortcode/zoom-post-type-meeting.php:73
 msgid "Start"
 msgstr ""
 
@@ -1631,13 +1615,12 @@ msgstr ""
 #: includes/admin/class-zvc-admin-post-type.php:189
 #: includes/admin/class-zvc-admin-post-type.php:431
 #: templates/fragments/join-links.php:27
-#: templates/shortcode/zoom-post-type-meeting.php:131
 msgid "Start Meeting"
 msgstr ""
 
 #: includes/template-functions.php:364 includes/template-functions.php:372
 #: includes/template-functions.php:386 templates/content-meeting.php:49
-#: includes/Shortcodes/Webinars.php:140 includes/Shortcodes/Meetings.php:336
+#: includes/Shortcodes/Webinars.php:140 includes/Shortcodes/Meetings.php:338
 #: templates/shortcode/zoom-webinar.php:73
 #: templates/shortcode/zoom-webinar.php:81
 #: templates/shortcode/zoom-webinar.php:88
@@ -1808,6 +1791,10 @@ msgstr ""
 msgid "This meeting is no longer valid and cannot be joined !"
 msgstr ""
 
+#: includes/Shortcodes/Meetings.php:179
+msgid "This post does not exist."
+msgstr ""
+
 #: includes/views/live/tpl-assign-host-id.php:12
 msgid ""
 "This section allows you to assign \"Zoom\" host to your users from WordPress."
@@ -1827,7 +1814,7 @@ msgid ""
 msgstr ""
 
 #: includes/template-functions.php:392 templates/content-meeting.php:68
-#: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:337
+#: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:339
 #: templates/shortcode/zoom-webinar.php:93
 #: templates/shortcode/zoom-listing.php:71
 #: includes/views/webinars/tpl-edit-webinar.php:58
@@ -1851,10 +1838,9 @@ msgid "to generate the below API values from your Zoom account"
 msgstr ""
 
 #: includes/template-functions.php:301 includes/Shortcodes/Webinars.php:139
-#: includes/Shortcodes/Meetings.php:334
+#: includes/Shortcodes/Meetings.php:336
 #: templates/fragments/meeting-details.php:27
 #: templates/shortcode/zoom-webinar.php:25
-#: templates/shortcode/zoom-post-type-meeting.php:65
 #: templates/shortcode/zoom-recordings.php:23
 #: templates/shortcode/zoom-recordings-by-meeting.php:43
 #: includes/views/webinars/tpl-list-webinars.php:59
