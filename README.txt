@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.7
-Stable tag: 3.6.4
+Stable tag: 3.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,7 +168,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.6.40 March 9th, 2021 =
+= 3.7.0 March 10th, 2021 =
 * Fixed: Validation for Agenda.
 * Added: Shortcode for displaying post type counter post. [zoom_meeting_post post_id="YOUR_POST_ID"]
 * Updated: Zoom WebSDK to version 1.9.1 (https://github.com/zoom/websdk/blob/master/CHANGELOG.md)
