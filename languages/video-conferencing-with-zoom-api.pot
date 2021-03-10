@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2021-03-03 07:32+0000\n"
+"POT-Creation-Date: 2021-03-10 05:50+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
 #: templates/fragments/meeting-details.php:53
+#: templates/shortcode/zoom-post-type-meeting.php:91
 msgid " hour"
 msgid_plural " hours"
 msgstr[0] ""
@@ -25,6 +26,8 @@ msgstr[1] ""
 
 #: templates/fragments/meeting-details.php:53
 #: templates/fragments/meeting-details.php:55
+#: templates/shortcode/zoom-post-type-meeting.php:91
+#: templates/shortcode/zoom-post-type-meeting.php:93
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] ""
@@ -35,6 +38,7 @@ msgid "!!!ALERT!!!: "
 msgstr ""
 
 #: templates/fragments/meeting-details.php:70
+#: templates/shortcode/zoom-post-type-meeting.php:108
 #, php-format
 msgid "%sNote%s: Countdown time is shown based on your local timezone."
 msgstr ""
@@ -66,7 +70,7 @@ msgstr ""
 msgid "Action (Required)."
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:251
+#: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:338
 msgid "Actions"
 msgstr ""
 
@@ -149,7 +153,7 @@ msgstr ""
 msgid "An error occured. Host ID and Meeting ID not defined properly."
 msgstr ""
 
-#: includes/Shortcodes.php:176
+#: includes/Shortcodes.php:177
 msgid "and join via Zoom App."
 msgstr ""
 
@@ -251,6 +255,7 @@ msgid "By"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:41
+#: templates/shortcode/zoom-post-type-meeting.php:79
 msgid "Category"
 msgstr ""
 
@@ -328,7 +333,7 @@ msgstr ""
 msgid "Choose meeting from here to sync."
 msgstr ""
 
-#: includes/Bootstrap.php:112
+#: includes/Bootstrap.php:112 includes/Shortcodes/Meetings.php:138
 msgid "Click join button below to join the meeting now !"
 msgstr ""
 
@@ -358,7 +363,7 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:129 includes/Shortcodes/Meetings.php:238
+#: includes/Shortcodes/Webinars.php:129 includes/Shortcodes/Meetings.php:325
 msgid "Could not retrieve meetings, check Host ID"
 msgstr ""
 
@@ -411,6 +416,7 @@ msgid "Created webinar %s at %s. Join %s"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:63
+#: templates/shortcode/zoom-post-type-meeting.php:101
 msgid "Current Timezone"
 msgstr ""
 
@@ -435,7 +441,8 @@ msgstr ""
 msgid "DateTime Format"
 msgstr ""
 
-#: includes/Shortcodes.php:203 templates/fragments/countdown-timer.php:30
+#: includes/Shortcodes.php:204 templates/fragments/countdown-timer.php:30
+#: templates/shortcode/zoom-post-type-meeting.php:33
 msgid "days"
 msgstr ""
 
@@ -471,6 +478,7 @@ msgid "Deleted Meeting with ID"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:20
+#: templates/shortcode/zoom-post-type-meeting.php:59
 msgid "Details"
 msgstr ""
 
@@ -531,17 +539,18 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: includes/Shortcodes.php:183
+#: includes/Shortcodes.php:184
 msgid "Download App from Store"
 msgstr ""
 
-#: includes/Shortcodes.php:186
+#: includes/Shortcodes.php:187
 msgid "Download from Zoom"
 msgstr ""
 
 #: includes/template-functions.php:398
 #: templates/fragments/meeting-details.php:49
 #: templates/shortcode/zoom-webinar.php:98
+#: templates/shortcode/zoom-post-type-meeting.php:87
 #: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
@@ -631,8 +640,8 @@ msgstr ""
 msgid "Enter the date to check:"
 msgstr ""
 
-#: includes/Shortcodes.php:126 includes/Shortcodes/Webinars.php:59
-#: includes/Shortcodes/Meetings.php:60
+#: includes/Shortcodes.php:127 includes/Shortcodes/Webinars.php:59
+#: includes/Shortcodes/Meetings.php:60 includes/Shortcodes/Meetings.php:114
 msgid "ERROR: "
 msgstr ""
 
@@ -710,7 +719,7 @@ msgstr ""
 msgid "Host ID"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:107 includes/Shortcodes/Meetings.php:219
+#: includes/Shortcodes/Webinars.php:107 includes/Shortcodes/Meetings.php:306
 msgid "Host ID should be given when defining this shortcode."
 msgstr ""
 
@@ -729,14 +738,16 @@ msgid "Host Video"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:30
+#: templates/shortcode/zoom-post-type-meeting.php:68
 msgid "Hosted By"
 msgstr ""
 
-#: templates/content-meeting.php:30 templates/shortcode/zoom-listing.php:32
+#: templates/content-meeting.php:31 templates/shortcode/zoom-listing.php:33
 msgid "Hosted By:"
 msgstr ""
 
-#: includes/Shortcodes.php:209 templates/fragments/countdown-timer.php:36
+#: includes/Shortcodes.php:210 templates/fragments/countdown-timer.php:36
+#: templates/shortcode/zoom-post-type-meeting.php:39
 msgid "hours"
 msgstr ""
 
@@ -799,10 +810,11 @@ msgid ""
 msgstr ""
 
 #: includes/template-functions.php:146
+#: templates/shortcode/zoom-post-type-meeting.php:118
 msgid "Join Meeting via Zoom App"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:282
+#: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:369
 msgid "Join via App"
 msgstr ""
 
@@ -812,7 +824,7 @@ msgstr ""
 msgid "Join via Web Browser"
 msgstr ""
 
-#: includes/Shortcodes.php:180 templates/shortcode/join-links.php:18
+#: includes/Shortcodes.php:181 templates/shortcode/join-links.php:18
 #: templates/shortcode/webinar-join-links.php:18
 msgid "Join via Zoom App"
 msgstr ""
@@ -873,6 +885,7 @@ msgid "Local"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:225
+#: includes/Elementor/Widgets/MeetingByPostID.php:90
 #: includes/Elementor/Widgets/MeetingByID.php:92
 msgid "Meeting"
 msgstr ""
@@ -926,7 +939,7 @@ msgid ""
 "update to create a new one for this post !"
 msgstr ""
 
-#: includes/Bootstrap.php:111
+#: includes/Bootstrap.php:111 includes/Shortcodes/Meetings.php:137
 msgid "Meeting Has Started ! Click below join button to join meeting now !"
 msgstr ""
 
@@ -993,7 +1006,7 @@ msgstr ""
 msgid "Meeting State"
 msgstr ""
 
-#: includes/template-functions.php:305 includes/Shortcodes/Meetings.php:248
+#: includes/template-functions.php:305 includes/Shortcodes/Meetings.php:335
 msgid "Meeting Status"
 msgstr ""
 
@@ -1044,7 +1057,8 @@ msgstr ""
 msgid "Meetings Type"
 msgstr ""
 
-#: includes/Shortcodes.php:215 templates/fragments/countdown-timer.php:42
+#: includes/Shortcodes.php:216 templates/fragments/countdown-timer.php:42
+#: templates/shortcode/zoom-post-type-meeting.php:45
 msgid "minutes"
 msgstr ""
 
@@ -1077,7 +1091,7 @@ msgstr ""
 msgid "New Users"
 msgstr ""
 
-#: templates/content-meeting.php:41 templates/shortcode/zoom-listing.php:44
+#: templates/content-meeting.php:42 templates/shortcode/zoom-listing.php:45
 msgid "Next Occurrence"
 msgstr ""
 
@@ -1097,7 +1111,7 @@ msgstr ""
 msgid "No meeting ID is defined."
 msgstr ""
 
-#: includes/Shortcodes.php:126 includes/Shortcodes/Meetings.php:60
+#: includes/Shortcodes.php:127 includes/Shortcodes/Meetings.php:60
 msgid "No meeting id set in the shortcode"
 msgstr ""
 
@@ -1120,6 +1134,10 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:322
 msgid "No meetings found."
+msgstr ""
+
+#: includes/Shortcodes/Meetings.php:114
+msgid "No post id set in the shortcode"
 msgstr ""
 
 #: includes/views/webinars/tpl-edit-webinar.php:111
@@ -1151,7 +1169,7 @@ msgstr ""
 msgid "Not a Host"
 msgstr ""
 
-#: includes/Shortcodes.php:176
+#: includes/Shortcodes.php:177
 msgid ""
 "Note: If you are having trouble joining the meeting below, enter Meeting ID: "
 msgstr ""
@@ -1303,6 +1321,7 @@ msgid "Pro User"
 msgstr ""
 
 #: templates/fragments/countdown-timer.php:17
+#: templates/shortcode/zoom-post-type-meeting.php:7
 msgid "PRO version is required for this meeting to be displayed."
 msgstr ""
 
@@ -1338,7 +1357,7 @@ msgstr ""
 msgid "Recordings by Meeting"
 msgstr ""
 
-#: templates/content-meeting.php:56 templates/shortcode/zoom-listing.php:59
+#: templates/content-meeting.php:57 templates/shortcode/zoom-listing.php:60
 msgid "Recurring"
 msgstr ""
 
@@ -1373,7 +1392,7 @@ msgid ""
 "meeting is completed."
 msgstr ""
 
-#: includes/Shortcodes.php:132
+#: includes/Shortcodes.php:133
 msgid "Restricted access, please login to continue."
 msgstr ""
 
@@ -1415,11 +1434,12 @@ msgstr ""
 msgid "Searching From: "
 msgstr ""
 
-#: includes/Shortcodes.php:221 templates/fragments/countdown-timer.php:48
+#: includes/Shortcodes.php:222 templates/fragments/countdown-timer.php:48
+#: templates/shortcode/zoom-post-type-meeting.php:51
 msgid "seconds"
 msgstr ""
 
-#: templates/content-meeting.php:70 templates/shortcode/zoom-listing.php:75
+#: templates/content-meeting.php:71 templates/shortcode/zoom-listing.php:76
 msgid "See More"
 msgstr ""
 
@@ -1443,6 +1463,7 @@ msgstr ""
 msgid "Select a Host"
 msgstr ""
 
+#: includes/Elementor/Widgets/MeetingByPostID.php:113
 #: includes/Elementor/Widgets/MeetingByID.php:115
 msgid "Select a Meeting"
 msgstr ""
@@ -1457,6 +1478,7 @@ msgstr ""
 msgid "Select a User"
 msgstr ""
 
+#: includes/Elementor/Widgets/MeetingByPostID.php:82
 #: includes/Elementor/Widgets/MeetingByID.php:84
 msgid "Select a Zoom Meeting"
 msgstr ""
@@ -1587,8 +1609,9 @@ msgstr ""
 msgid "SSO Create"
 msgstr ""
 
-#: templates/content-meeting.php:62 templates/fragments/meeting-details.php:35
-#: templates/shortcode/zoom-listing.php:65
+#: templates/content-meeting.php:63 templates/fragments/meeting-details.php:35
+#: templates/shortcode/zoom-listing.php:66
+#: templates/shortcode/zoom-post-type-meeting.php:73
 msgid "Start"
 msgstr ""
 
@@ -1608,16 +1631,17 @@ msgstr ""
 #: includes/admin/class-zvc-admin-post-type.php:189
 #: includes/admin/class-zvc-admin-post-type.php:431
 #: templates/fragments/join-links.php:27
+#: templates/shortcode/zoom-post-type-meeting.php:131
 msgid "Start Meeting"
 msgstr ""
 
 #: includes/template-functions.php:364 includes/template-functions.php:372
-#: includes/template-functions.php:386 templates/content-meeting.php:48
-#: includes/Shortcodes/Webinars.php:140 includes/Shortcodes/Meetings.php:249
+#: includes/template-functions.php:386 templates/content-meeting.php:49
+#: includes/Shortcodes/Webinars.php:140 includes/Shortcodes/Meetings.php:336
 #: templates/shortcode/zoom-webinar.php:73
 #: templates/shortcode/zoom-webinar.php:81
 #: templates/shortcode/zoom-webinar.php:88
-#: templates/shortcode/zoom-listing.php:51
+#: templates/shortcode/zoom-listing.php:52
 #: includes/views/webinars/tpl-list-webinars.php:61
 #: includes/views/live/tpl-list-meetings.php:62
 msgid "Start Time"
@@ -1776,7 +1800,7 @@ msgstr ""
 msgid "This meeting has been ended by host."
 msgstr ""
 
-#: includes/Bootstrap.php:113
+#: includes/Bootstrap.php:113 includes/Shortcodes/Meetings.php:139
 msgid "This meeting has been ended by the host."
 msgstr ""
 
@@ -1802,10 +1826,10 @@ msgid ""
 "already past."
 msgstr ""
 
-#: includes/template-functions.php:392 templates/content-meeting.php:67
-#: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:250
+#: includes/template-functions.php:392 templates/content-meeting.php:68
+#: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:337
 #: templates/shortcode/zoom-webinar.php:93
-#: templates/shortcode/zoom-listing.php:70
+#: templates/shortcode/zoom-listing.php:71
 #: includes/views/webinars/tpl-edit-webinar.php:58
 #: includes/views/webinars/tpl-add-webinar.php:62
 #: includes/views/live/tpl-edit-meeting.php:80
@@ -1827,9 +1851,10 @@ msgid "to generate the below API values from your Zoom account"
 msgstr ""
 
 #: includes/template-functions.php:301 includes/Shortcodes/Webinars.php:139
-#: includes/Shortcodes/Meetings.php:247
+#: includes/Shortcodes/Meetings.php:334
 #: templates/fragments/meeting-details.php:27
 #: templates/shortcode/zoom-webinar.php:25
+#: templates/shortcode/zoom-post-type-meeting.php:65
 #: templates/shortcode/zoom-recordings.php:23
 #: templates/shortcode/zoom-recordings-by-meeting.php:43
 #: includes/views/webinars/tpl-list-webinars.php:59
@@ -1884,10 +1909,10 @@ msgid "Try inactive logout"
 msgstr ""
 
 #: includes/template-functions.php:324 includes/template-functions.php:379
-#: templates/content-meeting.php:55
+#: templates/content-meeting.php:56
 #: includes/admin/class-zvc-admin-post-type.php:188
 #: templates/shortcode/zoom-webinar.php:33
-#: templates/shortcode/zoom-listing.php:58
+#: templates/shortcode/zoom-listing.php:59
 #: includes/Elementor/Widgets/MeetingHosts.php:108
 msgid "Type"
 msgstr ""
@@ -2112,6 +2137,10 @@ msgstr ""
 #: includes/admin/class-zvc-admin-post-type.php:313
 msgctxt "Zoom Meeting"
 msgid "Zoom Meeting"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingByPostID.php:43
+msgid "Zoom Meeting by Post ID"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:310

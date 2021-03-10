@@ -104,7 +104,7 @@ class Meetings {
 	 * @since  3.6.4
 	 */
 	public function show_meeting_by_postTypeID( $atts ) {
-	    extract( shortcode_atts( array(
+		extract( shortcode_atts( array(
 			'post_id' => ''
 		), $atts ) );
 
@@ -175,6 +175,8 @@ class Meetings {
 
 				vczapi_get_template_part( 'content', 'single-meeting' );
 			}
+		} else {
+			echo "<p>" . __( 'This post does not exist.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
 
 		return ob_get_clean();

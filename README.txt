@@ -168,7 +168,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.6.4 March 9th, 2021 =
+= 3.6.40 March 9th, 2021 =
 * Fixed: Validation for Agenda.
 * Added: Shortcode for displaying post type counter post. [zoom_meeting_post post_id="YOUR_POST_ID"]
 * Updated: Zoom WebSDK to version 1.9.1 (https://github.com/zoom/websdk/blob/master/CHANGELOG.md)
