@@ -142,7 +142,7 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 	/**
 	 * Prepare POST DATA for API
 	 *
-	 * @param $postdata
+	 * @param      $postdata
 	 * @param bool $post WP_POST
 	 *
 	 * @return array
@@ -161,7 +161,8 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 			'option_participants_video' => $postdata['option_participants_video'],
 			'option_mute_participants'  => $postdata['option_mute_participants'],
 			'option_auto_recording'     => $postdata['option_auto_recording'],
-			'alternative_host_ids'      => $postdata['alternative_host_ids']
+			'alternative_host_ids'      => $postdata['alternative_host_ids'],
+			'disable_waiting_room'      => $postdata['disable_waiting_room']
 		);
 
 		return $mtg_param;
@@ -170,8 +171,8 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 	/**
 	 * Prepare POST DATA for API
 	 *
-	 * @param $meeting_id
-	 * @param $postdata
+	 * @param      $meeting_id
+	 * @param      $postdata
 	 * @param bool $post WP_POST
 	 *
 	 * @return array
@@ -190,7 +191,8 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 			'option_participants_video' => $postdata['option_participants_video'],
 			'option_mute_participants'  => $postdata['option_mute_participants'],
 			'option_auto_recording'     => $postdata['option_auto_recording'],
-			'alternative_host_ids'      => $postdata['alternative_host_ids']
+			'alternative_host_ids'      => $postdata['alternative_host_ids'],
+			'disable_waiting_room' => $postdata['disable_waiting_room']
 		);
 
 		return $mtg_param;
