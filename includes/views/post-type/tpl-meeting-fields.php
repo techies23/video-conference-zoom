@@ -195,6 +195,22 @@ if ( ! defined( 'ABSPATH' ) ) {
         </td>
     </tr>
     <tr>
+        <th scope="row">
+            <label for="disable-waiting-room"><?php _e( 'Disable Waiting Room', 'video-conferencing-with-zoom-api' ); ?></label></th>
+        <td>
+            <p class="description" id="disable-waiting-room">
+                <input type="checkbox" 
+                       id="disable-waiting-room"
+                       name="disable-waiting-room" 
+                       value="yes" 
+                    <?php 
+                    ! empty( $meeting_fields['disable_waiting_room'] ) ? checked( 'yes', $meeting_fields['disable_waiting_room'] ) : false; ?> class="regular-text">
+                <?php _e( 'Waiting Room is enabled by default - if you want users to skip the waiting room and join the meeting directly - enable this option.');
+                printf('<span style="color:red">%s</span>',__('Please keep in mind anyone with the meeting link will be able to join without you allowing them into the meeting.', 'video-conferencing-with-zoom-api' )); ?>
+            </p>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="meeting-authentication"><?php _e( 'Meeting Authentication', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
             <p class="description" id="meeting-authentication">

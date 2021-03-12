@@ -11,6 +11,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 	/**
 	 * Instance
+	 *
 	 * @var null
 	 */
 	private static $_instance = null;
@@ -37,12 +38,14 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 	/**
 	 * Hold API KEY
+	 *
 	 * @var mixed|void
 	 */
 	private $api_key;
 
 	/**
 	 * HOLD API SECRET KEY
+	 *
 	 * @var mixed|void
 	 */
 	private $api_secret;
@@ -503,8 +506,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int $post_id Post ID.
-	 * @param \WP_Post $post Post object.
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.
@@ -543,6 +546,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			'timezone'               => sanitize_text_field( filter_input( INPUT_POST, 'timezone' ) ),
 			'duration'               => $duration,
 			'password'               => $pwd,
+			'disable_waiting_room'   => filter_input( INPUT_POST, 'disable-waiting-room' ),
 			'meeting_authentication' => filter_input( INPUT_POST, 'meeting_authentication' ),
 			'option_host_video'      => filter_input( INPUT_POST, 'option_host_video' ),
 			'option_auto_recording'  => filter_input( INPUT_POST, 'option_auto_recording' ),
@@ -604,10 +608,10 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	 * @param $post
 	 * @param $create_meeting_arr
 	 *
-	 * @since  3.0.0
+	 * @since    3.0.0
 	 * @modified 3.5.3
 	 *
-	 * @author Deepen
+	 * @author   Deepen
 	 */
 	private function create_zoom_meeting( $post, $create_meeting_arr ) {
 		//Prepare Webinar Insert Data
@@ -646,8 +650,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	 * @param $updated_meeting_arr
 	 * @param $meeting_id
 	 *
-	 * @author Deepen
-	 * @since  3.0.0
+	 * @author   Deepen
+	 * @since    3.0.0
 	 * @modified 3.5.3
 	 */
 	private function update_zoom_meeting( $post, $updated_meeting_arr, $meeting_id ) {
