@@ -48,6 +48,7 @@ final class Bootstrap {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
+		add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
 	}
 
 	public function autoloader() {
@@ -119,6 +120,15 @@ final class Bootstrap {
 	}
 
 	/**
+	 * Include template files
+	 *
+	 * @since  3.7.1
+	 */
+	public function include_template_functions() {
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-functions.php';
+	}
+
+	/**
 	 * Load the other class dependencies
 	 *
 	 * @since    2.0.0
@@ -152,7 +162,6 @@ final class Bootstrap {
 
 		//Templates
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-hooks.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-functions.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Filters.php';
 
 		//Shortcode

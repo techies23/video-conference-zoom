@@ -75,6 +75,12 @@ function compileVendorScripts() {
     ])
         .pipe(gulp.dest('./assets/vendor/dtimepicker'));
 
+    //Crypto JS
+    gulp.src([
+        './node_modules/crypto-js/crypto-js.js',
+    ])
+        .pipe(gulp.dest('./assets/vendor/crypto-js'));
+
     //MomentJS
     gulp.src([
         './node_modules/moment/min/**/*',

@@ -10,6 +10,7 @@
     }
   }
 
+  //For backwards compatiblity
   .dpn-zvc-col-8,
   .dpn-zvc-col-4 {
     position: relative;
@@ -130,6 +131,7 @@
     }
   }
 
+  //For backwards compatiblity
   @media (min-width: 992px) {
     .dpn-zvc-col-8 {
       width: 66.66666667%;

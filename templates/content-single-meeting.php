@@ -6,6 +6,7 @@
  *
  * @author Deepen.
  * @created_on 11/19/19
+ * @updated 3.7.1
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -27,8 +28,8 @@ if ( post_password_required() ) {
 do_action( 'vczoom_before_content' );
 ?>
 
-    <div class="dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>" id="dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>">
-        <div class="dpn-zvc-col-8">
+    <div class="vczapi-wrap dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>" id="dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>">
+        <div class="vczapi-col-8">
 			<?php
 			/**
 			 *  Hook: vczoom_single_content_left
@@ -39,7 +40,7 @@ do_action( 'vczoom_before_content' );
 			do_action( 'vczoom_single_content_left' );
 			?>
         </div>
-        <div class="dpn-zvc-col-4">
+        <div class="vczapi-col-4">
             <div class="dpn-zvc-sidebar-wrapper">
 				<?php
 				/**

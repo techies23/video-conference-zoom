@@ -25,11 +25,11 @@ jQuery(function ($) {
     },
     loadMeeting: function loadMeeting(e) {
       e.preventDefault();
-      var meeting_id = zvc_ajx.meeting_id;
+      var meeting_id = atob(zvc_ajx.meeting_id);
       var API_KEY = false;
       var SIGNATURE = false;
       var REDIRECTION = zvc_ajx.redirect_page;
-      var PASSWD = zvc_ajx.meeting_pwd;
+      var PASSWD = atob(zvc_ajx.meeting_pwd);
       var EMAIL_USER = '';
       $('body').append('<span id="zvc-cover"></span>');
 
