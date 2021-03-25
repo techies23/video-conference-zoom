@@ -261,7 +261,7 @@ class Webinars {
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
-		vczapi_get_template( 'shortcode-listing.php', true );
+		vczapi_get_template( 'shortcode-listing.php', true, false );
 		$content .= ob_get_clean();
 
 		return $content;

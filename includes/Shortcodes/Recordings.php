@@ -137,7 +137,7 @@ class Recordings {
 			} else {
 				$GLOBALS['zoom_recordings']               = $recordings;
 				$GLOBALS['zoom_recordings']->downloadable = $downloadable;
-				vczapi_get_template( 'shortcode/zoom-recordings.php', true );
+				vczapi_get_template( 'shortcode/zoom-recordings.php', true, false );
 			}
 		} else {
 			_e( "No recordings found.", "video-conferencing-with-zoom-api" );
@@ -216,7 +216,7 @@ class Recordings {
 		}
 
 		if ( ! empty( $GLOBALS['zoom_recordings'] ) ) {
-			vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true );
+			vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true, false );
 		} else {
 			_e( "No recordings found.", "video-conferencing-with-zoom-api" );
 			?>
