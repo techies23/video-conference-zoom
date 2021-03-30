@@ -230,11 +230,11 @@ input.ui-button::-moz-focus-inner, button.ui-button::-moz-focus-inner { border: 
 
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 
-.ui-draggable-handle { touch-action: none; }
+.ui-draggable-handle { -ms-touch-action: none; touch-action: none; }
 
 .ui-resizable { position: relative; }
 
-.ui-resizable-handle { position: absolute; font-size: 0.1px; display: block; touch-action: none; }
+.ui-resizable-handle { position: absolute; font-size: 0.1px; display: block; -ms-touch-action: none; touch-action: none; }
 
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
 
@@ -262,7 +262,7 @@ input.ui-button::-moz-focus-inner, button.ui-button::-moz-focus-inner { border: 
 
 .ui-progressbar-indeterminate .ui-progressbar-value { background-image: none; }
 
-.ui-selectable { touch-action: none; }
+.ui-selectable { -ms-touch-action: none; touch-action: none; }
 
 .ui-selectable-helper { position: absolute; z-index: 100; border: 1px dotted black; }
 
@@ -282,12 +282,12 @@ input.ui-button::-moz-focus-inner, button.ui-button::-moz-focus-inner { border: 
 
 .ui-slider { position: relative; text-align: left; }
 
-.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; touch-action: none; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; -ms-touch-action: none; touch-action: none; }
 
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
 
 /* support: IE8 - See #6727 */
-.ui-slider.ui-state-disabled .ui-slider-handle, .ui-slider.ui-state-disabled .ui-slider-range { filter: inherit; }
+.ui-slider.ui-state-disabled .ui-slider-handle, .ui-slider.ui-state-disabled .ui-slider-range { -webkit-filter: inherit; filter: inherit; }
 
 .ui-slider-horizontal { height: .8em; }
 
@@ -309,7 +309,7 @@ input.ui-button::-moz-focus-inner, button.ui-button::-moz-focus-inner { border: 
 
 .ui-slider-vertical .ui-slider-range-max { top: 0; }
 
-.ui-sortable-handle { touch-action: none; }
+.ui-sortable-handle { -ms-touch-action: none; touch-action: none; }
 
 .ui-spinner { position: relative; display: inline-block; overflow: hidden; padding: 0; vertical-align: middle; }
 

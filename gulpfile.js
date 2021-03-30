@@ -118,7 +118,7 @@ function styles() {
             outputStyle: 'compact',
             precision: 10
         }))
-        .pipe(postcss([autoprefixer]))
+        .pipe(postcss([autoprefixer()]))
         .pipe(gulp.dest(paths.styles.dest))
         .pipe(cleanCSS({
             level: {

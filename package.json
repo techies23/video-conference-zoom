@@ -8,6 +8,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "browserslist": [
+    "defaults",
+    "> 1%",
+    "ie >= 8",
+    "edge >= 15",
+    "ie_mob >= 10",
+    "ff >= 45",
+    "chrome >= 45",
+    "safari >= 7",
+    "opera >= 23",
+    "ios >= 7",
+    "android >= 4",
+    "bb >= 10"
+  ],
   "repository": "https://github.com/techies23/video-conference-zoom",
   "dependencies": {
     "@zoomus/websdk": "^1.9.1",
@@ -25,21 +39,23 @@
     "react-redux": "7.1.0",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
+    "select": "^1.1.2",
     "select2": "^4.0.12"
   },
   "devDependencies": {
+    "postcss": "^8.2.8",
     "@babel/core": "^7.13.14",
     "@babel/preset-env": "^7.12.11",
-    "autoprefixer": "^9.7.3",
-    "del": "^5.1.0",
+    "autoprefixer": "^10.2.5",
+    "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rename": "^1.4.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
     "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2"
   }
 }
