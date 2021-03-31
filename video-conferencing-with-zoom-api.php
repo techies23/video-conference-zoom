@@ -23,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define('ZVC_PLUGIN_FILE',__FILE__);
 define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
 define( 'ZVC_PLUGIN_VERSION', '3.7.3' );
 define( 'ZVC_ZOOM_WEBSDK_VERSION', '1.9.1' );

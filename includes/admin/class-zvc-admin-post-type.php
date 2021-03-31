@@ -299,6 +299,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			'labels'            => $labels,
 			'show_ui'           => true,
 			'show_admin_column' => true,
+			'show_in_rest'      => true,
+			'rest_base'         => 'zoom_meeting_cats',
 			'query_var'         => true,
 		);
 
