@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import {__} from '@wordpress/i18n';
-import {unionBy} from 'lodash';
+import {isEqual, unionBy, intersectionWith} from 'lodash';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -36,7 +36,7 @@ import AsyncSelect from 'react-select/async';
  * @return {WPElement} Element to render.
  */
 export default function Edit(props) {
-    const {className, attributes, setAttributes} = props;
+    const {className, attributes, setAttributes, isSelected} = props;
     const {
         shortcodeType,
         orderBy,
@@ -52,7 +52,7 @@ export default function Edit(props) {
     const isStillMounted = useRef();
 
     const [availableCategories, setAvailableCategories] = useState([]);
-    const [availableUsers, setAvailableUsers] = useState([{label: 'None', value: 0}]);
+    const [availableUsers, setAvailableUsers] = useState([]);
 
     const getUsers = (inputValue) => {
         return apiFetch({path: '/wp/v2/users?per_page=5&search=' + inputValue}).then(
@@ -74,12 +74,14 @@ export default function Edit(props) {
         apiFetch({path: '/wp/v2/zoom_meeting_cats'}).then(
             zoomCats => {
                 if (isStillMounted.current === true) {
-                    const defaultCategories = [{label: 'None', value: ''}];
+
                     const formattedCategories = zoomCats.length > 0 ? zoomCats.map((cats, i) => {
                         return {label: cats.name + ' (' + cats.count + ')', value: cats.slug}
                     }) : [];
-                    // console.log(zoomCats);
-                    setAvailableCategories([...defaultCategories, ...formattedCategories]);
+
+                    setAvailableCategories((prevAvailableCategories) => {
+                        return [...prevAvailableCategories, ...formattedCategories]
+                    });
                 }
             }
         ).catch(() => {
@@ -117,7 +119,7 @@ export default function Edit(props) {
                 <PanelBody title="Settings" initialOpen={true}>
 
                     <SelectControl
-                        label={__('Show Meeting or Webinar', 'vczapi-pro')}
+                        label={__('Show Meeting or Webinar', 'video-conferencing-with-zoom-api')}
                         value={shortcodeType}
                         options={[
                             {label: "Meeting", value: "meeting"},
@@ -128,26 +130,26 @@ export default function Edit(props) {
                     />
 
                     <SelectControl
-                        label={__('Type of Meeting/Webinar to Show', 'vczapi-pro')}
+                        label={__('Type of Meeting/Webinar to Show', 'video-conferencing-with-zoom-api')}
                         value={displayType}
+                        onChange={(value) => setAttributes({displayType: value})}
                         options={[
                             {label: "Show All", value: ""},
                             {label: "Upcoming", value: "upcoming"},
                             {label: "Past", value: "past"},
                         ]}
                         help={"Show All,Upcoming or Past Meeting - default All"}
-                        onChange={(value) => setAttributes({displayType: value})}
                     />
 
                     {displayType === 'upcoming' && <CheckboxControl
-                        label={__('Show Meeting that have started', 'vczapi-pro')}
+                        label={__('Show Meeting that have started', 'video-conferencing-with-zoom-api')}
                         checked={showPastMeeting}
                         onChange={(value) => setAttributes({showPastMeeting: value})}
                         help={"will show meetings that have passed meeting start time - upto 30 minutes after the meeting was scheduled to start."}
                     />}
 
                     <SelectControl
-                        label={__("Show Filter", "vczapi-pro")}
+                        label={__("Show Filter", "video-conferencing-with-zoom-api")}
                         value={showFilter}
                         options={[
                             {label: 'Yes', value: 'yes'},
@@ -159,7 +161,7 @@ export default function Edit(props) {
                     />
 
                     <RangeControl
-                        label={__("Columns", 'vczapi-pro')}
+                        label={__("Columns", 'video-conferencing-with-zoom-api')}
                         value={columns}
                         help={"how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value."}
                         onChange={(value) => {
@@ -170,7 +172,7 @@ export default function Edit(props) {
                     />
 
                     <SelectControl
-                        label={__("Order By", "vczapi-pro")}
+                        label={__("Order By", "video-conferencing-with-zoom-api")}
                         value={orderBy}
                         options={[
                             {label: 'Default Sorting', value: ''},
@@ -182,35 +184,63 @@ export default function Edit(props) {
                         }}
                     />
 
-                    <SelectControl
-                        label={__("Categories", "vczapi-pro")}
-                        value={selectedCategory}
-                        options={availableCategories}
-                        onChange={(value) => {
-                            setAttributes({selectedCategory: value})
-                        }}
-                    />
+                    {isStillMounted.current === true &&
+                    <>
+                        <span>{__('Category', 'video-conferencing-with-zoom-api')}</span>
+                        <AsyncSelect
+                            cacheOptions
+                            defaultOptions={availableCategories}
+                            isMulti
+                            isClearable
+                            placeholder={__('Select categories - default All categories are shown', 'video-conferencing-with-zoom-api')}
+                            onChange={(selectedInput, {action}) => {
+                                console.log(action);
+                                if (action === "clear") {
+                                    setAttributes({selectedCategory: []});
+                                    return [];
+                                } else if (action === "remove-value") {
+                                    setAttributes({selectedCategory: selectedInput});
+                                    return selectedInput;
+                                } else if (action === "select-option") {
+                                    const newSelectedCategories = unionBy(selectedCategory, selectedInput, 'value');
+                                    setAttributes({selectedCategory: newSelectedCategories});
+                                    setAvailableUsers(prevAvailableCategory => {
+                                        return unionBy(prevAvailableCategory, [selectedInput], 'value');
+                                    });
+                                }
+
+
+                            }}
+                            defaultValue={intersectionWith(availableCategories, selectedCategory, isEqual)}
+                            className="components-base-control"
+                        />
+                    </>
+                    }
+
 
                     {isStillMounted.current === true &&
                     <>
-                        <span>{__('Author','vczapi-pro')}</span>
+                        <span>{__('Author', 'video-conferencing-with-zoom-api')}</span>
                         <AsyncSelect
                             cacheOptions
-                            textFieldProps={{
-                                label: 'Label',
-                                InputLabelProps: {
-                                    shrink: true,
-                                },
-                            }}
                             defaultOptions={availableUsers}
                             loadOptions={getUsers}
-                            onChange={(selectedUser) => {
-                                setAttributes({selectedAuthor: selectedUser.value});
-                                setAvailableUsers(prevAvailableUser => {
-                                    return unionBy(prevAvailableUser, [selectedUser], 'value');
-                                });
+                            isClearable
+                            placeholder={__('Select Author - Default All Authors are shown','video-conferencing-with-zoom-api')}
+                            onChange={(selectedUser, {action}) => {
+                                if (action === 'clear') {
+                                    setAttributes({selectedAuthor: 0});
+                                } else if (action === 'remove-value') {
+                                    setAttributes({selectedAuthor: selectedUser});
+                                } else {
+                                    setAttributes({selectedAuthor: selectedUser.value});
+                                    setAvailableUsers(prevAvailableUser => {
+                                        return unionBy(prevAvailableUser, [selectedUser], 'value');
+                                    });
+                                }
+
                             }}
-                            value={availableUsers.filter(option => option.value === selectedAuthor)}
+                            defaultValue={availableUsers.filter(option => option.value === selectedAuthor)}
                             className="components-base-control"
                         />
                     </>
@@ -219,7 +249,7 @@ export default function Edit(props) {
 
 
                     <RangeControl
-                        label={__('Number of Meetings/Webinars to show', 'vczapi-pro')}
+                        label={__('Number of Meetings/Webinars to show', 'video-conferencing-with-zoom-api')}
                         value={postsToShow}
                         onChange={(value) => setAttributes({postsToShow: value})}
                         min={1}

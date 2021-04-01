@@ -340,7 +340,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			'capabilities'       => apply_filters( 'vczapi_cpt_capabilities', array() ),
 			'has_archive'        => true,
 			'hierarchical'       => false,
-			'show_in_rest'       => apply_filters( 'vczapi_cpt_show_in_rest', false ),
+			'show_in_rest'       => apply_filters( 'vczapi_cpt_show_in_rest', true ),
+			'rest_base'          => 'zoom_meetings',
 			'menu_position'      => apply_filters( 'vczapi_cpt_menu_position', 5 ),
 			'map_meta_cap'       => apply_filters( 'vczapi_cpt_meta_cap', null ),
 			'supports'           => array(

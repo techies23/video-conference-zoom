@@ -52,7 +52,7 @@ class Blocks {
 				array(
 					'slug'  => 'vczapi-blocks',
 					'title' => __( 'Zoom', 'video-conferencing-with-zoom-api' ),
-					'icon'  => 'wordpress',
+					//'icon'  => 'wordpress',
 				),
 			)
 		);
@@ -61,7 +61,7 @@ class Blocks {
 	public function register_blocks() {
 
 		register_block_type( 'vczapi/list-meetings', [
-			"title"           => "Zoom List Upcoming or Past Meetings",
+			"title"           => "List Zoom Meetings",
 			"attributes"      => [
 				"shortcodeType"    => [
 					"type"    => "string",
@@ -84,8 +84,8 @@ class Blocks {
 					"default" => ""
 				],
 				"selectedCategory" => [
-					"type"    => "string",
-					"default" => ""
+					"type"    => "array",
+					"default" => []
 				],
 				"selectedAuthor"   => [
 					"type"    => "number",
@@ -101,12 +101,29 @@ class Blocks {
 				]
 			],
 			"category"        => "vczapi-blocks",
-			"icon"            => "smiley",
-			"description"     => "Zoom List Upcoming or Past Meetings",
+			"icon"            => "list-view ",
+			"description"     => "List Upcoming or Past Meetings/Webinars",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_list_meetings' ]
+		] );
+
+		register_block_type( 'vczapi/show-meeting-post', [
+			"title"           => "Embed Zoom Meeting",
+			"attributes"      => [
+				"postID" => [
+					"type"    => "number",
+					"default" => 0
+				]
+			],
+			"category"        => "vczapi-blocks",
+			"icon"            => "sticky",
+			"description"     => "Show a Meeting Post with Countdown",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_meeting_post' ]
 		] );
 	}
 
@@ -128,8 +145,22 @@ class Blocks {
 			$shortcode .= ' filter="' . $attributes['showFilter'] . '"';
 		}
 
-		if ( isset( $attributes['selectedCategory'] ) && ! empty( $attributes['selectedCategory'] ) ) {
-			$shortcode .= ' category="' . $attributes['selectedCategory'] . '"';
+		if ( isset( $attributes['selectedCategory'] ) && is_array( $attributes['selectedCategory'] ) && ! empty( $attributes['selectedCategory'] ) ) {
+			$categories_string = '';
+			$category_count    = count( $attributes['selectedCategory'] );
+			$separator         = ( $category_count > 1 ) ? ',' : '';
+			foreach ( $attributes['selectedCategory'] as $index => $category ) {
+				if ( $category['value'] == '' ) {
+					continue;
+				}
+				$separator         = ( $index + 1 ) ? $separator : '';
+				$categories_string .= $category['value'] . $separator;
+			}
+			unset( $separator );
+
+			if ( ! empty( $categories_string ) ) {
+				$shortcode .= ' category="' . $categories_string . '"';
+			}
 		}
 
 		if ( isset( $attributes['selectedAuthor'] ) && ! empty( $attributes['selectedAuthor'] ) ) {
@@ -144,12 +175,18 @@ class Blocks {
 			$shortcode .= ' cols="' . $attributes['columns'] . '"';
 		}
 
-		ob_start();
-		dump( $attributes );
-		print_r( $shortcode );
-		$attributes = ob_get_clean();
+		return do_shortcode( '[' . $shortcode . ']' );
+	}
 
-		return $attributes . do_shortcode( '[' . $shortcode . ']' );
+	public function render_meeting_post( $attributes ) {
+		$shortcode = 'zoom_meeting_post';
+		if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
+			$shortcode .= ' post_id="' . $attributes['postID'] . '"';
+		}
+		
+		ob_start();
+		echo do_shortcode( '['.$shortcode.']');
+		return ob_get_clean();
 	}
 }
 

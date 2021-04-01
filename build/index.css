@@ -1,8 +1,4 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
+.wp-block-create-block-starter-block{background-color:#21759b;color:#fff;padding:2px}
 
+.vczapi-blocks-show-meeting{display:flex;flex-wrap:wrap;align-items:center;width:100%}.vczapi-blocks-show-meeting--select{flex:1 1 auto;margin:0 8px 0 0}
 
-/*# sourceMappingURL=index.css.map*/
