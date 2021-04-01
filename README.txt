@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.7
-Stable tag: 3.7.3
+Stable tag: 3.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.7.4 March 30th, 2021 =
+* Added: Setting to disable auto password generation when creating a meeting from wp-admin.
 
 = 3.7.3 March 25th, 2021 =
 * Added: Capability to show multiple recording shortcode in single page. Same for Webinar list shortcode.

@@ -38,6 +38,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </td>
                 </tr>
                 <tr>
+                    <th><label><?php _e( 'Disable Auto Password Generation ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="disable_auto_pwd_generation" <?php ! empty( $disable_auto_pwd_generation ) ? checked( $disable_auto_pwd_generation, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Checking this option will disable auto password generation for new meetings which are created from Zoom meeting > Add new section.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr>
                     <th><label><?php _e( 'Hide Join Links for Non-Loggedin ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="hide_join_links_non_loggedin_users" <?php ! empty( $hide_join_link_nloggedusers ) ? checked( $hide_join_link_nloggedusers, 'on' ) : false; ?>>

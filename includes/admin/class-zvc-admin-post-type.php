@@ -509,8 +509,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int      $post_id Post ID.
-	 * @param \WP_Post $post    Post object.
+	 * @param int $post_id Post ID.
+	 * @param \WP_Post $post Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.
@@ -537,8 +537,10 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			return;
 		}
 
-		$pwd                = sanitize_text_field( filter_input( INPUT_POST, 'password' ) );
-		$pwd                = ! empty( $pwd ) ? $pwd : $post_id;
+		$pwd = sanitize_text_field( filter_input( INPUT_POST, 'password' ) );
+		if ( !get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
+			$pwd = ! empty( $pwd ) ? $pwd : $post_id;
+		}
 		$duration_hour      = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_hour' ) );
 		$duration_minutes   = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_minutes' ) );
 		$duration           = ! empty( $duration_hour ) || ! empty( $duration_minutes ) ? vczapi_convert_to_minutes( $duration_hour, $duration_minutes ) : 40;

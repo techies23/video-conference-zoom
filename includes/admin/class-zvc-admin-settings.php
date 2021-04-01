@@ -141,6 +141,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$vczapi_disable_invite              = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_disable_invite' ) );
 					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
 					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
+					$disable_auto_pwd_generation        = sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) );
 
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
@@ -160,6 +161,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'vczapi_disable_invite', $vczapi_disable_invite );
 					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
 					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
+					update_option( 'zoom_api_disable_auto_meeting_pwd', $disable_auto_pwd_generation );
 
 					//After user has been created delete this transient in order to fetch latest Data.
 					video_conferencing_zoom_api_delete_user_cache();
@@ -193,6 +195,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				$vczapi_disable_invite       = get_option( 'vczapi_disable_invite' );
 				$disable_jvb                 = get_option( 'zoom_api_disable_jvb' );
 				$default_jvb_lang            = get_option( 'zoom_api_default_lang_jvb' );
+				$disable_auto_pwd_generation = get_option( 'zoom_api_disable_auto_meeting_pwd' );
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';

@@ -1,5 +1,5 @@
 /** Deepen @since  1.0.0 @modified 3.0.0 */
-.zvc-row { display: flex; }
+.zvc-row { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; }
 
 .zvc_listing_table { margin-top: 20px; }
 
@@ -17,9 +17,9 @@
 
 .zvc_accounts_reports_check_form { padding-bottom: 20px; }
 
-.zvc-position-floater-left { width: 100%; padding: 30px; border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #fff; justify-content: space-between; }
+.zvc-position-floater-left { width: 100%; padding: 30px; border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #fff; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; }
 
-.zvc-position-floater-right { width: 30%; justify-content: space-between; }
+.zvc-position-floater-right { width: 30%; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; }
 
 .zvc-position-floater-right .zvc-information-sec { background: #fff; padding: 20px; border: 1px solid #ccc; margin: 0 0 16px 0; }
 
@@ -39,7 +39,7 @@
 
 .video-conferencing-addons h3.border-padd { background: #fff; padding: 20px 40px; border: 1px solid #d3d3d3; }
 
-.video-conferencing-addons .video-conferencing-addons-flex { display: flex; }
+.video-conferencing-addons .video-conferencing-addons-flex { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; }
 
 .video-conferencing-addons .video-conferencing-addons-flex .video-conferencing-addons-box { background: #fff; padding: 40px; border: 1px solid #d3d3d3; margin: 10px; width: 100%; }
 
