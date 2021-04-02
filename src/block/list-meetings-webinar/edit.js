@@ -21,7 +21,6 @@ import ServerSideRender from "@wordpress/server-side-render";
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
 import {Disabled, PanelBody, RangeControl, SelectControl, CheckboxControl} from "@wordpress/components";
 import {Fragment, useEffect, useRef, useState} from "@wordpress/element";
 import apiFetch from '@wordpress/api-fetch';
@@ -55,7 +54,7 @@ export default function Edit(props) {
     const [availableUsers, setAvailableUsers] = useState([]);
 
     const getUsers = (inputValue) => {
-        return apiFetch({path: '/wp/v2/users?per_page=5&search=' + inputValue}).then(
+        return apiFetch({path: '/wp/v2/users?per_page=5&who=authors&search=' + inputValue}).then(
             users => {
                 if (isStillMounted.current === true) {
                     return users.length > 0 ? users.map((user, i) => {
@@ -194,7 +193,6 @@ export default function Edit(props) {
                             isClearable
                             placeholder={__('Select categories - default All categories are shown', 'video-conferencing-with-zoom-api')}
                             onChange={(selectedInput, {action}) => {
-                                console.log(action);
                                 if (action === "clear") {
                                     setAttributes({selectedCategory: []});
                                     return [];
@@ -208,8 +206,6 @@ export default function Edit(props) {
                                         return unionBy(prevAvailableCategory, [selectedInput], 'value');
                                     });
                                 }
-
-
                             }}
                             defaultValue={intersectionWith(availableCategories, selectedCategory, isEqual)}
                             className="components-base-control"

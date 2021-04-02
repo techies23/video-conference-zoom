@@ -16,7 +16,8 @@ class Blocks {
 		add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
 		add_action( 'init', [ $this, 'register_scripts' ] );
 		add_action( 'init', [ $this, 'register_blocks' ] );
-		//add_action( 'wp_ajax_vczapi_get_categories_for_gb', [ $this, 'get_categories' ] );
+
+		add_action( 'wp_ajax_vczapi_get_zoom_hosts', [ $this, 'get_hosts' ] );
 	}
 
 	public function register_scripts() {
@@ -125,6 +126,47 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_meeting_post' ]
 		] );
+
+		register_block_type( 'vczapi/list-host-meetings', [
+			"title"           => "List Host Zoom Meetings",
+			"attributes"      => [
+				"host" => [
+					"type" => "object",
+				]
+			],
+			"category"        => "vczapi-blocks",
+			"icon"            => "list-view",
+			"description"     => "Show a Meeting Post with Countdown",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_host_meeting_list' ]
+		] );
+	}
+
+	public function get_hosts() {
+		$host_name = filter_input( INPUT_GET, 'host' );
+		$users     = video_conferencing_zoom_api_get_user_transients();
+
+		$hosts = [];
+		if ( ! empty( $users ) ) {
+			foreach ( $users as $user ) {
+				$first_name = ! empty( $user->first_name ) ? $user->first_name . ' ' : '';
+				$last_name  = ! empty( $user->last_name ) ? $user->last_name . ' ' : '';
+				$username   = $first_name . $last_name . '(' . $user->email . ')';
+
+
+				if ( ! empty( $host_name ) ) {
+					preg_match( "/($host_name)/", $username, $matches );
+					if ( ! empty( $matches ) ) {
+						$hosts[] = [ 'label' => $username, 'value' => $user->id ];
+					}
+				} else {
+					$hosts[] = [ 'label' => $username, 'value' => $user->id ];
+				}
+			}
+		}
+		wp_send_json( $hosts );
 	}
 
 	public function render_list_meetings( $attributes ) {
@@ -183,9 +225,17 @@ class Blocks {
 		if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
 			$shortcode .= ' post_id="' . $attributes['postID'] . '"';
 		}
-		
+
 		ob_start();
-		echo do_shortcode( '['.$shortcode.']');
+		echo do_shortcode( '[' . $shortcode . ']' );
+
+		return ob_get_clean();
+	}
+
+	public function render_host_meeting_list( $attributes ) {
+		ob_start();
+		echo do_shortcode( '[zoom_list_host_meetings host="' . $attributes['host']['value'] . '"]' );
+
 		return ob_get_clean();
 	}
 }

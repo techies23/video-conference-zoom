@@ -10,7 +10,6 @@ import {Disabled, Placeholder, ToolbarGroup, ToolbarButton} from "@wordpress/com
 import AsyncSelect from "react-select/async";
 import {useEffect, useState, useRef} from "@wordpress/element";
 import apiFetch from '@wordpress/api-fetch';
-import './editor.scss';
 
 export default function Edit(props) {
     const {attributes, setAttributes} = props;
@@ -62,6 +61,11 @@ export default function Edit(props) {
                 }
             }
         )
+        
+        return () => {
+            isMounted.current = false;
+        }
+        
     }, []);
 
 
@@ -73,11 +77,11 @@ export default function Edit(props) {
             {(postID === 0 || isEditing) &&
             <Placeholder>
                 <h2>{__('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')}</h2>
-                <div className="vczapi-blocks-show-meeting">
+                <div className="vczapi-blocks-form">
                     
                     <AsyncSelect
                         cacheOptions
-                        className="vczapi-blocks-show-meeting--select"
+                        className="vczapi-blocks-form--select"
                         placeholder={__("Select Meeting to Show", "video-conferencing-with-zoom")}
                         defaultOptions={availableMeetings}
                         loadOptions={getMeetings}

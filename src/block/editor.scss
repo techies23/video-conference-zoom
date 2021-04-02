@@ -1,4 +1,4 @@
-.vczapi-blocks-show-meeting {
+.vczapi-blocks-form {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -7,9 +7,5 @@
   &--select {
     flex: 1 1 auto;
     margin: 0 8px 0 0;
-  }
-
-  button {
-   
   }
 }
