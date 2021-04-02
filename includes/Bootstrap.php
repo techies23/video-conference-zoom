@@ -170,6 +170,8 @@ final class Bootstrap {
 		if ( did_action( 'elementor/loaded' ) ) {
 			require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Elementor.php';
 		}
+		
+		require_once ZVC_PLUGIN_INCLUDES_PATH .'/Blocks/Blocks.php';
 
 		//Idea was to implement gutenberg also but in its current state ! ughh !
 	}
