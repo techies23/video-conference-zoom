@@ -16,8 +16,6 @@ export default function EditListHostMeeting(props) {
     const {className, attributes, setAttributes} = props;
     const {host} = attributes;
     const isMounted = useRef;
-
-    const [availableHosts, setAvailableHosts] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
 
     const editControls = [{
@@ -36,19 +34,15 @@ export default function EditListHostMeeting(props) {
             result => {
                 callback(result);
             }
+        ).catch(
+            () => {
+                callback([]);
+            }
         )
     }
 
     useEffect(() => {
-
         isMounted.current = true;
-        fetch('admin-ajax.php?action=vczapi_get_zoom_hosts').then(
-            response => response.json()
-        ).then(
-            result => {
-                setAvailableHosts(result)
-            }
-        ).catch()
         return () => {
             isMounted.current = false;
         }
@@ -66,7 +60,7 @@ export default function EditListHostMeeting(props) {
                     <AsyncSelect
                         className={'vczapi-blocks-form--select'}
                         defaultOptions
-                        noResultsText={__("No options found","video-conferencing-with-zoom-api")}
+                        noResultsText={__("No options found", "video-conferencing-with-zoom-api")}
                         loadOptions={debounce(get_hosts, 800)}
                         defaultValue={host}
                         onChange={(input, {action}) => {

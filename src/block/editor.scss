@@ -4,8 +4,26 @@
   align-items: center;
   width: 100%;
 
+  &--group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 3em;
+  }
+
   &--select {
     flex: 1 1 auto;
     margin: 0 8px 0 0;
   }
+  
+  &--selected-meeting{
+    width: 100%;
+  }
+  
+  .vczapi-blocks-pagination{
+    margin-top: 10px;
+    width: 100%;
+  }
 }
+

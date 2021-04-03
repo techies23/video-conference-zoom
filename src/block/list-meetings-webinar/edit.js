@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import {__} from '@wordpress/i18n';
-import {isEqual, unionBy, intersectionWith} from 'lodash';
+import {isEqual, unionBy, intersectionWith, debounce} from 'lodash';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -53,17 +53,22 @@ export default function Edit(props) {
     const [availableCategories, setAvailableCategories] = useState([]);
     const [availableUsers, setAvailableUsers] = useState([]);
 
-    const getUsers = (inputValue) => {
-        return apiFetch({path: '/wp/v2/users?per_page=5&who=authors&search=' + inputValue}).then(
+    const getUsers = (inputValue, callback) => {
+        let userQuery = '/wp/v2/users?per_page=5&who=authors';
+        if(inputValue !== ''){
+            userQuery += '&search=' + inputValue;
+        }
+        
+        return apiFetch({path: userQuery}).then(
             users => {
                 if (isStillMounted.current === true) {
-                    return users.length > 0 ? users.map((user, i) => {
+                    callback(users.length > 0 ? users.map((user, i) => {
                         return {label: user.name, value: user.id}
-                    }) : [];
+                    }) : []);
                 }
             }
         ).catch(() => {
-            return [];
+            callback([]);
         })
     }
 
@@ -220,9 +225,10 @@ export default function Edit(props) {
                         <AsyncSelect
                             cacheOptions
                             defaultOptions={availableUsers}
-                            loadOptions={getUsers}
+                            noResultsText
+                            loadOptions={debounce(getUsers, 800)}
                             isClearable
-                            placeholder={__('Select Author - Default All Authors are shown','video-conferencing-with-zoom-api')}
+                            placeholder={__('Select Author - Default All Authors are shown', 'video-conferencing-with-zoom-api')}
                             onChange={(selectedUser, {action}) => {
                                 if (action === 'clear') {
                                     setAttributes({selectedAuthor: 0});

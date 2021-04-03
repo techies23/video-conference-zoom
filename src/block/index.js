@@ -14,4 +14,5 @@ import './editor.scss';
 
 import './list-meetings-webinar';
 import './show-meeting-post';
-import './list-host-meetings'
+import './show-live-meeting';
+import './list-host-meetings';
