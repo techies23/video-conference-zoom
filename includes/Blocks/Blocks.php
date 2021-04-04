@@ -38,12 +38,21 @@ class Blocks {
 			$script_asset_path['version']
 		);
 
-
 		wp_register_script(
 			'vczapi-blocks',
 			plugins_url( '/build/index.js', ZVC_PLUGIN_FILE ),
 			$dependencies,
 			$script_asset_path['version']
+		);
+
+		wp_localize_script( 'vczapi-blocks',
+			'vczapi_blocks',
+			[
+				'list_meetings_preview'            => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-meetings-webinars.png',
+				'direct_meeting_preview_image'     => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/direct-meeting.jpg',
+				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
+				'embed_post_preview'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/embed_post_preview.png',
+			]
 		);
 	}
 
@@ -65,6 +74,10 @@ class Blocks {
 		register_block_type( 'vczapi/list-meetings', [
 			"title"           => "List Zoom Meetings",
 			"attributes"      => [
+				'preview'          => [
+					'type'    => 'boolean',
+					'default' => false
+				],
 				"shortcodeType"    => [
 					"type"    => "string",
 					"default" => "meeting"
@@ -111,10 +124,34 @@ class Blocks {
 			'render_callback' => [ $this, 'render_list_meetings' ]
 		] );
 
+		register_block_type( 'vczapi/list-host-meetings', [
+			"title"           => "List Host Zoom Meetings",
+			"attributes"      => [
+				"host"    => [
+					"type" => "object",
+				],
+				"preview" => [
+					"type"    => "boolean",
+					"default" => false
+				],
+			],
+			"category"        => "vczapi-blocks",
+			"icon"            => "list-view",
+			"description"     => "Show a Meeting Post with Countdown",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_host_meeting_list' ]
+		] );
+
 		register_block_type( 'vczapi/show-meeting-post', [
 			"title"           => "Embed Zoom Meeting",
 			"attributes"      => [
-				"postID" => [
+				"preview" => [
+					"type"    => "boolean",
+					"default" => false
+				],
+				"postID"  => [
 					"type"    => "number",
 					"default" => 0
 				]
@@ -129,39 +166,33 @@ class Blocks {
 		] );
 
 		register_block_type( 'vczapi/show-live-meeting', [
-			"title"           => "Show Zoom - meeting by Meeting ID",
+			"title"           => "Direct Meeting",
 			"attributes"      => [
+				"preview"         => [
+					"type"    => "boolean",
+					"default" => false
+				],
 				"host"            => [
 					"type" => "object",
 				],
 				"selectedMeeting" => [
 					"type" => "object",
+				],
+				"link_only"       => [
+					"type"    => "string",
+					"default" => "no"
 				]
 			],
 			"category"        => "vczapi-blocks",
 			"icon"            => "sticky",
-			"description"     => "Show a Meeting post that is on Zoom Only",
+			"description"     => "Show a Meeting details - direct from Zoom",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_live_meeting' ]
 		] );
 
-		register_block_type( 'vczapi/list-host-meetings', [
-			"title"           => "List Host Zoom Meetings",
-			"attributes"      => [
-				"host" => [
-					"type" => "object",
-				]
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "list-view",
-			"description"     => "Show a Meeting Post with Countdown",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_host_meeting_list' ]
-		] );
+
 	}
 
 	public function get_hosts() {
@@ -192,18 +223,18 @@ class Blocks {
 	public function get_live_meetings() {
 		$host_id     = filter_input( INPUT_GET, 'host_id' );
 		$args        = [
-			'page_size' => 7,
+			'page_size' => 300,
 		];
 		$page_number = filter_input( INPUT_GET, 'page_number' );
 		if ( ! empty( $page_number ) ) {
 			$args['page_number'] = $page_number;
 		}
-		
+
 		if ( empty( $host_id ) ) {
 			wp_send_json( [] );
 		}
 
-		$encoded_meetings   = zoom_conference()->listMeetings( $host_id, $args);
+		$encoded_meetings   = zoom_conference()->listMeetings( $host_id, $args );
 		$decoded_meetings   = json_decode( $encoded_meetings );
 		$meetings           = ! empty( $decoded_meetings->meetings ) ? $decoded_meetings->meetings : [];
 		$data               = [];
@@ -293,7 +324,9 @@ class Blocks {
 		if ( isset( $attributes['selectedMeeting'] ) && ! empty( 'selectedMeeting' ) ) {
 			$shortcode .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
 		}
-		
+		if ( isset( $attributes['link_only'] ) && ! empty( 'link_only' ) ) {
+			$shortcode .= ' link_only="' . $attributes['link_only'] . '"';
+		}
 		echo do_shortcode( '[' . $shortcode . ']' );
 
 		return ob_get_clean();

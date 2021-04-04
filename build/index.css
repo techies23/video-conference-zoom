@@ -11,6 +11,18 @@
       -ms-flex-align: center;
           align-items: center;
   width: 100%; }
+  .vczapi-blocks-form .radio-inline .components-base-control__field {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-content: center;
+        -ms-flex-line-pack: center;
+            align-content: center; }
+    .vczapi-blocks-form .radio-inline .components-base-control__field label {
+      margin-right: 10px; }
+  .vczapi-blocks-form--input-label {
+    width: 100%; }
   .vczapi-blocks-form--group {
     width: 100%;
     display: -webkit-box;
@@ -32,10 +44,24 @@
             flex: 1 1 auto;
     margin: 0 8px 0 0; }
   .vczapi-blocks-form--selected-meeting {
-    width: 100%; }
+    width: 100%;
+    margin-bottom: 2em;
+    border-bottom: 1px solid; }
   .vczapi-blocks-form .vczapi-blocks-pagination {
-    margin-top: 10px;
-    width: 100%; }
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    /* align-items: center; */
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 20px; }
+    .vczapi-blocks-form .vczapi-blocks-pagination button.selected {
+      background: var(--wp-admin-theme-color);
+      color: #fff; }
 
 
 /*# sourceMappingURL=index.css.map*/

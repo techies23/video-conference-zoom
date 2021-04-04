@@ -46,6 +46,7 @@ export default function Edit(props) {
         selectedCategory,
         selectedAuthor,
         columns,
+        preview
     } = attributes;
 
     const isStillMounted = useRef();
@@ -116,6 +117,28 @@ export default function Edit(props) {
         }
 
     }, []);
+
+    if (preview) {
+        return (
+            <Fragment>
+                <ServerSideRender
+                    block="vczapi/list-meetings"
+                    attributes={
+                        {
+                            columns: columns,
+                            displayType: displayType,
+                            postsToShow: postsToShow,
+                            orderBy: orderBy,
+                            shortcodeType: shortcodeType,
+                            showFilter: showFilter,
+                            selectedCategory: selectedCategory,
+                            selectedAuthor: selectedAuthor
+                        }
+                    }
+                />
+            </Fragment>
+        );
+    }   
 
     return (
         <Fragment>

@@ -4,6 +4,20 @@
   align-items: center;
   width: 100%;
 
+  .radio-inline{
+    .components-base-control__field{
+      display: flex;
+      align-content: center;
+      label{
+        margin-right:10px;
+      }
+    }
+  }
+  
+  &--input-label{
+    width: 100%;
+  }
+
   &--group {
     width: 100%;
     display: flex;
@@ -16,14 +30,26 @@
     flex: 1 1 auto;
     margin: 0 8px 0 0;
   }
-  
-  &--selected-meeting{
+
+  &--selected-meeting {
     width: 100%;
+    margin-bottom: 2em;
+    border-bottom: 1px solid;
   }
-  
-  .vczapi-blocks-pagination{
-    margin-top: 10px;
+
+  .vczapi-blocks-pagination {
     width: 100%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      &.selected {
+        background: var(--wp-admin-theme-color);
+        color: #fff;
+      }
+    }
   }
 }
 

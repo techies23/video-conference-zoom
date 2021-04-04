@@ -14,7 +14,7 @@ import {Placeholder, ToolbarGroup} from "@wordpress/components";
 
 export default function EditListHostMeeting(props) {
     const {className, attributes, setAttributes} = props;
-    const {host} = attributes;
+    const {host, preview} = attributes;
     const isMounted = useRef;
     const [isEditing, setIsEditing] = useState(false);
 
@@ -47,6 +47,12 @@ export default function EditListHostMeeting(props) {
             isMounted.current = false;
         }
     }, []);
+
+    if (preview) {
+        return (
+            <img src={vczapi_blocks.list_host_meetings_preview_image} alt={"List Host meetings"}/>
+        )
+    }
 
     return (
         <div {...useBlockProps()}>

@@ -14,7 +14,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 export default function Edit(props) {
     const {attributes, setAttributes} = props;
-    const {postID} = attributes;
+    const {postID,preview} = attributes;
 
     const [availableMeetings, setAvailableMeetings] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
@@ -68,7 +68,12 @@ export default function Edit(props) {
         }
 
     }, []);
-
+    
+    if(preview){
+        return(
+            <img src={vczapi_blocks.embed_post_preview} alt="Embed Zoom post"/>
+        )
+    }
 
     return (
         <div {...useBlockProps()}>
