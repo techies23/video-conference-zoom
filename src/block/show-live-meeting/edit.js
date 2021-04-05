@@ -11,19 +11,24 @@ import {useEffect, useState, useRef} from "@wordpress/element";
 
 import AsyncSelect from 'react-select/async';
 import Select from 'react-select';
-import {Placeholder, ToolbarGroup, Button, RadioControl} from "@wordpress/components";
+import {Placeholder, ToolbarGroup, Button, RadioControl, Disabled, Spinner} from "@wordpress/components";
 
-export default function EditListHostMeeting(props) {
+export default function EditLiveMeeting(props) {
     const {className, attributes, setAttributes} = props;
-    const {host, selectedMeeting, link_only, preview} = attributes;
+    const {host, selectedMeeting, link_only, preview, shouldShow} = attributes;
     const isMounted = useRef;
     const [isEditing, setIsEditing] = useState(false);
     const [availableMeetings, setAvailableMeetings] = useState([]);
+    
     const [tempHost, setTempHost] = useState([]);
+    const [tempShouldShow, setTempShouldShow] = useState(shouldShow);
+    const [tempSelectedMeeting, setTempSelectedMeeting] = useState({});
+    
     const [numberOfPages, setNumberOfPages] = useState(1);
-    const [isLoadingMeetings, setIsLoadingMeetings] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-
+    
+    const [isLoadingMeetings, setIsLoadingMeetings] = useState(false);
+   
     const editControls = [{
         icon: (!isEditing) ? 'edit' : 'no',
         title: (!isEditing) ? "Edit" : "Close",
@@ -46,10 +51,10 @@ export default function EditListHostMeeting(props) {
             }
         )
     }
-    const get_live_meetings = (input, additional_args = {}) => {
-        if (input === "undefined" || input === '')
+    const get_live_meetings = (host_id, shouldShow, additional_args = {}) => {
+        if (host_id === "undefined" || host_id === '')
             return [];
-        let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + input.value
+        let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + host_id + '&show=' + shouldShow.value
 
         if (additional_args.hasOwnProperty("page_number") && additional_args.page_number !== "undefined") {
             queryUrl += "&page_number=" + additional_args.page_number;
@@ -71,7 +76,6 @@ export default function EditListHostMeeting(props) {
             }
         )
     }
-
     const PaginateLinks = ({numberOfPages}) => {
         let pages = [];
         if (numberOfPages > 1) {
@@ -97,7 +101,6 @@ export default function EditListHostMeeting(props) {
         return '';
     }
 
-    const [tempSelectedMeeting, setTempSelectedMeeting] = useState({});
 
     useEffect(() => {
         isMounted.current = true;
@@ -127,6 +130,13 @@ export default function EditListHostMeeting(props) {
                     <div><p>{__("Get a meeting directly from Zoom", "video-conferencing-with-zoom-api")}</p></div>
                 </div>
                 <div className="vczapi-blocks-form">
+                    {
+                        (typeof selectedMeeting !== "undefined" && selectedMeeting.hasOwnProperty('value'))
+                        && <div className={"vczapi-blocks-form--selected-meeting"}>
+                            <h4>Currently Selected Meeting: <strong>{selectedMeeting.label}</strong></h4>
+                        </div>
+                    }
+
                     <div className={"vczapi-blocks-form--group"}>
                         <RadioControl
                             className={"radio-inline"}
@@ -137,18 +147,33 @@ export default function EditListHostMeeting(props) {
                                 {label: 'No', value: 'no'},
                             ]}
                             onChange={(option) => {
-                                console.log(option);
                                 setAttributes({link_only: option})
                             }}
                         />
                     </div>
                     <div className="vczapi-blocks-form--group">
-                        {
-                            (typeof selectedMeeting !== "undefined" && selectedMeeting.hasOwnProperty('value'))
-                            && <div className={"vczapi-blocks-form--selected-meeting"}>
-                                <h4>Currently Selected Meeting: <strong>{selectedMeeting.label}</strong></h4>
-                            </div>
-                        }
+                        <div className={"vczapi-blocks-form--input-label"}>
+                            {__("Would you like to show a Meeting or Webinar", "video-conferencing-with-zoom-api")}
+                        </div>
+                        <Select
+                            label="Show"
+                            className={'vczapi-blocks-form--select'}
+                            defaultValue={tempShouldShow}
+                            options={[
+                                {label: 'Meeting', value: 'meeting'},
+                                {label: 'Webinar', value: 'webinar'},
+                            ]}
+                            onChange={(option) => {
+                                setTempShouldShow(option);
+                                if (typeof host === "object" && host.hasOwnProperty('value')) {
+                                    setAvailableMeetings([]);
+                                    get_live_meetings(host.value, option);
+                                    setTempHost(host);
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="vczapi-blocks-form--group">
                         <div className={"vczapi-blocks-form--input-label"}>
                             {__("Select A Host", "video-conferencing-with-zoom-api")}
                         </div>
@@ -163,11 +188,14 @@ export default function EditListHostMeeting(props) {
                                 if (action === 'select-option') {
                                     setAttributes({host: input})
                                     setTempHost(input);
-                                    get_live_meetings(input);
+                                    get_live_meetings(input.value, tempShouldShow);
                                 }
                             }}
                         />
                     </div>
+                    {(isLoadingMeetings && (typeof availableMeetings === "undefined" || availableMeetings.length === 0)) &&
+                    <div className="vczapi-blocks-form--group"><Spinner/></div>
+                    }
 
                     {(typeof availableMeetings != "undefined" && availableMeetings.length > 0) &&
                     <div className="vczapi-blocks-form--group">
@@ -195,7 +223,12 @@ export default function EditListHostMeeting(props) {
 
                     <div className="vczapi-blocks-form--group">
                         <Button isPrimary onClick={() => {
+                            if (!tempSelectedMeeting.hasOwnProperty('value')) {
+                                alert('Meeting Needs to be selected');
+                                return false;
+                            }
                             setAttributes({selectedMeeting: tempSelectedMeeting});
+                            setAttributes({shouldShow: tempShouldShow});
                             setIsEditing(false);
                         }}>{__("Save", "video-conferencing-with-zoom-api")}</Button>
                     </div>
@@ -203,19 +236,20 @@ export default function EditListHostMeeting(props) {
                 </div>
             </Placeholder>
             }
-
             {((typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value')) && !isEditing)
             &&
-            <ServerSideRender
-                block="vczapi/show-live-meeting"
-                attributes={
-                    {
-                        host: host,
-                        link_only:link_only,
-                        selectedMeeting: selectedMeeting
+            <Disabled>
+                <ServerSideRender
+                    block="vczapi/show-live-meeting"
+                    attributes={
+                        {
+                            link_only: link_only,
+                            selectedMeeting: selectedMeeting,
+                            shouldShow: shouldShow
+                        }
                     }
-                }
-            />
+                />
+            </Disabled>
             }
 
         </div>

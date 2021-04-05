@@ -10107,23 +10107,26 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('vcz
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EditListHostMeeting; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "lodash");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_select_async__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-select/async */ "./node_modules/react-select/async/dist/react-select.esm.js");
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EditLiveMeeting; });
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_select_async__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-select/async */ "./node_modules/react-select/async/dist/react-select.esm.js");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__);
+
 
 
 
@@ -10140,45 +10143,56 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function EditListHostMeeting(props) {
+function EditLiveMeeting(props) {
   var className = props.className,
       attributes = props.attributes,
       setAttributes = props.setAttributes;
   var host = attributes.host,
       selectedMeeting = attributes.selectedMeeting,
       link_only = attributes.link_only,
-      preview = attributes.preview;
-  var isMounted = _wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useRef"];
+      preview = attributes.preview,
+      shouldShow = attributes.shouldShow;
+  var isMounted = _wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useRef"];
 
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
       isEditing = _useState2[0],
       setIsEditing = _useState2[1];
 
-  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])([]),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState3, 2),
       availableMeetings = _useState4[0],
       setAvailableMeetings = _useState4[1];
 
-  var _useState5 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
+  var _useState5 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])([]),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState5, 2),
       tempHost = _useState6[0],
       setTempHost = _useState6[1];
 
-  var _useState7 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])(1),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState7, 2),
-      numberOfPages = _useState8[0],
-      setNumberOfPages = _useState8[1];
+  var _useState7 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(shouldShow),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState7, 2),
+      tempShouldShow = _useState8[0],
+      setTempShouldShow = _useState8[1];
 
-  var _useState9 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
-      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState9, 2),
-      isLoadingMeetings = _useState10[0],
-      setIsLoadingMeetings = _useState10[1];
+  var _useState9 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])({}),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState9, 2),
+      tempSelectedMeeting = _useState10[0],
+      setTempSelectedMeeting = _useState10[1];
 
-  var _useState11 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])(1),
-      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState11, 2),
-      currentPage = _useState12[0],
-      setCurrentPage = _useState12[1];
+  var _useState11 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(1),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState11, 2),
+      numberOfPages = _useState12[0],
+      setNumberOfPages = _useState12[1];
+
+  var _useState13 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(1),
+      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState13, 2),
+      currentPage = _useState14[0],
+      setCurrentPage = _useState14[1];
+
+  var _useState15 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
+      _useState16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState15, 2),
+      isLoadingMeetings = _useState16[0],
+      setIsLoadingMeetings = _useState16[1];
 
   var editControls = [{
     icon: !isEditing ? 'edit' : 'no',
@@ -10201,10 +10215,10 @@ function EditListHostMeeting(props) {
     });
   };
 
-  var get_live_meetings = function get_live_meetings(input) {
-    var additional_args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    if (input === "undefined" || input === '') return [];
-    var queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + input.value;
+  var get_live_meetings = function get_live_meetings(host_id, shouldShow) {
+    var additional_args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    if (host_id === "undefined" || host_id === '') return [];
+    var queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + host_id + '&show=' + shouldShow.value;
 
     if (additional_args.hasOwnProperty("page_number") && additional_args.page_number !== "undefined") {
       queryUrl += "&page_number=" + additional_args.page_number;
@@ -10235,7 +10249,7 @@ function EditListHostMeeting(props) {
     if (numberOfPages > 1) {
       var _loop = function _loop(i) {
         var className = i === currentPage ? 'selected' : '';
-        pages.push(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+        pages.push(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Button"], {
           key: i,
           className: className,
           onClick: function onClick() {
@@ -10251,7 +10265,7 @@ function EditListHostMeeting(props) {
         _loop(i);
       }
 
-      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
         className: "vczapi-blocks-pagination"
       }, pages);
     }
@@ -10259,12 +10273,7 @@ function EditListHostMeeting(props) {
     return '';
   };
 
-  var _useState13 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])({}),
-      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState13, 2),
-      tempSelectedMeeting = _useState14[0],
-      setTempSelectedMeeting = _useState14[1];
-
-  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
     isMounted.current = true;
     return function () {
       isMounted.current = false;
@@ -10272,21 +10281,23 @@ function EditListHostMeeting(props) {
   }, []);
 
   if (preview) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("img", {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("img", {
       src: vczapi_blocks.direct_meeting_preview_image,
       alt: "Direct Meeting from Zoom"
     }));
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarGroup"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarGroup"], {
     controls: editControls
-  })), (typeof selectedMeeting === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  })), (typeof selectedMeeting === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-label-header"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Zoom - Show Meeting directly from Zoom", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Get a meeting directly from Zoom", "video-conferencing-with-zoom-api")))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Zoom - Show Meeting directly from Zoom", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Get a meeting directly from Zoom", "video-conferencing-with-zoom-api")))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  }, typeof selectedMeeting !== "undefined" && selectedMeeting.hasOwnProperty('value') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+    className: "vczapi-blocks-form--selected-meeting"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("h4", null, "Currently Selected Meeting: ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("strong", null, selectedMeeting.label))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form--group"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["RadioControl"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["RadioControl"], {
     className: "radio-inline",
     label: "Link Only",
     selected: link_only,
@@ -10298,26 +10309,47 @@ function EditListHostMeeting(props) {
       value: 'no'
     }],
     onChange: function onChange(option) {
-      console.log(option);
       setAttributes({
         link_only: option
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form--group"
-  }, typeof selectedMeeting !== "undefined" && selectedMeeting.hasOwnProperty('value') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
-    className: "vczapi-blocks-form--selected-meeting"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h4", null, "Currently Selected Meeting: ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("strong", null, selectedMeeting.label))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form--input-label"
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Select A Host", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Would you like to show a Meeting or Webinar", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    label: "Show",
+    className: 'vczapi-blocks-form--select',
+    defaultValue: tempShouldShow,
+    options: [{
+      label: 'Meeting',
+      value: 'meeting'
+    }, {
+      label: 'Webinar',
+      value: 'webinar'
+    }],
+    onChange: function onChange(option) {
+      setTempShouldShow(option);
+
+      if (_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(host) === "object" && host.hasOwnProperty('value')) {
+        setAvailableMeetings([]);
+        get_live_meetings(host.value, option);
+        setTempHost(host);
+      }
+    }
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+    className: "vczapi-blocks-form--group"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+    className: "vczapi-blocks-form--input-label"
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Select A Host", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_7__["default"], {
     className: 'vczapi-blocks-form--select',
     defaultOptions: true,
     defaultValue: tempHost,
-    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Select host to see meetings", "video-conferencing-with-zoom-api"),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Select host to see meetings", "video-conferencing-with-zoom-api"),
     noOptionsMessage: function noOptionsMessage() {
-      return Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("No options found", "video-conferencing-with-zoom-api");
+      return Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("No options found", "video-conferencing-with-zoom-api");
     },
-    loadOptions: Object(lodash__WEBPACK_IMPORTED_MODULE_4__["debounce"])(get_hosts, 800),
+    loadOptions: Object(lodash__WEBPACK_IMPORTED_MODULE_5__["debounce"])(get_hosts, 800),
     onChange: function onChange(input, _ref2) {
       var action = _ref2.action;
 
@@ -10326,14 +10358,16 @@ function EditListHostMeeting(props) {
           host: input
         });
         setTempHost(input);
-        get_live_meetings(input);
+        get_live_meetings(input.value, tempShouldShow);
       }
     }
-  })), typeof availableMeetings != "undefined" && availableMeetings.length > 0 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  })), isLoadingMeetings && (typeof availableMeetings === "undefined" || availableMeetings.length === 0) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form--group"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Spinner"], null)), typeof availableMeetings != "undefined" && availableMeetings.length > 0 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+    className: "vczapi-blocks-form--group"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form--input-label"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Select A Meeting : ", "video-conferencing-with-zoom-api"), numberOfPages > 1 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("span", null, "use pagination to load more meeting if necessary"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Select A Meeting : ", "video-conferencing-with-zoom-api"), numberOfPages > 1 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, "use pagination to load more meeting if necessary"))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select__WEBPACK_IMPORTED_MODULE_8__["default"], {
     className: 'vczapi-blocks-form--select',
     defaultValue: selectedMeeting,
     options: availableMeetings,
@@ -10342,27 +10376,35 @@ function EditListHostMeeting(props) {
     onChange: function onChange(input) {
       setTempSelectedMeeting(input);
     },
-    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Select a meeting", "video-conferencing-with-zoom-api")
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(PaginateLinks, {
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Select a meeting", "video-conferencing-with-zoom-api")
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(PaginateLinks, {
     numberOfPages: numberOfPages
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form--group"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Button"], {
     isPrimary: true,
     onClick: function onClick() {
+      if (!tempSelectedMeeting.hasOwnProperty('value')) {
+        alert('Meeting Needs to be selected');
+        return false;
+      }
+
       setAttributes({
         selectedMeeting: tempSelectedMeeting
       });
+      setAttributes({
+        shouldShow: tempShouldShow
+      });
       setIsEditing(false);
     }
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Save", "video-conferencing-with-zoom-api"))))), typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value') && !isEditing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default.a, {
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Save", "video-conferencing-with-zoom-api"))))), typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value') && !isEditing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Disabled"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default.a, {
     block: "vczapi/show-live-meeting",
     attributes: {
-      host: host,
       link_only: link_only,
-      selectedMeeting: selectedMeeting
+      selectedMeeting: selectedMeeting,
+      shouldShow: shouldShow
     }
-  }));
+  })));
 }
 
 /***/ }),
@@ -10512,7 +10554,7 @@ function Edit(props) {
       }
     });
     return function () {
-      isMounted.current = false;
+      isStillMounted.current = false;
     };
   }, []);
 
@@ -10525,7 +10567,7 @@ function Edit(props) {
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["ToolbarGroup"], {
     controls: editControls
-  })), (postID === 0 || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  })), !isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Spinner"], null), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, (postID === 0 || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
     className: "vczapi-blocks-form"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_7__["default"], {
     cacheOptions: true,
@@ -10548,7 +10590,7 @@ function Edit(props) {
     attributes: {
       postID: postID
     }
-  })));
+  }))));
 }
 
 /***/ }),

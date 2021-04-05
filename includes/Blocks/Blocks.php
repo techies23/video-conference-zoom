@@ -145,7 +145,7 @@ class Blocks {
 		] );
 
 		register_block_type( 'vczapi/show-meeting-post', [
-			"title"           => "Embed Zoom Meeting",
+			"title"           => "Embed Zoom Post",
 			"attributes"      => [
 				"preview" => [
 					"type"    => "boolean",
@@ -166,11 +166,18 @@ class Blocks {
 		] );
 
 		register_block_type( 'vczapi/show-live-meeting', [
-			"title"           => "Direct Meeting",
+			"title"           => "Direct Meeting or Webinar",
 			"attributes"      => [
 				"preview"         => [
 					"type"    => "boolean",
 					"default" => false
+				],
+				"shouldShow"      => [
+					"type"    => "object",
+					"default" => [
+						"label" => "Meeting",
+						"value" => "meeting"
+					]
 				],
 				"host"            => [
 					"type" => "object",
@@ -185,7 +192,7 @@ class Blocks {
 			],
 			"category"        => "vczapi-blocks",
 			"icon"            => "sticky",
-			"description"     => "Show a Meeting details - direct from Zoom",
+			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
@@ -221,11 +228,12 @@ class Blocks {
 	}
 
 	public function get_live_meetings() {
-		$host_id     = filter_input( INPUT_GET, 'host_id' );
-		$args        = [
+		$host_id                 = filter_input( INPUT_GET, 'host_id' );
+		$show_meeting_or_webinar = filter_input( INPUT_GET, 'show' );
+		$args                    = [
 			'page_size' => 300,
 		];
-		$page_number = filter_input( INPUT_GET, 'page_number' );
+		$page_number             = filter_input( INPUT_GET, 'page_number' );
 		if ( ! empty( $page_number ) ) {
 			$args['page_number'] = $page_number;
 		}
@@ -234,20 +242,25 @@ class Blocks {
 			wp_send_json( [] );
 		}
 
-		$encoded_meetings   = zoom_conference()->listMeetings( $host_id, $args );
-		$decoded_meetings   = json_decode( $encoded_meetings );
-		$meetings           = ! empty( $decoded_meetings->meetings ) ? $decoded_meetings->meetings : [];
+		$encoded_meetings_webinar  = ( $show_meeting_or_webinar == 'webinar' ) ? zoom_conference()->listWebinar( $host_id, $args ) : zoom_conference()->listMeetings( $host_id, $args );
+		$decoded_meetings_webinars = json_decode( $encoded_meetings_webinar );
+		if ( $show_meeting_or_webinar == 'webinar' ) {
+			$meetings_or_webinars = ! empty( $decoded_meetings_webinars->webinars ) ? $decoded_meetings_webinars->webinars : [];
+		} else {
+			$meetings_or_webinars = ! empty( $decoded_meetings_webinars->meetings ) ? $decoded_meetings_webinars->meetings : [];
+		}
+
 		$data               = [];
 		$formatted_meetings = [];
-		if ( ! empty( $meetings ) ) {
+		if ( ! empty( $meetings_or_webinars ) ) {
 			$data = [
-				'page_size'     => isset( $decoded_meetings->page_size ) ? $decoded_meetings->page_size : '',
-				'total_records' => isset( $decoded_meetings->total_records ) ? $decoded_meetings->total_records : ''
+				'page_size'     => isset( $decoded_meetings_webinars->page_size ) ? $decoded_meetings_webinars->page_size : '',
+				'total_records' => isset( $decoded_meetings_webinars->total_records ) ? $decoded_meetings_webinars->total_records : ''
 			];
-			foreach ( $meetings as $meeting ) {
+			foreach ( $meetings_or_webinars as $meeting_or_webinar ) {
 				$formatted_meetings[] = [
-					'label' => $meeting->topic,
-					'value' => $meeting->id
+					'label' => $meeting_or_webinar->topic,
+					'value' => $meeting_or_webinar->id
 				];
 			}
 			$data['formatted_meetings'] = $formatted_meetings;
@@ -320,9 +333,13 @@ class Blocks {
 
 	public function render_live_meeting( $attributes ) {
 		ob_start();
-		$shortcode = 'zoom_api_link';
+		$shortcode = ( $attributes['shouldShow']['value'] == 'webinar' ) ? 'zoom_api_webinar' : 'zoom_api_link';
+		
+		
 		if ( isset( $attributes['selectedMeeting'] ) && ! empty( 'selectedMeeting' ) ) {
-			$shortcode .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
+			$shortcode .= ( $attributes['shouldShow']['value'] == 'webinar' ) ?
+				' webinar_id="' . $attributes['selectedMeeting']['value'] . '"':
+				' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
 		}
 		if ( isset( $attributes['link_only'] ) && ! empty( 'link_only' ) ) {
 			$shortcode .= ' link_only="' . $attributes['link_only'] . '"';
