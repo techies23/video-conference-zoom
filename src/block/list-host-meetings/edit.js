@@ -9,12 +9,13 @@ import {debounce} from "lodash";
 import {__} from '@wordpress/i18n';
 import {useEffect, useState, useRef} from "@wordpress/element";
 
+import Select from "react-select";
 import AsyncSelect from 'react-select/async';
-import {Placeholder, ToolbarGroup} from "@wordpress/components";
+import {Placeholder, ToolbarGroup, Button} from "@wordpress/components";
 
 export default function EditListHostMeeting(props) {
     const {className, attributes, setAttributes} = props;
-    const {host, preview} = attributes;
+    const {host, shouldShow, preview} = attributes;
     const isMounted = useRef;
     const [isEditing, setIsEditing] = useState(false);
 
@@ -59,25 +60,58 @@ export default function EditListHostMeeting(props) {
             <BlockControls>
                 <ToolbarGroup controls={editControls}/>
             </BlockControls>
-            {(typeof host === "undefined" || isEditing) &&
-            <Placeholder>
-                <h2>{__('Zoom -  List Meetings based on HOST', 'video-conferencing-with-zoom')}</h2>
-                <div className="vczapi-blocks-form">
-                    <AsyncSelect
-                        className={'vczapi-blocks-form--select'}
-                        defaultOptions
-                        noResultsText={__("No options found", "video-conferencing-with-zoom-api")}
-                        loadOptions={debounce(get_hosts, 800)}
-                        defaultValue={host}
-                        onChange={(input, {action}) => {
-                            if (action === 'select-option') {
-                                setAttributes({host: input})
-                            }
-                        }}
-                    />
-                </div>
-            </Placeholder>
+            {isMounted.current
+            &&
+            <>
+                {(typeof host === "undefined" || isEditing) &&
+                <Placeholder>
+                    <h2>{__('Zoom -  List Meetings/Webinars based on HOST', 'video-conferencing-with-zoom')}</h2>
+                    <div className="vczapi-blocks-form">
+                        <div className="vczapi-blocks-form--group">
+                            <Select
+                                className={'vczapi-blocks-form--select'}
+                                defaultValue={shouldShow}
+                                options={[
+                                    {label: "Meeting", value: "meeting"},
+                                    {label: "Webinar", value: "webinar"},
+                                ]}
+                                onChange={(input, {action}) => {
+                                    if (action === 'select-option') {
+                                        setAttributes({shouldShow: input})
+                                    }
+                                }}
+                            />
+                        </div>
+                        <div className="vczapi-blocks-form--group">
+                            <AsyncSelect
+                                className={'vczapi-blocks-form--select'}
+                                defaultOptions
+                                noResultsText={__("No options found", "video-conferencing-with-zoom-api")}
+                                loadOptions={debounce(get_hosts, 800)}
+                                defaultValue={host}
+                                onChange={(input, {action}) => {
+                                    if (action === 'select-option') {
+                                        setAttributes({host: input})
+                                    }
+                                }}
+                            />
+                        </div>
+                        <div className="vczapi-blocks-form--group">
+                            <Button
+                                isPrimary
+                                onClick={() => {
+                                    setIsEditing(false);
+                                }}
+                            >
+                                {__("Save","video-conferencing-with-zoom-api")}
+                            </Button>
+                        </div>
+                    </div>
+                </Placeholder>
+                }
+            </>
             }
+
 
             {((typeof host !== 'undefined' && host.hasOwnProperty('value')) && !isEditing)
             &&
@@ -85,7 +119,8 @@ export default function EditListHostMeeting(props) {
                 block="vczapi/list-host-meetings"
                 attributes={
                     {
-                        host: host
+                        host: host,
+                        shouldShow: shouldShow
                     }
                 }
             />

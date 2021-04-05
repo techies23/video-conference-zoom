@@ -125,19 +125,26 @@ class Blocks {
 		] );
 
 		register_block_type( 'vczapi/list-host-meetings', [
-			"title"           => "List Host Zoom Meetings",
+			"title"           => "List Zoom Meetings by Host",
 			"attributes"      => [
-				"host"    => [
+				"host"       => [
 					"type" => "object",
 				],
-				"preview" => [
+				"shouldShow" => [
+					"type"    => "object",
+					"default" => [
+						"label" => "Meeting",
+						"value" => "meeting"
+					]
+				],
+				"preview"    => [
 					"type"    => "boolean",
 					"default" => false
 				],
 			],
 			"category"        => "vczapi-blocks",
 			"icon"            => "list-view",
-			"description"     => "Show a Meeting Post with Countdown",
+			"description"     => "Show Meetings/Webinars by Host",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
@@ -334,11 +341,13 @@ class Blocks {
 	public function render_live_meeting( $attributes ) {
 		ob_start();
 		$shortcode = ( $attributes['shouldShow']['value'] == 'webinar' ) ? 'zoom_api_webinar' : 'zoom_api_link';
-		
-		
+
+
 		if ( isset( $attributes['selectedMeeting'] ) && ! empty( 'selectedMeeting' ) ) {
-			$shortcode .= ( $attributes['shouldShow']['value'] == 'webinar' ) ?
-				' webinar_id="' . $attributes['selectedMeeting']['value'] . '"':
+			$shortcode .= ( $attributes['shouldShow']['value'] == 'webinar' )
+				?
+				' webinar_id="' . $attributes['selectedMeeting']['value'] . '"'
+				:
 				' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
 		}
 		if ( isset( $attributes['link_only'] ) && ! empty( 'link_only' ) ) {
@@ -350,8 +359,10 @@ class Blocks {
 	}
 
 	public function render_host_meeting_list( $attributes ) {
+		$shortcode = ( $attributes['shouldShow']['value'] == "webinar" ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
+
 		ob_start();
-		echo do_shortcode( '[zoom_list_host_meetings host="' . $attributes['host']['value'] . '"]' );
+		echo do_shortcode( '[' . $shortcode . ' host="' . $attributes['host']['value'] . '"]' );
 
 		return ob_get_clean();
 	}
