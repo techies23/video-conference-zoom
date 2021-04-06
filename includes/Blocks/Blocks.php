@@ -52,6 +52,7 @@ class Blocks {
 				'direct_meeting_preview_image'     => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/direct-meeting.jpg',
 				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
 				'embed_post_preview'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/embed_post_preview.png',
+				'join_via_browser'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/join-via-browser.png',
 			]
 		);
 	}
@@ -260,6 +261,44 @@ class Blocks {
 			'render_callback' => [ $this, 'render_join_via_browser' ]
 		] );
 
+		register_block_type( 'vczapi/recordings', [
+			"title"           => "Zoom - Show Recordings",
+			"attributes"      => [
+				"preview"         => [
+					"type"    => "boolean",
+					"default" => false
+				],
+				"shouldShow"      => [
+					"type"    => "object",
+					"default" => [
+						"label" => "Meeting",
+						"value" => "meeting"
+					]
+				],
+				"showBy"          => [
+					"type"    => "string",
+					"default" => "host"
+				],
+				"host"            => [
+					"type" => "object",
+				],
+				"selectedMeeting" => [
+					"type" => "object",
+				],
+				"downloadable"    => [
+					"type"    => "string",
+					"default" => "no"
+				]
+			],
+			"category"        => "vczapi-blocks",
+			"icon"            => "archive",
+			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_recordings' ]
+		] );
+
 
 	}
 
@@ -448,6 +487,32 @@ class Blocks {
 
 		//print_r($shortcode_args);
 		echo do_shortcode( '[zoom_join_via_browser' . $shortcode_args . ']' );
+
+		return ob_get_clean();
+	}
+
+	public function render_recordings( $attributes ) {
+		ob_start();
+		$shortcode = '';
+		if ( isset( $attributes['showBy'] ) && ! empty( $attributes['showBy'] ) ) {
+			$shortcode = ( $attributes['showBy'] == 'host' ) ? 'zoom_recordings' : 'zoom_recordings_by_meeting';
+			if ( $attributes['showBy'] == 'host' ) {
+				if ( isset( $attributes['host']['value'] ) && ! empty( $attributes['host']['value'] ) ) {
+					$shortcode .= ' host_id="' . $attributes['host']['value'] . '"';
+				}
+			} else {
+				if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
+					$shortcode .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
+				}
+			}
+		}
+		if ( isset( $attributes['downloadable'] ) && ! empty( $attributes['downloadable'] ) ) {
+			$maybe     = $attributes['downloadable'] == 'true' ? 'yes' : 'no';
+			$shortcode .= ' downloadable="' . $maybe . '"';
+		}
+
+		//print_r( $shortcode );
+		echo do_shortcode( '[' . $shortcode . ']' );
 
 		return ob_get_clean();
 	}

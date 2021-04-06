@@ -11,7 +11,8 @@
     align-items: center;
     margin-bottom: 1.5em;
   }
-  .radio-inline {
+
+  .radio-inline, .toggle-inline {
     width: 100%;
 
     .components-base-control__field {
@@ -28,6 +29,12 @@
       }
     }
   }
+
+  .toggle-inline {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
 
   .range-control {
     width: 100%;

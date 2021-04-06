@@ -25,9 +25,9 @@
         -ms-flex-align: center;
             align-items: center;
     margin-bottom: 1.5em; }
-  .vczapi-blocks-form .radio-inline {
+  .vczapi-blocks-form .radio-inline, .vczapi-blocks-form .toggle-inline {
     width: 100%; }
-    .vczapi-blocks-form .radio-inline .components-base-control__field {
+    .vczapi-blocks-form .radio-inline .components-base-control__field, .vczapi-blocks-form .toggle-inline .components-base-control__field {
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -36,13 +36,23 @@
           -ms-flex-line-pack: center;
               align-content: center;
       width: 100%; }
-      .vczapi-blocks-form .radio-inline .components-base-control__field .components-base-control__label {
+      .vczapi-blocks-form .radio-inline .components-base-control__field .components-base-control__label, .vczapi-blocks-form .toggle-inline .components-base-control__field .components-base-control__label {
         -webkit-box-flex: 1;
         -webkit-flex: 1 1 auto;
             -ms-flex: 1 1 auto;
                 flex: 1 1 auto; }
-      .vczapi-blocks-form .radio-inline .components-base-control__field label {
+      .vczapi-blocks-form .radio-inline .components-base-control__field label, .vczapi-blocks-form .toggle-inline .components-base-control__field label {
         margin-right: 10px; }
+  .vczapi-blocks-form .toggle-inline {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse; }
   .vczapi-blocks-form .range-control {
     width: 100%; }
   .vczapi-blocks-form .text-input {

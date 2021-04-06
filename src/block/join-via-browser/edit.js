@@ -106,7 +106,7 @@ export default function EditJoinViaBrowser(props) {
     if (preview) {
         return (
             <>
-                <img src={vczapi_blocks.direct_meeting_preview_image} alt={"Direct Meeting from Zoom"}/>
+                <img src={vczapi_blocks.join_via_browser} alt={"Direct Meeting from Zoom"}/>
             </>
         )
     }
