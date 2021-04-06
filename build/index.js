@@ -10190,15 +10190,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "lodash");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_select_async__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-select/async */ "./node_modules/react-select/async/dist/react-select.esm.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react_select_async__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-select/async */ "./node_modules/react-select/async/dist/react-select.esm.js");
 
 
 
@@ -10208,6 +10210,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
+
 
 
 /**
@@ -10267,13 +10270,19 @@ function Edit(props) {
       setAvailableUsers = _useState4[1];
 
   var getUsers = function getUsers(inputValue, callback) {
-    var userQuery = '/wp/v2/users?per_page=5&who=authors';
+    //?per_page=5&who=authors'
+    var userQueryParams = {
+      per_page: 5,
+      who: 'authors'
+    };
 
     if (inputValue !== '') {
-      userQuery += '&search=' + inputValue;
+      //userQuery = addQueryArgs(userQuery, {search: inputValue});
+      userQueryParams.search = inputValue;
     }
 
-    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default()({
+    var userQuery = Object(_wordpress_url__WEBPACK_IMPORTED_MODULE_5__["addQueryArgs"])('/wp/v2/users', userQueryParams);
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default()({
       path: userQuery
     }).then(function (users) {
       if (isStillMounted.current === true) {
@@ -10291,7 +10300,7 @@ function Edit(props) {
 
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
     isStillMounted.current = true;
-    _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default()({
+    _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default()({
       path: '/wp/v2/zoom_meeting_cats'
     }).then(function (zoomCats) {
       if (isStillMounted.current === true) {
@@ -10307,14 +10316,20 @@ function Edit(props) {
       }
     }).catch(function () {
       if (isStillMounted.current === true) setAvailableCategories([]);
-    });
-    var userUrl = '/wp/v2/users?per_page=10&who=authors';
+    }); //?per_page=10&who=authors
+
+    var userQueryArgs = {
+      per_page: 10,
+      who: "authors"
+    };
 
     if (selectedAuthor !== 0) {
-      userUrl = userUrl + '&include=' + selectedAuthor;
+      // userUrl = userUrl + '&include=' + selectedAuthor;
+      userQueryArgs.include = selectedAuthor;
     }
 
-    _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default()({
+    var userUrl = Object(_wordpress_url__WEBPACK_IMPORTED_MODULE_5__["addQueryArgs"])('/wp/v2/users', userQueryArgs);
+    _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default()({
       path: userUrl
     }).then(function (users) {
       if (isStillMounted.current === true) {
@@ -10335,7 +10350,7 @@ function Edit(props) {
   }, []);
 
   if (preview) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_6___default.a, {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_7___default.a, {
       block: "vczapi/list-meetings",
       attributes: {
         columns: columns,
@@ -10350,10 +10365,10 @@ function Edit(props) {
     }));
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["PanelBody"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["PanelBody"], {
     title: "Settings",
     initialOpen: true
-  }, isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["SelectControl"], {
+  }, isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["SelectControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Show Meeting or Webinar', 'video-conferencing-with-zoom-api'),
     value: shortcodeType,
     options: [{
@@ -10369,7 +10384,7 @@ function Edit(props) {
         shortcodeType: value
       });
     }
-  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["SelectControl"], {
+  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["SelectControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Type of Meeting/Webinar to Show', 'video-conferencing-with-zoom-api'),
     value: displayType,
     onChange: function onChange(value) {
@@ -10388,7 +10403,7 @@ function Edit(props) {
       value: "past"
     }],
     help: "Show All,Upcoming or Past Meeting - default All"
-  }), displayType === 'upcoming' && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["CheckboxControl"], {
+  }), displayType === 'upcoming' && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["CheckboxControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Show Meeting that have started', 'video-conferencing-with-zoom-api'),
     checked: showPastMeeting,
     onChange: function onChange(value) {
@@ -10397,7 +10412,7 @@ function Edit(props) {
       });
     },
     help: "will show meetings that have passed meeting start time - upto 30 minutes after the meeting was scheduled to start."
-  })), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["SelectControl"], {
+  })), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["SelectControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Show Filter", "video-conferencing-with-zoom-api"),
     value: showFilter,
     options: [{
@@ -10412,7 +10427,7 @@ function Edit(props) {
         showFilter: value
       });
     }
-  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["RangeControl"], {
+  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["RangeControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Columns", 'video-conferencing-with-zoom-api'),
     value: columns,
     help: "how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.",
@@ -10423,7 +10438,7 @@ function Edit(props) {
     },
     min: 1,
     max: 4
-  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["SelectControl"], {
+  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["SelectControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])("Order By", "video-conferencing-with-zoom-api"),
     value: orderBy,
     options: [{
@@ -10441,7 +10456,7 @@ function Edit(props) {
         orderBy: value
       });
     }
-  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Category', 'video-conferencing-with-zoom-api')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Category', 'video-conferencing-with-zoom-api')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_10__["default"], {
     cacheOptions: true,
     defaultOptions: availableCategories,
     isMulti: true,
@@ -10472,7 +10487,7 @@ function Edit(props) {
     },
     defaultValue: Object(lodash__WEBPACK_IMPORTED_MODULE_4__["intersectionWith"])(availableCategories, selectedCategory, lodash__WEBPACK_IMPORTED_MODULE_4__["isEqual"]),
     className: "components-base-control"
-  })), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Author', 'video-conferencing-with-zoom-api')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  })), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Author', 'video-conferencing-with-zoom-api')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_10__["default"], {
     cacheOptions: true,
     defaultOptions: availableUsers,
     noResultsText: true,
@@ -10503,7 +10518,7 @@ function Edit(props) {
       return option.value === selectedAuthor;
     }),
     className: "components-base-control"
-  })), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["RangeControl"], {
+  })), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["RangeControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Number of Meetings/Webinars to show', 'video-conferencing-with-zoom-api'),
     value: postsToShow,
     onChange: function onChange(value) {
@@ -10513,7 +10528,7 @@ function Edit(props) {
     },
     min: 1,
     max: 100
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["Disabled"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_6___default.a, {
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Disabled"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_7___default.a, {
     block: "vczapi/list-meetings",
     attributes: {
       columns: columns,
@@ -11181,6 +11196,17 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('vcz
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["serverSideRender"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/url":
+/*!*****************************!*\
+  !*** external ["wp","url"] ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["url"]; }());
 
 /***/ }),
 

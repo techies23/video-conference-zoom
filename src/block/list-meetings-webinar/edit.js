@@ -5,6 +5,7 @@
  */
 import {__} from '@wordpress/i18n';
 import {isEqual, unionBy, intersectionWith, debounce} from 'lodash';
+import {addQueryArgs} from "@wordpress/url";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -55,11 +56,16 @@ export default function Edit(props) {
     const [availableUsers, setAvailableUsers] = useState([]);
 
     const getUsers = (inputValue, callback) => {
-        let userQuery = '/wp/v2/users?per_page=5&who=authors';
-        if (inputValue !== '') {
-            userQuery += '&search=' + inputValue;
+        //?per_page=5&who=authors'
+        let userQueryParams = {
+            per_page: 5,
+            who: 'authors'
         }
-
+        if (inputValue !== '') {
+            //userQuery = addQueryArgs(userQuery, {search: inputValue});
+            userQueryParams.search = inputValue;
+        }
+        let userQuery = addQueryArgs('/wp/v2/users', userQueryParams);
         return apiFetch({path: userQuery}).then(
             users => {
                 if (isStillMounted.current === true) {
@@ -95,10 +101,17 @@ export default function Edit(props) {
         });
 
 
-        let userUrl = '/wp/v2/users?per_page=10&who=authors';
-        if (selectedAuthor !== 0) {
-            userUrl = userUrl + '&include=' + selectedAuthor;
+        //?per_page=10&who=authors
+        let userQueryArgs = {
+            per_page: 10,
+            who: "authors"
         }
+        if (selectedAuthor !== 0) {
+            // userUrl = userUrl + '&include=' + selectedAuthor;
+            userQueryArgs.include = selectedAuthor;
+        }
+
+        let userUrl = addQueryArgs('/wp/v2/users', userQueryArgs);
 
         apiFetch({path: userUrl}).then(
             users => {
@@ -292,7 +305,6 @@ export default function Edit(props) {
                         max={100}
                     />
                     }
-
                 </PanelBody>
             </InspectorControls>
             <div {...useBlockProps()}>
