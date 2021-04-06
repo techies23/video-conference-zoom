@@ -35,7 +35,7 @@ import AsyncSelect from 'react-select/async';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit(props) {
+export default function EditListMeetingsWebinars(props) {
     const {className, attributes, setAttributes, isSelected} = props;
     const {
         shortcodeType,
