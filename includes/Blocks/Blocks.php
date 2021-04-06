@@ -165,7 +165,7 @@ class Blocks {
 				]
 			],
 			"category"        => "vczapi-blocks",
-			"icon"            => "sticky",
+			"icon"            => "embed-post",
 			"description"     => "Show a Meeting Post with Countdown",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
@@ -264,10 +264,6 @@ class Blocks {
 		register_block_type( 'vczapi/recordings', [
 			"title"           => "Zoom - Show Recordings",
 			"attributes"      => [
-				"preview"         => [
-					"type"    => "boolean",
-					"default" => false
-				],
 				"shouldShow"      => [
 					"type"    => "object",
 					"default" => [
@@ -291,7 +287,7 @@ class Blocks {
 				]
 			],
 			"category"        => "vczapi-blocks",
-			"icon"            => "archive",
+			"icon"            => "playlist-video",
 			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',

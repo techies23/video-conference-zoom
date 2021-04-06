@@ -16,9 +16,4 @@ registerBlockType('vczapi/recordings', {
      * @see ./edit.js
      */
     edit: Edit,
-    example: {
-        attributes: {
-            preview: true
-        }
-    }
 });
