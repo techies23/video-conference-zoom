@@ -11,7 +11,7 @@ import {useEffect, useState, useRef} from "@wordpress/element";
 
 import AsyncSelect from 'react-select/async';
 import Select from 'react-select';
-import {Placeholder, ToolbarGroup, Button, RadioControl, Disabled, Spinner} from "@wordpress/components";
+import {Placeholder, ToolbarGroup, ToolbarButton, Button, RadioControl, Disabled, Spinner} from "@wordpress/components";
 
 export default function EditLiveMeeting(props) {
     const {className, attributes, setAttributes} = props;
@@ -28,15 +28,6 @@ export default function EditLiveMeeting(props) {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [isLoadingMeetings, setIsLoadingMeetings] = useState(false);
-
-    const editControls = [{
-        icon: (!isEditing) ? 'edit' : 'no',
-        title: (!isEditing) ? "Edit" : "Close",
-        subscript: "Edit",
-        onClick: () => {
-            setIsEditing(prevIsEditing => !prevIsEditing);
-        }
-    }];
 
     const get_hosts = (input, callback) => {
         fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + input).then(
@@ -120,7 +111,16 @@ export default function EditLiveMeeting(props) {
     return (
         <div {...useBlockProps()}>
             <BlockControls>
-                <ToolbarGroup controls={editControls}/>
+                <ToolbarGroup>
+                    <ToolbarButton
+                        icon={(!isEditing) ? 'edit' : 'no'}
+                        title={(!isEditing) ? "Edit" : "Close"}
+                        subscript={"Edit"}
+                        onClick={() => {
+                            setIsEditing(prevIsEditing => !prevIsEditing);
+                        }}
+                    />
+                </ToolbarGroup>
             </BlockControls>
 
             {(typeof selectedMeeting === "undefined" || isEditing) &&

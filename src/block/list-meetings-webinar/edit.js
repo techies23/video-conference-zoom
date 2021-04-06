@@ -327,6 +327,5 @@ export default function EditListMeetingsWebinars(props) {
                 </Disabled>
             </div>
         </>
-
     );
 }

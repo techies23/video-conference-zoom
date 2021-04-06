@@ -9644,17 +9644,6 @@ function EditJoinViaBrowser(props) {
       isLoadingMeetings = _useState16[0],
       setIsLoadingMeetings = _useState16[1];
 
-  var editControls = [{
-    icon: !isEditing ? 'edit' : 'no',
-    title: !isEditing ? "Edit" : "Close",
-    subscript: "Edit",
-    onClick: function onClick() {
-      setIsEditing(function (prevIsEditing) {
-        return !prevIsEditing;
-      });
-    }
-  }];
-
   var get_hosts = function get_hosts(input, callback) {
     fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + input).then(function (response) {
       return response.json();
@@ -9744,9 +9733,16 @@ function EditJoinViaBrowser(props) {
     }));
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarGroup"], {
-    controls: editControls
-  })), isMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, (typeof selectedMeeting === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarButton"], {
+    icon: !isEditing ? 'edit' : 'no',
+    title: !isEditing ? "Edit" : "Close",
+    subscript: "Edit",
+    onClick: function onClick() {
+      setIsEditing(function (prevIsEditing) {
+        return !prevIsEditing;
+      });
+    }
+  }))), (typeof selectedMeeting === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-label-header"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Zoom - Embed Join Via A Browser", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Embed Join via a browser", "video-conferencing-with-zoom-api")))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form"
@@ -9925,7 +9921,7 @@ function EditJoinViaBrowser(props) {
       });
       setIsEditing(false);
     }
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Save", "video-conferencing-with-zoom-api")))))), typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value') && !isEditing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Disabled"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default.a, {
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Save", "video-conferencing-with-zoom-api"))))), typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value') && !isEditing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Disabled"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default.a, {
     block: "vczapi/join-via-browser",
     attributes: {
       selectedMeeting: selectedMeeting,
@@ -10036,17 +10032,6 @@ function EditListHostMeeting(props) {
       isEditing = _useState2[0],
       setIsEditing = _useState2[1];
 
-  var editControls = [{
-    icon: !isEditing ? 'edit' : 'no',
-    title: !isEditing ? "Edit" : "Close",
-    subscript: "Edit",
-    onClick: function onClick() {
-      setIsEditing(function (prevIsEditing) {
-        return !prevIsEditing;
-      });
-    }
-  }];
-
   var get_hosts = function get_hosts(input, callback) {
     fetch('admin-ajax.php?action=vczapi_get_zoom_hosts&host=' + input).then(function (response) {
       return response.json();
@@ -10071,9 +10056,16 @@ function EditListHostMeeting(props) {
     });
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarGroup"], {
-    controls: editControls
-  })), isMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, (typeof host === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Zoom -  List Meetings/Webinars based on HOST', 'video-conferencing-with-zoom')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarButton"], {
+    icon: !isEditing ? 'edit' : 'no',
+    title: !isEditing ? "Edit" : "Close",
+    subscript: "Edit",
+    onClick: function onClick() {
+      setIsEditing(function (prevIsEditing) {
+        return !prevIsEditing;
+      });
+    }
+  }))), (typeof host === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Zoom -  List Meetings/Webinars based on HOST', 'video-conferencing-with-zoom')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
     className: "vczapi-blocks-form"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
     className: "vczapi-blocks-form--group"
@@ -10120,7 +10112,7 @@ function EditListHostMeeting(props) {
     onClick: function onClick() {
       setIsEditing(false);
     }
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Save", "video-conferencing-with-zoom-api")))))), typeof host !== 'undefined' && host.hasOwnProperty('value') && !isEditing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default.a, {
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])("Save", "video-conferencing-with-zoom-api"))))), typeof host !== 'undefined' && host.hasOwnProperty('value') && !isEditing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default.a, {
     block: "vczapi/list-host-meetings",
     attributes: {
       host: host,
@@ -10682,17 +10674,6 @@ function EditLiveMeeting(props) {
       isLoadingMeetings = _useState16[0],
       setIsLoadingMeetings = _useState16[1];
 
-  var editControls = [{
-    icon: !isEditing ? 'edit' : 'no',
-    title: !isEditing ? "Edit" : "Close",
-    subscript: "Edit",
-    onClick: function onClick() {
-      setIsEditing(function (prevIsEditing) {
-        return !prevIsEditing;
-      });
-    }
-  }];
-
   var get_hosts = function get_hosts(input, callback) {
     fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + input).then(function (response) {
       return response.json();
@@ -10775,9 +10756,16 @@ function EditLiveMeeting(props) {
     }));
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarGroup"], {
-    controls: editControls
-  })), (typeof selectedMeeting === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["ToolbarButton"], {
+    icon: !isEditing ? 'edit' : 'no',
+    title: !isEditing ? "Edit" : "Close",
+    subscript: "Edit",
+    onClick: function onClick() {
+      setIsEditing(function (prevIsEditing) {
+        return !prevIsEditing;
+      });
+    }
+  }))), (typeof selectedMeeting === "undefined" || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-label-header"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Zoom - Show Meeting directly from Zoom", "video-conferencing-with-zoom-api")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])("Get a meeting directly from Zoom", "video-conferencing-with-zoom-api")))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
     className: "vczapi-blocks-form"
@@ -11055,7 +11043,7 @@ function Edit(props) {
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["ToolbarGroup"], {
     controls: editControls
-  })), !isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Spinner"], null), isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, (postID === 0 || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
+  })), !isStillMounted.current && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Spinner"], null), (postID === 0 || isEditing) && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Placeholder"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
     className: "vczapi-blocks-form"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(react_select_async__WEBPACK_IMPORTED_MODULE_7__["default"], {
     cacheOptions: true,
@@ -11078,7 +11066,7 @@ function Edit(props) {
     attributes: {
       postID: postID
     }
-  }))));
+  })));
 }
 
 /***/ }),

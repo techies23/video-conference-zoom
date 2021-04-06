@@ -83,42 +83,39 @@ export default function Edit(props) {
             {
                 !isStillMounted.current && <Spinner/>
             }
-            {isStillMounted.current &&
-            <>
-                {(postID === 0 || isEditing) &&
-                <Placeholder>
-                    <h2>{__('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')}</h2>
-                    <div className="vczapi-blocks-form">
+            
+            {(postID === 0 || isEditing) &&
+            <Placeholder>
+                <h2>{__('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')}</h2>
+                <div className="vczapi-blocks-form">
 
-                        <AsyncSelect
-                            cacheOptions
-                            className="vczapi-blocks-form--select"
-                            placeholder={__("Select Meeting to Show", "video-conferencing-with-zoom")}
-                            defaultOptions={availableMeetings}
-                            loadOptions={debounce(getMeetings, 800)}
-                            onChange={(selectedOption, {action}) => {
-                                setAttributes({postID: selectedOption.value});
-                                setIsEditing(false);
-                            }}
-                            defaultValue={availableMeetings.filter((meeting) => {
-                                return meeting.value === postID;
-                            })}
-                        />
-
-                    </div>
-                </Placeholder>
-                }
-                {(postID !== 0 && !isEditing) &&
-                <Disabled>
-                    <ServerSideRender
-                        block="vczapi/show-meeting-post"
-                        attributes={
-                            {postID: postID}
-                        }
+                    <AsyncSelect
+                        cacheOptions
+                        className="vczapi-blocks-form--select"
+                        placeholder={__("Select Meeting to Show", "video-conferencing-with-zoom")}
+                        defaultOptions={availableMeetings}
+                        loadOptions={debounce(getMeetings, 800)}
+                        onChange={(selectedOption, {action}) => {
+                            setAttributes({postID: selectedOption.value});
+                            setIsEditing(false);
+                        }}
+                        defaultValue={availableMeetings.filter((meeting) => {
+                            return meeting.value === postID;
+                        })}
                     />
-                </Disabled>
-                }
-            </>
+
+                </div>
+            </Placeholder>
+            }
+            {(postID !== 0 && !isEditing) &&
+            <Disabled>
+                <ServerSideRender
+                    block="vczapi/show-meeting-post"
+                    attributes={
+                        {postID: postID}
+                    }
+                />
+            </Disabled>
             }
 
 
