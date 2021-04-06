@@ -19,16 +19,16 @@ export default function EditLiveMeeting(props) {
     const isMounted = useRef;
     const [isEditing, setIsEditing] = useState(false);
     const [availableMeetings, setAvailableMeetings] = useState([]);
-    
-    const [tempHost, setTempHost] = useState([]);
+
+    const [tempHost, setTempHost] = useState([host]);
     const [tempShouldShow, setTempShouldShow] = useState(shouldShow);
     const [tempSelectedMeeting, setTempSelectedMeeting] = useState({});
-    
+
     const [numberOfPages, setNumberOfPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
-    
+
     const [isLoadingMeetings, setIsLoadingMeetings] = useState(false);
-   
+
     const editControls = [{
         icon: (!isEditing) ? 'edit' : 'no',
         title: (!isEditing) ? "Edit" : "Close",

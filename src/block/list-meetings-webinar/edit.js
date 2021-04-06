@@ -56,10 +56,10 @@ export default function Edit(props) {
 
     const getUsers = (inputValue, callback) => {
         let userQuery = '/wp/v2/users?per_page=5&who=authors';
-        if(inputValue !== ''){
+        if (inputValue !== '') {
             userQuery += '&search=' + inputValue;
         }
-        
+
         return apiFetch({path: userQuery}).then(
             users => {
                 if (isStillMounted.current === true) {
@@ -138,13 +138,13 @@ export default function Edit(props) {
                 />
             </Fragment>
         );
-    }   
+    }
 
     return (
-        <Fragment>
+        <>
             <InspectorControls>
                 <PanelBody title="Settings" initialOpen={true}>
-
+                    {isStillMounted.current &&
                     <SelectControl
                         label={__('Show Meeting or Webinar', 'video-conferencing-with-zoom-api')}
                         value={shortcodeType}
@@ -155,26 +155,32 @@ export default function Edit(props) {
                         help={"Determines whether to show Meeting or Webinar"}
                         onChange={(value) => setAttributes({shortcodeType: value})}
                     />
+                    }
 
-                    <SelectControl
-                        label={__('Type of Meeting/Webinar to Show', 'video-conferencing-with-zoom-api')}
-                        value={displayType}
-                        onChange={(value) => setAttributes({displayType: value})}
-                        options={[
-                            {label: "Show All", value: ""},
-                            {label: "Upcoming", value: "upcoming"},
-                            {label: "Past", value: "past"},
-                        ]}
-                        help={"Show All,Upcoming or Past Meeting - default All"}
-                    />
+                    {isStillMounted.current &&
+                    <>
+                        <SelectControl
+                            label={__('Type of Meeting/Webinar to Show', 'video-conferencing-with-zoom-api')}
+                            value={displayType}
+                            onChange={(value) => setAttributes({displayType: value})}
+                            options={[
+                                {label: "Show All", value: ""},
+                                {label: "Upcoming", value: "upcoming"},
+                                {label: "Past", value: "past"},
+                            ]}
+                            help={"Show All,Upcoming or Past Meeting - default All"}
+                        />
+                        {displayType === 'upcoming' && <CheckboxControl
+                            label={__('Show Meeting that have started', 'video-conferencing-with-zoom-api')}
+                            checked={showPastMeeting}
+                            onChange={(value) => setAttributes({showPastMeeting: value})}
+                            help={"will show meetings that have passed meeting start time - upto 30 minutes after the meeting was scheduled to start."}
+                        />}
+                    </>
+                    }
 
-                    {displayType === 'upcoming' && <CheckboxControl
-                        label={__('Show Meeting that have started', 'video-conferencing-with-zoom-api')}
-                        checked={showPastMeeting}
-                        onChange={(value) => setAttributes({showPastMeeting: value})}
-                        help={"will show meetings that have passed meeting start time - upto 30 minutes after the meeting was scheduled to start."}
-                    />}
 
+                    {isStillMounted.current &&
                     <SelectControl
                         label={__("Show Filter", "video-conferencing-with-zoom-api")}
                         value={showFilter}
@@ -186,7 +192,8 @@ export default function Edit(props) {
                             setAttributes({showFilter: value})
                         }}
                     />
-
+                    }
+                    {isStillMounted.current &&
                     <RangeControl
                         label={__("Columns", 'video-conferencing-with-zoom-api')}
                         value={columns}
@@ -197,7 +204,9 @@ export default function Edit(props) {
                         min={1}
                         max={4}
                     />
+                    }
 
+                    {isStillMounted.current &&
                     <SelectControl
                         label={__("Order By", "video-conferencing-with-zoom-api")}
                         value={orderBy}
@@ -210,8 +219,10 @@ export default function Edit(props) {
                             setAttributes({orderBy: value})
                         }}
                     />
+                    }
 
-                    {isStillMounted.current === true &&
+
+                    {isStillMounted.current &&
                     <>
                         <span>{__('Category', 'video-conferencing-with-zoom-api')}</span>
                         <AsyncSelect
@@ -242,7 +253,7 @@ export default function Edit(props) {
                     }
 
 
-                    {isStillMounted.current === true &&
+                    {isStillMounted.current &&
                     <>
                         <span>{__('Author', 'video-conferencing-with-zoom-api')}</span>
                         <AsyncSelect
@@ -272,7 +283,7 @@ export default function Edit(props) {
 
                     }
 
-
+                    {isStillMounted.current &&
                     <RangeControl
                         label={__('Number of Meetings/Webinars to show', 'video-conferencing-with-zoom-api')}
                         value={postsToShow}
@@ -280,6 +291,8 @@ export default function Edit(props) {
                         min={1}
                         max={100}
                     />
+                    }
+
                 </PanelBody>
             </InspectorControls>
             <div {...useBlockProps()}>
@@ -301,6 +314,7 @@ export default function Edit(props) {
                     />
                 </Disabled>
             </div>
-        </Fragment>
+        </>
+
     );
 }

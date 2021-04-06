@@ -3,27 +3,48 @@
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
-
-  .radio-inline{
-    .components-base-control__field{
-      display: flex;
-      align-content: center;
-      label{
-        margin-right:10px;
-      }
-    }
-  }
-  
-  &--input-label{
-    width: 100%;
-  }
-
+  //intende to create gaps between for fields - keep separate from other class modifiers
   &--group {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 1.5em;
+  }
+  .radio-inline {
+    width: 100%;
+
+    .components-base-control__field {
+      display: flex;
+      align-content: center;
+      width: 100%;
+
+      .components-base-control__label {
+        flex: 1 1 auto;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .range-control {
+    width: 100%;
+  }
+
+  .text-input {
+    width: 100%;
+
+    .components-base-control__field,
+    .components-base-control__label,
+    .components-base-control__input {
+      width: 100%;
+    }
+  }
+
+  &--input-label {
+    width: 100%;
   }
 
   &--select {

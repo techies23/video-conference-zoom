@@ -16,3 +16,4 @@ import './list-meetings-webinar';
 import './show-meeting-post';
 import './show-live-meeting';
 import './list-host-meetings';
+import './join-via-browser';

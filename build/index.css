@@ -11,18 +11,6 @@
       -ms-flex-align: center;
           align-items: center;
   width: 100%; }
-  .vczapi-blocks-form .radio-inline .components-base-control__field {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-content: center;
-        -ms-flex-line-pack: center;
-            align-content: center; }
-    .vczapi-blocks-form .radio-inline .components-base-control__field label {
-      margin-right: 10px; }
-  .vczapi-blocks-form--input-label {
-    width: 100%; }
   .vczapi-blocks-form--group {
     width: 100%;
     display: -webkit-box;
@@ -37,6 +25,34 @@
         -ms-flex-align: center;
             align-items: center;
     margin-bottom: 1.5em; }
+  .vczapi-blocks-form .radio-inline {
+    width: 100%; }
+    .vczapi-blocks-form .radio-inline .components-base-control__field {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-content: center;
+          -ms-flex-line-pack: center;
+              align-content: center;
+      width: 100%; }
+      .vczapi-blocks-form .radio-inline .components-base-control__field .components-base-control__label {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+                flex: 1 1 auto; }
+      .vczapi-blocks-form .radio-inline .components-base-control__field label {
+        margin-right: 10px; }
+  .vczapi-blocks-form .range-control {
+    width: 100%; }
+  .vczapi-blocks-form .text-input {
+    width: 100%; }
+    .vczapi-blocks-form .text-input .components-base-control__field,
+    .vczapi-blocks-form .text-input .components-base-control__label,
+    .vczapi-blocks-form .text-input .components-base-control__input {
+      width: 100%; }
+  .vczapi-blocks-form--input-label {
+    width: 100%; }
   .vczapi-blocks-form--select {
     -webkit-box-flex: 1;
     -webkit-flex: 1 1 auto;

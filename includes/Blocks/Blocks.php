@@ -206,6 +206,60 @@ class Blocks {
 			'render_callback' => [ $this, 'render_live_meeting' ]
 		] );
 
+		register_block_type( 'vczapi/join-via-browser', [
+			"title"           => "Zoom - Join via Browser",
+			"attributes"      => [
+				"preview"           => [
+					"type"    => "boolean",
+					"default" => false
+				],
+				"shouldShow"        => [
+					"type"    => "object",
+					"default" => [
+						"label" => "Meeting",
+						"value" => "meeting"
+					]
+				],
+				"host"              => [
+					"type" => "object",
+				],
+				"selectedMeeting"   => [
+					"type" => "object",
+				],
+				"login_required"    => [
+					"type"    => "string",
+					"default" => "no"
+				],
+				"help"              => [
+					"type"    => "string",
+					"default" => "no"
+				],
+				"disable_countdown" => [
+					"type"    => "string",
+					"default" => "no"
+				],
+				"title"             => [
+					"type"    => "string",
+					"default" => ""
+				],
+				"passcode"          => [
+					"type"    => "string",
+					"default" => ""
+				],
+				"height"            => [
+					"type"    => "number",
+					"default" => 500
+				]
+			],
+			"category"        => "vczapi-blocks",
+			"icon"            => "archive",
+			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_join_via_browser' ]
+		] );
+
 
 	}
 
@@ -360,9 +414,40 @@ class Blocks {
 
 	public function render_host_meeting_list( $attributes ) {
 		$shortcode = ( $attributes['shouldShow']['value'] == "webinar" ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
-
 		ob_start();
 		echo do_shortcode( '[' . $shortcode . ' host="' . $attributes['host']['value'] . '"]' );
+
+		return ob_get_clean();
+	}
+
+	public function render_join_via_browser( $attributes ) {
+		$shortcode_args = '';
+		if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
+			$shortcode_args .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
+		}
+		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) ) {
+			$shortcode_args .= ' title="' . $attributes['title'] . '"';
+		}
+		if ( isset( $attributes['login_required'] ) && ! empty( $attributes['login_required'] ) ) {
+			$shortcode_args .= ' login_required="' . $attributes['login_required'] . '"';
+		}
+		if ( isset( $attributes['help'] ) && ! empty( $attributes['help'] ) ) {
+			$shortcode_args .= ' help="' . $attributes['help'] . '"';
+		}
+		if ( isset( $attributes['disable_countdown'] ) && ! empty( $attributes['disable_countdown'] ) ) {
+			$shortcode_args .= ' disable_countdown="' . $attributes['disable_countdown'] . '"';
+		}
+		if ( isset( $attributes['passcode'] ) && ! empty( $attributes['passcode'] ) ) {
+			$shortcode_args .= ' passcode="' . $attributes['passcode'] . '"';
+		}
+		if ( isset( $attributes['height'] ) && ! empty( $attributes['height'] ) ) {
+			$shortcode_args .= ' height="' . $attributes['height'] . 'px"';
+		}
+
+		ob_start();
+
+		//print_r($shortcode_args);
+		echo do_shortcode( '[zoom_join_via_browser' . $shortcode_args . ']' );
 
 		return ob_get_clean();
 	}
