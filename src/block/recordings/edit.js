@@ -116,14 +116,6 @@ export default function EditZoomRecording(props) {
         }
     }, []);
 
-    if (preview) {
-        return (
-            <>
-                <img src={vczapi_blocks.direct_meeting_preview_image} alt={"Direct Meeting from Zoom"}/>
-            </>
-        )
-    }
-
     return (
         <div {...useBlockProps()}>
             <BlockControls>
@@ -139,7 +131,7 @@ export default function EditZoomRecording(props) {
                 </ToolbarGroup>
             </BlockControls>
 
-            {(typeof selectedMeeting === "undefined" || isEditing) &&
+            {((typeof selectedMeeting === "undefined" || typeof host === "undefined") || isEditing) &&
             <Placeholder>
                 <div className="vczapi-label-header">
                     <h2>{__("Zoom - Show Recordings", "video-conferencing-with-zoom-api")}</h2>
