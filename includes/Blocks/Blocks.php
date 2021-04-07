@@ -52,21 +52,21 @@ class Blocks {
 				'direct_meeting_preview_image'     => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/direct-meeting.jpg',
 				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
 				'embed_post_preview'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/embed_post_preview.png',
-				'join_via_browser'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/join-via-browser.png',
+				'join_via_browser'                 => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/join-via-browser.png',
 			]
 		);
 	}
 
 	public function register_block_categories( $categories, $post ) {
 		return array_merge(
-			$categories,
-			array(
-				array(
+			[
+				[
 					'slug'  => 'vczapi-blocks',
 					'title' => __( 'Zoom', 'video-conferencing-with-zoom-api' ),
 					//'icon'  => 'wordpress',
-				),
-			)
+				],
+			],
+			$categories
 		);
 	}
 
