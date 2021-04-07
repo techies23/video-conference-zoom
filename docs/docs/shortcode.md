@@ -1,5 +1,7 @@
 **Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=453" target="_blank">video documentation</a> if you want to see live demo.**
 
+If you are using the new WordPress editor ([Gutenberg](https://wordpress.org/gutenberg/)) consider using our [blocks instead](blocks.md)
+
 With new version you can grab your shortcode with just a click.
 
 ### Types

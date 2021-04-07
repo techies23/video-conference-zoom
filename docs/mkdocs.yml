@@ -11,6 +11,7 @@ nav:
   - Usage:
       - Meeting Types: meeting_types.md
       - Webinars: webinars.md
+      - Blocks: blocks.md
       - Shortcode: shortcode.md
       - PRO Version Shortcode: pro-shortcode.md
       - Change DateTime: date_types.md
@@ -27,7 +28,7 @@ nav:
       - WooCommerce Product Vendors (Addon): woocommerce-product-vendors.md
       - WooCommerce Bookings (Addon): woocommerce-booking.md
       - Booked Appointments (Addon): booked-appointments.md
-      - Dokan Integration for Zoom (Addon): dokan.md 
+      - Dokan Integration for Zoom (Addon): dokan.md
       - WCFM (Addon): wcfm.md
       - WooCommerce Appointments (addon): woocommerce-appointments.md
   - FAQ: faq.md

@@ -16,4 +16,11 @@ registerBlockType( 'vczapi/list-meetings', {
      * @see ./edit.js
      */
     edit: Edit,
+    example: {
+        attributes: {
+            preview : true,
+            columns: 2,
+            postsToShow: 2
+        },
+    },
 } );

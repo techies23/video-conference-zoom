@@ -4,7 +4,8 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import {__} from '@wordpress/i18n';
-import {isEqual, unionBy, intersectionWith} from 'lodash';
+import {isEqual, unionBy, intersectionWith, debounce} from 'lodash';
+import {addQueryArgs} from "@wordpress/url";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -21,7 +22,6 @@ import ServerSideRender from "@wordpress/server-side-render";
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
 import {Disabled, PanelBody, RangeControl, SelectControl, CheckboxControl} from "@wordpress/components";
 import {Fragment, useEffect, useRef, useState} from "@wordpress/element";
 import apiFetch from '@wordpress/api-fetch';
@@ -35,7 +35,7 @@ import AsyncSelect from 'react-select/async';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit(props) {
+export default function EditListMeetingsWebinars(props) {
     const {className, attributes, setAttributes, isSelected} = props;
     const {
         shortcodeType,
@@ -47,6 +47,7 @@ export default function Edit(props) {
         selectedCategory,
         selectedAuthor,
         columns,
+        preview
     } = attributes;
 
     const isStillMounted = useRef();
@@ -54,17 +55,27 @@ export default function Edit(props) {
     const [availableCategories, setAvailableCategories] = useState([]);
     const [availableUsers, setAvailableUsers] = useState([]);
 
-    const getUsers = (inputValue) => {
-        return apiFetch({path: '/wp/v2/users?per_page=5&search=' + inputValue}).then(
+    const getUsers = (inputValue, callback) => {
+        //?per_page=5&who=authors'
+        let userQueryParams = {
+            per_page: 5,
+            who: 'authors'
+        }
+        if (inputValue !== '') {
+            //userQuery = addQueryArgs(userQuery, {search: inputValue});
+            userQueryParams.search = inputValue;
+        }
+        let userQuery = addQueryArgs('/wp/v2/users', userQueryParams);
+        return apiFetch({path: userQuery}).then(
             users => {
                 if (isStillMounted.current === true) {
-                    return users.length > 0 ? users.map((user, i) => {
+                    callback(users.length > 0 ? users.map((user, i) => {
                         return {label: user.name, value: user.id}
-                    }) : [];
+                    }) : []);
                 }
             }
         ).catch(() => {
-            return [];
+            callback([]);
         })
     }
 
@@ -90,10 +101,17 @@ export default function Edit(props) {
         });
 
 
-        let userUrl = '/wp/v2/users?per_page=10&who=authors';
-        if (selectedAuthor !== 0) {
-            userUrl = userUrl + '&include=' + selectedAuthor;
+        //?per_page=10&who=authors
+        let userQueryArgs = {
+            per_page: 10,
+            who: "authors"
         }
+        if (selectedAuthor !== 0) {
+            // userUrl = userUrl + '&include=' + selectedAuthor;
+            userQueryArgs.include = selectedAuthor;
+        }
+
+        let userUrl = addQueryArgs('/wp/v2/users', userQueryArgs);
 
         apiFetch({path: userUrl}).then(
             users => {
@@ -113,11 +131,33 @@ export default function Edit(props) {
 
     }, []);
 
+    if (preview) {
+        return (
+            <Fragment>
+                <ServerSideRender
+                    block="vczapi/list-meetings"
+                    attributes={
+                        {
+                            columns: columns,
+                            displayType: displayType,
+                            postsToShow: postsToShow,
+                            orderBy: orderBy,
+                            shortcodeType: shortcodeType,
+                            showFilter: showFilter,
+                            selectedCategory: selectedCategory,
+                            selectedAuthor: selectedAuthor
+                        }
+                    }
+                />
+            </Fragment>
+        );
+    }
+
     return (
-        <Fragment>
+        <>
             <InspectorControls>
                 <PanelBody title="Settings" initialOpen={true}>
-
+                    {isStillMounted.current &&
                     <SelectControl
                         label={__('Show Meeting or Webinar', 'video-conferencing-with-zoom-api')}
                         value={shortcodeType}
@@ -128,26 +168,32 @@ export default function Edit(props) {
                         help={"Determines whether to show Meeting or Webinar"}
                         onChange={(value) => setAttributes({shortcodeType: value})}
                     />
+                    }
 
-                    <SelectControl
-                        label={__('Type of Meeting/Webinar to Show', 'video-conferencing-with-zoom-api')}
-                        value={displayType}
-                        onChange={(value) => setAttributes({displayType: value})}
-                        options={[
-                            {label: "Show All", value: ""},
-                            {label: "Upcoming", value: "upcoming"},
-                            {label: "Past", value: "past"},
-                        ]}
-                        help={"Show All,Upcoming or Past Meeting - default All"}
-                    />
+                    {isStillMounted.current &&
+                    <>
+                        <SelectControl
+                            label={__('Type of Meeting/Webinar to Show', 'video-conferencing-with-zoom-api')}
+                            value={displayType}
+                            onChange={(value) => setAttributes({displayType: value})}
+                            options={[
+                                {label: "Show All", value: ""},
+                                {label: "Upcoming", value: "upcoming"},
+                                {label: "Past", value: "past"},
+                            ]}
+                            help={"Show All,Upcoming or Past Meeting - default All"}
+                        />
+                        {displayType === 'upcoming' && <CheckboxControl
+                            label={__('Show Meeting that have started', 'video-conferencing-with-zoom-api')}
+                            checked={showPastMeeting}
+                            onChange={(value) => setAttributes({showPastMeeting: value})}
+                            help={"will show meetings that have passed meeting start time - upto 30 minutes after the meeting was scheduled to start."}
+                        />}
+                    </>
+                    }
 
-                    {displayType === 'upcoming' && <CheckboxControl
-                        label={__('Show Meeting that have started', 'video-conferencing-with-zoom-api')}
-                        checked={showPastMeeting}
-                        onChange={(value) => setAttributes({showPastMeeting: value})}
-                        help={"will show meetings that have passed meeting start time - upto 30 minutes after the meeting was scheduled to start."}
-                    />}
 
+                    {isStillMounted.current &&
                     <SelectControl
                         label={__("Show Filter", "video-conferencing-with-zoom-api")}
                         value={showFilter}
@@ -159,7 +205,8 @@ export default function Edit(props) {
                             setAttributes({showFilter: value})
                         }}
                     />
-
+                    }
+                    {isStillMounted.current &&
                     <RangeControl
                         label={__("Columns", 'video-conferencing-with-zoom-api')}
                         value={columns}
@@ -170,7 +217,9 @@ export default function Edit(props) {
                         min={1}
                         max={4}
                     />
+                    }
 
+                    {isStillMounted.current &&
                     <SelectControl
                         label={__("Order By", "video-conferencing-with-zoom-api")}
                         value={orderBy}
@@ -183,8 +232,10 @@ export default function Edit(props) {
                             setAttributes({orderBy: value})
                         }}
                     />
+                    }
 
-                    {isStillMounted.current === true &&
+
+                    {isStillMounted.current &&
                     <>
                         <span>{__('Category', 'video-conferencing-with-zoom-api')}</span>
                         <AsyncSelect
@@ -194,7 +245,6 @@ export default function Edit(props) {
                             isClearable
                             placeholder={__('Select categories - default All categories are shown', 'video-conferencing-with-zoom-api')}
                             onChange={(selectedInput, {action}) => {
-                                console.log(action);
                                 if (action === "clear") {
                                     setAttributes({selectedCategory: []});
                                     return [];
@@ -208,8 +258,6 @@ export default function Edit(props) {
                                         return unionBy(prevAvailableCategory, [selectedInput], 'value');
                                     });
                                 }
-
-
                             }}
                             defaultValue={intersectionWith(availableCategories, selectedCategory, isEqual)}
                             className="components-base-control"
@@ -218,15 +266,16 @@ export default function Edit(props) {
                     }
 
 
-                    {isStillMounted.current === true &&
+                    {isStillMounted.current &&
                     <>
                         <span>{__('Author', 'video-conferencing-with-zoom-api')}</span>
                         <AsyncSelect
                             cacheOptions
                             defaultOptions={availableUsers}
-                            loadOptions={getUsers}
+                            noResultsText
+                            loadOptions={debounce(getUsers, 800)}
                             isClearable
-                            placeholder={__('Select Author - Default All Authors are shown','video-conferencing-with-zoom-api')}
+                            placeholder={__('Select Author - Default All Authors are shown', 'video-conferencing-with-zoom-api')}
                             onChange={(selectedUser, {action}) => {
                                 if (action === 'clear') {
                                     setAttributes({selectedAuthor: 0});
@@ -247,7 +296,7 @@ export default function Edit(props) {
 
                     }
 
-
+                    {isStillMounted.current &&
                     <RangeControl
                         label={__('Number of Meetings/Webinars to show', 'video-conferencing-with-zoom-api')}
                         value={postsToShow}
@@ -255,6 +304,7 @@ export default function Edit(props) {
                         min={1}
                         max={100}
                     />
+                    }
                 </PanelBody>
             </InspectorControls>
             <div {...useBlockProps()}>
@@ -276,6 +326,6 @@ export default function Edit(props) {
                     />
                 </Disabled>
             </div>
-        </Fragment>
+        </>
     );
 }
