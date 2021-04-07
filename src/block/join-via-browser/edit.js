@@ -11,7 +11,13 @@ import {useEffect, useState, useRef} from "@wordpress/element";
 
 import AsyncSelect from 'react-select/async';
 import Select from 'react-select';
-import {Placeholder, ToolbarButton, TextControl, ToolbarGroup, Button, RadioControl, Disabled, Spinner, RangeControl} from "@wordpress/components";
+import {
+    Placeholder, ToolbarButton,
+    TextControl, ToolbarGroup,
+    Button, RadioControl,
+    Disabled, Spinner,
+    RangeControl
+} from "@wordpress/components";
 
 export default function EditJoinViaBrowser(props) {
     const {className, attributes, setAttributes} = props;
@@ -152,7 +158,7 @@ export default function EditJoinViaBrowser(props) {
                     <div className="vczapi-blocks-form--group">
                         <TextControl
                             className={"text-input"}
-                            label={"Passcode"}
+                            label={__("Passcode (Set password of your meeting to automatically let users join without needing them to enter password.)", "video-conferencing-with-zoom-api")}
                             value={passcode}
                             onChange={(value) => {
                                 setAttributes({passcode: value})
@@ -296,7 +302,7 @@ export default function EditJoinViaBrowser(props) {
                 </div>
             </Placeholder>
             }
-                
+
 
             {((typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value')) && !isEditing)
             &&

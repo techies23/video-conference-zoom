@@ -86,13 +86,13 @@ export default function Edit(props) {
             
             {(postID === 0 || isEditing) &&
             <Placeholder>
-                <h2>{__('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom')}</h2>
+                <h2>{__('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom-api')}</h2>
                 <div className="vczapi-blocks-form">
 
                     <AsyncSelect
                         cacheOptions
                         className="vczapi-blocks-form--select"
-                        placeholder={__("Select Meeting to Show", "video-conferencing-with-zoom")}
+                        placeholder={__("Select Meeting to Show", "video-conferencing-with-zoom-api")}
                         defaultOptions={availableMeetings}
                         loadOptions={debounce(getMeetings, 800)}
                         onChange={(selectedOption, {action}) => {
