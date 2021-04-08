@@ -168,7 +168,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.7.5 April 8th, 2021 =
+= 3.8.0 April 8th, 2021 =
 * Added: Gutenberg Blocks support.
 * Added: Option to choose host ID manually when creating meeting incase there are more than 300 users in a zoom account.
 
