@@ -170,10 +170,8 @@ final class Bootstrap {
 		if ( did_action( 'elementor/loaded' ) ) {
 			require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Elementor.php';
 		}
-		
-		require_once ZVC_PLUGIN_INCLUDES_PATH .'/Blocks/Blocks.php';
 
-		//Idea was to implement gutenberg also but in its current state ! ughh !
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Blocks/Blocks.php';
 	}
 
 	/**
@@ -219,7 +217,8 @@ final class Bootstrap {
 			'ajaxurl'      => admin_url( 'admin-ajax.php' ),
 			'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
 			'lang'         => array(
-				'confirm_end' => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" )
+				'confirm_end'  => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" ),
+				'host_id_search'  => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" )
 			)
 		) );
 	}

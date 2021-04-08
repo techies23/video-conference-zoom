@@ -1,18 +1,32 @@
 <?php
 
-
 namespace Codemanas\VczApi\Blocks;
 
-
+/**
+ * Class Blocks
+ *
+ * @package Codemanas\VczApi\Blocks
+ * @since 3.7.5
+ * @updated N/A
+ */
 class Blocks {
+
+	/**
+	 * @var null
+	 */
 	public static $_instance = null;
 
+	/**
+	 * @return Blocks|null
+	 */
 	public static function get_instance() {
 		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
 	}
 
+	/**
+	 * Blocks constructor.
+	 */
 	public function __construct() {
-
 		add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
 		add_action( 'init', [ $this, 'register_scripts' ] );
 		add_action( 'init', [ $this, 'register_blocks' ] );
@@ -21,6 +35,12 @@ class Blocks {
 		add_action( 'wp_ajax_vczapi_get_live_meetings', [ $this, 'get_live_meetings' ] );
 	}
 
+	/**
+	 * Register necessary scripts
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 */
 	public function register_scripts() {
 		$script_asset_path = require_once( ZVC_PLUGIN_DIR_PATH . '/build/index.asset.php' );
 		$dependencies      = $script_asset_path['dependencies'];
@@ -57,6 +77,17 @@ class Blocks {
 		);
 	}
 
+	/**
+	 * Registering block categories
+	 *
+	 * @param $categories
+	 * @param $post
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 *
+	 * @return array
+	 */
 	public function register_block_categories( $categories, $post ) {
 		return array_merge(
 			[
@@ -70,8 +101,13 @@ class Blocks {
 		);
 	}
 
+	/**
+	 * Registering blocks
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 */
 	public function register_blocks() {
-
 		register_block_type( 'vczapi/list-meetings', [
 			"title"           => "List Zoom Meetings",
 			"attributes"      => [
@@ -294,10 +330,14 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_recordings' ]
 		] );
-
-
 	}
 
+	/**
+	 * Get All host helper
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 */
 	public function get_hosts() {
 		$host_name = filter_input( INPUT_GET, 'host' );
 		$users     = video_conferencing_zoom_api_get_user_transients();
@@ -323,6 +363,12 @@ class Blocks {
 		wp_send_json( $hosts );
 	}
 
+	/**
+	 * Get all live meetings helper
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 */
 	public function get_live_meetings() {
 		$host_id                 = filter_input( INPUT_GET, 'host_id' );
 		$show_meeting_or_webinar = filter_input( INPUT_GET, 'show' );
@@ -364,11 +410,17 @@ class Blocks {
 		wp_send_json( $data );
 	}
 
+	/**
+	 * Render list of meetings
+	 *
+	 * @param $attributes
+	 * @since 3.7.5
+	 * @updated N/A
+	 *
+	 * @return string
+	 */
 	public function render_list_meetings( $attributes ) {
-
-
 		$shortcode = isset( $attributes['shortcodeType'] ) && ( $attributes['shortcodeType'] == 'webinar' ) ? 'zoom_list_webinars' : 'zoom_list_meetings';
-
 
 		if ( isset( $attributes['postsToShow'] ) && ! empty( $attributes['postsToShow'] ) ) {
 			$shortcode .= ' per_page="' . $attributes['postsToShow'] . '"';
@@ -415,6 +467,15 @@ class Blocks {
 		return do_shortcode( '[' . $shortcode . ']' );
 	}
 
+	/**
+	 * Render just the post
+	 *
+	 * @param $attributes
+	 * @since 3.7.5
+	 * @updated N/A
+	 *
+	 * @return false|string
+	 */
 	public function render_meeting_post( $attributes ) {
 		$shortcode = 'zoom_meeting_post';
 		if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
@@ -427,6 +488,13 @@ class Blocks {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Render directly from API
+	 *
+	 * @param $attributes
+	 *
+	 * @return false|string
+	 */
 	public function render_live_meeting( $attributes ) {
 		ob_start();
 		$shortcode = ( $attributes['shouldShow']['value'] == 'webinar' ) ? 'zoom_api_webinar' : 'zoom_api_link';
@@ -447,6 +515,16 @@ class Blocks {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Render host meeting list.
+	 *
+	 * @param $attributes
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 *
+	 * @return false|string
+	 */
 	public function render_host_meeting_list( $attributes ) {
 		$shortcode = ( $attributes['shouldShow']['value'] == "webinar" ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
 		ob_start();
@@ -455,6 +533,16 @@ class Blocks {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Embed join via browser
+	 *
+	 * @param $attributes
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 *
+	 * @return false|string
+	 */
 	public function render_join_via_browser( $attributes ) {
 		$shortcode_args = '';
 		if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
@@ -487,6 +575,16 @@ class Blocks {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Render Recordings
+	 *
+	 * @param $attributes
+	 *
+	 * @since 3.7.5
+	 * @updated N/A
+	 *
+	 * @return false|string
+	 */
 	public function render_recordings( $attributes ) {
 		ob_start();
 		$shortcode = '';

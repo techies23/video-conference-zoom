@@ -112,6 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     <option value="<?php echo $user->id; ?>" <?php selected( $users[0]->id, $user->id ); ?> ><?php echo esc_html( $user->first_name ) . ' ( ' . esc_html( $user->email ) . ' )'; ?></option>
 								<?php } ?>
                             </select>
+                            <p class="vczapi-manually-hostid-wrap"><a href="javascript:void(0);" class="vczapi-admin-hostID-manually-add"><?php _e( 'User not in the list? Click here to manually enter Host.', 'video-conferencing-with-zoom-api' ); ?></a></p>
 						<?php } ?>
                         <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
 					<?php } else {

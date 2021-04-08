@@ -168,8 +168,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.7.5 April 7th, 2021 =
+= 3.7.5 April 8th, 2021 =
 * Added: Gutenberg Blocks support.
+* Added: Option to choose host ID manually when creating meeting incase there are more than 300 users in a zoom account.
 
 = 3.7.4 March 30th, 2021 =
 * Added: Setting to disable auto password generation when creating a meeting from wp-admin.
