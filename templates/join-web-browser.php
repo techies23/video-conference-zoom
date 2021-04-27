@@ -63,7 +63,7 @@ if ( video_conference_zoom_check_login() ) {
 					<?php }
 				}
 
-				if ( ! isset( $_GET['pak'] ) ) { ?>
+				if ( ! isset( $_GET['pak'] ) && ! empty( $zoom['password'] ) ) { ?>
                     <div class="form-group">
                         <input type="password" name="meeting_password" id="meeting_password" value="" placeholder="Meeting Password" class="form-control" required>
                     </div>

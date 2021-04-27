@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://deepenbajracharya.com.np/donate
 Requires at least: 4.9
 Tested up to: 5.7
-Stable tag: 3.7.5
+Stable tag: 3.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,8 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 * Shortcode
 * Shortcode Template Customize
 * Import your Zoom Meetings into your WordPress Dashboard in one click.
+* Gutenberg Blocks Support
+* Elementor Support
 
 **DOCUMENTATION LINKS:**
 
@@ -167,6 +169,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.8.1 April 27th, 2021 =
+* Fixed: If meeting does not have password, password field will be hidden when join via browser.
+* Fixed: atob error when meeeting password embed is disabled.
 
 = 3.8.0 April 8th, 2021 =
 * Added: Gutenberg Blocks support.
