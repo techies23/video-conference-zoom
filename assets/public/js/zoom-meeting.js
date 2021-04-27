@@ -29,7 +29,7 @@ jQuery(function ($) {
       var API_KEY = false;
       var SIGNATURE = false;
       var REDIRECTION = zvc_ajx.redirect_page;
-      var PASSWD = atob(zvc_ajx.meeting_pwd);
+      var PASSWD = zvc_ajx.meeting_pwd !== false ? atob(zvc_ajx.meeting_pwd) : false;
       var EMAIL_USER = '';
       $('body').append('<span id="zvc-cover"></span>');
 
