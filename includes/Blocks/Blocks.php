@@ -28,8 +28,10 @@ class Blocks {
 	 */
 	public function __construct() {
 		add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
-		add_action( 'init', [ $this, 'register_scripts' ] );
-		add_action( 'init', [ $this, 'register_blocks' ] );
+		if ( function_exists( 'register_block_type' ) ) {
+			add_action( 'init', [ $this, 'register_scripts' ] );
+			add_action( 'init', [ $this, 'register_blocks' ] );
+		}
 
 		add_action( 'wp_ajax_vczapi_get_zoom_hosts', [ $this, 'get_hosts' ] );
 		add_action( 'wp_ajax_vczapi_get_live_meetings', [ $this, 'get_live_meetings' ] );
@@ -83,10 +85,10 @@ class Blocks {
 	 * @param $categories
 	 * @param $post
 	 *
+	 * @return array
 	 * @since 3.7.5
 	 * @updated N/A
 	 *
-	 * @return array
 	 */
 	public function register_block_categories( $categories, $post ) {
 		return array_merge(
@@ -414,10 +416,11 @@ class Blocks {
 	 * Render list of meetings
 	 *
 	 * @param $attributes
+	 *
+	 * @return string
 	 * @since 3.7.5
 	 * @updated N/A
 	 *
-	 * @return string
 	 */
 	public function render_list_meetings( $attributes ) {
 		$shortcode = isset( $attributes['shortcodeType'] ) && ( $attributes['shortcodeType'] == 'webinar' ) ? 'zoom_list_webinars' : 'zoom_list_meetings';
@@ -471,10 +474,11 @@ class Blocks {
 	 * Render just the post
 	 *
 	 * @param $attributes
+	 *
+	 * @return false|string
 	 * @since 3.7.5
 	 * @updated N/A
 	 *
-	 * @return false|string
 	 */
 	public function render_meeting_post( $attributes ) {
 		$shortcode = 'zoom_meeting_post';
@@ -520,10 +524,10 @@ class Blocks {
 	 *
 	 * @param $attributes
 	 *
+	 * @return false|string
 	 * @since 3.7.5
 	 * @updated N/A
 	 *
-	 * @return false|string
 	 */
 	public function render_host_meeting_list( $attributes ) {
 		$shortcode = ( $attributes['shouldShow']['value'] == "webinar" ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
@@ -538,10 +542,10 @@ class Blocks {
 	 *
 	 * @param $attributes
 	 *
+	 * @return false|string
 	 * @since 3.7.5
 	 * @updated N/A
 	 *
-	 * @return false|string
 	 */
 	public function render_join_via_browser( $attributes ) {
 		$shortcode_args = '';
@@ -580,10 +584,10 @@ class Blocks {
 	 *
 	 * @param $attributes
 	 *
+	 * @return false|string
 	 * @since 3.7.5
 	 * @updated N/A
 	 *
-	 * @return false|string
 	 */
 	public function render_recordings( $attributes ) {
 		ob_start();
