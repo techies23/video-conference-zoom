@@ -38,6 +38,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </td>
                 </tr>
                 <tr>
+                    <th><label><?php _e( 'Meetings Deletion ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="donot_delete_zom_meeting_also" <?php ! empty( $donot_delete_zoom ) ? checked( $donot_delete_zoom, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Do not delete your meetings on Zoom, when you delete your meeting from Zoom Meetings > All Meetings page.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr>
                     <th><label><?php _e( 'Disable Auto Password Generation ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="disable_auto_pwd_generation" <?php ! empty( $disable_auto_pwd_generation ) ? checked( $disable_auto_pwd_generation, 'on' ) : false; ?>>

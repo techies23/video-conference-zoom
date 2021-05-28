@@ -169,8 +169,7 @@ class Recordings {
 			return false;
 		}
 
-		$meeting_id = absint( $atts['meeting_id'] );
-
+		$meeting_id = $atts['meeting_id'];
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable' );
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );

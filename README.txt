@@ -172,6 +172,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 3.8.3 May 28th, 2021 =
 * Fixed: PRO version register now link not working due to priority check incorrectly.
+* Fixed: Importing meetings not working sometimes due to incorrect meeting ID check.
+* Added: Option to stop meeting deletion on zoom side when you delete it from your website.
 
 = 3.8.2 May 18th, 2021 =
 * Updated: WebSDK version to 1.9.5

@@ -126,6 +126,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$zoom_api_key                       = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 					$zoom_api_secret                    = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 					$vanity_url                         = esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) );
+					$delete_zoom_meeting                = filter_input( INPUT_POST, 'donot_delete_zom_meeting_also' );
 					$join_links                         = filter_input( INPUT_POST, 'meeting_end_join_link' );
 					$zoom_author_show                   = filter_input( INPUT_POST, 'meeting_show_zoom_author_original' );
 					$started_mtg                        = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_started_text' ) );
@@ -146,6 +147,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
 					update_option( 'zoom_vanity_url', $vanity_url );
+					update_option( 'zoom_api_donot_delete_on_zoom', $delete_zoom_meeting );
 					update_option( 'zoom_past_join_links', $join_links );
 					update_option( 'zoom_show_author', $zoom_author_show );
 					update_option( 'zoom_started_meeting_text', $started_mtg );
@@ -196,6 +198,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				$disable_jvb                 = get_option( 'zoom_api_disable_jvb' );
 				$default_jvb_lang            = get_option( 'zoom_api_default_lang_jvb' );
 				$disable_auto_pwd_generation = get_option( 'zoom_api_disable_auto_meeting_pwd' );
+				$donot_delete_zoom           = get_option( 'zoom_api_donot_delete_on_zoom' );
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';

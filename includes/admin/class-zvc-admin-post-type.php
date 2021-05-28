@@ -538,7 +538,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 		}
 
 		$pwd = sanitize_text_field( filter_input( INPUT_POST, 'password' ) );
-		if ( !get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
+		if ( ! get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
 			$pwd = ! empty( $pwd ) ? $pwd : $post_id;
 		}
 		$duration_hour      = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_hour' ) );
@@ -784,6 +784,11 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	 * @author Deepen
 	 */
 	public function delete( $post_id ) {
+		$donot_delete_zoom = get_option( 'zoom_api_donot_delete_on_zoom' );
+		if ( ! empty( $donot_delete_zoom ) ) {
+			return;
+		}
+
 		if ( get_post_type( $post_id ) === $this->post_type ) {
 			$meeting_details = get_post_meta( $post_id, '_meeting_fields', true );
 			$meeting_id      = get_post_meta( $post_id, '_meeting_zoom_meeting_id', true );

@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2021-04-08 06:27+0000\n"
+"POT-Creation-Date: 2021-05-28 13:07+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -110,11 +110,11 @@ msgstr ""
 msgid "Add Users"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:202
+#: includes/views/tabs/api-settings.php:209
 msgid "Addons"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:182
+#: includes/views/tabs/api-settings.php:189
 msgid ""
 "After you enter your keys. Do save changes before doing \"Check API "
 "Connection\"."
@@ -258,7 +258,7 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:158
+#: includes/views/tabs/api-settings.php:165
 msgid ""
 "Change date time formats according to your choice. Please edit this properly."
 " Failure to correctly put value will result in failure to show date in "
@@ -276,7 +276,7 @@ msgstr ""
 msgid "check %s for shortcode references."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:185
+#: includes/views/tabs/api-settings.php:192
 msgid "Check API Connection"
 msgstr ""
 
@@ -288,45 +288,45 @@ msgstr ""
 msgid "Check Pending Users"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:44
+#: includes/views/tabs/api-settings.php:51
 msgid ""
 "Checking this option will disable auto password generation for new meetings "
 "which are created from Zoom meeting > Add new section."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:51
+#: includes/views/tabs/api-settings.php:58
 msgid ""
 "Checking this option will hide join links from your shortcode for non-"
 "loggedin users."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:170
+#: includes/views/tabs/api-settings.php:177
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:177
+#: includes/views/tabs/api-settings.php:184
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:87
+#: includes/views/tabs/api-settings.php:94
 msgid "Checking this show will hide email field in Join via Browser window."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:72
+#: includes/views/tabs/api-settings.php:79
 msgid ""
 "Checking this show Zoom original Author in single meetings page which are "
 "created from"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:94
+#: includes/views/tabs/api-settings.php:101
 msgid ""
 "Checking this will disable invite button when user joins meeting via Join "
 "via Browser window."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:80
+#: includes/views/tabs/api-settings.php:87
 msgid "Checking this will hide all Join via Browser Buttons."
 msgstr ""
 
@@ -359,7 +359,7 @@ msgstr ""
 msgid "Column Layout"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:198
+#: includes/views/tabs/api-settings.php:205
 msgid "Contact for additional Support"
 msgstr ""
 
@@ -441,7 +441,7 @@ msgstr ""
 msgid "Date field cannot be Empty !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:137
+#: includes/views/tabs/api-settings.php:144
 msgid "DateTime Format"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgstr ""
 msgid "Debug Log"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:98
+#: includes/views/tabs/api-settings.php:105
 msgid "Default Language for Join via browser page ?"
 msgstr ""
 
@@ -484,7 +484,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:200
+#: includes/views/tabs/api-settings.php:207
 msgid "Developer"
 msgstr ""
 
@@ -497,7 +497,7 @@ msgid ""
 "are working correctly."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:41
+#: includes/views/tabs/api-settings.php:48
 msgid "Disable Auto Password Generation ?"
 msgstr ""
 
@@ -505,15 +505,15 @@ msgstr ""
 msgid "Disable Countdown Timer?"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:84
+#: includes/views/tabs/api-settings.php:91
 msgid "Disable Email field when join via browser ?"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:55
+#: includes/views/tabs/api-settings.php:62
 msgid "Disable Embed password in Link ?"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:91
+#: includes/views/tabs/api-settings.php:98
 msgid "Disable Invite field when join via browser ?"
 msgstr ""
 
@@ -522,7 +522,7 @@ msgstr ""
 msgid "Disable Join"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:77
+#: includes/views/tabs/api-settings.php:84
 msgid "Disable Join via browser ?"
 msgstr ""
 
@@ -530,15 +530,21 @@ msgstr ""
 msgid "Disable Waiting Room"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:172
+#: includes/admin/class-zvc-admin-settings.php:174
 msgid "Dismiss this notice."
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:44
+msgid ""
+"Do not delete your meetings on Zoom, when you delete your meeting from Zoom "
+"Meetings > All Meetings page."
 msgstr ""
 
 #: includes/helpers.php:355
 msgid "Do not get confused here !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:195
+#: includes/views/tabs/api-settings.php:202
 msgid "Documentation"
 msgstr ""
 
@@ -658,7 +664,7 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:192
+#: includes/views/tabs/api-settings.php:199
 msgid "Facebook Group"
 msgstr ""
 
@@ -716,7 +722,7 @@ msgstr ""
 msgid "HD Video"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:48
+#: includes/views/tabs/api-settings.php:55
 msgid "Hide Join Links for Non-Loggedin ?"
 msgstr ""
 
@@ -923,11 +929,11 @@ msgstr ""
 msgid "Meeting duration (minutes). (optional)"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:131
+#: includes/views/tabs/api-settings.php:138
 msgid "Meeting Ended Text"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:125
+#: includes/views/tabs/api-settings.php:132
 msgid "Meeting going to start Text"
 msgstr ""
 
@@ -996,14 +1002,14 @@ msgstr ""
 msgid "Meeting Password"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:58
+#: includes/views/tabs/api-settings.php:65
 msgid ""
 "Meeting password will not be included in the invite link to allow "
 "participants to join with just one click without having to enter the "
 "password."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:119
+#: includes/views/tabs/api-settings.php:126
 msgid "Meeting Started Text"
 msgstr ""
 
@@ -1049,6 +1055,10 @@ msgstr ""
 
 #: includes/Elementor/Widgets/MeetingList.php:108
 msgid "Meetings Category"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:41
+msgid "Meetings Deletion ?"
 msgstr ""
 
 #: includes/views/live/tpl-reports.php:132
@@ -1153,7 +1163,7 @@ msgid "No Recordings"
 msgstr ""
 
 #: includes/Shortcodes/Recordings.php:143
-#: includes/Shortcodes/Recordings.php:221
+#: includes/Shortcodes/Recordings.php:220
 msgid "No recordings found."
 msgstr ""
 
@@ -1300,7 +1310,7 @@ msgid ""
 "list. This will only create meeting in your zoom.us account !"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:161
+#: includes/views/tabs/api-settings.php:168
 #, php-format
 msgid "Please see %s on how to format date"
 msgstr ""
@@ -1424,7 +1434,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:184
+#: includes/views/tabs/api-settings.php:191
 msgid "Save Changes"
 msgstr ""
 
@@ -1456,7 +1466,7 @@ msgstr ""
 msgid "Select a Date to Check"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:115
+#: includes/views/tabs/api-settings.php:122
 msgid "Select a default language for your join meeting via browser page."
 msgstr ""
 
@@ -1535,7 +1545,7 @@ msgstr ""
 msgid "Shortcode"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:101
+#: includes/views/tabs/api-settings.php:108
 msgid "Show All"
 msgstr ""
 
@@ -1562,7 +1572,7 @@ msgstr ""
 msgid "Show meeting posts based on Author ID"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:62
+#: includes/views/tabs/api-settings.php:69
 msgid "Show Past Join Link ?"
 msgstr ""
 
@@ -1586,7 +1596,7 @@ msgstr ""
 msgid "Show webinars based on HOST ID in frontend."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:69
+#: includes/views/tabs/api-settings.php:76
 msgid "Show Zoom Author ?"
 msgstr ""
 
@@ -1718,7 +1728,7 @@ msgstr ""
 msgid "Successfully imported meeting with ID"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:170
+#: includes/admin/class-zvc-admin-settings.php:172
 msgid "Successfully Updated. Please refresh this page."
 msgstr ""
 
@@ -1831,7 +1841,7 @@ msgstr ""
 msgid "This will disable join via browser link in frontend page."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:65
+#: includes/views/tabs/api-settings.php:72
 msgid ""
 "This will show join meeting links on frontend even after meeting time is "
 "already past."
@@ -1914,7 +1924,7 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:216
+#: includes/views/tabs/api-settings.php:223
 msgid "Try inactive logout"
 msgstr ""
 
@@ -1952,11 +1962,11 @@ msgstr ""
 msgid "Updated Webinar."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:167
+#: includes/views/tabs/api-settings.php:174
 msgid "Use 24-hour format"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:174
+#: includes/views/tabs/api-settings.php:181
 msgid "Use full month label format ?"
 msgstr ""
 
@@ -2128,7 +2138,7 @@ msgid ""
 "continue or contact administrator."
 msgstr ""
 
-#: includes/Blocks/Blocks.php:96
+#: includes/Blocks/Blocks.php:98
 msgid "Zoom"
 msgstr ""
 
