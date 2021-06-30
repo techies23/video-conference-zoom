@@ -183,7 +183,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <option value="0" <?php echo $duration['min'] == 0 ? 'selected' : ''; ?>>0</option>
                     <option value="15" <?php echo $duration['min'] == 15 ? 'selected' : ''; ?>>15</option>
                     <option value="30" <?php echo $duration['min'] == 30 ? 'selected' : ''; ?>>30</option>
-                    <option value="40" <?php echo $duration['min'] == 40 ? 'selected' : ''; ?>>40</option>
+                    <option value="45" <?php echo $duration['min'] == 45 ? 'selected' : ''; ?>>45</option>
                 </select> min
             </label>
         </td>
