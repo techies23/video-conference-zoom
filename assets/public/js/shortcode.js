@@ -53,16 +53,20 @@
         var page_num = parseInt($triggerEl.text());
         var data = $targetWrapper.data();
         data['page_num'] = page_num;
+        var form_data = $targetWrapper.find('form.vczapi-filters').serializeArray().reduce(function (obj, item) {
+          obj[item.name] = item.value;
+          return obj;
+        }, {});
         $.ajax({
           type: 'POST',
           url: vczapi_ajax.ajaxurl,
           data: {
             action: 'vczapi_list_meeting_shortcode_ajax_handler',
-            data: data
+            data: data,
+            form_data: form_data
           },
           beforeSend: function beforeSend() {},
           success: function success(response) {
-            console.log(response);
             $targetWrapper.find('.vczapi-items-wrap').html(response.content);
             $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination); // console.log(response.pagination);
           },
@@ -70,17 +74,17 @@
         });
       });
     },
-    filterHandler: function filterHandler() {
-      //each individual select option will require a different listeners
-      $('form.vczapi-filters').find('select').on('change', function (event) {
-        event.preventDefault();
+    filterFormSubmitHandler: function filterFormSubmitHandler() {
+      $('form.vczapi-filters').on('submit', function (e) {
+        e.preventDefault();
         var $targetWrapper = $(this).parents('.vczapi-list-zoom-meetings');
-        var $filterForm = $(this).parents('form');
-        var formData = $filterForm.serializeArray().reduce(function (obj, item) {
+        console.log($targetWrapper);
+        var formData = $(this).serializeArray().reduce(function (obj, item) {
           obj[item.name] = item.value;
           return obj;
         }, {});
-        var data = $targetWrapper.data(); //console.log(formData);
+        var data = $targetWrapper.data();
+        data['page_num'] = 1; //console.log(formData);
 
         $.ajax({
           type: 'POST',
@@ -99,9 +103,17 @@
         });
       });
     },
+    filterOnChangeHandler: function filterOnChangeHandler() {
+      //each individual select option will require a different listeners
+      $('form.vczapi-filters').find('select').on('change', function (event) {
+        event.preventDefault();
+        $(this).parents('form.vczapi-filters').submit();
+      });
+    },
     eventListeners: function eventListeners() {
       this.paginationHandler();
-      this.filterHandler();
+      this.filterOnChangeHandler();
+      this.filterFormSubmitHandler();
     },
     init: function init() {
       this.eventListeners();

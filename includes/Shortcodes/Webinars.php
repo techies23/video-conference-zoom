@@ -13,6 +13,7 @@ class Webinars {
 
 	/**
 	 * Instance
+	 *
 	 * @var null
 	 */
 	private static $_instance = null;
@@ -172,7 +173,7 @@ class Webinars {
 	 * @param $atts
 	 *
 	 * @return string
-	 * @since 3.6.0
+	 * @since  3.6.0
 	 *
 	 * @author Deepen Bajracharya
 	 */
@@ -260,8 +261,9 @@ class Webinars {
 		unset( $GLOBALS['zoom_meetings'] );
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
+		$atts['meeting_type']              = 'webinars';
 		ob_start();
-		vczapi_get_template( 'shortcode-listing.php', true, false );
+		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();
 
 		return $content;

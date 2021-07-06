@@ -28,11 +28,12 @@ $atts = shortcode_atts(
 		'type'         => '',
 		'filter'       => 'yes',
 		'show_on_past' => 'yes',
-		'cols'         => 3
+		'cols'         => 3,
+        'meeting_type' => 'meetings',
 	),
 	$args, 'zoom_list_meetings'
 );
-$big = 999999999999999;
+$big  = 999999999999999;
 
 ?>
 <div class="vczapi-list-zoom-meetings"
@@ -44,7 +45,8 @@ $big = 999999999999999;
      data-filter="<?php echo $atts['filter']; ?>"
      data-show_on_past="<?php echo $atts['show_on_past']; ?>"
      data-cols="<?php echo $atts['cols']; ?>"
-     data-base_url="<?php echo esc_url(get_pagenum_link( $big )); ?>"
+     data-base_url="<?php echo esc_url( get_pagenum_link( $big ) ); ?>"
+     data-meeting_type="<?php echo $atts['meeting_type']; ?>"
 >
 
 	<?php

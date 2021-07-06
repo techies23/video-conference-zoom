@@ -286,6 +286,7 @@ class Meetings {
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
+		$atts['meeting_type'] = "meetings";
 		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();
 
@@ -298,8 +299,8 @@ class Meetings {
 		$data = filter_input( INPUT_POST, 'data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		//will only be provided on filter form submit
 		$form_data = filter_input( INPUT_POST, 'form_data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		
-		$atts       = shortcode_atts(
+
+		$atts  = shortcode_atts(
 			array(
 				'author'       => '',
 				'per_page'     => 5,
@@ -310,12 +311,13 @@ class Meetings {
 				'show_on_past' => 'yes',
 				'cols'         => 3,
 				'page_num'     => 1,
-				'base_url'     => ''
+				'base_url'     => '',
+				'meeting_type' => 'meetings'
 			),
 			$data, 'zoom_list_meetings'
 		);
-		$paged      = isset( $data['page_num'] ) ? $data['page_num'] : 1;
-		
+		$paged = isset( $data['page_num'] ) ? $data['page_num'] : 1;
+
 		$query_args = array(
 			'post_type'      => $this->post_type,
 			'posts_per_page' => $atts['per_page'],
@@ -325,7 +327,10 @@ class Meetings {
 			'meta_key'       => '_meeting_field_start_date_utc',
 			'order'          => $atts['order'],
 			'caller'         => ! empty( $atts['filter'] ) && $atts['filter'] === "yes" ? 'vczapi' : false,
-			'meta_query'     => array(
+		);
+
+		if ( $atts['meeting_type'] == 'meetings' ) {
+			$query_args['meta_query'] = array(
 				'relation' => 'AND',
 				array(
 					'relation' => 'OR',
@@ -339,8 +344,20 @@ class Meetings {
 						'compare' => 'NOT EXISTS'
 					),
 				)
-			)
-		);
+			);
+		} else if ( $atts['meeting_type'] == 'webinars' ) {
+			$query_args['meta_query'] = array(
+				'relation' => 'AND',
+				array(
+					'relation' => 'OR',
+					array(
+						'key'     => '_vczapi_meeting_type',
+						'value'   => 'webinar',
+						'compare' => '='
+					)
+				)
+			);
+		}
 
 		if ( ! empty( $atts['author'] ) ) {
 			$query_args['author'] = absint( $atts['author'] );
@@ -364,9 +381,9 @@ class Meetings {
 			);
 			array_push( $query_args['meta_query'], $meta_query );
 		}
-		
-		if( isset($form_data['taxonomy']) && !empty($form_data['taxonomy']) && $form_data['taxonomy'] != 'category_order'){
-		    
+
+		if ( isset( $form_data['taxonomy'] ) && ! empty( $form_data['taxonomy'] ) && $form_data['taxonomy'] != 'category_order' ) {
+
 			$query_args['tax_query'] = [
 				[
 					'taxonomy' => 'zoom-meeting',
@@ -375,8 +392,7 @@ class Meetings {
 					'operator' => 'IN'
 				]
 			];
-		}
-		else if ( ! empty( $atts['category'] ) ) {
+		} else if ( ! empty( $atts['category'] ) ) {
 			$category                = array_map( 'trim', explode( ',', $atts['category'] ) );
 			$query_args['tax_query'] = [
 				[
@@ -386,6 +402,17 @@ class Meetings {
 					'operator' => 'IN'
 				]
 			];
+		}
+
+		if ( isset( $form_data['orderby'] ) && ! empty( isset( $form_data['orderby'] ) )
+		     && $form_data['orderby'] != 'show_all'
+		) {
+			$orderby             = ( $form_data['orderby'] === "past" ) ? 'ASC' : 'DESC';
+			$query_args['order'] = $orderby;
+		}
+
+		if ( isset( $form_data['search'] ) && ! empty( $form_data['search'] ) ) {
+			$query_args['s'] = esc_attr( $form_data['search'] );
 		}
 
 		$query         = apply_filters( 'vczapi_meeting_list_query_args', $query_args );
