@@ -78,7 +78,6 @@
       $('form.vczapi-filters').on('submit', function (e) {
         e.preventDefault();
         var $targetWrapper = $(this).parents('.vczapi-list-zoom-meetings');
-        console.log($targetWrapper);
         var formData = $(this).serializeArray().reduce(function (obj, item) {
           obj[item.name] = item.value;
           return obj;
