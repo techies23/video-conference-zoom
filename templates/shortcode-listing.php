@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/shortcode-listing.php.
  *
- * @package    Video Conferencing with Zoom API/Templates
+ * @package     Video Conferencing with Zoom API/Templates
  * @version     3.2.2
  * @updated     3.6.0
  */
@@ -18,8 +18,34 @@ global $zoom_meetings;
 if ( ! is_object( $zoom_meetings ) && ! ( $zoom_meetings instanceof \WP_Query ) ) {
 	return;
 }
+$args = isset( $args ) ? $args : [];
+$atts = shortcode_atts(
+	array(
+		'author'       => '',
+		'per_page'     => 5,
+		'category'     => '',
+		'order'        => 'DESC',
+		'type'         => '',
+		'filter'       => 'yes',
+		'show_on_past' => 'yes',
+		'cols'         => 3
+	),
+	$args, 'zoom_list_meetings'
+);
+$big = 999999999999999;
+
 ?>
-<div class="vczapi-list-zoom-meetings">
+<div class="vczapi-list-zoom-meetings"
+     data-author="<?php echo $atts['author']; ?>"
+     data-per_page="<?php echo $atts['per_page']; ?>"
+     data-category="<?php echo $atts['category']; ?>"
+     data-order="<?php echo $atts['order']; ?>"
+     data-type="<?php echo $atts['type']; ?>"
+     data-filter="<?php echo $atts['filter']; ?>"
+     data-show_on_past="<?php echo $atts['show_on_past']; ?>"
+     data-cols="<?php echo $atts['cols']; ?>"
+     data-base_url="<?php echo esc_url(get_pagenum_link( $big )); ?>"
+>
 
 	<?php
 	/**
@@ -28,7 +54,7 @@ if ( ! is_object( $zoom_meetings ) && ! ( $zoom_meetings instanceof \WP_Query ) 
 	do_action( 'vczapi_before_shortcode_content_post_loop', $zoom_meetings );
 	?>
 
-    <div class="vczapi-wrap">
+    <div class="vczapi-wrap vczapi-items-wrap">
 		<?php
 		if ( $zoom_meetings->have_posts() ) {
 			while ( $zoom_meetings->have_posts() ) {

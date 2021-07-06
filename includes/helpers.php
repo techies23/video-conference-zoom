@@ -370,7 +370,7 @@ function video_conferencing_zoom_api_show_api_notice() {
  *
  * @return bool|string
  */
-function vczapi_get_template( $template_name, $load = false, $require_once = true ) {
+function vczapi_get_template( $template_name, $load = false, $require_once = true, $args = [] ) {
 	if ( empty( $template_name ) ) {
 		return false;
 	}
@@ -387,7 +387,7 @@ function vczapi_get_template( $template_name, $load = false, $require_once = tru
 	// Allow 3rd party plugin filter template file from their plugin.
 	$located = apply_filters( 'vczapi_get_template', $located, $template_name );
 	if ( $load && ! empty( $located ) && file_exists( $located ) ) {
-		load_template( $located, $require_once );
+		load_template( $located, $require_once , $args);
 	}
 
 	return $located;

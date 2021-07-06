@@ -38,6 +38,61 @@
         },
     };
 
+    /**
+     * Shortcode List Meeting Ajaxify
+     * Have to account for multiple instances on same page possibility
+     */
+    var vczAPIMeetingList = {
+        cacheDOM: function () {
+            this.$shortCodeInstances = [];
+            var refObj = this;
+            $('.vczapi-list-zoom-meetings').each(function (index, instance) {
+                refObj.$shortCodeInstances.push($(instance));
+            });
+        },
+        paginationHandler: function () {
+            $(document).on('click', '.vczapi-list-zoom-meetings--pagination .page-numbers', function (event) {
+                event.preventDefault();
+                var $triggerEl = $(event.target);
+                var $targetWrapper = $triggerEl.parents('.vczapi-list-zoom-meetings');
+                var page_num = parseInt($triggerEl.text());
+                var data = $targetWrapper.data();
+                data['page_num'] = page_num;
+                console.log($targetWrapper);
+                $.ajax({
+                    type: 'POST',
+                    url: vczapi_ajax.ajaxurl,
+                    data: {
+                        action: 'vczapi_list_meeting_shortcode_ajax_handler',
+                        data: data
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        $targetWrapper.find('.vczapi-items-wrap').html(response.content);
+                        $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination);
+
+                        // console.log(response.pagination);
+                    },
+                    error: function (MLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            });
+        },
+        filterHandler: function () {
+
+        },
+        eventListeners: function () {
+            this.paginationHandler();
+        },
+        init: function () {
+            this.cacheDOM();
+            this.eventListeners();
+        }
+    }
+
+
     var vczAPIRecordingsGenerateModal = {
         init: function () {
             this.cacheDOM();
@@ -109,7 +164,8 @@
     };
 
     $(function () {
-        vczAPIMeetingFilter.init();
+        vczAPIMeetingList.init();
+        //vczAPIMeetingFilter.init();
         vczAPIListUserMeetings.init();
         vczAPIRecordingsGenerateModal.init();
     });
