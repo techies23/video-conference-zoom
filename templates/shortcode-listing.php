@@ -48,7 +48,9 @@ $big  = 999999999999999;
      data-base_url="<?php echo esc_url( get_pagenum_link( $big ) ); ?>"
      data-meeting_type="<?php echo $atts['meeting_type']; ?>"
 >
-
+   <div class="vczapi-loader">
+       <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH.'/ajax-loader.gif'; ?>" alt="loading..." />
+   </div>
 	<?php
 	/**
 	 * BEFORE LOOP HOOK

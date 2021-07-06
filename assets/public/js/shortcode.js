@@ -65,8 +65,11 @@
             data: data,
             form_data: form_data
           },
-          beforeSend: function beforeSend() {},
+          beforeSend: function beforeSend() {
+            $targetWrapper.addClass('loading');
+          },
           success: function success(response) {
+            $targetWrapper.removeClass('loading');
             $targetWrapper.find('.vczapi-items-wrap').html(response.content);
             $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination); // console.log(response.pagination);
           },
@@ -93,8 +96,11 @@
             data: data,
             form_data: formData
           },
-          beforeSend: function beforeSend() {},
+          beforeSend: function beforeSend() {
+            $targetWrapper.addClass('loading');
+          },
           success: function success(response) {
+            $targetWrapper.removeClass('loading');
             $targetWrapper.find('.vczapi-items-wrap').html(response.content);
             $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination);
           },

@@ -64,8 +64,10 @@
                         form_data: form_data
                     },
                     beforeSend: function () {
+                        $targetWrapper.addClass('loading');
                     },
                     success: function (response) {
+                        $targetWrapper.removeClass('loading');
                         $targetWrapper.find('.vczapi-items-wrap').html(response.content);
                         $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination);
 
@@ -96,8 +98,10 @@
                         form_data: formData
                     },
                     beforeSend: function () {
+                        $targetWrapper.addClass('loading');
                     },
                     success: function (response) {
+                        $targetWrapper.removeClass('loading');
                         $targetWrapper.find('.vczapi-items-wrap').html(response.content);
                         $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination);
                     },
