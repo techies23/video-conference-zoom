@@ -45,13 +45,6 @@
    */
 
   var vczAPIMeetingList = {
-    cacheDOM: function cacheDOM() {
-      this.$shortCodeInstances = [];
-      var refObj = this;
-      $('.vczapi-list-zoom-meetings').each(function (index, instance) {
-        refObj.$shortCodeInstances.push($(instance));
-      });
-    },
     paginationHandler: function paginationHandler() {
       $(document).on('click', '.vczapi-list-zoom-meetings--pagination .page-numbers', function (event) {
         event.preventDefault();
@@ -60,7 +53,6 @@
         var page_num = parseInt($triggerEl.text());
         var data = $targetWrapper.data();
         data['page_num'] = page_num;
-        console.log($targetWrapper);
         $.ajax({
           type: 'POST',
           url: vczapi_ajax.ajaxurl,
@@ -78,12 +70,40 @@
         });
       });
     },
-    filterHandler: function filterHandler() {},
+    filterHandler: function filterHandler() {
+      //each individual select option will require a different listeners
+      $('form.vczapi-filters').find('select').on('change', function (event) {
+        event.preventDefault();
+        var $targetWrapper = $(this).parents('.vczapi-list-zoom-meetings');
+        var $filterForm = $(this).parents('form');
+        var formData = $filterForm.serializeArray().reduce(function (obj, item) {
+          obj[item.name] = item.value;
+          return obj;
+        }, {});
+        var data = $targetWrapper.data(); //console.log(formData);
+
+        $.ajax({
+          type: 'POST',
+          url: vczapi_ajax.ajaxurl,
+          data: {
+            action: 'vczapi_list_meeting_shortcode_ajax_handler',
+            data: data,
+            form_data: formData
+          },
+          beforeSend: function beforeSend() {},
+          success: function success(response) {
+            $targetWrapper.find('.vczapi-items-wrap').html(response.content);
+            $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination);
+          },
+          error: function error(MLHttpRequest, textStatus, errorThrown) {}
+        });
+      });
+    },
     eventListeners: function eventListeners() {
       this.paginationHandler();
+      this.filterHandler();
     },
     init: function init() {
-      this.cacheDOM();
       this.eventListeners();
     }
   };

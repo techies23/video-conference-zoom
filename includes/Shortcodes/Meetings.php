@@ -294,9 +294,12 @@ class Meetings {
 
 	public function list_meeting_ajax_handler() {
 		$response = [];
-		$data     = filter_input( INPUT_POST, 'data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-
-		$atts = shortcode_atts(
+		//will be provided on both filter form change or pagination
+		$data = filter_input( INPUT_POST, 'data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		//will only be provided on filter form submit
+		$form_data = filter_input( INPUT_POST, 'form_data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		
+		$atts       = shortcode_atts(
 			array(
 				'author'       => '',
 				'per_page'     => 5,
@@ -311,7 +314,8 @@ class Meetings {
 			),
 			$data, 'zoom_list_meetings'
 		);
-		$paged = $data['page_num'];
+		$paged      = isset( $data['page_num'] ) ? $data['page_num'] : 1;
+		
 		$query_args = array(
 			'post_type'      => $this->post_type,
 			'posts_per_page' => $atts['per_page'],
@@ -360,8 +364,19 @@ class Meetings {
 			);
 			array_push( $query_args['meta_query'], $meta_query );
 		}
-
-		if ( ! empty( $atts['category'] ) ) {
+		
+		if( isset($form_data['taxonomy']) && !empty($form_data['taxonomy']) && $form_data['taxonomy'] != 'category_order'){
+		    
+			$query_args['tax_query'] = [
+				[
+					'taxonomy' => 'zoom-meeting',
+					'field'    => 'slug',
+					'terms'    => $form_data['taxonomy'],
+					'operator' => 'IN'
+				]
+			];
+		}
+		else if ( ! empty( $atts['category'] ) ) {
 			$category                = array_map( 'trim', explode( ',', $atts['category'] ) );
 			$query_args['tax_query'] = [
 				[
@@ -393,11 +408,11 @@ class Meetings {
 		}
 
 		$content .= ob_get_clean();
-		
+
 		ob_start();
 		Helpers::pagination( $zoom_meetings, $atts['page_num'], $atts['base_url'] );
-		$pagination             = ob_get_clean();
-		
+		$pagination = ob_get_clean();
+
 		$response['content']    = $content;
 		$response['pagination'] = $pagination;
 
