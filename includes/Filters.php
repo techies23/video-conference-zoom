@@ -17,6 +17,7 @@ class Filters {
 
 	/**
 	 * Instance
+	 *
 	 * @var null
 	 */
 	private static $_instance = null;

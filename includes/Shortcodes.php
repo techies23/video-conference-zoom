@@ -88,6 +88,9 @@ class Shortcodes {
 			'jquery',
 			'video-conferencing-with-zoom-api-datable-js'
 		], ZVC_PLUGIN_VERSION, true );
+		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
 	}
 
 	/**

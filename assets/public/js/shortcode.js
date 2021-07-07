@@ -39,6 +39,91 @@
       $(e.currentTarget).closest('form').submit();
     }
   };
+  /**
+   * Shortcode List Meeting Ajaxify
+   * Have to account for multiple instances on same page possibility
+   */
+
+  var vczAPIMeetingList = {
+    paginationHandler: function paginationHandler() {
+      $(document).on('click', '.vczapi-list-zoom-meetings--pagination .page-numbers', function (event) {
+        event.preventDefault();
+        var $triggerEl = $(event.target);
+        var $targetWrapper = $triggerEl.parents('.vczapi-list-zoom-meetings');
+        var page_num = parseInt($triggerEl.text());
+        var data = $targetWrapper.data();
+        data['page_num'] = page_num;
+        var form_data = $targetWrapper.find('form.vczapi-filters').serializeArray().reduce(function (obj, item) {
+          obj[item.name] = item.value;
+          return obj;
+        }, {});
+        $.ajax({
+          type: 'POST',
+          url: vczapi_ajax.ajaxurl,
+          data: {
+            action: 'vczapi_list_meeting_shortcode_ajax_handler',
+            data: data,
+            form_data: form_data
+          },
+          beforeSend: function beforeSend() {
+            $targetWrapper.addClass('loading');
+          },
+          success: function success(response) {
+            $targetWrapper.removeClass('loading');
+            $targetWrapper.find('.vczapi-items-wrap').html(response.content);
+            $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination); // console.log(response.pagination);
+          },
+          error: function error(MLHttpRequest, textStatus, errorThrown) {}
+        });
+      });
+    },
+    filterFormSubmitHandler: function filterFormSubmitHandler() {
+      $('form.vczapi-filters').on('submit', function (e) {
+        e.preventDefault();
+        var $targetWrapper = $(this).parents('.vczapi-list-zoom-meetings');
+        var formData = $(this).serializeArray().reduce(function (obj, item) {
+          obj[item.name] = item.value;
+          return obj;
+        }, {});
+        var data = $targetWrapper.data();
+        data['page_num'] = 1; //console.log(formData);
+
+        $.ajax({
+          type: 'POST',
+          url: vczapi_ajax.ajaxurl,
+          data: {
+            action: 'vczapi_list_meeting_shortcode_ajax_handler',
+            data: data,
+            form_data: formData
+          },
+          beforeSend: function beforeSend() {
+            $targetWrapper.addClass('loading');
+          },
+          success: function success(response) {
+            $targetWrapper.removeClass('loading');
+            $targetWrapper.find('.vczapi-items-wrap').html(response.content);
+            $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').html(response.pagination);
+          },
+          error: function error(MLHttpRequest, textStatus, errorThrown) {}
+        });
+      });
+    },
+    filterOnChangeHandler: function filterOnChangeHandler() {
+      //each individual select option will require a different listeners
+      $('form.vczapi-filters').find('select').on('change', function (event) {
+        event.preventDefault();
+        $(this).parents('form.vczapi-filters').submit();
+      });
+    },
+    eventListeners: function eventListeners() {
+      this.paginationHandler();
+      this.filterOnChangeHandler();
+      this.filterFormSubmitHandler();
+    },
+    init: function init() {
+      this.eventListeners();
+    }
+  };
   var vczAPIRecordingsGenerateModal = {
     init: function init() {
       this.cacheDOM();
@@ -107,7 +192,8 @@
     }
   };
   $(function () {
-    vczAPIMeetingFilter.init();
+    vczAPIMeetingList.init(); //vczAPIMeetingFilter.init();
+
     vczAPIListUserMeetings.init();
     vczAPIRecordingsGenerateModal.init();
   });

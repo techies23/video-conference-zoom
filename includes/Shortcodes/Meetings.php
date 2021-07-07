@@ -13,6 +13,7 @@ class Meetings {
 
 	/**
 	 * Instance
+	 *
 	 * @var null
 	 */
 	private static $_instance = null;
@@ -28,6 +29,11 @@ class Meetings {
 		}
 
 		return self::$_instance;
+	}
+
+	public function __construct() {
+		add_action( 'wp_ajax_nopriv_vczapi_list_meeting_shortcode_ajax_handler', [ $this, 'list_meeting_ajax_handler' ] );
+		add_action( 'wp_ajax_vczapi_list_meeting_shortcode_ajax_handler', [ $this, 'list_meeting_ajax_handler' ] );
 	}
 
 	/**
@@ -280,10 +286,165 @@ class Meetings {
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
-		vczapi_get_template( 'shortcode-listing.php', true, false );
+		$atts['meeting_type'] = "meetings";
+		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();
 
 		return $content;
+	}
+
+	public function list_meeting_ajax_handler() {
+		$response = [];
+		//will be provided on both filter form change or pagination
+		$data = filter_input( INPUT_POST, 'data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		//will only be provided on filter form submit
+		$form_data = filter_input( INPUT_POST, 'form_data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+		$atts  = shortcode_atts(
+			array(
+				'author'       => '',
+				'per_page'     => 5,
+				'category'     => '',
+				'order'        => 'DESC',
+				'type'         => '',
+				'filter'       => 'yes',
+				'show_on_past' => 'yes',
+				'cols'         => 3,
+				'page_num'     => 1,
+				'base_url'     => '',
+				'meeting_type' => 'meetings'
+			),
+			$data, 'zoom_list_meetings'
+		);
+		$paged = isset( $data['page_num'] ) ? $data['page_num'] : 1;
+
+		$query_args = array(
+			'post_type'      => $this->post_type,
+			'posts_per_page' => $atts['per_page'],
+			'post_status'    => 'publish',
+			'paged'          => $paged,
+			'orderby'        => 'meta_value',
+			'meta_key'       => '_meeting_field_start_date_utc',
+			'order'          => $atts['order'],
+			'caller'         => ! empty( $atts['filter'] ) && $atts['filter'] === "yes" ? 'vczapi' : false,
+		);
+
+		if ( $atts['meeting_type'] == 'meetings' ) {
+			$query_args['meta_query'] = array(
+				'relation' => 'AND',
+				array(
+					'relation' => 'OR',
+					array(
+						'key'     => '_vczapi_meeting_type',
+						'value'   => 'meeting',
+						'compare' => '='
+					),
+					array(
+						'key'     => '_vczapi_meeting_type',
+						'compare' => 'NOT EXISTS'
+					),
+				)
+			);
+		} else if ( $atts['meeting_type'] == 'webinars' ) {
+			$query_args['meta_query'] = array(
+				'relation' => 'AND',
+				array(
+					'relation' => 'OR',
+					array(
+						'key'     => '_vczapi_meeting_type',
+						'value'   => 'webinar',
+						'compare' => '='
+					)
+				)
+			);
+		}
+
+		if ( ! empty( $atts['author'] ) ) {
+			$query_args['author'] = absint( $atts['author'] );
+		}
+
+		if ( ! empty( $atts['type'] ) && ! empty( $query_args['meta_query'] ) ) {
+			//NOTE !!!! When using this filter please correctly send minutes or hours otherwise it will output error
+			$threshold_limit = apply_filters( 'vczapi_list_cpt_meetings_threshold', '30 minutes' );
+			if ( $atts['show_on_past'] === "yes" && ! empty( $threshold_limit ) ) {
+				$threshold = ( $atts['type'] === "upcoming" ) ? vczapi_dateConverter( 'now -' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false ) : vczapi_dateConverter( 'now +' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false );
+			} else {
+				$threshold = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
+			}
+
+			$type       = ( $atts['type'] === "upcoming" ) ? '>=' : '<=';
+			$meta_query = array(
+				'key'     => '_meeting_field_start_date_utc',
+				'value'   => $threshold,
+				'compare' => $type,
+				'type'    => 'DATETIME'
+			);
+			array_push( $query_args['meta_query'], $meta_query );
+		}
+
+		if ( isset( $form_data['taxonomy'] ) && ! empty( $form_data['taxonomy'] ) && $form_data['taxonomy'] != 'category_order' ) {
+
+			$query_args['tax_query'] = [
+				[
+					'taxonomy' => 'zoom-meeting',
+					'field'    => 'slug',
+					'terms'    => $form_data['taxonomy'],
+					'operator' => 'IN'
+				]
+			];
+		} else if ( ! empty( $atts['category'] ) ) {
+			$category                = array_map( 'trim', explode( ',', $atts['category'] ) );
+			$query_args['tax_query'] = [
+				[
+					'taxonomy' => 'zoom-meeting',
+					'field'    => 'slug',
+					'terms'    => $category,
+					'operator' => 'IN'
+				]
+			];
+		}
+
+		if ( isset( $form_data['orderby'] ) && ! empty( isset( $form_data['orderby'] ) )
+		     && $form_data['orderby'] != 'show_all'
+		) {
+			$orderby             = ( $form_data['orderby'] === "past" ) ? 'ASC' : 'DESC';
+			$query_args['order'] = $orderby;
+		}
+
+		if ( isset( $form_data['search'] ) && ! empty( $form_data['search'] ) ) {
+			$query_args['s'] = esc_attr( $form_data['search'] );
+		}
+
+		$query         = apply_filters( 'vczapi_meeting_list_query_args', $query_args );
+		$zoom_meetings = new \WP_Query( $query );
+		unset( $GLOBALS['zoom_meetings'] );
+		$GLOBALS['zoom_meetings']          = $zoom_meetings;
+		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
+		$content                           = '';
+		ob_start();
+
+		if ( $zoom_meetings->have_posts() ) {
+			while ( $zoom_meetings->have_posts() ) {
+				$zoom_meetings->the_post();
+				do_action( 'vczapi_main_content_post_loop' );
+				vczapi_get_template_part( 'shortcode/zoom', 'listing' );
+			}
+			wp_reset_postdata();
+		} else {
+			echo "<p class='vczapi-no-meeting-found'>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
+		}
+
+		$content .= ob_get_clean();
+
+		ob_start();
+		Helpers::pagination( $zoom_meetings, $atts['page_num'], $atts['base_url'] );
+		$pagination = ob_get_clean();
+
+		$response['content']    = $content;
+		$response['pagination'] = $pagination;
+
+
+		wp_send_json( $response );
 	}
 
 	/**
@@ -312,6 +473,9 @@ class Meetings {
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
+		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 
 		$meetings         = get_option( 'vczapi_user_meetings_for_' . $atts['host'] );
