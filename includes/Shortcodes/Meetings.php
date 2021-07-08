@@ -293,6 +293,12 @@ class Meetings {
 		return $content;
 	}
 
+	/**
+	 * Ajax handler for pagination
+     *
+     * @since 3.8.5 ( July 8th, 2021 )
+     * @author Digamber
+	 */
 	public function list_meeting_ajax_handler() {
 		$response = [];
 		//will be provided on both filter form change or pagination
