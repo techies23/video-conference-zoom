@@ -52,6 +52,16 @@
         var $targetWrapper = $triggerEl.parents('.vczapi-list-zoom-meetings');
         var page_num = parseInt($triggerEl.text());
         var data = $targetWrapper.data();
+        var $currentPage = 1; //clicking of next and previous pagination buttons
+
+        if ($triggerEl.hasClass('next')) {
+          $currentPage = $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').find('.page-numbers.current');
+          page_num = parseInt($currentPage.next().text());
+        } else if ($triggerEl.hasClass('prev')) {
+          $currentPage = $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').find('.page-numbers.current');
+          page_num = parseInt($currentPage.prev().text());
+        }
+
         data['page_num'] = page_num;
         var form_data = $targetWrapper.find('form.vczapi-filters').serializeArray().reduce(function (obj, item) {
           obj[item.name] = item.value;
