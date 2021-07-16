@@ -317,7 +317,8 @@ export default function EditJoinViaBrowser(props) {
                             disable_countdown: disable_countdown,
                             passcode: passcode,
                             height: height,
-                            help: help
+                            help: help,
+                            shouldShow: shouldShow
                         }
                     }
                 />

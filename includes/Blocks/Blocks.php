@@ -570,10 +570,13 @@ class Blocks {
 		if ( isset( $attributes['height'] ) && ! empty( $attributes['height'] ) ) {
 			$shortcode_args .= ' height="' . $attributes['height'] . 'px"';
 		}
+		if ( ! empty( $attributes['shouldShow'] ) && ! empty( $attributes['shouldShow']['value'] ) && $attributes['shouldShow']['value'] == "webinar" ) {
+			$shortcode_args .= ' webinar="yes"';
+		}
 
 		ob_start();
 
-		//print_r($shortcode_args);
+		#dump($shortcode_args);
 		echo do_shortcode( '[zoom_join_via_browser' . $shortcode_args . ']' );
 
 		return ob_get_clean();

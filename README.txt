@@ -1,10 +1,10 @@
 === Video Conferencing with Zoom ===
 Contributors: j__3rk, codemanas, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
-Donate link: https://deepenbajracharya.com.np/donate
+Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 5.7
-Stable tag: 3.8.5
+Stable tag: 3.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -169,6 +169,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.8.6 July 16th, 2021 =
+* Fixed: Join via browser block fix for webinar.
 
 = 3.8.5 July 8th, 2021 =
 * Added: Ajax pagination for shortcode meeting/webinar list page (https://zoom.codemanas.com/shortcode/#3-list-upcoming-or-past-meetings).
