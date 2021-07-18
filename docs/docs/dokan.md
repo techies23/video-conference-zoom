@@ -47,4 +47,4 @@ These plugins are required before Zoom can be enable with Dokan + WooCommerce Bo
 #### Basic Settings
 After all of the required plugins are installed. Vendors will now see a new field when creating their Bookable Products.
 ![Enable Zoom Meeting for Bookable Product](img/dokan/enable-zoom-meetings.png)
-Enabling Zoom Meeting here for a product will create a Zoom Meeting when the bookable product is booked. For more information of how it works please check out  [Zoom Integration for WooCommerce Bookings Documentation](woocoommerce-bookings.md).
+Enabling Zoom Meeting here for a product will create a Zoom Meeting when the bookable product is booked. For more information of how it works please check out  [Zoom Integration for WooCommerce Bookings Documentation](woocommerce-booking.md).
