@@ -55,14 +55,12 @@ Zoom Integration for WCFM acts as a glue plugin for Zoom integration for WooComm
 Once all the required plugins are installed and activated. The ability to enable Zoom Meetings for Bookable Products will be available.
 
 When you select bookable product via the WCFM frontend interface
+
 ---
-
 ![WCFM Bookable Product](img/wcfm/bookable-product.png)
-
 ---
 You will see a new Zoom Setting Tab for the Bookable Product.
 ![WCFM Bookable Product Options](img/wcfm/Bookable-Product-WCFM-options.png)
-
 ---
 
 For detailed information on how Bookings and Zoom for WooCommerce and Bookings will work please see [Zoom for WooCommerce Bookings](woocommerce-booking.md)
