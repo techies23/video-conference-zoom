@@ -179,6 +179,11 @@ class Meetings {
 				//Set flag that this is coming from shortcode instance
 				$GLOBALS['zoom']['shortcode'] = true;
 
+				//Check if pro active
+				if ( vczapi_pro_version_active() && ! empty( $GLOBALS['zoom']['api']->registration_url ) ) {
+					wp_enqueue_script( 'vczapi-pro' );
+				}
+
 				vczapi_get_template_part( 'content', 'single-meeting' );
 			}
 		} else {
@@ -295,9 +300,9 @@ class Meetings {
 
 	/**
 	 * Ajax handler for pagination
-     *
-     * @since 3.8.5 ( July 8th, 2021 )
-     * @author Digamber
+	 *
+	 * @since 3.8.5 ( July 8th, 2021 )
+	 * @author Digamber
 	 */
 	public function list_meeting_ajax_handler() {
 		$response = [];

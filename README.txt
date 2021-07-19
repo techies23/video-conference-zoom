@@ -172,6 +172,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 3.8.7 July 19th, 2021 =
 * Changed: Ajax pagination filter changed for zoom-meetings list page.
+* Fixed: Registrations not working when [zoom_meeting_post] shortcode is used.
 
 = 3.8.6 July 16th, 2021 =
 * Fixed: Join via browser block fix for webinar.
