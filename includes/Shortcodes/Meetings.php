@@ -421,7 +421,7 @@ class Meetings {
 			$query_args['s'] = esc_attr( $form_data['search'] );
 		}
 
-		$query         = apply_filters( 'vczapi_meeting_list_query_args', $query_args );
+		$query         = apply_filters( 'vczapi_meeting_list_ajax_query_args', $query_args, $form_data );
 		$zoom_meetings = new \WP_Query( $query );
 		unset( $GLOBALS['zoom_meetings'] );
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
