@@ -49,7 +49,14 @@ class Recordings {
                             <ul class="vczapi-modal-list vczapi-modal-list-<?php echo $files->id; ?>">
                                 <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo $files->file_type; ?></li>
                                 <li><strong><?php _e( 'File Size', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo vczapi_filesize_converter( $files->file_size ); ?></li>
+								<?php
+								if ( true == apply_filters('vczapi_recordings_show_password', false) && isset( $recording->password ) && ! empty( $recording->password ) ) {
+									?>
+                                    <li><strong><?php _e( 'Password:', 'video-conferencing-with-zoom-api' ); ?></strong> <?php echo $recording->password; ?></li>
+								<?php }
+								?>
                                 <li><strong><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?>: </strong><a href="<?php echo $files->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a></li>
+
 								<?php if ( ! empty( $downloable ) && $downloable ) { ?>
                                     <li><strong><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?>: </strong>
                                         <a href="<?php echo $files->download_url; ?>" target="_blank"><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?></a>
