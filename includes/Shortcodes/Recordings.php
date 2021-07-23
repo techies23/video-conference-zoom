@@ -50,7 +50,7 @@ class Recordings {
                                 <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo $files->file_type; ?></li>
                                 <li><strong><?php _e( 'File Size', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo vczapi_filesize_converter( $files->file_size ); ?></li>
 								<?php
-								if ( true == apply_filters('vczapi_recordings_show_password', false) && isset( $recording->password ) && ! empty( $recording->password ) ) {
+								if ( true == apply_filters( 'vczapi_recordings_show_password', false ) && isset( $recording->password ) && ! empty( $recording->password ) ) {
 									?>
                                     <li><strong><?php _e( 'Password:', 'video-conferencing-with-zoom-api' ); ?></strong> <?php echo $recording->password; ?></li>
 								<?php }
@@ -164,7 +164,8 @@ class Recordings {
 		$atts    = shortcode_atts(
 			array(
 				'meeting_id'   => '',
-				'downloadable' => 'no'
+				'downloadable' => 'no',
+				'cache'        => 'true'
 			),
 			$atts, 'zoom_recordings'
 		);
@@ -185,7 +186,7 @@ class Recordings {
 
 		$recordings        = [];
 		$flush_cache       = filter_input( INPUT_GET, 'flush_cache' );
-		$cached_recordings = Helpers::get_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id' );
+		$cached_recordings = ! empty( $atts['cache'] ) && $atts['cache'] == "true" ? Helpers::get_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id' ) : false;
 
 		ob_start();
 		unset( $GLOBALS['zoom_recordings'] );

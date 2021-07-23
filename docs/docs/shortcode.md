@@ -142,12 +142,13 @@ Where,
 
 Show recordings list based on your meeting ID
 
-Usage: `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no"]`
+Usage: `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no" cache="true"]`
 
 Where,
 
 * `meeting_id` : YOUR MEETING ID to pull.
 * `downloadable` : Default is set to false. If you want your users to be able to download your recordings.
+* `cache` : set to 'false' or 'true' - Default is true. Shows latest records without caching any previous data. **Note: this may result in slow page load speed or even fail to load recordings due to API call limit from zoom side, if there are alot of recordings/ alot of traffic in your site.**
 
 ### How to get Meeting ID
 
