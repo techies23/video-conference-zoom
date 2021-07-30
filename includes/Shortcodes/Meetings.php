@@ -203,6 +203,7 @@ class Meetings {
 	 * @since  3.0.4
 	 */
 	public function list_cpt_meetings( $atts ) {
+	    wp_enqueue_script('video-conferencing-with-zoom-api-shortcode-js');
 		$atts = shortcode_atts(
 			array(
 				'author'       => '',

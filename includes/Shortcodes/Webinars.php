@@ -178,6 +178,7 @@ class Webinars {
 	 * @author Deepen Bajracharya
 	 */
 	public function list_cpt_webinars( $atts ) {
+	    wp_enqueue_script('video-conferencing-with-zoom-api-shortcode-js');
 		$atts = shortcode_atts(
 			array(
 				'author'       => '',
