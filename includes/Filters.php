@@ -76,8 +76,6 @@ class Filters {
 	 * @param $query
 	 */
 	public function show_filters_html( $query ) {
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
-
 		unset( $GLOBALS['vczapi'] );
 		$GLOBALS['vczapi'] = array();
 		//Get all TERMS
