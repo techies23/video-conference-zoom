@@ -18,6 +18,7 @@ global $zoom_meetings;
 if ( ! is_object( $zoom_meetings ) && ! ( $zoom_meetings instanceof \WP_Query ) ) {
 	return;
 }
+
 $args = isset( $args ) ? $args : [];
 $atts = shortcode_atts(
 	array(
@@ -29,11 +30,10 @@ $atts = shortcode_atts(
 		'filter'       => 'yes',
 		'show_on_past' => 'yes',
 		'cols'         => 3,
-        'meeting_type' => 'meetings',
+		'meeting_type' => 'meetings',
 	),
 	$args, 'zoom_list_meetings'
 );
-$big  = 999999999999999;
 
 ?>
 <div class="vczapi-list-zoom-meetings"
@@ -45,17 +45,18 @@ $big  = 999999999999999;
      data-filter="<?php echo $atts['filter']; ?>"
      data-show_on_past="<?php echo $atts['show_on_past']; ?>"
      data-cols="<?php echo $atts['cols']; ?>"
-     data-base_url="<?php echo esc_url( get_pagenum_link( $big ) ); ?>"
+     data-base_url="<?php echo esc_url( get_pagenum_link( 999999999999999 ) ); ?>"
      data-meeting_type="<?php echo $atts['meeting_type']; ?>"
 >
-   <div class="vczapi-loader">
-       <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH.'/ajax-loader.gif'; ?>" alt="loading..." />
-   </div>
+    <div class="vczapi-loader">
+        <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/ajax-loader.gif'; ?>" alt="loading..."/>
+    </div>
 	<?php
 	/**
 	 * BEFORE LOOP HOOK
 	 */
 	do_action( 'vczapi_before_shortcode_content_post_loop', $zoom_meetings );
+
 	?>
 
     <div class="vczapi-wrap vczapi-items-wrap">

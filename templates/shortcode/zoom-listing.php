@@ -73,7 +73,7 @@ $columns = ! empty( $zoom['columns'] ) ? $zoom['columns'] : 'vczapi-col-4';
 
 					<?php do_action( 'vczapi_additional_content_inside_zoom_listing_shortcode' ); ?>
                 </div>
-                <a href="<?php echo esc_url( get_the_permalink() ) ?>" class="btn vczapi-btn-link"><?php _e( 'See More', 'video-conferencing-with-zoom-api' ); ?></a>
+                <a href="<?php echo esc_url( get_the_permalink() ) ?>" class="btn vczapi-btn-link"><?php _e( 'View Event', 'video-conferencing-with-zoom-api' ); ?></a>
             </div><!--Details end-->
         </div><!--List item end-->
     </div>

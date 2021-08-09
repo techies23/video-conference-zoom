@@ -9,9 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly
 
 /**
- * Elementor Hello World
- *
- * Elementor widget for hello world.
+ * Elementor widget for Meeting via Hosts
  *
  * @since 3.4.0
  * @author CodeManas

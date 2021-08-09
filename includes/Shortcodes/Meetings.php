@@ -217,6 +217,9 @@ class Meetings {
 			),
 			$atts, 'zoom_list_meetings'
 		);
+
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
+
 		if ( is_front_page() ) {
 			$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
 		} else {
@@ -292,7 +295,6 @@ class Meetings {
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
 		ob_start();
-		$atts['meeting_type'] = "meetings";
 		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();
 

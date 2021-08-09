@@ -127,7 +127,7 @@ class Webinars {
 				if ( ! empty( $decoded_meetings ) && ! empty( $decoded_meetings->code ) ) {
 					return '<strong>Zoom API Error:</strong>' . $decoded_meetings->message;
 				} else {
-					return __( 'Could not retrieve meetings, check Host ID', 'video-conferencing-with-zoom-api' );
+					return __( 'Could not retrieve webinars, check Host ID', 'video-conferencing-with-zoom-api' );
 				}
 			}
 		}
@@ -192,6 +192,8 @@ class Webinars {
 			),
 			$atts, 'zoom_list_webinars'
 		);
+
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 		if ( is_front_page() ) {
 			$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
 		} else {
@@ -262,7 +264,6 @@ class Webinars {
 		unset( $GLOBALS['zoom_meetings'] );
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
-		$atts['meeting_type']              = 'webinars';
 		ob_start();
 		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();

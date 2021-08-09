@@ -9,9 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly
 
 /**
- * Elementor Hello World
- *
- * Elementor widget for hello world.
+ * Elementor widget for showing meeting by POST ID
  *
  * @since 3.4.0
  */
