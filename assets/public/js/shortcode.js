@@ -15,7 +15,8 @@
     },
     defaultActions: function defaultActions() {
       this.$wrapper.DataTable({
-        responsive: true
+        responsive: true,
+        language: vczapi_dt_i18n
       });
     }
   };
@@ -149,6 +150,7 @@
       if ($('.vczapi-recordings-list-table').length > 0) {
         $('.vczapi-recordings-list-table').DataTable({
           responsive: true,
+          language: vczapi_dt_i18n,
           order: [3, "desc"],
           columnDefs: [{
             orderable: false,
@@ -193,9 +195,9 @@
       var postData = {
         recording_id: recording_id,
         action: 'get_recording',
-        downlable: vczapi_ajax.downloadable
+        downlable: vczapi_recordings_data.downloadable
       };
-      $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading + '</p>').show();
+      $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_recordings_data.loading + '</p>').show();
       $.get(vczapi_ajax.ajaxurl, postData).done(function (response) {
         $('.vczapi-modal').html(response.data).show();
       });

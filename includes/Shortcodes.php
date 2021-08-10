@@ -73,7 +73,7 @@ class Shortcodes {
 		$minified = SCRIPT_DEBUG ? '' : '.min';
 		wp_enqueue_style( 'video-conferencing-with-zoom-api' );
 		wp_register_style( 'video-conferencing-with-zoom-api-datable', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.css', false, ZVC_PLUGIN_VERSION );
-		wp_register_style( 'video-conferencing-with-zoom-api-datable-responsive', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.css', false, ZVC_PLUGIN_VERSION );
+		wp_register_style( 'video-conferencing-with-zoom-api-datable-responsive', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.css', [ 'video-conferencing-with-zoom-api-datable' ], ZVC_PLUGIN_VERSION );
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', [ 'jquery' ], ZVC_PLUGIN_VERSION, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/dataTables.responsive.min.js', [
 			'jquery',
@@ -90,6 +90,23 @@ class Shortcodes {
 		], ZVC_PLUGIN_VERSION, true );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(
+			'emptyTable'     => __( 'No data available in table', 'video-conferencing-with-zoom-api' ),
+			'info'           => sprintf( __( 'Showing %s to %s of %s entries', 'video-conferencing-with-zoom-api' ), '_START_', '_END_', '_TOTAL_' ),
+			'infoEmpty'      => __( '', 'video-conferencing-with-zoom-api' ),
+			'infoFiltered'   => sprintf( __( 'filtered from %s total entries', 'video-conferencing-with-zoom-api' ), '_MAX_' ),
+			'lengthMenu'     => sprintf( __( 'Show %s entries', 'video-conferencing-with-zoom-api' ), '_MENU_' ),
+			'loadingRecords' => __( 'Loading', 'video-conferencing-with-zoom-api' ),
+			'processing'     => __( 'Processing', 'video-conferencing-with-zoom-api' ),
+			'search'         => __( 'Search', 'video-conferencing-with-zoom-api' ),
+			'zeroRecords'    => __( 'No matching records found', 'video-conferencing-with-zoom-api' ),
+			'paginate'       => [
+				'first'    => __( 'First', 'video-conferencing-with-zoom-api' ),
+				'last'     => __( 'Last', 'video-conferencing-with-zoom-api' ),
+				'next'     => __( 'Next', 'video-conferencing-with-zoom-api' ),
+				'previous' => __( 'Previous', 'video-conferencing-with-zoom-api' )
+			]
 		) );
 	}
 
