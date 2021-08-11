@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2021-05-28 13:07+0000\n"
+"POT-Creation-Date: 2021-08-10 05:29+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -66,7 +66,7 @@ msgstr ""
 msgid "Action (Required)."
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:340
+#: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:513
 msgid "Actions"
 msgstr ""
 
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Add Users"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:209
+#: includes/views/tabs/api-settings.php:206
 msgid "Addons"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgstr ""
 msgid "An error occured. Host ID and Meeting ID not defined properly."
 msgstr ""
 
-#: includes/Shortcodes.php:177
+#: includes/Shortcodes.php:197
 msgid "and join via Zoom App."
 msgstr ""
 
@@ -198,8 +198,8 @@ msgstr ""
 msgid "ATTENTION: Zoom Account & Setting Prerequisites for Reports Section"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:95
-#: includes/Elementor/Widgets/MeetingList.php:97
+#: includes/Elementor/Widgets/WebinarList.php:93
+#: includes/Elementor/Widgets/MeetingList.php:95
 msgid "Author ID"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgstr ""
 msgid "Choose meeting from here to sync."
 msgstr ""
 
-#: includes/Bootstrap.php:113 includes/Shortcodes/Meetings.php:138
+#: includes/Bootstrap.php:113 includes/Shortcodes/Meetings.php:144
 msgid "Click join button below to join the meeting now !"
 msgstr ""
 
@@ -354,29 +354,33 @@ msgstr ""
 msgid "Cloud"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:192
-#: includes/Elementor/Widgets/MeetingList.php:194
+#: includes/Elementor/Widgets/WebinarList.php:190
+#: includes/Elementor/Widgets/MeetingList.php:192
 msgid "Column Layout"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:205
+#: includes/views/tabs/api-settings.php:202
 msgid "Contact for additional Support"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:87
-#: includes/Elementor/Widgets/MeetingList.php:89
+#: includes/Elementor/Widgets/WebinarList.php:85
+#: includes/Elementor/Widgets/MeetingList.php:87
 msgid "Content"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:129 includes/Shortcodes/Meetings.php:327
+#: includes/Shortcodes/Meetings.php:500
 msgid "Could not retrieve meetings, check Host ID"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:167
+#: includes/Shortcodes/Webinars.php:129
+msgid "Could not retrieve webinars, check Host ID"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingList.php:165
 msgid "Count of meetings"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:165
+#: includes/Elementor/Widgets/WebinarList.php:163
 msgid "Count of Webinars"
 msgstr ""
 
@@ -445,7 +449,7 @@ msgstr ""
 msgid "DateTime Format"
 msgstr ""
 
-#: includes/Shortcodes.php:204 templates/fragments/countdown-timer.php:30
+#: includes/Shortcodes.php:224 templates/fragments/countdown-timer.php:30
 msgid "days"
 msgstr ""
 
@@ -461,7 +465,7 @@ msgstr ""
 msgid "Default Sorting"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:140
+#: includes/Elementor/Widgets/EmbedMeetings.php:138
 msgid "Default title"
 msgstr ""
 
@@ -484,7 +488,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:207
+#: includes/views/tabs/api-settings.php:204
 msgid "Developer"
 msgstr ""
 
@@ -501,7 +505,7 @@ msgstr ""
 msgid "Disable Auto Password Generation ?"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:160
+#: includes/Elementor/Widgets/EmbedMeetings.php:158
 msgid "Disable Countdown Timer?"
 msgstr ""
 
@@ -544,22 +548,22 @@ msgstr ""
 msgid "Do not get confused here !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:202
+#: includes/views/tabs/api-settings.php:199
 msgid "Documentation"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:54 includes/Shortcodes/Recordings.php:55
+#: includes/Shortcodes/Recordings.php:61 includes/Shortcodes/Recordings.php:62
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
 #: includes/views/live/tpl-list-recordings.php:54
 #: includes/views/live/tpl-list-recordings.php:55
 msgid "Download"
 msgstr ""
 
-#: includes/Shortcodes.php:184
+#: includes/Shortcodes.php:204
 msgid "Download App from Store"
 msgstr ""
 
-#: includes/Shortcodes.php:187
+#: includes/Shortcodes.php:207
 msgid "Download from Zoom"
 msgstr ""
 
@@ -599,15 +603,15 @@ msgstr ""
 msgid "Email Address"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:148
+#: includes/Elementor/Widgets/EmbedMeetings.php:146
 msgid "Embed Height"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:89
+#: includes/Elementor/Widgets/EmbedMeetings.php:87
 msgid "Embed Meeting"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:48
+#: includes/Elementor/Widgets/EmbedMeetings.php:46
 msgid "Embed Zoom Meeting"
 msgstr ""
 
@@ -655,8 +659,8 @@ msgstr ""
 msgid "Enter the date to check:"
 msgstr ""
 
-#: includes/Shortcodes.php:127 includes/Shortcodes/Webinars.php:59
-#: includes/Shortcodes/Meetings.php:60 includes/Shortcodes/Meetings.php:114
+#: includes/Shortcodes.php:147 includes/Shortcodes/Webinars.php:60
+#: includes/Shortcodes/Meetings.php:66 includes/Shortcodes/Meetings.php:120
 msgid "ERROR: "
 msgstr ""
 
@@ -664,7 +668,7 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:199
+#: includes/views/tabs/api-settings.php:209
 msgid "Facebook Group"
 msgstr ""
 
@@ -686,6 +690,15 @@ msgstr ""
 #: includes/Shortcodes/Recordings.php:50
 #: includes/views/live/tpl-list-recordings.php:47
 msgid "File Type"
+msgstr ""
+
+#: includes/Shortcodes.php:98
+#, php-format
+msgid "filtered from %s total entries"
+msgstr ""
+
+#: includes/Shortcodes.php:105
+msgid "First"
 msgstr ""
 
 #: includes/views/live/tpl-add-user.php:55
@@ -734,7 +747,7 @@ msgstr ""
 msgid "Host ID"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:107 includes/Shortcodes/Meetings.php:308
+#: includes/Shortcodes/Webinars.php:108 includes/Shortcodes/Meetings.php:482
 msgid "Host ID should be given when defining this shortcode."
 msgstr ""
 
@@ -760,7 +773,7 @@ msgstr ""
 msgid "Hosted By:"
 msgstr ""
 
-#: includes/Shortcodes.php:210 templates/fragments/countdown-timer.php:36
+#: includes/Shortcodes.php:230 templates/fragments/countdown-timer.php:36
 msgid "hours"
 msgstr ""
 
@@ -788,12 +801,12 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:94
+#: includes/Shortcodes/Recordings.php:101
 msgid ""
 "Invalid HOST ID. Please define a host ID to show recordings based on host."
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:167
+#: includes/Shortcodes/Recordings.php:173
 msgid "Invalid Meeting ID."
 msgstr ""
 
@@ -826,19 +839,23 @@ msgstr ""
 msgid "Join Meeting via Zoom App"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:371
+#: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:544
 msgid "Join via App"
 msgstr ""
 
-#: includes/helpers.php:594 includes/helpers.php:598 includes/helpers.php:622
-#: includes/helpers.php:626 templates/shortcode/join-links.php:27
+#: includes/helpers.php:595 includes/helpers.php:599 includes/helpers.php:623
+#: includes/helpers.php:627 templates/shortcode/join-links.php:27
 #: templates/shortcode/webinar-join-links.php:27
 msgid "Join via Web Browser"
 msgstr ""
 
-#: includes/Shortcodes.php:181 templates/shortcode/join-links.php:18
+#: includes/Shortcodes.php:201 templates/shortcode/join-links.php:18
 #: templates/shortcode/webinar-join-links.php:18
 msgid "Join via Zoom App"
+msgstr ""
+
+#: includes/Shortcodes.php:106
+msgid "Last"
 msgstr ""
 
 #: includes/views/live/tpl-list-users.php:36
@@ -885,7 +902,11 @@ msgstr ""
 msgid "Live Webinars"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:110
+#: includes/Shortcodes.php:100
+msgid "Loading"
+msgstr ""
+
+#: includes/Shortcodes/Recordings.php:115
 msgid "Loading recordings.. Please wait.."
 msgstr ""
 
@@ -897,8 +918,8 @@ msgid "Local"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:228
-#: includes/Elementor/Widgets/MeetingByPostID.php:90
-#: includes/Elementor/Widgets/MeetingByID.php:92
+#: includes/Elementor/Widgets/MeetingByPostID.php:88
+#: includes/Elementor/Widgets/MeetingByID.php:90
 msgid "Meeting"
 msgstr ""
 
@@ -920,7 +941,7 @@ msgstr ""
 msgid "Meeting Details"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:178
+#: includes/Elementor/Widgets/MeetingList.php:176
 msgid "Meeting Display Threshold"
 msgstr ""
 
@@ -951,7 +972,7 @@ msgid ""
 "update to create a new one for this post !"
 msgstr ""
 
-#: includes/Bootstrap.php:112 includes/Shortcodes/Meetings.php:137
+#: includes/Bootstrap.php:112 includes/Shortcodes/Meetings.php:143
 msgid "Meeting Has Started ! Click below join button to join meeting now !"
 msgstr ""
 
@@ -969,8 +990,8 @@ msgstr ""
 #: templates/shortcode/zoom-webinar.php:21
 #: templates/shortcode/zoom-recordings.php:22
 #: templates/shortcode/zoom-recordings-by-meeting.php:42
-#: includes/Elementor/Widgets/EmbedMeetings.php:96
-#: includes/Elementor/Widgets/RecordingByMeetingID.php:95
+#: includes/Elementor/Widgets/EmbedMeetings.php:94
+#: includes/Elementor/Widgets/RecordingByMeetingID.php:93
 #: includes/views/live/tpl-list-meetings.php:58
 #: includes/views/live/tpl-list-recordings.php:21
 msgid "Meeting ID"
@@ -995,8 +1016,8 @@ msgstr ""
 msgid "Meeting not created yet."
 msgstr ""
 
+#: includes/Elementor/Widgets/EmbedMeetings.php:173
 #: includes/Elementor/Widgets/EmbedMeetings.php:175
-#: includes/Elementor/Widgets/EmbedMeetings.php:177
 #: includes/views/live/tpl-edit-meeting.php:99
 #: includes/views/live/tpl-add-meetings.php:81
 msgid "Meeting Password"
@@ -1018,7 +1039,7 @@ msgstr ""
 msgid "Meeting State"
 msgstr ""
 
-#: includes/template-functions.php:314 includes/Shortcodes/Meetings.php:337
+#: includes/template-functions.php:314 includes/Shortcodes/Meetings.php:510
 msgid "Meeting Status"
 msgstr ""
 
@@ -1053,7 +1074,7 @@ msgstr ""
 msgid "Meetings"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:108
+#: includes/Elementor/Widgets/MeetingList.php:106
 msgid "Meetings Category"
 msgstr ""
 
@@ -1065,15 +1086,15 @@ msgstr ""
 msgid "Meetings Held"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:121
+#: includes/Elementor/Widgets/MeetingList.php:119
 msgid "Meetings Order By"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:136
+#: includes/Elementor/Widgets/MeetingList.php:134
 msgid "Meetings Type"
 msgstr ""
 
-#: includes/Shortcodes.php:216 templates/fragments/countdown-timer.php:42
+#: includes/Shortcodes.php:236 templates/fragments/countdown-timer.php:42
 msgid "minutes"
 msgstr ""
 
@@ -1106,11 +1127,15 @@ msgstr ""
 msgid "New Users"
 msgstr ""
 
+#: includes/Shortcodes.php:107
+msgid "Next"
+msgstr ""
+
 #: templates/content-meeting.php:42 templates/shortcode/zoom-listing.php:45
 msgid "Next Occurrence"
 msgstr ""
 
-#: includes/helpers.php:707
+#: includes/helpers.php:708
 msgid "Next Results"
 msgstr ""
 
@@ -1118,15 +1143,23 @@ msgstr ""
 msgid "Next Start Time"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:225
+#: includes/Shortcodes.php:95
+msgid "No data available in table"
+msgstr ""
+
+#: includes/Shortcodes.php:103
+msgid "No matching records found"
+msgstr ""
+
+#: includes/Elementor/Widgets/EmbedMeetings.php:223
 msgid "No Meeting ID is defined."
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingByMeetingID.php:140
+#: includes/Elementor/Widgets/RecordingByMeetingID.php:138
 msgid "No meeting ID is defined."
 msgstr ""
 
-#: includes/Shortcodes.php:127 includes/Shortcodes/Meetings.php:60
+#: includes/Shortcodes.php:147 includes/Shortcodes/Meetings.php:66
 msgid "No meeting id set in the shortcode"
 msgstr ""
 
@@ -1143,7 +1176,8 @@ msgstr ""
 msgid "No meetings found in Trash."
 msgstr ""
 
-#: templates/shortcode-listing.php:42 templates/archive-meetings.php:55
+#: templates/shortcode-listing.php:73 templates/archive-meetings.php:55
+#: includes/Shortcodes/Meetings.php:447
 msgid "No Meetings found."
 msgstr ""
 
@@ -1151,7 +1185,7 @@ msgstr ""
 msgid "No meetings found."
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:114
+#: includes/Shortcodes/Meetings.php:120
 msgid "No post id set in the shortcode"
 msgstr ""
 
@@ -1162,8 +1196,8 @@ msgstr ""
 msgid "No Recordings"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:143
-#: includes/Shortcodes/Recordings.php:220
+#: includes/Shortcodes/Recordings.php:148
+#: includes/Shortcodes/Recordings.php:225
 msgid "No recordings found."
 msgstr ""
 
@@ -1171,20 +1205,20 @@ msgstr ""
 msgid "No Records Found.."
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingsByHost.php:159
-#: includes/Elementor/Widgets/MeetingHosts.php:163
+#: includes/Elementor/Widgets/RecordingsByHost.php:157
+#: includes/Elementor/Widgets/MeetingHosts.php:161
 msgid "No user selected."
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:59
+#: includes/Shortcodes/Webinars.php:60
 msgid "No webinar id set in the shortcode"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-ajax.php:260
+#: includes/admin/class-zvc-admin-ajax.php:262
 msgid "Not a Host"
 msgstr ""
 
-#: includes/Shortcodes.php:177
+#: includes/Shortcodes.php:197
 msgid ""
 "Note: If you are having trouble joining the meeting below, enter Meeting ID: "
 msgstr ""
@@ -1249,6 +1283,10 @@ msgid ""
 "generate )"
 msgstr ""
 
+#: includes/Shortcodes/Recordings.php:55
+msgid "Password:"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-post-type.php:137
 msgid "Past"
 msgstr ""
@@ -1261,7 +1299,7 @@ msgstr ""
 msgid "Personal Meeting Room"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:52
+#: includes/Shortcodes/Recordings.php:58
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
 #: includes/views/live/tpl-list-recordings.php:51
 #: includes/views/live/tpl-list-recordings.php:52
@@ -1315,14 +1353,14 @@ msgstr ""
 msgid "Please see %s on how to format date"
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:88
+#: includes/Shortcodes/Meetings.php:94
 #, php-format
 msgid ""
 "Please try again ! Some error occured while trying to fetch meeting with id: "
 " %d"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:80
+#: includes/Shortcodes/Webinars.php:81
 #, php-format
 msgid ""
 "Please try again ! Some error occured while trying to fetch webinar with id: "
@@ -1331,6 +1369,10 @@ msgstr ""
 
 #: includes/views/post-type/tpl-meeting-fields.php:267
 msgid "Practise Session"
+msgstr ""
+
+#: includes/Shortcodes.php:108
+msgid "Previous"
 msgstr ""
 
 #: includes/views/live/tpl-reports.php:120
@@ -1349,7 +1391,11 @@ msgstr ""
 msgid "Pro, Business, Enterprise, Education, or API Account. Check more"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:150
+#: includes/Shortcodes.php:101
+msgid "Processing"
+msgstr ""
+
+#: includes/Elementor/Widgets/EmbedMeetings.php:148
 msgid "Put height of the container."
 msgstr ""
 
@@ -1364,7 +1410,7 @@ msgstr ""
 msgid "Recorded"
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingByMeetingID.php:88
+#: includes/Elementor/Widgets/RecordingByMeetingID.php:86
 msgid "Recording by Meeting"
 msgstr ""
 
@@ -1373,7 +1419,7 @@ msgstr ""
 msgid "Recordings"
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingByMeetingID.php:47
+#: includes/Elementor/Widgets/RecordingByMeetingID.php:45
 msgid "Recordings by Meeting"
 msgstr ""
 
@@ -1402,7 +1448,7 @@ msgid "Reports"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:452
-#: includes/Elementor/Widgets/EmbedMeetings.php:107
+#: includes/Elementor/Widgets/EmbedMeetings.php:105
 msgid "Requires Login?"
 msgstr ""
 
@@ -1412,7 +1458,7 @@ msgid ""
 "meeting is completed."
 msgstr ""
 
-#: includes/Shortcodes.php:133
+#: includes/Shortcodes.php:153
 msgid "Restricted access, please login to continue."
 msgstr ""
 
@@ -1442,6 +1488,10 @@ msgstr ""
 msgid "Saved !"
 msgstr ""
 
+#: includes/Shortcodes.php:102
+msgid "Search"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-post-type.php:325
 msgid "Search meetings"
 msgstr ""
@@ -1454,11 +1504,11 @@ msgstr ""
 msgid "Searching From: "
 msgstr ""
 
-#: includes/Shortcodes.php:222 templates/fragments/countdown-timer.php:48
+#: includes/Shortcodes.php:242 templates/fragments/countdown-timer.php:48
 msgid "seconds"
 msgstr ""
 
-#: templates/content-meeting.php:71 templates/shortcode/zoom-listing.php:76
+#: templates/content-meeting.php:71
 msgid "See More"
 msgstr ""
 
@@ -1482,8 +1532,8 @@ msgstr ""
 msgid "Select a Host"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingByPostID.php:113
-#: includes/Elementor/Widgets/MeetingByID.php:115
+#: includes/Elementor/Widgets/MeetingByPostID.php:111
+#: includes/Elementor/Widgets/MeetingByID.php:113
 msgid "Select a Meeting"
 msgstr ""
 
@@ -1497,8 +1547,8 @@ msgstr ""
 msgid "Select a User"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingByPostID.php:82
-#: includes/Elementor/Widgets/MeetingByID.php:84
+#: includes/Elementor/Widgets/MeetingByPostID.php:80
+#: includes/Elementor/Widgets/MeetingByID.php:82
 msgid "Select a Zoom Meeting"
 msgstr ""
 
@@ -1507,8 +1557,8 @@ msgstr ""
 msgid "Select bulk action"
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingsByHost.php:95
-#: includes/Elementor/Widgets/MeetingHosts.php:95
+#: includes/Elementor/Widgets/RecordingsByHost.php:93
+#: includes/Elementor/Widgets/MeetingHosts.php:93
 msgid "Select User"
 msgstr ""
 
@@ -1527,8 +1577,8 @@ msgid ""
 "Set what type of auto recording feature you want to add. Default is none."
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:184
-#: includes/Elementor/Widgets/MeetingList.php:186
+#: includes/Elementor/Widgets/WebinarList.php:182
+#: includes/Elementor/Widgets/MeetingList.php:184
 msgid ""
 "Setting this to yes will display meetings for 30 minutes more after the "
 "meeting date has passed. This will only work if Meeting Type is defined."
@@ -1545,30 +1595,35 @@ msgstr ""
 msgid "Shortcode"
 msgstr ""
 
+#: includes/Shortcodes.php:99
+#, php-format
+msgid "Show %s entries"
+msgstr ""
+
 #: includes/views/tabs/api-settings.php:108
 msgid "Show All"
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingsByHost.php:108
-#: includes/Elementor/Widgets/RecordingByMeetingID.php:106
+#: includes/Elementor/Widgets/RecordingsByHost.php:106
+#: includes/Elementor/Widgets/RecordingByMeetingID.php:104
 msgid "Show Downloadable Link"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:150
-#: includes/Elementor/Widgets/MeetingList.php:152
+#: includes/Elementor/Widgets/WebinarList.php:148
+#: includes/Elementor/Widgets/MeetingList.php:150
 msgid "Show Filter"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:123
+#: includes/Elementor/Widgets/EmbedMeetings.php:121
 msgid "Show Help Text?"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingHosts.php:87
+#: includes/Elementor/Widgets/MeetingHosts.php:85
 msgid "Show Meeting by Zoom User"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:98
-#: includes/Elementor/Widgets/MeetingList.php:100
+#: includes/Elementor/Widgets/WebinarList.php:96
+#: includes/Elementor/Widgets/MeetingList.php:98
 msgid "Show meeting posts based on Author ID"
 msgstr ""
 
@@ -1584,7 +1639,7 @@ msgstr ""
 msgid "Show Recordings based on Meeting ID"
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingsByHost.php:87
+#: includes/Elementor/Widgets/RecordingsByHost.php:85
 msgid "Show Recordings via Host ID"
 msgstr ""
 
@@ -1598,6 +1653,11 @@ msgstr ""
 
 #: includes/views/tabs/api-settings.php:76
 msgid "Show Zoom Author ?"
+msgstr ""
+
+#: includes/Shortcodes.php:96
+#, php-format
+msgid "Showing %s to %s of %s entries"
 msgstr ""
 
 #: templates/fragments/filters.php:14
@@ -1654,7 +1714,7 @@ msgstr ""
 
 #: includes/template-functions.php:373 includes/template-functions.php:381
 #: includes/template-functions.php:395 templates/content-meeting.php:49
-#: includes/Shortcodes/Webinars.php:140 includes/Shortcodes/Meetings.php:338
+#: includes/Shortcodes/Webinars.php:140 includes/Shortcodes/Meetings.php:511
 #: templates/shortcode/zoom-webinar.php:73
 #: templates/shortcode/zoom-webinar.php:81
 #: templates/shortcode/zoom-webinar.php:88
@@ -1817,7 +1877,7 @@ msgstr ""
 msgid "This meeting has been ended by host."
 msgstr ""
 
-#: includes/Bootstrap.php:114 includes/Shortcodes/Meetings.php:139
+#: includes/Bootstrap.php:114 includes/Shortcodes/Meetings.php:145
 msgid "This meeting has been ended by the host."
 msgstr ""
 
@@ -1825,7 +1885,7 @@ msgstr ""
 msgid "This meeting is no longer valid and cannot be joined !"
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:179
+#: includes/Shortcodes/Meetings.php:190
 msgid "This post does not exist."
 msgstr ""
 
@@ -1848,7 +1908,7 @@ msgid ""
 msgstr ""
 
 #: includes/template-functions.php:401 templates/content-meeting.php:68
-#: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:339
+#: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:512
 #: templates/shortcode/zoom-webinar.php:93
 #: templates/shortcode/zoom-listing.php:71
 #: includes/views/webinars/tpl-edit-webinar.php:58
@@ -1859,7 +1919,7 @@ msgstr ""
 msgid "Timezone"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:138
+#: includes/Elementor/Widgets/EmbedMeetings.php:136
 msgid "Title"
 msgstr ""
 
@@ -1872,7 +1932,7 @@ msgid "to generate the below API values from your Zoom account"
 msgstr ""
 
 #: includes/template-functions.php:310 includes/Shortcodes/Webinars.php:139
-#: includes/Shortcodes/Meetings.php:336
+#: includes/Shortcodes/Meetings.php:509
 #: templates/fragments/meeting-details.php:27
 #: templates/shortcode/zoom-webinar.php:25
 #: templates/shortcode/zoom-recordings.php:23
@@ -1933,7 +1993,7 @@ msgstr ""
 #: includes/admin/class-zvc-admin-post-type.php:191
 #: templates/shortcode/zoom-webinar.php:33
 #: templates/shortcode/zoom-listing.php:59
-#: includes/Elementor/Widgets/MeetingHosts.php:108
+#: includes/Elementor/Widgets/MeetingHosts.php:106
 msgid "Type"
 msgstr ""
 
@@ -1942,7 +2002,7 @@ msgstr ""
 msgid "Type of User (Required)"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:141
+#: includes/Elementor/Widgets/EmbedMeetings.php:139
 msgid "Type your title here"
 msgstr ""
 
@@ -2013,6 +2073,10 @@ msgid ""
 "and users directly from your WordPress dashboard."
 msgstr ""
 
+#: templates/shortcode/zoom-listing.php:76
+msgid "View Event"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-post-type.php:323
 msgid "View meetings"
 msgstr ""
@@ -2029,7 +2093,7 @@ msgstr ""
 msgid "Webinar"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:185
+#: includes/Elementor/Widgets/EmbedMeetings.php:183
 msgid "Webinar ?"
 msgstr ""
 
@@ -2043,7 +2107,7 @@ msgstr ""
 msgid "Webinar Description."
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:176
+#: includes/Elementor/Widgets/WebinarList.php:174
 msgid "Webinar Display Threshold"
 msgstr ""
 
@@ -2088,15 +2152,15 @@ msgstr ""
 msgid "Webinars"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:106
+#: includes/Elementor/Widgets/WebinarList.php:104
 msgid "Webinars Category"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:119
+#: includes/Elementor/Widgets/WebinarList.php:117
 msgid "Webinars Order By"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:134
+#: includes/Elementor/Widgets/WebinarList.php:132
 msgid "Webinars Type"
 msgstr ""
 
@@ -2155,7 +2219,7 @@ msgstr ""
 msgid "Zoom Integration Settings"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingByID.php:45
+#: includes/Elementor/Widgets/MeetingByID.php:43
 #: includes/views/post-type/tpl-meeting-fields.php:67
 msgid "Zoom Meeting"
 msgstr ""
@@ -2167,7 +2231,7 @@ msgctxt "Zoom Meeting"
 msgid "Zoom Meeting"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingByPostID.php:43
+#: includes/Elementor/Widgets/MeetingByPostID.php:41
 msgid "Zoom Meeting by Post ID"
 msgstr ""
 
@@ -2176,15 +2240,15 @@ msgctxt "Zoom Meetings and Webinars"
 msgid "Zoom Meetings and Webinars"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:48
+#: includes/Elementor/Widgets/MeetingList.php:46
 msgid "Zoom Meetings List"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingHosts.php:46
+#: includes/Elementor/Widgets/MeetingHosts.php:44
 msgid "Zoom Meetings via Host"
 msgstr ""
 
-#: includes/Elementor/Widgets/RecordingsByHost.php:46
+#: includes/Elementor/Widgets/RecordingsByHost.php:44
 msgid "Zoom Recordings by Host"
 msgstr ""
 
@@ -2196,6 +2260,6 @@ msgstr ""
 msgid "Zoom Webinar"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:46
+#: includes/Elementor/Widgets/WebinarList.php:44
 msgid "Zoom Webinars List"
 msgstr ""

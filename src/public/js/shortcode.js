@@ -12,7 +12,8 @@
         },
         defaultActions: function () {
             this.$wrapper.DataTable({
-                responsive: true
+                responsive: true,
+                language: vczapi_dt_i18n
             });
         }
     };
@@ -51,7 +52,7 @@
                 var page_num = parseInt($triggerEl.text());
                 var data = $targetWrapper.data();
                 var $currentPage = 1;
-                
+
                 //clicking of next and previous pagination buttons
                 if ($triggerEl.hasClass('next')) {
                     $currentPage = $targetWrapper.find('.vczapi-list-zoom-meetings--pagination').find('.page-numbers.current');
@@ -157,6 +158,7 @@
             if ($('.vczapi-recordings-list-table').length > 0) {
                 $('.vczapi-recordings-list-table').DataTable({
                     responsive: true,
+                    language: vczapi_dt_i18n,
                     order: [3, "desc"],
                     columnDefs: [
                         {
@@ -202,10 +204,10 @@
             var postData = {
                 recording_id: recording_id,
                 action: 'get_recording',
-                downlable: vczapi_ajax.downloadable
+                downlable: vczapi_recordings_data.downloadable
             };
 
-            $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading + '</p>').show();
+            $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_recordings_data.loading + '</p>').show();
             $.get(vczapi_ajax.ajaxurl, postData).done(function (response) {
                 $('.vczapi-modal').html(response.data).show();
             });

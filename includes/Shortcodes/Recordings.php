@@ -106,13 +106,11 @@ class Recordings {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css', false, ZVC_PLUGIN_VERSION );
 
-		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable' );
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
-		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
-			'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_recordings_data', array(
 			'downloadable' => $downloadable,
 			'loading'      => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
 		) );
@@ -178,7 +176,6 @@ class Recordings {
 		}
 
 		$meeting_id = $atts['meeting_id'];
-		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable' );
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
