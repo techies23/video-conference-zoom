@@ -177,7 +177,7 @@ class Webinars {
 	 * @author Deepen Bajracharya
 	 */
 	public function list_cpt_webinars( $atts ) {
-	    wp_enqueue_script('video-conferencing-with-zoom-api-shortcode-js');
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 		$atts = shortcode_atts(
 			array(
 				'author'       => '',
@@ -263,6 +263,10 @@ class Webinars {
 		unset( $GLOBALS['zoom_meetings'] );
 		$GLOBALS['zoom_meetings']          = $zoom_meetings;
 		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
+		//since list webinars shortcode is different from list meeting shortcode $atts['meeting_type'] needs to be defined explicitly here
+		//to be used in shortcode-listing.php otherwise it will cause issues.
+        //@todo: consider using singular webinar instead of webinars - must change code in list_meeting_ajax_handler function
+		$atts['meeting_type'] = 'webinars';  
 		ob_start();
 		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();
