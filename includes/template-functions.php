@@ -157,13 +157,14 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
 	}
 
 	if ( wp_doing_ajax() ) {
-		$post_id         = absint( filter_input( INPUT_POST, 'post_id' ) );
+		$post_id         = filter_input( INPUT_POST, 'post_id' );
 		$meeting_details = get_post_meta( $post_id, '_meeting_fields', true );
 		if ( ! empty( $zoom_meeting->id ) && ! empty( $post_id ) && empty( $meeting_details['site_option_browser_join'] ) && ! vczapi_check_disable_joinViaBrowser() ) {
+			$meeting_id = ! empty( $zoom_meeting->pmi ) ? $zoom_meeting->pmi : $zoom_meeting->id;
 			if ( ! empty( $zoom_meeting->password ) ) {
-				echo vczapi_get_browser_join_links( $post_id, $zoom_meeting->id, $zoom_meeting->password );
+				echo vczapi_get_browser_join_links( $post_id, $meeting_id, $zoom_meeting->password );
 			} else {
-				echo vczapi_get_browser_join_links( $post_id, $zoom_meeting->id );
+				echo vczapi_get_browser_join_links( $post_id, $meeting_id );
 			}
 		}
 	}
