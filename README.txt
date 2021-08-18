@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 5.8
-Stable tag: 3.8.11
+Stable tag: 3.8.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,7 +170,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.8.12 August 17th, 2021 =
+= 3.8.12 August 18th, 2021 =
 * Fixed: Join via browser not working when used PMI for meetings/webinars.
 
 = 3.8.11 August 11th, 2021 =
