@@ -72,6 +72,23 @@ class Zoom_Video_Conferencing_Admin_PostType {
 		add_action( 'manage_edit-' . $this->post_type . '_sortable_columns', array( $this, 'sortable_data' ), 30 );
 		add_filter( 'views_edit-' . $this->post_type, [ $this, 'addFiltersOnSubSubSub' ] );
 		add_filter( 'pre_get_posts', [ $this, 'filter_posts' ] );
+		add_filter( 'wp_headers', [ $this, 'set_corp_headers' ], 10, 2 );
+	}
+
+	/**
+	 * Description: Add CORP headers for Zoom Meetings join via browser page
+	 *
+	 * @param    $headers
+	 * @param WP $wp
+	 */
+	function set_corp_headers( $headers, $wp ) {
+		$type = filter_input( INPUT_GET, 'type' );
+		if ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) {
+			$headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
+			$headers['Cross-Origin-Opener-Policy']   = 'same-origin';
+		}
+
+		return $headers;
 	}
 
 	/**
@@ -509,8 +526,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int $post_id Post ID.
-	 * @param \WP_Post $post Post object.
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.
