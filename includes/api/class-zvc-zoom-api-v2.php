@@ -240,7 +240,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}
 
 			$createAMeetingArray['topic']      = $data['meetingTopic'];
-			$createAMeetingArray['agenda']     = ! empty( $data['agenda'] ) ? $data['agenda'] : "";
+			$createAMeetingArray['agenda']     = ! empty( $data['agenda'] ) ? wp_strip_all_tags( $data['agenda'], true ) : "";
 			$createAMeetingArray['type']       = ! empty( $data['type'] ) ? $data['type'] : 2; //Scheduled
 			$createAMeetingArray['start_time'] = $start_time;
 			$createAMeetingArray['timezone']   = $data['timezone'];
@@ -254,7 +254,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ) ? true : false,
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
 				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : "",
-				'waiting_room'           => isset( $data['disable_waiting_room'] ) &&  ( $data['disable_waiting_room'] == 'yes' ) ? false : true
+				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true
 			);
 
 			$createAMeetingArray = apply_filters( 'vczapi_createAmeeting', $createAMeetingArray );
@@ -301,7 +301,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ) ? true : false,
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
 				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : "",
-				'waiting_room'           => isset( $data['disable_waiting_room'] ) &&  ( $data['disable_waiting_room'] == 'yes' ) ? false : true
+				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true
 			);
 
 			$updateMeetingInfoArray = apply_filters( 'vczapi_updateMeetingInfo', $updateMeetingInfoArray );

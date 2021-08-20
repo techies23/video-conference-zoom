@@ -76,14 +76,16 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	}
 
 	/**
-	 * Description: Add CORP headers for Zoom Meetings join via browser page
-	 *
-	 * @param    $headers
+     * Add CORP headers for Zoom Meetings join via browser page
+     *
+	 * @param $headers
 	 * @param WP $wp
+	 *
+	 * @return mixed
 	 */
 	function set_corp_headers( $headers, $wp ) {
 		$type = filter_input( INPUT_GET, 'type' );
-		if ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) {
+		if ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == $this->post_type && ! empty( $type ) ) {
 			$headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
 			$headers['Cross-Origin-Opener-Policy']   = 'same-origin';
 		}

@@ -186,7 +186,7 @@ class Zoom_Video_Conferencing_Admin_Webinars {
 
 		$webinar_arrr = array(
 			'topic'      => ! empty( $post ) ? esc_html( $post->post_title ) : esc_html( $postData['topic'] ),
-			'agenda'     => ! empty( $post ) ? esc_html( $post->post_content ) : esc_html( $postData['agenda'] ),
+			'agenda'     => ! empty( $post ) ? wp_strip_all_tags( get_the_excerpt( $post ), true ) : esc_html( $postData['agenda'] ),
 			'start_time' => $start_time,
 			'timezone'   => $postData['timezone'],
 			'password'   => $postData['password'],

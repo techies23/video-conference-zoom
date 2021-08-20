@@ -200,11 +200,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <label for="disable-waiting-room"><?php _e( 'Disable Waiting Room', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
             <p class="description" id="disable-waiting-room">
-                <input type="checkbox"
-                       id="disable-waiting-room"
-                       name="disable-waiting-room"
-                       value="yes"
-					<?php ! empty( $meeting_fields['disable_waiting_room'] ) ? checked( 'yes', $meeting_fields['disable_waiting_room'] ) : false; ?> class="regular-text">
+                <input type="checkbox" id="disable-waiting-room" name="disable-waiting-room" value="yes" <?php ! empty( $meeting_fields['disable_waiting_room'] ) ? checked( 'yes', $meeting_fields['disable_waiting_room'] ) : false; ?> class="regular-text">
 				<?php _e( 'Waiting Room is enabled by default - if you want users to skip the waiting room and join the meeting directly - enable this option.' ); ?>
                 <span style="color:red"><?php _e( 'Please keep in mind anyone with the meeting link will be able to join without you allowing them into the meeting.', 'video-conferencing-with-zoom-api' ) ?></span>
             </p>
@@ -222,7 +218,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <th scope="row"><label for="join_before_host"><?php _e( 'Join Before Host', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
             <p class="description" id="join_before_host-description">
-                <input type="checkbox" name="join_before_host" value="1" <?php ! empty( $meeting_fields['join_before_host'] ) ? checked( '1', $meeting_fields['join_before_host'] ) : false; ?> class="regular-text"><?php _e( 'Join meeting before host start the meeting. Only for scheduled or recurring meetings.', 'video-conferencing-with-zoom-api' ); ?>
+                <input type="checkbox" name="join_before_host" value="1" <?php ! empty( $meeting_fields['join_before_host'] ) ? checked( '1', $meeting_fields['join_before_host'] ) : false; ?> class="regular-text"><?php _e( 'Allow users to join meetin before host start/joins the meeting. Only for scheduled or recurring meetings. If the waiting room is enabled, this setting will not work.', 'video-conferencing-with-zoom-api' ); ?>
             </p>
         </td>
     </tr>

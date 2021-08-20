@@ -170,8 +170,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.8.12 August 18th, 2021 =
+= 3.8.12 August 20th, 2021 =
 * Fixed: Join via browser not working when used PMI for meetings/webinars.
+* Fixed: Meeting/Webinar description unescaped string being passed.
+* Fixed: Browser header issue fixed "Cross-Origin-Embedder-Policy", "Cross-Origin-Opener-Policy" related to webSDK resulting in not showing gallery view and video for user joining through join via web.
 
 = 3.8.11 August 11th, 2021 =
 * Fixed: Ajax pagination for webinars not working correctly.
