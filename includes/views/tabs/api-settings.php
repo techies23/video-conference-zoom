@@ -1,5 +1,8 @@
 <?php
 
+use Codemanas\Zoom\Core\Oauth;
+
+$oauth = Codemanas\Zoom\Core\Oauth::get_instance();
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -12,28 +15,141 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a target="_blank" href="<?php echo ZVC_PLUGIN_AUTHOR; ?>/zoom-conference-wp-plugin-documentation/"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
         </h3>
 
-        <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST">
-			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
-            <table class="form-table">
-                <tbody>
-                <tr>
-                    <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
-                </tr>
-                <tr class="enabled-vanity-url">
-                    <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="url" name="vanity_url" class="regular-text" value="<?php echo ( $zoom_vanity_url ) ? esc_html( $zoom_vanity_url ) : ''; ?>" placeholder="https://example.zoom.us">
-                        <p class="description"><?php _e( 'If you are using Zoom Vanity URL then please insert it here else leave it empty.', 'video-conferencing-with-zoom-api' ); ?></p>
-                        <a href="https://support.zoom.us/hc/en-us/articles/215062646-Guidelines-for-Vanity-URL-Requests"><?php _e( 'Read more about Vanity
+		<?php $oauth->maybe_connected_to_zoom_html(); ?>
+
+		<?php if ( current_user_can( 'manage_options' ) ): ?>
+            <style>
+                .vczapi-client-key, .vczapi-client-secret {
+                    display: <?php echo ($vczapi_enable_join_via_browser == 'yes')?'table-row':'none'; ?>
+                }
+            </style>
+            <script>
+                (function ($) {
+                    var vczapiToggleJWT = {
+                        init: function () {
+                            this.$vczapiForm = $('#vczapi-settings-form');
+                            if (this.$vczapiForm.length < 1) {
+                                return;
+                            }
+                            this.$enableToggle = this.$vczapiForm.find('#vczapi_enable_join_via_browser');
+                            this.$clientKeyRow = this.$vczapiForm.find('.vczapi-client-key');
+                            this.$clientSecretRow = this.$vczapiForm.find('.vczapi-client-secret');
+                            this.$verifyJWTKeyButton = this.$vczapiForm.find('#vzcpia-verify-jwt-key');
+
+                            this.$enableToggle.on('click', this.isChecked.bind(this));
+                            this.$verifyJWTKeyButton.on('click', this.verifyJWT.bind(this));
+                        },
+                        isChecked: function (e) {
+                            $target = $(e.target);
+                            if ($target.is(':checked')) {
+                                this.$clientKeyRow.show();
+                                this.$clientSecretRow.show();
+                            } else {
+                                this.$clientKeyRow.hide();
+                                this.$clientSecretRow.hide();
+                            }
+                        },
+                        verifyJWT: function (e) {
+                            e.preventDefault();
+
+                            this.clientAPIKey = this.$clientKeyRow.find('#zoom_api_key').val();
+                            this.clientSecretKey = this.$clientSecretRow.find('#zoom_api_secret').val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: ajaxurl,
+                                data: {
+                                    action: 'vczapi_verify_jwt_keys',
+                                    api_key: this.clientAPIKey,
+                                    secret_key: this.clientSecretKey
+                                },
+                                context: this,
+                                beforeSend: function () {
+                                    this.$verifyJWTKeyButton.val('Verifying...');
+                                },
+                                success: function (response) {
+                                    if (response.hasOwnProperty('code') && response.hasOwnProperty('message') ) {
+                                        alert(response.message + 'Please verify your keys are correct');
+                                    }
+                                    else if(response.hasOwnProperty('users')){
+                                        alert('JWT keys verified - please save the settings now');
+                                    }else{
+                                        alert('Something has gone wrong...');
+                                    }
+                                    this.$verifyJWTKeyButton.val('Verify JWT Keys');
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    console.log(errorThrown);
+                                }
+                            });
+
+                        }
+
+                    };
+                    $(function () {
+                        vczapiToggleJWT.init();
+                    });
+
+                })(jQuery);
+            </script>
+            <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST" id="vczapi-settings-form">
+				<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th>
+                            <label for="vczapi_enable_oauth_individual_use">
+								<?php _e( 'Individual Accounts', 'video-conferencing-with-zoom-api' ); ?>
+                            </label>
+                        </th>
+                        <td>
+                            <input type="checkbox" id="vczapi_enable_oauth_individual_use" name="vczapi_enable_oauth_individual_use" value="yes" <?php checked( $vczapi_enable_oauth_individual_use, 'yes' ); ?>>
+                            <span class="description"><?php _e( 'This option will allow other users logged into this site to create Zoom Meetings using their own Zoom accounts' ); ?></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="vczapi_enable_join_via_browser"><?php _e( 'Enable join via browser', 'video-conferencing-with-zoom-api' ); ?></label>
+                        </th>
+                        <td>
+                            <input type="checkbox"
+                                   name="vczapi_enable_join_via_browser"
+                                   id="vczapi_enable_join_via_browser"
+                                   value="yes"
+								<?php checked( $vczapi_enable_join_via_browser, 'yes' ); ?>
+                            >
+                            <span class="description">
+                        <?php _e( 'Enabling join via browser requires some extra configuration, so please check this box if you want users to be able to join Zoom meetings via your site.', 'video-conferencing-with-zoom-api' ) ?>
+                        </span>
+                        </td>
+                    </tr>
+                    <tr class="vczapi-client-key">
+                        <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                        <td>
+                            <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
+                            <a href="javascript:void(0);" class="toggle-api">Show</a></td>
+                    </tr>
+                    <tr class="vczapi-client-secret">
+                        <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                        <td>
+                            <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
+                            <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
+                    </tr>
+                    <tr class="vczapi-client-secret">
+                        <th>
+                            <input type="button"
+                                   class="button button-primary"
+                                   value="<?php _e( 'Verify JWT Keys', 'video-conferencing-with-zoom-api' ); ?>"
+                                   id="vzcpia-verify-jwt-key"
+                            >
+                        </th>
+                    </tr>
+                    <tr class="enabled-vanity-url">
+                        <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                        <td>
+                            <input type="url" name="vanity_url" class="regular-text" value="<?php echo ( $zoom_vanity_url ) ? esc_html( $zoom_vanity_url ) : ''; ?>" placeholder="https://example.zoom.us">
+                            <p class="description"><?php _e( 'If you are using Zoom Vanity URL then please insert it here else leave it empty.', 'video-conferencing-with-zoom-api' ); ?></p>
+                            <a href="https://support.zoom.us/hc/en-us/articles/215062646-Guidelines-for-Vanity-URL-Requests"><?php _e( 'Read more about Vanity
                                 URLs', 'video-conferencing-with-zoom-api' ); ?></a>
                     </td>
                 </tr>
@@ -192,6 +308,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <a href="javascript:void(0);" class="button button-primary check-api-connection"><?php esc_html_e( 'Check API Connection', 'video-conferencing-with-zoom-api' ); ?></a>
             </p>
         </form>
+        <?php endif; ?>
     </div>
     <div class="zvc-position-floater-right">
         <ul class="zvc-information-sec">

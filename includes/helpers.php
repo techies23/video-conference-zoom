@@ -912,3 +912,17 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
 
 	return array( 'hr' => $hours, 'min' => $minutes );
 }
+
+function vczapi_is_jwt_enabled(){
+	$join_via_browser_enabled = get_option('vczapi_enable_join_via_browser');
+	$jwt_keys_added = !empty( get_option( 'zoom_api_key' )) &&  !empty( get_option( 'zoom_api_secret' ));
+	if($join_via_browser_enabled == 'yes' && $jwt_keys_added == true ){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function vczapi_is_oauth_used_globally(){
+	return empty( get_option('vczapi_enable_oauth_individual_use') );
+}
