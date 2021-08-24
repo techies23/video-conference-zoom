@@ -2,6 +2,7 @@
 
 namespace CodeManas\VczApi\Elementor;
 
+use CodeManas\VczApi\Elementor\Widgets\MeetingByPostID;
 use CodeManas\VczApi\Elementor\Widgets\MeetingList;
 use CodeManas\VczApi\Elementor\Widgets\MeetingByID;
 use CodeManas\VczApi\Elementor\Widgets\MeetingHosts;
@@ -110,6 +111,7 @@ class Elementor {
 		require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Widgets/EmbedMeetings.php';
 		require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Widgets/RecordingsByHost.php';
 		require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Widgets/RecordingByMeetingID.php';
+		require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Widgets/MeetingByPostID.php';
 	}
 
 	/**
@@ -128,6 +130,7 @@ class Elementor {
 		Plugin::instance()->widgets_manager->register_widget_type( new RecordingsByHost() );
 		Plugin::instance()->widgets_manager->register_widget_type( new RecordingByMeetingID() );
 		Plugin::instance()->widgets_manager->register_widget_type( new WebinarList() );
+		Plugin::instance()->widgets_manager->register_widget_type( new MeetingByPostID() );
 	}
 }
 

@@ -10,9 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Elementor Hello World
- *
- * Elementor widget for hello world.
+ * Elementor widget for Showing recordings by Meeting ID
  *
  * @since 3.4.0
  * @author CodeManas

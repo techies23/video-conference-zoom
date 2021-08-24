@@ -38,7 +38,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	public function delete_meeting() {
 		check_ajax_referer( '_nonce_zvc_security', 'security' );
 
-		$meeting_id   = absint( filter_input( INPUT_POST, 'meeting_id' ) );
+		$meeting_id   = filter_input( INPUT_POST, 'meeting_id' );
 		$meeting_type = filter_input( INPUT_POST, 'type' );
 		if ( $meeting_id ) {
 			if ( ! empty( $meeting_type ) && $meeting_type === "webinar" ) {
@@ -167,7 +167,9 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * @author ZoomUS
 	 */
 	private function generate_signature( $api_key, $api_sercet, $meeting_number, $role ) {
-		$time = time() * 1000 - 30000;//time in milliclearseconds (or close enough)
+		//Set the timezone to UTC
+		date_default_timezone_set( "UTC" );
+		$time = time() * 1000 - 30000; //time in milliclearseconds (or close enough)
 		$data = base64_encode( $api_key . $meeting_number . $time . $role );
 		$hash = hash_hmac( 'sha256', $data, $api_sercet, true );
 		$_sig = $api_key . "." . $meeting_number . "." . $time . "." . $role . "." . base64_encode( $hash );
@@ -254,7 +256,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		if ( ! empty( $users ) ) {
 			foreach ( $users as $user ) {
 				$user_zoom_hostid = get_user_meta( $user->ID, 'user_zoom_hostid', true );
-				$host_id_field = '';
+				$host_id_field    = '';
 				if ( ! empty( $zoom_users ) ) {
 					$host_id_field .= '<select name="zoom_host_id[' . $user->ID . ']" style="width:100%">';
 					$host_id_field .= '<option value="">' . __( 'Not a Host', 'video-conferencing-with-zoom-api' ) . '</option>';

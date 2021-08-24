@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Video Conferencing with Zoom - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-12-18 08:51+0000\n"
+"PO-Revision-Date: 2021-02-09 06:20+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,11 +14,26 @@ msgstr ""
 "release)\n"
 "Language-Team: Russian"
 
-#: templates/join-web-browser.php:38
+#: templates/fragments/meeting-details.php:53
+msgid " hour"
+msgid_plural " hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: templates/fragments/meeting-details.php:53
+#: templates/fragments/meeting-details.php:55
+msgid " minute"
+msgid_plural " minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: templates/join-web-browser.php:39
 msgid "!!!ALERT!!!: "
 msgstr "!!!ВНИМАНИЕ!!!:"
 
-#: templates/fragments/meeting-details.php:59
+#: templates/fragments/meeting-details.php:70
 msgid "%sNote%s: Countdown time is shown based on your local timezone."
 msgstr ""
 "%sNote%s: Время обратного отсчета отображается в зависимости от вашего "
@@ -45,9 +60,9 @@ msgstr ""
 "Владельцем учетной записи или администратор получит доступ к отчетам о "
 "действиях всех пользователей."
 
-#: templates/shortcode/zoom-recordings.php:21
+#: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
-#: includes/views/live/tpl-list-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:26
 msgid "Action"
 msgstr "Действие"
 
@@ -95,11 +110,11 @@ msgstr "Добавить новый вебинар"
 msgid "Add Users"
 msgstr "Добавить пользователя"
 
-#: includes/views/tabs/api-settings.php:167
+#: includes/views/tabs/api-settings.php:195
 msgid "Addons"
 msgstr "Дополнения"
 
-#: includes/views/tabs/api-settings.php:147
+#: includes/views/tabs/api-settings.php:175
 msgid ""
 "After you enter your keys. Do save changes before doing \"Check API "
 "Connection\"."
@@ -115,11 +130,11 @@ msgstr "Все категории"
 msgid "All Meetings"
 msgstr "Все конференции"
 
-#: includes/views/post-type/tpl-meeting-fields.php:228
+#: includes/views/post-type/tpl-meeting-fields.php:271
 msgid "Allow attendess to join from multiple devices."
 msgstr "Разрешите посетителям присоединяться с нескольких устройств."
 
-#: includes/views/post-type/tpl-meeting-fields.php:224
+#: includes/views/post-type/tpl-meeting-fields.php:267
 msgid "Allow Multiple Devices"
 msgstr "Разрешить несколько устройств"
 
@@ -127,7 +142,7 @@ msgstr "Разрешить несколько устройств"
 #: includes/views/webinars/tpl-add-webinar.php:124
 #: includes/views/live/tpl-edit-meeting.php:159
 #: includes/views/live/tpl-add-meetings.php:135
-#: includes/views/post-type/tpl-meeting-fields.php:254
+#: includes/views/post-type/tpl-meeting-fields.php:297
 msgid "Alternative Hosts"
 msgstr "Альтернативный ведущий"
 
@@ -140,7 +155,7 @@ msgstr "Альтернативные ID хостов. Множественное
 msgid "An error occured. Host ID and Meeting ID not defined properly."
 msgstr "Произошла ошибка. ID хоста и ID конференции не определены."
 
-#: includes/Shortcodes.php:170
+#: includes/Shortcodes.php:176
 msgid "and join via Zoom App."
 msgstr "и подключиться с его помощью"
 
@@ -200,7 +215,7 @@ msgstr "Автоматическое Создание "
 #: includes/views/webinars/tpl-add-webinar.php:112
 #: includes/views/live/tpl-edit-meeting.php:141
 #: includes/views/live/tpl-add-meetings.php:123
-#: includes/views/post-type/tpl-meeting-fields.php:233
+#: includes/views/post-type/tpl-meeting-fields.php:276
 msgid "Auto Recording"
 msgstr "Автоматическая запись "
 
@@ -233,7 +248,7 @@ msgstr ""
 "Ниже приведено несколько примеров того, как вы можете добавлять шорткоды "
 "вручную в свои сообщения."
 
-#: templates/join-web-browser.php:38
+#: templates/join-web-browser.php:39
 msgid ""
 "Browser did not detect a valid SSL certificate. Audio and Video for Zoom "
 "meeting will not work on a non HTTPS site, please install a valid SSL "
@@ -252,7 +267,7 @@ msgstr "По"
 msgid "Category"
 msgstr "Категория"
 
-#: includes/views/tabs/api-settings.php:123
+#: includes/views/tabs/api-settings.php:151
 msgid ""
 "Change date time formats according to your choice. Please edit this properly."
 " Failure to correctly put value will result in failure to show date in "
@@ -262,15 +277,17 @@ msgstr ""
 "это правильно. Неправильная установка значения приведет к невозможности "
 "отображения даты во внешнем интерфейсе."
 
+#: includes/admin/class-zvc-admin-recordings.php:79
+#: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
 msgstr ""
 
-#: includes/helpers.php:332
+#: includes/helpers.php:337
 msgid "check %s for shortcode references."
 msgstr "проверить %s для ссылок шорткода."
 
-#: includes/views/tabs/api-settings.php:150
+#: includes/views/tabs/api-settings.php:178
 msgid "Check API Connection"
 msgstr "Проверьте соединение через API"
 
@@ -290,13 +307,13 @@ msgstr ""
 "Если вы выберете эту опцию в шорткоде, то пользователи, не авторизованные в "
 "системе, будут скрывать ссылки на подключение."
 
-#: includes/views/tabs/api-settings.php:135
+#: includes/views/tabs/api-settings.php:163
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr ""
 "При выборе этой опции будет отображаться 24-часовой формат времени во всех "
 "датах событий."
 
-#: includes/views/tabs/api-settings.php:142
+#: includes/views/tabs/api-settings.php:170
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
@@ -317,6 +334,12 @@ msgid ""
 msgstr ""
 "Проверка конференции Zoom на подлинность на одиночной странице конференции, "
 "из созданных"
+
+#: includes/views/tabs/api-settings.php:87
+msgid ""
+"Checking this will disable invite button when user joins meeting via Join "
+"via Browser window."
+msgstr ""
 
 #: includes/views/tabs/api-settings.php:73
 msgid "Checking this will hide all Join via Browser Buttons."
@@ -342,11 +365,11 @@ msgstr "Нажмите, чтобы скопировать шорткод!"
 #: includes/views/webinars/tpl-edit-webinar.php:114
 #: includes/views/webinars/tpl-add-webinar.php:117
 #: includes/views/live/tpl-edit-meeting.php:151
-#: includes/views/post-type/tpl-meeting-fields.php:243
+#: includes/views/post-type/tpl-meeting-fields.php:286
 msgid "Cloud"
 msgstr "Облако"
 
-#: includes/views/tabs/api-settings.php:163
+#: includes/views/tabs/api-settings.php:191
 msgid "Contact for additional Support"
 msgstr "Обратитесь за дополнительной поддержкой"
 
@@ -407,6 +430,10 @@ msgstr "Создано на"
 msgid "Created webinar %s at %s. Join %s"
 msgstr "Создан вебинар %s в %s. Присоединиться к %s"
 
+#: templates/fragments/meeting-details.php:63
+msgid "Current Timezone"
+msgstr ""
+
 #: includes/views/sync.php:13
 msgid "Currently, you can only sync scheduled meetings."
 msgstr ""
@@ -425,17 +452,21 @@ msgstr "Дата"
 msgid "Date field cannot be Empty !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:102
+#: includes/views/tabs/api-settings.php:130
 msgid "DateTime Format"
 msgstr "Формат времени и даты"
 
-#: includes/Shortcodes.php:197 templates/fragments/countdown-timer.php:30
+#: includes/Shortcodes.php:203 templates/fragments/countdown-timer.php:30
 msgid "days"
 msgstr "дней"
 
 #: includes/admin/class-zvc-admin-post-type.php:299
 msgid "Debug Log"
 msgstr "Журнал отладки "
+
+#: includes/views/tabs/api-settings.php:91
+msgid "Default Language for Join via browser page ?"
+msgstr ""
 
 #: templates/fragments/filters.php:32
 msgid "Default Sorting"
@@ -447,7 +478,7 @@ msgstr "Заголовок по умолчанию"
 
 #: includes/views/webinars/tpl-edit-webinar.php:103
 #: includes/views/webinars/tpl-add-webinar.php:107
-#: includes/views/post-type/tpl-meeting-fields.php:218
+#: includes/views/post-type/tpl-meeting-fields.php:261
 msgid "Defaults to HD video."
 msgstr "HD видео по умолчанию"
 
@@ -463,13 +494,13 @@ msgstr "Удалить конференцию с ID"
 msgid "Details"
 msgstr "Подробности"
 
-#: includes/views/tabs/api-settings.php:165
+#: includes/views/tabs/api-settings.php:193
 msgid "Developer"
 msgstr "Разработчик"
 
-#: includes/views/post-type/tpl-meeting-fields.php:58
-#: includes/views/post-type/tpl-meeting-fields.php:85
-#: includes/views/post-type/tpl-meeting-fields.php:265
+#: includes/views/post-type/tpl-meeting-fields.php:55
+#: includes/views/post-type/tpl-meeting-fields.php:114
+#: includes/views/post-type/tpl-meeting-fields.php:308
 msgid ""
 "Did not find any hosts here ? Please %scheck here%s to verify your API keys "
 "are working correctly."
@@ -489,6 +520,10 @@ msgstr "Скрыть поле электронной почты при подк�
 msgid "Disable Embed password in Link ?"
 msgstr "Отключить встраивание пароля в ссылку?"
 
+#: includes/views/tabs/api-settings.php:84
+msgid "Disable Invite field when join via browser ?"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-post-type.php:195
 #: includes/views/live/tpl-list-meetings.php:128
 msgid "Disable Join"
@@ -498,43 +533,43 @@ msgstr "Запретить подключение"
 msgid "Disable Join via browser ?"
 msgstr "Отключить присоединение через браузер?"
 
-#: includes/admin/class-zvc-admin-settings.php:166
+#: includes/admin/class-zvc-admin-settings.php:170
 msgid "Dismiss this notice."
 msgstr "Скрыть это уведомление."
 
-#: includes/helpers.php:350
+#: includes/helpers.php:355
 msgid "Do not get confused here !!"
 msgstr "Не путать здесь !!"
 
-#: includes/views/tabs/api-settings.php:160
+#: includes/views/tabs/api-settings.php:188
 msgid "Documentation"
 msgstr "Документация"
 
-#: templates/shortcode/zoom-recordings.php:41
+#: includes/Shortcodes/Recordings.php:54 includes/Shortcodes/Recordings.php:55
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:53
 #: includes/views/live/tpl-list-recordings.php:54
+#: includes/views/live/tpl-list-recordings.php:55
 msgid "Download"
 msgstr "Скачать"
 
-#: includes/Shortcodes.php:177
+#: includes/Shortcodes.php:183
 msgid "Download App from Store"
 msgstr "Скачать приложение из магазина"
 
-#: includes/Shortcodes.php:180
+#: includes/Shortcodes.php:186
 msgid "Download from Zoom"
 msgstr "Скачать с Zoom"
 
 #: includes/template-functions.php:397
-#: templates/fragments/meeting-details.php:47
+#: templates/fragments/meeting-details.php:49
 #: templates/shortcode/zoom-webinar.php:98
-#: templates/shortcode/zoom-recordings.php:18
+#: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
 #: includes/views/live/tpl-edit-meeting.php:92
-#: includes/views/live/tpl-list-recordings.php:22
+#: includes/views/live/tpl-list-recordings.php:23
 #: includes/views/live/tpl-add-meetings.php:74
-#: includes/views/post-type/tpl-meeting-fields.php:137
+#: includes/views/post-type/tpl-meeting-fields.php:166
 msgid "Duration"
 msgstr "Длительность "
 
@@ -590,7 +625,7 @@ msgstr "Разрешить подключение "
 msgid "Enable Meeting Join ?"
 msgstr "Разрешить подключение к конференции?"
 
-#: includes/views/post-type/tpl-meeting-fields.php:208
+#: includes/views/post-type/tpl-meeting-fields.php:251
 msgid "Enable Practise Session."
 msgstr "Включить пробную сессию."
 
@@ -614,6 +649,7 @@ msgstr ""
 msgid "Enter a value to Check..."
 msgstr "Введите значение для проверки ..."
 
+#: includes/admin/class-zvc-admin-recordings.php:78
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
 msgstr "Введите дату для проверки:"
@@ -627,7 +663,7 @@ msgstr "ОШИБКА:"
 msgid "Extensions"
 msgstr "Расширения"
 
-#: includes/views/tabs/api-settings.php:157
+#: includes/views/tabs/api-settings.php:185
 msgid "Facebook Group"
 msgstr "Группа Facebook"
 
@@ -643,11 +679,13 @@ msgstr ""
 "Получение данных ... Подождите, это может занять некоторое время в "
 "зависимости от того, сколько у вас конференции Zoom."
 
-#: includes/views/live/tpl-list-recordings.php:48
+#: includes/Shortcodes/Recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:49
 msgid "File Size"
 msgstr "Размер файла"
 
-#: includes/views/live/tpl-list-recordings.php:46
+#: includes/Shortcodes/Recordings.php:50
+#: includes/views/live/tpl-list-recordings.php:47
 msgid "File Type"
 msgstr "Тип файла"
 
@@ -681,7 +719,7 @@ msgstr "Получить отчет за указанный период."
 
 #: includes/views/webinars/tpl-edit-webinar.php:100
 #: includes/views/webinars/tpl-add-webinar.php:104
-#: includes/views/post-type/tpl-meeting-fields.php:214
+#: includes/views/post-type/tpl-meeting-fields.php:257
 msgid "HD Video"
 msgstr "HD видео"
 
@@ -723,11 +761,11 @@ msgstr "Ведущий"
 msgid "Hosted By:"
 msgstr "Ведущий"
 
-#: includes/Shortcodes.php:203 templates/fragments/countdown-timer.php:36
+#: includes/Shortcodes.php:209 templates/fragments/countdown-timer.php:36
 msgid "hours"
 msgstr "Часа(ов)"
 
-#: includes/helpers.php:353
+#: includes/helpers.php:358
 msgid "I understand ! Don't show this again !"
 msgstr "Я понимаю ! Больше не показывать это !"
 
@@ -755,18 +793,18 @@ msgstr ""
 msgid "Import"
 msgstr "Импортировать"
 
-#: includes/Shortcodes/Recordings.php:45
+#: includes/Shortcodes/Recordings.php:94
 msgid ""
 "Invalid HOST ID. Please define a host ID to show recordings based on host."
 msgstr ""
 "Неверный ID хоста. Пожалуйста, укажите ID хоста для отображения записей на "
 "основе хоста."
 
-#: includes/Shortcodes/Recordings.php:107
+#: includes/Shortcodes/Recordings.php:167
 msgid "Invalid Meeting ID."
 msgstr "Неверный ID конференции"
 
-#: templates/join-web-browser.php:89 templates/shortcode/join-links.php:20
+#: templates/join-web-browser.php:103 templates/shortcode/join-links.php:20
 #: templates/shortcode/join-links.php:29
 #: templates/shortcode/webinar-join-links.php:20
 #: templates/shortcode/webinar-join-links.php:29
@@ -775,13 +813,13 @@ msgstr "Подключиться"
 
 #: includes/views/live/tpl-edit-meeting.php:106
 #: includes/views/live/tpl-add-meetings.php:88
-#: includes/views/post-type/tpl-meeting-fields.php:159
+#: includes/views/post-type/tpl-meeting-fields.php:202
 msgid "Join Before Host"
 msgstr "Вход перед ведущим"
 
 #: includes/views/live/tpl-edit-meeting.php:109
 #: includes/views/live/tpl-add-meetings.php:91
-#: includes/views/post-type/tpl-meeting-fields.php:162
+#: includes/views/post-type/tpl-meeting-fields.php:205
 msgid ""
 "Join meeting before host start the meeting. Only for scheduled or recurring "
 "meetings."
@@ -797,13 +835,13 @@ msgstr "Подключиться к конференции через прило
 msgid "Join via App"
 msgstr "Подключиться с помощью приложения"
 
-#: includes/helpers.php:590 includes/helpers.php:594 includes/helpers.php:618
-#: includes/helpers.php:622 templates/shortcode/join-links.php:27
+#: includes/helpers.php:594 includes/helpers.php:598 includes/helpers.php:622
+#: includes/helpers.php:626 templates/shortcode/join-links.php:27
 #: templates/shortcode/webinar-join-links.php:27
 msgid "Join via Web Browser"
 msgstr "Подключиться через веб-браузер"
 
-#: includes/Shortcodes.php:174 templates/shortcode/join-links.php:18
+#: includes/Shortcodes.php:180 templates/shortcode/join-links.php:18
 #: templates/shortcode/webinar-join-links.php:18
 msgid "Join via Zoom App"
 msgstr "Подключиться через приложение Zoom"
@@ -828,7 +866,7 @@ msgstr "Фамилия"
 msgid "Last Name of the User (Required)."
 msgstr "Фамилия пользователя (обязательно)."
 
-#: includes/helpers.php:328
+#: includes/helpers.php:333
 msgid "Like this plugin ?"
 msgstr "Понравился плагин?"
 
@@ -852,10 +890,14 @@ msgstr "Live конференции"
 msgid "Live Webinars"
 msgstr "Live Вебинары"
 
+#: includes/Shortcodes/Recordings.php:110
+msgid "Loading recordings.. Please wait.."
+msgstr ""
+
 #: includes/views/webinars/tpl-edit-webinar.php:113
 #: includes/views/webinars/tpl-add-webinar.php:116
 #: includes/views/live/tpl-edit-meeting.php:148
-#: includes/views/post-type/tpl-meeting-fields.php:240
+#: includes/views/post-type/tpl-meeting-fields.php:283
 msgid "Local"
 msgstr "Локальный"
 
@@ -869,7 +911,7 @@ msgstr "Конференция"
 msgid "Meeting Agenda"
 msgstr "Повестка дня конференции"
 
-#: includes/views/post-type/tpl-meeting-fields.php:151
+#: includes/views/post-type/tpl-meeting-fields.php:194
 msgid "Meeting Authentication"
 msgstr "Проверка подлинности конференции"
 
@@ -884,15 +926,14 @@ msgstr "Подробности конференции"
 
 #: includes/views/live/tpl-edit-meeting.php:95
 #: includes/views/live/tpl-add-meetings.php:77
-#: includes/views/post-type/tpl-meeting-fields.php:140
 msgid "Meeting duration (minutes). (optional)"
 msgstr "Длительность конференции (минуты). (необязательно)"
 
-#: includes/views/tabs/api-settings.php:96
+#: includes/views/tabs/api-settings.php:124
 msgid "Meeting Ended Text"
 msgstr "Сообщение о окончании конференции."
 
-#: includes/views/tabs/api-settings.php:90
+#: includes/views/tabs/api-settings.php:118
 msgid "Meeting going to start Text"
 msgstr "Сообщение о начале конференции."
 
@@ -919,20 +960,21 @@ msgstr ""
 
 #: includes/views/live/tpl-edit-meeting.php:54
 #: includes/views/live/tpl-add-meetings.php:43
-#: includes/views/post-type/tpl-meeting-fields.php:42
-#: includes/views/post-type/tpl-meeting-fields.php:75
+#: includes/views/post-type/tpl-meeting-fields.php:39
+#: includes/views/post-type/tpl-meeting-fields.php:74
+#: includes/views/post-type/tpl-meeting-fields.php:95
 msgid "Meeting Host *"
 msgstr "Учетная запись ZOOM"
 
 #: includes/template-functions.php:296
 #: includes/admin/class-zvc-admin-post-type.php:125
 #: templates/shortcode/zoom-webinar.php:21
-#: templates/shortcode/zoom-recordings.php:16
+#: templates/shortcode/zoom-recordings.php:22
 #: templates/shortcode/zoom-recordings-by-meeting.php:42
 #: includes/Elementor/Widgets/EmbedMeetings.php:96
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:95
 #: includes/views/live/tpl-list-meetings.php:58
-#: includes/views/live/tpl-list-recordings.php:20
+#: includes/views/live/tpl-list-recordings.php:21
 msgid "Meeting ID"
 msgstr "ID конференции"
 
@@ -971,7 +1013,7 @@ msgstr ""
 "Пароль конференции не будет включен в ссылку приглашения, чтобы участники "
 "могли присоединиться одним кликом мыши без необходимости ввода пароля."
 
-#: includes/views/tabs/api-settings.php:84
+#: includes/views/tabs/api-settings.php:112
 msgid "Meeting Started Text"
 msgstr "Сообщение текущей конференции."
 
@@ -990,7 +1032,7 @@ msgstr "Синхронизация конференции завершена!"
 
 #: includes/views/live/tpl-edit-meeting.php:88
 #: includes/views/live/tpl-add-meetings.php:70
-#: includes/views/post-type/tpl-meeting-fields.php:133
+#: includes/views/post-type/tpl-meeting-fields.php:162
 msgid "Meeting Timezone"
 msgstr "Часовой пояс конференции"
 
@@ -1004,8 +1046,8 @@ msgstr "Тема конференции *"
 msgid "Meeting topic. (Required)."
 msgstr "Тема конференции. (Обязательно)."
 
-#: includes/views/post-type/tpl-meeting-fields.php:64
-#: includes/views/post-type/tpl-meeting-fields.php:91
+#: includes/views/post-type/tpl-meeting-fields.php:61
+#: includes/views/post-type/tpl-meeting-fields.php:120
 msgid "Meeting Type"
 msgstr "Тип конференции"
 
@@ -1031,7 +1073,7 @@ msgstr "Конференции сортировать по"
 msgid "Meetings Type"
 msgstr "Тип конференций"
 
-#: includes/Shortcodes.php:209 templates/fragments/countdown-timer.php:42
+#: includes/Shortcodes.php:215 templates/fragments/countdown-timer.php:42
 msgid "minutes"
 msgstr "минут"
 
@@ -1042,13 +1084,13 @@ msgstr "Удалить в корзину"
 
 #: includes/views/live/tpl-edit-meeting.php:132
 #: includes/views/live/tpl-add-meetings.php:114
-#: includes/views/post-type/tpl-meeting-fields.php:184
+#: includes/views/post-type/tpl-meeting-fields.php:227
 msgid "Mute Participants upon entry"
 msgstr "Отключить звук участников при входе"
 
 #: includes/views/live/tpl-edit-meeting.php:136
 #: includes/views/live/tpl-add-meetings.php:118
-#: includes/views/post-type/tpl-meeting-fields.php:188
+#: includes/views/post-type/tpl-meeting-fields.php:231
 msgid "Mutes Participants when entering the meeting."
 msgstr "Отключение звука участников при входе в конференцию."
 
@@ -1068,7 +1110,7 @@ msgstr "Новые пользователи"
 msgid "Next Occurrence"
 msgstr "Следующий сеанс"
 
-#: includes/helpers.php:703
+#: includes/helpers.php:707
 msgid "Next Results"
 msgstr "Следующие результаты"
 
@@ -1112,12 +1154,12 @@ msgstr "Конференции не найдены"
 #: includes/views/webinars/tpl-edit-webinar.php:111
 #: includes/views/webinars/tpl-add-webinar.php:115
 #: includes/views/live/tpl-edit-meeting.php:145
-#: includes/views/post-type/tpl-meeting-fields.php:237
+#: includes/views/post-type/tpl-meeting-fields.php:280
 msgid "No Recordings"
 msgstr "Не записывать"
 
-#: includes/Shortcodes/Recordings.php:79 includes/Shortcodes/Recordings.php:83
-#: includes/Shortcodes/Recordings.php:162
+#: includes/Shortcodes/Recordings.php:143
+#: includes/Shortcodes/Recordings.php:218
 msgid "No recordings found."
 msgstr "Записи не найдены."
 
@@ -1138,7 +1180,7 @@ msgstr "В шорткоде нет id вебинара"
 msgid "Not a Host"
 msgstr "Неверный хост"
 
-#: includes/Shortcodes.php:170
+#: includes/Shortcodes.php:176
 msgid ""
 "Note: If you are having trouble joining the meeting below, enter Meeting ID: "
 msgstr ""
@@ -1155,7 +1197,7 @@ msgstr ""
 "Только зарегистрированные пользователи этого сайта смогут подключиться к "
 "этой конференции."
 
-#: includes/views/post-type/tpl-meeting-fields.php:154
+#: includes/views/post-type/tpl-meeting-fields.php:197
 msgid "Only loggedin users in Zoom App can join this Meeting."
 msgstr ""
 "Только зарегистрированные пользователи приложения Zoom могут присоединиться "
@@ -1171,7 +1213,7 @@ msgstr ""
 
 #: includes/views/webinars/tpl-edit-webinar.php:139
 #: includes/views/live/tpl-edit-meeting.php:173
-#: includes/views/post-type/tpl-meeting-fields.php:267
+#: includes/views/post-type/tpl-meeting-fields.php:310
 msgid ""
 "Paid Zoom Account is required for this !! Alternative hosts IDs. Multiple "
 "value separated by comma."
@@ -1194,11 +1236,11 @@ msgstr "Участники "
 
 #: includes/views/live/tpl-edit-meeting.php:123
 #: includes/views/live/tpl-add-meetings.php:105
-#: includes/views/post-type/tpl-meeting-fields.php:175
+#: includes/views/post-type/tpl-meeting-fields.php:218
 msgid "Participants Video"
 msgstr "Видео участников"
 
-#: includes/views/post-type/tpl-meeting-fields.php:144
+#: includes/views/post-type/tpl-meeting-fields.php:187
 msgid "Password"
 msgstr "Пароль"
 
@@ -1206,7 +1248,7 @@ msgstr "Пароль"
 #: includes/views/webinars/tpl-add-webinar.php:84
 #: includes/views/live/tpl-edit-meeting.php:102
 #: includes/views/live/tpl-add-meetings.php:84
-#: includes/views/post-type/tpl-meeting-fields.php:147
+#: includes/views/post-type/tpl-meeting-fields.php:190
 msgid ""
 "Password to join the meeting. Password may only contain the following "
 "characters: [a-z A-Z 0-9]. Max of 10 characters.( Leave blank for auto "
@@ -1224,18 +1266,19 @@ msgstr "Пользователи, ожидающие утверждения"
 msgid "Personal Meeting Room"
 msgstr "Персональная комната"
 
-#: templates/shortcode/zoom-recordings.php:39
+#: includes/Shortcodes/Recordings.php:52
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:50
 #: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:52
 msgid "Play"
 msgstr "Воспроизвести"
 
-#: includes/views/post-type/tpl-meeting-fields.php:55
+#: includes/views/post-type/tpl-meeting-fields.php:52
+#: includes/views/post-type/tpl-meeting-fields.php:86
 msgid "Please check your internet connection or API connection."
 msgstr "Пожалуйста, проверьте ваше интернет-соединение или соединение API."
 
-#: includes/helpers.php:263
+#: includes/helpers.php:268
 msgid ""
 "Please check your internet connection or API keys. Zoom API is not able to "
 "connect with Zoom servers at the moment."
@@ -1243,7 +1286,7 @@ msgstr ""
 "Пожалуйста, проверьте ваше интернет-соединение. API Zoom в настоящий момент "
 "не может подключиться к серверам Zoom."
 
-#: includes/helpers.php:331
+#: includes/helpers.php:336
 msgid ""
 "Please consider giving a %s if you found this useful at wordpress.org or "
 msgstr ""
@@ -1263,7 +1306,7 @@ msgid "Please note this requires a PRO Zoom account or Higher."
 msgstr ""
 "Обратите внимание, для этого требуется учетная запись PRO Zoom или выше."
 
-#: includes/helpers.php:352
+#: includes/helpers.php:357
 msgid ""
 "Please read !!! These below meetings are directly from your zoom.us account "
 "via API connection. Meetings added from here won't show up on your Post Type "
@@ -1274,7 +1317,7 @@ msgstr ""
 "будут отображаться в вашем списке конференций. Это только создаст "
 "конференцию в вашем аккаунте zoom.us!"
 
-#: includes/views/tabs/api-settings.php:126
+#: includes/views/tabs/api-settings.php:154
 msgid "Please see %s on how to format date"
 msgstr "См. %s о том, как форматировать дату"
 
@@ -1293,7 +1336,7 @@ msgstr ""
 "Пожалуйста, попробуйте еще раз ! Произошла ошибка при попытке получить "
 "вебинар с ID: %d"
 
-#: includes/views/post-type/tpl-meeting-fields.php:204
+#: includes/views/post-type/tpl-meeting-fields.php:247
 msgid "Practise Session"
 msgstr "Пробная сессия"
 
@@ -1325,18 +1368,14 @@ msgstr ""
 "Подробнее о Vanity\n"
 "URL"
 
-#: templates/shortcode/zoom-recordings.php:19
-#: includes/views/live/tpl-list-recordings.php:23
+#: templates/shortcode/zoom-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:24
 msgid "Recorded"
 msgstr "Записано"
 
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:88
 msgid "Recording by Meeting"
 msgstr "Запись конференции"
-
-#: includes/views/live/tpl-list-recordings.php:56
-msgid "Recording Type"
-msgstr "Тип записи"
 
 #: includes/admin/class-zvc-admin-settings.php:58
 #: includes/views/live/tpl-list-recordings.php:10
@@ -1409,7 +1448,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:149
+#: includes/views/tabs/api-settings.php:177
 msgid "Save Changes"
 msgstr "Сохранить"
 
@@ -1429,7 +1468,7 @@ msgstr "Поиск.."
 msgid "Searching From: "
 msgstr "Искать в:"
 
-#: includes/Shortcodes.php:215 templates/fragments/countdown-timer.php:48
+#: includes/Shortcodes.php:221 templates/fragments/countdown-timer.php:48
 msgid "seconds"
 msgstr "секунд"
 
@@ -1441,6 +1480,10 @@ msgstr "Узнать больше"
 msgid "Select a Date to Check"
 msgstr ""
 
+#: includes/views/tabs/api-settings.php:108
+msgid "Select a default language for your join meeting via browser page."
+msgstr ""
+
 #: includes/views/webinars/tpl-edit-webinar.php:124
 #: includes/views/webinars/tpl-add-webinar.php:46
 #: includes/views/webinars/tpl-add-webinar.php:127
@@ -1448,8 +1491,8 @@ msgstr ""
 #: includes/views/live/tpl-edit-meeting.php:162
 #: includes/views/live/tpl-add-meetings.php:46
 #: includes/views/live/tpl-add-meetings.php:138
-#: includes/views/post-type/tpl-meeting-fields.php:79
-#: includes/views/post-type/tpl-meeting-fields.php:259
+#: includes/views/post-type/tpl-meeting-fields.php:106
+#: includes/views/post-type/tpl-meeting-fields.php:302
 msgid "Select a Host"
 msgstr "Выбрать ведущего"
 
@@ -1457,7 +1500,11 @@ msgstr "Выбрать ведущего"
 msgid "Select a Meeting"
 msgstr "Выбрать конференцию"
 
-#: includes/admin/class-zvc-admin-recordings.php:63 includes/views/sync.php:20
+#: templates/shortcode/zoom-recordings.php:15
+msgid "Select a month to filter:"
+msgstr ""
+
+#: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:20
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
@@ -1489,7 +1536,7 @@ msgstr ""
 #: includes/views/webinars/tpl-add-webinar.php:119
 #: includes/views/live/tpl-edit-meeting.php:154
 #: includes/views/live/tpl-add-meetings.php:130
-#: includes/views/post-type/tpl-meeting-fields.php:246
+#: includes/views/post-type/tpl-meeting-fields.php:289
 msgid ""
 "Set what type of auto recording feature you want to add. Default is none."
 msgstr ""
@@ -1505,6 +1552,10 @@ msgstr "Настройки"
 #: includes/views/live/tpl-list-meetings.php:59
 msgid "Shortcode"
 msgstr "Шорткод"
+
+#: includes/views/tabs/api-settings.php:94
+msgid "Show All"
+msgstr ""
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:108
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:106
@@ -1556,9 +1607,9 @@ msgstr "Показать ведущего Zoom конференции?"
 msgid "Showing all"
 msgstr ""
 
-#: templates/shortcode/zoom-recordings.php:20
+#: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
-#: includes/views/live/tpl-list-recordings.php:24
+#: includes/views/live/tpl-list-recordings.php:25
 msgid "Size"
 msgstr "Размер"
 
@@ -1594,7 +1645,7 @@ msgstr "Дата начала"
 #: includes/views/webinars/tpl-add-webinar.php:55
 #: includes/views/live/tpl-edit-meeting.php:66
 #: includes/views/live/tpl-add-meetings.php:55
-#: includes/views/post-type/tpl-meeting-fields.php:105
+#: includes/views/post-type/tpl-meeting-fields.php:134
 msgid "Start Date/Time *"
 msgstr "Дата / Время начала *"
 
@@ -1629,7 +1680,7 @@ msgstr "Присоединиться через браузер"
 #: includes/views/webinars/tpl-add-webinar.php:91
 #: includes/views/live/tpl-edit-meeting.php:117
 #: includes/views/live/tpl-add-meetings.php:99
-#: includes/views/post-type/tpl-meeting-fields.php:170
+#: includes/views/post-type/tpl-meeting-fields.php:213
 msgid "Start video when host join meeting."
 msgstr "Начать видео, когда ведущий подключиться к встрече."
 
@@ -1638,23 +1689,23 @@ msgstr "Начать видео, когда ведущий подключить�
 msgid "Start video when panelists join meeting."
 msgstr "Видео начинается, когда участники присоединяются к встрече."
 
-#: includes/views/post-type/tpl-meeting-fields.php:198
+#: includes/views/post-type/tpl-meeting-fields.php:241
 msgid "Start video when panelists join webinar."
 msgstr "Видео начинается, когда участники присоединяются к вебинару"
 
 #: includes/views/live/tpl-edit-meeting.php:126
 #: includes/views/live/tpl-add-meetings.php:108
-#: includes/views/post-type/tpl-meeting-fields.php:178
+#: includes/views/post-type/tpl-meeting-fields.php:221
 msgid "Start video when participants join meeting."
 msgstr "Начать видео, когда участники подключаться к встрече."
 
-#: includes/views/post-type/tpl-meeting-fields.php:167
+#: includes/views/post-type/tpl-meeting-fields.php:210
 msgid "Start When Host Joins"
 msgstr "Начать при присоединении ведущего"
 
 #: includes/views/live/tpl-edit-meeting.php:76
 #: includes/views/live/tpl-add-meetings.php:58
-#: includes/views/post-type/tpl-meeting-fields.php:108
+#: includes/views/post-type/tpl-meeting-fields.php:137
 msgid "Starting Date and Time of the Meeting (Required)."
 msgstr "Дата начала и время проведения конференции (обязательно)."
 
@@ -1680,7 +1731,7 @@ msgstr "Статус"
 msgid "Successfully imported meeting with ID"
 msgstr "Конференции с ID импортированы"
 
-#: includes/admin/class-zvc-admin-settings.php:164
+#: includes/admin/class-zvc-admin-settings.php:168
 msgid "Successfully Updated. Please refresh this page."
 msgstr "Успешно обновлено. Пожалуйста, обновите страницу."
 
@@ -1698,6 +1749,15 @@ msgstr "Синхронизируйте свои Live конференции Zoom
 
 #: includes/admin/class-zvc-admin-reports.php:96
 msgid "The fields cannot be Empty !!"
+msgstr ""
+
+#: includes/views/live/tpl-list-recordings.php:11
+msgid ""
+"The maximum range can be a month. If no value is provided for this field, "
+"the default will be current date. For example, if you make the API request "
+"on June 30, 2020, without providing the “from” parameter, by default the "
+"value of ‘from’ field will be “2020-05-30” and the value of the ‘to’ field "
+"will be “2020-06-30”."
 msgstr ""
 
 #: includes/views/live/tpl-add-user.php:40
@@ -1767,12 +1827,13 @@ msgstr "Это повторяющаяся конференция без фикс
 #: includes/views/webinars/tpl-add-webinar.php:51
 #: includes/views/live/tpl-edit-meeting.php:62
 #: includes/views/live/tpl-add-meetings.php:51
-#: includes/views/post-type/tpl-meeting-fields.php:60
-#: includes/views/post-type/tpl-meeting-fields.php:87
+#: includes/views/post-type/tpl-meeting-fields.php:57
+#: includes/views/post-type/tpl-meeting-fields.php:89
+#: includes/views/post-type/tpl-meeting-fields.php:112
 msgid "This is host ID for the meeting (Required)."
 msgstr "Это учетная запись zoom для конференции (обязательно)."
 
-#: templates/join-web-browser.php:20
+#: templates/join-web-browser.php:21
 msgid "This meeting has been ended by host."
 msgstr "Эта конференция была завершена ведущим."
 
@@ -1810,14 +1871,13 @@ msgstr ""
 
 #: includes/template-functions.php:391 templates/content-meeting.php:67
 #: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:239
-#: templates/fragments/meeting-details.php:52
 #: templates/shortcode/zoom-webinar.php:93
 #: templates/shortcode/zoom-listing.php:69
 #: includes/views/webinars/tpl-edit-webinar.php:58
 #: includes/views/webinars/tpl-add-webinar.php:62
 #: includes/views/live/tpl-edit-meeting.php:80
 #: includes/views/live/tpl-add-meetings.php:62
-#: includes/views/post-type/tpl-meeting-fields.php:115
+#: includes/views/post-type/tpl-meeting-fields.php:144
 msgid "Timezone"
 msgstr "Часовой пояс"
 
@@ -1837,11 +1897,11 @@ msgstr "для создания приведенных ниже значений
 #: includes/Shortcodes/Meetings.php:236
 #: templates/fragments/meeting-details.php:27
 #: templates/shortcode/zoom-webinar.php:25
-#: templates/shortcode/zoom-recordings.php:17
+#: templates/shortcode/zoom-recordings.php:23
 #: templates/shortcode/zoom-recordings-by-meeting.php:43
 #: includes/views/webinars/tpl-list-webinars.php:59
 #: includes/views/live/tpl-list-meetings.php:60
-#: includes/views/live/tpl-list-recordings.php:21
+#: includes/views/live/tpl-list-recordings.php:22
 msgid "Topic"
 msgstr "Тема"
 
@@ -1886,7 +1946,7 @@ msgstr "Общий размер"
 msgid "Trash"
 msgstr "Корзина"
 
-#: includes/views/tabs/api-settings.php:181
+#: includes/views/tabs/api-settings.php:209
 msgid "Try inactive logout"
 msgstr "Попробуйте неактивный выход"
 
@@ -1920,11 +1980,11 @@ msgstr "Обновить конференцию"
 msgid "Updated Webinar."
 msgstr "Обновить вебинар"
 
-#: includes/views/tabs/api-settings.php:132
+#: includes/views/tabs/api-settings.php:160
 msgid "Use 24-hour format"
 msgstr "Используйте 24-часовой формат"
 
-#: includes/views/tabs/api-settings.php:139
+#: includes/views/tabs/api-settings.php:167
 msgid "Use full month label format ?"
 msgstr "Использовать полный формат метки месяца?"
 
@@ -1978,6 +2038,10 @@ msgstr ""
 #: includes/admin/class-zvc-admin-post-type.php:252
 msgid "View meetings"
 msgstr "Смотреть конференции"
+
+#: templates/shortcode/zoom-recordings.php:41
+msgid "View Recordings"
+msgstr ""
 
 #: includes/template-functions.php:308
 msgid "Waiting - Not started"
@@ -2062,11 +2126,11 @@ msgstr "вебсайт"
 msgid "What does this do ? Check out"
 msgstr "Что это делает? Проверьте"
 
-#: includes/views/post-type/tpl-meeting-fields.php:194
+#: includes/views/post-type/tpl-meeting-fields.php:237
 msgid "When Panelists Join"
 msgstr "Когда присоединяются участники"
 
-#: includes/views/post-type/tpl-meeting-fields.php:97
+#: includes/views/post-type/tpl-meeting-fields.php:126
 msgid ""
 "Which type of meeting do you want to create. Note: Webinar requires Zoom "
 "Webinar Plan enabled in your account."
@@ -2082,7 +2146,7 @@ msgstr "Интеграция с WooCommerce?"
 msgid "You are seeing this because you are the author of this post."
 msgstr "Вы видите это, потому что вы являетесь автором этого поста."
 
-#: includes/views/post-type/tpl-meeting-fields.php:67
+#: includes/views/post-type/tpl-meeting-fields.php:64
 msgid ""
 "You cannot update meeting type. This is not allowed to avoid any conflict "
 "issues."
@@ -2090,7 +2154,7 @@ msgstr ""
 "Вы не можете обновить тип встречи. Это не позволяет избежать конфликтных "
 "ситуаций."
 
-#: templates/join-web-browser.php:100
+#: templates/join-web-browser.php:114
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
@@ -2112,7 +2176,7 @@ msgid "Zoom Integration Settings"
 msgstr "Настройки интеграции Zoom"
 
 #: includes/Elementor/Widgets/MeetingByID.php:45
-#: includes/views/post-type/tpl-meeting-fields.php:66
+#: includes/views/post-type/tpl-meeting-fields.php:63
 msgid "Zoom Meeting"
 msgstr "Конференция Zoom"
 
@@ -2144,7 +2208,7 @@ msgstr "Записи Zoom по хосту"
 msgid "Zoom Users"
 msgstr "Пользователи Zoom"
 
-#: includes/views/post-type/tpl-meeting-fields.php:66
+#: includes/views/post-type/tpl-meeting-fields.php:63
 msgid "Zoom Webinar"
 msgstr "Вебинар Zoom"
 

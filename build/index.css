@@ -1,0 +1,106 @@
+.vczapi-blocks-form {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%; }
+  .vczapi-blocks-form--group {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-bottom: 1.5em; }
+  .vczapi-blocks-form .radio-inline, .vczapi-blocks-form .toggle-inline {
+    width: 100%; }
+    .vczapi-blocks-form .radio-inline .components-base-control__field, .vczapi-blocks-form .toggle-inline .components-base-control__field {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-content: center;
+          -ms-flex-line-pack: center;
+              align-content: center;
+      width: 100%; }
+      .vczapi-blocks-form .radio-inline .components-base-control__field .components-base-control__label, .vczapi-blocks-form .toggle-inline .components-base-control__field .components-base-control__label {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+                flex: 1 1 auto; }
+      .vczapi-blocks-form .radio-inline .components-base-control__field label, .vczapi-blocks-form .toggle-inline .components-base-control__field label {
+        margin-right: 10px; }
+  .vczapi-blocks-form .toggle-inline {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+    .vczapi-blocks-form .toggle-inline--full {
+      width: 100%; }
+      .vczapi-blocks-form .toggle-inline--full .components-base-control__field {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: reverse;
+        -webkit-flex-direction: row-reverse;
+            -ms-flex-direction: row-reverse;
+                flex-direction: row-reverse; }
+        .vczapi-blocks-form .toggle-inline--full .components-base-control__field label {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1 1 auto;
+              -ms-flex: 1 1 auto;
+                  flex: 1 1 auto; }
+  .vczapi-blocks-form .range-control {
+    width: 100%; }
+  .vczapi-blocks-form .text-input {
+    width: 100%; }
+    .vczapi-blocks-form .text-input .components-base-control__field,
+    .vczapi-blocks-form .text-input .components-base-control__label,
+    .vczapi-blocks-form .text-input .components-base-control__input {
+      width: 100%; }
+  .vczapi-blocks-form--input-label {
+    width: 100%; }
+  .vczapi-blocks-form--select {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+    margin: 0 8px 0 0; }
+  .vczapi-blocks-form--selected-meeting {
+    width: 100%;
+    margin-bottom: 2em;
+    border-bottom: 1px solid; }
+  .vczapi-blocks-form .vczapi-blocks-pagination {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    /* align-items: center; */
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 20px; }
+    .vczapi-blocks-form .vczapi-blocks-pagination button.selected {
+      background: var(--wp-admin-theme-color);
+      color: #fff; }
+
+
+/*# sourceMappingURL=index.css.map*/

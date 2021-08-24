@@ -25,11 +25,11 @@ jQuery(function ($) {
     },
     loadMeeting: function loadMeeting(e) {
       e.preventDefault();
-      var meeting_id = zvc_ajx.meeting_id;
+      var meeting_id = atob(zvc_ajx.meeting_id);
       var API_KEY = false;
       var SIGNATURE = false;
       var REDIRECTION = zvc_ajx.redirect_page;
-      var PASSWD = zvc_ajx.meeting_pwd;
+      var PASSWD = zvc_ajx.meeting_pwd !== false ? atob(zvc_ajx.meeting_pwd) : false;
       var EMAIL_USER = '';
       $('body').append('<span id="zvc-cover"></span>');
 
@@ -85,7 +85,15 @@ jQuery(function ($) {
               ZoomMtg.init({
                 leaveUrl: REDIRECTION,
                 isSupportAV: true,
+                meetingInfo: zvc_ajx.meetingInfo,
                 disableInvite: zvc_ajx.disableInvite,
+                disableRecord: zvc_ajx.disableRecord,
+                disableJoinAudio: zvc_ajx.disableJoinAudio,
+                isSupportChat: zvc_ajx.isSupportChat,
+                isSupportQA: zvc_ajx.isSupportQA,
+                isSupportBreakout: zvc_ajx.isSupportBreakout,
+                isSupportCC: zvc_ajx.isSupportCC,
+                screenShare: zvc_ajx.screenShare,
                 success: function success() {
                   ZoomMtg.i18n.load(meetConfig.lang);
                   ZoomMtg.i18n.reload(meetConfig.lang);

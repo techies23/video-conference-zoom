@@ -17,22 +17,22 @@ const del = require('del');
 
 const paths = {
     styles: {
-        src: 'dist/public/sass/**/*.scss',
+        src: 'src/public/sass/**/*.scss',
         dest: 'assets/public/css/'
     },
     admin_styles: {
-        src: 'dist/admin/sass/**/*.scss',
+        src: 'src/admin/sass/**/*.scss',
         dest: 'assets/admin/css/'
     },
     admin_scripts: {
-        src: 'dist/admin/js/**/*.js',
+        src: 'src/admin/js/**/*.js',
         dest: 'assets/admin/js/'
     },
     publicScripts: {
-        mainScript: 'dist/public/js/public.js',
-        browserJoinScript: 'dist/public/js/join-via-browser.js',
-        shortcodeScript: 'dist/public/js/shortcode.js',
-        vendorScripts: 'dist/public/vendor/**/*.js',
+        mainScript: 'src/public/js/public.js',
+        browserJoinScript: 'src/public/js/join-via-browser.js',
+        shortcodeScript: 'src/public/js/shortcode.js',
+        vendorScripts: 'src/public/vendor/**/*.js',
         dest: 'assets/public/js/'
     }
 };
@@ -75,6 +75,12 @@ function compileVendorScripts() {
     ])
         .pipe(gulp.dest('./assets/vendor/dtimepicker'));
 
+    //Crypto JS
+    gulp.src([
+        './node_modules/crypto-js/crypto-js.js',
+    ])
+        .pipe(gulp.dest('./assets/vendor/crypto-js'));
+
     //MomentJS
     gulp.src([
         './node_modules/moment/min/**/*',
@@ -112,7 +118,7 @@ function styles() {
             outputStyle: 'compact',
             precision: 10
         }))
-        .pipe(postcss([autoprefixer]))
+        .pipe(postcss([autoprefixer()]))
         .pipe(gulp.dest(paths.styles.dest))
         .pipe(cleanCSS({
             level: {

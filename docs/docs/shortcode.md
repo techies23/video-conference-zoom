@@ -1,20 +1,23 @@
 **Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=453" target="_blank">video documentation</a> if you want to see live demo.**
 
+If you are using the new WordPress editor ([Gutenberg](https://wordpress.org/gutenberg/)) consider using our [blocks instead](blocks.md)
+
 With new version you can grab your shortcode with just a click.
 
 ### Types
 
 1. `[zoom_api_link meeting_id="" link_only="no"]`
-2. `[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming"]` 
-3. `[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming"]` 
-4. `[zoom_list_host_meetings host="YOUR_HOST_ID"]`
-5. `[zoom_api_webinar meeting_id="YOUR_WEBINAR_ID" link_only="no"]`
-6. `[zoom_list_host_webinars host="YOUR_HOST_ID"]`
-7. `[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes"]`
-8. `[zoom_recordings host_id="YOUR_HOST_ID" downloadable="yes"]`
-9. `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no"]`
+2. `[zoom_meeting_post post_id="ZOOM MEETING POST ID"]`
+3. `[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
+4. `[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
+5. `[zoom_list_host_meetings host="YOUR_HOST_ID"]`
+6. `[zoom_api_webinar meeting_id="YOUR_WEBINAR_ID" link_only="no"]`
+7. `[zoom_list_host_webinars host="YOUR_HOST_ID"]`
+8. `[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes"]`
+9. `[zoom_recordings host_id="YOUR_HOST_ID" downloadable="yes"]`
+10. `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no"]`
 
-### 1. Show Single Zoom Meeting Detail
+### 1. Show single Zoom meeting detail
 
 Use: `[zoom_api_link meeting_id="" link_only="no"]`
 
@@ -27,33 +30,47 @@ Your frontend page should look like:
 
 <img src="https://deepenbajracharya.com.np/wp-content/uploads/2019/11/Meetings-%E2%80%93-Plugin-Tester-1024x520.png">
 
-### 2. List Upcoming or Past Meetings
+### 2. Show a meeting post with Countdown
 
-Use: `[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]`
+Use: `[zoom_meeting_post post_id=""]`
 
 Where,
 
+* `post_id` = Zoom Meeting post ID.
+
+### 3. List Upcoming or Past Meetings
+
+Use: `[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]`
+
+Where,
+
+* **author** = Author ID of the posts to display.
 * **per_page** = Number of posts to show per page
 * **category** = Which categories to show in the list
 * **order** = ASC or DESC based on post created time.
-* **type** = "upcoming" or "past" - To show only upcoming meeting based on start time (Update to meeting is required for old post type meetings). Do not add to show all meetings.
+* **type** = "upcoming" or "past" - To show only upcoming meeting based on start time. (Remove this option to show all meetings).
 * **filter** = "yes" or "no" - Shows filter option for the list.
+* **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show meetings for 30 minutes after the past date, if upcoming type is defined.
+* **cols** = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.
 
 **NOTE: This was added in version 3.3.4 so, old meetings which were created might need to be updated in order for this shortcode to work properly.**
 
-### 3. List Upcoming or Past Webinars 
+### 4. List Upcoming or Past Webinars 
 
-Use: `[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming"]`
+Use: `[zoom_list_webinars per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]`
 
 Where,
 
+* **author** = Author ID of the posts to display.
 * **per_page** = Number of posts to show per page
 * **category** = Which categories to show in the list
 * **order** = ASC or DESC based on post created time.
-* **type** = "upcoming" or "past" - To show only upcoming meeting based on start time (Update to meeting is required for old post type meetings). Do not add to show all meetings.
+* **type** = "upcoming" or "past" - To show only upcoming webinars based on start time. (Remove this option to show all webinars).
 * **filter** = "yes" or "no" - Shows filter option for the list.
+* **show_on_past** = "yes" or "no" - Default is "yes", this parameter will show webinars for 30 minutes after the past date, if upcoming type is defined.
+* **cols** = Show how many columns in the grid. Default value is 3. Users can use 1 or 2 or 3 or 4 - Any value upper than 4 will take 3 column value.
 
-### 4. List Meetings based on HOST ID
+### 5. List Meetings based on HOST ID
 
 Use: `[zoom_list_host_meetings host="YOUR_HOST_ID"]`
 
@@ -63,7 +80,7 @@ Where,
 
 **NOTE: Added from version 3.3.10. This will list all past and upcoming 300 meetings related to the defined HOST ID.**
 
-### 5. Show Specific Webinar Detail
+### 6. Show Specific Webinar Detail
 
 Use: `[zoom_api_webinar webinar_id="YOUR_WEBINAR_ID" link_only="no"]`
 
@@ -73,7 +90,7 @@ Where,
 
 **NOTE: Added in version 3.4.0**
 
-### 6. Show List of Webinars
+### 7. Show List of Webinars
 
 Use: `[zoom_list_host_webinars host="YOUR_HOST_ID"]`
 
@@ -83,11 +100,11 @@ Where,
 
 **NOTE: Added from version 3.4.0**
 
-### 7. Embed Zoom Meeting in your Browser
+### 8. Embed Zoom Meeting in your Browser
 
 Embeds your meeting in an IFRAME for any page or post you insert this shortcode into.
 
-<strong style="color:red;">Although this embed feature is here. I do no garauntee this would work properly as this is not natively supported by Zoom itself. This is here only because of user requests. USE THIS AT OWN RISK !!</strong>
+<strong style="color:red;">Although this embed feature is here there are alot of known issues with ZoomWebSDK at the moment. USE THIS AT OWN RISK !!</strong>
 
 Use: `[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes" passcode="1232132121" webinar="no"]`
 
@@ -110,7 +127,7 @@ To redirect user after a meeting fails, after completed or if meeting is not yet
     return 'https://yoursiteurl.com/page';
 });`**
 
-### 8. Show recordings based on HOST ID.
+### 9. Show recordings based on HOST ID.
 
 Show recordings list in frontend based on host ID.
 
@@ -121,16 +138,17 @@ Where,
 * `host_id` : YOUR HOST ID.
 * `downloadable` : Default is set to false. If you want your users to be able to download your recordings.
 
-### 9. Show Recordings based on Meeting ID
+### 10. Show Recordings based on Meeting ID
 
 Show recordings list based on your meeting ID
 
-Usage: `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no"]`
+Usage: `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no" cache="true"]`
 
 Where,
 
 * `meeting_id` : YOUR MEETING ID to pull.
 * `downloadable` : Default is set to false. If you want your users to be able to download your recordings.
+* `cache` : set to 'false' or 'true' - Default is true. Shows latest records without caching any previous data. **Note: this may result in slow page load speed or even fail to load recordings due to API call limit from zoom side, if there are alot of recordings/ alot of traffic in your site.**
 
 ### How to get Meeting ID
 

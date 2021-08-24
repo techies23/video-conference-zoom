@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Video Conferencing with Zoom - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-12-18 08:51+0000\n"
+"PO-Revision-Date: 2021-02-09 06:19+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,11 +13,24 @@ msgstr ""
 "release)\n"
 "Language-Team: Chinese (Taiwan)"
 
-#: templates/join-web-browser.php:38
+#: templates/fragments/meeting-details.php:53
+msgid " hour"
+msgid_plural " hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/fragments/meeting-details.php:53
+#: templates/fragments/meeting-details.php:55
+msgid " minute"
+msgid_plural " minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/join-web-browser.php:39
 msgid "!!!ALERT!!!: "
 msgstr "注意："
 
-#: templates/fragments/meeting-details.php:59
+#: templates/fragments/meeting-details.php:70
 msgid "%sNote%s: Countdown time is shown based on your local timezone."
 msgstr "%s備註%s：倒數計時所顯示的時間是依據你的本地時區顯示。"
 
@@ -38,9 +51,9 @@ msgid ""
 "Account owner or admin permissions to access Usage Reports for all users."
 msgstr "此帳號必須為帳戶持有人或是可以存取所有使用者報告的使用者。"
 
-#: templates/shortcode/zoom-recordings.php:21
+#: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
-#: includes/views/live/tpl-list-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:26
 msgid "Action"
 msgstr "執行"
 
@@ -74,7 +87,7 @@ msgstr "新增"
 
 #: includes/views/live/tpl-list-meetings.php:40
 msgid "Add New Meeting"
-msgstr ""
+msgstr "新增會議"
 
 #: includes/admin/class-zvc-admin-post-type.php:249
 msgid "Add New meeting"
@@ -88,11 +101,11 @@ msgstr "新增網路研討會文章"
 msgid "Add Users"
 msgstr "新增 Zoom 使用者"
 
-#: includes/views/tabs/api-settings.php:167
+#: includes/views/tabs/api-settings.php:195
 msgid "Addons"
 msgstr "附加元件"
 
-#: includes/views/tabs/api-settings.php:147
+#: includes/views/tabs/api-settings.php:175
 msgid ""
 "After you enter your keys. Do save changes before doing \"Check API "
 "Connection\"."
@@ -106,11 +119,11 @@ msgstr "所有分類"
 msgid "All Meetings"
 msgstr "所有會議文章"
 
-#: includes/views/post-type/tpl-meeting-fields.php:228
+#: includes/views/post-type/tpl-meeting-fields.php:271
 msgid "Allow attendess to join from multiple devices."
 msgstr "允許與會者透過多個裝置加入會議。"
 
-#: includes/views/post-type/tpl-meeting-fields.php:224
+#: includes/views/post-type/tpl-meeting-fields.php:267
 msgid "Allow Multiple Devices"
 msgstr "允許多重裝置"
 
@@ -118,7 +131,7 @@ msgstr "允許多重裝置"
 #: includes/views/webinars/tpl-add-webinar.php:124
 #: includes/views/live/tpl-edit-meeting.php:159
 #: includes/views/live/tpl-add-meetings.php:135
-#: includes/views/post-type/tpl-meeting-fields.php:254
+#: includes/views/post-type/tpl-meeting-fields.php:297
 msgid "Alternative Hosts"
 msgstr "聯合主持人"
 
@@ -131,7 +144,7 @@ msgstr "聯合主持人 ID，可使用半形逗號分隔多個 ID"
 msgid "An error occured. Host ID and Meeting ID not defined properly."
 msgstr "發生錯誤，主持人 ID 及會議 ID 沒有正確設定。"
 
-#: includes/Shortcodes.php:170
+#: includes/Shortcodes.php:176
 msgid "and join via Zoom App."
 msgstr "以及使用 Zoom App 加入會議"
 
@@ -156,7 +169,7 @@ msgstr "API 設定"
 #: includes/views/webinars/tpl-list-webinars.php:28
 #: includes/views/live/tpl-list-meetings.php:39
 msgid "Apply"
-msgstr ""
+msgstr "套用"
 
 #: includes/Bootstrap.php:209 includes/template-functions.php:86
 msgid ""
@@ -185,7 +198,7 @@ msgstr "自動建立"
 #: includes/views/webinars/tpl-add-webinar.php:112
 #: includes/views/live/tpl-edit-meeting.php:141
 #: includes/views/live/tpl-add-meetings.php:123
-#: includes/views/post-type/tpl-meeting-fields.php:233
+#: includes/views/post-type/tpl-meeting-fields.php:276
 msgid "Auto Recording"
 msgstr "自動錄影"
 
@@ -216,7 +229,7 @@ msgid ""
 "posts."
 msgstr "底下範例會告訴你如何將短代碼放入你的文章當中。"
 
-#: templates/join-web-browser.php:38
+#: templates/join-web-browser.php:39
 msgid ""
 "Browser did not detect a valid SSL certificate. Audio and Video for Zoom "
 "meeting will not work on a non HTTPS site, please install a valid SSL "
@@ -233,22 +246,24 @@ msgstr "由"
 msgid "Category"
 msgstr "分類"
 
-#: includes/views/tabs/api-settings.php:123
+#: includes/views/tabs/api-settings.php:151
 msgid ""
 "Change date time formats according to your choice. Please edit this properly."
 " Failure to correctly put value will result in failure to show date in "
 "frontend."
 msgstr "請根據你的選擇更改日期時間格式，請小心更改，不正確的設定將會造成前端日期顯示錯誤。"
 
+#: includes/admin/class-zvc-admin-recordings.php:79
+#: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
-msgstr ""
+msgstr "檢查"
 
-#: includes/helpers.php:332
+#: includes/helpers.php:337
 msgid "check %s for shortcode references."
 msgstr "或是在 %s 看看短代碼怎麼設定。"
 
-#: includes/views/tabs/api-settings.php:150
+#: includes/views/tabs/api-settings.php:178
 msgid "Check API Connection"
 msgstr "檢查 API 連線"
 
@@ -266,11 +281,11 @@ msgid ""
 "loggedin users."
 msgstr "啟用這個選項後，未登入的使用者在包含短代碼的頁面中將無法看到加入會議的連結。"
 
-#: includes/views/tabs/api-settings.php:135
+#: includes/views/tabs/api-settings.php:163
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr "啟用這個選項將會在所有會議時間採用 24 小時格式。"
 
-#: includes/views/tabs/api-settings.php:142
+#: includes/views/tabs/api-settings.php:170
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
@@ -285,6 +300,12 @@ msgid ""
 "Checking this show Zoom original Author in single meetings page which are "
 "created from"
 msgstr "啟用這個選項將會在 Zoom 頁面顯示 Zoom 會議文章的文章作者"
+
+#: includes/views/tabs/api-settings.php:87
+msgid ""
+"Checking this will disable invite button when user joins meeting via Join "
+"via Browser window."
+msgstr "啟用這個選項後，經由瀏覽器視窗加入會議時將會隱藏邀請按鈕。"
 
 #: includes/views/tabs/api-settings.php:73
 msgid "Checking this will hide all Join via Browser Buttons."
@@ -310,11 +331,11 @@ msgstr "點擊複製短代碼！"
 #: includes/views/webinars/tpl-edit-webinar.php:114
 #: includes/views/webinars/tpl-add-webinar.php:117
 #: includes/views/live/tpl-edit-meeting.php:151
-#: includes/views/post-type/tpl-meeting-fields.php:243
+#: includes/views/post-type/tpl-meeting-fields.php:286
 msgid "Cloud"
 msgstr "雲端"
 
-#: includes/views/tabs/api-settings.php:163
+#: includes/views/tabs/api-settings.php:191
 msgid "Contact for additional Support"
 msgstr "聯繫支援"
 
@@ -342,15 +363,15 @@ msgstr "建立"
 
 #: includes/views/live/tpl-add-meetings.php:148
 msgid "Create Meeting"
-msgstr ""
+msgstr "建立會議"
 
 #: includes/views/live/tpl-add-user.php:89
 msgid "Create User"
-msgstr ""
+msgstr "建立使用者"
 
 #: includes/views/webinars/tpl-add-webinar.php:137
 msgid "Create Webinar"
-msgstr ""
+msgstr "建立網路研討會"
 
 #: includes/admin/class-zvc-admin-users.php:66
 msgid ""
@@ -373,9 +394,13 @@ msgstr "建立時間"
 msgid "Created webinar %s at %s. Join %s"
 msgstr "網路研討會 %s 已於 %s 建立，加入 %s"
 
+#: templates/fragments/meeting-details.php:63
+msgid "Current Timezone"
+msgstr "目前時區"
+
 #: includes/views/sync.php:13
 msgid "Currently, you can only sync scheduled meetings."
-msgstr ""
+msgstr "目前你僅能同步事先排程好的會議。"
 
 #: includes/views/live/tpl-add-user.php:26
 #: includes/views/live/tpl-add-user.php:40
@@ -388,19 +413,23 @@ msgstr "日期"
 
 #: includes/admin/class-zvc-admin-reports.php:67
 msgid "Date field cannot be Empty !!"
-msgstr ""
+msgstr "日期欄位不能空白！"
 
-#: includes/views/tabs/api-settings.php:102
+#: includes/views/tabs/api-settings.php:130
 msgid "DateTime Format"
 msgstr "日期時間格式"
 
-#: includes/Shortcodes.php:197 templates/fragments/countdown-timer.php:30
+#: includes/Shortcodes.php:203 templates/fragments/countdown-timer.php:30
 msgid "days"
 msgstr "日"
 
 #: includes/admin/class-zvc-admin-post-type.php:299
 msgid "Debug Log"
 msgstr "除錯用記錄檔"
+
+#: includes/views/tabs/api-settings.php:91
+msgid "Default Language for Join via browser page ?"
+msgstr "「使用網頁瀏覽器加入會議」的預設語言？"
 
 #: templates/fragments/filters.php:32
 msgid "Default Sorting"
@@ -412,7 +441,7 @@ msgstr "預設標題"
 
 #: includes/views/webinars/tpl-edit-webinar.php:103
 #: includes/views/webinars/tpl-add-webinar.php:107
-#: includes/views/post-type/tpl-meeting-fields.php:218
+#: includes/views/post-type/tpl-meeting-fields.php:261
 msgid "Defaults to HD video."
 msgstr "預設為高畫質影片。"
 
@@ -428,13 +457,13 @@ msgstr "已根據 ID 刪除會議"
 msgid "Details"
 msgstr "詳細資料"
 
-#: includes/views/tabs/api-settings.php:165
+#: includes/views/tabs/api-settings.php:193
 msgid "Developer"
 msgstr "開發者"
 
-#: includes/views/post-type/tpl-meeting-fields.php:58
-#: includes/views/post-type/tpl-meeting-fields.php:85
-#: includes/views/post-type/tpl-meeting-fields.php:265
+#: includes/views/post-type/tpl-meeting-fields.php:55
+#: includes/views/post-type/tpl-meeting-fields.php:114
+#: includes/views/post-type/tpl-meeting-fields.php:308
 msgid ""
 "Did not find any hosts here ? Please %scheck here%s to verify your API keys "
 "are working correctly."
@@ -452,6 +481,10 @@ msgstr "經由瀏覽器加入會議時取消電子郵件欄位？"
 msgid "Disable Embed password in Link ?"
 msgstr "在連結中取消內嵌密碼？"
 
+#: includes/views/tabs/api-settings.php:84
+msgid "Disable Invite field when join via browser ?"
+msgstr "經由瀏覽器加入會議時取消邀請欄位？"
+
 #: includes/admin/class-zvc-admin-post-type.php:195
 #: includes/views/live/tpl-list-meetings.php:128
 msgid "Disable Join"
@@ -461,43 +494,43 @@ msgstr "不允許加入"
 msgid "Disable Join via browser ?"
 msgstr "取消「使用網頁瀏覽器加入會議」？"
 
-#: includes/admin/class-zvc-admin-settings.php:166
+#: includes/admin/class-zvc-admin-settings.php:170
 msgid "Dismiss this notice."
 msgstr "關閉此通知"
 
-#: includes/helpers.php:350
+#: includes/helpers.php:355
 msgid "Do not get confused here !!"
 msgstr "無需感到困惑！"
 
-#: includes/views/tabs/api-settings.php:160
+#: includes/views/tabs/api-settings.php:188
 msgid "Documentation"
 msgstr "文件"
 
-#: templates/shortcode/zoom-recordings.php:41
+#: includes/Shortcodes/Recordings.php:54 includes/Shortcodes/Recordings.php:55
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:53
 #: includes/views/live/tpl-list-recordings.php:54
+#: includes/views/live/tpl-list-recordings.php:55
 msgid "Download"
 msgstr "下載"
 
-#: includes/Shortcodes.php:177
+#: includes/Shortcodes.php:183
 msgid "Download App from Store"
 msgstr "從商城下載影用程式"
 
-#: includes/Shortcodes.php:180
+#: includes/Shortcodes.php:186
 msgid "Download from Zoom"
 msgstr "從 Zoom 網站下載"
 
 #: includes/template-functions.php:397
-#: templates/fragments/meeting-details.php:47
+#: templates/fragments/meeting-details.php:49
 #: templates/shortcode/zoom-webinar.php:98
-#: templates/shortcode/zoom-recordings.php:18
+#: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
 #: includes/views/live/tpl-edit-meeting.php:92
-#: includes/views/live/tpl-list-recordings.php:22
+#: includes/views/live/tpl-list-recordings.php:23
 #: includes/views/live/tpl-add-meetings.php:74
-#: includes/views/post-type/tpl-meeting-fields.php:137
+#: includes/views/post-type/tpl-meeting-fields.php:166
 msgid "Duration"
 msgstr "會議長度"
 
@@ -553,7 +586,7 @@ msgstr "允許加入"
 msgid "Enable Meeting Join ?"
 msgstr "允許加入會議？"
 
-#: includes/views/post-type/tpl-meeting-fields.php:208
+#: includes/views/post-type/tpl-meeting-fields.php:251
 msgid "Enable Practise Session."
 msgstr "啟用準備模式。"
 
@@ -575,6 +608,7 @@ msgstr "點擊此按鈕將會使得使用者無法加入會議，僅適用於所
 msgid "Enter a value to Check..."
 msgstr "輸入欲檢查的值..."
 
+#: includes/admin/class-zvc-admin-recordings.php:78
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
 msgstr "請輸入日期:"
@@ -588,7 +622,7 @@ msgstr "錯誤："
 msgid "Extensions"
 msgstr "擴充套件"
 
-#: includes/views/tabs/api-settings.php:157
+#: includes/views/tabs/api-settings.php:185
 msgid "Facebook Group"
 msgstr "Facebook 社團"
 
@@ -602,11 +636,13 @@ msgid ""
 "Zoom Meetings you have."
 msgstr "取得資料中 .. 請稍候，這將會需要一點時間，這取決於你有多少 Zoom 會議。"
 
-#: includes/views/live/tpl-list-recordings.php:48
+#: includes/Shortcodes/Recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:49
 msgid "File Size"
 msgstr "檔案大小"
 
-#: includes/views/live/tpl-list-recordings.php:46
+#: includes/Shortcodes/Recordings.php:50
+#: includes/views/live/tpl-list-recordings.php:47
 msgid "File Type"
 msgstr "檔案類型"
 
@@ -640,7 +676,7 @@ msgstr "取得指定期間的帳戶報告。"
 
 #: includes/views/webinars/tpl-edit-webinar.php:100
 #: includes/views/webinars/tpl-add-webinar.php:104
-#: includes/views/post-type/tpl-meeting-fields.php:214
+#: includes/views/post-type/tpl-meeting-fields.php:257
 msgid "HD Video"
 msgstr "高畫質影片"
 
@@ -682,11 +718,11 @@ msgstr "主持人"
 msgid "Hosted By:"
 msgstr "主持人:"
 
-#: includes/Shortcodes.php:203 templates/fragments/countdown-timer.php:36
+#: includes/Shortcodes.php:209 templates/fragments/countdown-timer.php:36
 msgid "hours"
 msgstr "時"
 
-#: includes/helpers.php:353
+#: includes/helpers.php:358
 msgid "I understand ! Don't show this again !"
 msgstr "我了解！請不要在顯示！"
 
@@ -710,16 +746,16 @@ msgstr "如果你需要將此會議顯示在其他頁面或文章，請使用這
 msgid "Import"
 msgstr "匯入"
 
-#: includes/Shortcodes/Recordings.php:45
+#: includes/Shortcodes/Recordings.php:94
 msgid ""
 "Invalid HOST ID. Please define a host ID to show recordings based on host."
 msgstr "無效的主持人 ID，請輸入正確的主持人 ID 才能找到相關的錄影。"
 
-#: includes/Shortcodes/Recordings.php:107
+#: includes/Shortcodes/Recordings.php:167
 msgid "Invalid Meeting ID."
 msgstr "無效的會議 ID"
 
-#: templates/join-web-browser.php:89 templates/shortcode/join-links.php:20
+#: templates/join-web-browser.php:103 templates/shortcode/join-links.php:20
 #: templates/shortcode/join-links.php:29
 #: templates/shortcode/webinar-join-links.php:20
 #: templates/shortcode/webinar-join-links.php:29
@@ -728,13 +764,13 @@ msgstr "加入"
 
 #: includes/views/live/tpl-edit-meeting.php:106
 #: includes/views/live/tpl-add-meetings.php:88
-#: includes/views/post-type/tpl-meeting-fields.php:159
+#: includes/views/post-type/tpl-meeting-fields.php:202
 msgid "Join Before Host"
 msgstr "會前報到"
 
 #: includes/views/live/tpl-edit-meeting.php:109
 #: includes/views/live/tpl-add-meetings.php:91
-#: includes/views/post-type/tpl-meeting-fields.php:162
+#: includes/views/post-type/tpl-meeting-fields.php:205
 msgid ""
 "Join meeting before host start the meeting. Only for scheduled or recurring "
 "meetings."
@@ -748,13 +784,13 @@ msgstr "使用 Zoom App 加入會議"
 msgid "Join via App"
 msgstr "使用 Zoom App 加入會議"
 
-#: includes/helpers.php:590 includes/helpers.php:594 includes/helpers.php:618
-#: includes/helpers.php:622 templates/shortcode/join-links.php:27
+#: includes/helpers.php:594 includes/helpers.php:598 includes/helpers.php:622
+#: includes/helpers.php:626 templates/shortcode/join-links.php:27
 #: templates/shortcode/webinar-join-links.php:27
 msgid "Join via Web Browser"
 msgstr "使用網頁瀏覽器加入會議"
 
-#: includes/Shortcodes.php:174 templates/shortcode/join-links.php:18
+#: includes/Shortcodes.php:180 templates/shortcode/join-links.php:18
 #: templates/shortcode/webinar-join-links.php:18
 msgid "Join via Zoom App"
 msgstr "使用 Zoom App 加入會議"
@@ -779,7 +815,7 @@ msgstr "姓氏"
 msgid "Last Name of the User (Required)."
 msgstr "使用者的姓氏 (必填)"
 
-#: includes/helpers.php:328
+#: includes/helpers.php:333
 msgid "Like this plugin ?"
 msgstr "喜歡這個外掛嗎？"
 
@@ -803,10 +839,14 @@ msgstr "線上會議"
 msgid "Live Webinars"
 msgstr "線上網路研討會"
 
+#: includes/Shortcodes/Recordings.php:110
+msgid "Loading recordings.. Please wait.."
+msgstr "載入錄影中 ... 請稍候.."
+
 #: includes/views/webinars/tpl-edit-webinar.php:113
 #: includes/views/webinars/tpl-add-webinar.php:116
 #: includes/views/live/tpl-edit-meeting.php:148
-#: includes/views/post-type/tpl-meeting-fields.php:240
+#: includes/views/post-type/tpl-meeting-fields.php:283
 msgid "Local"
 msgstr "本機端"
 
@@ -820,7 +860,7 @@ msgstr "會議"
 msgid "Meeting Agenda"
 msgstr "會議議程"
 
-#: includes/views/post-type/tpl-meeting-fields.php:151
+#: includes/views/post-type/tpl-meeting-fields.php:194
 msgid "Meeting Authentication"
 msgstr "會議授權"
 
@@ -835,15 +875,14 @@ msgstr "會議詳細資訊"
 
 #: includes/views/live/tpl-edit-meeting.php:95
 #: includes/views/live/tpl-add-meetings.php:77
-#: includes/views/post-type/tpl-meeting-fields.php:140
 msgid "Meeting duration (minutes). (optional)"
 msgstr "會議長度 (分鐘) (選填)"
 
-#: includes/views/tabs/api-settings.php:96
+#: includes/views/tabs/api-settings.php:124
 msgid "Meeting Ended Text"
 msgstr "自訂會議結束的文字"
 
-#: includes/views/tabs/api-settings.php:90
+#: includes/views/tabs/api-settings.php:118
 msgid "Meeting going to start Text"
 msgstr "自訂會議即將開始的文字"
 
@@ -866,20 +905,21 @@ msgstr "會議已經開始！點擊底下的按鈕可以立即加入會議！"
 
 #: includes/views/live/tpl-edit-meeting.php:54
 #: includes/views/live/tpl-add-meetings.php:43
-#: includes/views/post-type/tpl-meeting-fields.php:42
-#: includes/views/post-type/tpl-meeting-fields.php:75
+#: includes/views/post-type/tpl-meeting-fields.php:39
+#: includes/views/post-type/tpl-meeting-fields.php:74
+#: includes/views/post-type/tpl-meeting-fields.php:95
 msgid "Meeting Host *"
 msgstr "會議主持人 *"
 
 #: includes/template-functions.php:296
 #: includes/admin/class-zvc-admin-post-type.php:125
 #: templates/shortcode/zoom-webinar.php:21
-#: templates/shortcode/zoom-recordings.php:16
+#: templates/shortcode/zoom-recordings.php:22
 #: templates/shortcode/zoom-recordings-by-meeting.php:42
 #: includes/Elementor/Widgets/EmbedMeetings.php:96
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:95
 #: includes/views/live/tpl-list-meetings.php:58
-#: includes/views/live/tpl-list-recordings.php:20
+#: includes/views/live/tpl-list-recordings.php:21
 msgid "Meeting ID"
 msgstr "會議 ID"
 
@@ -916,7 +956,7 @@ msgid ""
 "password."
 msgstr "邀請連結中將不會包含會議密碼，點擊連結的人將必須手動輸入密碼後才能參加會議。"
 
-#: includes/views/tabs/api-settings.php:84
+#: includes/views/tabs/api-settings.php:112
 msgid "Meeting Started Text"
 msgstr "自訂會議已開始的文字"
 
@@ -935,7 +975,7 @@ msgstr "完成會議同步！"
 
 #: includes/views/live/tpl-edit-meeting.php:88
 #: includes/views/live/tpl-add-meetings.php:70
-#: includes/views/post-type/tpl-meeting-fields.php:133
+#: includes/views/post-type/tpl-meeting-fields.php:162
 msgid "Meeting Timezone"
 msgstr "會議時區"
 
@@ -949,8 +989,8 @@ msgstr "會議主題 *"
 msgid "Meeting topic. (Required)."
 msgstr "會議主題 (必填)"
 
-#: includes/views/post-type/tpl-meeting-fields.php:64
-#: includes/views/post-type/tpl-meeting-fields.php:91
+#: includes/views/post-type/tpl-meeting-fields.php:61
+#: includes/views/post-type/tpl-meeting-fields.php:120
 msgid "Meeting Type"
 msgstr "會議類型"
 
@@ -976,7 +1016,7 @@ msgstr "會議排序"
 msgid "Meetings Type"
 msgstr "會議類型"
 
-#: includes/Shortcodes.php:209 templates/fragments/countdown-timer.php:42
+#: includes/Shortcodes.php:215 templates/fragments/countdown-timer.php:42
 msgid "minutes"
 msgstr "分"
 
@@ -987,13 +1027,13 @@ msgstr "移至回收桶"
 
 #: includes/views/live/tpl-edit-meeting.php:132
 #: includes/views/live/tpl-add-meetings.php:114
-#: includes/views/post-type/tpl-meeting-fields.php:184
+#: includes/views/post-type/tpl-meeting-fields.php:227
 msgid "Mute Participants upon entry"
 msgstr "參與者靜音"
 
 #: includes/views/live/tpl-edit-meeting.php:136
 #: includes/views/live/tpl-add-meetings.php:118
-#: includes/views/post-type/tpl-meeting-fields.php:188
+#: includes/views/post-type/tpl-meeting-fields.php:231
 msgid "Mutes Participants when entering the meeting."
 msgstr "在參與者進入會議時，預設為靜音"
 
@@ -1013,7 +1053,7 @@ msgstr "新加入使用者"
 msgid "Next Occurrence"
 msgstr "下一次會議"
 
-#: includes/helpers.php:703
+#: includes/helpers.php:707
 msgid "Next Results"
 msgstr "下一筆"
 
@@ -1057,12 +1097,12 @@ msgstr "找不到會議"
 #: includes/views/webinars/tpl-edit-webinar.php:111
 #: includes/views/webinars/tpl-add-webinar.php:115
 #: includes/views/live/tpl-edit-meeting.php:145
-#: includes/views/post-type/tpl-meeting-fields.php:237
+#: includes/views/post-type/tpl-meeting-fields.php:280
 msgid "No Recordings"
 msgstr "不錄影"
 
-#: includes/Shortcodes/Recordings.php:79 includes/Shortcodes/Recordings.php:83
-#: includes/Shortcodes/Recordings.php:162
+#: includes/Shortcodes/Recordings.php:143
+#: includes/Shortcodes/Recordings.php:218
 msgid "No recordings found."
 msgstr "找不到紀錄"
 
@@ -1083,7 +1123,7 @@ msgstr "短代碼沒有設定網路研討會 ID"
 msgid "Not a Host"
 msgstr "選擇一位主持人"
 
-#: includes/Shortcodes.php:170
+#: includes/Shortcodes.php:176
 msgid ""
 "Note: If you are having trouble joining the meeting below, enter Meeting ID: "
 msgstr "注意：如果你加入會議的過程出現問題，請輸入會議 ID："
@@ -1096,7 +1136,7 @@ msgstr "會議次數"
 msgid "Only logged in users of this site will be able to join this meeting."
 msgstr "只有登入的會員才能加入這場會議"
 
-#: includes/views/post-type/tpl-meeting-fields.php:154
+#: includes/views/post-type/tpl-meeting-fields.php:197
 msgid "Only loggedin users in Zoom App can join this Meeting."
 msgstr "僅有在 Zoom 應用程式登入的使用者才能加入會議。"
 
@@ -1108,7 +1148,7 @@ msgstr "你沒有選擇要同步的會議，請選擇一個或兩個會議，我
 
 #: includes/views/webinars/tpl-edit-webinar.php:139
 #: includes/views/live/tpl-edit-meeting.php:173
-#: includes/views/post-type/tpl-meeting-fields.php:267
+#: includes/views/post-type/tpl-meeting-fields.php:310
 msgid ""
 "Paid Zoom Account is required for this !! Alternative hosts IDs. Multiple "
 "value separated by comma."
@@ -1129,11 +1169,11 @@ msgstr "參與者"
 
 #: includes/views/live/tpl-edit-meeting.php:123
 #: includes/views/live/tpl-add-meetings.php:105
-#: includes/views/post-type/tpl-meeting-fields.php:175
+#: includes/views/post-type/tpl-meeting-fields.php:218
 msgid "Participants Video"
 msgstr "參與者視訊"
 
-#: includes/views/post-type/tpl-meeting-fields.php:144
+#: includes/views/post-type/tpl-meeting-fields.php:187
 msgid "Password"
 msgstr "密碼"
 
@@ -1141,7 +1181,7 @@ msgstr "密碼"
 #: includes/views/webinars/tpl-add-webinar.php:84
 #: includes/views/live/tpl-edit-meeting.php:102
 #: includes/views/live/tpl-add-meetings.php:84
-#: includes/views/post-type/tpl-meeting-fields.php:147
+#: includes/views/post-type/tpl-meeting-fields.php:190
 msgid ""
 "Password to join the meeting. Password may only contain the following "
 "characters: [a-z A-Z 0-9]. Max of 10 characters.( Leave blank for auto "
@@ -1156,24 +1196,25 @@ msgstr "待審使用者清單"
 msgid "Personal Meeting Room"
 msgstr "個人會議室"
 
-#: templates/shortcode/zoom-recordings.php:39
+#: includes/Shortcodes/Recordings.php:52
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:50
 #: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:52
 msgid "Play"
 msgstr "播放"
 
-#: includes/views/post-type/tpl-meeting-fields.php:55
+#: includes/views/post-type/tpl-meeting-fields.php:52
+#: includes/views/post-type/tpl-meeting-fields.php:86
 msgid "Please check your internet connection or API connection."
 msgstr "請檢查你的網路連線或 API 連線狀況。"
 
-#: includes/helpers.php:263
+#: includes/helpers.php:268
 msgid ""
 "Please check your internet connection or API keys. Zoom API is not able to "
 "connect with Zoom servers at the moment."
-msgstr ""
+msgstr "請檢查你的網路連線及 API 金鑰，Zoom API 目前無法連至 Zoom 伺服器。"
 
-#: includes/helpers.php:331
+#: includes/helpers.php:336
 msgid ""
 "Please consider giving a %s if you found this useful at wordpress.org or "
 msgstr "如果你覺得這個 wordpress.org 外掛非常有用，請給我們 %s"
@@ -1190,7 +1231,7 @@ msgstr "加入此會議前請先登入。"
 msgid "Please note this requires a PRO Zoom account or Higher."
 msgstr "請注意，僅有 PRO 等級以上的帳戶才能使用此功能。"
 
-#: includes/helpers.php:352
+#: includes/helpers.php:357
 msgid ""
 "Please read !!! These below meetings are directly from your zoom.us account "
 "via API connection. Meetings added from here won't show up on your Post Type "
@@ -1199,7 +1240,7 @@ msgstr ""
 "請詳細閱讀！以下所列出的會議是經由 API 自你的 zoom.us 帳號取得的資料，所顯示的會議不會顯示在你的文章類型列表， 系統只會使用 API "
 "在你的 zoom.us 帳號建立會議。"
 
-#: includes/views/tabs/api-settings.php:126
+#: includes/views/tabs/api-settings.php:154
 msgid "Please see %s on how to format date"
 msgstr "可透過 %s 了解日期格式"
 
@@ -1215,7 +1256,7 @@ msgid ""
 " %d"
 msgstr "請再試一次！在透過此 ID 取得網路研討會資料時發生了錯誤:  %d"
 
-#: includes/views/post-type/tpl-meeting-fields.php:204
+#: includes/views/post-type/tpl-meeting-fields.php:247
 msgid "Practise Session"
 msgstr "準備模式"
 
@@ -1247,18 +1288,14 @@ msgstr ""
 "了解更多有關虛名\n"
 "                                URLs"
 
-#: templates/shortcode/zoom-recordings.php:19
-#: includes/views/live/tpl-list-recordings.php:23
+#: templates/shortcode/zoom-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:24
 msgid "Recorded"
 msgstr "錄影"
 
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:88
 msgid "Recording by Meeting"
 msgstr "會議錄影"
-
-#: includes/views/live/tpl-list-recordings.php:56
-msgid "Recording Type"
-msgstr "錄製類型"
 
 #: includes/admin/class-zvc-admin-settings.php:58
 #: includes/views/live/tpl-list-recordings.php:10
@@ -1310,7 +1347,7 @@ msgstr "無法存取，請登入後繼續。"
 
 #: templates/fragments/filters.php:14
 msgid "results"
-msgstr ""
+msgstr "結果"
 
 #: includes/admin/class-zvc-admin-post-type.php:199
 msgid "Resuming this will enable users to join this meeting."
@@ -1324,9 +1361,9 @@ msgstr "點擊此按鈕將會開放使用者可以加入這場會議，適用於
 
 #: includes/views/live/tpl-assign-host-id.php:38
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
-#: includes/views/tabs/api-settings.php:149
+#: includes/views/tabs/api-settings.php:177
 msgid "Save Changes"
 msgstr "儲存設定"
 
@@ -1346,7 +1383,7 @@ msgstr "搜尋.."
 msgid "Searching From: "
 msgstr "搜尋："
 
-#: includes/Shortcodes.php:215 templates/fragments/countdown-timer.php:48
+#: includes/Shortcodes.php:221 templates/fragments/countdown-timer.php:48
 msgid "seconds"
 msgstr "秒"
 
@@ -1356,7 +1393,11 @@ msgstr "了解更多"
 
 #: includes/views/live/tpl-reports.php:80
 msgid "Select a Date to Check"
-msgstr ""
+msgstr "請輸入檢查的日期:"
+
+#: includes/views/tabs/api-settings.php:108
+msgid "Select a default language for your join meeting via browser page."
+msgstr "請選擇「使用網頁瀏覽器加入會議」頁面的預設語言。"
 
 #: includes/views/webinars/tpl-edit-webinar.php:124
 #: includes/views/webinars/tpl-add-webinar.php:46
@@ -1365,8 +1406,8 @@ msgstr ""
 #: includes/views/live/tpl-edit-meeting.php:162
 #: includes/views/live/tpl-add-meetings.php:46
 #: includes/views/live/tpl-add-meetings.php:138
-#: includes/views/post-type/tpl-meeting-fields.php:79
-#: includes/views/post-type/tpl-meeting-fields.php:259
+#: includes/views/post-type/tpl-meeting-fields.php:106
+#: includes/views/post-type/tpl-meeting-fields.php:302
 msgid "Select a Host"
 msgstr "選擇一位主持人"
 
@@ -1374,7 +1415,11 @@ msgstr "選擇一位主持人"
 msgid "Select a Meeting"
 msgstr "選擇會議"
 
-#: includes/admin/class-zvc-admin-recordings.php:63 includes/views/sync.php:20
+#: templates/shortcode/zoom-recordings.php:15
+msgid "Select a month to filter:"
+msgstr "選擇要篩選的月份:"
+
+#: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:20
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
@@ -1404,7 +1449,7 @@ msgstr "選擇指定的 WordPress 使用者。此功能僅在使用者接受 Zoo
 #: includes/views/webinars/tpl-add-webinar.php:119
 #: includes/views/live/tpl-edit-meeting.php:154
 #: includes/views/live/tpl-add-meetings.php:130
-#: includes/views/post-type/tpl-meeting-fields.php:246
+#: includes/views/post-type/tpl-meeting-fields.php:289
 msgid ""
 "Set what type of auto recording feature you want to add. Default is none."
 msgstr "設定以何種自動錄影形式進行錄製，預設為「不錄影」"
@@ -1418,6 +1463,10 @@ msgstr "設定"
 #: includes/views/live/tpl-list-meetings.php:59
 msgid "Shortcode"
 msgstr "短代碼"
+
+#: includes/views/tabs/api-settings.php:94
+msgid "Show All"
+msgstr "顯示全部"
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:108
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:106
@@ -1467,11 +1516,11 @@ msgstr "顯示會議文章作者？"
 
 #: templates/fragments/filters.php:14
 msgid "Showing all"
-msgstr ""
+msgstr "顯示全部"
 
-#: templates/shortcode/zoom-recordings.php:20
+#: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
-#: includes/views/live/tpl-list-recordings.php:24
+#: includes/views/live/tpl-list-recordings.php:25
 msgid "Size"
 msgstr "大小"
 
@@ -1507,7 +1556,7 @@ msgstr "開始日期/時間"
 #: includes/views/webinars/tpl-add-webinar.php:55
 #: includes/views/live/tpl-edit-meeting.php:66
 #: includes/views/live/tpl-add-meetings.php:55
-#: includes/views/post-type/tpl-meeting-fields.php:105
+#: includes/views/post-type/tpl-meeting-fields.php:134
 msgid "Start Date/Time *"
 msgstr "開始日期/時間 *"
 
@@ -1542,7 +1591,7 @@ msgstr "使用網頁瀏覽器加入會議"
 #: includes/views/webinars/tpl-add-webinar.php:91
 #: includes/views/live/tpl-edit-meeting.php:117
 #: includes/views/live/tpl-add-meetings.php:99
-#: includes/views/post-type/tpl-meeting-fields.php:170
+#: includes/views/post-type/tpl-meeting-fields.php:213
 msgid "Start video when host join meeting."
 msgstr "當主持人進入會議後才啟動視訊"
 
@@ -1551,23 +1600,23 @@ msgstr "當主持人進入會議後才啟動視訊"
 msgid "Start video when panelists join meeting."
 msgstr "當與會者進入會議後才啟動視訊"
 
-#: includes/views/post-type/tpl-meeting-fields.php:198
+#: includes/views/post-type/tpl-meeting-fields.php:241
 msgid "Start video when panelists join webinar."
 msgstr "當與會者進入會議後才啟動視訊"
 
 #: includes/views/live/tpl-edit-meeting.php:126
 #: includes/views/live/tpl-add-meetings.php:108
-#: includes/views/post-type/tpl-meeting-fields.php:178
+#: includes/views/post-type/tpl-meeting-fields.php:221
 msgid "Start video when participants join meeting."
 msgstr "當參與者加入會議，預設啟動參與者視訊"
 
-#: includes/views/post-type/tpl-meeting-fields.php:167
+#: includes/views/post-type/tpl-meeting-fields.php:210
 msgid "Start When Host Joins"
 msgstr "主持人進入後開始"
 
 #: includes/views/live/tpl-edit-meeting.php:76
 #: includes/views/live/tpl-add-meetings.php:58
-#: includes/views/post-type/tpl-meeting-fields.php:108
+#: includes/views/post-type/tpl-meeting-fields.php:137
 msgid "Starting Date and Time of the Meeting (Required)."
 msgstr "會議開始的日期及時間 (必填)"
 
@@ -1591,7 +1640,7 @@ msgstr "狀態"
 msgid "Successfully imported meeting with ID"
 msgstr "成功透過 ID 匯入會議"
 
-#: includes/admin/class-zvc-admin-settings.php:164
+#: includes/admin/class-zvc-admin-settings.php:168
 msgid "Successfully Updated. Please refresh this page."
 msgstr "已成功更新，請重新整理這個頁面。"
 
@@ -1609,7 +1658,18 @@ msgstr "同步你的線上 Zoom 會議到你的網站"
 
 #: includes/admin/class-zvc-admin-reports.php:96
 msgid "The fields cannot be Empty !!"
+msgstr "這個欄位不能空白！"
+
+#: includes/views/live/tpl-list-recordings.php:11
+msgid ""
+"The maximum range can be a month. If no value is provided for this field, "
+"the default will be current date. For example, if you make the API request "
+"on June 30, 2020, without providing the “from” parameter, by default the "
+"value of ‘from’ field will be “2020-05-30” and the value of the ‘to’ field "
+"will be “2020-06-30”."
 msgstr ""
+"日期區間的最大範圍為一個月，如果你沒有填入這個欄位，預設將為當前日期。舉例來說，如果當下為2020年6月30日，如果沒有提供 from 參數，則預設的 "
+"from 參數則為「2020-05-30」而 to 參數則為「2020-06-30」。"
 
 #: includes/views/live/tpl-add-user.php:40
 msgid ""
@@ -1664,12 +1724,13 @@ msgstr "這是一個沒有固定時間的定期會議。"
 #: includes/views/webinars/tpl-add-webinar.php:51
 #: includes/views/live/tpl-edit-meeting.php:62
 #: includes/views/live/tpl-add-meetings.php:51
-#: includes/views/post-type/tpl-meeting-fields.php:60
-#: includes/views/post-type/tpl-meeting-fields.php:87
+#: includes/views/post-type/tpl-meeting-fields.php:57
+#: includes/views/post-type/tpl-meeting-fields.php:89
+#: includes/views/post-type/tpl-meeting-fields.php:112
 msgid "This is host ID for the meeting (Required)."
 msgstr "用於會議的主持人帳號 (必填)"
 
-#: templates/join-web-browser.php:20
+#: templates/join-web-browser.php:21
 msgid "This meeting has been ended by host."
 msgstr "會議已經結束。"
 
@@ -1703,14 +1764,13 @@ msgstr "啟用選項後，前端將不論會議是否結束，都會顯示加入
 
 #: includes/template-functions.php:391 templates/content-meeting.php:67
 #: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:239
-#: templates/fragments/meeting-details.php:52
 #: templates/shortcode/zoom-webinar.php:93
 #: templates/shortcode/zoom-listing.php:69
 #: includes/views/webinars/tpl-edit-webinar.php:58
 #: includes/views/webinars/tpl-add-webinar.php:62
 #: includes/views/live/tpl-edit-meeting.php:80
 #: includes/views/live/tpl-add-meetings.php:62
-#: includes/views/post-type/tpl-meeting-fields.php:115
+#: includes/views/post-type/tpl-meeting-fields.php:144
 msgid "Timezone"
 msgstr "時區"
 
@@ -1730,11 +1790,11 @@ msgstr "的指示，在你的 Zoom 帳戶建立以下 API 欄位所需的資訊"
 #: includes/Shortcodes/Meetings.php:236
 #: templates/fragments/meeting-details.php:27
 #: templates/shortcode/zoom-webinar.php:25
-#: templates/shortcode/zoom-recordings.php:17
+#: templates/shortcode/zoom-recordings.php:23
 #: templates/shortcode/zoom-recordings-by-meeting.php:43
 #: includes/views/webinars/tpl-list-webinars.php:59
 #: includes/views/live/tpl-list-meetings.php:60
-#: includes/views/live/tpl-list-recordings.php:21
+#: includes/views/live/tpl-list-recordings.php:22
 msgid "Topic"
 msgstr "主題"
 
@@ -1779,7 +1839,7 @@ msgstr "總計大小"
 msgid "Trash"
 msgstr "回收桶"
 
-#: includes/views/tabs/api-settings.php:181
+#: includes/views/tabs/api-settings.php:209
 msgid "Try inactive logout"
 msgstr "試試 Inactive Logout"
 
@@ -1803,7 +1863,7 @@ msgstr "請在這裡輸入標題"
 
 #: includes/views/live/tpl-edit-meeting.php:178
 msgid "Update Meeting"
-msgstr ""
+msgstr "更新會議"
 
 #: includes/admin/class-zvc-admin-meetings.php:92
 msgid "Updated meeting."
@@ -1813,11 +1873,11 @@ msgstr "會議已更新"
 msgid "Updated Webinar."
 msgstr "網路研討會已更新"
 
-#: includes/views/tabs/api-settings.php:132
+#: includes/views/tabs/api-settings.php:160
 msgid "Use 24-hour format"
 msgstr "使用 24 小時格式"
 
-#: includes/views/tabs/api-settings.php:139
+#: includes/views/tabs/api-settings.php:167
 msgid "Use full month label format ?"
 msgstr "顯示完整月份名稱？"
 
@@ -1865,6 +1925,10 @@ msgstr "Zoom 視訊會議提供你絕佳的體驗，讓你可在 WordPress 管�
 #: includes/admin/class-zvc-admin-post-type.php:252
 msgid "View meetings"
 msgstr "檢視會議文章"
+
+#: templates/shortcode/zoom-recordings.php:41
+msgid "View Recordings"
+msgstr "檢視錄影"
 
 #: includes/template-functions.php:308
 msgid "Waiting - Not started"
@@ -1949,11 +2013,11 @@ msgstr "網站"
 msgid "What does this do ? Check out"
 msgstr "這是什麼功能？請參閱"
 
-#: includes/views/post-type/tpl-meeting-fields.php:194
+#: includes/views/post-type/tpl-meeting-fields.php:237
 msgid "When Panelists Join"
 msgstr "當與會者加入時"
 
-#: includes/views/post-type/tpl-meeting-fields.php:97
+#: includes/views/post-type/tpl-meeting-fields.php:126
 msgid ""
 "Which type of meeting do you want to create. Note: Webinar requires Zoom "
 "Webinar Plan enabled in your account."
@@ -1967,13 +2031,13 @@ msgstr "整合 WooCommerce？"
 msgid "You are seeing this because you are the author of this post."
 msgstr "因為你是這篇文章的作者，所以你可以看見這個區塊。"
 
-#: includes/views/post-type/tpl-meeting-fields.php:67
+#: includes/views/post-type/tpl-meeting-fields.php:64
 msgid ""
 "You cannot update meeting type. This is not allowed to avoid any conflict "
 "issues."
 msgstr "為避免產生任何衝突問題，你無法更新會議類型。"
 
-#: templates/join-web-browser.php:100
+#: templates/join-web-browser.php:114
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
@@ -1982,7 +2046,7 @@ msgstr "你沒有權限可以檢視這個頁面，請登入或是洽詢網站管
 #: includes/admin/class-zvc-admin-post-type.php:225
 msgctxt "Zoom Category Name"
 msgid "Category"
-msgstr ""
+msgstr "Zoom 分類"
 
 #: includes/admin/class-zvc-admin-post-type.php:291
 msgid "Zoom Details"
@@ -1993,7 +2057,7 @@ msgid "Zoom Integration Settings"
 msgstr "Zoom 整合設定"
 
 #: includes/Elementor/Widgets/MeetingByID.php:45
-#: includes/views/post-type/tpl-meeting-fields.php:66
+#: includes/views/post-type/tpl-meeting-fields.php:63
 msgid "Zoom Meeting"
 msgstr "Zoom 會議"
 
@@ -2025,7 +2089,7 @@ msgstr "主持人的 Zoom 錄影"
 msgid "Zoom Users"
 msgstr "Zoom 使用者"
 
-#: includes/views/post-type/tpl-meeting-fields.php:66
+#: includes/views/post-type/tpl-meeting-fields.php:63
 msgid "Zoom Webinar"
 msgstr "Zoom 網路研討會"
 

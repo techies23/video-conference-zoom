@@ -47,6 +47,8 @@ final class Bootstrap {
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
+		add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
 	}
 
 	public function autoloader() {
@@ -118,6 +120,15 @@ final class Bootstrap {
 	}
 
 	/**
+	 * Include template files
+	 *
+	 * @since  3.7.1
+	 */
+	public function include_template_functions() {
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-functions.php';
+	}
+
+	/**
 	 * Load the other class dependencies
 	 *
 	 * @since    2.0.0
@@ -131,6 +142,7 @@ final class Bootstrap {
 
 		//Loading Includes
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/Datastore.php';
 
 		//AJAX CALLS SCRIPTS
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-ajax.php';
@@ -151,7 +163,6 @@ final class Bootstrap {
 
 		//Templates
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-hooks.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-functions.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Filters.php';
 
 		//Shortcode
@@ -161,7 +172,7 @@ final class Bootstrap {
 			require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Elementor.php';
 		}
 
-		//Idea was to implement gutenberg also but in its current state ! ughh !
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Blocks/Blocks.php';
 	}
 
 	/**
@@ -190,7 +201,7 @@ final class Bootstrap {
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', array( 'jquery' ), $this->plugin_version, true );
 
 		if ( $hook === $pg . "video-conferencing-reports" || $hook === $pg . "video-conferencing-recordings" ) {
-			wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css',false, $this->plugin_version );
+			wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css', false, $this->plugin_version );
 		}
 
 		//Plugin Scripts
@@ -207,7 +218,8 @@ final class Bootstrap {
 			'ajaxurl'      => admin_url( 'admin-ajax.php' ),
 			'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
 			'lang'         => array(
-				'confirm_end' => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" )
+				'confirm_end'  => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" ),
+				'host_id_search'  => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" )
 			)
 		) );
 	}
@@ -250,5 +262,29 @@ final class Bootstrap {
 		update_option( '_zvc_user_lists_expiry_time', '' );
 
 		flush_rewrite_rules();
+	}
+
+	/**
+	 * Add Action links to plugins page.
+	 *
+	 * @param $actions
+	 * @param $plugin_file
+	 *
+	 * @return array
+	 */
+	public function action_link( $actions, $plugin_file ) {
+		static $plugin;
+
+		if ( ! isset( $plugin ) ) {
+			$plugin = ZVC_PLUGIN_ABS_NAME;
+		}
+
+		if ( $plugin == $plugin_file ) {
+			$settings = array( 'settings' => '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">' . __( 'Settings', 'video-conferencing-with-zoom-api' ) . '</a>' );
+
+			$actions = array_merge( $settings, $actions );
+		}
+
+		return $actions;
 	}
 }

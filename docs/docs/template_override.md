@@ -3,9 +3,9 @@ Overriding the template means to change the layout of how the content is display
 ### Overriding the Parent
 
 * Here, parent is the `Video conferencing with zoom api` main plugin templates folder.
-* All frontend templates are stored inside `wp-admin/plugins/video-conferencing-with-zoom-api/templates/` folder.
+* All frontend templates are stored inside `public_html/wp-content/plugins/video-conferencing-with-zoom-api/templates/` folder.
 
-To override, copy files from `wp-admin/plugins/video-conferencing-with-zoom-api/templates/` folder to `wp-content/yourtheme/video-conferencing-zoom/` folder.
+To override, copy files from `public_html/wp-content/plugins/video-conferencing-with-zoom-api/templates/` folder to `public_html/wp-content/yourtheme/video-conferencing-zoom/` folder.
 
 **Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=730" target="_blank">video documentation</a> if you want to see basic live demo on Template Overrides.**
 

@@ -13,6 +13,7 @@ class Webinars {
 
 	/**
 	 * Instance
+	 *
 	 * @var null
 	 */
 	private static $_instance = null;
@@ -107,7 +108,6 @@ class Webinars {
 			return __( 'Host ID should be given when defining this shortcode.', 'video-conferencing-with-zoom-api' );
 		}
 
-		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable' );
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
@@ -126,7 +126,7 @@ class Webinars {
 				if ( ! empty( $decoded_meetings ) && ! empty( $decoded_meetings->code ) ) {
 					return '<strong>Zoom API Error:</strong>' . $decoded_meetings->message;
 				} else {
-					return __( 'Could not retrieve meetings, check Host ID', 'video-conferencing-with-zoom-api' );
+					return __( 'Could not retrieve webinars, check Host ID', 'video-conferencing-with-zoom-api' );
 				}
 			}
 		}
@@ -172,21 +172,26 @@ class Webinars {
 	 * @param $atts
 	 *
 	 * @return string
-	 * @since 3.6.0
+	 * @since  3.6.0
 	 *
 	 * @author Deepen Bajracharya
 	 */
 	public function list_cpt_webinars( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'per_page' => 5,
-				'category' => '',
-				'order'    => 'DESC',
-				'type'     => '',
-				'filter'   => 'yes'
+				'author'       => '',
+				'per_page'     => 5,
+				'category'     => '',
+				'order'        => 'DESC',
+				'type'         => '',
+				'filter'       => 'yes',
+				'show_on_past' => 'yes',
+				'cols'         => 3
 			),
 			$atts, 'zoom_list_webinars'
 		);
+
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 		if ( is_front_page() ) {
 			$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
 		} else {
@@ -215,11 +220,23 @@ class Webinars {
 			)
 		);
 
+		if ( ! empty( $atts['author'] ) ) {
+			$query_args['author'] = absint( $atts['author'] );
+		}
+
 		if ( ! empty( $atts['type'] ) && ! empty( $query_args['meta_query'] ) ) {
+			//NOTE !!!! When using this filter please correctly send minutes or hours otherwise it will output error
+			$threshold_limit = apply_filters( 'vczapi_list_cpt_meetings_threshold', '30 minutes' );
+			if ( $atts['show_on_past'] === "yes" && ! empty( $threshold_limit ) ) {
+				$threshold = ( $atts['type'] === "upcoming" ) ? vczapi_dateConverter( 'now -' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false ) : vczapi_dateConverter( 'now +' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false );
+			} else {
+				$threshold = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
+			}
+
 			$type       = ( $atts['type'] === "upcoming" ) ? '>=' : '<=';
 			$meta_query = array(
 				'key'     => '_meeting_field_start_date_utc',
-				'value'   => vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false ),
+				'value'   => $threshold,
 				'compare' => $type,
 				'type'    => 'DATETIME'
 			);
@@ -243,9 +260,14 @@ class Webinars {
 		$content       = '';
 
 		unset( $GLOBALS['zoom_meetings'] );
-		$GLOBALS['zoom_meetings'] = $zoom_meetings;
+		$GLOBALS['zoom_meetings']          = $zoom_meetings;
+		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
+		//since list webinars shortcode is different from list meeting shortcode $atts['meeting_type'] needs to be defined explicitly here
+		//to be used in shortcode-listing.php otherwise it will cause issues.
+        //@todo: consider using singular webinar instead of webinars - must change code in list_meeting_ajax_handler function
+		$atts['meeting_type'] = 'webinars';  
 		ob_start();
-		vczapi_get_template( 'shortcode-listing.php', true );
+		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
 		$content .= ob_get_clean();
 
 		return $content;

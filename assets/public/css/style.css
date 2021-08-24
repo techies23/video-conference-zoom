@@ -75,7 +75,9 @@
 
 #zvc-cover { background: url(../../images/ajax-loader.gif) no-repeat scroll center center #000000; position: absolute; height: 100%; width: 100%; z-index: 5; opacity: .9; top: 0; }
 
-#vczapi-zoom-browser-meeting { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1; }
+#vczapi-zoom-browser-meeting { position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); z-index: 1; }
+
+#vczapi-zoom-browser-meeting--container { width: 400px; }
 
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form input[type=text], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form input[type=password], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form button[type=submit], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form input[type=email], #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form select { height: 40px; border-radius: 0; }
 
@@ -83,7 +85,7 @@
 
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--meeting-form .form-group { margin-bottom: 10px; }
 
-#vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--info { background: #fff; padding: 20px 30px; margin-bottom: 10px; width: 400px; }
+#vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--info { background: #fff; padding: 20px 30px; margin-bottom: 10px; }
 
 #vczapi-zoom-browser-meeting .vczapi-zoom-browser-meeting--info ul { list-style: none; padding: 0; margin: 0; }
 
@@ -102,17 +104,9 @@
 
 .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-string { font-size: 0.45em; width: 100%; text-transform: uppercase; }
 
-.vczapi-list-zoom-meetings--items { display: flex; flex-wrap: wrap; }
-
-.vczapi-list-zoom-meetings--item { width: 100%; margin-bottom: 20px; }
+.vczapi-list-zoom-meetings { position: relative; }
 
 .vczapi-list-zoom-meetings--item__image { margin-bottom: 20px; }
-
-@media screen and (min-width: 767px) { .vczapi-list-zoom-meetings--item { width: 45%; }
-  .vczapi-list-zoom-meetings--item { margin-right: 5%; } }
-
-@media screen and (min-width: 1200px) { .vczapi-list-zoom-meetings--item { width: 25%; }
-  .vczapi-list-zoom-meetings--item { margin-right: 5%; } }
 
 .vczapi-list-zoom-meetings--item__image { box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3); }
 
@@ -120,9 +114,15 @@
 
 .vczapi-list-zoom-meetings--item__details h1, .vczapi-list-zoom-meetings h2, .vczapi-list-zoom-meetings h3, .vczapi-list-zoom-meetings h4, .vczapi-list-zoom-meetings h5, .vczapi-list-zoom-meetings h6 { font-size: 1.3em; margin-bottom: 5px; }
 
-.vczapi-list-zoom-meetings--item__details__meta .meta { display: flex; flex-direction: column; margin-bottom: 5px; }
+.vczapi-list-zoom-meetings--item__details__meta .meta { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -webkit-flex-direction: column; -ms-flex-direction: column; flex-direction: column; margin-bottom: 5px; }
 
-.vczapi-wrap { display: flex; flex: 1 0 100%; flex-wrap: wrap; margin-right: -5px; margin-left: -5px; }
+.vczapi-list-zoom-meetings .vczapi-loader { display: none; }
+
+.vczapi-list-zoom-meetings.loading .vczapi-loader { display: block; width: 100%; height: 100%; position: absolute; background: rgba(0, 0, 0, 0.5); z-index: 100; }
+
+.vczapi-list-zoom-meetings.loading .vczapi-loader img { -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); left: 50%; top: 50%; position: absolute; }
+
+.vczapi-wrap { display: -ms-flexbox; display: -webkit-box; display: -webkit-flex; display: flex; -ms-flex: 1 0 100%; -webkit-box-flex: 1; -webkit-flex: 1 0 100%; flex: 1 0 100%; -ms-flex-wrap: wrap; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin-right: -5px; margin-left: -5px; }
 
 .vczapi-wrap input, .vczapi-wrap select { width: 100%; }
 
@@ -132,22 +132,27 @@
 
 .vczapi-pb { padding-bottom: 1.5em; }
 
+.vczapi-pb-3 { padding-bottom: 3em; }
+
 .vczapi-pt { padding-top: 1.5em; }
 
 .vczapi-pl { padding-left: 1.5em; }
 
 .vczapi-pr { padding-right: 1.5em; }
 
-.vczapi-col-2, .vczapi-col-3, .vczapi-col-4, .vczapi-col-5, .vczapi-col-6, .vczapi-col-8, .vczapi-col-9, .vczapi-col-10, .vczapi-col-11, .vczapi-col-12 { position: relative; width: 100%; padding-right: 5px; padding-left: 5px; }
+.vczapi-col-2, .vczapi-col-3, .vczapi-col-4, .vczapi-col-5, .vczapi-col-6, .vczapi-col-8, .vczapi-col-9, .vczapi-col-10, .vczapi-col-11, .vczapi-col-12 { position: relative; width: 100%; padding-right: 10px; padding-left: 10px; }
 
-.vczapi-form-control { padding: .75em; height: auto; border-width: 1px; border-style: solid; border-color: #eaeaea; border-radius: 2px; background: #fafafa; box-shadow: none; box-sizing: border-box; transition: all .2s linear; }
+.vczapi-form-control { padding: .75em; height: auto; border-width: 1px; border-style: solid; border-color: #eaeaea; border-radius: 2px; background: #fafafa; box-shadow: none; box-sizing: border-box; -webkit-transition: all .2s linear; transition: all .2s linear; }
 
-@media (min-width: 768px) { .vczapi-col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-  .vczapi-col-3 { flex: 0 0 25%; max-width: 25%; } }
+@media (min-width: 768px) { .vczapi-col-4 { -ms-flex: 0 0 33.333333%; -webkit-box-flex: 0; -webkit-flex: 0 0 33.333333%; flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .vczapi-col-3 { -ms-flex: 0 0 25%; -webkit-box-flex: 0; -webkit-flex: 0 0 25%; flex: 0 0 25%; max-width: 25%; }
+  .vczapi-col-6 { -webkit-box-flex: 0; -ms-flex: 0 0 50%; -webkit-flex: 0 0 50%; flex: 0 0 50%; max-width: 50%; }
+  .vczapi-col-8 { -webkit-box-flex: 0; -ms-flex: 0 0 66.666667%; -webkit-flex: 0 0 66.666667%; flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .vczapi-col-12 { -webkit-box-flex: 0; -ms-flex: 0 0 100%; -webkit-flex: 0 0 100%; flex: 0 0 100%; max-width: 100%; } }
 
 .clearfix { clear: both; }
 
-.vczapi-filters-wrapper { margin-bottom: 2em; margin-top: 1em; align-items: center; }
+.vczapi-filters-wrapper { margin-bottom: 2em; margin-top: 1em; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; }
 
 /* The Modal (background) */
 .vczapi-modal { display: none; /* Hidden by default */ position: fixed; /* Stay in place */ z-index: 9999; /* Sit on top */ padding-top: 100px; /* Location of the box */ left: 0; top: 0; width: 100%; /* Full width */ height: 100%; /* Full height */ overflow: auto; /* Enable scroll if needed */ background-color: black; /* Fallback color */ background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */ /* Modal Content */ /* The Close Button */ }

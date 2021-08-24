@@ -11,6 +11,7 @@ nav:
   - Usage:
       - Meeting Types: meeting_types.md
       - Webinars: webinars.md
+      - Blocks: blocks.md
       - Shortcode: shortcode.md
       - PRO Version Shortcode: pro-shortcode.md
       - Change DateTime: date_types.md
@@ -19,16 +20,17 @@ nav:
       - Template Override: template_override.md
       - Filter Hooks: filters_hooks.md
       - Import Meeting: import-meetings.md
-      - Assign Host Page: assign_host.md
+      - Host to WP: assign_host.md
       - WebHooks: webhooks.md
   - Addons:
-    - Video Conferencing with Zoom Pro: vczapi-pro.md
-    - WooCommerce (Addon): woocommerce.md
-    - WooCommerce Product Vendors (Addon): woocommerce-product-vendors.md
-    - WooCommerce Bookings (Addon): woocommerce-booking.md
-    - Booked Appointments (Addon): booked-appointments.md
-    - WCFM (Addon): wcfm.md
-    - WooCommerce Appointments (addon): woocommerce-appointments.md
+      - Video Conferencing with Zoom Pro: vczapi-pro.md
+      - WooCommerce (Addon): woocommerce.md
+      - WooCommerce Product Vendors (Addon): woocommerce-product-vendors.md
+      - WooCommerce Bookings (Addon): woocommerce-booking.md
+      - Booked Appointments (Addon): booked-appointments.md
+      - Dokan Integration for Zoom (Addon): dokan.md
+      - WCFM (Addon): wcfm.md
+      - WooCommerce Appointments (addon): woocommerce-appointments.md
   - FAQ: faq.md
   - Support: support.md
 theme:

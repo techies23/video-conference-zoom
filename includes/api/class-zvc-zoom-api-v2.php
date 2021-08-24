@@ -68,8 +68,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		/**
 		 * Send request to API
 		 *
-		 * @param $calledFunction
-		 * @param $data
+		 * @param        $calledFunction
+		 * @param        $data
 		 * @param string $request
 		 *
 		 * @return array|bool|string|WP_Error
@@ -245,7 +245,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}
 
 			$createAMeetingArray['topic']      = $data['meetingTopic'];
-			$createAMeetingArray['agenda']     = ! empty( $data['agenda'] ) ? $data['agenda'] : "";
+			$createAMeetingArray['agenda']     = ! empty( $data['agenda'] ) ? wp_strip_all_tags( $data['agenda'], true ) : "";
 			$createAMeetingArray['type']       = ! empty( $data['type'] ) ? $data['type'] : 2; //Scheduled
 			$createAMeetingArray['start_time'] = $start_time;
 			$createAMeetingArray['timezone']   = $data['timezone'];
@@ -258,7 +258,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'participant_video'      => ! empty( $data['option_participants_video'] ) ? true : false,
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ) ? true : false,
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
-				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : ""
+				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : "",
+				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true
 			);
 
 			$createAMeetingArray = apply_filters( 'vczapi_createAmeeting', $createAMeetingArray );
@@ -304,7 +305,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'participant_video'      => ! empty( $data['option_participants_video'] ) ? true : false,
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ) ? true : false,
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
-				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : ""
+				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : "",
+				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true
 			);
 
 			$updateMeetingInfoArray = apply_filters( 'vczapi_updateMeetingInfo', $updateMeetingInfoArray );
@@ -438,7 +440,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		/**
 		 * Create Webinar
 		 *
-		 * @param $userID
+		 * @param       $userID
 		 * @param array $data
 		 *
 		 * @return array|bool|string|void|WP_Error
@@ -452,13 +454,17 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		/**
 		 * Update Webinar
 		 *
-		 * @param $webinar_id
+		 * @param       $webinar_id
 		 * @param array $data
 		 *
 		 * @return array|bool|string|void|WP_Error
 		 */
 		public function updateWebinar( $webinar_id, $data = array() ) {
 			$postData = apply_filters( 'vczapi_updateWebinar', $data );
+			//https://devforum.zoom.us/t/is-there-a-size-limit-for-the-agenda-field/11199
+			//data sanitization for agenda field - remove html tags and make sure it's only 2000 characters.
+			$agenda         = strip_tags( html_entity_decode( $data['agenda'] ), null );
+			$data['agenda'] = substr( $agenda, 0, 1999 );
 
 			return $this->sendRequest( 'webinars/' . $webinar_id, $postData, "PATCH" );
 		}

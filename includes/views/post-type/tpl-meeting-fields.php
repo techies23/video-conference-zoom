@@ -25,7 +25,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         <tr>
             <th scope="row"><label for="meeting-shortcode">Shortcode</label></th>
             <td>
-                <input class="text regular-text" id="meeting-shortcode" type="text" readonly value='[zoom_api_link meeting_id="<?php echo $meeting_details->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
+				<?php if ( $meeting_fields['meeting_type'] == "1" ) { ?>
+                    <input class="text regular-text" id="meeting-shortcode" type="text" readonly value='[zoom_api_link meeting_id="<?php echo $meeting_details->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
+				<?php } else { ?>
+                    <input class="text regular-text" id="meeting-shortcode" type="text" readonly value='[zoom_api_webinar webinar_id="<?php echo $meeting_details->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
+				<?php } ?>
                 <p class="description">
 					<?php _e( 'If you need to show this meeting on another page or post please use this shortcode', 'video-conferencing-with-zoom-api' ); ?>
                 </p>
@@ -108,6 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     <option value="<?php echo $user->id; ?>" <?php selected( $users[0]->id, $user->id ); ?> ><?php echo esc_html( $user->first_name ) . ' ( ' . esc_html( $user->email ) . ' )'; ?></option>
 								<?php } ?>
                             </select>
+                            <p class="vczapi-manually-hostid-wrap"><a href="javascript:void(0);" class="vczapi-admin-hostID-manually-add"><?php _e( 'User not in the list? Click here to manually enter Host.', 'video-conferencing-with-zoom-api' ); ?></a></p>
 						<?php } ?>
                         <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
 					<?php } else {
@@ -178,7 +183,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <option value="0" <?php echo $duration['min'] == 0 ? 'selected' : ''; ?>>0</option>
                     <option value="15" <?php echo $duration['min'] == 15 ? 'selected' : ''; ?>>15</option>
                     <option value="30" <?php echo $duration['min'] == 30 ? 'selected' : ''; ?>>30</option>
-                    <option value="40" <?php echo $duration['min'] == 40 ? 'selected' : ''; ?>>40</option>
+                    <option value="45" <?php echo $duration['min'] == 45 ? 'selected' : ''; ?>>45</option>
                 </select> min
             </label>
         </td>
@@ -188,6 +193,17 @@ if ( ! defined( 'ABSPATH' ) ) {
         <td class="zvc-meetings-form">
             <input type="text" name="password" maxlength="10" data-maxlength="10" class="regular-text" value="<?php echo ! empty( $meeting_details->password ) ? esc_attr( $meeting_details->password ) : false; ?>">
             <p class="description" id="email-description"><?php _e( 'Password to join the meeting. Password may only contain the following characters: [a-z A-Z 0-9]. Max of 10 characters.( Leave blank for auto generate )', 'video-conferencing-with-zoom-api' ); ?></p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <label for="disable-waiting-room"><?php _e( 'Disable Waiting Room', 'video-conferencing-with-zoom-api' ); ?></label></th>
+        <td>
+            <p class="description" id="disable-waiting-room">
+                <input type="checkbox" id="disable-waiting-room" name="disable-waiting-room" value="yes" <?php ! empty( $meeting_fields['disable_waiting_room'] ) ? checked( 'yes', $meeting_fields['disable_waiting_room'] ) : false; ?> class="regular-text">
+				<?php _e( 'Waiting Room is enabled by default - if you want users to skip the waiting room and join the meeting directly - enable this option.' ); ?>
+                <span style="color:red"><?php _e( 'Please keep in mind anyone with the meeting link will be able to join without you allowing them into the meeting.', 'video-conferencing-with-zoom-api' ) ?></span>
+            </p>
         </td>
     </tr>
     <tr>
@@ -202,7 +218,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <th scope="row"><label for="join_before_host"><?php _e( 'Join Before Host', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
             <p class="description" id="join_before_host-description">
-                <input type="checkbox" name="join_before_host" value="1" <?php ! empty( $meeting_fields['join_before_host'] ) ? checked( '1', $meeting_fields['join_before_host'] ) : false; ?> class="regular-text"><?php _e( 'Join meeting before host start the meeting. Only for scheduled or recurring meetings.', 'video-conferencing-with-zoom-api' ); ?>
+                <input type="checkbox" name="join_before_host" value="1" <?php ! empty( $meeting_fields['join_before_host'] ) ? checked( '1', $meeting_fields['join_before_host'] ) : false; ?> class="regular-text"><?php _e( 'Allow users to join meetin before host start/joins the meeting. Only for scheduled or recurring meetings. If the waiting room is enabled, this setting will not work.', 'video-conferencing-with-zoom-api' ); ?>
             </p>
         </td>
     </tr>

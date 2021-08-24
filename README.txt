@@ -1,10 +1,10 @@
 === Video Conferencing with Zoom ===
 Contributors: j__3rk, codemanas, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
-Donate link: https://deepenbajracharya.com.np/donate
+Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
-Tested up to: 5.6
-Stable tag: 3.6.23
+Tested up to: 5.8
+Stable tag: 3.8.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,9 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 **FEATURES:**
 
 * Manage WordPress posts and link them to Live Zoom meetings and Zoom Webinars.
+* Create Recurring meetings and Webinars (PRO)
+* Enable registrations (PRO)
+* Webhooks (PRO)
 * Override single and archive page templates via your theme.
 * JOIN DIRECTLY VIA WEB BROWSER FROM FRONTEND !
 * Start Links for post authors.
@@ -26,6 +29,7 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 * Start time and join links are shown according to local time compared with zoom timezone.
 * Show user recordings based on Zoom Account.
 * Display Webinars via Shortcode
+* Use PMI (PRO)
 * WCFM Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Appointments Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
@@ -35,11 +39,16 @@ Simple plugin which gives you the extensive functionality to manage Zoom Meeting
 * Shortcode
 * Shortcode Template Customize
 * Import your Zoom Meetings into your WordPress Dashboard in one click.
+* Gutenberg Blocks Support
+* Elementor Support
 
 **DOCUMENTATION LINKS:**
 
+* [Installation](https://zoom.codemanas.com/integration/ "Installation")
+* [Full Shortcode Documentation](https://zoom.codemanas.com/shortcode/ "Shortcodes")
 * [Full Documentation](https://zoom.codemanas.com/ "Usage Documentation")
 * [Usage Documentation /w WP](https://deepenbajracharya.com.np/zoom-api-integration-with-wordpress/ "Usage Documentation")
+* [Webhooks](https://zoom.codemanas.com/webhooks/ "Webhooks")
 
 **EXTENDING AND MAKING MEETINGS PURCHASABLE:**
 
@@ -90,27 +99,15 @@ As an extension of the Zoom browser client, this SDK is intended for implementat
 
 **SHORTCODE:**
 
-**You can get your shorcodes from individual meetings after creating certain meeting. (From version 3.1.8+)**
-
-* [zoom_api_link meeting_id="123456789" link_only="no"] - Just enter your meeting ID and you are good to show your meeting in any page. Adding link_only="yes" would show join link only. See [Usage Documentation](https://techies23.github.io/video-conference-zoom/ "Usage Documentation") for more detail on usage.
-
-* [zoom_api_webinar webinar_id="YOUR_WEBINAR_ID" link_only="no"] - Show webinar details based on webinar ID.
-
-* [zoom_list_meetings per_page="5" category="test,test2,test3" order="DESC" filter="no"] - Show list of meetings in frontend via category, Edit shortcode template for table view.
-
-* [zoom_list_webinars per_page="5" category="test,test2,test3" order="DESC" filter="no"] - Show list of webinars in frontend via category, Edit shortcode template for table view.
-
-* [zoom_list_host_meetings host="your_host_id"] - Show list of meetings in frontend for specific HOST ID.
-
-* [zoom_recordings host_id="YOUR_HOST_ID" downloadable="yes"] - Show list of recordings based on HOST ID. By default downloadable is set to false.
-
-* [zoom_recordings_by_meeting meeting_id="MEETING_ID" downloadable="yes"] - which shows recordings based on meeting ID.
+[Full Shortcode Documentation](https://zoom.codemanas.com/shortcode/ "Shortcodes")
 
 **CONTRIBUTING**
 
 There’s a [GIT repository](https://github.com/techies23/video-conference-zoom "GIT repository") if you want to contribute a patch. Please check issues. Pull requests are welcomed and your contributions will be appreciated.
 
 Please consider giving a 5 star thumbs up if you found this useful.
+
+Lastly, Thank you all to those contributors who have contributed for this plugin in one or the other way. Taking from language translations to minor or major suggestions. We appreciate your input in every way !!
 
 **QUICK DEMO:**
 
@@ -173,8 +170,121 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.6.23 January 13th, 2021 =
+= 3.8.12 August 20th, 2021 =
+* Fixed: Join via browser not working when used PMI for meetings/webinars.
+* Fixed: Meeting/Webinar description unescaped string being passed.
+* Fixed: Browser header issue fixed "Cross-Origin-Embedder-Policy", "Cross-Origin-Opener-Policy" related to webSDK resulting in not showing gallery view and video for user joining through join via web.
+
+= 3.8.11 August 11th, 2021 =
+* Fixed: Ajax pagination for webinars not working correctly.
+
+= 3.8.10 August 10th, 2021 =
+* Added: Made Datatable translatable.
+* Minor bug fixes.
+
+= 3.8.9 August 1st, 2021 =
+* Minor Bug Fixes
+
+= 3.8.8 July 23rd, 2021 =
+* Added: Show recording password, can be enabled with filter "vczapi_recordings_show_password"
+* Updated: WebSDK to version 1.9.7
+* Added: "cache" paramter to [zoom_recordings_by_meeting] shortcode.
+
+= 3.8.7 July 19th, 2021 =
+* Changed: Ajax pagination filter changed for zoom-meetings list page.
+* Fixed: Registrations not working when [zoom_meeting_post] shortcode is used.
+
+= 3.8.6 July 16th, 2021 =
+* Fixed: Join via browser block fix for webinar.
+
+= 3.8.5 July 8th, 2021 =
+* Added: Ajax pagination for shortcode meeting/webinar list page (https://zoom.codemanas.com/shortcode/#3-list-upcoming-or-past-meetings).
+
+= 3.8.4 July 1st, 2021 =
+* Changed: Inceased default duration from 40 to 45 as per zoom change.
+
+= 3.8.3 June 10th, 2021 =
+* Fixed: PRO version register now link not working due to priority check incorrectly.
+* Fixed: Importing meetings not working sometimes due to incorrect meeting ID check.
+* Added: Option to stop meeting deletion on zoom side when you delete it from your website.
+* Updated: WebSDK to version 1.9.6
+
+= 3.8.2 May 18th, 2021 =
+* Updated: WebSDK version to 1.9.5
+* Fixed: Gutenberg plugin compatibility.
+* Fixed: https://wordpress.org/support/topic/gutenberg-blocks-support/ issue
+
+= 3.8.1 April 27th, 2021 =
+* Fixed: If meeting does not have password, password field will be hidden when join via browser.
+* Fixed: atob error when meeeting password embed is disabled.
+
+= 3.8.0 April 8th, 2021 =
+* Added: Gutenberg Blocks support.
+* Added: Option to choose host ID manually when creating meeting incase there are more than 300 users in a zoom account.
+
+= 3.7.4 March 30th, 2021 =
+* Added: Setting to disable auto password generation when creating a meeting from wp-admin.
+
+= 3.7.3 March 25th, 2021 =
+* Added: Capability to show multiple recording shortcode in single page. Same for Webinar list shortcode.
+
+= 3.7.2 March 18th, 2021 =
+* Fixed: Archive page not showing webinar dates correctly.
+
+= 3.7.1 March 12th, 2021 =
+* Added: Option to enable disable waiting room.
+* Added: Encoded password and meeting ID when join via browser.
+* Updated: Allowed template functions to be overridden from theme.
+
+= 3.7.0 March 10th, 2021 =
+* Fixed: Validation for Agenda.
+* Added: Shortcode for displaying post type counter post. [zoom_meeting_post post_id="YOUR_POST_ID"]
+* Updated: Zoom WebSDK to version 1.9.1 (https://github.com/zoom/websdk/blob/master/CHANGELOG.md)
+
+= 3.6.33 March 4th, 2021 =
+* Changed: CSS class re-added for backwards compatibility.
+
+= 3.6.32 March 3rd, 2021 =
+* Added: Plugin settings menu
+* Added: 'vczapi_admin_meeting_fields' filter hook to filter results when create/update post type.
+* Added: Filter upcoming or past meetings in wp-admin
+
+= 3.6.31 March 1st, 2021 =
+* Added: 'vczapi_join_via_browser_after_script_load' action hook for additional scripts to be added in join via browser page.
+* Added: Column parameter for [zoom_list_meetings] and [zoom_list_webinars] shortcodes.
+* Changed: CSS Grid layout for Meeting list page and shortcode listing pages.
+
+= 3.6.30 February 24th, 2021 =
+* Added: Dutch translation file added - Thanks to "Gijsbert van Luinen" for providing the translation files.
+* Fixed: Width for join via browser fields when browser info is removed.
+* Added: Show meetings after the event date has passed for about 30 minutes more. This can be done by adding "show_on_past" in [zoom_list_meetings] or [zoom_list_webinars] - By default this is set to true.
+* Added: Theme style enqueued in join via browser pages for additional css changes.
+
+= 3.6.29 February 15th, 2021 =
+* Fixed: Recordings list shortcode pulled via UUID for recurring meeting fix.
+
+= 3.6.28 February 12th, 2021 =
+* Fixed: View recordings button not working when recordings exceed 10 entries.
+* Added: Recordings list view sorting removed for action and duration
+
+= 3.6.27 February 9th, 2021 =
+* Fixed: Showing hour and minutes in frontend meeting details page.
+* Updated: Translations - Thanks to the WordPress translation team !!
+* Fixed: Show shortcode on backend based on type - Meeting or Webinar
+
+= 3.6.26 February 2nd, 2021 =
+* Updated: WebSDK library to 1.9.0 which supports gallery view
+* Updated: Join via browser ( If logged-in user, automatically fills out email and name )
+
+= 3.6.25 January 29th, 2021 =
+* Fixed: Post Author Name not showing in single meeting page.
+
+= 3.6.24 January 29th, 2021 =
+* Added filter hook to show or enable different views in join via browser window. See https://zoom.codemanas.com/filters_hooks/#join-via-browser-show-fields
+
+= 3.6.23 January 28th, 2021 =
 * Updated: Duration selector when creating meeting.
+* Added: Invite button remove from join via browser through settings page.
 
 = 3.6.22 January 13th, 2021 =
 * Fixed: Helper function to get time according to DST.

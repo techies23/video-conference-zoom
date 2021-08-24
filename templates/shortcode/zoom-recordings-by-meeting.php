@@ -21,8 +21,8 @@ foreach ( $zoom_recordings as $zoom_recording ) {
 		}
 		?>
         <tr>
-            <td><?php echo vczapi_dateConverter( $recording->recording_start, $zoom_recording->timezone ); ?></td>
-            <td><?php echo vczapi_dateConverter( $recording->recording_end, $zoom_recording->timezone ); ?></td>
+            <td data-sort="<?php echo strtotime( $recording->recording_start ); ?>"><?php echo vczapi_dateConverter( $recording->recording_start, $zoom_recording->timezone ); ?></td>
+            <td data-sort="<?php echo strtotime( $recording->recording_end ); ?>"><?php echo vczapi_dateConverter( $recording->recording_end, $zoom_recording->timezone ); ?></td>
             <td><?php echo vczapi_filesize_converter( $recording->file_size ); ?></td>
             <td>
                 <a href="<?php echo $recording->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a>
@@ -47,7 +47,7 @@ foreach ( $zoom_recordings as $zoom_recording ) {
         </li>
     </ul>
 </div>
-<table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table vczapi-user-meeting-list">
+<table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table-meeting-id vczapi-user-meeting-list">
     <thead>
     <tr>
         <th><?php _e( 'Start Date', 'video-conferencing-with-zoom-api' ); ?></th>

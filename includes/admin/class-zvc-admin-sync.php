@@ -99,14 +99,14 @@ class Zoom_Video_Conferencing_Admin_Sync {
 
 		//Sync process started = 1
 		if ( $type === "sync" ) {
-			$meeting_id  = absint( filter_input( INPUT_POST, 'meeting_id' ) );
+			$meeting_id  = filter_input( INPUT_POST, 'meeting_id' );
 			$db_meetings = $this->get_existing_meetings();
 			if ( ! empty( $meeting_id ) && ! in_array( $meeting_id, $db_meetings ) ) {
 				$cached_meetings = json_decode( get_option( '_vczapi_sync_meetings' ) );
 				if ( ! empty( $cached_meetings ) ) {
 					foreach ( $cached_meetings->meetings as $k => $meeting ) {
 						//Check for the sent meeting ID
-						if ( $meeting->id === $meeting_id ) {
+						if ( $meeting->id == $meeting_id ) {
 							$meeting = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
 							//If ERROR
 							if ( ! empty( $meeting->code ) ) {
@@ -210,7 +210,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 		$existing_meeting_ids = array();
 		if ( ! empty( $meetings ) ) {
 			foreach ( $meetings as $meeting ) {
-				$meeting_id             = absint( get_post_meta( $meeting->ID, '_meeting_zoom_meeting_id', true ) );
+				$meeting_id             = get_post_meta( $meeting->ID, '_meeting_zoom_meeting_id', true );
 				$existing_meeting_ids[] = $meeting_id;
 			}
 		}

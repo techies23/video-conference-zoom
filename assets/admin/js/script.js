@@ -30,6 +30,7 @@
       $dom.toggleSecret = $('.toggle-secret');
       $dom.changeMeetingState = $('.vczapi-meeting-state-change');
       $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error');
+      this.$manualHostID = $('.vczapi-admin-hostID-manually-add');
     },
     eventListeners: function eventListeners() {
       //Check All Table Elements for Meetings List
@@ -54,7 +55,20 @@
       $('.zvc-dismiss-message').on('click', this.dismissNotice.bind(this));
       $('.check-api-connection').on('click', this.checkConnection.bind(this)); //End and Resume Meetings
 
-      $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this));
+      $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this)); //Manual Host Selector
+
+      this.$manualHostID.on('click', this.showManualHostIDField.bind(this));
+    },
+
+    /**
+     * Show Manual Host ID selector field
+     *
+     * @param e
+     */
+    showManualHostIDField: function showManualHostIDField(e) {
+      e.preventDefault();
+      $('.vczapi-admin-post-type-host-selector').select2('destroy').remove();
+      $('.vczapi-manually-hostid-wrap').before('<input type="text" placeholder="' + zvc_ajax.lang.host_id_search + '" class="regular-text vczapi-search-host-id" name="userId" required>').remove();
     },
     datePickers: function datePickers() {
       //For Datepicker

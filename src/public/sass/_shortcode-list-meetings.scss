@@ -1,0 +1,49 @@
+.vczapi-list-zoom-meetings {
+  position: relative;
+
+  &--item {
+    &__image {
+      margin-bottom: 20px;
+    }
+  }
+
+  &--item__image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3)
+  }
+
+  &--item__details,
+  &--item__details p {
+    font-size: 1em;
+  }
+
+  &--item__details h1, h2, h3, h4, h5, h6 {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+  }
+
+  &--item__details__meta .meta {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+
+  .vczapi-loader {
+    display: none;
+  }
+
+  &.loading .vczapi-loader {
+    display:  block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+
+    img {
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+      position: absolute;
+    }
+  }
+}

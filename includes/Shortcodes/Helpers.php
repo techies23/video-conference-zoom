@@ -12,9 +12,9 @@ class Helpers {
 	/**
 	 * Set Cache Helper
 	 *
-	 * @param $post_id
-	 * @param $key
-	 * @param $value
+	 * @param      $post_id
+	 * @param      $key
+	 * @param      $value
 	 * @param bool $time_in_secods
 	 *
 	 * @return bool
@@ -53,15 +53,20 @@ class Helpers {
 	 *
 	 * @param $query
 	 */
-	public static function pagination( $query ) {
+	public static function pagination( $query, $page_num = 1, $base_url = '' ) {
 		$big = 999999999999999;
 		if ( is_front_page() ) {
 			$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
 		} else {
 			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		}
+		//ajax
+		if ( wp_doing_ajax() ) {
+			$paged = $page_num;
+		}
+		$base_url = ! wp_doing_ajax() ? get_pagenum_link( $big ) : $base_url;
 		echo paginate_links( array(
-			'base'    => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+			'base'    => str_replace( $big, '%#%', esc_url( $base_url ) ),
 			'format'  => '?paged=%#%',
 			'current' => max( 1, $paged ),
 			'total'   => $query->max_num_pages

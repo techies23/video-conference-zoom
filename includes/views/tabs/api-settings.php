@@ -151,34 +151,48 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <p class="description"><?php _e( 'If you are using Zoom Vanity URL then please insert it here else leave it empty.', 'video-conferencing-with-zoom-api' ); ?></p>
                             <a href="https://support.zoom.us/hc/en-us/articles/215062646-Guidelines-for-Vanity-URL-Requests"><?php _e( 'Read more about Vanity
                                 URLs', 'video-conferencing-with-zoom-api' ); ?></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label><?php _e( 'Hide Join Links for Non-Loggedin ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                        <td>
-                            <input type="checkbox" name="hide_join_links_non_loggedin_users" <?php ! empty( $hide_join_link_nloggedusers ) ? checked( $hide_join_link_nloggedusers, 'on' ) : false; ?>>
-                            <span class="description"><?php _e( 'Checking this option will hide join links from your shortcode for non-loggedin users.', 'video-conferencing-with-zoom-api' ); ?></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label><?php _e( 'Disable Embed password in Link ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                        <td>
-                            <input type="checkbox" name="embed_password_join_link" <?php ! empty( $embed_password_join_link ) ? checked( $embed_password_join_link, 'on' ) : false; ?>>
-                            <span class="description"><?php _e( 'Meeting password will not be included in the invite link to allow participants to join with just one click without having to enter the password.', 'video-conferencing-with-zoom-api' ); ?></span>
-                        </td>
-                    </tr>
-                    <tr class="enabled-join-links-after-mtg-end">
-                        <th><label><?php _e( 'Show Past Join Link ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                        <td>
-                            <input type="checkbox" name="meeting_end_join_link" <?php ! empty( $past_join_links ) ? checked( $past_join_links, 'on' ) : false; ?>>
-                            <span class="description"><?php _e( 'This will show join meeting links on frontend even after meeting time is already past.', 'video-conferencing-with-zoom-api' ); ?></span>
-                        </td>
-                    </tr>
-                    <tr class="show-zoom-authors">
-                        <th><label><?php _e( 'Show Zoom Author ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                        <td>
-                            <input type="checkbox" name="meeting_show_zoom_author_original" <?php ! empty( $zoom_author_show ) ? checked( $zoom_author_show, 'on' ) : false; ?>>
-                            <span class="description"><?php _e( 'Checking this show Zoom original Author in single meetings page which are created from', 'video-conferencing-with-zoom-api' ); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label><?php _e( 'Meetings Deletion ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="donot_delete_zom_meeting_also" <?php ! empty( $donot_delete_zoom ) ? checked( $donot_delete_zoom, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Do not delete your meetings on Zoom, when you delete your meeting from Zoom Meetings > All Meetings page.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label><?php _e( 'Disable Auto Password Generation ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="disable_auto_pwd_generation" <?php ! empty( $disable_auto_pwd_generation ) ? checked( $disable_auto_pwd_generation, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Checking this option will disable auto password generation for new meetings which are created from Zoom meeting > Add new section.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label><?php _e( 'Hide Join Links for Non-Loggedin ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="hide_join_links_non_loggedin_users" <?php ! empty( $hide_join_link_nloggedusers ) ? checked( $hide_join_link_nloggedusers, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Checking this option will hide join links from your shortcode for non-loggedin users.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label><?php _e( 'Disable Embed password in Link ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="embed_password_join_link" <?php ! empty( $embed_password_join_link ) ? checked( $embed_password_join_link, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Meeting password will not be included in the invite link to allow participants to join with just one click without having to enter the password.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr class="enabled-join-links-after-mtg-end">
+                    <th><label><?php _e( 'Show Past Join Link ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="meeting_end_join_link" <?php ! empty( $past_join_links ) ? checked( $past_join_links, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'This will show join meeting links on frontend even after meeting time is already past.', 'video-conferencing-with-zoom-api' ); ?></span>
+                    </td>
+                </tr>
+                <tr class="show-zoom-authors">
+                    <th><label><?php _e( 'Show Zoom Author ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="checkbox" name="meeting_show_zoom_author_original" <?php ! empty( $zoom_author_show ) ? checked( $zoom_author_show, 'on' ) : false; ?>>
+                        <span class="description"><?php _e( 'Checking this show Zoom original Author in single meetings page which are created from', 'video-conferencing-with-zoom-api' ); ?>
                                 <a href="<?php echo esc_url( admin_url( '/edit.php?post_type=zoom-meetings' ) ); ?>">Zoom Meetings</a></span>
                     </td>
                 </tr>
@@ -299,9 +313,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="zvc-position-floater-right">
         <ul class="zvc-information-sec">
             <li>
-                <a target="_blank" href="https://www.facebook.com/groups/zoomwp/"><?php _e( 'Facebook Group', 'video-conferencing-with-zoom-api' ); ?></a>
-            </li>
-            <li>
                 <a target="_blank" href="https://zoom.codemanas.com"><?php _e( 'Documentation', 'video-conferencing-with-zoom-api' ); ?></a>
             </li>
             <li>
@@ -310,6 +321,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             <li><a target="_blank" href="https://deepenbajracharya.com.np"><?php _e( 'Developer', 'video-conferencing-with-zoom-api' ); ?></a></li>
             <li>
                 <a target="_blank" href="<?php echo admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-addons' ); ?>"><?php _e( 'Addons', 'video-conferencing-with-zoom-api' ); ?></a>
+            </li>
+            <li>
+                <a target="_blank" href="https://www.facebook.com/groups/zoomwp/"><?php _e( 'Facebook Group', 'video-conferencing-with-zoom-api' ); ?></a>
             </li>
         </ul>
         <div class="zvc-information-sec">

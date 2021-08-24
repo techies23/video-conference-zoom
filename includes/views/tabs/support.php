@@ -23,14 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="vczapi-settings-admin-support-bg">
-        <h3>Facebook Group</h3>
-        <p>We have created a facebook group in order to raise and solve questions as well as provide necessary updates to the plugin changes and so on. </p><p>You can follow our
-            <a href="https://www.facebook.com/groups/zoomwp/">Facebook Group</a> where you can see what others are facing and also post the issues that you are facing and let the community solve it for you.
-        </p>
-    </div>
-
-
-    <div class="vczapi-settings-admin-support-bg">
         <h3>Premium Support Ticket for premium users</h3>
         <p>Create a ticket or view if your queries are already answered in <a href="https://www.codemanas.com/forums/">Support forum</a>. </p>
         <p>Check <a href="https://www.codemanas.com/">site</a> for recent change logs and updates.</p>
