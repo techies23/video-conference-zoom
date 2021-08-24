@@ -144,8 +144,6 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
 					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
 					$disable_auto_pwd_generation        = sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) );
-
-
 					update_option( 'vczapi_enable_join_via_browser', $vczapi_enable_join_via_browser );
 					update_option( 'vczapi_enable_oauth_individual_use', $vczapi_enable_oauth_individual_use );
 					update_option( 'zoom_api_key', $zoom_api_key );
