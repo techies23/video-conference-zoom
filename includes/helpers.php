@@ -924,5 +924,5 @@ function vczapi_is_jwt_enabled(){
 }
 
 function vczapi_is_oauth_used_globally(){
-	return empty( get_option('vczapi_enable_oauth_individual_use') );
+	return ( get_option('vczapi_enable_oauth_individual_use') == 'yes' );
 }
