@@ -13,7 +13,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		add_action( 'wp_ajax_zvc_delete_meeting', array( $this, 'delete_meeting' ) );
 		add_action( 'wp_ajax_zvc_bulk_meetings_delete', array( $this, 'delete_bulk_meeting' ) );
 		add_action( 'wp_ajax_zoom_dimiss_notice', array( $this, 'dismiss_notice' ) );
-		add_action( 'wp_ajax_check_connection', array( $this, 'check_connection' ) );
 
 		//Join via browser Auth Call
 		add_action( 'wp_ajax_nopriv_get_auth', array( $this, 'get_auth' ) );
@@ -100,33 +99,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	public function dismiss_notice() {
 		update_option( 'zoom_api_notice', 1 );
 		wp_send_json( 1 );
-		wp_die();
-	}
-
-	/**
-	 * Check API connection
-	 *
-	 * @since 3.0.0
-	 * @author Deepen Bajracharya
-	 */
-	public function check_connection() {
-		check_ajax_referer( '_nonce_zvc_security', 'security' );
-
-		$test = json_decode( zoom_conference()->listUsers() );
-		if ( ! empty( $test ) ) {
-			if ( ! empty( $test->code ) ) {
-				wp_send_json( $test->message );
-			}
-
-			if ( http_response_code() === 200 ) {
-				//After user has been created delete this transient in order to fetch latest Data.
-				video_conferencing_zoom_api_delete_user_cache();
-
-				wp_send_json( "API Connection is good. Please refresh !" );
-			} else {
-				wp_send_json( $test );
-			}
-		}
 		wp_die();
 	}
 

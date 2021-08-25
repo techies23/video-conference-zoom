@@ -52,8 +52,7 @@
 
       $dom.togglePwd.on('click', this.toggleAPISettings.bind(this));
       $dom.toggleSecret.on('click', this.toggleSecretSettings.bind(this));
-      $('.zvc-dismiss-message').on('click', this.dismissNotice.bind(this));
-      $('.check-api-connection').on('click', this.checkConnection.bind(this)); //End and Resume Meetings
+      $('.zvc-dismiss-message').on('click', this.dismissNotice.bind(this)); //End and Resume Meetings
 
       $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this)); //Manual Host Selector
 
@@ -335,18 +334,6 @@
       }).done(function (result) {
         //Done
         console.log(result);
-      });
-    },
-    checkConnection: function checkConnection(e) {
-      e.preventDefault();
-      $dom.cover.show();
-      $.post(zvc_ajax.ajaxurl, {
-        action: 'check_connection',
-        security: zvc_ajax.zvc_security
-      }).done(function (result) {
-        //Done
-        $dom.cover.hide();
-        alert(result);
       });
     },
 

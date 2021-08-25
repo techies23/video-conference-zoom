@@ -83,8 +83,6 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				))
 			);
 
-			
-
 			if ( $request == "GET" ) {
 				$args['body'] = ! empty( $data ) ? $data : array();
 				$response     = wp_remote_get( $request_url, $args );

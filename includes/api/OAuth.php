@@ -7,7 +7,15 @@ use \Firebase\JWT\JWT;
 
 require_once( ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php' );
 
-class Oauth extends Zoom_Video_Conferencing_Api {
+/**
+ * Class OAuth
+ *
+ * Handle OAuth operations for Zoom API.
+ *
+ * @since 3.9.0
+ * @package Codemanas\Zoom\Core
+ */
+class OAuth extends Zoom_Video_Conferencing_Api {
 	public static $_instance = null;
 	private $authorization_header = '';
 	private $client_id = 'LhF1UQO0SKuuBFUH69iyrw';
@@ -15,7 +23,7 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	//redirect uri required to generate request access token url
 	private $redirect_uri = 'https://oauth.codemanas.com/zprocess/';
 
-	// authorization is 2nd part of Oauth process
+	// authorization is 2nd part of OAuth process
 	private $authorize_uri = 'https://zoom.us/oauth/authorize';
 	private $zoom_verify_listener = '';
 	private $access_token_url = 'https://zoom.us/oauth/token';
@@ -37,6 +45,10 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		$this->temp_jwt_key = $temp_jwt_key;
 	}
 
+	/**
+     * Get Instance
+	 * @return OAuth|null
+	 */
 	public static function get_instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
@@ -46,23 +58,24 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
-	 * Oauth constructor.
+	 * OAuth constructor.
 	 */
 	public function __construct() {
 		$this->set_required_fields();
 		parent::__construct();
 		add_action( 'admin_init', [ $this, 'request_or_remove_access_token' ] );
 		add_filter( 'vczapi_core_api_request_headers', [ $this, 'change_request_headers' ] );
-		//currently workig under the assumption that once connected only connected user is used - and not any accounts they may have under those user
 		add_filter( 'vczapi_users_list', [ $this, 'set_zoom_user' ] );
-		add_action( 'vczapi_check_oauth_response', [ $this, 'check_refresh_token_and_resend_request' ], 10, 4 );
+		add_filter( 'vczapi_check_oauth_response', [ $this, 'check_refresh_token_and_resend_request' ], 10, 4 );
 
 		add_action( 'wp_ajax_vczapi_verify_jwt_keys', [ $this, 'verify_jwt_keys' ] );
 		add_action( 'pre_get_posts', [ $this, 'show_only_own_zoom_meetings' ] );
 	}
 
 	/**
-	 * Set Required Variables for Oauth to work properly
+	 * Set Required Variables for OAuth to work properly
+     *
+     * @since 3.9.0
 	 */
 	public function set_required_fields() {
 		$this->zoom_verify_listener = admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' );
@@ -75,35 +88,38 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * @param \WP_Query $wp_query
+     *
+     * @since 3.9.0
 	 */
 	public function show_only_own_zoom_meetings( \WP_Query $wp_query ) {
 		if ( vczapi_is_oauth_used_globally() ) {
 			return;
 		}
+
 		if ( $wp_query->is_main_query() && is_admin() && $wp_query->get( 'post_type' ) == 'zoom-meetings' ) {
 			$screen = get_current_screen();
 			if ( $screen->id == 'edit-zoom-meetings' ) {
 				$wp_query->set( 'author', $this->current_user_id );
 				add_filter( 'views_edit-zoom-meetings', '__return_false' );
 			}
-
 		}
 
 	}
 
 	/**
+     * Overridden to check key using passed $key and $secret
+     *
 	 * @param false $key
 	 * @param false $secret
+     * @since 3.9.0
 	 *
 	 * @return string
-	 * Overridden to check key using passed $key and $secret
 	 */
 	private function generateJWTKey( $key = false, $secret = false ) {
 		if ( empty( $key ) || empty( $secret ) ) {
 			$key    = $this->zoom_api_key;
 			$secret = $this->zoom_api_secret;
 		}
-
 
 		$token = array(
 			"iss" => $key,
@@ -115,6 +131,8 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Verify JWT Keys
+     *
+     * @since 3.9.0
 	 */
 	public function verify_jwt_keys() {
 		$api_key    = filter_input( INPUT_POST, 'api_key' );
@@ -124,15 +142,31 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		$this->temp_jwt_key = $this->generateJWTKey( $api_key, $secret_key );
 		remove_filter( 'vczapi_core_api_request_headers', [ $this, 'change_request_headers' ], 10 );
 		add_filter( 'vczapi_core_api_request_headers', [ $this, 'set_temp_jwt_key_for_header' ], 20 );
-		$response = $this->listUsers();
-		wp_send_json( json_decode( $response ) );
+		$response = json_decode( $this->listUsers() );
+		if ( ! empty( $response->code ) ) {
+			wp_send_json( $response->message );
+		}
+
+		if ( http_response_code() === 200 ) {
+			//After user has been created delete this transient in order to fetch latest Data.
+			/**
+			 * @TODO: Correctly place users into the cache!
+			 */
+			#video_conferencing_zoom_api_delete_user_cache();
+
+			wp_send_json( __( "JWT keys verified - please save the settings now !", "video-conferencing-with-zoom-api" ) );
+		} else {
+			wp_send_json( $response );
+		}
 	}
 
 	/**
+     * Set temporary JWT key to verify JWT keys
+     *
 	 * @param $headers
+     * @since 3.9.0
 	 *
 	 * @return mixed
-	 * Set temporary JWT key to verify JWT keys
 	 */
 	public function set_temp_jwt_key_for_header( $headers ) {
 		$headers['Authorization'] = 'Bearer ' . $this->temp_jwt_key;
@@ -141,10 +175,12 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
+     * Purpose of this is to allow 3rd Party extensions to get OAuth Data and use it to create meetings
+     *
 	 * @param false $user_id
+     * @since 3.9.0
 	 *
 	 * @return false|mixed|void
-	 * Purpose of this is to allow 3rd Party extensions to get Oauth Data and use it to create meetings
 	 */
 	public function get_oauth_data( $user_id = false ) {
 		$oauth_data = false;
@@ -164,6 +200,10 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
+     * Get authorized user information
+     *
+     * @since 3.9.0
+     *
 	 * @return array|bool|string|\WP_Error
 	 */
 	public function getMyInfo() {
@@ -172,38 +212,46 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Generate connect to Zoom html
+     *
+     * @since 3.9.0
 	 */
 	public function maybe_connected_to_zoom_html() {
 		if ( empty( $this->user_oauth_data ) ) {
 			?>
-            <a href="<?php echo $this->get_request_user_authentication_url(); ?>" class="button button-hero button-primary">Connect Your Account via Oauth</a>
+            <a href="<?php echo $this->get_request_user_authentication_url(); ?>" class="button button-hero button-primary"><?php _e( 'Connect Your Account via OAuth (BETA)', 'video-conferencing-with-zoom-api' ); ?></a>
 			<?php
 		} else {
 			//$this->regenerate_access_token();
 			$connected_user_info = json_decode( $this->getMyInfo() );
+			dump($connected_user_info);
 			if ( isset( $connected_user_info->code ) && $connected_user_info->code == '124' ) {
 				?>
-                <a href="<?php echo $this->get_request_user_authentication_url(); ?>" class="button button-hero button-primary">Connect Your Account via Oauth</a>
+                <a href="<?php echo $this->get_request_user_authentication_url(); ?>" class="button button-hero button-primary"><?php _e( 'Connect Your Account via OAuth (BETA)', 'video-conferencing-with-zoom-api' ); ?></a>
 				<?php
+			} else if ( isset( $connected_user_info->code ) ) {
+				echo '<h3>' . __( 'ERROR', 'video-conferencing-with-zoom-api' ) . ': ' . $connected_user_info->message . ' ' . __( 'There seems to be an error connecting with zoom API. Please try refreshing the browser.', 'video-conferencing-with-zoom-api' ) . '</h3>';
 			} else {
 				?>
-                <h4>
+                <h3>
 					<?php
 					if ( \vczapi_is_oauth_used_globally() ) {
 						_e( 'This is the site wide Zoom Account', 'video-conferencing-with-zoom-api' );
 					} else {
 						_e( 'You are Connected to Zoom', 'video-conferencing-with-zoom-api' );
 					}
-					?></h4>
+					?>
+                </h3>
                 <div class="" style="display:flex;flex-wrap:wrap;">
-                    <div class="" style="">
-                        <img src="<?php echo $connected_user_info->pic_url; ?>" style="border-radius:50%;">
-                    </div>
+					<?php if ( ! empty( $connected_user_info->pic_url ) ) { ?>
+                        <div class="" style="">
+                            <img src="<?php echo $connected_user_info->pic_url; ?>" style="border-radius:50%;">
+                        </div>
+					<?php } ?>
                     <div class="" style="padding-left:20px">
                         <ul>
-                            <li>Host Id: <?php echo $connected_user_info->id; ?></li>
-                            <li>Name: <?php echo $connected_user_info->first_name . ' ' . $connected_user_info->last_name; ?></li>
-                            <li>Email: <?php echo $connected_user_info->email; ?></li>
+                            <li><?php _e( 'Host ID', 'video-conferencing-with-zoom-api' ); ?>: <?php echo $connected_user_info->id; ?></li>
+                            <li><?php _e( 'Name', 'video-conferencing-with-zoom-api' ); ?>: <?php echo $connected_user_info->first_name . ' ' . $connected_user_info->last_name; ?></li>
+                            <li><?php _e( 'Email', 'video-conferencing-with-zoom-api' ); ?>: <?php echo $connected_user_info->email; ?></li>
                         </ul>
                     </div>
                     <div style="padding-left:20px">
@@ -218,20 +266,19 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 							<?php
 						}
 						?>
-                        <a id="vczapi-remove-oauth-access" href="<?php echo $this->zoom_verify_listener . '&revoke_access_token=true'; ?>" class="button button-hero button-primary" style="margin-top:10px;">Disconnect your account</a>
+                        <a id="vczapi-remove-oauth-access" href="<?php echo $this->zoom_verify_listener . '&revoke_access_token=true'; ?>" class="button button-hero button-primary" style="margin-top:10px;"><?php _e( 'Disconnect your account', 'video-conferencing-with-zoom-api' ); ?></a>
                     </div>
-
                 </div>
-
-
 				<?php
 			}
-
 		}
-
 	}
 
 	/**
+     * Generate authentication URL
+     *
+     * @since 3.9.0
+     *
 	 * @return string return Authentication URL
 	 */
 	public function get_request_user_authentication_url() {
@@ -244,6 +291,8 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Handler to check if you should revoke or request new access token
+     *
+     * @since 3.9.0
 	 */
 	public function request_or_remove_access_token() {
 		global $pagenow;
@@ -261,6 +310,8 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Request Access Token according to code returned
+     *
+     * @since 3.9.0
 	 */
 	public function requestAccessToken() {
 		$code = filter_input( INPUT_GET, 'code' );
@@ -300,7 +351,6 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 				update_option( 'vczapi_global_connected_user_info', $vczpai_connected_user_info );
 			}
 
-
 			wp_redirect( $this->zoom_verify_listener );
 			exit;
 		}
@@ -308,6 +358,8 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Revoke Access Token when requested.
+     *
+     * @since 3.9.0
 	 */
 	public function revokeAccessToken() {
 
@@ -347,7 +399,10 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
+     * Change request header to math OAuth request
+     *
 	 * @param $headers
+     * @since 3.9.0
 	 *
 	 * @return mixed
 	 */
@@ -365,7 +420,6 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	 * @return mixed|null[]
 	 */
 	public function set_zoom_user( $users ) {
-
 		if ( ! vczapi_is_oauth_used_globally() && ! empty( $this->connected_user_info ) ) {
 			$users = [ $this->connected_user_info ];
 		} else if ( ! vczapi_is_oauth_used_globally() && empty( $this->connected_user_info ) ) {
@@ -376,13 +430,16 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
+     * Uses refresh token if required and resends / re-dos request
+     *
 	 * @param $response
 	 * @param $calledFunction
 	 * @param $data
 	 * @param $request
+     *
+     * @since 3.9.0
 	 *
 	 * @return array|bool|mixed|string|\WP_Error
-	 * Uses refresh token if required and resends / re-dos request
 	 */
 	public function check_refresh_token_and_resend_request( $response, $calledFunction, $data, $request ) {
 		//** remove filter so we don't end up in a loop */
@@ -391,7 +448,7 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 		if ( isset( $response_check->code ) && $response_check->code == '124' ) {
 			$response_body = $this->regenerate_access_token();
 			if ( isset( $response_body->access_token ) ) {
-				$response = zoom_conference()->sendRequest( $calledFunction, $data, $request );
+				$response = $this->sendRequest( $calledFunction, $data, $request );
 			}
 		}
 
@@ -399,11 +456,13 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
+     * Regenerate Access Token
+     *
+     * @since 3.9.0
+     *
 	 * @return mixed|null
-	 * Regenerate Access Token
 	 */
 	public function regenerate_access_token() {
-		$this->access_token_url;
 		if ( isset( $this->user_oauth_data->refresh_token ) && ! empty( $this->user_oauth_data->refresh_token ) ) {
 			$regen_access_token_url = add_query_arg(
 				[
@@ -420,7 +479,6 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 			];
 
 			$response = wp_remote_post( $regen_access_token_url, $header_args );
-
 			$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 			if ( ! isset( $response_body->error ) ) {
 				//update user oauth data first or else getting connected user info will be wrong
@@ -429,7 +487,7 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 				$vczpai_connected_user_info = json_decode( $this->getMyInfo() );
 				update_user_meta( $this->current_user_id, 'vczapi_connected_user_info', $vczpai_connected_user_info );
 				$this->connected_user_info = $vczpai_connected_user_info;
-				\file_put_contents( \get_stylesheet_directory() . '/access_token_regenerated.txt', var_export( $response_body, true ) );
+				#file_put_contents( get_stylesheet_directory() . '/access_token_regenerated.txt', var_export( $response_body, true ) );
 			}
 
 			return $response_body;
@@ -437,4 +495,4 @@ class Oauth extends Zoom_Video_Conferencing_Api {
 	}
 }
 
-Oauth::get_instance();
+OAuth::get_instance();

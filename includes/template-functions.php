@@ -156,11 +156,6 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
 		<?php
 	}
 
-	// JWT API keys are required to enable join via browser
-	if( !vczapi_is_jwt_enabled() ){
-		return;
-	}
-
 	if ( wp_doing_ajax() ) {
 		$post_id         = filter_input( INPUT_POST, 'post_id' );
 		$meeting_details = get_post_meta( $post_id, '_meeting_fields', true );

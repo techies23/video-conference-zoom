@@ -817,8 +817,9 @@ function vczapi_getWpUsers_basedon_UserRoles( $search = false ) {
  * @return bool
  */
 function vczapi_check_disable_joinViaBrowser() {
-	$disable_jvb = get_option( 'zoom_api_disable_jvb' );
-	if ( ! empty( $disable_jvb ) ) {
+	$disable_jvb    = get_option( 'zoom_api_disable_jvb' );
+	$jwt_keys_added = ! empty( get_option( 'zoom_api_key' ) ) && ! empty( get_option( 'zoom_api_secret' ) );
+	if ( ! empty( $disable_jvb ) && $jwt_keys_added == true ) {
 		return true;
 	}
 
@@ -913,16 +914,12 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
 	return array( 'hr' => $hours, 'min' => $minutes );
 }
 
-function vczapi_is_jwt_enabled(){
-	$join_via_browser_enabled = get_option('vczapi_enable_join_via_browser');
-	$jwt_keys_added = !empty( get_option( 'zoom_api_key' )) &&  !empty( get_option( 'zoom_api_secret' ));
-	if($join_via_browser_enabled == 'yes' && $jwt_keys_added == true ){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-function vczapi_is_oauth_used_globally(){
-	return ( get_option('vczapi_enable_oauth_individual_use') != 'yes' );
+/**
+ * Check if oAuth is used Globally
+ *
+ * @since 3.9.0
+ * @return bool
+ */
+function vczapi_is_oauth_used_globally() {
+	return ( get_option( 'vczapi_enable_oauth_individual_use' ) != 'yes' );
 }

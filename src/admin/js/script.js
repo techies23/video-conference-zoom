@@ -60,8 +60,6 @@
 
             $('.zvc-dismiss-message').on('click', this.dismissNotice.bind(this));
 
-            $('.check-api-connection').on('click', this.checkConnection.bind(this));
-
             //End and Resume Meetings
             $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this));
 
@@ -325,16 +323,6 @@
             $.post(zvc_ajax.ajaxurl, {action: 'zoom_dimiss_notice'}).done(function (result) {
                 //Done
                 console.log(result);
-            });
-        },
-
-        checkConnection: function (e) {
-            e.preventDefault();
-            $dom.cover.show();
-            $.post(zvc_ajax.ajaxurl, {action: 'check_connection', security: zvc_ajax.zvc_security}).done(function (result) {
-                //Done
-                $dom.cover.hide();
-                alert(result);
             });
         },
 
