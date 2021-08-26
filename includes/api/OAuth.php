@@ -12,7 +12,7 @@ require_once( ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php' );
  *
  * Handle OAuth operations for Zoom API.
  *
- * @since 3.9.0
+ * @since   3.9.0
  * @package Codemanas\Zoom\Core
  */
 class OAuth extends Zoom_Video_Conferencing_Api {
@@ -24,12 +24,14 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Auth Header Placeholder
+	 *
 	 * @var string
 	 */
 	private $authorization_header = '';
 
 	/**
 	 * Client ID
+	 *
 	 * @var string
 	 */
 	private $client_id = 'LhF1UQO0SKuuBFUH69iyrw';
@@ -68,6 +70,7 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 
 	/**
 	 * Get Instance
+	 *
 	 * @return OAuth|null
 	 */
 	public static function get_instance() {
@@ -109,6 +112,44 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 
 		$this->user_oauth_data     = ( ! vczapi_is_oauth_used_globally() ) ? get_user_meta( $this->current_user_id, 'vczapi_zoom_oauth', true ) : get_option( 'vczapi_global_zoom_oauth' );
 		$this->connected_user_info = ( ! vczapi_is_oauth_used_globally() ) ? get_user_meta( $this->current_user_id, 'vczapi_connected_user_info', true ) : get_option( 'vczapi_global_connected_user_info' );
+	}
+
+	/**
+     * Saves users oauth data to system
+	 * @param $response_body
+	 *
+	 * @since 3.9.0
+	 */
+	private function save_oauth_credentials( $response_body ) {
+		if ( ! isset( $response_body->error ) ) {
+			//update user oauth data first or else getting connected user info will be wrong
+
+			$this->user_oauth_data      = $response_body;
+			$vczpai_connected_user_info = json_decode( $this->getMyInfo() );
+
+			update_user_meta( $this->current_user_id, 'vczapi_zoom_oauth', $response_body );
+			update_user_meta( $this->current_user_id, 'vczapi_connected_user_info', $vczpai_connected_user_info );
+			$this->connected_user_info = $vczpai_connected_user_info;
+
+			if ( vczapi_is_oauth_used_globally() ) {
+				update_option( 'vczapi_global_zoom_oauth', $response_body );
+				update_option( 'vczapi_global_connected_user_info', $vczpai_connected_user_info );
+			}
+		}
+	}
+
+	/**
+     * Removes users oauth data from system
+	 * @since 3.9.0
+	 */
+	private function remove_oauth_credentials() {
+		delete_user_meta( $this->current_user_id, 'vczapi_zoom_oauth' );
+		delete_user_meta( $this->current_user_id, 'vczapi_connected_user_info' );
+
+		if ( \vczapi_is_oauth_used_globally() ) {
+			delete_option( 'vczapi_global_zoom_oauth' );
+			delete_option( 'vczapi_global_connected_user_info' );
+		}
 	}
 
 	/**
@@ -366,17 +407,7 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 
 		if ( ! isset( $response_body->error ) ) {
 			//update user oauth data first or else getting connected user info will be wrong
-			update_user_meta( $this->current_user_id, 'vczapi_zoom_oauth', $response_body );
-			$this->user_oauth_data = $response_body;
-
-			$vczpai_connected_user_info = json_decode( $this->getMyInfo() );
-			update_user_meta( $this->current_user_id, 'vczapi_connected_user_info', $vczpai_connected_user_info );
-			$this->connected_user_info = $vczpai_connected_user_info;
-
-			if ( vczapi_is_oauth_used_globally() ) {
-				update_option( 'vczapi_global_zoom_oauth', $response_body );
-				update_option( 'vczapi_global_connected_user_info', $vczpai_connected_user_info );
-			}
+			$this->save_oauth_credentials( $response_body );
 
 			wp_redirect( $this->zoom_verify_listener );
 			exit;
@@ -412,13 +443,7 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 		$response      = wp_remote_post( $revoke_query, $header_args );
 		$response_body = wp_remote_retrieve_body( $response );
 
-		delete_user_meta( $this->current_user_id, 'vczapi_zoom_oauth' );
-		delete_user_meta( $this->current_user_id, 'vczapi_connected_user_info' );
-
-		if ( \vczapi_is_oauth_used_globally() ) {
-			delete_option( 'vczapi_global_zoom_oauth' );
-			delete_option( 'vczapi_global_connected_user_info' );
-		}
+		$this->remove_oauth_credentials();
 
 		wp_redirect( $this->zoom_verify_listener );
 		exit;
@@ -509,21 +534,13 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 			$response      = wp_remote_post( $regen_access_token_url, $header_args );
 			$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 			if ( ! isset( $response_body->error ) ) {
-				update_user_meta( $this->current_user_id, 'vczapi_zoom_oauth', $response_body );
-				$this->user_oauth_data      = $response_body;
-				$vczpai_connected_user_info = json_decode( $this->getMyInfo() );
-				update_user_meta( $this->current_user_id, 'vczapi_connected_user_info', $vczpai_connected_user_info );
-				$this->connected_user_info = $vczpai_connected_user_info;
-				#file_put_contents( get_stylesheet_directory() . '/access_token_regenerated.txt', var_export( $response_body, true ) );
-
-				if ( vczapi_is_oauth_used_globally() ) {
-					update_option( 'vczapi_global_zoom_oauth', $response_body );
-					update_option( 'vczapi_global_connected_user_info', $vczpai_connected_user_info );
-				}
+				$this->save_oauth_credentials( $response_body );
 			}
 
 			return $response_body;
 		}
+
+		return null;
 	}
 }
 
