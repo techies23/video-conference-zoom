@@ -46,7 +46,7 @@ class Zoom_Video_Conferencing_Recordings {
 				$to                 = date( 'Y-m-t', $search_date );
 				$postParams['from'] = $from;
 				$postParams['to']   = $to;
-				$recordings = json_decode( zoom_conference()->listRecording( $_GET['host_id'], $postParams ) );
+				$recordings         = json_decode( zoom_conference()->listRecording( $_GET['host_id'], $postParams ) );
 			} else {
 				$recordings = json_decode( zoom_conference()->listRecording( $_GET['host_id'] ) );
 			}
@@ -86,15 +86,17 @@ class Zoom_Video_Conferencing_Recordings {
                 <select onchange="location = this.value;" class="zvc-hacking-select">
                     <option value="?post_type=zoom-meetings&page=zoom-video-conferencing"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
 					<?php
-					foreach ( $users as $user ) {
-						$host_recordings_link = add_query_arg( array(
-							'post_type' => 'zoom-meetings',
-							'page'      => 'zoom-video-conferencing-recordings',
-							'host_id'   => $user->id
-						), admin_url( 'edit.php' ) );
-						?>
-                        <option value="<?php echo esc_url( $host_recordings_link ); ?>" <?php echo $host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
-					<?php } ?>
+					if ( ! empty( $users ) ) {
+						foreach ( $users as $user ) {
+							$host_recordings_link = add_query_arg( array(
+								'post_type' => 'zoom-meetings',
+								'page'      => 'zoom-video-conferencing-recordings',
+								'host_id'   => $user->id
+							), admin_url( 'edit.php' ) );
+							?>
+                            <option value="<?php echo esc_url( $host_recordings_link ); ?>" <?php echo $host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+						<?php }
+					} ?>
                 </select>
             </div>
             <div class="clear"></div>

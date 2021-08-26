@@ -917,9 +917,21 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
 /**
  * Check if oAuth is used Globally
  *
- * @since 3.9.0
  * @return bool
+ * @since 3.9.0
  */
 function vczapi_is_oauth_used_globally() {
 	return ( get_option( 'vczapi_enable_oauth_individual_use' ) != 'yes' );
+}
+
+/**
+ * Show admin menu items for zoom meetings page.
+ *
+ * @since 3.9.0
+ * @return bool
+ */
+function vczapi_show_admin_menu_items() {
+	$user_oauth_data = ( ! vczapi_is_oauth_used_globally() ) ? get_user_meta( get_current_user_id(), 'vczapi_zoom_oauth', true ) : get_option( 'vczapi_global_zoom_oauth' );
+
+	return ( ! empty( $user_oauth_data ) || ( ! empty( get_option( 'zoom_api_key' ) ) && ! empty( get_option( 'zoom_api_secret' ) ) && empty( get_option( 'zoom_api_disable_jvb' ) ) ) ) ? true : false;
 }

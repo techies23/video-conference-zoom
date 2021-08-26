@@ -12,7 +12,7 @@ if ( isset( $_GET['host_id'] ) ) {
 	$encoded_meetings = zoom_conference()->listMeetings( $_GET['host_id'] );
 	$decoded_meetings = json_decode( $encoded_meetings );
 	$meetings         = ! empty( $decoded_meetings->meetings ) ? $decoded_meetings->meetings : array();
-	$meeting_states = get_option( 'zoom_api_meeting_options' );
+	$meeting_states   = get_option( 'zoom_api_meeting_options' );
 }
 ?>
 <div id="zvc-cover" style="display: none;"></div>
@@ -42,9 +42,12 @@ if ( isset( $_GET['host_id'] ) ) {
             <div class="alignright">
                 <select onchange="location = this.value;" class="zvc-hacking-select">
                     <option value="?post_type=zoom-meetings&page=zoom-video-conferencing"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
-					<?php foreach ( $users as $user ) { ?>
-                        <option value="?post_type=zoom-meetings&page=zoom-video-conferencing&host_id=<?php echo $user->id; ?>" <?php echo $get_host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
-					<?php } ?>
+					<?php
+					if ( ! empty( $users ) ) {
+						foreach ( $users as $user ) { ?>
+                            <option value="?post_type=zoom-meetings&page=zoom-video-conferencing&host_id=<?php echo $user->id; ?>" <?php echo $get_host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+						<?php }
+					} ?>
                 </select>
             </div>
             <div class="clear"></div>

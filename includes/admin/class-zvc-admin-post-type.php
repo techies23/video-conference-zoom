@@ -76,8 +76,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	}
 
 	/**
-     * Add CORP headers for Zoom Meetings join via browser page
-     *
+	 * Add CORP headers for Zoom Meetings join via browser page
+	 *
 	 * @param $headers
 	 * @param WP $wp
 	 *
@@ -166,7 +166,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			return;
 		}
 
-		if ( ! video_conferencing_zoom_api_get_user_transients() ) {
+		if ( ! vczapi_show_admin_menu_items() ) {
 			global $submenu;
 			unset( $submenu['edit.php?post_type=zoom-meetings'][5] );
 			unset( $submenu['edit.php?post_type=zoom-meetings'][10] );
@@ -528,8 +528,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int      $post_id Post ID.
-	 * @param \WP_Post $post    Post object.
+	 * @param int $post_id Post ID.
+	 * @param \WP_Post $post Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.

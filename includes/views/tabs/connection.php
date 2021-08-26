@@ -13,8 +13,6 @@ $disable_jvb                        = get_option( 'zoom_api_disable_jvb' );
 $vczapi_enable_oauth_individual_use = get_option( 'vczapi_enable_oauth_individual_use' );
 $zoom_api_key                       = get_option( 'zoom_api_key' );
 $zoom_api_secret                    = get_option( 'zoom_api_secret' );
-
-dump($vczapi_enable_oauth_individual_use);
 ?>
 <div class="zvc-row" style="margin-top:10px;">
     <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
