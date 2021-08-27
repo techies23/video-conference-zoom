@@ -79,6 +79,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <td>
 				<?php
 				$user = json_decode( zoom_conference()->getUserInfo( $host_id ) );
+				/* @todo fix for oauth */
 				if ( ! empty( $user ) ) {
 					if ( ! empty( $user->code ) ) {
 						echo $user->message;

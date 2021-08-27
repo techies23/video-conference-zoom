@@ -115,7 +115,8 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
-     * Saves users oauth data to system
+	 * Saves users oauth data to system
+	 *
 	 * @param $response_body
 	 *
 	 * @since 3.9.0
@@ -139,7 +140,8 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 	}
 
 	/**
-     * Removes users oauth data from system
+	 * Removes users oauth data from system
+	 *
 	 * @since 3.9.0
 	 */
 	private function remove_oauth_credentials() {
@@ -256,7 +258,7 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 		if ( $user_id != false ) {
 			$user_id = (int) $user_id;
 			$user    = \get_user_by( 'id', $user_id );
-			if ( ! is_object( $user ) ) {
+			if ( is_object( $user ) ) {
 				$oauth_data = get_user_meta( $user_id, 'vczapi_zoom_oauth', true );
 			}
 		} else if ( \vczapi_is_oauth_used_globally() ) {
@@ -290,7 +292,6 @@ class OAuth extends Zoom_Video_Conferencing_Api {
             <a href="<?php echo $this->get_request_user_authentication_url(); ?>" class="button button-hero button-primary"><?php _e( 'Connect Your Account via OAuth (BETA)', 'video-conferencing-with-zoom-api' ); ?></a>
 			<?php
 		} else {
-			//$this->regenerate_access_token();
 			$connected_user_info = json_decode( $this->getMyInfo() );
 			if ( isset( $connected_user_info->code ) && $connected_user_info->code == '124' ) {
 				?>
@@ -541,6 +542,20 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param null $current_user_id
+	 */
+	public function set_current_user_id( $current_user_id ) {
+		$this->current_user_id = $current_user_id;
+	}
+
+	/**
+	 * @param null $user_oauth_data
+	 */
+	public function set_user_oauth_data( $user_oauth_data ) {
+		$this->user_oauth_data = $user_oauth_data;
 	}
 }
 
