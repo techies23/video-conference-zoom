@@ -25,24 +25,21 @@ Table is copied from Zoom official directly !
 <table>
     <tbody>
       <tr>
-        <th></th>
-        <th>Chrome</th>
-        <th>Firefox</th>
-        <th>Safari</th>
-        <th>Edge</th>
-        <th>Internet Explorer</th>
+        <th>Browser / Feature</th>
+        <th>Chrome 69+</th>
+        <th>Firefox 76+</th>
+        <th>Safari 11+</th>
+        <th>Chromium Edge 80+</th>
       </tr>
       <tr>
         <td>Gallery View</td>
         <td>✓</td>
         <td>✘</td>
         <td>✘</td>
-        <td>(1)</td>
-        <td>✘</td>
+        <td>✓</td>
       </tr>
       <tr>
         <td>Pause Recording</td>
-        <td>✓</td>
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
@@ -54,7 +51,6 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✓</td>
       </tr>
       <tr>
         <td>Share Video</td>
@@ -62,7 +58,6 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✘</td>
       </tr>
       <tr>
         <td>Share Screen</td>
@@ -70,19 +65,16 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✘</td>
         <td>✓</td>
-        <td>✘</td>
       </tr>
       <tr>
         <td>Join Computer Audio</td>
         <td>✓</td>
         <td>✓</td>
-        <td>(2)</td>
+        <td>(1)</td>
         <td>✓</td>
-        <td>✘</td>
       </tr>
       <tr>
         <td>Join Audio by Phone</td>
-        <td>✓</td>
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
@@ -94,7 +86,6 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✓</td>
       </tr>
       <tr>
         <td>View Shared Video</td>
@@ -102,11 +93,9 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✘</td>
       </tr>
       <tr>
         <td>View Shared Screen</td>
-        <td>✓</td>
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
@@ -118,11 +107,9 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✓</td>
       </tr>
       <tr>
         <td>In-meeting Chat</td>
-        <td>✓</td>
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
@@ -134,7 +121,6 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✓</td>
       </tr>
       <tr>
         <td>Webinar Q&amp;A</td>
@@ -142,7 +128,13 @@ Table is copied from Zoom official directly !
         <td>✓</td>
         <td>✓</td>
         <td>✓</td>
-        <td>✓</td>
+      </tr>
+      <tr>
+        <td>End-to-end encryption (E2EE) (2)</td>
+        <td>✘</td>
+        <td>✘</td>
+        <td>✘</td>
+        <td>✘</td>
       </tr>
     </tbody>
   </table>
