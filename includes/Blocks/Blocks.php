@@ -351,7 +351,6 @@ class Blocks {
 				$last_name  = ! empty( $user->last_name ) ? $user->last_name . ' ' : '';
 				$username   = $first_name . $last_name . '(' . $user->email . ')';
 
-
 				if ( ! empty( $host_name ) ) {
 					preg_match( "/($host_name)/", $username, $matches );
 					if ( ! empty( $matches ) ) {
@@ -362,6 +361,19 @@ class Blocks {
 				}
 			}
 		}
+
+		//If not found host then search for email address
+		if ( empty( $hosts ) && ! empty( $host_name ) ) {
+			$user = json_decode( zoom_conference()->getUserInfo( $host_name ) );
+			if ( ! empty( $user ) && ! isset( $user->code ) ) {
+				$first_name = ! empty( $user->first_name ) ? $user->first_name . ' ' : '';
+				$last_name  = ! empty( $user->last_name ) ? $user->last_name . ' ' : '';
+				$username   = $first_name . $last_name . '(' . $user->email . ')';
+
+				$hosts[] = [ 'label' => $username, 'value' => $user->id ];
+			}
+		}
+
 		wp_send_json( $hosts );
 	}
 

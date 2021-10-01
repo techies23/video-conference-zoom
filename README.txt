@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 5.8
-Stable tag: 3.8.13
+Stable tag: 3.8.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -169,6 +169,11 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.8.14 October 1st, 2021 =
+* Changed: Generate token UTC timestamp method.
+* Added: Ability to show meetings/webinars based on user email or host ID which cannot be found through pagination when used gutenberg blocks.
+* Updated: WebSDK to version 1.9.9
 
 = 3.8.13 September 2nd, 2021 =
 * Changed: WebSDK version updated to 1.9.8.

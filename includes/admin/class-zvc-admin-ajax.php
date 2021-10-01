@@ -162,14 +162,12 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * @param $role
 	 *
 	 * @return string
-	 * @since 3.2.0
-	 *
-	 * @author ZoomUS
+	 * @throws Exception
 	 */
 	private function generate_signature( $api_key, $api_sercet, $meeting_number, $role ) {
 		//Set the timezone to UTC
-		date_default_timezone_set( "UTC" );
-		$time = time() * 1000 - 30000; //time in milliclearseconds (or close enough)
+		$date_utc = new \DateTime("now", new \DateTimeZone("UTC"));
+		$time = $date_utc->getTimestamp() * 1000 - 30000; //time in milliclearseconds (or close enough)
 		$data = base64_encode( $api_key . $meeting_number . $time . $role );
 		$hash = hash_hmac( 'sha256', $data, $api_sercet, true );
 		$_sig = $api_key . "." . $meeting_number . "." . $time . "." . $role . "." . base64_encode( $hash );
