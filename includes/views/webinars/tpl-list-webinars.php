@@ -42,7 +42,11 @@ $get_host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
 						'post_type' => 'zoom-meetings',
 						'page'      => 'zoom-video-conferencing-webinars',
 						'host_id'   => $user->id
-					) ); ?>" <?php echo $get_host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+					) ); ?>"
+						<?php selected( $get_host_id, $user->id ); ?>
+                    >
+						<?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?>
+                    </option>
 				<?php } ?>
             </select>
         </div>

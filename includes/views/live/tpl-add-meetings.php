@@ -19,9 +19,9 @@ $users = video_conferencing_zoom_api_get_user_transients();
     </div>
 	<?php video_conferencing_zoom_api_show_api_notice(); ?>
 
-    <a href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing<?php echo isset( $_GET['host_id'] ) ? '&host_id=' . $_GET['host_id'] : false; ?>"><?php _e( 'Back to selected host Meetings list', 'video-conferencing-with-zoom-api' ); ?></a>
+    <a href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing<?php echo isset( $_GET['host_id'] ) ? '&host_id=' . esc_html( $_GET['host_id'] ) : false; ?>"><?php _e( 'Back to selected host Meetings list', 'video-conferencing-with-zoom-api' ); ?></a>
 
-    <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting<?php echo isset( $_GET['host_id'] ) ? '&host_id=' . $_GET['host_id'] : false; ?>" method="POST" class="zvc-meetings-form">
+    <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting<?php echo isset( $_GET['host_id'] ) ? '&host_id=' . esc_html( $_GET['host_id'] ) : false; ?>" method="POST" class="zvc-meetings-form">
 		<?php wp_nonce_field( '_zoom_add_meeting_nonce_action', '_zoom_add_meeting_nonce' ); ?>
         <table class="form-table">
             <tbody>

@@ -31,7 +31,7 @@ if ( ! empty( $meeting_info ) ) {
 		}
 		?>
     </div>
-    <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting&edit=<?php echo $_GET['edit']; ?>&host_id=<?php echo $_GET['host_id']; ?>" method="POST" class="zvc-meetings-form">
+    <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting&edit=<?php echo esc_html( $_GET['edit'] ); ?>&host_id=<?php echo $_GET['host_id']; ?>" method="POST" class="zvc-meetings-form">
 		<?php wp_nonce_field( '_zoom_update_meeting_nonce_action', '_zoom_update_meeting_nonce' ); ?>
         <input type="hidden" name="meeting_id" value="<?php echo $meeting_info->id; ?>">
         <table class="form-table">
@@ -91,7 +91,7 @@ if ( ! empty( $meeting_info ) ) {
             <tr>
                 <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="number" name="duration" class="regular-text" value="<?php echo !empty($meeting_info->duration) && $meeting_info->duration ? $meeting_info->duration : 40; ?>">
+                    <input type="number" name="duration" class="regular-text" value="<?php echo ! empty( $meeting_info->duration ) && $meeting_info->duration ? $meeting_info->duration : 40; ?>">
                     <p class="description" id="duration-description"><?php _e( 'Meeting duration (minutes). (optional)', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>

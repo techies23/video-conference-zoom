@@ -19,11 +19,11 @@ $users = video_conferencing_zoom_api_get_user_transients();
     </div>
 	<?php video_conferencing_zoom_api_show_api_notice(); ?>
 
-    <a href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-webinars<?php echo isset( $_GET['host_id'] ) ? '&host_id=' . $_GET['host_id'] : false; ?>"><?php _e( 'Back to selected host Webinars list', 'video-conferencing-with-zoom-api' ); ?></a>
+    <a href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-webinars<?php echo isset( $_GET['host_id'] ) ? '&host_id=' . esc_html( $_GET['host_id'] ) : false; ?>"><?php _e( 'Back to selected host Webinars list', 'video-conferencing-with-zoom-api' ); ?></a>
 
     <form action="" method="POST" class="zvc-meetings-form">
 		<?php wp_nonce_field( '_zoom_add_meeting_nonce_action', '_zoom_add_meeting_nonce' ); ?>
-        <input type="hidden" name="webinar_id" value="<?php echo $meeting_info->id; ?>">
+        <input type="hidden" name="webinar_id" value="<?php echo isset( $meeting_info ) ? $meeting_info->id : ''; ?>">
         <table class="form-table">
             <tbody>
             <tr>
