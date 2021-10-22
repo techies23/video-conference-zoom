@@ -170,9 +170,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.8.15 October 7th, 2021 =
+= 3.8.15 October 22nd, 2021 =
 * Fixed: Security issues suggested by wpscan.
 * Added: Dynamic templating for shortcode "zoom_list_host_meetings" and "zoom_list_host_webinars"
+* Updated: Websdk to version 2.0.0
 
 = 3.8.14 October 1st, 2021 =
 * Changed: Generate token UTC timestamp method.

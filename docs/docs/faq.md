@@ -1,3 +1,13 @@
+### Embedded Join via Web Browser Issues
+Few of the known issues when using embed join via web browser i.e only when used with <a href="https://zoom.codemanas.com/shortcode/#8-embed-zoom-meeting-in-your-browser">embed join via browser shortcode</a> or Join via Browser gutenberg Block.
+
+1. Video not showing to participants but only shows to host.
+2. Not able to fullscreen the view.
+
+Above issues are caused due to the use of IFRAME html component. Currently, these issues are unsolvable so, please use this feature at your own risk i.e <a href="https://zoom.codemanas.com/shortcode/#8-embed-zoom-meeting-in-your-browser">embed join via browser shortcode</a> or Join via Browser gutenberg Block.
+
+**_Also, note: These above issues does not affect for normal join via web browser pages._**
+
 ### Zoom Pro Plans
 
 If you are subscribed to Zoom PRO plans you have more benefits for your meetings as well as webinars you host. So, its worth checking out Zoom plans here <a href="https://zoom.us/pricing">https://zoom.us/pricing</a>
