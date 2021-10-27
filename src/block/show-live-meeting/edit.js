@@ -43,6 +43,7 @@ export default function EditLiveMeeting(props) {
         )
     }
     const get_live_meetings = (host_id, shouldShow, additional_args = {}) => {
+        console.log(additional_args);
         if (host_id === "undefined" || host_id === '')
             return [];
         let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + host_id + '&show=' + shouldShow.value
@@ -77,7 +78,7 @@ export default function EditLiveMeeting(props) {
                         key={i}
                         className={className}
                         onClick={() => {
-                            get_live_meetings(host, {
+                            get_live_meetings(host.value, shouldShow,{
                                 page_number: i
                             })
                             setCurrentPage(i);
@@ -236,7 +237,7 @@ export default function EditLiveMeeting(props) {
                 </div>
             </Placeholder>
             }
-            {((typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value')) && !isEditing)
+                {((typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value')) && !isEditing)
             &&
             <Disabled>
                 <ServerSideRender
