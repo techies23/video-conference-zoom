@@ -43,7 +43,6 @@ export default function EditLiveMeeting(props) {
         )
     }
     const get_live_meetings = (host_id, shouldShow, additional_args = {}) => {
-        console.log(additional_args);
         if (host_id === "undefined" || host_id === '')
             return [];
         let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + host_id + '&show=' + shouldShow.value
