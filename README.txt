@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 5.8
-Stable tag: 3.8.15
+Stable tag: 3.8.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -169,6 +169,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.8.16 October 27th, 2021 =
+* Fixed: Fix issue for pagination with Direct Meeting Embed
 
 = 3.8.15 October 22nd, 2021 =
 * Fixed: Security issues suggested by wpscan.
