@@ -387,7 +387,7 @@ class Blocks {
 		$host_id                 = filter_input( INPUT_GET, 'host_id' );
 		$show_meeting_or_webinar = filter_input( INPUT_GET, 'show' );
 		$args                    = [
-			'page_size' => 2,
+			'page_size' => 300,
 		];
 		$page_number             = filter_input( INPUT_GET, 'page_number' );
 		if ( ! empty( $page_number ) ) {
