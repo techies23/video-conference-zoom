@@ -36,7 +36,7 @@
     "@wordpress/server-side-render": "^1.21.0",
     "@zoom/videosdk": "^1.1.6",
     "@zoomus/websdk": "^2.0.1",
-    "datatables.net": "^1.10.23",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.23",
     "datatables.net-responsive": "^2.2.5",
     "datatables.net-responsive-dt": "^2.2.5",
