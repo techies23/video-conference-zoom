@@ -29,7 +29,7 @@ if ( isset( $_GET['host_id'] ) ) {
 	<?php if ( ! empty( $error ) ) { ?>
         <div id="message" class="notice notice-error"><p><?php echo $error; ?></p></div>
 	<?php } else {
-		$get_host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
+		$get_host_id = isset( $_GET['host_id'] ) ? esc_attr( $_GET['host_id'] ) : null;
 		?>
         <div class="select_zvc_user_listings_wrapp">
             <div class="alignleft actions bulkactions">
@@ -45,7 +45,7 @@ if ( isset( $_GET['host_id'] ) ) {
 					<?php foreach ( $users as $user ) { ?>
                         <option
                                 value="?post_type=zoom-meetings&page=zoom-video-conferencing&host_id=<?php echo $user->id; ?>"
-                                <?php selected($get_host_id, $user->id); ?> >
+							<?php selected( $get_host_id, $user->id ); ?> >
 							<?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?>
                         </option>
 					<?php } ?>
@@ -75,7 +75,7 @@ if ( isset( $_GET['host_id'] ) ) {
 						?>
                         <tr>
                             <td class="zvc-text-center">
-                                <input type="checkbox" name="meeting_id_check[]" class="checkthis" value="<?php echo $meeting->id; ?>"/></td>
+                                <input type="checkbox" name="meeting_id_check[]" class="checkthis" value="<?php echo esc_attr( $meeting->id ); ?>"/></td>
                             <td><?php echo $meeting->id; ?></td>
                             <td>
                                 <input class="text" id="meeting-shortcode-<?php echo $meeting->id; ?>" type="text" readonly value='[zoom_api_link meeting_id="<?php echo $meeting->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>

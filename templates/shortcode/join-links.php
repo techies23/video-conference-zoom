@@ -17,7 +17,7 @@ if ( ! empty( $meetings['join_uri'] ) ) {
     <tr>
         <td><?php _e( 'Join via Zoom App', 'video-conferencing-with-zoom-api' ); ?></td>
         <td>
-            <a class="btn-join-link-shortcode" target="_blank" href="<?php echo $meetings['join_uri']; ?>" title="Join via App"><?php _e( 'Join', 'video-conferencing-with-zoom-api' ); ?></a>
+            <a class="btn-join-link-shortcode" target="_blank" href="<?php echo esc_url( $meetings['join_uri'] ); ?>" title="Join via App"><?php _e( 'Join', 'video-conferencing-with-zoom-api' ); ?></a>
         </td>
     </tr>
 <?php } ?>
@@ -26,7 +26,7 @@ if ( ! empty( $meetings['join_uri'] ) ) {
     <tr>
         <td><?php _e( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ); ?></td>
         <td>
-            <a class="btn-join-link-shortcode" target="_blank" href="<?php echo $meetings['browser_url']; ?>" title="Join via Browser"><?php _e( 'Join', 'video-conferencing-with-zoom-api' ); ?></a>
+            <a class="btn-join-link-shortcode" target="_blank" href="<?php echo esc_url( $meetings['browser_url'] ); ?>" title="Join via Browser"><?php _e( 'Join', 'video-conferencing-with-zoom-api' ); ?></a>
         </td>
     </tr>
 <?php } ?>

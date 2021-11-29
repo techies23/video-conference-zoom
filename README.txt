@@ -170,8 +170,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.8.16 October 27th, 2021 =
+= 3.8.16 November 29th, 2021 =
 * Fixed: Fix issue for pagination with Direct Meeting Embed
+* Updated: WebSDK to version 2.0.1
+* Fixed: Security issues related to escaping attributes suggested by WPScan.
 
 = 3.8.15 October 22nd, 2021 =
 * Fixed: Security issues suggested by wpscan.

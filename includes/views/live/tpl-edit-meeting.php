@@ -31,22 +31,22 @@ if ( ! empty( $meeting_info ) ) {
 		}
 		?>
     </div>
-    <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting&edit=<?php echo esc_html( $_GET['edit'] ); ?>&host_id=<?php echo $_GET['host_id']; ?>" method="POST" class="zvc-meetings-form">
+    <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting&edit=<?php echo esc_html( $_GET['edit'] ); ?>&host_id=<?php echo esc_html( $_GET['host_id'] ); ?>" method="POST" class="zvc-meetings-form">
 		<?php wp_nonce_field( '_zoom_update_meeting_nonce_action', '_zoom_update_meeting_nonce' ); ?>
-        <input type="hidden" name="meeting_id" value="<?php echo $meeting_info->id; ?>">
+        <input type="hidden" name="meeting_id" value="<?php echo esc_attr( $meeting_info->id ); ?>">
         <table class="form-table">
             <tbody>
             <tr>
                 <th scope="row"><label for="meetingTopic"><?php _e( 'Meeting Topic *', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="text" name="meetingTopic" size="100" class="regular-text" required value="<?php echo ! empty( $meeting_info->topic ) ? $meeting_info->topic : null; ?>">
+                    <input type="text" name="meetingTopic" size="100" class="regular-text" required value="<?php echo ! empty( $meeting_info->topic ) ? esc_attr( $meeting_info->topic ) : null; ?>">
                     <p class="description" id="meetingTopic-description"><?php _e( 'Meeting topic. (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="meetingAgenda"><?php _e( 'Meeting Agenda', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="text" name="agenda" class="regular-text" value="<?php echo ! empty( $meeting_info->agenda ) ? $meeting_info->agenda : null; ?>">
+                    <input type="text" name="agenda" class="regular-text" value="<?php echo ! empty( $meeting_info->agenda ) ? esc_attr( $meeting_info->agenda ) : null; ?>">
                     <p class="description" id="meetingTopic-description"><?php _e( 'Meeting Description.', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
@@ -56,7 +56,7 @@ if ( ! empty( $meeting_info ) ) {
                     <select name="userId" required class="zvc-hacking-select">
                         <option value=""><?php _e( 'Select a Host', 'video-conferencing-with-zoom-api' ); ?></option>
 						<?php foreach ( $users as $user ): ?>
-                            <option value="<?php echo $user->id; ?>" <?php echo $meeting_info->host_id == $user->id ? 'selected' : null; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+                            <option value="<?php echo esc_attr( $user->id ); ?>" <?php echo $meeting_info->host_id == $user->id ? 'selected' : null; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
 						<?php endforeach; ?>
                     </select>
                     <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
@@ -82,7 +82,7 @@ if ( ! empty( $meeting_info ) ) {
 					<?php $tzlists = zvc_get_timezone_options(); ?>
                     <select id="timezone" name="timezone" class="zvc-hacking-select">
 						<?php foreach ( $tzlists as $k => $tzlist ) { ?>
-                            <option value="<?php echo $k; ?>" <?php echo $meeting_info->timezone == $k ? 'selected' : null; ?>><?php echo $tzlist; ?></option>
+                            <option value="<?php echo esc_attr( $k ); ?>" <?php echo $meeting_info->timezone == $k ? 'selected' : null; ?>><?php echo $tzlist; ?></option>
 						<?php } ?>
                     </select>
                     <p class="description" id="timezone-description"><?php _e( 'Meeting Timezone', 'video-conferencing-with-zoom-api' ); ?></p>
@@ -91,14 +91,14 @@ if ( ! empty( $meeting_info ) ) {
             <tr>
                 <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="number" name="duration" class="regular-text" value="<?php echo ! empty( $meeting_info->duration ) && $meeting_info->duration ? $meeting_info->duration : 40; ?>">
+                    <input type="number" name="duration" class="regular-text" value="<?php echo ! empty( $meeting_info->duration ) && $meeting_info->duration ? esc_attr( $meeting_info->duration ) : 40; ?>">
                     <p class="description" id="duration-description"><?php _e( 'Meeting duration (minutes). (optional)', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="password"><?php _e( 'Meeting Password', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="text" name="password" class="regular-text" maxlength="10" data-maxlength="9" value="<?php echo ! empty( $meeting_info->password ) ? $meeting_info->password : false; ?>">
+                    <input type="text" name="password" class="regular-text" maxlength="10" data-maxlength="9" value="<?php echo ! empty( $meeting_info->password ) ? esc_attr( $meeting_info->password ) : false; ?>">
                     <p class="description" id="email-description"><?php _e( 'Password to join the meeting. Password may only contain the following characters: [a-z A-Z 0-9]. Max of 10 characters.( Leave blank for auto generate )', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
@@ -167,7 +167,7 @@ if ( ! empty( $meeting_info ) ) {
 								$user_found = true;
 							}
 							?>
-                            <option value="<?php echo $user->id; ?>" <?php echo $user_found ? 'selected' : null; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+                            <option value="<?php echo esc_attr( $user->id ); ?>" <?php echo $user_found ? 'selected' : null; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
 						<?php endforeach; ?>
                     </select>
                     <p class="description" id="settings_alternative_hosts"><?php _e( 'Paid Zoom Account is required for this !! Alternative hosts IDs. Multiple value separated by comma.', 'video-conferencing-with-zoom-api' ); ?></p>
