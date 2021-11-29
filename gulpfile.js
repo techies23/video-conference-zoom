@@ -10,7 +10,7 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
 const del = require('del');
@@ -115,7 +115,6 @@ function styles() {
     // .pipe(sourcemaps.init())
         .pipe(sass({
             errLogToConsole: true,
-            outputStyle: 'compact',
             precision: 10
         }))
         .pipe(postcss([autoprefixer()]))
@@ -147,7 +146,6 @@ function admin_styles() {
     // .pipe(sourcemaps.init())
         .pipe(sass({
             errLogToConsole: true,
-            outputStyle: 'compact',
             precision: 10
         }))
         .pipe(postcss([autoprefixer]))
