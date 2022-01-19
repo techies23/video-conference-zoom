@@ -6,7 +6,7 @@ namespace Codemanas\VczApi\Blocks;
  * Class Blocks
  *
  * @package Codemanas\VczApi\Blocks
- * @since 3.7.5
+ * @since   3.7.5
  * @updated N/A
  */
 class Blocks {
@@ -27,7 +27,12 @@ class Blocks {
 	 * Blocks constructor.
 	 */
 	public function __construct() {
-		add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
+		global $wp_version;
+		if ( version_compare( $wp_version, '5.8', '>=' ) ) {
+			add_filter( 'block_categories_all', [ $this, 'register_block_categories' ], 10, 2 );
+		}else{
+			add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
+		}
 		if ( function_exists( 'register_block_type' ) ) {
 			add_action( 'init', [ $this, 'register_scripts' ] );
 			add_action( 'init', [ $this, 'register_blocks' ] );
@@ -40,7 +45,7 @@ class Blocks {
 	/**
 	 * Register necessary scripts
 	 *
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 */
 	public function register_scripts() {
@@ -86,7 +91,7 @@ class Blocks {
 	 * @param $post
 	 *
 	 * @return array
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 *
 	 */
@@ -106,7 +111,7 @@ class Blocks {
 	/**
 	 * Registering blocks
 	 *
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 */
 	public function register_blocks() {
@@ -337,7 +342,7 @@ class Blocks {
 	/**
 	 * Get All host helper
 	 *
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 */
 	public function get_hosts() {
@@ -380,7 +385,7 @@ class Blocks {
 	/**
 	 * Get all live meetings helper
 	 *
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 */
 	public function get_live_meetings() {
@@ -430,7 +435,7 @@ class Blocks {
 	 * @param $attributes
 	 *
 	 * @return string
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 *
 	 */
@@ -488,7 +493,7 @@ class Blocks {
 	 * @param $attributes
 	 *
 	 * @return false|string
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 *
 	 */
@@ -537,7 +542,7 @@ class Blocks {
 	 * @param $attributes
 	 *
 	 * @return false|string
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 *
 	 */
@@ -555,7 +560,7 @@ class Blocks {
 	 * @param $attributes
 	 *
 	 * @return false|string
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 *
 	 */
@@ -600,7 +605,7 @@ class Blocks {
 	 * @param $attributes
 	 *
 	 * @return false|string
-	 * @since 3.7.5
+	 * @since   3.7.5
 	 * @updated N/A
 	 *
 	 */
