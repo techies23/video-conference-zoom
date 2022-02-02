@@ -172,6 +172,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 3.8.17 February 2nd, 2022 =
 * Updated: webSDK to version 2.2.0
+* Fix: Deprecated warning for block editor.
+* Added: Translations for japanese and persian from WordPress translations.
 * Bug fixes.
 
 = 3.8.16 November 29th, 2021 =
