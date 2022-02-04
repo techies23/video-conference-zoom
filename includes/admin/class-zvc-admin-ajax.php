@@ -281,6 +281,10 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	}
 
 	public function get_wp_usersByRole() {
+		if( !current_user_can('manage_options') ) {
+			return;
+		}
+
 		$search_string = filter_input( INPUT_GET, 'term' );
 		$users         = vczapi_getWpUsers_basedon_UserRoles( $search_string );
 		$results       = array();

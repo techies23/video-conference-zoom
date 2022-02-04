@@ -170,7 +170,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <tr>
         <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
-			<?php $duration = ! empty( $meeting_fields['duration'] ) ? vczapi_convertMinutesToHM( $meeting_fields['duration'], false ) : vczapi_convertMinutesToHM( 40, false ); ?>
+			<?php $duration = ! empty( $meeting_fields['duration'] ) ? vczapi_convertMinutesToHM( $meeting_fields['duration'], false ) : vczapi_convertMinutesToHM( 45, false ); ?>
             <label>
                 <select class="option_duration_hour" name="option_duration_hour">
 					<?php for ( $hr = 0; $hr <= 24; $hr ++ ) { ?>

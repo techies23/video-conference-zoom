@@ -1,28 +1,23 @@
-# Copyright (C) 2017 Video Conferencing with Zoom API
-# This file is distributed under the same license as the Video Conferencing with Zoom API package.
+# Translation of Plugins - Video Conferencing with Zoom - Stable (latest release) in Persian
+# This file is distributed under the same license as the Plugins - Video Conferencing with Zoom - Stable (latest release) package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Video Conferencing with Zoom API\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
-"conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2020-08-04 11:15+0000\n"
+"PO-Revision-Date: 2022-01-19 09:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2022-01-19 08:58+0000\n"
-"Language-Team: Slovak\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Loco https://localise.biz/\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
-"Last-Translator: Deepen Bajracharya <dpen.connectify@gmail.com>\n"
-"Language: sk_SK\n"
-"X-Loco-Version: 2.3.1; wp-5.4.2"
+"Language: fa_FA\n"
+"Project-Id-Version: Plugins - Video Conferencing with Zoom - Stable (latest "
+"release)\n"
+"Language-Team: Persian (FA)"
 
 #: templates/fragments/meeting-details.php:53
 msgid " hour"
 msgid_plural " hours"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: templates/fragments/meeting-details.php:53
 #: templates/fragments/meeting-details.php:55
@@ -30,120 +25,116 @@ msgid " minute"
 msgid_plural " minutes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: templates/join-web-browser.php:39
 msgid "!!!ALERT!!!: "
-msgstr "!!!Upozornenie!!!: "
+msgstr "!!!هشدار!!!: "
 
 #: templates/fragments/meeting-details.php:70
-#, php-format
 msgid "%sNote%s: Countdown time is shown based on your local timezone."
 msgstr ""
-"%sPoznámka%s: Čas odpočítavania sa zobrazuje na základe vášho miestneho "
-"časového pásma."
+"%sتوجه%s: زمان شمارش معکوس بر اساس منطقه زمانی محلی شما نشان داده می شود."
 
 #: includes/views/live/tpl-reports.php:15
 msgid "1. Daily Report"
-msgstr "1. Denná správa"
+msgstr "1. گزارش روزانه"
 
 #: includes/views/live/tpl-reports.php:16
 msgid "2. Account Report"
-msgstr "2. Prehľad účtu"
+msgstr "2. گزارش حساب کاربری"
 
 #: includes/views/live/tpl-reports.php:27
 msgid "Account Owner or a user is given the User activities reports."
-msgstr ""
-"Majiteľovi účtu alebo používateľovi sa poskytujú správy o činnosti "
-"používateľa."
+msgstr "گزارش فعالیتهای کاربر به مالک حساب یا یک کاربر داده می شود."
 
 #: includes/views/live/tpl-reports.php:26
 msgid ""
 "Account owner or admin permissions to access Usage Reports for all users."
 msgstr ""
-"Povolenia vlastníka účtu alebo správcu na prístup k prehľadom použitia pre "
-"všetkých používateľov."
+"مجوزهای مالک یا سرپرست حساب برای دسترسی به گزارش های استفاده برای همه "
+"کاربران."
 
 #: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
 #: includes/views/live/tpl-list-recordings.php:25
 msgid "Action"
-msgstr ""
+msgstr "عملیات"
 
 #: includes/views/live/tpl-add-user.php:21
 msgid "Action (Required)."
-msgstr "Akcie (vyžadované)."
+msgstr "عملیات(الزامی)."
 
 #: includes/Shortcodes/Webinars.php:142 includes/Shortcodes/Meetings.php:513
 msgid "Actions"
-msgstr ""
+msgstr "عملیات"
 
 #: includes/views/live/tpl-add-meetings.php:11
 msgid "Add a Meeting"
-msgstr "Pridanie schôdze"
+msgstr "افزودن یک جلسه"
 
 #: includes/views/live/tpl-add-user.php:2
 msgid "Add a User"
-msgstr "Pridať používateľa"
+msgstr "افزودن یک کاربر"
 
 #: includes/Bootstrap.php:221
 msgid "Add a valid Host ID or Email address."
-msgstr ""
+msgstr "افزودن شناسه میزبان معتبر یا آدرس ایمیل."
 
 #: includes/views/webinars/tpl-add-webinar.php:11
 msgid "Add a Webinar"
-msgstr ""
+msgstr "افزودن یک وبینار"
 
 #: includes/admin/class-zvc-admin-settings.php:38
 msgid "Add Live Meeting"
-msgstr "Pridať živú schôdzu"
+msgstr "افزودن جلسه زنده"
 
 #: includes/admin/class-zvc-admin-post-type.php:338
 msgid "Add New"
-msgstr "Pridať nové"
+msgstr "افزودن جدید"
 
 #: includes/views/live/tpl-list-meetings.php:40
 msgid "Add New Meeting"
-msgstr ""
+msgstr "افزودن جلسه جدید"
 
 #: includes/admin/class-zvc-admin-post-type.php:339
 msgid "Add New meeting"
-msgstr "Pridať novú schôdzu"
+msgstr "افزودن جلسه جدید"
 
 #: includes/views/webinars/tpl-list-webinars.php:32
 msgid "Add New Webinar"
-msgstr ""
+msgstr "وبینار جدید اضافه کنید"
 
 #: includes/admin/class-zvc-admin-settings.php:48
 msgid "Add Users"
-msgstr "Pridať užívateľov"
+msgstr "اضافه کردن کاربران جدید"
 
 #: includes/views/tabs/api-settings.php:206
 msgid "Addons"
-msgstr "Rozšírenia"
+msgstr "افزونه ها"
 
 #: includes/views/tabs/api-settings.php:189
 msgid ""
 "After you enter your keys. Do save changes before doing \"Check API "
 "Connection\"."
 msgstr ""
-"Po zadaní kľúčov. Pred vykonaním kontroly pripojenia API vykonajte zmeny."
+"بعد از وارد کردن کلیدها ابتدا روی دکمه ذخیره تنظیمات کلیک کنید و سپس روی "
+"دکمه \"بررسی ارتباط API\"."
 
 #: templates/fragments/filters.php:21
 msgid "All Category"
-msgstr ""
+msgstr "همهٔ دسته‌ها"
 
 #: includes/admin/class-zvc-admin-post-type.php:343
 msgid "All Meetings"
-msgstr ""
+msgstr "همه جلسات"
 
 #: includes/views/post-type/tpl-meeting-fields.php:287
 msgid "Allow attendess to join from multiple devices."
-msgstr ""
+msgstr "به شرکت کنندگان اجازه دهید از چند دستگاه به هم بپیوندند."
 
 #: includes/views/post-type/tpl-meeting-fields.php:283
 msgid "Allow Multiple Devices"
-msgstr ""
+msgstr "اجازه دادن به چندین دستگاه"
 
 #: includes/views/post-type/tpl-meeting-fields.php:221
 msgid ""
@@ -158,74 +149,75 @@ msgstr ""
 #: includes/views/live/tpl-add-meetings.php:135
 #: includes/views/post-type/tpl-meeting-fields.php:313
 msgid "Alternative Hosts"
-msgstr "Alternatívnymi hostiteľmi"
+msgstr "میزبان های جایگزین"
 
 #: includes/views/webinars/tpl-add-webinar.php:132
 #: includes/views/live/tpl-add-meetings.php:143
 msgid "Alternative hosts IDs. Multiple value separated by comma."
-msgstr "ID alternatívnych hostiteľov. Viacnásobná hodnota oddelená čiarkou."
+msgstr "شناسه های میزبان جایگزین. مقدار چندگانه با کاما از هم جدا شوند."
 
 #: includes/admin/class-zvc-admin-ajax.php:54
 msgid "An error occured. Host ID and Meeting ID not defined properly."
-msgstr ""
-"Vyskytla sa chyba. ID hostiteľa a ID stretnutia nie sú správne definované."
+msgstr "خطایی رخ داد شناسه میزبان و شناسه جلسه به درستی تعریف نشده است."
 
 #: includes/Shortcodes.php:197
 msgid "and join via Zoom App."
-msgstr "a pripojte sa pomocou aplikácie Zoom."
+msgstr "و از طریق برنامه زوم بپیوندید."
 
 #: includes/views/tabs/api-settings.php:20
 msgid "API Key"
-msgstr "API klúč"
+msgstr "کلید API"
 
 #: includes/admin/class-zvc-admin-sync.php:34
 #: includes/admin/class-zvc-admin-sync.php:63
 msgid ""
 "API keys are not configured properly ! Please configure them before syncing."
 msgstr ""
+"کلیدهای API به درستی پیکربندی نشده اند! لطفاً قبل از همگام سازی آنها را "
+"پیکربندی کنید."
 
 #: includes/views/tabs/api-settings.php:26
 msgid "API Secret Key"
-msgstr "API tajný kľúč"
+msgstr "کلید مخفی API"
 
 #: includes/admin/class-zvc-admin-settings.php:109
 msgid "API Settings"
-msgstr ""
+msgstr "تنظیمات API"
 
 #: includes/views/webinars/tpl-list-webinars.php:28
 #: includes/views/live/tpl-list-meetings.php:39
 msgid "Apply"
-msgstr ""
+msgstr "اعمال"
 
 #: includes/Bootstrap.php:220 includes/template-functions.php:95
 msgid ""
 "Are you sure you want to end this meeting ? Users won't be able to join this "
 "meeting shown from the shortcode."
 msgstr ""
-"Naozaj chcete ukončiť toto stretnutie? Používatelia sa nebudú môcť pripojiť "
-"k tejto schôdzi zobrazenej v skrátenom kóde."
+"آیا از پایان دادن به این جلسه مطمئن هستید؟ کاربران از لینک پیوستن به جلسه "
+"نمایش داده شده در کد کوتاه قادر به پیوستن به جلسه نخواهند بود."
 
 #: includes/views/live/tpl-assign-host-id.php:9
 msgid "Assign Zoom Host Users to your WordPress Users"
-msgstr ""
+msgstr "کاربران میزبان زوم را به کاربران وردپرس اختصاص دهید"
 
 #: includes/views/live/tpl-add-user.php:79
 msgid "Assign Zoom user to WordPress User"
-msgstr ""
+msgstr "اختصاص کاربر زوم به وردپرس"
 
 #: includes/views/live/tpl-reports.php:20
 msgid "ATTENTION: Zoom Account & Setting Prerequisites for Reports Section"
-msgstr "POZOR: Zoom účet a nastavenie predpokladov pre sekciu Prehľady"
+msgstr "توجه: حساب زوم و تنظیم پیش نیازهای بخش گزارش"
 
 #: includes/Elementor/Widgets/WebinarList.php:93
 #: includes/Elementor/Widgets/MeetingList.php:95
 msgid "Author ID"
-msgstr ""
+msgstr "شناسه نویسنده"
 
 #: includes/views/live/tpl-add-user.php:25
 #: includes/views/live/tpl-add-user.php:36
 msgid "Auto Create"
-msgstr "Automatické vytvorenie"
+msgstr "ایجاد خودکار"
 
 #: includes/views/webinars/tpl-edit-webinar.php:108
 #: includes/views/webinars/tpl-add-webinar.php:112
@@ -233,36 +225,36 @@ msgstr "Automatické vytvorenie"
 #: includes/views/live/tpl-add-meetings.php:123
 #: includes/views/post-type/tpl-meeting-fields.php:292
 msgid "Auto Recording"
-msgstr "Automatické nahrávanie"
+msgstr "ضبط خودکار"
 
 #: includes/views/live/tpl-edit-meeting.php:25
 msgid "Back to List"
-msgstr "Späť na zoznam"
+msgstr "بازگشت به فهرست"
 
 #: includes/views/live/tpl-add-meetings.php:22
 msgid "Back to selected host Meetings list"
-msgstr "Späť na vybratý zoznam schôdzí hostiteľa"
+msgstr "بازگشت به لیست جلسات میزبان انتخاب شده"
 
 #: includes/views/webinars/tpl-edit-webinar.php:22
 #: includes/views/webinars/tpl-add-webinar.php:22
 msgid "Back to selected host Webinars list"
-msgstr ""
+msgstr "بازگشت به لیست وبینارهای میزبان انتخاب شده"
 
 #: includes/views/tabs/shortcode.php:17
 msgid "Basic Usage"
-msgstr "Základné použitie"
+msgstr "کاربرد اساسی"
 
 #: includes/views/live/tpl-add-user.php:71
 msgid "Basic User"
-msgstr "Základný používateľ"
+msgstr "کاربر پایه"
 
 #: includes/views/tabs/shortcode.php:14
 msgid ""
 "Below are few examples of how you can add shortcodes manually into your "
 "posts."
 msgstr ""
-"Nižšie uvádzame niekoľko príkladov, ako môžete do svojich príspevkov "
-"manuálne pridávať krátke kódy."
+"در زیر چند نمونه از نحوه افزودن کد کوتاه به صورت دستی در پست های خود آورده "
+"شده است."
 
 #: templates/join-web-browser.php:39
 msgid ""
@@ -270,18 +262,17 @@ msgid ""
 "meeting will not work on a non HTTPS site, please install a valid SSL "
 "certificate to allow audio and video in your Meetings via browser."
 msgstr ""
-"Prehliadač nezistil platný certifikát SSL. Schôdza Audio and Video pre Zoom "
-"nebude fungovať na webe, ktorý nie je HTTPS, nainštalujte prosím platný "
-"certifikát SSL, ktorý umožní zvuk a video na vašich stretnutiach "
-"prostredníctvom prehliadača."
+"مرورگر گواهی SSL معتبری را تشخیص نداد. جلسه صوتی و تصویری برای بزرگنمایی در "
+"سایت غیر HTTPS کار نمی کند ، لطفاً یک گواهینامه SSL معتبر نصب کنید تا صدا و "
+"تصویر را در جلسات خود از طریق مرورگر اجازه دهید."
 
 #: includes/views/live/tpl-reports.php:131
 msgid "By"
-msgstr "Od"
+msgstr "توسط"
 
 #: templates/fragments/meeting-details.php:41
 msgid "Category"
-msgstr "Kategória"
+msgstr "دسته بندی"
 
 #: includes/views/tabs/api-settings.php:165
 msgid ""
@@ -289,115 +280,128 @@ msgid ""
 " Failure to correctly put value will result in failure to show date in "
 "frontend."
 msgstr ""
+"قالب های زمان تاریخ را با توجه به انتخاب خود تغییر دهید. لطفاً این را به "
+"درستی ویرایش کنید. عدم تعیین صحیح مقدار منجر به عدم نمایش تاریخ در جلو می "
+"شود."
 
 #: includes/admin/class-zvc-admin-recordings.php:79
 #: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
-msgstr ""
+msgstr "بررسی"
 
 #: includes/helpers.php:337
-#, php-format
 msgid "check %s for shortcode references."
-msgstr "skontrolujte %s, či neobsahuje odkazy na krátky kód."
+msgstr "برای مرجع کدهای کوتاه %s را بررسی کنید."
 
 #: includes/views/tabs/api-settings.php:192
 msgid "Check API Connection"
-msgstr "Skontrolujte pripojenie API"
+msgstr "بررسی ارتباط API"
 
 #: includes/views/live/tpl-list-pending-users.php:11
 msgid "Check Available Users"
-msgstr ""
+msgstr "بررسی کاربران موجود"
 
 #: includes/views/live/tpl-list-users.php:15
 msgid "Check Pending Users"
-msgstr ""
+msgstr "بررسی کاربران در انتظار"
 
 #: includes/views/tabs/api-settings.php:51
 msgid ""
 "Checking this option will disable auto password generation for new meetings "
 "which are created from Zoom meeting > Add new section."
 msgstr ""
+"با علامت زدن این گزینه، تولید گذرواژه خودکار برای جلسات جدید که از جلسه زوم >"
+" بخش جدید ایجاد شده ایجاد نمی شود."
 
 #: includes/views/tabs/api-settings.php:58
 msgid ""
 "Checking this option will hide join links from your shortcode for non-"
 "loggedin users."
 msgstr ""
+"با علامت زدن این گزینه، لینک پیوستن از کد کوتاه شما برای کاربرانی که وارد "
+"سایت نشده اند، پنهان می شوند."
 
 #: includes/views/tabs/api-settings.php:177
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr ""
+"با علامت زدن این گزینه، قالب زمان 24 ساعته در تمام تاریخ های رویداد نشان "
+"داده می شود."
 
 #: includes/views/tabs/api-settings.php:184
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
 msgstr ""
+"با بررسی این گزینه برچسب ماه کامل به عنوان مثال ژوئن، جولای، آگوست و غیره "
+"نشان داده می شود."
 
 #: includes/views/tabs/api-settings.php:94
 msgid "Checking this show will hide email field in Join via Browser window."
 msgstr ""
+"با علامت زدن این گزینه، زمینه ایمیل در پنجره ورود با مرورگر پنهان می شود."
 
 #: includes/views/tabs/api-settings.php:79
 msgid ""
 "Checking this show Zoom original Author in single meetings page which are "
 "created from"
 msgstr ""
-"Zaškrtnutím tejto možnosti zobrazíte pôvodného autora Zoom na jednu stránku "
-"stretnutí, z ktorej sú vytvorené"
+"با علامت زدن این گزینه، زوم نویسنده اصلی در صفحه جلسات منفرد که از آن ایجاد "
+"شده است"
 
 #: includes/views/tabs/api-settings.php:101
 msgid ""
 "Checking this will disable invite button when user joins meeting via Join "
 "via Browser window."
 msgstr ""
+"با علامت زدن این گزینه، دعوت هنگامی که کاربر به جلسه می پیوندد از طریق عضویت "
+"از طریق پنجره مرورگر غیرفعال می شود."
 
 #: includes/views/tabs/api-settings.php:87
 msgid "Checking this will hide all Join via Browser Buttons."
-msgstr ""
+msgstr "با بررسی این موضوع تمام عضویت از طریق دکمه های مرورگر پنهان می شود."
 
 #: includes/views/sync.php:19
 msgid "Choose a Zoom User"
-msgstr ""
+msgstr "انتخاب یک کاربر زوم"
 
 #: includes/admin/class-zvc-admin-sync.php:44
 msgid "Choose meeting from here to sync."
-msgstr ""
+msgstr "جلسه را از اینجا برای همگام سازی انتخاب کنید."
 
 #: includes/Bootstrap.php:113 includes/Shortcodes/Meetings.php:144
 msgid "Click join button below to join the meeting now !"
-msgstr "Kliknutím na tlačidlo dole nižšie sa pripojte k schôdzke teraz!"
+msgstr "برای پیوستن به جلسه هم اکنون بر روی دکمه عضویت کلیک کنید!"
 
 #: includes/views/webinars/tpl-list-webinars.php:77
 #: includes/views/live/tpl-list-meetings.php:78
 msgid "Click to Copy Shortcode !"
-msgstr "Kliknite pre kopírovanie shortcode!"
+msgstr "برای کپی کردن کدکوتاه کلیک کنید !"
 
 #: includes/views/webinars/tpl-edit-webinar.php:114
 #: includes/views/webinars/tpl-add-webinar.php:117
 #: includes/views/live/tpl-edit-meeting.php:151
 #: includes/views/post-type/tpl-meeting-fields.php:302
 msgid "Cloud"
-msgstr "Cloud"
+msgstr "ابر"
 
 #: includes/Elementor/Widgets/WebinarList.php:190
 #: includes/Elementor/Widgets/MeetingList.php:192
 msgid "Column Layout"
-msgstr ""
+msgstr "چیدمان ستون"
 
 #: includes/views/tabs/api-settings.php:202
 msgid "Contact for additional Support"
-msgstr "Kontakt pre dodatočnú podporu"
+msgstr "برای پشتیبانی بیشتر تماس بگیرید"
 
 #: includes/Elementor/Widgets/WebinarList.php:85
 #: includes/Elementor/Widgets/MeetingList.php:87
 msgid "Content"
-msgstr ""
+msgstr "محتوا"
 
 #: includes/Shortcodes/Meetings.php:500
 msgid "Could not retrieve meetings, check Host ID"
-msgstr ""
+msgstr "بازیابی جلسات امکان پذیر نیست ، شناسه میزبان را بررسی کنید"
 
 #: includes/Shortcodes/Webinars.php:129
 msgid "Could not retrieve webinars, check Host ID"
@@ -405,70 +409,68 @@ msgstr ""
 
 #: includes/Elementor/Widgets/MeetingList.php:165
 msgid "Count of meetings"
-msgstr ""
+msgstr "تعداد جلسات"
 
 #: includes/Elementor/Widgets/WebinarList.php:163
 msgid "Count of Webinars"
-msgstr ""
+msgstr "تعداد وبینارها"
 
 #: includes/views/live/tpl-add-user.php:24
 #: includes/views/live/tpl-add-user.php:32
 msgid "Create"
-msgstr "Vytvoriť"
+msgstr "ایجاد"
 
 #: includes/views/live/tpl-add-meetings.php:148
 msgid "Create Meeting"
-msgstr ""
+msgstr "ایجاد جلسه"
 
 #: includes/views/live/tpl-add-user.php:89
 msgid "Create User"
-msgstr ""
+msgstr "ایجاد کاربر"
 
 #: includes/views/webinars/tpl-add-webinar.php:137
 msgid "Create Webinar"
-msgstr ""
+msgstr "ایجاد وبینار"
 
 #: includes/admin/class-zvc-admin-users.php:66
 msgid ""
 "Created a User. Please check email for confirmation. Added user will only "
 "appear in the list after approval."
 msgstr ""
-"Vytvoril sa používateľ. Skontrolujte e-mail na potvrdenie. Pridaný "
-"používateľ sa v zozname zobrazí až po schválení."
+"یک کاربر ایجاد کرد لطفاً برای تأیید ایمیل را بررسی کنید. کاربر اضافه شده فقط "
+"پس از تأیید در لیست ظاهر می شود."
 
 #: includes/admin/class-zvc-admin-meetings.php:131
-#, php-format
 msgid "Created meeting %s at %s. Join %s"
-msgstr "Vytvorená schôdza %s na %s. pripojiť %s"
+msgstr "جلسه %s را در %s ایجاد کرد. به %s بپیوندید"
 
 #: includes/views/webinars/tpl-list-webinars.php:62
 #: includes/views/live/tpl-list-meetings.php:64
 #: includes/views/live/tpl-list-pending-users.php:19
 #: includes/views/live/tpl-list-users.php:34
 msgid "Created On"
-msgstr "Zakúpené"
+msgstr "ایجاد شده در"
 
 #: includes/admin/class-zvc-admin-webinars.php:157
-#, php-format
 msgid "Created webinar %s at %s. Join %s"
-msgstr ""
+msgstr "وبینار %s را در %s ایجاد کرد. به %s بپیوندید"
 
 #: templates/fragments/meeting-details.php:63
 msgid "Current Timezone"
-msgstr ""
+msgstr "منطقه زمانی کنونی"
 
 #: includes/views/sync.php:13
 msgid "Currently, you can only sync scheduled meetings."
-msgstr ""
+msgstr "در حال حاضر، فقط می توانید جلسات برنامه ریزی شده را همگام سازی کنید."
 
 #: includes/views/live/tpl-add-user.php:26
 #: includes/views/live/tpl-add-user.php:40
 msgid "Cust Create"
-msgstr "Cust vytvoriť"
+msgstr "Cust ایجاد کنید"
 
 #: includes/views/live/tpl-reports.php:57
 msgid "Date"
-msgstr "Dátum"
+msgstr "تاریخ"
 
 #: includes/admin/class-zvc-admin-reports.php:67
 msgid "Date field cannot be Empty !!"
@@ -476,96 +478,96 @@ msgstr ""
 
 #: includes/views/tabs/api-settings.php:144
 msgid "DateTime Format"
-msgstr ""
+msgstr "فرمت تاریخ و زمان"
 
 #: includes/Shortcodes.php:224 templates/fragments/countdown-timer.php:30
 msgid "days"
-msgstr "dní"
+msgstr "روز"
 
 #: includes/admin/class-zvc-admin-post-type.php:390
 msgid "Debug Log"
-msgstr "Protokol zoznamu chýb"
+msgstr "اشکال زدایی ورود"
 
 #: includes/views/tabs/api-settings.php:105
 msgid "Default Language for Join via browser page ?"
-msgstr ""
+msgstr "زبان پیش فرض برای پیوستن از طریق صفحه مرورگر؟"
 
 #: templates/fragments/filters.php:32
 msgid "Default Sorting"
-msgstr ""
+msgstr "مرتب سازی پیش فرض"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:138
 msgid "Default title"
-msgstr ""
+msgstr "عنوان پیش فرض"
 
 #: includes/views/webinars/tpl-edit-webinar.php:103
 #: includes/views/webinars/tpl-add-webinar.php:107
 #: includes/views/post-type/tpl-meeting-fields.php:277
 msgid "Defaults to HD video."
-msgstr ""
+msgstr "پیش فرض های فیلم HD."
 
 #: includes/admin/class-zvc-admin-ajax.php:87
-#, php-format
 msgid "Deleted %d Meeting(s)."
-msgstr "Odstránené %d schôdze."
+msgstr "‫%d جلسه حذف شد(ند)."
 
 #: includes/admin/class-zvc-admin-ajax.php:50
 msgid "Deleted Meeting with ID"
-msgstr ""
+msgstr "جلسه با شناسه حذف شد"
 
 #: templates/fragments/meeting-details.php:20
 msgid "Details"
-msgstr "Podrobnosti"
+msgstr "جزئیات"
 
 #: includes/views/tabs/api-settings.php:204
 msgid "Developer"
-msgstr "Developer"
+msgstr "توسعه دهنده"
 
 #: includes/views/post-type/tpl-meeting-fields.php:59
 #: includes/views/post-type/tpl-meeting-fields.php:119
 #: includes/views/post-type/tpl-meeting-fields.php:324
-#, php-format
 msgid ""
 "Did not find any hosts here ? Please %scheck here%s to verify your API keys "
 "are working correctly."
 msgstr ""
+"هيچ ميزباني اينجا پيدا نکردي؟ لطفا %s اینجا %s برای بررسی کلیدهای API خود را "
+"به درستی کار می کنند."
 
 #: includes/views/tabs/api-settings.php:48
 msgid "Disable Auto Password Generation ?"
-msgstr ""
+msgstr "غیر فعال کردن تولید رمز عبور خودکار ?"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:158
 msgid "Disable Countdown Timer?"
-msgstr ""
+msgstr "زمان شمارش معکوس را غیر فعال کنید؟"
 
 #: includes/views/tabs/api-settings.php:91
 msgid "Disable Email field when join via browser ?"
-msgstr ""
+msgstr "غیر فعال کردن زمینه ایمیل در هنگام پیوستن از طریق مرورگر ?"
 
 #: includes/views/tabs/api-settings.php:62
 msgid "Disable Embed password in Link ?"
-msgstr ""
+msgstr "غیر فعال کردن رمز عبور جاسازی شده در لینک ?"
 
 #: includes/views/tabs/api-settings.php:98
 msgid "Disable Invite field when join via browser ?"
-msgstr ""
+msgstr "غیر فعال کردن زمینه دعوت هنگامی که پیوستن از طریق مرورگر?"
 
 #: includes/admin/class-zvc-admin-post-type.php:283
 #: includes/views/live/tpl-list-meetings.php:128
 msgid "Disable Join"
-msgstr "Zakázať pripojiť"
+msgstr "غیرفعال کردن عضویت"
 
 #: includes/views/tabs/api-settings.php:84
 msgid "Disable Join via browser ?"
-msgstr ""
+msgstr "غیرفعال کردن عضویت از طریق مرورگر ?"
 
 #: includes/views/post-type/tpl-meeting-fields.php:200
 msgid "Disable Waiting Room"
-msgstr ""
+msgstr "غیر فعال کردن اتاق انتظار"
 
 #: includes/admin/class-zvc-admin-settings.php:174
 msgid "Dismiss this notice."
-msgstr "Skryť toto upozornenie."
+msgstr "این اطلاعیه را رد کنید."
 
 #: includes/views/tabs/api-settings.php:44
 msgid ""
@@ -575,26 +577,26 @@ msgstr ""
 
 #: includes/helpers.php:355
 msgid "Do not get confused here !!"
-msgstr "Nenechajte sa zmiasť tu !!"
+msgstr "اینجا گیج نشوید !!"
 
 #: includes/views/tabs/api-settings.php:199
 msgid "Documentation"
-msgstr "Dokumentácia"
+msgstr "مستندات"
 
 #: includes/Shortcodes/Recordings.php:61 includes/Shortcodes/Recordings.php:62
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
 #: includes/views/live/tpl-list-recordings.php:53
 #: includes/views/live/tpl-list-recordings.php:54
 msgid "Download"
-msgstr ""
+msgstr "دانلود"
 
 #: includes/Shortcodes.php:204
 msgid "Download App from Store"
-msgstr "Stiahnite si aplikáciu z obchodu"
+msgstr "دانلود اپلیکیشن زوم از Store"
 
 #: includes/Shortcodes.php:207
 msgid "Download from Zoom"
-msgstr "Stiahnuť z Zoom"
+msgstr "دانلود اپلیکیشن زوم از Zoom"
 
 #: includes/template-functions.php:408
 #: templates/fragments/meeting-details.php:49
@@ -607,124 +609,125 @@ msgstr "Stiahnuť z Zoom"
 #: includes/views/live/tpl-add-meetings.php:74
 #: includes/views/post-type/tpl-meeting-fields.php:171
 msgid "Duration"
-msgstr "Trvanie"
+msgstr "مدت زمان"
 
 #: includes/views/live/tpl-edit-meeting.php:24
 msgid "Edit a Meeting"
-msgstr "Úprava schôdze"
+msgstr "ویرایش یک جلسه"
 
 #: includes/admin/class-zvc-admin-post-type.php:341
 msgid "Edit meeting"
-msgstr "Upraviť schôdzu"
+msgstr "ویرایش جلسه"
 
 #: includes/views/webinars/tpl-edit-webinar.php:11
 #: includes/views/webinars/tpl-edit-webinar.php:144
 msgid "Edit Webinar"
-msgstr ""
+msgstr "ویرایش وبینار"
 
 #: includes/views/live/tpl-list-pending-users.php:18
 #: includes/views/live/tpl-assign-host-id.php:31
 #: includes/views/live/tpl-list-users.php:32
 msgid "Email"
-msgstr "E-mail"
+msgstr "ایمیل"
 
 #: includes/views/live/tpl-add-user.php:49
 msgid "Email Address"
-msgstr "Emailová adresa"
+msgstr "آدرس ایمیل"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:146
 msgid "Embed Height"
-msgstr ""
+msgstr "ارتفاع جاسازی شده"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:87
 msgid "Embed Meeting"
-msgstr ""
+msgstr "نشست جاسازی"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:46
 msgid "Embed Zoom Meeting"
-msgstr ""
+msgstr "نشست زوم جاسازی شده"
 
 #: includes/views/tabs/shortcode.php:33
 msgid "Embed Zoom Meeting in your Browser"
-msgstr ""
+msgstr "جلسه زوم را در مرورگر خود قرار دهید"
 
 #: includes/admin/class-zvc-admin-post-type.php:495
 msgid "Enable Debug?"
-msgstr "Povoliť ladenie?"
+msgstr "فعال کردن حالت عیب یابی؟"
 
 #: includes/admin/class-zvc-admin-post-type.php:286
 #: includes/views/live/tpl-list-meetings.php:134
 msgid "Enable Join"
-msgstr "Povoliť pripojenie"
+msgstr "فعال کردن عضویت"
 
 #: includes/template-functions.php:104
 msgid "Enable Meeting Join ?"
-msgstr "Povoliť pripojenie k stretnutiu?"
+msgstr "فعال کردن پیوستن به جلسه ؟"
 
 #: includes/views/post-type/tpl-meeting-fields.php:267
 msgid "Enable Practise Session."
-msgstr ""
+msgstr "جلسه تمرین را فعال کنید."
 
 #: templates/shortcode/zoom-recordings-by-meeting.php:54
 msgid "End Date"
-msgstr ""
+msgstr "تاریخ پایان"
 
 #: includes/template-functions.php:102
 msgid "End Meeting ?"
-msgstr "Ukončiť schôdzu?"
+msgstr "پایان جلسه ؟"
 
 #: includes/views/live/tpl-list-meetings.php:131
 msgid ""
 "Ending this will disable users to join this meeting. Applies to any "
 "shortcode output only."
 msgstr ""
-"Ukončenie tejto akcie zakáže používateľom pripojiť sa k tejto schôdzi. "
-"Vzťahuje sa iba na akýkoľvek výstup s krátkym kódom."
+"پایان دادن به این کار کاربران را برای پیوستن به این جلسه غیرفعال می کند. فقط "
+"برای هر خروجی کد کوتاه اعمال می شود."
 
 #: includes/views/live/tpl-reports.php:158
 msgid "Enter a value to Check..."
-msgstr "Zadajte hodnotu, ktorú chcete skontrolovať..."
+msgstr "مقداری را برای بررسی وارد کنید..."
 
 #: includes/admin/class-zvc-admin-recordings.php:78
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
-msgstr "Zadajte dátum, ktorý chcete skontrolovať:"
+msgstr "جهت بررسی تاریخ را وارد کنید:"
 
 #: includes/Shortcodes.php:147 includes/Shortcodes/Webinars.php:60
 #: includes/Shortcodes/Meetings.php:66 includes/Shortcodes/Meetings.php:120
 msgid "ERROR: "
-msgstr "Chyba: "
+msgstr "خطا: "
 
 #: includes/admin/class-zvc-admin-settings.php:63
 msgid "Extensions"
-msgstr ""
+msgstr "برنامه های افزودنی"
 
 #: includes/views/tabs/api-settings.php:209
 msgid "Facebook Group"
-msgstr ""
+msgstr "گروه فیسبوک"
 
 #: includes/admin/class-zvc-admin-sync.php:191
 msgid "Failed to import meeting with ID"
-msgstr ""
+msgstr "موفق به وارد کردن جلسه با شناسه نشد"
 
 #: includes/admin/class-zvc-admin-sync.php:41
 msgid ""
 "Fetching data.. Please wait this might take some time depending on how many "
 "Zoom Meetings you have."
 msgstr ""
+"واکشی داده ها .. لطفاً صبر کنید بسته به تعداد جلسات زوم شما ممکن است مدتی "
+"طول بکشد."
 
 #: includes/Shortcodes/Recordings.php:51
 #: includes/views/live/tpl-list-recordings.php:48
 msgid "File Size"
-msgstr ""
+msgstr "اندازۀ پرونده"
 
 #: includes/Shortcodes/Recordings.php:50
 #: includes/views/live/tpl-list-recordings.php:46
 msgid "File Type"
-msgstr ""
+msgstr "نوع پرونده"
 
 #: includes/Shortcodes.php:98
-#, php-format
 msgid "filtered from %s total entries"
 msgstr ""
 
@@ -734,133 +737,133 @@ msgstr ""
 
 #: includes/views/live/tpl-add-user.php:55
 msgid "First Name"
-msgstr "Krstné meno"
+msgstr "نام"
 
 #: includes/views/live/tpl-add-user.php:58
 msgid "First Name of the User (Required)."
-msgstr "Krstné meno používateľa (vyžadované)."
+msgstr "نام کاربر (الزامی)."
 
 #: includes/views/live/tpl-list-users.php:14
 msgid "Flush User Cache"
-msgstr "Vyprázdniť vyrovnávaciu pamäť používateľa"
+msgstr "پاک کردن حافظه پنهان کاربر"
 
 #: includes/admin/class-zvc-admin-users.php:28
 msgid "Flushed User Cache!"
-msgstr "Vyrovnávacia pamäť používateľa!"
+msgstr "حافظه پنهان کاربر پاک شد!"
 
 #: includes/views/live/tpl-reports.php:122
 msgid "From"
-msgstr "Od"
+msgstr "از"
 
 #: includes/views/live/tpl-assign-host-id.php:32
 msgid "Full Name"
-msgstr ""
+msgstr "نام کامل"
 
 #: includes/views/live/tpl-reports.php:119
 msgid "Get account report for a specified period."
-msgstr "Získajte výkaz kont pre zadané obdobie."
+msgstr "گزارش حساب را برای یک دوره مشخص دریافت کنید."
 
 #: includes/views/webinars/tpl-edit-webinar.php:100
 #: includes/views/webinars/tpl-add-webinar.php:104
 #: includes/views/post-type/tpl-meeting-fields.php:273
 msgid "HD Video"
-msgstr ""
+msgstr "ویدئو HD"
 
 #: includes/views/tabs/api-settings.php:55
 msgid "Hide Join Links for Non-Loggedin ?"
-msgstr ""
+msgstr "پنهان لینک ها برای کاربران مهمان ؟"
 
 #: includes/admin/class-zvc-admin-post-type.php:475
 msgid "Hide Join via browser link ?"
-msgstr "Skryť Pripojiť sa pomocou odkazu prehliadača?"
+msgstr "پنهان کردن لینک پیوستن با مرورگر ؟"
 
 #: includes/views/live/tpl-assign-host-id.php:33
 msgid "Host ID"
-msgstr "Identifikácia hostiteľa"
+msgstr "شناسه میزبان"
 
 #: includes/Shortcodes/Webinars.php:108 includes/Shortcodes/Meetings.php:482
 msgid "Host ID should be given when defining this shortcode."
-msgstr ""
+msgstr "شناسه میزبان باید هنگام تعریف این کد کوتاه داده شود."
 
 #: includes/views/live/tpl-edit-meeting.php:114
 #: includes/views/live/tpl-add-meetings.php:96
 msgid "Host join start"
-msgstr "Hostiteľ pripojiť Štart"
+msgstr "شروع پیوستن میزبان"
 
 #: includes/admin/class-zvc-admin-settings.php:70
 msgid "Host to WP Users"
-msgstr ""
+msgstr "میزبان کاربران WP"
 
 #: includes/views/webinars/tpl-edit-webinar.php:84
 #: includes/views/webinars/tpl-add-webinar.php:88
 msgid "Host Video"
-msgstr ""
+msgstr "ویدئو میزبان"
 
 #: templates/fragments/meeting-details.php:30
 msgid "Hosted By"
-msgstr "Hostiteľ"
+msgstr "میزبانی شده توسط"
 
 #: templates/content-meeting.php:31 templates/shortcode/zoom-listing.php:33
 msgid "Hosted By:"
-msgstr "Hostiteľom:"
+msgstr "میزبان:"
 
 #: includes/Shortcodes.php:230 templates/fragments/countdown-timer.php:36
 msgid "hours"
-msgstr "hodín"
+msgstr "ساعت"
 
 #: includes/helpers.php:358
 msgid "I understand ! Don't show this again !"
-msgstr "Rozumiem! Nezobrazovať to znova!"
+msgstr "می‌فهمم! اينو دوباره نشون نده !"
 
 #: includes/views/live/tpl-assign-host-id.php:30
 msgid "ID"
-msgstr ""
+msgstr "شناسه"
 
 #: includes/views/tabs/api-settings.php:35
 msgid ""
 "If you are using Zoom Vanity URL then please insert it here else leave it "
 "empty."
 msgstr ""
-"Ak používate webovú adresu Zoom Vanity, vložte ju sem, inak ju nechajte "
-"prázdnu."
 
 #: includes/views/post-type/tpl-meeting-fields.php:34
 msgid ""
 "If you need to show this meeting on another page or post please use this "
 "shortcode"
 msgstr ""
-"Ak potrebujete zobraziť túto schôdzu na inej stránke alebo článku, použite "
-"tento krátky kód"
+"اگر قصد نمایش این جلسه در یک صفحه یا نوشته دیگر دارید از این کدکوتاه استفاده "
+"نمایید"
 
 #: includes/admin/class-zvc-admin-settings.php:76
 msgid "Import"
-msgstr ""
+msgstr "درون ریزی"
 
 #: includes/Shortcodes/Recordings.php:101
 msgid ""
 "Invalid HOST ID. Please define a host ID to show recordings based on host."
 msgstr ""
+"شناسه HOST نامعتبر است. لطفاً شناسه میزبان را برای نمایش ضبط ها بر اساس "
+"میزبان تعریف کنید."
 
 #: includes/Shortcodes/Recordings.php:173
 msgid "Invalid Meeting ID."
-msgstr ""
+msgstr "شناسه جلسه نامعتبر است."
 
 #: templates/join-web-browser.php:103 templates/shortcode/join-links.php:20
 #: templates/shortcode/join-links.php:29
 #: templates/shortcode/webinar-join-links.php:20
 #: templates/shortcode/webinar-join-links.php:29
 msgid "Join"
-msgstr "Pripojiť sa"
+msgstr "پیوستن"
 
 #: includes/views/live/tpl-edit-meeting.php:106
 #: includes/views/live/tpl-add-meetings.php:88
 #: includes/views/post-type/tpl-meeting-fields.php:218
 msgid "Join Before Host"
-msgstr "Pripojiť sa pred hostiteľom"
+msgstr "قبل از میزبان بپیوندید"
 
 #: includes/admin/class-zvc-admin-post-type.php:457
 msgid "Join Meeting"
-msgstr ""
+msgstr "عضویت در جلسه"
 
 #: includes/views/live/tpl-edit-meeting.php:109
 #: includes/views/live/tpl-add-meetings.php:91
@@ -868,27 +871,27 @@ msgid ""
 "Join meeting before host start the meeting. Only for scheduled or recurring "
 "meetings."
 msgstr ""
-"Pripojiť sa k schôdzi pred hostiteľským začiatkom schôdze. Len pre "
-"naplánované alebo opakujúce sa schôdze."
+"قبل از شروع جلسه توسط میزبان به جلسه بپیوندید. فقط برای جلسات برنامه ریزی "
+"شده یا مکرر."
 
 #: includes/template-functions.php:155
 msgid "Join Meeting via Zoom App"
-msgstr "Pripojiť sa k schôdzi pomocou aplikácie zoom"
+msgstr "پیوستن به جلسه با اپلیکیشن زوم"
 
 #: includes/Shortcodes/Webinars.php:156 includes/Shortcodes/Meetings.php:544
 msgid "Join via App"
-msgstr ""
+msgstr "پیوستن با اپلیکیشن"
 
 #: includes/helpers.php:595 includes/helpers.php:599 includes/helpers.php:623
 #: includes/helpers.php:627 templates/shortcode/join-links.php:27
 #: templates/shortcode/webinar-join-links.php:27
 msgid "Join via Web Browser"
-msgstr "Pripojte sa cez webový prehliadač"
+msgstr "پیوستن با مرورگر وب"
 
 #: includes/Shortcodes.php:201 templates/shortcode/join-links.php:18
 #: templates/shortcode/webinar-join-links.php:18
 msgid "Join via Zoom App"
-msgstr "Pripojiť sa cez zoom Applikáciu"
+msgstr "پیوستن با اپلیکیشن زوم"
 
 #: includes/Shortcodes.php:106
 msgid "Last"
@@ -896,47 +899,47 @@ msgstr ""
 
 #: includes/views/live/tpl-list-users.php:36
 msgid "Last Client"
-msgstr "Posledný klient"
+msgstr "آخرین مشتری"
 
 #: includes/views/live/tpl-list-users.php:35
 msgid "Last Login"
-msgstr "Posledné prihlásenie"
+msgstr "آخرین ورود"
 
 #: includes/views/live/tpl-reports.php:135
 msgid "Last Login Time"
-msgstr "Čas posledného prihlásenia"
+msgstr "آخرین زمان ورود"
 
 #: includes/views/live/tpl-add-user.php:62
 msgid "Last Name"
-msgstr "Priezvisko"
+msgstr "نام خانوادگی"
 
 #: includes/views/live/tpl-add-user.php:64
 msgid "Last Name of the User (Required)."
-msgstr "Priezvisko používateľa (vyžadované)."
+msgstr "نام خانوادگی کاربر (الزامی)."
 
 #: includes/helpers.php:333
 msgid "Like this plugin ?"
-msgstr "Páči sa tento plugin?"
+msgstr "امتیاز به این افزونه ؟"
 
 #: includes/views/tabs/shortcode.php:29
 msgid "List Host ID"
-msgstr ""
+msgstr "لیست شناسه میزبان"
 
 #: includes/views/tabs/shortcode.php:21
 msgid "Listing Zoom Meetings"
-msgstr "Zoznam stretnutí so zoomom"
+msgstr "لیست جلسات زوم"
 
 #: includes/views/tabs/shortcode.php:25
 msgid "Listing Zoom Webinars"
-msgstr ""
+msgstr "لیست وبینارهای زوم"
 
 #: includes/admin/class-zvc-admin-settings.php:33
 msgid "Live Meetings"
-msgstr "Živé stretnutia"
+msgstr "جلسات زنده"
 
 #: includes/admin/class-zvc-admin-settings.php:28
 msgid "Live Webinars"
-msgstr ""
+msgstr "وبینارهای زنده"
 
 #: includes/Shortcodes.php:100
 msgid "Loading"
@@ -944,62 +947,62 @@ msgstr ""
 
 #: includes/Shortcodes/Recordings.php:115
 msgid "Loading recordings.. Please wait.."
-msgstr ""
+msgstr "بارگیری ضبط ها .. لطفا صبر کنید .."
 
 #: includes/views/webinars/tpl-edit-webinar.php:113
 #: includes/views/webinars/tpl-add-webinar.php:116
 #: includes/views/live/tpl-edit-meeting.php:148
 #: includes/views/post-type/tpl-meeting-fields.php:299
 msgid "Local"
-msgstr "Lokálne"
+msgstr "محلی"
 
 #: includes/admin/class-zvc-admin-post-type.php:247
 #: includes/Elementor/Widgets/MeetingByPostID.php:88
 #: includes/Elementor/Widgets/MeetingByID.php:90
 msgid "Meeting"
-msgstr ""
+msgstr "ملاقات"
 
 #: includes/views/live/tpl-edit-meeting.php:47
 #: includes/views/live/tpl-add-meetings.php:36
 msgid "Meeting Agenda"
-msgstr "Program schôdze"
+msgstr "دستور کار نشست"
 
 #: includes/views/post-type/tpl-meeting-fields.php:210
 msgid "Meeting Authentication"
-msgstr ""
+msgstr "احراز هویت جلسه"
 
 #: includes/views/live/tpl-edit-meeting.php:50
 #: includes/views/live/tpl-add-meetings.php:39
 msgid "Meeting Description."
-msgstr "Popis schôdze."
+msgstr "شرح جلسه."
 
 #: includes/admin/class-zvc-admin-post-type.php:386
 msgid "Meeting Details"
-msgstr "Podrobnosti o schôdzi"
+msgstr "جزئیات جلسه"
 
 #: includes/Elementor/Widgets/MeetingList.php:176
 msgid "Meeting Display Threshold"
-msgstr ""
+msgstr "آستانه نمایش جلسه"
 
 #: includes/views/live/tpl-edit-meeting.php:95
 #: includes/views/live/tpl-add-meetings.php:77
 msgid "Meeting duration (minutes). (optional)"
-msgstr "Trvanie schôdze (minúty). voliteľné"
+msgstr "زمان جلسه (دقیقه). (اختیاری)"
 
 #: includes/views/tabs/api-settings.php:138
 msgid "Meeting Ended Text"
-msgstr "Text ukončenia stretnutia"
+msgstr "متن جلسه پایان یافته است"
 
 #: includes/views/tabs/api-settings.php:132
 msgid "Meeting going to start Text"
-msgstr "Text, že stretnutie začne"
+msgstr "متن جسله در حال شروع شدن است"
 
 #: includes/template-functions.php:356 includes/template-functions.php:365
 #: includes/template-functions.php:375 templates/shortcode/zoom-webinar.php:55
 #: templates/shortcode/zoom-webinar.php:64
 #: templates/shortcode/zoom-webinar.php:74
 msgid "Meeting has ended !"
-msgstr ""
+msgstr "جلسه به پایان رسیده است !"
 
 #: includes/admin/class-zvc-admin-post-type.php:445
 #: includes/admin/class-zvc-admin-post-type.php:467
@@ -1007,12 +1010,13 @@ msgid ""
 "Meeting has not been created for this post yet. Publish your meeting or hit "
 "update to create a new one for this post !"
 msgstr ""
+"جلسه هنوز برای این پست ایجاد نشده است جلسه خود را منتشر کنید یا به روزرسانی "
+"کنید تا جلسه جدیدی برای این پست ایجاد کنید!"
 
 #: includes/Bootstrap.php:112 includes/Shortcodes/Meetings.php:143
 msgid "Meeting Has Started ! Click below join button to join meeting now !"
 msgstr ""
-"Stretnutie sa začalo! Kliknutím na tlačidlo Pripojiť sa nižšie sa pripojíte "
-"k stretnutiu!"
+"جلسه آغاز شده است! برای پیوستن به جلسه هم اکنون بر روی دکمه عضویت کلیک کنید!"
 
 #: includes/views/live/tpl-edit-meeting.php:54
 #: includes/views/live/tpl-add-meetings.php:43
@@ -1020,7 +1024,7 @@ msgstr ""
 #: includes/views/post-type/tpl-meeting-fields.php:78
 #: includes/views/post-type/tpl-meeting-fields.php:99
 msgid "Meeting Host *"
-msgstr "Schôdza hostiteľa *"
+msgstr "میزبان جلسه *"
 
 #: includes/template-functions.php:307
 #: includes/admin/class-zvc-admin-post-type.php:213
@@ -1033,33 +1037,33 @@ msgstr "Schôdza hostiteľa *"
 #: includes/views/live/tpl-list-meetings.php:58
 #: includes/views/live/tpl-list-recordings.php:20
 msgid "Meeting ID"
-msgstr "ID mítingu"
+msgstr "آیدی جلسه"
 
 #: includes/template-functions.php:321
 msgid "Meeting is in Progress"
-msgstr ""
+msgstr "جلسه در حال انجام است"
 
 #: includes/template-functions.php:241
 msgid "Meeting is not defined. Try updating this meeting"
-msgstr ""
+msgstr "جلسه‌ای تعریف نشده است. لطفا این جلسه را بروزرسانی کنید"
 
 #: includes/views/live/tpl-reports.php:61
 msgid "Meeting Minutes"
-msgstr "Zápisnica zo schôdze"
+msgstr "دقایق جلسه"
 
 #: includes/admin/class-zvc-admin-post-type.php:254
 #: includes/admin/class-zvc-admin-post-type.php:265
 #: includes/admin/class-zvc-admin-post-type.php:274
 #: includes/admin/class-zvc-admin-post-type.php:290
 msgid "Meeting not created yet."
-msgstr ""
+msgstr "جلسه هنوز ایجاد نشده است."
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:173
 #: includes/Elementor/Widgets/EmbedMeetings.php:175
 #: includes/views/live/tpl-edit-meeting.php:99
 #: includes/views/live/tpl-add-meetings.php:81
 msgid "Meeting Password"
-msgstr "Heslo pre schôdzu"
+msgstr "رمز عبور جلسه"
 
 #: includes/views/tabs/api-settings.php:65
 msgid ""
@@ -1067,54 +1071,56 @@ msgid ""
 "participants to join with just one click without having to enter the "
 "password."
 msgstr ""
+"رمز جلسه در پیوند دعوت وجود نخواهد داشت تا به شرکت کنندگان اجازه دهد فقط با "
+"یک کلیک بدون وارد کردن رمز ورود به آن بپیوندند."
 
 #: includes/views/tabs/api-settings.php:126
 msgid "Meeting Started Text"
-msgstr "Text že sa začalo stretnutie"
+msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:214
 #: includes/views/live/tpl-list-meetings.php:63
 msgid "Meeting State"
-msgstr "Stav schôdze"
+msgstr "وضعیت جلسه"
 
 #: includes/template-functions.php:315 includes/Shortcodes/Meetings.php:510
 msgid "Meeting Status"
-msgstr "Stav mítingu"
+msgstr "وضعیت جلسه"
 
 #: includes/admin/class-zvc-admin-sync.php:48
 msgid "Meeting sync has been completed !"
-msgstr ""
+msgstr "همگام سازی جلسه به پایان رسیده است!"
 
 #: includes/views/live/tpl-edit-meeting.php:88
 #: includes/views/live/tpl-add-meetings.php:70
 #: includes/views/post-type/tpl-meeting-fields.php:167
 msgid "Meeting Timezone"
-msgstr "Schôdza časové pásmo"
+msgstr "منطقه زمانی جلسه"
 
 #: includes/views/live/tpl-edit-meeting.php:40
 #: includes/views/live/tpl-add-meetings.php:29
 msgid "Meeting Topic *"
-msgstr "Téma schôdze *"
+msgstr "موضوع جلسه *"
 
 #: includes/views/live/tpl-edit-meeting.php:43
 #: includes/views/live/tpl-add-meetings.php:32
 msgid "Meeting topic. (Required)."
-msgstr "Tému schôdze. (Vyžadované)."
+msgstr "موضوع جلسه (ضروری)."
 
 #: includes/views/post-type/tpl-meeting-fields.php:65
 #: includes/views/post-type/tpl-meeting-fields.php:125
 msgid "Meeting Type"
-msgstr ""
+msgstr "نوع جلسه"
 
 #: templates/archive-meetings.php:24
 #: includes/views/live/tpl-list-meetings.php:20
 #: includes/views/live/tpl-reports.php:58
 msgid "Meetings"
-msgstr "Stretnutia"
+msgstr "جلسه ها"
 
 #: includes/Elementor/Widgets/MeetingList.php:106
 msgid "Meetings Category"
-msgstr ""
+msgstr "دسته بندی جلسات"
 
 #: includes/views/tabs/api-settings.php:41
 msgid "Meetings Deletion ?"
@@ -1122,7 +1128,7 @@ msgstr ""
 
 #: includes/views/live/tpl-reports.php:132
 msgid "Meetings Held"
-msgstr "Stretnutia sa konali"
+msgstr "جلسات برگزار شده"
 
 #: includes/Elementor/Widgets/MeetingList.php:119
 msgid "Meetings Order By"
@@ -1130,40 +1136,40 @@ msgstr ""
 
 #: includes/Elementor/Widgets/MeetingList.php:134
 msgid "Meetings Type"
-msgstr ""
+msgstr "نوع جلسات"
 
 #: includes/Shortcodes.php:236 templates/fragments/countdown-timer.php:42
 msgid "minutes"
-msgstr "minút"
+msgstr "دقیقه"
 
 #: includes/views/webinars/tpl-list-webinars.php:26
 #: includes/views/live/tpl-list-meetings.php:38
 msgid "Move to Trash"
-msgstr "Presunúť do koša"
+msgstr "انتقال به سطل زباله"
 
 #: includes/views/live/tpl-edit-meeting.php:132
 #: includes/views/live/tpl-add-meetings.php:114
 #: includes/views/post-type/tpl-meeting-fields.php:243
 msgid "Mute Participants upon entry"
-msgstr "Stlmiť účastníkov pri vstupe"
+msgstr "هنگام ورود ، شرکت کنندگان را بی صدا کنید"
 
 #: includes/views/live/tpl-edit-meeting.php:136
 #: includes/views/live/tpl-add-meetings.php:118
 #: includes/views/post-type/tpl-meeting-fields.php:247
 msgid "Mutes Participants when entering the meeting."
-msgstr "Pri zadávaní schôdze stlmiť účastníkov."
+msgstr "این گزینه هنگام ورود ، شرکت کنندگان را بی صدا می کند."
 
 #: includes/views/live/tpl-list-users.php:33
 msgid "Name"
-msgstr "Meno"
+msgstr "نام"
 
 #: includes/admin/class-zvc-admin-post-type.php:340
 msgid "New meeting"
-msgstr "Nová schôdza"
+msgstr "جلسه جدید"
 
 #: includes/views/live/tpl-reports.php:59
 msgid "New Users"
-msgstr "Noví používatelia"
+msgstr "کاربران جدید"
 
 #: includes/Shortcodes.php:107
 msgid "Next"
@@ -1171,15 +1177,15 @@ msgstr ""
 
 #: templates/content-meeting.php:42 templates/shortcode/zoom-listing.php:45
 msgid "Next Occurrence"
-msgstr ""
+msgstr "وقوع بعدی"
 
 #: includes/helpers.php:708
 msgid "Next Results"
-msgstr ""
+msgstr "نتایج بعدی"
 
 #: includes/template-functions.php:342 templates/shortcode/zoom-webinar.php:41
 msgid "Next Start Time"
-msgstr ""
+msgstr "زمان شروع بعدی"
 
 #: includes/Shortcodes.php:95
 msgid "No data available in table"
@@ -1191,97 +1197,96 @@ msgstr ""
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:223
 msgid "No Meeting ID is defined."
-msgstr ""
+msgstr "شناسه جلسه مشخص نشده است."
 
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:138
 msgid "No meeting ID is defined."
-msgstr ""
+msgstr "No meeting ID is defined."
 
 #: includes/Shortcodes.php:147 includes/Shortcodes/Meetings.php:66
 msgid "No meeting id set in the shortcode"
-msgstr "V skrátenom kóde nie je nastavené žiadne stretnutie"
+msgstr "در شورت کد هیچ جلسه ای تنظیم نشده است"
 
 #: includes/admin/class-zvc-admin-sync.php:124
 msgid "No meeting is selected or selected meeting already exists"
-msgstr ""
+msgstr "هیچ جلسه ای انتخاب نشده یا جلسه انتخابی از قبل وجود ندارد"
 
 #: includes/admin/class-zvc-admin-sync.php:93
 #: includes/admin/class-zvc-admin-sync.php:96
 msgid "No Meetings Found !"
-msgstr ""
+msgstr "هیچ جلسه ای پیدا نشد !"
 
 #: includes/admin/class-zvc-admin-post-type.php:347
 msgid "No meetings found in Trash."
-msgstr "Nenašli sa žiadne schôdze v koši."
+msgstr "جلسه ای در سطل زباله یافت نشد."
 
 #: templates/shortcode-listing.php:73 templates/archive-meetings.php:55
 #: includes/Shortcodes/Meetings.php:447
 msgid "No Meetings found."
-msgstr ""
+msgstr "هیچ جلسه‌ای یافت نشد."
 
 #: includes/admin/class-zvc-admin-post-type.php:346
 msgid "No meetings found."
-msgstr "Nenašli sa žiadne schôdze."
+msgstr "هيچ جلسه اي پيدا نشد ."
 
 #: includes/Shortcodes/Meetings.php:120
 msgid "No post id set in the shortcode"
-msgstr ""
+msgstr "شناسه پستی در کد کوتاه تنظیم نشده است"
 
 #: includes/views/webinars/tpl-edit-webinar.php:111
 #: includes/views/webinars/tpl-add-webinar.php:115
 #: includes/views/live/tpl-edit-meeting.php:145
 #: includes/views/post-type/tpl-meeting-fields.php:296
 msgid "No Recordings"
-msgstr "Žiadne nahrávky"
+msgstr "ضبط نشود"
 
 #: includes/Shortcodes/Recordings.php:148
 #: includes/Shortcodes/Recordings.php:225
 msgid "No recordings found."
-msgstr ""
+msgstr "هیچ ضبط شده ای یافت نشد."
 
 #: includes/views/live/tpl-reports.php:143
 msgid "No Records Found.."
-msgstr "Nenašli sa žiadne záznamy.."
+msgstr "هيچ پرونده اي پيدا نشده."
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:157
 #: includes/Elementor/Widgets/MeetingHosts.php:161
 msgid "No user selected."
-msgstr ""
+msgstr "هیچ کاربری انتخاب نشده است."
 
 #: includes/Shortcodes/Webinars.php:60
 msgid "No webinar id set in the shortcode"
-msgstr ""
+msgstr "هیچ شناسه وبینار در کد کوتاه تنظیم نشده است"
 
 #: includes/admin/class-zvc-admin-ajax.php:262
 msgid "Not a Host"
-msgstr ""
+msgstr "میزبان نیست"
 
 #: includes/Shortcodes.php:197
 msgid ""
 "Note: If you are having trouble joining the meeting below, enter Meeting ID: "
 msgstr ""
-"Poznámka: Ak máte ťažkosti s pripojením sa na nasledujúcu schôdzu, zadajte "
-"ID schôdzky: "
+"توجه: اگر برای پیوستن به جلسه زیر مشکلی ندارید ، شناسه جلسه را وارد کنید: "
 
 #: includes/template-functions.php:338 templates/shortcode/zoom-webinar.php:37
 msgid "Ocurrences"
-msgstr ""
+msgstr "ورود"
 
 #: includes/admin/class-zvc-admin-post-type.php:474
 msgid "Only logged in users of this site will be able to join this meeting."
-msgstr ""
-"K tejto schôdzi sa budú môcť prihlásiť iba prihlásení používatelia tejto "
-"stránky."
+msgstr "فقط کاربران عضو سایت می توانند به این جلسه بپیوندند."
 
 #: includes/views/post-type/tpl-meeting-fields.php:213
 msgid "Only loggedin users in Zoom App can join this Meeting."
-msgstr ""
+msgstr "فقط کاربران وارد شده در برنامه زوم می توانند به این جلسه بپیوندند."
 
 #: includes/admin/class-zvc-admin-sync.php:47
 msgid ""
 "Opps ! You have not selected any meeting to sync yet. Select one or two and "
 "this section will be filled by happiness for you !!"
 msgstr ""
+"مخالفت! شما هنوز هیچ جلسه ای را برای همگام سازی انتخاب نکرده اید. یکی دو "
+"گزینه را انتخاب کنید و این بخش برای شما پر از خوشبختی خواهد شد !!"
 
 #: includes/views/webinars/tpl-edit-webinar.php:139
 #: includes/views/live/tpl-edit-meeting.php:173
@@ -1290,8 +1295,8 @@ msgid ""
 "Paid Zoom Account is required for this !! Alternative hosts IDs. Multiple "
 "value separated by comma."
 msgstr ""
-"Platené zoom účet je potrebné pre tento! Alternatívne hostiteľov ID. "
-"Viacnásobná hodnota oddelená čiarkou."
+"برای استفاده از این قابلیت باید حساب تجاری Zoom داشته باشد!! آیدی های میزبان "
+"های جایگزین. با وارد کردن کامای انگلیسی از هم جدا کنید."
 
 #: includes/views/webinars/tpl-edit-webinar.php:92
 #: includes/views/webinars/tpl-add-webinar.php:96
@@ -1300,21 +1305,21 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:345
 msgid "Parent meetings:"
-msgstr "Nadradené schôdze:"
+msgstr "جلسات والد:"
 
 #: includes/views/live/tpl-reports.php:60
 msgid "Participants"
-msgstr "Účastníci"
+msgstr "شركت كنندگان"
 
 #: includes/views/live/tpl-edit-meeting.php:123
 #: includes/views/live/tpl-add-meetings.php:105
 #: includes/views/post-type/tpl-meeting-fields.php:234
 msgid "Participants Video"
-msgstr "Účastníci video"
+msgstr "ویدئو شرکت کنندگان"
 
 #: includes/views/post-type/tpl-meeting-fields.php:192
 msgid "Password"
-msgstr ""
+msgstr "رمز عبور"
 
 #: includes/views/webinars/tpl-edit-webinar.php:80
 #: includes/views/webinars/tpl-add-webinar.php:84
@@ -1326,6 +1331,8 @@ msgid ""
 "characters: [a-z A-Z 0-9]. Max of 10 characters.( Leave blank for auto "
 "generate )"
 msgstr ""
+"رمز ورود به جلسه . رمز ورود فقط ممکن است حاوی نویسه های زیر باشد: [a-z A-Z 0-"
+"9]. حداکثر 10 حرف. (برای تولید خودکار ،خالی بگذارید)"
 
 #: includes/Shortcodes/Recordings.php:55
 msgid "Password:"
@@ -1333,58 +1340,61 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:156
 msgid "Past"
-msgstr ""
+msgstr "گذشته"
 
 #: includes/views/live/tpl-list-pending-users.php:10
 msgid "Pending Approval Users"
-msgstr ""
+msgstr "کاربران تأیید در انتظار"
 
 #: includes/template-functions.php:390
 msgid "Personal Meeting Room"
-msgstr ""
+msgstr "اتاق جلسات شخصی"
 
 #: includes/Shortcodes/Recordings.php:58
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
 #: includes/views/live/tpl-list-recordings.php:50
 #: includes/views/live/tpl-list-recordings.php:51
 msgid "Play"
-msgstr ""
+msgstr "پخش"
 
 #: includes/views/post-type/tpl-meeting-fields.php:56
 #: includes/views/post-type/tpl-meeting-fields.php:90
 msgid "Please check your internet connection or API connection."
-msgstr ""
+msgstr "لطفا اتصال به اینترنت یا اتصال API خود را بررسی کنید."
 
 #: includes/helpers.php:268
 msgid ""
 "Please check your internet connection or API keys. Zoom API is not able to "
 "connect with Zoom servers at the moment."
 msgstr ""
+"لطفا اتصال به اینترنت یا کلیدهای API خود را بررسی کنید. زوم API در حال حاضر "
+"قادر به ارتباط با سرورهای زوم نیست."
 
 #: includes/helpers.php:336
-#, php-format
 msgid ""
 "Please consider giving a %s if you found this useful at wordpress.org or "
 msgstr ""
-"Zvážte, prosím, dať %s, ak ste našli to užitočné na wordpress.org alebo "
+"اگر این افزونه برای شما مفید بود در سایت wordpress.org یک %s ثبت کنید یا "
 
 #: includes/views/tabs/api-settings.php:11
 msgid "Please follow"
-msgstr "Prosím nasleduj"
+msgstr "لطفا دنبال کنید"
 
 #: includes/views/post-type/tpl-meeting-fields.php:205
 msgid ""
 "Please keep in mind anyone with the meeting link will be able to join "
 "without you allowing them into the meeting."
 msgstr ""
+"لطفاً بخاطر داشته باشید هر کسی که پیوند جلسه را داشته باشد بدون اینکه شما "
+"اجازه دهید در جلسه شرکت کند ، می تواند عضو شود."
 
 #: includes/template-functions.php:137
 msgid "Please login to join this meeting."
-msgstr ""
+msgstr "لطفا برای پیوستن به این جلسه وارد شوید."
 
 #: includes/views/live/tpl-add-user.php:13
 msgid "Please note this requires a PRO Zoom account or Higher."
-msgstr ""
+msgstr "لطفاً توجه داشته باشید که این کار به حساب PRO یا بالاتر نیاز دارد."
 
 #: includes/helpers.php:357
 msgid ""
@@ -1392,34 +1402,31 @@ msgid ""
 "via API connection. Meetings added from here won't show up on your Post Type "
 "list. This will only create meeting in your zoom.us account !"
 msgstr ""
-"Prečítajte si prosím!!! Tieto stretnutia sú priamo z vášho zoom.us účtu cez "
-"API pripojenie. Schôdze pridané tu sa nezobrazia v zozname Typ príspevku. "
-"Vytvorí sa tak iba stretnutie vo vašom účte zoom.us!"
+"لطفا بخونید !!! این جلسات زیر مستقیماً از طریق حساب zoom.us شما از طریق "
+"اتصال API انجام می شود. جلسات اضافه شده از اینجا در لیست نوع پست شما نشان "
+"داده نمی شوند. این فقط جلسه را در حساب zoom.us شما ایجاد می کند!"
 
 #: includes/views/tabs/api-settings.php:168
-#, php-format
 msgid "Please see %s on how to format date"
-msgstr ""
+msgstr "لطفاً %s را در مورد نحوه قالب بندی تاریخ مشاهده کنید"
 
 #: includes/Shortcodes/Meetings.php:94
-#, php-format
 msgid ""
 "Please try again ! Some error occured while trying to fetch meeting with id: "
 " %d"
 msgstr ""
-"Prosím, skúste to znova! Pri pokuse o načítanie schôdze s ID %d sa vyskytla "
-"chyba"
+"لطفا دوباره تلاش کنید ! هنگام تلاش برای واگذاری جلسه با شناسه  %d ، خطایی "
+"روی داد"
 
 #: includes/Shortcodes/Webinars.php:81
-#, php-format
 msgid ""
 "Please try again ! Some error occured while trying to fetch webinar with id: "
 " %d"
-msgstr ""
+msgstr "لطفا دوباره تلاش کنید ! هنگام واکشی وبینار با شناسه خطایی روی داد:  %d"
 
 #: includes/views/post-type/tpl-meeting-fields.php:263
 msgid "Practise Session"
-msgstr ""
+msgstr "جلسه تمرین"
 
 #: includes/Shortcodes.php:108
 msgid "Previous"
@@ -1427,19 +1434,19 @@ msgstr ""
 
 #: includes/views/live/tpl-reports.php:120
 msgid "Print"
-msgstr "Tlačiť"
+msgstr "چاپ"
 
 #: includes/views/live/tpl-add-user.php:72
 msgid "Pro User"
-msgstr "Pro užívateľ"
+msgstr "کاربر حرفه ای"
 
 #: templates/fragments/countdown-timer.php:17
 msgid "PRO version is required for this meeting to be displayed."
-msgstr ""
+msgstr "نسخه PRO برای نمایش این جلسه مورد نیاز است."
 
 #: includes/views/live/tpl-reports.php:23
 msgid "Pro, Business, Enterprise, Education, or API Account. Check more"
-msgstr "Účet Pro, Business, Enterprise, Education alebo API. Skontrolujte viac"
+msgstr "حساب حرفه ای ، تجاری ، شرکتی ، آموزشی یا API. بیشتر بررسی کنید"
 
 #: includes/Shortcodes.php:101
 msgid "Processing"
@@ -1447,103 +1454,102 @@ msgstr ""
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:148
 msgid "Put height of the container."
-msgstr ""
+msgstr "ارتفاع را وارد کنید."
 
 #: includes/views/tabs/api-settings.php:36
 msgid ""
 "Read more about Vanity\n"
 "                                URLs"
 msgstr ""
-"Prečítajte si viac o Vanity\n"
-"                                 URL"
+"اطلاعات بیشتر در مورد Vanity\n"
+"                                آدرس"
 
 #: templates/shortcode/zoom-recordings.php:25
 #: includes/views/live/tpl-list-recordings.php:23
 msgid "Recorded"
-msgstr ""
+msgstr "ضبط شده"
 
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:86
 msgid "Recording by Meeting"
-msgstr ""
+msgstr "ضبط توسط جلسه"
 
 #: includes/admin/class-zvc-admin-settings.php:58
 #: includes/views/live/tpl-list-recordings.php:10
 msgid "Recordings"
-msgstr ""
+msgstr "ضبط ها"
 
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:45
 msgid "Recordings by Meeting"
-msgstr ""
+msgstr "ضبط شده توسط جلسه"
 
 #: templates/content-meeting.php:57 templates/shortcode/zoom-listing.php:60
 msgid "Recurring"
-msgstr ""
+msgstr "تکرار"
 
 #: includes/template-functions.php:335
 #: includes/admin/class-zvc-admin-post-type.php:263
 #: templates/shortcode/zoom-webinar.php:34
 #: includes/views/live/tpl-list-meetings.php:120
 msgid "Recurring Meeting"
-msgstr "Opakujúce sa schôdze"
+msgstr "جلسه مکرر"
 
 #: includes/views/webinars/tpl-list-webinars.php:119
 msgid "Recurring Webinar"
-msgstr ""
+msgstr "تکرار وبینار"
 
 #: includes/template-functions.php:326
 msgid "Refresh is needed to change status."
-msgstr "Na zmenu stavu je potrebné obnoviť."
+msgstr "برای تغییر وضعیت بارگذاری مجدد نیاز است."
 
 #: includes/admin/class-zvc-admin-settings.php:53
 #: includes/views/live/tpl-reports.php:12
 msgid "Reports"
-msgstr "Reporty"
+msgstr "گزارش ها"
 
 #: includes/admin/class-zvc-admin-post-type.php:471
 #: includes/Elementor/Widgets/EmbedMeetings.php:105
 msgid "Requires Login?"
-msgstr "Vyžaduje sa prihlásenie?"
+msgstr "نیاز به ورود دارد؟"
 
 #: includes/admin/class-zvc-admin-post-type.php:284
 msgid ""
 "Restrict users to join this meeting before the start time or after the "
 "meeting is completed."
 msgstr ""
-"Obmedzte používateľov, aby sa pripojili k tejto schôdzi pred začiatkom alebo "
-"po ukončení schôdzky."
+"کاربران را برای پیوستن به این جلسه قبل از زمان شروع یا پس از اتمام جلسه "
+"محدود کنید."
 
 #: includes/Shortcodes.php:153
 msgid "Restricted access, please login to continue."
-msgstr "Obmedzený prístup. Ak chcete pokračovať, prihláste sa."
+msgstr "دسترسی محدود شده ، لطفاً برای ادامه به سیستم وارد شوید."
 
 #: templates/fragments/filters.php:14
 msgid "results"
-msgstr ""
+msgstr "نتایج"
 
 #: includes/admin/class-zvc-admin-post-type.php:287
 msgid "Resuming this will enable users to join this meeting."
-msgstr ""
-"Obnovenie tohto postupu umožní používateľom pripojiť sa k tejto schôdzi."
+msgstr "از سر گرفتن این امر کاربران را قادر می سازد به این جلسه بپیوندند."
 
 #: includes/views/live/tpl-list-meetings.php:137
 msgid ""
 "Resuming this will enable users to join this meeting. Applies to any "
 "shortcode output only."
 msgstr ""
-"Obnovenie tohto postupu umožní používateľom pripojiť sa k tejto schôdzi. "
-"Vzťahuje sa iba na akýkoľvek výstup s krátkym kódom."
+"از سر گرفتن این امر کاربران را قادر می سازد به این جلسه بپیوندند. فقط برای "
+"هر خروجی کد کوتاه اعمال می شود."
 
 #: includes/views/live/tpl-assign-host-id.php:38
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
 #: includes/views/tabs/api-settings.php:191
 msgid "Save Changes"
-msgstr "Uložiť zmeny"
+msgstr "ذخیره تغییرات"
 
 #: includes/admin/class-zvc-admin-users.php:90
 msgid "Saved !"
-msgstr "Uložené!"
+msgstr "ذخیره شد!"
 
 #: includes/Shortcodes.php:102
 msgid "Search"
@@ -1551,31 +1557,31 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:344
 msgid "Search meetings"
-msgstr "Vyhľadať stretnutia"
+msgstr "جستجوی جلسات"
 
 #: templates/fragments/filters.php:38
 msgid "Search.."
-msgstr ""
+msgstr "جستجو..."
 
 #: includes/views/live/tpl-reports.php:107
 msgid "Searching From: "
-msgstr "Vyhľadávanie z: "
+msgstr "جستجو از: "
 
 #: includes/Shortcodes.php:242 templates/fragments/countdown-timer.php:48
 msgid "seconds"
-msgstr "sekundy"
+msgstr "ثانیه"
 
 #: templates/content-meeting.php:71
 msgid "See More"
-msgstr "Pozrieť viac"
+msgstr "مشاهده بیشتر"
 
 #: includes/views/live/tpl-reports.php:80
 msgid "Select a Date to Check"
-msgstr ""
+msgstr "یک تاریخ برای بررسی انتخاب کنید"
 
 #: includes/views/tabs/api-settings.php:122
 msgid "Select a default language for your join meeting via browser page."
-msgstr ""
+msgstr "برای جلسه پیوستن خود از طریق صفحه مرورگر یک زبان پیش فرض انتخاب کنید."
 
 #: includes/views/webinars/tpl-edit-webinar.php:124
 #: includes/views/webinars/tpl-add-webinar.php:46
@@ -1587,43 +1593,45 @@ msgstr ""
 #: includes/views/post-type/tpl-meeting-fields.php:110
 #: includes/views/post-type/tpl-meeting-fields.php:318
 msgid "Select a Host"
-msgstr "Vyberte hostiteľa"
+msgstr "یک میزبان انتخاب کنید"
 
 #: includes/Elementor/Widgets/MeetingByPostID.php:111
 #: includes/Elementor/Widgets/MeetingByID.php:113
 msgid "Select a Meeting"
-msgstr ""
+msgstr "انتخاب یک جلسه"
 
 #: templates/shortcode/zoom-recordings.php:15
 msgid "Select a month to filter:"
-msgstr ""
+msgstr "یک ماه برای فیلتر کردن انتخاب کنید:"
 
 #: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:20
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
-msgstr "Vyberte používateľa"
+msgstr "انتخاب یک کاربر"
 
 #: includes/Elementor/Widgets/MeetingByPostID.php:80
 #: includes/Elementor/Widgets/MeetingByID.php:82
 msgid "Select a Zoom Meeting"
-msgstr ""
+msgstr "انتخاب یک جلسه زوم"
 
 #: includes/views/webinars/tpl-list-webinars.php:24
 #: includes/views/live/tpl-list-meetings.php:36
 msgid "Select bulk action"
-msgstr "Vyberte hromadnú akciu"
+msgstr "اقدام فله ای را انتخاب کنید"
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:93
 #: includes/Elementor/Widgets/MeetingHosts.php:93
 msgid "Select User"
-msgstr ""
+msgstr "انتخاب کاربر"
 
 #: includes/views/live/tpl-add-user.php:83
 msgid ""
 "Select which WordPress user to assign. This will be only usable when the "
 "user approves your Zoom Invitation."
 msgstr ""
+"انتخاب کنید که کدام کاربر وردپرس اختصاص داده شود. این تنها درصورتی قابل "
+"استفاده خواهد بود که کاربر دعوت زوم شما را تأیید کند."
 
 #: includes/views/webinars/tpl-edit-webinar.php:116
 #: includes/views/webinars/tpl-add-webinar.php:119
@@ -1633,8 +1641,8 @@ msgstr ""
 msgid ""
 "Set what type of auto recording feature you want to add. Default is none."
 msgstr ""
-"Nastavte typ funkcie automatického nahrávania, ktorú chcete pridať. "
-"Predvolená hodnota nie je."
+"تنظیم کنید که می خواهید چه نوع ویژگی ضبط خودکار را اضافه کنید. پیش فرض هیچ "
+"کدام است."
 
 #: includes/Elementor/Widgets/WebinarList.php:182
 #: includes/Elementor/Widgets/MeetingList.php:184
@@ -1642,120 +1650,120 @@ msgid ""
 "Setting this to yes will display meetings for 30 minutes more after the "
 "meeting date has passed. This will only work if Meeting Type is defined."
 msgstr ""
+"با تنظیم بله ، جلسات برای 30 دقیقه بیشتر پس از پایان تاریخ جلسه نمایش داده "
+"می شود. این فقط در صورتی تعریف می شود که نوع جلسه تعریف شده باشد."
 
 #: includes/Bootstrap.php:282 includes/admin/class-zvc-admin-settings.php:82
 #: includes/admin/class-zvc-admin-settings.php:82
 msgid "Settings"
-msgstr "Nastavenia"
+msgstr "تنظیمات"
 
 #: includes/admin/class-zvc-admin-settings.php:112
 #: includes/views/webinars/tpl-list-webinars.php:58
 #: includes/views/live/tpl-list-meetings.php:59
 msgid "Shortcode"
-msgstr "Shortcode"
+msgstr "کد کوتاه"
 
 #: includes/Shortcodes.php:99
-#, php-format
 msgid "Show %s entries"
 msgstr ""
 
 #: includes/views/tabs/api-settings.php:108
 msgid "Show All"
-msgstr ""
+msgstr "نمایش همه"
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:106
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:104
 msgid "Show Downloadable Link"
-msgstr ""
+msgstr "نمایش لینک قابل دانلود"
 
 #: includes/Elementor/Widgets/WebinarList.php:148
 #: includes/Elementor/Widgets/MeetingList.php:150
 msgid "Show Filter"
-msgstr ""
+msgstr "نمایش فیلتر"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:121
 msgid "Show Help Text?"
-msgstr ""
+msgstr "نمایش متن راهنما؟"
 
 #: includes/Elementor/Widgets/MeetingHosts.php:85
 msgid "Show Meeting by Zoom User"
-msgstr ""
+msgstr "نمایش های جلسه بر اساس کاربر"
 
 #: includes/Elementor/Widgets/WebinarList.php:96
 #: includes/Elementor/Widgets/MeetingList.php:98
 msgid "Show meeting posts based on Author ID"
-msgstr ""
+msgstr "نمایش های جلسه بر اساس شناسه نویسنده"
 
 #: includes/views/tabs/api-settings.php:69
 msgid "Show Past Join Link ?"
-msgstr "Zobraziť minulý odkaz na pripojenie?"
+msgstr "نمایش پیوند قبلی پیوستن به جلسه ؟"
 
 #: includes/views/tabs/shortcode.php:45
 msgid "Show recordings based on HOST ID."
-msgstr ""
+msgstr "نمایش ضبط شده بر اساس شناسه میزبان."
 
 #: includes/views/tabs/shortcode.php:49
 msgid "Show Recordings based on Meeting ID"
-msgstr ""
+msgstr "نمایش ضبط شده بر اساس شناسه جلسه"
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:85
 msgid "Show Recordings via Host ID"
-msgstr ""
+msgstr "نمایش ضبط شده از طریق شناسه میزبان"
 
 #: includes/views/tabs/shortcode.php:41
 msgid "Show Webinar based meeting ID."
-msgstr ""
+msgstr "نمایش جلسه وبینار مبتنی بر شناسه جلسه."
 
 #: includes/views/tabs/shortcode.php:37
 msgid "Show webinars based on HOST ID in frontend."
-msgstr ""
+msgstr "نمایش جلسه وبینار مبتنی بر شناسه میزبان ."
 
 #: includes/views/tabs/api-settings.php:76
 msgid "Show Zoom Author ?"
-msgstr "Zobraziť autora Zoom?"
+msgstr "نمایش نویسنده زوم ?"
 
 #: includes/Shortcodes.php:96
-#, php-format
 msgid "Showing %s to %s of %s entries"
 msgstr ""
 
 #: templates/fragments/filters.php:14
 msgid "Showing all"
-msgstr ""
+msgstr "نمایش همه"
 
 #: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
 #: includes/views/live/tpl-list-recordings.php:24
 msgid "Size"
-msgstr ""
+msgstr "اندازه"
 
 #: includes/views/live/tpl-list-pending-users.php:16
 #: includes/views/live/tpl-list-users.php:30
 msgid "SN"
-msgstr "Sn"
+msgstr "SN"
 
 #: templates/fragments/filters.php:34
 msgid "Sort Ascending"
-msgstr ""
+msgstr "مرتب سازی صعودی"
 
 #: templates/fragments/filters.php:33
 msgid "Sort Descending"
-msgstr ""
+msgstr "مرتب سازی نزولی"
 
 #: includes/views/live/tpl-add-user.php:27
 #: includes/views/live/tpl-add-user.php:44
 msgid "SSO Create"
-msgstr "SSO vytvoriť"
+msgstr "ایجاد SSO"
 
 #: templates/content-meeting.php:63 templates/fragments/meeting-details.php:35
 #: templates/shortcode/zoom-listing.php:66
 msgid "Start"
-msgstr "Štart"
+msgstr "شروع"
 
 #: includes/admin/class-zvc-admin-post-type.php:212
 #: templates/shortcode/zoom-recordings-by-meeting.php:53
 msgid "Start Date"
-msgstr ""
+msgstr "تاریخ شروع"
 
 #: includes/views/webinars/tpl-edit-webinar.php:44
 #: includes/views/webinars/tpl-add-webinar.php:55
@@ -1763,13 +1771,13 @@ msgstr ""
 #: includes/views/live/tpl-add-meetings.php:55
 #: includes/views/post-type/tpl-meeting-fields.php:139
 msgid "Start Date/Time *"
-msgstr "Počiatočný dátum a čas *"
+msgstr "تاریخ/زمان شروع *"
 
 #: includes/admin/class-zvc-admin-post-type.php:211
 #: includes/admin/class-zvc-admin-post-type.php:456
 #: templates/fragments/join-links.php:27
 msgid "Start Meeting"
-msgstr "Začať stretnutie"
+msgstr "شروع جلسه"
 
 #: includes/template-functions.php:374 includes/template-functions.php:382
 #: includes/template-functions.php:396 templates/content-meeting.php:49
@@ -1781,18 +1789,18 @@ msgstr "Začať stretnutie"
 #: includes/views/webinars/tpl-list-webinars.php:61
 #: includes/views/live/tpl-list-meetings.php:62
 msgid "Start Time"
-msgstr "Začiatok podujatia"
+msgstr "زمان شروع"
 
 #: includes/views/webinars/tpl-list-webinars.php:88
 #: includes/views/live/tpl-list-meetings.php:89
 msgid "Start via App"
-msgstr "Pripojiť sa cez zoom Applikáciu"
+msgstr "شروع با اپلیکیشن"
 
 #: includes/admin/class-zvc-admin-post-type.php:458
 #: includes/views/webinars/tpl-list-webinars.php:84
 #: includes/views/live/tpl-list-meetings.php:85
 msgid "Start via Browser"
-msgstr "Spustiť cez prehliadač"
+msgstr "شروع با مرورگر"
 
 #: includes/views/webinars/tpl-edit-webinar.php:87
 #: includes/views/webinars/tpl-add-webinar.php:91
@@ -1800,72 +1808,76 @@ msgstr "Spustiť cez prehliadač"
 #: includes/views/live/tpl-add-meetings.php:99
 #: includes/views/post-type/tpl-meeting-fields.php:229
 msgid "Start video when host join meeting."
-msgstr "Spustiť video, keď sa hosť pripojí k schôdzke."
+msgstr "هنگام پیوستن میزبان به جلسه، ویدیو را شروع کنید."
 
 #: includes/views/webinars/tpl-edit-webinar.php:95
 #: includes/views/webinars/tpl-add-webinar.php:99
 msgid "Start video when panelists join meeting."
-msgstr ""
+msgstr "وقتی اعضای جلسه به جلسه می پیوندند، ویدیو را شروع کنید."
 
 #: includes/views/post-type/tpl-meeting-fields.php:257
 msgid "Start video when panelists join webinar."
-msgstr ""
+msgstr "با عضویت در میزبانان وبینار ، فیلم را شروع کنید."
 
 #: includes/views/live/tpl-edit-meeting.php:126
 #: includes/views/live/tpl-add-meetings.php:108
 #: includes/views/post-type/tpl-meeting-fields.php:237
 msgid "Start video when participants join meeting."
-msgstr "Spustite video, keď sa účastníci pripoja k schôdzi."
+msgstr "شروع ویدئو زمانی که شرکت کنندگان به جلسه می پیوندند."
 
 #: includes/views/post-type/tpl-meeting-fields.php:226
 msgid "Start When Host Joins"
-msgstr ""
+msgstr "هنگام پیوستن میزبان شروع کنید"
 
 #: includes/views/live/tpl-edit-meeting.php:76
 #: includes/views/live/tpl-add-meetings.php:58
 #: includes/views/post-type/tpl-meeting-fields.php:142
 msgid "Starting Date and Time of the Meeting (Required)."
-msgstr "Počiatočný dátum a čas schôdze (povinné)."
+msgstr "زمان و تاریخ شروع جلسه (الزامی)"
 
 #: includes/views/webinars/tpl-edit-webinar.php:54
 #: includes/views/webinars/tpl-add-webinar.php:58
 msgid "Starting Date and Time of the Webinar (Required)."
-msgstr ""
+msgstr "تاریخ و زمان برگزاری وبینار (لازم است)."
 
 #: includes/admin/class-zvc-admin-sync.php:46
 msgid ""
 "Starting sync process.. Please wait for some time. Do not close this window "
 "until completed."
 msgstr ""
+"yektanet.comبستن تبلیغات\n"
+"مترجم فارسی ⇄ انگلیسی\n"
+"شروع فرآیند همگام سازی .. لطفاً مدتی صبر کنید. تا زمان اتمام این پنجره را "
+"نبندید."
 
 #: includes/views/webinars/tpl-list-webinars.php:60
 #: includes/views/live/tpl-list-meetings.php:61
 msgid "Status"
-msgstr "Stav"
+msgstr "وضعیت"
 
 #: includes/admin/class-zvc-admin-sync.php:185
 msgid "Successfully imported meeting with ID"
-msgstr ""
+msgstr "جلسه با موفقیت با شناسه وارد شد"
 
 #: includes/admin/class-zvc-admin-settings.php:172
 msgid "Successfully Updated. Please refresh this page."
-msgstr "Úspešne aktualizované. Obnovte túto stránku."
+msgstr "با موفقیت به روز شد لطفاً این صفحه را رفرش کنید."
 
 #: includes/admin/class-zvc-admin-settings.php:115
 msgid "Support"
-msgstr ""
+msgstr "پشتیبانی"
 
 #: includes/admin/class-zvc-admin-sync.php:45
 msgid "Sync Now"
-msgstr ""
+msgstr "همگام سازی"
 
 #: includes/views/sync.php:10
 msgid "Sync your Live Zoom Meetings to your site"
-msgstr ""
+msgstr "جلسات زوم زنده خود را با سایت خود همگام سازی کنید"
 
 #: includes/admin/class-zvc-admin-reports.php:96
 msgid "The fields cannot be Empty !!"
-msgstr ""
+msgstr "زمینه ها نمی توانند خالی باشند !!"
 
 #: includes/views/live/tpl-list-recordings.php:11
 msgid ""
@@ -1875,14 +1887,18 @@ msgid ""
 "value of ‘from’ field will be “2020-05-30” and the value of the ‘to’ field "
 "will be “2020-06-30”."
 msgstr ""
+"حداکثر دامنه می تواند یک ماه باشد. اگر برای این قسمت مقداری ارائه نشود، پیش "
+"فرض تاریخ جاری خواهد بود. به عنوان مثال، اگر درخواست API را در تاریخ 30 ژوئن "
+"2020 بدون ارائه پارامتر \"از\" انجام دهید، به طور پیش فرض مقدار فیلد \"از\" "
+"خواهد بود \"2020-05-30\" و مقدار فیلد \"به\" خواهد بود \"2020-06-30\"."
 
 #: includes/views/live/tpl-add-user.php:40
 msgid ""
 "This action is provided for API partner only. User created in this way has "
 "no password and is not able to log into the Zoom web site or client."
 msgstr ""
-"Táto akcia sa poskytuje iba pre partnera API. Takto vytvorený užívateľ nemá "
-"žiadne heslo a nemôže sa prihlásiť na webovú stránku alebo klienta Zoom."
+"این عملکرد فقط برای شریک API ارائه شده است. کاربری که از این طریق ایجاد شده "
+"هیچ رمز عبوری ندارد و نمی تواند به وب سایت یا کلاینت زوم وارد شود."
 
 #: includes/views/live/tpl-add-user.php:44
 msgid ""
@@ -1892,12 +1908,11 @@ msgid ""
 "provisioning email. If user name or pmi is invalid or occupied, will use "
 "random number/random personal vanity URL."
 msgstr ""
-"Táto akcia je k dispozícii pre povolenú možnosť „Predbežne zadávajúci "
-"používateľ SSO“. Takto vytvorený používateľ nemá žiadne heslo. Ak nejde o "
-"obyčajného používateľa, vygeneruje adresu URL osobnej márnosti pomocou "
-"používateľského mena (bez domény) e-mailu poskytujúceho informácie. Ak je "
-"používateľské meno alebo adresa PMI neplatná alebo obsadená, použije sa "
-"náhodné číslo / náhodná adresa URL s osobným menom."
+"این عملکرد برای گزینه \"پیش تهیه SSO کاربر\" فعال شده است. کاربری که از این "
+"طریق ایجاد شده رمز ندارد. اگر یک کاربر اساسی نباشد ، با استفاده از نام "
+"کاربری (بدون دامنه) ایمیل ارائه دهنده ، یک نشانی اینترنتی شخصی باطل ایجاد می "
+"کند. اگر نام کاربر یا pmi نامعتبر یا اشغال شده باشد ، از شماره تصادفی / URL "
+"تصادفی شخصی تصادفی استفاده می کند."
 
 #: includes/views/live/tpl-add-user.php:36
 msgid ""
@@ -1906,14 +1921,13 @@ msgid ""
 "creating a user who does not belong to your domain without notifying the "
 "user."
 msgstr ""
-"Táto akcia je poskytnutá pre podnikového zákazníka, ktorý má spravovanú "
-"doménu. Táto funkcia je v predvolenom nastavení vypnutá z dôvodu "
-"bezpečnostného rizika pri vytváraní používateľa, ktorý nepatrí do vašej "
-"domény bez toho, aby ste o tom upovedomili používateľa."
+"این اقدام برای مشتری سازمانی که دامنه مدیریت شده ای دارد ارائه می شود. این "
+"ویژگی به دلیل خطر امنیتی که در ایجاد کاربری که به دامنه شما تعلق ندارد بدون "
+"اطلاع کاربر ، غیرفعال است."
 
 #: includes/views/live/tpl-add-user.php:51
 msgid "This address is used for zoom (Required)."
-msgstr "Táto adresa sa používa na zoom (vyžaduje sa)."
+msgstr "این آدرس برای زوم استفاده می شود (ضروری)."
 
 #: includes/views/sync.php:12
 msgid ""
@@ -1921,19 +1935,22 @@ msgid ""
 "site directly. Synced meetings will be inside Zoom Meeting > All Meetings "
 "page."
 msgstr ""
+"با این کار می توانید جلسات زنده خود را مستقیماً از حساب بزرگنمایی خود با این "
+"سایت همگام سازی کنید. جلسات همگام سازی شده در صفحه بزرگنمایی جلسات> همه "
+"جلسات خواهد بود."
 
 #: includes/views/tabs/api-settings.php:12
 msgid "this guide"
-msgstr "táto príručka"
+msgstr "این راهنمایی"
 
 #: includes/template-functions.php:383 templates/shortcode/zoom-webinar.php:82
 msgid "This is a meeting with no Fixed Time."
-msgstr ""
+msgstr "این جلسه ای بدون زمان ثابت است."
 
 #: includes/views/webinars/tpl-list-webinars.php:117
 #: includes/views/live/tpl-list-meetings.php:118
 msgid "This is a recurring meeting with no fixed time."
-msgstr ""
+msgstr "این یک جلسه تکراری است و زمان مشخصی ندارد."
 
 #: includes/views/webinars/tpl-add-webinar.php:51
 #: includes/views/live/tpl-edit-meeting.php:62
@@ -1942,23 +1959,23 @@ msgstr ""
 #: includes/views/post-type/tpl-meeting-fields.php:93
 #: includes/views/post-type/tpl-meeting-fields.php:117
 msgid "This is host ID for the meeting (Required)."
-msgstr "Toto je identifikácia hostiteľa pre schôdzu (vyžaduje sa)."
+msgstr "این شناسه میزبان جلسه است (لازم است)."
 
 #: templates/join-web-browser.php:21
 msgid "This meeting has been ended by host."
-msgstr "Toto stretnutie bolo ukončené hostiteľom."
+msgstr "جلسه توسط میزبان پایان یافت."
 
 #: includes/Bootstrap.php:114 includes/Shortcodes/Meetings.php:145
 msgid "This meeting has been ended by the host."
-msgstr "Toto stretnutie bolo ukončené hostiteľom."
+msgstr "این جلسه توسط میزبان به پایان رسیده است."
 
 #: includes/Timezone.php:49
 msgid "This meeting is no longer valid and cannot be joined !"
-msgstr "Táto schôdza už nie je platná a nedá sa spojiť!"
+msgstr "این جلسه دیگر معتبر نیست و نمی تواند به آن بپیوندد!"
 
 #: includes/Shortcodes/Meetings.php:190
 msgid "This post does not exist."
-msgstr ""
+msgstr "این پست وجود ندارد."
 
 #: includes/views/live/tpl-assign-host-id.php:12
 msgid ""
@@ -1967,19 +1984,21 @@ msgid ""
 "creation that user will not see list of other host on his/her side except "
 "for administrator."
 msgstr ""
+"این بخش به شما امکان می دهد میزبان \"بزرگنمایی\" را از وردپرس به کاربران خود "
+"اختصاص دهید. اگر از اینجا یک کاربر وردپرس را به یک میزبان بزرگنمایی اضافه "
+"کنید ، در هنگام ایجاد جلسه ، کاربر به غیر از سرپرست لیست سایر میزبانها را در "
+"کنار خود نمی بیند."
 
 #: includes/admin/class-zvc-admin-post-type.php:478
 msgid "This will disable join via browser link in frontend page."
-msgstr ""
-"Tým zakážete pripojenie pomocou odkazu prehliadača na titulnej stránke."
+msgstr "این گزینه پیوستن با مرورگر را در صفحه جلسه غیرفعال می کند."
 
 #: includes/views/tabs/api-settings.php:72
 msgid ""
 "This will show join meeting links on frontend even after meeting time is "
 "already past."
 msgstr ""
-"Týmto sa zobrazia prepojenia na stretnutie na frontende aj po uplynutí času "
-"na stretnutie."
+"این پیوندهای پیوستن به جلسات در جلو را نشان می دهد حتی پس از پایان زمان جلسه."
 
 #: includes/template-functions.php:402 templates/content-meeting.php:68
 #: includes/Shortcodes/Webinars.php:141 includes/Shortcodes/Meetings.php:512
@@ -1991,19 +2010,19 @@ msgstr ""
 #: includes/views/live/tpl-add-meetings.php:62
 #: includes/views/post-type/tpl-meeting-fields.php:149
 msgid "Timezone"
-msgstr "Časové pásmo"
+msgstr "منطقه زمانی"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:136
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: includes/views/live/tpl-reports.php:124
 msgid "To"
-msgstr "Do"
+msgstr "به"
 
 #: includes/views/tabs/api-settings.php:12
 msgid "to generate the below API values from your Zoom account"
-msgstr "generovanie nižšie uvedených hodnôt API zo svojho účtu zoom"
+msgstr "را برای مقادیر API زیر از حساب کاربری خود در سایت Zoom دنبال کنید"
 
 #: includes/template-functions.php:311 includes/Shortcodes/Webinars.php:139
 #: includes/Shortcodes/Meetings.php:509
@@ -2015,52 +2034,52 @@ msgstr "generovanie nižšie uvedených hodnôt API zo svojho účtu zoom"
 #: includes/views/live/tpl-list-meetings.php:60
 #: includes/views/live/tpl-list-recordings.php:21
 msgid "Topic"
-msgstr "Téma"
+msgstr "موضوع"
 
 #: includes/views/live/tpl-reports.php:134
 msgid "Total Meeting Minutes"
-msgstr "Celkový počet minút schôdze"
+msgstr "مجموع دقیقه جلسه"
 
 #: includes/views/live/tpl-reports.php:111
 msgid "Total Meeting Minutes Combined: "
-msgstr "Celkový počet minút schôdze v kombinácii: "
+msgstr "مجموع صورتجلسه های ترکیبی: "
 
 #: includes/views/live/tpl-reports.php:109
 msgid "Total Meetings Held: "
-msgstr "Celkové zasadnutia sa uskutočnili: "
+msgstr "مجموع جلسات برگزار شده: "
 
 #: includes/admin/class-zvc-admin-sync.php:43
 msgid "Total Not Synced Records"
-msgstr ""
+msgstr "کل سوابق همگام نشده"
 
 #: includes/views/live/tpl-reports.php:133
 msgid "Total Participants"
-msgstr "Celkový počet účastníkov"
+msgstr "کل شرکت کنندگان"
 
 #: includes/views/live/tpl-reports.php:110
 msgid "Total Participants Involved: "
-msgstr "Celkový počet zúčastnených účastníkov: "
+msgstr "کل شرکت کنندگان درگیر: "
 
 #: includes/admin/class-zvc-admin-sync.php:42
 msgid "Total Records Found"
-msgstr ""
+msgstr "کل رکوردهای یافت شده"
 
 #: includes/views/live/tpl-reports.php:108
 msgid "Total Records Found: "
-msgstr "Celkový počet nájdených záznamov: "
+msgstr "تعداد سوابق یافت شده: "
 
 #: templates/shortcode/zoom-recordings-by-meeting.php:44
 msgid "Total Size"
-msgstr ""
+msgstr "سایز کلی"
 
 #: includes/views/webinars/tpl-list-webinars.php:87
 #: includes/views/live/tpl-list-meetings.php:88
 msgid "Trash"
-msgstr "Kôš"
+msgstr "زباله‌دان"
 
 #: includes/views/tabs/api-settings.php:223
 msgid "Try inactive logout"
-msgstr "Vyskúšajte neaktívne odhlásenie"
+msgstr "ورود به سیستم غیرفعال را امتحان کنید"
 
 #: includes/template-functions.php:334 includes/template-functions.php:389
 #: templates/content-meeting.php:56
@@ -2069,53 +2088,53 @@ msgstr "Vyskúšajte neaktívne odhlásenie"
 #: templates/shortcode/zoom-listing.php:59
 #: includes/Elementor/Widgets/MeetingHosts.php:106
 msgid "Type"
-msgstr "Typ"
+msgstr "نوع"
 
 #: includes/views/live/tpl-add-user.php:30
 #: includes/views/live/tpl-add-user.php:74
 msgid "Type of User (Required)"
-msgstr "Typ používateľa (vyžadované)"
+msgstr "نوع کاربر (الزامی)"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:139
 msgid "Type your title here"
-msgstr ""
+msgstr "عنوان خود را اینجا بنویسید"
 
 #: includes/admin/class-zvc-admin-post-type.php:155
 msgid "Upcoming"
-msgstr ""
+msgstr "پیش رو"
 
 #: includes/views/live/tpl-edit-meeting.php:178
 msgid "Update Meeting"
-msgstr ""
+msgstr "بروزرسانی جلسات"
 
 #: includes/admin/class-zvc-admin-meetings.php:92
 msgid "Updated meeting."
-msgstr "Aktualizované stretnutie."
+msgstr "جلسه بروز شده است."
 
 #: includes/admin/class-zvc-admin-webinars.php:114
 msgid "Updated Webinar."
-msgstr ""
+msgstr "وبینار به روز شده."
 
 #: includes/views/tabs/api-settings.php:174
 msgid "Use 24-hour format"
-msgstr ""
+msgstr "استفاده از رنگ های سفارشی"
 
 #: includes/views/tabs/api-settings.php:181
 msgid "Use full month label format ?"
-msgstr ""
+msgstr "از قالب برچسب ماه کامل استفاده می شود؟"
 
 #: includes/views/live/tpl-list-pending-users.php:17
 #: includes/views/live/tpl-list-users.php:31
 msgid "User ID"
-msgstr "ID používateľa"
+msgstr "شناسه کاربر"
 
 #: includes/views/post-type/tpl-meeting-fields.php:115
 msgid "User not in the list? Click here to manually enter Host."
-msgstr ""
+msgstr "کاربر در لیست نیست؟ برای ورود دستی به هاست اینجا را کلیک کنید."
 
 #: includes/views/live/tpl-add-user.php:68
 msgid "User Type (Required)."
-msgstr "Typ používateľa (vyžadované)."
+msgstr "نوع کاربر (الزامی)."
 
 #: includes/views/live/tpl-add-user.php:32
 msgid ""
@@ -2123,26 +2142,25 @@ msgid ""
 "email. User will then need to click this link to activate their account to "
 "the Zoom service. The user can set or change their password in Zoom."
 msgstr ""
-"Používateľ dostane e-mail odoslaný z programu Zoom. V tomto e-maile je odkaz "
-"na potvrdenie. Používateľ potom bude musieť kliknúť na tento odkaz, aby si "
-"aktivoval svoj účet v službe Zoom. Užívateľ môže nastaviť alebo zmeniť svoje "
-"heslo v Zoom."
+"کاربر یک ایمیل ارسال شده از زوم دریافت می کند. در این ایمیل پیوند تأیید وجود "
+"دارد. سپس کاربر برای فعال کردن حساب کاربری خود در سرویس زوم باید روی این "
+"پیوند کلیک کند. کاربر می تواند رمز عبور خود را در زوم تنظیم یا تغییر دهد."
 
 #: includes/views/live/tpl-list-users.php:13
 msgid "Users"
-msgstr "Užívatelia"
+msgstr "کاربر"
 
 #: includes/views/tabs/shortcode.php:13
 msgid "Using Shortcode Example"
-msgstr "Použitie shortcode príklad"
+msgstr "مثال با استفاده از کدکوتاه"
 
 #: includes/views/tabs/api-settings.php:32
 msgid "Vanity URL"
-msgstr "Zapamätacia adresa URL"
+msgstr "لینک Vanity"
 
 #. Name of the plugin
 msgid "Video Conferencing with Zoom"
-msgstr ""
+msgstr "کنفرانس ویدیویی با بزرگنمایی"
 
 #. Description of the plugin
 msgid ""
@@ -2157,189 +2175,193 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:342
 msgid "View meetings"
-msgstr "Zobraziť míting"
+msgstr "نمایش جلسات"
 
 #: templates/shortcode/zoom-recordings.php:47
 msgid "View Recordings"
-msgstr ""
+msgstr "مشاهده ضبط شده ها"
 
 #: includes/template-functions.php:319
 msgid "Waiting - Not started"
-msgstr ""
+msgstr "انتظار - شروع نشده است"
 
 #: includes/admin/class-zvc-admin-post-type.php:245
 msgid "Webinar"
-msgstr ""
+msgstr "وبینار"
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:183
 msgid "Webinar ?"
-msgstr ""
+msgstr "وبینار?"
 
 #: includes/views/webinars/tpl-edit-webinar.php:37
 #: includes/views/webinars/tpl-add-webinar.php:36
 msgid "Webinar Agenda"
-msgstr ""
+msgstr "دستور کار وبینار"
 
 #: includes/views/webinars/tpl-edit-webinar.php:40
 #: includes/views/webinars/tpl-add-webinar.php:39
 msgid "Webinar Description."
-msgstr ""
+msgstr "توضیحات وبینار."
 
 #: includes/Elementor/Widgets/WebinarList.php:174
 msgid "Webinar Display Threshold"
-msgstr ""
+msgstr "آستانه نمایش وبینار"
 
 #: includes/views/webinars/tpl-edit-webinar.php:73
 #: includes/views/webinars/tpl-add-webinar.php:77
 msgid "Webinar duration (minutes). (optional)"
-msgstr ""
+msgstr "مدت زمان وبینار (دقیقه). (اختیاری)"
 
 #: includes/views/webinars/tpl-add-webinar.php:43
 msgid "Webinar Host *"
-msgstr ""
+msgstr "میزبان وبینار *"
 
 #: includes/views/webinars/tpl-list-webinars.php:57
 msgid "Webinar ID"
-msgstr ""
+msgstr "آیدی وبینار"
 
 #: includes/template-functions.php:185
 msgid "Webinar is not defined. Try updating this Webinar"
-msgstr ""
+msgstr "وبینار تعریف نشده است. این وبینار را به روز کنید"
 
 #: includes/views/webinars/tpl-edit-webinar.php:77
 #: includes/views/webinars/tpl-add-webinar.php:81
 msgid "Webinar Password"
-msgstr ""
+msgstr "رمز عبور وبینار"
 
 #: includes/views/webinars/tpl-edit-webinar.php:66
 #: includes/views/webinars/tpl-add-webinar.php:70
 msgid "Webinar Timezone"
-msgstr ""
+msgstr "منطقه زمانی وبینار"
 
 #: includes/views/webinars/tpl-edit-webinar.php:30
 #: includes/views/webinars/tpl-add-webinar.php:29
 msgid "Webinar Topic *"
-msgstr ""
+msgstr "موضوع وبینار *"
 
 #: includes/views/webinars/tpl-edit-webinar.php:33
 #: includes/views/webinars/tpl-add-webinar.php:32
 msgid "Webinar topic. (Required)."
-msgstr ""
+msgstr "موضوع وبینار. (ضروری)."
 
 #: includes/views/webinars/tpl-list-webinars.php:11
 msgid "Webinars"
-msgstr ""
+msgstr "وبینارها"
 
 #: includes/Elementor/Widgets/WebinarList.php:104
 msgid "Webinars Category"
-msgstr ""
+msgstr "دسته وبینارها"
 
 #: includes/Elementor/Widgets/WebinarList.php:117
 msgid "Webinars Order By"
-msgstr ""
+msgstr "مرتب سازی وبینارها"
 
 #: includes/Elementor/Widgets/WebinarList.php:132
 msgid "Webinars Type"
-msgstr ""
+msgstr "نوع وبینارها"
 
 #: includes/views/live/tpl-add-user.php:13
 msgid "website"
-msgstr "webové stránky"
+msgstr "وبسایت"
 
 #: includes/views/live/tpl-add-user.php:12
 msgid "What does this do ? Check out"
-msgstr "Čo to robí? Vysúšaj"
+msgstr "این چه کاری انجام می دهد؟ بررسی کنید"
 
 #: includes/views/post-type/tpl-meeting-fields.php:253
 msgid "When Panelists Join"
-msgstr ""
+msgstr "هنگامی که اعضای میزگرد بپیوندند"
 
 #: includes/views/post-type/tpl-meeting-fields.php:131
 msgid ""
 "Which type of meeting do you want to create. Note: Webinar requires Zoom "
 "Webinar Plan enabled in your account."
 msgstr ""
+"می خواهید کدام نوع جلسه را ایجاد کنید. توجه: Webinar نیاز به این دارد که "
+"برنامه Zoom Webinar در حساب شما فعال باشد."
 
 #: includes/admin/class-zvc-admin-post-type.php:395
 msgid "WooCommerce Integration?"
-msgstr "WooCommerce integrácie?"
+msgstr "ادغام ووکامرس ؟"
 
 #: includes/template-functions.php:106
 msgid "You are seeing this because you are the author of this post."
-msgstr "Toto sa zobrazuje, pretože ste autorom tohto príspevku."
+msgstr "شما این بخش را مشاهده می کنید چون شما نویسنده این پست هستید."
 
 #: includes/views/post-type/tpl-meeting-fields.php:68
 msgid ""
 "You cannot update meeting type. This is not allowed to avoid any conflict "
 "issues."
 msgstr ""
+"نمی توانید نوع جلسه را به روز کنید. این امر برای جلوگیری از هرگونه تضاد مجاز "
+"نیست."
 
 #: templates/join-web-browser.php:114
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
 msgstr ""
-"Nemáte dostatočné oprávnenie na prístup na túto stránku. Ak chcete "
-"pokračovať, prihláste sa alebo sa obráťte na správcu."
+"شما برای دسترسی به این صفحه امتیاز کافی ندارید. لطفاً برای ادامه وارد شوید "
+"یا با سرپرست تماس بگیرید."
 
 #: includes/Blocks/Blocks.php:98
 msgid "Zoom"
-msgstr ""
+msgstr "بزرگنمایی"
 
 #: includes/admin/class-zvc-admin-post-type.php:313
 msgctxt "Zoom Category Name"
 msgid "Category"
-msgstr "Kategória"
+msgstr "دسته بندی"
 
 #: includes/admin/class-zvc-admin-post-type.php:382
 msgid "Zoom Details"
-msgstr "Zoom podrobnosti"
+msgstr "جزئیات زوم"
 
 #: includes/admin/class-zvc-admin-settings.php:106
 msgid "Zoom Integration Settings"
-msgstr "Nastavenia integrácie Zoom"
+msgstr "تنظیمات ادغام زوم"
 
 #: includes/Elementor/Widgets/MeetingByID.php:43
 #: includes/views/post-type/tpl-meeting-fields.php:67
 msgid "Zoom Meeting"
-msgstr ""
+msgstr "جلسه زوم"
 
 #: includes/admin/class-zvc-admin-post-type.php:335
 #: includes/admin/class-zvc-admin-post-type.php:336
 #: includes/admin/class-zvc-admin-post-type.php:337
 msgctxt "Zoom Meeting"
 msgid "Zoom Meeting"
-msgstr "Zoom míting"
+msgstr "جلسه زوم"
 
 #: includes/Elementor/Widgets/MeetingByPostID.php:41
 msgid "Zoom Meeting by Post ID"
-msgstr ""
+msgstr "زوم جلسه با شناسه پست ایدی"
 
 #: includes/admin/class-zvc-admin-post-type.php:334
 msgctxt "Zoom Meetings and Webinars"
 msgid "Zoom Meetings and Webinars"
-msgstr ""
+msgstr "جلسات و وبینارهای زوم"
 
 #: includes/Elementor/Widgets/MeetingList.php:46
 msgid "Zoom Meetings List"
-msgstr ""
+msgstr "لیست جلسات زوم"
 
 #: includes/Elementor/Widgets/MeetingHosts.php:44
 msgid "Zoom Meetings via Host"
-msgstr ""
+msgstr "جلسات زوم با میزبان"
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:44
 msgid "Zoom Recordings by Host"
-msgstr ""
+msgstr "زوم ضبط شده توسط میزبان"
 
 #: includes/admin/class-zvc-admin-settings.php:43
 msgid "Zoom Users"
-msgstr "Zoom užívatelia"
+msgstr "کاربران زوم"
 
 #: includes/views/post-type/tpl-meeting-fields.php:67
 msgid "Zoom Webinar"
-msgstr ""
+msgstr "وبینار زوم"
 
 #: includes/Elementor/Widgets/WebinarList.php:44
 msgid "Zoom Webinars List"
-msgstr ""
+msgstr "لیست وبینارهای زوم"
