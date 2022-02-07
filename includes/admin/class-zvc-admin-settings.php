@@ -114,6 +114,9 @@ class Zoom_Video_Conferencing_Admin_Views {
                 <a href="<?php echo add_query_arg( array( 'tab' => 'support' ) ); ?>" class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Support', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
+                <a href="<?php echo add_query_arg( array( 'tab' => 'debug' ) ); ?>" class="nav-tab <?php echo ( 'debug' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+		            <?php esc_html_e( 'Debug', 'video-conferencing-with-zoom-api' ); ?>
+                </a>
 				<?php do_action( 'vczapi_admin_tabs_heading', $active_tab ); ?>
             </h2>
 			<?php
@@ -206,6 +209,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/shortcode.php';
 			} else if ( 'support' == $active_tab ) {
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/support.php';
+			} else if ( 'debug' == $active_tab ) {
+				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/debug.php';
 			}
 			?>
         </div>

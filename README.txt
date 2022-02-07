@@ -170,10 +170,15 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
+= 3.8.18 February 7th, 2022 =
+* Added: Debugging Logger on backend for more robust debugging process.
+* Added: Compability for deleting old past meetings.
+
 = 3.8.17 February 2nd, 2022 =
 * Updated: webSDK to version 2.2.0
 * Fix: Deprecated warning for block editor.
 * Added: Translations for japanese and persian from WordPress translations.
+* Fix: Ajax authorization permission issue - suggested by WPScan
 * Bug fixes.
 
 = 3.8.16 November 29th, 2021 =
