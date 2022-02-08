@@ -31,14 +31,9 @@ class Logger {
 	public $log_dir = '';
 
 	/**
-	 * File name for the log saved in the log dir
-	 */
-	public $log_folder_name = "vczapi-logs";
-
-	/**
 	 * File extension for the logs saved in the log dir
 	 */
-	public $log_file_extension = "txt";
+	public $log_file_extension = "log";
 
 	/**
 	 * Whether to append to the log file (true) or to overwrite it (false)
@@ -239,16 +234,15 @@ class Logger {
 	 * Create debug directory and set $this->log_dir property.
 	 */
 	public function create_dir() {
-		$uploads_folder = wp_get_upload_dir();
-		if ( ! is_dir( $uploads_folder['basedir'] . '/' . $this->log_folder_name ) ) {
+		if ( ! is_dir( ZVC_LOG_DIR ) ) {
 			//Create our directory if it does not exist
-			mkdir( $uploads_folder['basedir'] . '/' . $this->log_folder_name );
-			file_put_contents( $uploads_folder['basedir'] . '/' . $this->log_folder_name . '/' . '.htaccess', 'deny from all' );
-			file_put_contents( $uploads_folder['basedir'] . '/' . $this->log_folder_name . '/' . 'index.html', '' );
+			mkdir( ZVC_LOG_DIR );
+			file_put_contents( ZVC_LOG_DIR . '/' . '.htaccess', 'deny from all' );
+			file_put_contents( ZVC_LOG_DIR . '/' . 'index.html', '' );
 		}
 
 		//Set Log directory Path
-		$this->log_dir = $uploads_folder['basedir'] . '/' . $this->log_folder_name;
+		$this->log_dir = ZVC_LOG_DIR;
 	}
 
 	/**
@@ -265,9 +259,12 @@ class Logger {
 			//Create Directory
 			$this->create_dir();
 
+			//Set logs based on date.
+			$file_name = date( 'Y-m-d' );
+
 			/* Build log file path */
 			if ( file_exists( $this->log_dir ) ) {
-				$this->log_file_path = implode( DIRECTORY_SEPARATOR, [ $this->log_dir, $this->log_folder_name ] );
+				$this->log_file_path = implode( DIRECTORY_SEPARATOR, [ $this->log_dir, $file_name ] );
 				if ( ! empty( $this->log_file_extension ) ) {
 					$this->log_file_path .= "." . $this->log_file_extension;
 				}
@@ -314,5 +311,49 @@ class Logger {
 
 			fclose( $output_file );
 		}
+	}
+
+	/**
+	 * Get Log files from the directory
+	 *
+	 * @return array
+	 */
+	public static function get_log_files() {
+		$files  = @scandir( ZVC_LOG_DIR );
+		$result = array();
+
+		if ( ! empty( $files ) ) {
+			foreach ( $files as $key => $value ) {
+				if ( ! in_array( $value, array( '.', '..' ), true ) ) {
+					if ( ! is_dir( $value ) && strstr( $value, '.log' ) ) {
+						$result[ sanitize_title( $value ) ] = $value;
+					}
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Remove/delete the chosen file.
+	 *
+	 * @param string $handle Log handle.
+	 *
+	 * @return bool
+	 */
+	public static function remove( $handle ) {
+		$removed = false;
+		$logs    = self::get_log_files();
+		$handle  = sanitize_title( $handle );
+
+		if ( isset( $logs[ $handle ] ) && $logs[ $handle ] ) {
+			$file = realpath( trailingslashit( ZVC_LOG_DIR ) . $logs[ $handle ] );
+			if ( 0 === stripos( $file, realpath( trailingslashit( ZVC_LOG_DIR ) ) ) && is_file( $file ) ) {
+				$removed = unlink( $file );
+			}
+		}
+
+		return $removed;
 	}
 }

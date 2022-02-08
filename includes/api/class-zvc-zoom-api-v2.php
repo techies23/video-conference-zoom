@@ -143,7 +143,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 * @since 3.8.18
 		 */
 		public function logMessage( $responseBody, $responseCode, $request ) {
-			$message = wp_remote_retrieve_response_message( $request );
+			$message = $responseCode . ' ::: ';
+			$message .= wp_remote_retrieve_response_message( $request );
 			/*$error_data['date']       = ! empty( $request['headers'] ) && ! empty( $request['headers']->offsetGet( 'date' ) ) ? $request['headers']->offsetGet( 'date' ) : '';
 			$error_data['rate_limit'] = ! empty( $request['headers'] ) && ! empty( $request['headers']->offsetGet( 'x-ratelimit-category' ) ) ? $request['headers']->offsetGet( 'x-ratelimit-category' ) : '';
 			if ( ! empty( $responseBody ) ) {
@@ -153,7 +154,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 			if ( ! empty( $responseBody ) ) {
 				$responseBody = json_decode( $responseBody );
-				$message      .= ! empty( $responseBody ) && ! empty( $responseBody->message ) ? ' ::: API RESPONSE MESSAGE => ' . $responseBody->message : '';
+				$message      .= ! empty( $responseBody ) && ! empty( $responseBody->message ) ? ' ::: MESSAGE => ' . $responseBody->message : '';
 			}
 
 //			$error = new \WP_Error( $responseCode, $message, $error_data );

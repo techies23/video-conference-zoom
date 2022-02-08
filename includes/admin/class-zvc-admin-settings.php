@@ -1,5 +1,7 @@
 <?php
 
+use Codemanas\VczApi\Data\Logger;
+
 /**
  * Registering the Pages Here
  *
@@ -115,7 +117,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					<?php esc_html_e( 'Support', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
                 <a href="<?php echo add_query_arg( array( 'tab' => 'debug' ) ); ?>" class="nav-tab <?php echo ( 'debug' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
-		            <?php esc_html_e( 'Debug', 'video-conferencing-with-zoom-api' ); ?>
+					<?php esc_html_e( 'Debug', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
 				<?php do_action( 'vczapi_admin_tabs_heading', $active_tab ); ?>
             </h2>
@@ -210,6 +212,28 @@ class Zoom_Video_Conferencing_Admin_Views {
 			} else if ( 'support' == $active_tab ) {
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/support.php';
 			} else if ( 'debug' == $active_tab ) {
+
+				$logs = Logger::get_log_files();
+
+				if ( ! empty( $_REQUEST['log_file'] ) && isset( $logs[ sanitize_title( wp_unslash( $_REQUEST['log_file'] ) ) ] ) ) {
+					$viewed_log = $logs[ sanitize_title( wp_unslash( $_REQUEST['log_file'] ) ) ];
+				} elseif ( ! empty( $logs ) ) {
+					$viewed_log = current( $logs );
+				}
+
+				if ( ! empty( $_REQUEST['handle'] ) ) { // WPCS: input var ok, CSRF ok.
+					if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( wp_unslash( $_REQUEST['_wpnonce'] ), 'remove_log' ) ) { // WPCS: input var ok, sanitization ok.
+						wp_die( esc_html__( 'Action failed. Please refresh the page and retry.', 'video-conferencing-with-zoom-api' ) );
+					}
+
+					if ( ! empty( $_REQUEST['handle'] ) ) {  // WPCS: input var ok.
+						Logger::remove( wp_unslash( $_REQUEST['handle'] ) ); // WPCS: input var ok, sanitization ok.
+					}
+
+					wp_safe_redirect( esc_url_raw( admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings&tab=debug' ) ) );
+					exit();
+				}
+
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/debug.php';
 			}
 			?>

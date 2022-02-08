@@ -268,3 +268,11 @@
     margin-bottom: 20px;
   }
 }
+
+#log-viewer {
+  pre {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}
