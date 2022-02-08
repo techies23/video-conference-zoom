@@ -117,7 +117,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					<?php esc_html_e( 'Support', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
                 <a href="<?php echo add_query_arg( array( 'tab' => 'debug' ) ); ?>" class="nav-tab <?php echo ( 'debug' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
-					<?php esc_html_e( 'Debug', 'video-conferencing-with-zoom-api' ); ?>
+					<?php esc_html_e( 'Logs', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
 				<?php do_action( 'vczapi_admin_tabs_heading', $active_tab ); ?>
             </h2>
@@ -148,6 +148,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
 					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
 					$disable_auto_pwd_generation        = sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) );
+					$debugger_logs                      = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) );
 
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
@@ -169,6 +170,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
 					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
 					update_option( 'zoom_api_disable_auto_meeting_pwd', $disable_auto_pwd_generation );
+					update_option( 'zoom_api_enable_debug_log', $debugger_logs );
 
 					//After user has been created delete this transient in order to fetch latest Data.
 					video_conferencing_zoom_api_delete_user_cache();
@@ -204,6 +206,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				$default_jvb_lang            = get_option( 'zoom_api_default_lang_jvb' );
 				$disable_auto_pwd_generation = get_option( 'zoom_api_disable_auto_meeting_pwd' );
 				$donot_delete_zoom           = get_option( 'zoom_api_donot_delete_on_zoom' );
+				$debug_logs                  = get_option( 'zoom_api_enable_debug_log' );
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';
@@ -212,8 +215,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 			} else if ( 'support' == $active_tab ) {
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/support.php';
 			} else if ( 'debug' == $active_tab ) {
-
-				$logs = Logger::get_log_files();
+				$debug_log = get_option( 'zoom_api_enable_debug_log' );
+				$logs       = Logger::get_log_files();
 
 				if ( ! empty( $_REQUEST['log_file'] ) && isset( $logs[ sanitize_title( wp_unslash( $_REQUEST['log_file'] ) ) ] ) ) {
 					$viewed_log = $logs[ sanitize_title( wp_unslash( $_REQUEST['log_file'] ) ) ];

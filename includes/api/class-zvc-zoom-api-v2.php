@@ -111,20 +111,24 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				$responseCode = wp_remote_retrieve_response_code( $request );
 				$responseBody = wp_remote_retrieve_body( $request );
 
-				if ( $responseCode == 400 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
-				} else if ( $responseCode == 400 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
-				} else if ( $responseCode == 401 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
-				} else if ( $responseCode == 403 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
-				} else if ( $responseCode == 404 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
-				} else if ( $responseCode == 409 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
-				} else if ( $responseCode == 429 ) {
-					$this->logMessage( $responseBody, $responseCode, $request );
+				$debug_log = get_option( 'zoom_api_enable_debug_log' );
+				//If Debug log is enabled.
+				if ( ! empty( $debug_log ) ) {
+					if ( $responseCode == 400 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 400 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 401 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 403 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 404 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 409 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 429 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					}
 				}
 			}
 

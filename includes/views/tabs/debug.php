@@ -10,7 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="zvc-row">
     <section class="zvc-position-floater-left">
-		<?php if ( ! empty( $logs ) ) : ?>
+		<?php
+		if ( empty( $debug_log ) ) {
+			echo "<p class='vczapi-admin-enable-debug-log-msg'>Please check <strong><i>Enable Logs</i></strong> option from <a href='" . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . "'>API SETTINGS</a> page to enable new logs. Currently, new logs are not being recorded.</p>";
+		}
+
+		if ( ! empty( $logs ) ) : ?>
             <div class="alignleft">
                 <h2>
 					<?php echo esc_html( $viewed_log ); ?>
@@ -45,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <pre><strong>===START OF LOG===</strong><br><?php echo esc_html( file_get_contents( ZVC_LOG_DIR . $viewed_log ) ); ?><strong>===END OF LOG===</strong></pre>
             </div>
 		<?php else : ?>
-            <p><?php esc_html_e( 'There are currently no logs to view.', 'video-conferencing-with-zoom-api' ); ?></p>
+            <p><?php esc_html_e( 'There aren\'t any new logs to view at the moment.', 'video-conferencing-with-zoom-api' ); ?></p>
 		<?php endif; ?>
     </section>
 </div>
