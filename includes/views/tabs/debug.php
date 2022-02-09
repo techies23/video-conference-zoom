@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								$timestamp     = filemtime( ZVC_LOG_DIR . $log_file );
 								$log_file_date = wp_date( wc_date_format(), $timestamp );
 								?>
-                                <option value="<?php echo esc_html( $log_file ); ?>" <?php selected( sanitize_title( $viewed_log ), $k ); ?>><?php echo esc_html( $log_file ); ?></option>
+                                <option value="<?php echo esc_html( $log_file ); ?>" <?php selected( sanitize_title( $viewed_log ), $k ); ?>><?php echo esc_html( $log_file_date ); ?></option>
 							<?php } ?>
                         </select>
                         <button type="submit" class="button" value="<?php esc_attr_e( 'View', 'video-conferencing-with-zoom-api' ); ?>"><?php esc_html_e( 'View', 'video-conferencing-with-zoom-api' ); ?></button>

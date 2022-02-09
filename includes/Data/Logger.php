@@ -319,7 +319,7 @@ class Logger {
 	 * @return array
 	 */
 	public static function get_log_files() {
-		$files  = @scandir( ZVC_LOG_DIR );
+		$files  = @scandir( ZVC_LOG_DIR, SCANDIR_SORT_DESCENDING );
 		$result = array();
 
 		if ( ! empty( $files ) ) {
