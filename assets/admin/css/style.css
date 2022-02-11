@@ -250,3 +250,19 @@
 .vczapi-pro-user-results .dataTables_length {
   margin-bottom: 20px;
 }
+
+#log-viewer pre {
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.vczapi-admin-enable-debug-log-msg {
+  background: #751f1f;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 35px;
+}
+.vczapi-admin-enable-debug-log-msg a {
+  color: #ddd;
+}

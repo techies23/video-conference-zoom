@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 5.9
-Stable tag: 3.8.17
+Stable tag: 3.8.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,10 +170,16 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
+= 3.8.18 February 7th, 2022 =
+* Added: Debugging Logger on backend for more robust debugging process.
+* Added: Compability for deleting old past meetings.
+* Modified: API connection modified /w backwards compatibility.
+
 = 3.8.17 February 2nd, 2022 =
 * Updated: webSDK to version 2.2.0
 * Fix: Deprecated warning for block editor.
 * Added: Translations for japanese and persian from WordPress translations.
+* Fix: Ajax authorization permission issue - suggested by WPScan
 * Bug fixes.
 
 = 3.8.16 November 29th, 2021 =

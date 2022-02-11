@@ -1,9 +1,10 @@
 <?php
 
 use \Firebase\JWT\JWT;
+use Codemanas\VczApi\Data\Logger;
 
 /**
- * Class Connecting Zoom APi V2
+ * Class Connecting Zoom API V2
  *
  * @since   2.0
  * @author  Deepen
@@ -85,37 +86,91 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 			if ( $request == "GET" ) {
 				$args['body'] = ! empty( $data ) ? $data : array();
-				$response     = wp_remote_get( $request_url, $args );
+				$request      = wp_remote_get( $request_url, $args );
 			} else if ( $request == "DELETE" ) {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "DELETE";
-				$response       = wp_remote_request( $request_url, $args );
+				$request        = wp_remote_request( $request_url, $args );
 			} else if ( $request == "PATCH" ) {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "PATCH";
-				$response       = wp_remote_request( $request_url, $args );
+				$request        = wp_remote_request( $request_url, $args );
 			} else if ( $request == "PUT" ) {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "PUT";
-				$response       = wp_remote_request( $request_url, $args );
+				$request        = wp_remote_request( $request_url, $args );
 			} else {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "POST";
-				$response       = wp_remote_post( $request_url, $args );
+				$request        = wp_remote_post( $request_url, $args );
 			}
 
-			$response = wp_remote_retrieve_body( $response );
-			/*dump($response);
-			die;*/
+			if ( is_wp_error( $request ) ) {
+				return $request; // Bail early
+			} else {
+				$responseCode = wp_remote_retrieve_response_code( $request );
+				$responseBody = wp_remote_retrieve_body( $request );
 
-			if ( ! $response ) {
-				return false;
+				$debug_log = get_option( 'zoom_api_enable_debug_log' );
+				//If Debug log is enabled.
+				if ( ! empty( $debug_log ) ) {
+					if ( $responseCode == 400 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 400 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 401 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 403 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 404 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 409 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					} else if ( $responseCode == 429 ) {
+						$this->logMessage( $responseBody, $responseCode, $request );
+					}
+				}
 			}
 
-			return $response;
+			return $responseBody;
 		}
 
-		//function to generate JWT
+		/**
+		 * Just log the message for now because of backwards incompatibility issues
+		 *
+		 * @param $responseBody
+		 * @param $responseCode
+		 * @param $request
+		 *
+		 * @author Deepen Bajracharya
+		 *
+		 * @since 3.8.18
+		 */
+		public function logMessage( $responseBody, $responseCode, $request ) {
+			$message = $responseCode . ' ::: ';
+			$message .= wp_remote_retrieve_response_message( $request );
+			/*$error_data['date']       = ! empty( $request['headers'] ) && ! empty( $request['headers']->offsetGet( 'date' ) ) ? $request['headers']->offsetGet( 'date' ) : '';
+			$error_data['rate_limit'] = ! empty( $request['headers'] ) && ! empty( $request['headers']->offsetGet( 'x-ratelimit-category' ) ) ? $request['headers']->offsetGet( 'x-ratelimit-category' ) : '';
+			if ( ! empty( $responseBody ) ) {
+				$responseBody          = json_decode( $responseBody );
+				$error_data['message'] = ! empty( $responseBody ) && ! empty( $responseBody->message ) ? $responseBody->message : '';
+			}*/
+
+			if ( ! empty( $responseBody ) ) {
+				$responseBody = json_decode( $responseBody );
+				$message      .= ! empty( $responseBody ) && ! empty( $responseBody->message ) ? ' ::: MESSAGE => ' . $responseBody->message : '';
+			}
+
+//			$error = new \WP_Error( $responseCode, $message, $error_data );
+			$logger = new Logger();
+			$logger->error( $message );
+		}
+
+		/**
+		 * Generate JWT key
+		 *
+		 * @return string
+		 */
 		private function generateJWTKey() {
 			$key    = $this->zoom_api_key;
 			$secret = $this->zoom_api_secret;
