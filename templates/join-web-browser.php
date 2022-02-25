@@ -46,7 +46,7 @@ if ( video_conference_zoom_check_login() ) {
             <form class="vczapi-zoom-browser-meeting--meeting-form" id="vczapi-zoom-browser-meeting-join-form" action="">
 				<?php $full_name = ! empty( $current_user->first_name ) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name; ?>
                 <div class="form-group">
-                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="Your Name Here" class="form-control" required>
+                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php _e('Your Name Here','video-conferencing-with-zoom-api'); ?>" class="form-control" required>
                 </div>
 				<?php
 				$hide_email = get_option( 'zoom_api_hide_in_jvb' );
