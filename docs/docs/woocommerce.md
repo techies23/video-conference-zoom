@@ -22,6 +22,7 @@ There are 2 ways you can create a Zoom Product
 
 1. Product Linked with Zoom Meeting
 2. Zoom Meeting linked with Product	( Zoom Product )
+3. Selling Recordings (version 2.6.0 and above)
 
 ### 1. Product Linked with Zoom Meeting
 
@@ -67,6 +68,21 @@ This method should be used to link Zoom Meeting with a Product. The product crea
 <video controls width="640" controls>
 <source src="https://www.codemanas.com/wp-content/uploads/2020/03/zoom-product.mp4" />
 </video>
+
+### 3. Selling Recordings
+From version 2.6.0 the ability to sell recording was added to Zoom Integration for WooCommerce.
+The steps are very similar to selling meetings, but instead of meetings recordings are being sold.
+
+To do this go to Products > Add New and create a simple virtual product as you would do for a normal woocommerce product, then go to Zoom Connection tab which should look like the following.
+
+![Select Recording](img/woocommerce/select-recording.png)
+
+We then need to select the host / year and month when the recording took place, and click get recordings.
+This will retrieve the list of recording for that month. You can then add multiple recordings to be associated with this product.
+
+![Retrieve and Select Recrodings](img/woocommerce/recordings-selected.png)
+
+Now save the product and once the user purchases the product - the recording links will be sent to them after purchase has been completed.
 
 ### Shortcode
 
