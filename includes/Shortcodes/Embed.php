@@ -124,11 +124,7 @@ class Embed {
 		}
 
 		echo "</div>";
-
 		$content .= ob_get_clean();
-
-		// Allow addon devs to perform filter before window rendering
-		$content = apply_filters( 'vczapi_after_shortcode_content', $content );
 
 		return $content;
 	}
