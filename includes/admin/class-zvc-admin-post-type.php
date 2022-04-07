@@ -358,7 +358,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			'capability_type'    => apply_filters( 'vczapi_cpt_capabilities_type', 'post' ),
 			'capabilities'       => apply_filters( 'vczapi_cpt_capabilities', array() ),
 			'has_archive'        => true,
-			'hierarchical'       => false,
+			'hierarchical'       => apply_filters( 'vczapi_cpt_hierarchical', false ),
 			'show_in_rest'       => apply_filters( 'vczapi_cpt_show_in_rest', true ),
 			'rest_base'          => 'zoom_meetings',
 			'menu_position'      => apply_filters( 'vczapi_cpt_menu_position', 5 ),
@@ -367,7 +367,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 				'title',
 				'editor',
 				'author',
-				'thumbnail'
+				'thumbnail',
+                'page-attributes'
 			),
 			'rewrite'            => array( 'slug' => apply_filters( 'vczapi_cpt_slug', $this->post_type ) ),
 		);

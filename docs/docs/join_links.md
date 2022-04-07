@@ -18,126 +18,19 @@ If you do not want to allow users to directly join via browser then you can disa
 
 ### Browser Compatiblity
 
-Table is copied from Zoom official directly !
+**The following are not supported:**
+
+-  **Mobile web browsers.**
+-  **Internet Explorer (IE).**
+-  **iFrames. iFrames make Cross-Origin Isolation doubly complex. Use at your own risk.**
 
 <a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web#browser-support" target="_blank">Official Doc here</a>
 
-<table>
-    <tbody>
-      <tr>
-        <th>Browser / Feature</th>
-        <th>Chrome 69+</th>
-        <th>Firefox 76+</th>
-        <th>Safari 11+</th>
-        <th>Chromium Edge 80+</th>
-      </tr>
-      <tr>
-        <td>Gallery View</td>
-        <td>✓</td>
-        <td>✘</td>
-        <td>✘</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Pause Recording</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Waiting Room</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Share Video</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Share Screen</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✘</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Join Computer Audio</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>(1)</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Join Audio by Phone</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Meeting Host Controls</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>View Shared Video</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>View Shared Screen</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Request Remote Control</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>In-meeting Chat</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Closed Captioning</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>Webinar Q&amp;A</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-      <tr>
-        <td>End-to-end encryption (E2EE) (2)</td>
-        <td>✘</td>
-        <td>✘</td>
-        <td>✘</td>
-        <td>✘</td>
-      </tr>
-    </tbody>
-  </table>
+<table><thead><tr><th></th><th>Chrome 69+</th><th>Firefox 56+</th><th>Safari 11+</th><th>Edge 79+</th></tr></thead><tbody><tr><td>Gallery View</td><td>(1)</td><td>✘</td><td>✘</td><td>(1)</td></tr><tr><td>Pause Recording</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Waiting Room</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Share Video</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Share Screen</td><td>✓</td><td>✓</td><td>✘</td><td>✓</td></tr><tr><td>Join Computer Audio</td><td>✓</td><td>✓</td><td>(2)</td><td>✓</td></tr><tr><td>Join Audio by Phone</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Meeting Host Controls</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>View Shared Video</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>View Shared Screen</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Request Remote Control</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>In-meeting Chat</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Closed Captioning</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Webinar Q&amp;A</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>End-to-end encryption (E2EE) (3)</td><td>✘</td><td>✘</td><td>✘</td><td>✘</td></tr><tr><td>Share computer audio</td><td>(4)</td><td>✘</td><td>✘</td><td>✘</td></tr></tbody></table>
+
+### Performance Limits
+
+Currently, the Zoom Meeting Web SDK encodes at a maximum resolution of 720p. See Web SDK 720p video for details. If a user is in a meeting with both native and browser clients, the browser client video displayed within the native client will be of lower quality due to encoding limitations.
 
 ### Not working ?
 
@@ -153,3 +46,15 @@ To do this add below code to your config.php file.
 `define('VCZAPI_STATIC_CDN', true);`
 
 If incase, there is problem loading your join via browser page when using CDN. You can change the "true" value to "false". 
+
+### Known issues when embedding join via browser
+
+Below are some known issues when you use [zoom_join_via_browser] shortcode to embed your meeting into your site. Please note that these issues are not fixable at the moment so, if you are facing these issues - please avoid using [zoom_join_via_browser]
+
+- Cannot fullscreen the meeting window.
+- Delay in voice.
+- Delay in video.
+- Delay in screen sharing.
+- Echo in sound.
+- Cannot go into gallery view mode.
+

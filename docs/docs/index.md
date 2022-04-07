@@ -10,9 +10,6 @@ OR
 
 Download Plugin from <a href="https://wordpress.org/plugins/video-conferencing-with-zoom-api/">WordPress.org</a> repository.
 
-## Reviews
-
-
 
 ## About Plugin
 

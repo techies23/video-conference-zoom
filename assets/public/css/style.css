@@ -248,42 +248,131 @@
   }
 }
 
-.dpn-zvc-timer.zoom-join-via-browser-countdown {
-  display: table;
+.vczapi-jvb-countdown-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: #eaeaea;
+  padding: 60px 0;
+}
+.vczapi-jvb-countdown-wrapper-countdown-title {
+  text-align: center;
+}
+.vczapi-jvb-countdown-wrapper .dpn-zvc-timer.zoom-join-via-browser-countdown {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   width: 100%;
-  table-layout: fixed;
   border-spacing: 2px;
   border-collapse: separate;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
-.dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-meeting-ended {
+.vczapi-jvb-countdown-wrapper .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-meeting-ended {
   background: #3a3a3a;
   padding: 10px 16px;
   border-radius: 2px;
 }
-.dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-meeting-ended h3 {
+.vczapi-jvb-countdown-wrapper .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-meeting-ended h3 {
   margin: 0;
   padding: 0;
   color: #fff;
 }
-.dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell {
-  display: table-cell;
-  vertical-align: top;
+.vczapi-jvb-countdown-wrapper .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-align: center;
   font-size: 32px;
   background: #3a3a3a;
   color: #fff;
-  line-height: normal;
-  padding: 10px 3px;
-  border-radius: 2px;
+  padding: 20px 5px;
+  border-radius: 10px;
+  width: 120px;
+  margin: 6px;
 }
-.dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-number {
+.vczapi-jvb-countdown-wrapper .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-number {
   font-size: 1em;
   width: 100%;
+  font-weight: 700;
 }
-.dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-string {
+.vczapi-jvb-countdown-wrapper .dpn-zvc-timer.zoom-join-via-browser-countdown .dpn-zvc-timer-cell-string {
   font-size: 0.45em;
   width: 100%;
   text-transform: uppercase;
+}
+
+.vczapi-jvb-countdown-content {
+  padding: 25px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.vczapi-jvb-countdown-content-image {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 30%;
+      -ms-flex: 0 0 30%;
+          flex: 0 0 30%;
+}
+.vczapi-jvb-countdown-content-image img {
+  border-radius: 10px;
+}
+.vczapi-jvb-countdown-content-contents {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 70%;
+      -ms-flex: 0 0 70%;
+          flex: 0 0 70%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-left: 20px;
+}
+.vczapi-jvb-countdown-content-links {
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.vczapi-jvb-countdown-content-links .btn {
+  padding: 10px 20px;
+  color: #fff;
+  display: block;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+.vczapi-jvb-countdown-content-links .btn-join-link {
+  background: #a5452d;
 }
 
 .vczapi-list-zoom-meetings {

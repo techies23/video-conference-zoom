@@ -324,10 +324,10 @@ function video_conferencing_zoom_api_pagination_prev( $type, $page_type = 'zoom-
  */
 function video_conferencing_zoom_api_show_like_popup() {
 	if ( isset( $_GET['vczapi_dismiss'] ) && $_GET['vczapi_dismiss'] == 1 ) {
-		set_transient( '_vczapi_dismiss_notice', 1, 60 * 60 * 24 * 30 );
+		update_option( '_vczapi_dismiss_notice', 1);
 	}
 
-	if ( ! get_transient( '_vczapi_dismiss_notice' ) ) {
+	if ( ! get_option( '_vczapi_dismiss_notice' ) ) {
 		?>
         <div id="message" class="notice notice-warning is-dismissible">
             <h3><?php esc_html_e( 'Like this plugin ?', 'video-conferencing-with-zoom-api' ); ?></h3>

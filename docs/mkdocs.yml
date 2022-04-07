@@ -1,7 +1,7 @@
 site_name: Video Conferencing with Zoom Documentation
 repo_url: https://github.com/techies23/video-conference-zoom
 site_author: Deepen Bajracharya
-copyright: Deepen Bajracharya (CodeManas)
+copyright: Deepen Bajracharya
 nav:
   - Getting Started: index.md
   - Installation:
@@ -35,3 +35,8 @@ nav:
   - Support: support.md
 theme:
   name: material
+  logo: assets/images/logo.png
+  favicon: assets/images/logo.png
+  font:
+    text: Rubik
+

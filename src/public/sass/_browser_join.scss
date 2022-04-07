@@ -65,45 +65,101 @@
   }
 }
 
-.dpn-zvc-timer.zoom-join-via-browser-countdown {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  border-spacing: 2px;
-  border-collapse: separate;
+.vczapi-jvb-countdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  background: #eaeaea;
+  padding: 60px 0;
 
-  .dpn-zvc-meeting-ended {
-    background: #3a3a3a;
-    padding: 10px 16px;
-    border-radius: 2px;
+  &-countdown-title {
+    text-align: center;
+  }
 
-    h3 {
-      margin: 0;
-      padding: 0;
+  .dpn-zvc-timer.zoom-join-via-browser-countdown {
+    display: flex;
+    width: 100%;
+    border-spacing: 2px;
+    border-collapse: separate;
+    justify-content: center;
+
+    .dpn-zvc-meeting-ended {
+      background: #3a3a3a;
+      padding: 10px 16px;
+      border-radius: 2px;
+
+      h3 {
+        margin: 0;
+        padding: 0;
+        color: #fff;
+      }
+    }
+
+    .dpn-zvc-timer-cell {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      font-size: 32px;
+      background: #3a3a3a;
       color: #fff;
+      padding: 20px 5px;
+      border-radius: 10px;
+      width: 120px;
+      margin: 6px;
+    }
+
+    .dpn-zvc-timer-cell-number {
+      font-size: 1em;
+      width: 100%;
+      font-weight: 700;
+    }
+
+    .dpn-zvc-timer-cell-string {
+      font-size: 0.45em;
+      width: 100%;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.vczapi-jvb-countdown-content {
+  padding: 25px 0;
+  display: flex;
+  width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+  flex-wrap: wrap;
+
+  &-image {
+    flex: 0 0 30%;
+
+    img {
+      border-radius: 10px;
     }
   }
 
-  .dpn-zvc-timer-cell {
-    display: table-cell;
-    vertical-align: top;
-    text-align: center;
-    font-size: 32px;
-    background: #3a3a3a;
-    color: #fff;
-    line-height: normal;
-    padding: 10px 3px;
-    border-radius: 2px;
+  &-contents {
+    flex: 0 0 70%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
   }
 
-  .dpn-zvc-timer-cell-number {
-    font-size: 1em;
-    width: 100%;
-  }
+  &-links {
+    margin-top:10px;
+    display: flex;
 
-  .dpn-zvc-timer-cell-string {
-    font-size: 0.45em;
-    width: 100%;
-    text-transform: uppercase;
+    .btn {
+      padding: 10px 20px;
+      color: #fff;
+      display: block;
+      margin-right: 10px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .btn-join-link {
+      background: #a5452d;
+    }
   }
 }
