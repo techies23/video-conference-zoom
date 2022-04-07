@@ -13,9 +13,9 @@ nav:
       - Webinars: webinars.md
       - Blocks: blocks.md
       - Shortcode: shortcode.md
+      - Join via Browser: join_links.md
       - PRO Version Shortcode: pro-shortcode.md
       - Change DateTime: date_types.md
-      - Join via Browser: join_links.md
       - Vanity URL: vanity_url.md
       - Template Override: template_override.md
       - Filter Hooks: filters_hooks.md

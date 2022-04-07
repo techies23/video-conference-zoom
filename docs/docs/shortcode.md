@@ -102,29 +102,7 @@ Where,
 
 ### 8. Embed Zoom Meeting in your Browser
 
-<strong style="color:red;">NOTE: IF YOU ARE USING "IFRAME" = "yes" - Although this embed feature is here there are alot of known issues with ZoomWebSDK at the moment. USE THIS AT OWN RISK !! Check out this section for [known issues](join_links.md#known-issues-when-embedding-join-via-browser) before using this shortcode.</strong>
-
-Use: `[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" iframe="no" title="Test" height="500px" disable_countdown="yes" passcode="1232132121" webinar="no" image="https://images.unsplash.com/photo-1459257831348-f0cdd359235f"]`
-
-Where,
-
-* `meeting_id` : Your MEETING ID.
-* `login_required` : "yes or no", Requires login to view or join.
-* `iframe` : "yes or no", Show meeting or webinar in iframe element. This is not recommeded as there are [known issues](join_links.md#known-issues-when-embedding-join-via-browser) with this approach. Set this to "no" for more robust approach.
-* `title` : Title of your Embed Session
-* `height` : Height of embedded video IFRAME.
-* `disable_countdown` : "yes or no", enable or disable countdown.
-* `passcode` : Set password of your meeting to automatically let users join without needing them to enter password.
-* `webinar` : "yes" for embedding webinars.
-* `image` : Image url for your post.
-
-**Updated in version 3.6.3**
-
-To redirect user after a meeting fails, after completed or if meeting is not yet started; Add below code to your functions.php file in your theme and replace it with url you want to redirect:
-
-**`add_filter('vczapi_api_redirect_join_browser', function() { 
-    return 'https://yoursiteurl.com/page';
-});`**
+<strong style="color:red;">Although this embed feature is here there are alot of known issues with ZoomWebSDK at the moment. USE THIS AT OWN RISK !! Check out this section for [known issues](join_links.md#known-issues-when-embedding-join-via-browser) before using this shortcode.</strong>
 
 ### 9. Show recordings based on HOST ID.
 
