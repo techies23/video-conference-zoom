@@ -1,8 +1,4 @@
-**Check out the <a href="https://youtu.be/5Z2Ii0PnHRQ?t=453" target="_blank">video documentation</a> if you want to see live demo.**
-
-If you are using the new WordPress editor ([Gutenberg](https://wordpress.org/gutenberg/)) consider using our [blocks instead](blocks.md)
-
-With new version you can grab your shortcode with just a click.
+All these shortcodes are available as elementor and gutenberg modules.
 
 ### Types
 
@@ -102,7 +98,7 @@ Where,
 
 ### 8. Embed Zoom Meeting in your Browser
 
-<strong style="color:red;">Although this embed feature is here there are alot of known issues with ZoomWebSDK at the moment. USE THIS AT OWN RISK !! Check out this section for [known issues](join_links.md#known-issues-when-embedding-join-via-browser) before using this shortcode.</strong>
+<strong style="color:red;">This section has been moved to [another page](join_links.md#embed-or-join-via-browser-method)</strong>
 
 ### 9. Show recordings based on HOST ID.
 
@@ -143,6 +139,6 @@ With new version, its possible to override the display of output from default pl
 2. Copy this "Shortcode" folder to **`yourtheme/video-conferencing-zoom/shortcode/zoom-shortcode.php`**
 3. Your done ! Change the styling and divs according to your needs.
 
-### Elementor Support
+### Elementor and Gutenbert Supported
 
-From version 3.4.0 - Plugin now has some inbuilt modules for Elementor as well. We'll keep adding in the future as well.
+From version 3.4.0 - Plugin is fully compatible with Elementor modules as well Gutenberg Blocks.

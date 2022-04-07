@@ -8,39 +8,38 @@ Stable tag: 3.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Gives you the power to manage Zoom Meetings, Webinars, Recordings, Reports and create users directly from your WordPress dashboard.
+Gives you the power to manage Zoom Meetings, Zoom Webinars, Recordings, Reports and create users directly from your WordPress dashboard.
 
 == Description ==
 
-Simple plugin which gives you the extensive functionality to manage Zoom Meetings, Webinars, Recordings, Users, Reports from your WordPress Dashboard. Now, with capability to add your own post as a meeting. Create posts as meetings directly from your WordPress dashboard to show in the frontend as a meeting page. Allow users to directly join via that page with click of a button.
+Video conferencing with Zoom plugin gives you the extensive functionality to manage your Zoom Meetings, Webinars, Recordings, Users, Reports from your WordPress Dashboard directly. The plugin is a great tool for managing your Zoom sessions on the fly without needing to go back and forth on multiple platforms. This plugin is developed in order to make smooth transitions in managing your online meetings or webinars without any hassle and time loss.
 
 [View the plugin live demo from here.](https://demo.codemanas.com/code-manas-pro/zoom-meetings/demo-zoom-event/ "Checkout our live demo here.")
 
 **FEATURES:**
 
-* Manage WordPress posts and link them to Live Zoom meetings and Zoom Webinars.
-* Create Recurring meetings and Webinars (PRO)
-* Enable registrations (PRO)
-* Webhooks (PRO)
-* Override single and archive page templates via your theme.
-* JOIN DIRECTLY VIA WEB BROWSER FROM FRONTEND !
-* Start Links for post authors.
-* CountDown timer to Meeting start shows in individual meeting page.
-* Start time and join links are shown according to local time compared with zoom timezone.
-* Show user recordings based on Zoom Account.
-* Display Webinars via Shortcode
-* Use PMI (PRO)
-* WCFM Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
-* WooCommerce Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
-* WooCommerce Appointments Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
-* WooCommerce Bookings Integration( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
-* Developer Friendly
-* Daily and Account Reports
-* Shortcode
-* Shortcode Template Customize
+* Manage your Zoom Meetings and Zoom Webinars.
+* Manage Zoom users and Reports.
+* Change frontend layouts as per your needs using template override.
+* Join via browser directly without Zoom App.
+* Show User recordings based on Zoom Account.
+* Extensive Developer Friendly
+* Shortcodes
 * Import your Zoom Meetings into your WordPress Dashboard in one click.
 * Gutenberg Blocks Support
 * Elementor Support
+
+**PRO FEATURES**
+
+* Recurring meetings and Webinars (PRO)
+* Enable registrations (PRO)
+* Webhooks (PRO)
+* Use PMI (PRO)
+* WCFM Integration ( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
+* WooCommerce Integration ( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
+* WooCommerce Appointments Integration ( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
+* WooCommerce Bookings Integration ( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
+ and more...
 
 **DOCUMENTATION LINKS:**
 
@@ -58,22 +57,6 @@ Addon: **[WooCommerce Booking Integration](https://www.codemanas.com/downloads/z
 Addon: **[Booked Appointments Integration](https://www.codemanas.com/downloads/zoom-meetings-for-booked-appointments/ "Booked Appointments Integration")**:
 Addon: **[WooCommerce Appointments Integration](https://www.codemanas.com/downloads/zoom-for-woocommerce-appointments/ "WooCommerce Appointments Integration")**:
 
-* Integration with WooCommerce and Zoom Meetings Countdown page.
-* Purchasable Single Meetings !
-* WP-Cron emails before 24 hours of the meeting.
-* Separate meeting list page in my-account section.
-* Integration with WooCommerce Bookings
-* Automated WooCommerce Booking meeting process.
-* Individual Booking Product Meetings
-* Individual Booking Product Hosts
-* Individual Booking product meeting links for each bookings.
-* Integration with WCFM
-* Integration with WooCommerce Product Vendors
-* Integration with Booked Appointments.
-* Integration with WooCommerce Appointments.
-
-& more functionalities and integrations are on its way!
-
 You can find more information on the Pro version on website: **[codemanas.com](https://www.codemanas.com/ "codemanas.com")**
 
 **OVERRIDDING TEMPLATES:**
@@ -90,12 +73,9 @@ REFER FAQ to override page templates!
 * Provides Shortcode to conduct the meeting via any WordPress page/post or custom post type pages
 * Separate Admin area to manage all meetings.
 * Can add meeting links via shortcode to your WooCommerce product pages as well.
-
-**Zoom Web SDK Notice from Zoom Itself**
-
-The Web SDK enables the development of video applications powered by Zoom’s core framework inside an HTML5 web client through a highly optimized WebAssembly module.
-
-As an extension of the Zoom browser client, this SDK is intended for implementations where the end user has a low-bandwidth environment, is behind a network firewall, or has restrictions on their machine which would prevent them from installing the Zoom Desktop or Mobile Clients.
+* Gutenberg
+* Elementor
+* Beaver Builder
 
 **SHORTCODE:**
 
