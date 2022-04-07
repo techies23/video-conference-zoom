@@ -50,7 +50,7 @@ class Elementor {
 	private function add_actions() {
 		// Register widget scripts.
 		#add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'widget_scripts' ] );
-		add_action( 'elementor/widgets/widgets_registered', [ $this, 'on_widgets_registered' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'on_widgets_registered' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'widget_categories' ] );
 	}
 
@@ -70,13 +70,18 @@ class Elementor {
 	 * On Widgets Registered
 	 *
 	 * @since 3.4.0
-	 * @author CodeManas
+	 * @modified 3.9.0
+	 * @author Deepen Bajracharya
 	 *
 	 * @access public
+	 *
+	 * @param $widgets_manager
+	 *
+	 * @throws \Exception
 	 */
-	public function on_widgets_registered() {
+	public function on_widgets_registered( $widgets_manager ) {
 		$this->includes();
-		$this->register_widget();
+		$this->register_widget( $widgets_manager );
 	}
 
 	/**
@@ -89,7 +94,7 @@ class Elementor {
 			'vczapi-elements',
 			[
 				'title'  => 'Zoom',
-				'icon'   => 'fa fa-plug',
+				'icon'   => 'eicon-video-camera',
 				'active' => true
 			]
 		);
@@ -117,20 +122,22 @@ class Elementor {
 	/**
 	 * Register Widget
 	 *
-	 * @since 3.4.0
-	 * @author CodeManas
+	 * @param $widgets_manager
 	 *
-	 * @access private
+	 * @throws \Exception
+	 * @since 3.4.0
+	 * @modified 3.9.0
+	 * @author Deepen Bajracharya
 	 */
-	private function register_widget() {
-		Plugin::instance()->widgets_manager->register_widget_type( new MeetingByID() );
-		Plugin::instance()->widgets_manager->register_widget_type( new MeetingList() );
-		Plugin::instance()->widgets_manager->register_widget_type( new MeetingHosts() );
-		Plugin::instance()->widgets_manager->register_widget_type( new EmbedMeetings() );
-		Plugin::instance()->widgets_manager->register_widget_type( new RecordingsByHost() );
-		Plugin::instance()->widgets_manager->register_widget_type( new RecordingByMeetingID() );
-		Plugin::instance()->widgets_manager->register_widget_type( new WebinarList() );
-		Plugin::instance()->widgets_manager->register_widget_type( new MeetingByPostID() );
+	private function register_widget( $widgets_manager ) {
+		$widgets_manager->register( new MeetingByID() );
+		$widgets_manager->register( new MeetingList() );
+		$widgets_manager->register( new MeetingHosts() );
+		$widgets_manager->register( new EmbedMeetings() );
+		$widgets_manager->register( new RecordingsByHost() );
+		$widgets_manager->register( new RecordingByMeetingID() );
+		$widgets_manager->register( new WebinarList() );
+		$widgets_manager->register( new MeetingByPostID() );
 	}
 }
 

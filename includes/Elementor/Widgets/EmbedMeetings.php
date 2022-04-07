@@ -57,7 +57,7 @@ class EmbedMeetings extends Widget_Base {
 	 *
 	 */
 	public function get_icon() {
-		return 'fas fa-video';
+		return 'eicon-video-camera';
 	}
 
 	/**
@@ -115,10 +115,10 @@ class EmbedMeetings extends Widget_Base {
 		);
 
 		$this->add_control(
-			'help_text',
+			'iframe',
 			[
-				'name'        => 'help_text',
-				'label'       => __( 'Show Help Text?', 'video-conferencing-with-zoom-api' ),
+				'name'        => 'iframe',
+				'label'       => __( 'Show in Iframe?', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'label_block' => true,
 				'multiple'    => false,
@@ -145,7 +145,7 @@ class EmbedMeetings extends Widget_Base {
 			[
 				'label'       => __( 'Embed Height', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::NUMBER,
-				'description' => __( 'Put height of the container.', 'video-conferencing-with-zoom-api' ),
+				'description' => __( 'Only valid when show in iframe is enabled.', 'video-conferencing-with-zoom-api' ),
 				'placeholder' => '500',
 				'default'     => 500
 			]
@@ -177,10 +177,22 @@ class EmbedMeetings extends Widget_Base {
 		);
 
 		$this->add_control(
+			'image',
+			[
+				'name'        => 'image',
+				'label'       => __( 'Image URL', 'video-conferencing-with-zoom-api' ),
+				'type'        => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://images.unsplash.com/photo-1459257831348-f0cdd359235f', 'video-conferencing-with-zoom-api' ),
+				'options'     => false,
+				'label_block' => true,
+			]
+		);
+
+		$this->add_control(
 			'enable_webinar',
 			[
 				'name'        => 'enable_webinar',
-				'label'       => __( 'Webinar ?', 'video-conferencing-with-zoom-api' ),
+				'label'       => __( 'Is Webinar ?', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'label_block' => true,
 				'multiple'    => false,
@@ -211,14 +223,15 @@ class EmbedMeetings extends Widget_Base {
 
 		$meeting_id        = ! empty( $settings['meeting_id'] ) ? $settings['meeting_id'] : false;
 		$login_required    = ! empty( $settings['login_required'] ) ? $settings['login_required'] : 'no';
-		$help_text         = ! empty( $settings['help_text'] ) ? $settings['help_text'] : 'no';
+		$iframe            = ! empty( $settings['iframe'] ) ? $settings['iframe'] : 'no';
 		$title_text        = ! empty( $settings['title_text'] ) ? $settings['title_text'] : false;
-		$height            = ! empty( $settings['height'] ) ? $settings['height'] : 500;
+		$height            = ! empty( $settings['height'] ) ? (int) $settings['height'] : 500;
 		$disable_countdown = ! empty( $settings['disable_countdown'] ) ? $settings['disable_countdown'] : 'yes';
 		$passcode          = ! empty( $settings['passcode'] ) ? $settings['passcode'] : '';
 		$enable_webinar    = ! empty( $settings['enable_webinar'] ) ? $settings['enable_webinar'] : 'yes';
+		$image             = ! empty( $settings['image'] ) && ! empty( $settings['image']['url'] ) ? 'image=' . esc_url( $settings['image']['url'] ) : false;
 		if ( ! empty( $meeting_id ) ) {
-			echo do_shortcode( '[zoom_join_via_browser meeting_id="' . esc_attr( $meeting_id ) . '" login_required="' . esc_attr( $login_required ) . '" help="' . esc_attr( $help_text ) . '" title="' . esc_attr( $title_text ) . '" height="' . esc_attr( $height ) . 'px" disable_countdown="' . esc_attr( $disable_countdown ) . '" ' . 'passcode="' . esc_attr( $passcode ) . '"' . ' webinar="' . esc_attr( $enable_webinar ) . '"]' );
+			echo do_shortcode( '[zoom_join_via_browser meeting_id="' . esc_attr( $meeting_id ) . '" login_required="' . esc_attr( $login_required ) . '" iframe="' . esc_attr( $iframe ) . '" title="' . esc_attr( $title_text ) . '" height="' . esc_attr( $height ) . 'px" disable_countdown="' . esc_attr( $disable_countdown ) . '" passcode="' . esc_attr( $passcode ) . '" webinar="' . esc_attr( $enable_webinar ) . '" ' . $image . ' ]' );
 		} else {
 			_e( 'No Meeting ID is defined.', 'video-conferencing-with-zoom-api' );
 		}

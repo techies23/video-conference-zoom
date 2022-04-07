@@ -174,6 +174,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Added: Filter to allow hierarchical pages.
 * Updated: WebSDK to version 2.3.5
 * Updated: Join via browser shortcode changed for making compatible with issues like lags and gallery view. ( Crucial update )
+* Updated: Elementor "elementor/widgets/register" register hook changed to remove deprecation notice and updated necessary elementor codebase.
 
 = 3.8.19 March 13th, 2022 =
 * Updated: WebSDK to version 2.3.0

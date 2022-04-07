@@ -24,7 +24,11 @@ class Embed {
 		return self::$_instance;
 	}
 
-	public function __construct() {
+	public function enqueue_scripts() {
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
+		wp_enqueue_script( 'video-conferncing-with-zoom-browser-js' );
 	}
 
 	/**
@@ -38,11 +42,6 @@ class Embed {
 	 *
 	 */
 	public function join_via_browser( $atts, $content = null ) {
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
-		wp_enqueue_script( 'video-conferncing-with-zoom-browser-js' );
-
 		// Allow addon devs to perform action before window rendering
 		do_action( 'vczapi_before_shortcode_content' );
 
@@ -58,6 +57,10 @@ class Embed {
 			'image'             => '',
 			'iframe'            => 'yes'
 		), $atts );
+
+		if ( $attributes['disable_countdown'] == "no" ) {
+			$this->enqueue_scripts();
+		}
 
 		unset( $GLOBALS['zoom'] );
 

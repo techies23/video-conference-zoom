@@ -55,7 +55,7 @@ class RecordingsByHost extends Widget_Base {
 	 *
 	 */
 	public function get_icon() {
-		return 'fas fa-video';
+		return 'eicon-video-camera';
 	}
 
 	/**
