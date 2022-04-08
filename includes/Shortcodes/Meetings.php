@@ -111,7 +111,8 @@ class Meetings {
 	 */
 	public function show_meeting_by_postTypeID( $atts ) {
 		extract( shortcode_atts( array(
-			'post_id' => ''
+			'post_id'  => '',
+			'template' => ''
 		), $atts ) );
 
 		ob_start();
@@ -184,7 +185,12 @@ class Meetings {
 					wp_enqueue_script( 'vczapi-pro' );
 				}
 
-				vczapi_get_template_part( 'content', 'single-meeting' );
+				if ( ! empty( $template ) && $template == "boxed" ) {
+					$GLOBALS['zoom']['shortcode_post_by_id'] = true;
+					vczapi_get_template( 'shortcode/meeting-by-post-id.php', true, false );
+				} else {
+					vczapi_get_template_part( 'content', 'single-meeting' );
+				}
 			}
 		} else {
 			echo "<p>" . __( 'This post does not exist.', 'video-conferencing-with-zoom-api' ) . "</p>";

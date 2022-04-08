@@ -5,8 +5,8 @@
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/shortcode/zoom-listing.php.
  *
  * @package    Video Conferencing with Zoom API/Templates
- * @version     3.2.2
- * @updated     3.6.0
+ * @since     3.2.2
+ * @version     3.6.0
  */
 
 global $zoom;

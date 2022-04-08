@@ -3,7 +3,7 @@ All these shortcodes are available as elementor and gutenberg modules.
 ### Types
 
 1. `[zoom_api_link meeting_id="" link_only="no"]`
-2. `[zoom_meeting_post post_id="ZOOM MEETING POST ID"]`
+2. `[zoom_meeting_post post_id="ZOOM MEETING POST ID" template="none"]`
 3. `[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
 4. `[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
 5. `[zoom_list_host_meetings host="YOUR_HOST_ID"]`
@@ -28,11 +28,12 @@ Your frontend page should look like:
 
 ### 2. Show a meeting post with Countdown
 
-Use: `[zoom_meeting_post post_id=""]`
+Use: `[zoom_meeting_post post_id="" template="none"]`
 
 Where,
 
 * `post_id` = Zoom Meeting post ID.
+* `template` = "boxed" - changing to boxed will show meeting with timer.
 
 ### 3. List Upcoming or Past Meetings
 

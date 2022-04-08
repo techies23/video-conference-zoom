@@ -6,7 +6,7 @@
  *
  * @package     Video Conferencing with Zoom API/Templates
  * @version     3.2.2
- * @updated     3.6.0
+ * @version     3.6.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

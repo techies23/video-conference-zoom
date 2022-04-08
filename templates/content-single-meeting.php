@@ -6,7 +6,7 @@
  *
  * @author Deepen.
  * @created_on 11/19/19
- * @updated 3.7.1
+ * @version 3.7.1
  */
 
 defined( 'ABSPATH' ) || exit;

@@ -5,8 +5,8 @@
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/shortcode/embed-session.php
  *
  * @author Deepen Bajracharya
- * @since 3.8.20
- * @created April 7th, 2022
+ * @since 3.9.0
+ * @version 3.9.0
  */
 
 global $zoom;
@@ -42,25 +42,25 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
         <div class="dpn-zvc-timer zoom-join-via-browser-countdown" id="dpn-zvc-timer" data-date="<?php echo $zoom->start_time; ?>" data-tz="<?php echo $zoom->timezone; ?>">
             <div class="dpn-zvc-timer-cell">
                 <div class="dpn-zvc-timer-cell-number">
-                    <div id="dpn-zvc-timer-days"></div>
+                    <div id="dpn-zvc-timer-days">00</div>
                 </div>
                 <div class="dpn-zvc-timer-cell-string"><?php _e( 'days', 'video-conferencing-with-zoom-api' ); ?></div>
             </div>
             <div class="dpn-zvc-timer-cell">
                 <div class="dpn-zvc-timer-cell-number">
-                    <div id="dpn-zvc-timer-hours"></div>
+                    <div id="dpn-zvc-timer-hours">00</div>
                 </div>
                 <div class="dpn-zvc-timer-cell-string"><?php _e( 'hours', 'video-conferencing-with-zoom-api' ); ?></div>
             </div>
             <div class="dpn-zvc-timer-cell">
                 <div class="dpn-zvc-timer-cell-number">
-                    <div id="dpn-zvc-timer-minutes"></div>
+                    <div id="dpn-zvc-timer-minutes">00</div>
                 </div>
                 <div class="dpn-zvc-timer-cell-string"><?php _e( 'minutes', 'video-conferencing-with-zoom-api' ); ?></div>
             </div>
             <div class="dpn-zvc-timer-cell">
                 <div class="dpn-zvc-timer-cell-number">
-                    <div id="dpn-zvc-timer-seconds"></div>
+                    <div id="dpn-zvc-timer-seconds">00</div>
                 </div>
                 <div class="dpn-zvc-timer-cell-string"><?php _e( 'seconds', 'video-conferencing-with-zoom-api' ); ?></div>
             </div>

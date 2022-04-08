@@ -3,7 +3,8 @@
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/fragments/filters.php.
  *
  * @author      Deepen Bajracharya (CodeManas)
- * @created     3.6.0
+ * @since       3.6.0
+ * @version     3.6.0
  */
 
 global $vczapi;

@@ -5,8 +5,8 @@
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/shortcode/zoom-shortcode.php.
  *
  * @author Deepen.
- * @created_on 11/20/19
  * @since 3.0.0
+ * @version 3.0.0
  */
 
 global $zoom_webinars;

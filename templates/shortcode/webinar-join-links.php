@@ -5,9 +5,8 @@
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/shortcode/join-links.php
  *
  * @author Deepen Bajracharya
- * @created_on 02/19/2020
  * @since 3.1.2
- * @modified 3.3.1
+ * @version 3.3.1
  */
 
 global $webinars;

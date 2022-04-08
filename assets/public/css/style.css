@@ -117,6 +117,156 @@
   }
 }
 
+.vczapi-show-by-postid {
+  padding: 60px 0;
+}
+.vczapi-show-by-postid-countdown-title {
+  text-align: center;
+}
+.vczapi-show-by-postid-countdown {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 1200px;
+  border-spacing: 2px;
+  border-collapse: separate;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: #eaeaea;
+  padding: 60px 0;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  border-radius: 10px;
+}
+.vczapi-show-by-postid .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  border-spacing: 2px;
+  border-collapse: separate;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.vczapi-show-by-postid .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer .dpn-zvc-meeting-ended {
+  background: #3a3a3a;
+  padding: 10px 16px;
+  border-radius: 2px;
+}
+.vczapi-show-by-postid .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer .dpn-zvc-meeting-ended h3 {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+.vczapi-show-by-postid .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer .dpn-zvc-timer-cell {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  font-size: 32px;
+  background: #3a3a3a;
+  color: #fff;
+  padding: 20px 5px;
+  border-radius: 10px;
+  width: 120px;
+  margin: 6px;
+}
+.vczapi-show-by-postid .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer .dpn-zvc-timer-cell-number {
+  font-size: 1em;
+  width: 100%;
+  font-weight: 700;
+}
+.vczapi-show-by-postid .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer .dpn-zvc-timer-cell-string {
+  font-size: 0.45em;
+  width: 100%;
+  text-transform: uppercase;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents {
+  padding: 25px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-top: 20px;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-image {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 30%;
+      -ms-flex: 0 0 30%;
+          flex: 0 0 30%;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-image img {
+  border-radius: 10px;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections-thecontent {
+  margin-top: 20px;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections-description {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 70%;
+      -ms-flex: 0 0 70%;
+          flex: 0 0 70%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-left: 20px;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .join-links {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .btn {
+  padding: 10px 20px;
+  color: #fff;
+  display: block;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .btn-join-link {
+  background: #a5452d;
+}
+
 .dpn-zvc-shortcode-op-wrapper table {
   border: 1px solid #dee2e6;
   width: 100%;

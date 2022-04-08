@@ -4,9 +4,9 @@
  *
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/fragments/meeting-details.php.
  *
- * @author      Deepen Bajracharya (CodeManas)
- * @created     3.0.0
- * @updated     3.6.0
+ * @author      Deepen Bajracharya
+ * @since       3.0.0
+ * @version     3.6.0
  */
 
 global $zoom;
@@ -14,6 +14,11 @@ global $zoom;
 if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) ) {
 	return;
 }
+
+if ( ! empty( $zoom['shortcode_post_by_id'] ) ) {
+    return;
+}
+
 ?>
 <div class="dpn-zvc-sidebar-box">
     <div class="dpn-zvc-sidebar-tile">

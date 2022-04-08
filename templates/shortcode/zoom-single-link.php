@@ -1,7 +1,10 @@
 <?php
 /**
+ * Template for showing single link with join url.
+ *
  * @author Deepen.
- * @created_on 11/29/19
+ * @since 3.0.0
+ * @version 3.9.0
  */
 
 global $zoom_meetings;

@@ -1,3 +1,15 @@
+<?php
+/**
+ * The template for displaying list of meeting hosts  table.
+ *
+ * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/shortcode/list-meetings-host.php
+ *
+ * @author Deepen Bajracharya
+ * @since 3.4.0
+ * @version 3.4.0
+ */
+?>
+
 <table id="vczapi-show-meetings-list-table" class="vczapi-user-meeting-list">
     <thead>
     <tr>

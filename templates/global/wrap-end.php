@@ -1,7 +1,10 @@
 <?php
 /**
+ * Wrapper for the theme
+ *
  * @author Deepen.
- * @created_on 11/26/19
+ * @since 2.0.0
+ * @version 2.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

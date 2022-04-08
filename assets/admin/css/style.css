@@ -266,3 +266,8 @@
 .vczapi-admin-enable-debug-log-msg a {
   color: #ddd;
 }
+
+.vczapi-metabox-shortcode-detail {
+  padding: 10px;
+  background: #99CCCC;
+}
