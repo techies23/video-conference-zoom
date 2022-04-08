@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2022-02-09 07:36+0000\n"
+"POT-Creation-Date: 2022-04-08 04:54+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -163,10 +163,6 @@ msgstr ""
 
 #: includes/admin/class-zvc-admin-ajax.php:54
 msgid "An error occured. Host ID and Meeting ID not defined properly."
-msgstr ""
-
-#: includes/Shortcodes.php:197
-msgid "and join via Zoom App."
 msgstr ""
 
 #: includes/views/tabs/api-settings.php:20
@@ -461,11 +457,12 @@ msgstr ""
 msgid "DateTime Format"
 msgstr ""
 
-#: includes/Shortcodes.php:224 templates/fragments/countdown-timer.php:30
+#: templates/fragments/countdown-timer.php:30
+#: templates/shortcode/embed-session.php:47
 msgid "days"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:390
+#: includes/admin/class-zvc-admin-post-type.php:391
 msgid "Debug Log"
 msgstr ""
 
@@ -575,14 +572,6 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: includes/Shortcodes.php:204
-msgid "Download App from Store"
-msgstr ""
-
-#: includes/Shortcodes.php:207
-msgid "Download from Zoom"
-msgstr ""
-
 #: includes/template-functions.php:408
 #: templates/fragments/meeting-details.php:49
 #: templates/shortcode/zoom-webinar.php:98
@@ -635,7 +624,7 @@ msgstr ""
 msgid "Embed Zoom Meeting in your Browser"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:495
+#: includes/admin/class-zvc-admin-post-type.php:496
 msgid "Enable Debug?"
 msgstr ""
 
@@ -679,7 +668,7 @@ msgstr ""
 msgid "Enter the date to check:"
 msgstr ""
 
-#: includes/Shortcodes.php:147 includes/Shortcodes/Webinars.php:60
+#: includes/Shortcodes/Webinars.php:60 includes/Shortcodes/Embed.php:72
 #: includes/Shortcodes/Meetings.php:66 includes/Shortcodes/Meetings.php:120
 msgid "ERROR: "
 msgstr ""
@@ -712,12 +701,12 @@ msgstr ""
 msgid "File Type"
 msgstr ""
 
-#: includes/Shortcodes.php:98
+#: includes/Shortcodes.php:99
 #, php-format
 msgid "filtered from %s total entries"
 msgstr ""
 
-#: includes/Shortcodes.php:105
+#: includes/Shortcodes.php:106
 msgid "First"
 msgstr ""
 
@@ -759,7 +748,7 @@ msgstr ""
 msgid "Hide Join Links for Non-Loggedin ?"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:475
+#: includes/admin/class-zvc-admin-post-type.php:476
 msgid "Hide Join via browser link ?"
 msgstr ""
 
@@ -793,7 +782,8 @@ msgstr ""
 msgid "Hosted By:"
 msgstr ""
 
-#: includes/Shortcodes.php:230 templates/fragments/countdown-timer.php:36
+#: templates/fragments/countdown-timer.php:36
+#: templates/shortcode/embed-session.php:53
 msgid "hours"
 msgstr ""
 
@@ -817,6 +807,10 @@ msgid ""
 "shortcode"
 msgstr ""
 
+#: includes/Elementor/Widgets/EmbedMeetings.php:183
+msgid "Image URL"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-settings.php:78
 msgid "Import"
 msgstr ""
@@ -828,6 +822,10 @@ msgstr ""
 
 #: includes/Shortcodes/Recordings.php:173
 msgid "Invalid Meeting ID."
+msgstr ""
+
+#: includes/Elementor/Widgets/EmbedMeetings.php:195
+msgid "Is Webinar ?"
 msgstr ""
 
 #: templates/join-web-browser.php:103 templates/shortcode/join-links.php:20
@@ -843,7 +841,7 @@ msgstr ""
 msgid "Join Before Host"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:457
+#: includes/admin/class-zvc-admin-post-type.php:458
 msgid "Join Meeting"
 msgstr ""
 
@@ -863,18 +861,22 @@ msgstr ""
 msgid "Join via App"
 msgstr ""
 
+#: templates/shortcode/embed-session.php:92
+msgid "Join via Browser"
+msgstr ""
+
 #: includes/helpers.php:595 includes/helpers.php:599 includes/helpers.php:623
 #: includes/helpers.php:627 templates/shortcode/join-links.php:27
 #: templates/shortcode/webinar-join-links.php:27
 msgid "Join via Web Browser"
 msgstr ""
 
-#: includes/Shortcodes.php:201 templates/shortcode/join-links.php:18
+#: templates/shortcode/join-links.php:18
 #: templates/shortcode/webinar-join-links.php:18
 msgid "Join via Zoom App"
 msgstr ""
 
-#: includes/Shortcodes.php:106
+#: includes/Shortcodes.php:107
 msgid "Last"
 msgstr ""
 
@@ -922,7 +924,7 @@ msgstr ""
 msgid "Live Webinars"
 msgstr ""
 
-#: includes/Shortcodes.php:100
+#: includes/Shortcodes.php:101
 msgid "Loading"
 msgstr ""
 
@@ -965,7 +967,7 @@ msgstr ""
 msgid "Meeting Description."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:386
+#: includes/admin/class-zvc-admin-post-type.php:387
 msgid "Meeting Details"
 msgstr ""
 
@@ -993,8 +995,8 @@ msgstr ""
 msgid "Meeting has ended !"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:445
-#: includes/admin/class-zvc-admin-post-type.php:467
+#: includes/admin/class-zvc-admin-post-type.php:446
+#: includes/admin/class-zvc-admin-post-type.php:468
 msgid ""
 "Meeting has not been created for this post yet. Publish your meeting or hit "
 "update to create a new one for this post !"
@@ -1014,7 +1016,7 @@ msgstr ""
 
 #: includes/template-functions.php:307
 #: includes/admin/class-zvc-admin-post-type.php:213
-#: includes/admin/class-zvc-admin-post-type.php:459
+#: includes/admin/class-zvc-admin-post-type.php:460
 #: templates/shortcode/zoom-webinar.php:21
 #: templates/shortcode/zoom-recordings.php:22
 #: templates/shortcode/zoom-recordings-by-meeting.php:42
@@ -1060,6 +1062,10 @@ msgstr ""
 
 #: includes/views/tabs/api-settings.php:126
 msgid "Meeting Started Text"
+msgstr ""
+
+#: templates/shortcode/embed-session.php:41
+msgid "Meeting starts in"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:214
@@ -1123,7 +1129,8 @@ msgstr ""
 msgid "Meetings Type"
 msgstr ""
 
-#: includes/Shortcodes.php:236 templates/fragments/countdown-timer.php:42
+#: templates/fragments/countdown-timer.php:42
+#: templates/shortcode/embed-session.php:59
 msgid "minutes"
 msgstr ""
 
@@ -1156,7 +1163,7 @@ msgstr ""
 msgid "New Users"
 msgstr ""
 
-#: includes/Shortcodes.php:107
+#: includes/Shortcodes.php:108
 msgid "Next"
 msgstr ""
 
@@ -1172,15 +1179,15 @@ msgstr ""
 msgid "Next Start Time"
 msgstr ""
 
-#: includes/Shortcodes.php:95
+#: includes/Shortcodes.php:96
 msgid "No data available in table"
 msgstr ""
 
-#: includes/Shortcodes.php:103
+#: includes/Shortcodes.php:104
 msgid "No matching records found"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:223
+#: includes/Elementor/Widgets/EmbedMeetings.php:236
 msgid "No Meeting ID is defined."
 msgstr ""
 
@@ -1188,7 +1195,7 @@ msgstr ""
 msgid "No meeting ID is defined."
 msgstr ""
 
-#: includes/Shortcodes.php:147 includes/Shortcodes/Meetings.php:66
+#: includes/Shortcodes/Embed.php:72 includes/Shortcodes/Meetings.php:66
 msgid "No meeting id set in the shortcode"
 msgstr ""
 
@@ -1247,21 +1254,20 @@ msgstr ""
 msgid "Not a Host"
 msgstr ""
 
-#: includes/Shortcodes.php:197
-msgid ""
-"Note: If you are having trouble joining the meeting below, enter Meeting ID: "
-msgstr ""
-
 #: includes/template-functions.php:338 templates/shortcode/zoom-webinar.php:37
 msgid "Ocurrences"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:474
+#: includes/admin/class-zvc-admin-post-type.php:475
 msgid "Only logged in users of this site will be able to join this meeting."
 msgstr ""
 
 #: includes/views/post-type/tpl-meeting-fields.php:213
 msgid "Only loggedin users in Zoom App can join this Meeting."
+msgstr ""
+
+#: includes/Elementor/Widgets/EmbedMeetings.php:148
+msgid "Only valid when show in iframe is enabled."
 msgstr ""
 
 #: includes/admin/class-zvc-admin-sync.php:47
@@ -1297,6 +1303,7 @@ msgstr ""
 msgid "Participants Video"
 msgstr ""
 
+#: templates/shortcode/embed-session.php:89
 #: includes/views/post-type/tpl-meeting-fields.php:192
 msgid "Password"
 msgstr ""
@@ -1382,7 +1389,7 @@ msgstr ""
 msgid "Please see %s on how to format date"
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:94
+#: includes/Shortcodes/Embed.php:122 includes/Shortcodes/Meetings.php:94
 #, php-format
 msgid ""
 "Please try again ! Some error occured while trying to fetch meeting with id: "
@@ -1400,7 +1407,7 @@ msgstr ""
 msgid "Practise Session"
 msgstr ""
 
-#: includes/Shortcodes.php:108
+#: includes/Shortcodes.php:109
 msgid "Previous"
 msgstr ""
 
@@ -1420,12 +1427,8 @@ msgstr ""
 msgid "Pro, Business, Enterprise, Education, or API Account. Check more"
 msgstr ""
 
-#: includes/Shortcodes.php:101
+#: includes/Shortcodes.php:102
 msgid "Processing"
-msgstr ""
-
-#: includes/Elementor/Widgets/EmbedMeetings.php:148
-msgid "Put height of the container."
 msgstr ""
 
 #: includes/views/tabs/api-settings.php:36
@@ -1476,7 +1479,7 @@ msgstr ""
 msgid "Reports"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:471
+#: includes/admin/class-zvc-admin-post-type.php:472
 #: includes/Elementor/Widgets/EmbedMeetings.php:105
 msgid "Requires Login?"
 msgstr ""
@@ -1487,7 +1490,7 @@ msgid ""
 "meeting is completed."
 msgstr ""
 
-#: includes/Shortcodes.php:153
+#: includes/Shortcodes/Embed.php:78
 msgid "Restricted access, please login to continue."
 msgstr ""
 
@@ -1517,7 +1520,7 @@ msgstr ""
 msgid "Saved !"
 msgstr ""
 
-#: includes/Shortcodes.php:102
+#: includes/Shortcodes.php:103
 msgid "Search"
 msgstr ""
 
@@ -1533,7 +1536,8 @@ msgstr ""
 msgid "Searching From: "
 msgstr ""
 
-#: includes/Shortcodes.php:242 templates/fragments/countdown-timer.php:48
+#: templates/fragments/countdown-timer.php:48
+#: templates/shortcode/embed-session.php:65
 msgid "seconds"
 msgstr ""
 
@@ -1624,7 +1628,7 @@ msgstr ""
 msgid "Shortcode"
 msgstr ""
 
-#: includes/Shortcodes.php:99
+#: includes/Shortcodes.php:100
 #, php-format
 msgid "Show %s entries"
 msgstr ""
@@ -1644,7 +1648,7 @@ msgid "Show Filter"
 msgstr ""
 
 #: includes/Elementor/Widgets/EmbedMeetings.php:121
-msgid "Show Help Text?"
+msgid "Show in Iframe?"
 msgstr ""
 
 #: includes/Elementor/Widgets/MeetingHosts.php:85
@@ -1684,7 +1688,7 @@ msgstr ""
 msgid "Show Zoom Author ?"
 msgstr ""
 
-#: includes/Shortcodes.php:96
+#: includes/Shortcodes.php:97
 #, php-format
 msgid "Showing %s to %s of %s entries"
 msgstr ""
@@ -1736,7 +1740,7 @@ msgid "Start Date/Time *"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:211
-#: includes/admin/class-zvc-admin-post-type.php:456
+#: includes/admin/class-zvc-admin-post-type.php:457
 #: templates/fragments/join-links.php:27
 msgid "Start Meeting"
 msgstr ""
@@ -1747,6 +1751,7 @@ msgstr ""
 #: templates/shortcode/zoom-webinar.php:81
 #: templates/shortcode/zoom-webinar.php:88
 #: templates/shortcode/zoom-listing.php:52
+#: templates/shortcode/embed-session.php:87
 #: templates/shortcode/list-webinars-host.php:5
 #: templates/shortcode/list-meetings-host.php:6
 #: includes/views/webinars/tpl-list-webinars.php:65
@@ -1759,7 +1764,7 @@ msgstr ""
 msgid "Start via App"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:458
+#: includes/admin/class-zvc-admin-post-type.php:459
 #: includes/views/webinars/tpl-list-webinars.php:88
 #: includes/views/live/tpl-list-meetings.php:89
 msgid "Start via Browser"
@@ -1935,7 +1940,7 @@ msgid ""
 "for administrator."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:478
+#: includes/admin/class-zvc-admin-post-type.php:479
 msgid "This will disable join via browser link in frontend page."
 msgstr ""
 
@@ -1948,6 +1953,7 @@ msgstr ""
 #: includes/template-functions.php:402 templates/content-meeting.php:68
 #: templates/shortcode/zoom-webinar.php:93
 #: templates/shortcode/zoom-listing.php:71
+#: templates/shortcode/embed-session.php:88
 #: templates/shortcode/list-webinars-host.php:6
 #: templates/shortcode/list-meetings-host.php:7
 #: includes/views/webinars/tpl-edit-webinar.php:58
@@ -2137,10 +2143,6 @@ msgstr ""
 msgid "Webinar"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:183
-msgid "Webinar ?"
-msgstr ""
-
 #: includes/views/webinars/tpl-edit-webinar.php:37
 #: includes/views/webinars/tpl-add-webinar.php:36
 msgid "Webinar Agenda"
@@ -2226,7 +2228,7 @@ msgid ""
 "Webinar Plan enabled in your account."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:395
+#: includes/admin/class-zvc-admin-post-type.php:396
 msgid "WooCommerce Integration?"
 msgstr ""
 
@@ -2246,6 +2248,10 @@ msgid ""
 "continue or contact administrator."
 msgstr ""
 
+#: templates/join-web-browser.php:49
+msgid "Your Name Here"
+msgstr ""
+
 #: includes/Blocks/Blocks.php:103
 msgid "Zoom"
 msgstr ""
@@ -2255,7 +2261,7 @@ msgctxt "Zoom Category Name"
 msgid "Category"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:382
+#: includes/admin/class-zvc-admin-post-type.php:383
 msgid "Zoom Details"
 msgstr ""
 

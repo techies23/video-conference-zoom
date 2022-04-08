@@ -182,7 +182,7 @@ class EmbedMeetings extends Widget_Base {
 				'name'        => 'image',
 				'label'       => __( 'Image URL', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://images.unsplash.com/photo-1459257831348-f0cdd359235f', 'video-conferencing-with-zoom-api' ),
+				'placeholder' => esc_html( 'https://images.unsplash.com/photo-1459257831348-f0cdd359235f' ),
 				'options'     => false,
 				'label_block' => true,
 			]
