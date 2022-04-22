@@ -162,4 +162,14 @@
       background: #a5452d;
     }
   }
+
+  @media only screen and (max-width: 660px) {
+    & {
+      flex-direction: column;
+
+      .vczapi-jvb-countdown-content-description-topic {
+        margin-top: 1em;
+      }
+    }
+  }
 }

@@ -152,6 +152,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 3.9.1 April 10th, 2022 =
 * Added: Template for displaying meeting by Post ID with coutdown timer.
+* Fixed: Embed join by browser shortcode fix iframe element view when countdown timer is enabled.
 
 = 3.9.0 April 7th, 2022 =
 * Added: Filter to allow hierarchical pages.

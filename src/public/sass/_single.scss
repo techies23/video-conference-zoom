@@ -148,6 +148,10 @@
 .vczapi-show-by-postid {
   padding: 60px 0;
 
+  .dpn-zvc-sidebar-state {
+    display: none;
+  }
+
   &-countdown-title {
     text-align: center;
   }
@@ -223,46 +227,90 @@
     flex-wrap: wrap;
     margin-top: 20px;
 
-    &-image {
-      flex: 0 0 30%;
-
-      img {
-        border-radius: 10px;
-      }
-    }
-
     &-sections {
 
       &-thecontent {
         margin-top: 20px;
       }
 
-      &-description {
-        flex: 0 0 70%;
-        display: flex;
-        flex-direction: column;
-        padding-left: 20px;
-      }
-
       .dpn-zvc-sidebar-box {
-        margin-top: 10px;
-        padding-left: 20px;
-
-        .join-links {
-          display: flex;
-        }
-
         .btn {
           padding: 10px 20px;
           color: #fff;
           display: block;
           margin-right: 10px;
           text-align: center;
-          border-radius: 10px;
         }
 
         .btn-join-link {
           background: #a5452d;
+        }
+      }
+    }
+
+    @media (min-width: 769px) {
+      &-image {
+        flex: 0 0 30%;
+
+        img {
+          border-radius: 10px;
+        }
+      }
+
+      &-sections {
+
+        &-description {
+          flex: 0 0 70%;
+          display: flex;
+          flex-direction: column;
+          padding-left: 20px;
+        }
+
+        .dpn-zvc-sidebar-box {
+          margin-top: 10px;
+          padding-left: 20px;
+
+          .join-links {
+            display: flex;
+          }
+
+          .btn-start-link {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 660px) {
+    .dpn-zvc-.vczapi-jvb-countdown-contenttimer.vczapi-show-by-postid-countdown-timer {
+      flex-direction: column;
+      padding: 0 40px;
+
+      .dpn-zvc-timer-cell {
+        width: 100%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 769px) {
+    & {
+      padding: 60px 30px;
+    }
+
+    .vczapi-show-by-postid-contents {
+      flex-direction: column;
+
+      &-sections {
+        &-description-topic {
+          margin-top: 1em;
+        }
+
+        .dpn-zvc-sidebar-box {
+          .btn {
+            margin-top: 10px;
+            margin-right: 0;
+          }
         }
       }
     }

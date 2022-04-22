@@ -38,7 +38,7 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
 } else if ( $zoom->meeting_time_check > $zoom->meeting_timezone_time && ! empty( $zoom->shortcode_attributes['disable_countdown'] ) && $zoom->shortcode_attributes['disable_countdown'] == "no" ) {
 	?>
     <div class="vczapi-jvb-countdown-wrapper">
-        <h3 class="vczapi-jvb-countdown-wrapper-countdown-title"><?php _e('Meeting starts in', 'video-conferencing-with-zoom-api'); ?>:</h3>
+        <h3 class="vczapi-jvb-countdown-wrapper-countdown-title"><?php _e( 'Meeting starts in', 'video-conferencing-with-zoom-api' ); ?>:</h3>
         <div class="dpn-zvc-timer zoom-join-via-browser-countdown" id="dpn-zvc-timer" data-date="<?php echo $zoom->start_time; ?>" data-tz="<?php echo $zoom->timezone; ?>">
             <div class="dpn-zvc-timer-cell">
                 <div class="dpn-zvc-timer-cell-number">
@@ -68,13 +68,17 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
     </div>
 <?php } ?>
 
-<?php if ( $zoom->shortcode_attributes['iframe'] == "yes" ) { ?>
-    <div class="vczapi-jvb-wrapper zoom-window-wrap">
-        <div id="<?php echo ! empty( $zoom->shortcode_attributes['id'] ) ? esc_attr( $zoom->shortcode_attributes['id'] ) : 'video-conferncing-embed-iframe'; ?>" class="zoom-iframe-container">
-            <iframe style="width:100%; <?php echo ! empty( $zoom->shortcode_attributes['height'] ) ? "height: " . $zoom->shortcode_attributes['height'] : "height: 500px;"; ?>" sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation" allow="cross-origin-isolated; encrypted-media; autoplay; microphone; camera" src="<?php echo esc_url( $join_via_browser_link ); ?>"></iframe>
+<?php if ( $zoom->shortcode_attributes['iframe'] == "yes" ) {
+	if ( $zoom->meeting_time_check < $zoom->meeting_timezone_time || ( ! empty( $zoom->shortcode_attributes['disable_countdown'] ) && $zoom->shortcode_attributes['disable_countdown'] == "yes" ) ) {
+		?>
+        <div class="vczapi-jvb-wrapper zoom-window-wrap">
+            <div id="<?php echo ! empty( $zoom->shortcode_attributes['id'] ) ? esc_attr( $zoom->shortcode_attributes['id'] ) : 'video-conferncing-embed-iframe'; ?>" class="zoom-iframe-container">
+                <iframe style="width:100%; <?php echo ! empty( $zoom->shortcode_attributes['height'] ) ? "height: " . $zoom->shortcode_attributes['height'] : "height: 500px;"; ?>" sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation" allow="cross-origin-isolated; encrypted-media; autoplay; microphone; camera" src="<?php echo esc_url( $join_via_browser_link ); ?>"></iframe>
+            </div>
         </div>
-    </div>
-<?php } else { ?>
+		<?php
+	}
+} else { ?>
     <div class="vczapi-jvb-countdown-content">
 		<?php if ( ! empty( $zoom->shortcode_attributes['image'] ) ) { ?>
             <div class="vczapi-jvb-countdown-content-image">
@@ -84,12 +88,12 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
         <div class="vczapi-jvb-countdown-content-contents">
             <div class="vczapi-jvb-countdown-content-description">
                 <h2 class="vczapi-jvb-countdown-content-description-topic"><?php echo $zoom->topic; ?></h2>
-                <div class="vczapi-jvb-countdown-content-description-time"><strong><?php _e('Start Time', 'video-conferencing-with-zoom-api'); ?>:</strong> <?php echo vczapi_dateConverter( $zoom->start_time, $zoom->timezone, true ); ?></div>
-                <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e('Timezone', 'video-conferencing-with-zoom-api'); ?>:</strong> <?php echo $zoom->timezone; ?></div>
-                <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e('Password', 'video-conferencing-with-zoom-api'); ?>:</strong> <?php echo $zoom->password; ?></div>
+                <div class="vczapi-jvb-countdown-content-description-time"><strong><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo vczapi_dateConverter( $zoom->start_time, $zoom->timezone, true ); ?></div>
+                <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->timezone; ?></div>
+                <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->password; ?></div>
             </div>
             <div class="vczapi-jvb-countdown-content-links">
-                <a class="btn btn-join-link btn-join-via-app" href="<?php echo $join_via_browser_link; ?>"><?php _e('Join via Browser', 'video-conferencing-with-zoom-api'); ?></a>
+                <a class="btn btn-join-link btn-join-via-app" href="<?php echo $join_via_browser_link; ?>"><?php _e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
                 <!--            <a class="btn btn-join-link btn-join-via-browser" href="--><?php //echo $zoom->join_link; ?><!--">Join via Zoom App</a>-->
             </div>
         </div>

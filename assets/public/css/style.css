@@ -120,6 +120,9 @@
 .vczapi-show-by-postid {
   padding: 60px 0;
 }
+.vczapi-show-by-postid .dpn-zvc-sidebar-state {
+  display: none;
+}
 .vczapi-show-by-postid-countdown-title {
   text-align: center;
 }
@@ -217,43 +220,8 @@
           flex-wrap: wrap;
   margin-top: 20px;
 }
-.vczapi-show-by-postid .vczapi-show-by-postid-contents-image {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 30%;
-      -ms-flex: 0 0 30%;
-          flex: 0 0 30%;
-}
-.vczapi-show-by-postid .vczapi-show-by-postid-contents-image img {
-  border-radius: 10px;
-}
 .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections-thecontent {
   margin-top: 20px;
-}
-.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections-description {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 70%;
-      -ms-flex: 0 0 70%;
-          flex: 0 0 70%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  padding-left: 20px;
-}
-.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-.vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .join-links {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .btn {
   padding: 10px 20px;
@@ -261,10 +229,81 @@
   display: block;
   margin-right: 10px;
   text-align: center;
-  border-radius: 10px;
 }
 .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .btn-join-link {
   background: #a5452d;
+}
+@media (min-width: 769px) {
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-image {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 30%;
+        -ms-flex: 0 0 30%;
+            flex: 0 0 30%;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-image img {
+    border-radius: 10px;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections-description {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 70%;
+        -ms-flex: 0 0 70%;
+            flex: 0 0 70%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding-left: 20px;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .join-links {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .btn-start-link {
+    margin-top: 0;
+  }
+}
+@media only screen and (max-width: 660px) {
+  .vczapi-show-by-postid .dpn-zvc-.vczapi-jvb-countdown-contenttimer.vczapi-show-by-postid-countdown-timer {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 0 40px;
+  }
+  .vczapi-show-by-postid .dpn-zvc-.vczapi-jvb-countdown-contenttimer.vczapi-show-by-postid-countdown-timer .dpn-zvc-timer-cell {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 769px) {
+  .vczapi-show-by-postid {
+    padding: 60px 30px;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections-description-topic {
+    margin-top: 1em;
+  }
+  .vczapi-show-by-postid .vczapi-show-by-postid-contents-sections .dpn-zvc-sidebar-box .btn {
+    margin-top: 10px;
+    margin-right: 0;
+  }
 }
 
 .dpn-zvc-shortcode-op-wrapper table {
@@ -523,6 +562,18 @@
 }
 .vczapi-jvb-countdown-content-links .btn-join-link {
   background: #a5452d;
+}
+@media only screen and (max-width: 660px) {
+  .vczapi-jvb-countdown-content {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .vczapi-jvb-countdown-content .vczapi-jvb-countdown-content-description-topic {
+    margin-top: 1em;
+  }
 }
 
 .vczapi-list-zoom-meetings {
