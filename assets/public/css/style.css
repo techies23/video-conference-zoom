@@ -49,11 +49,11 @@
   margin: 0;
 }
 .dpn-zvc-single-content-wrapper .dpn-zvc-sidebar-wrapper .dpn-zvc-timer {
-  display: table;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   width: 100%;
-  table-layout: fixed;
-  border-spacing: 2px;
-  border-collapse: separate;
 }
 .dpn-zvc-single-content-wrapper .dpn-zvc-sidebar-wrapper .dpn-zvc-timer .dpn-zvc-meeting-ended {
   background: #3a3a3a;
@@ -67,15 +67,27 @@
   line-height: 1.8;
 }
 .dpn-zvc-single-content-wrapper .dpn-zvc-sidebar-wrapper .dpn-zvc-timer .dpn-zvc-timer-cell {
-  display: table-cell;
-  vertical-align: top;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   text-align: center;
   font-size: 32px;
   background: #3a3a3a;
   color: #fff;
   line-height: normal;
-  padding: 10px 3px;
+  padding: 20px 5px;
   border-radius: 2px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-right: 6px;
+  width: 100%;
+}
+.dpn-zvc-single-content-wrapper .dpn-zvc-sidebar-wrapper .dpn-zvc-timer .dpn-zvc-timer-cell:last-child {
+  margin-right: 0;
 }
 .dpn-zvc-single-content-wrapper .dpn-zvc-sidebar-wrapper .dpn-zvc-timer .dpn-zvc-timer-cell-number {
   font-size: 1em;
@@ -702,7 +714,7 @@
   transition: all 0.2s linear;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .vczapi-col-4 {
     -ms-flex: 0 0 33.333333%;
     -webkit-box-flex: 0;

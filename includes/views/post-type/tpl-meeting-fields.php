@@ -166,7 +166,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <tr>
         <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
-			<?php $duration = ! empty( $meeting_fields['duration'] ) ? vczapi_convertMinutesToHM( $meeting_fields['duration'], false ) : vczapi_convertMinutesToHM( 45, false ); ?>
+			<?php $duration = ! empty( $meeting_fields['duration'] ) ? vczapi_convertMinutesToHM( $meeting_fields['duration'], false ) : vczapi_convertMinutesToHM( 40, false ); ?>
             <label>
                 <select class="option_duration_hour" name="option_duration_hour">
 					<?php for ( $hr = 0; $hr <= 24; $hr ++ ) { ?>
@@ -179,7 +179,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <option value="0" <?php echo $duration['min'] == 0 ? 'selected' : ''; ?>>0</option>
                     <option value="15" <?php echo $duration['min'] == 15 ? 'selected' : ''; ?>>15</option>
                     <option value="30" <?php echo $duration['min'] == 30 ? 'selected' : ''; ?>>30</option>
-                    <option value="45" <?php echo $duration['min'] == 45 ? 'selected' : ''; ?>>45</option>
+                    <option value="45" <?php echo $duration['min'] == 40 ? 'selected' : ''; ?>>40</option>
                 </select> min
             </label>
         </td>

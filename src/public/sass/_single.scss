@@ -62,11 +62,11 @@
     }
 
     .dpn-zvc-timer {
-      display: table;
+      //display: table;
+      //width: 100%;
+      //table-layout: fixed;
+      display: flex;
       width: 100%;
-      table-layout: fixed;
-      border-spacing: 2px;
-      border-collapse: separate;
 
       .dpn-zvc-meeting-ended {
         background: #3a3a3a;
@@ -82,15 +82,21 @@
       }
 
       .dpn-zvc-timer-cell {
-        display: table-cell;
-        vertical-align: top;
+        display: flex;
         text-align: center;
         font-size: 32px;
         background: #3a3a3a;
         color: #fff;
         line-height: normal;
-        padding: 10px 3px;
+        padding: 20px 5px;
         border-radius: 2px;
+        flex-direction: column;
+        margin-right: 6px;
+        width: 100%;
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
 
       .dpn-zvc-timer-cell-number {
