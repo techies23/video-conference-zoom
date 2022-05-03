@@ -80,7 +80,7 @@ class Embed {
 			return;
 		}
 
-		if ( ! empty( $webinar ) && $webinar === "yes" ) {
+		if ( ! empty( $attributes['webinar'] ) && $attributes['webinar'] == "yes" ) {
 			$meeting = json_decode( zoom_conference()->getWebinarInfo( $meeting_id ) );
 		} else {
 			$meeting = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
