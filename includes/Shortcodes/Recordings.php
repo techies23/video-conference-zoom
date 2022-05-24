@@ -45,7 +45,7 @@ class Recordings {
 					$recording = json_decode( zoom_conference()->recordingsByMeeting( $meeting_id ) );
 					if ( ! empty( $recording->recording_files ) ) {
 						foreach ( $recording->recording_files as $files ) {
-							if ( isset( $files->recording_type ) && $files->recording_type == 'chat_file' ) {
+							if ( ! apply_filters( 'vczapi_show_recording_chat_file', false ) && isset( $files->recording_type ) && $files->recording_type == 'chat_file' ) {
 								continue;
 							}
 							?>
