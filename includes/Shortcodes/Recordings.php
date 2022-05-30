@@ -45,6 +45,9 @@ class Recordings {
 					$recording = json_decode( zoom_conference()->recordingsByMeeting( $meeting_id ) );
 					if ( ! empty( $recording->recording_files ) ) {
 						foreach ( $recording->recording_files as $files ) {
+							if ( ! apply_filters( 'vczapi_show_recording_chat_file', false ) && isset( $files->recording_type ) && $files->recording_type == 'chat_file' ) {
+								continue;
+							}
 							?>
                             <ul class="vczapi-modal-list vczapi-modal-list-<?php echo $files->id; ?>">
                                 <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo $files->file_type; ?></li>
@@ -91,9 +94,10 @@ class Recordings {
 			array(
 				'host_id'      => '',
 				'per_page'     => 300,
-				'downloadable' => 'no'
+				'downloadable' => 'no',
 			),
-			$atts, 'zoom_recordings'
+			$atts,
+			'zoom_recordings'
 		);
 
 		$downloadable = ( ! empty( $atts['downloadable'] ) && $atts['downloadable'] === "yes" ) ? true : false;
@@ -112,7 +116,7 @@ class Recordings {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_recordings_data', array(
 			'downloadable' => $downloadable,
-			'loading'      => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
+			'loading'      => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' ),
 		) );
 
 		$postParams = array(
@@ -163,9 +167,10 @@ class Recordings {
 			array(
 				'meeting_id'   => '',
 				'downloadable' => 'no',
-				'cache'        => 'true'
+				'cache'        => 'true',
 			),
-			$atts, 'zoom_recordings'
+			$atts,
+			'zoom_recordings'
 		);
 		$post_id = get_the_ID();
 
