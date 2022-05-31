@@ -154,6 +154,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Updated: Compatible with WordPress version 6.0
 * Fixed: Escaped all add_query_arg() function.
 * Removed: Live Meetings section for removing confusions.
+* Added: Recording chat filter "vczapi_show_recording_chat_file".
 
 = 3.9.2 May 3rd, 2022 =
 * Fixed: Webinar view not working when using embed shortcode.
