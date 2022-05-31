@@ -9,7 +9,7 @@ nav:
       - OAuth Connection: oauth.md
       - Uninstalling App: uninstalling.md
   - Usage:
-      - Meeting Types: meeting_types.md
+#      - Meeting Types: meeting_types.md
       - Webinars: webinars.md
       - Blocks: blocks.md
       - Shortcode: shortcode.md

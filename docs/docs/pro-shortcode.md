@@ -46,3 +46,13 @@ Where,
 
 * **user_id** = (optional) - Use this to show events for only the defined user ID
 * **show** = (optional ) - Use "upcoming" or "past" to show upcoming or past registered events.
+
+### 5. Show Registration Form Only
+
+Display registration form in any page you want.
+
+Use: `[vczapi_pro_registration_form post_id='']`
+
+Where,
+
+* **post_id** = (required) = POST ID of the registration zoom event you want to display.

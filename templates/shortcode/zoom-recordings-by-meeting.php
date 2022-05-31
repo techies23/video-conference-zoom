@@ -43,7 +43,7 @@ foreach ( $zoom_recordings as $zoom_recording ) {
         <li><strong><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom_recordings[0]->topic; ?></li>
         <li><strong><?php _e( 'Total Size', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo vczapi_filesize_converter( $total_size ); ?></li>
         <li>
-            <a href="<?php echo add_query_arg( [ 'flush_cache' => 'yes' ], get_the_permalink() ) ?>"><?php _e( 'Check for latest' ); ?></a>
+            <a href="<?php echo esc_url( add_query_arg( [ 'flush_cache' => 'yes' ], get_the_permalink() ) ); ?>"><?php _e( 'Check for latest' ); ?></a>
         </li>
     </ul>
 </div>

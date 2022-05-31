@@ -332,19 +332,19 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	public function register_post_type() {
 		$labels = apply_filters( 'vczapi_admin_cpt_labels', array(
 			'name'               => _x( 'Zoom Meetings and Webinars', 'Zoom Meetings and Webinars', 'video-conferencing-with-zoom-api' ),
-			'singular_name'      => _x( 'Zoom Meeting', 'Zoom Meeting', 'video-conferencing-with-zoom-api' ),
-			'menu_name'          => _x( 'Zoom Meeting', 'Zoom Meeting', 'video-conferencing-with-zoom-api' ),
-			'name_admin_bar'     => _x( 'Zoom Meeting', 'Zoom Meeting', 'video-conferencing-with-zoom-api' ),
+			'singular_name'      => _x( 'Zoom Events', 'Zoom Events', 'video-conferencing-with-zoom-api' ),
+			'menu_name'          => _x( 'Zoom Events', 'Zoom Events', 'video-conferencing-with-zoom-api' ),
+			'name_admin_bar'     => _x( 'Zoom Events', 'Zoom Events', 'video-conferencing-with-zoom-api' ),
 			'add_new'            => __( 'Add New', 'video-conferencing-with-zoom-api' ),
-			'add_new_item'       => __( 'Add New meeting', 'video-conferencing-with-zoom-api' ),
-			'new_item'           => __( 'New meeting', 'video-conferencing-with-zoom-api' ),
-			'edit_item'          => __( 'Edit meeting', 'video-conferencing-with-zoom-api' ),
+			'add_new_item'       => __( 'Add New Event', 'video-conferencing-with-zoom-api' ),
+			'new_item'           => __( 'New Zoom Event', 'video-conferencing-with-zoom-api' ),
+			'edit_item'          => __( 'Edit Zoom Event', 'video-conferencing-with-zoom-api' ),
 			'view_item'          => __( 'View meetings', 'video-conferencing-with-zoom-api' ),
-			'all_items'          => __( 'All Meetings', 'video-conferencing-with-zoom-api' ),
+			'all_items'          => __( 'All Events', 'video-conferencing-with-zoom-api' ),
 			'search_items'       => __( 'Search meetings', 'video-conferencing-with-zoom-api' ),
 			'parent_item_colon'  => __( 'Parent meetings:', 'video-conferencing-with-zoom-api' ),
-			'not_found'          => __( 'No meetings found.', 'video-conferencing-with-zoom-api' ),
-			'not_found_in_trash' => __( 'No meetings found in Trash.', 'video-conferencing-with-zoom-api' ),
+			'not_found'          => __( 'No zoom events found.', 'video-conferencing-with-zoom-api' ),
+			'not_found_in_trash' => __( 'No zoom events found in Trash.', 'video-conferencing-with-zoom-api' ),
 		) );
 
 		$args = array(

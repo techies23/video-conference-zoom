@@ -229,7 +229,7 @@ class Recordings {
 		} else {
 			_e( "No recordings found.", "video-conferencing-with-zoom-api" );
 			?>
-            <a href="<?php echo add_query_arg( [ 'flush_cache' => 'yes' ], get_the_permalink() ) ?>"><?php _e( 'Check for latest' ); ?></a>
+            <a href="<?php echo esc_url( add_query_arg( [ 'flush_cache' => 'yes' ], get_the_permalink() ) ); ?>"><?php _e( 'Check for latest' ); ?></a>
 			<?php
 		}
 

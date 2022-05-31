@@ -187,7 +187,7 @@ class Meetings {
 
 				if ( ! empty( $template ) && $template == "boxed" ) {
 					$GLOBALS['zoom']['shortcode_post_by_id'] = true;
-					vczapi_get_template( 'shortcode/meeting-by-post-id.php', true, false );
+					vczapi_get_template( 'shortcode/meeting-by-post-id.php', true, true );
 				} else {
 					vczapi_get_template_part( 'content', 'single-meeting' );
 				}

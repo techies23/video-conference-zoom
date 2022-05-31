@@ -2,20 +2,20 @@ All these shortcodes are available as elementor and gutenberg modules.
 
 ### Types
 
-1. `[zoom_api_link meeting_id="" link_only="no"]`
+1. `[zoom_api_link meeting_id="1234567890" link_only="no"]`
 2. `[zoom_meeting_post post_id="ZOOM MEETING POST ID" template="none"]`
 3. `[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
 4. `[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]` 
 5. `[zoom_list_host_meetings host="YOUR_HOST_ID"]`
 6. `[zoom_api_webinar meeting_id="YOUR_WEBINAR_ID" link_only="no"]`
 7. `[zoom_list_host_webinars host="YOUR_HOST_ID"]`
-8. `[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes"]`
+8. `[zoom_join_via_browser meeting_id="1234567890" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes"]`
 9. `[zoom_recordings host_id="YOUR_HOST_ID" downloadable="yes"]`
-10. `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no"]`
+10. `[zoom_recordings_by_meeting meeting_id="1234567890" downloadable="no"]`
 
 ### 1. Show single Zoom meeting detail
 
-Use: `[zoom_api_link meeting_id="" link_only="no"]`
+Use: `[zoom_api_link meeting_id="1234567890" link_only="no"]`
 
 Where,
 
@@ -116,7 +116,7 @@ Where,
 
 Show recordings list based on your meeting ID
 
-Usage: `[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no" cache="true"]`
+Usage: `[zoom_recordings_by_meeting meeting_id="1234567890" downloadable="no" cache="true"]`
 
 Where,
 

@@ -201,7 +201,8 @@
   visibility: visible;
 }
 
-#adminmenu .menu-icon-zoom-meetings a[href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting"]:link {
+#adminmenu .menu-icon-zoom-meetings a[href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting"]:link,
+#adminmenu .menu-icon-zoom-meetings a[href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-users"]:link {
   display: none;
 }
 

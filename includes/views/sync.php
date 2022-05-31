@@ -7,14 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 $users = video_conferencing_zoom_api_get_user_transients();
 ?>
 <div class="wrap">
-    <h3><?php _e( "Sync your Live Zoom Meetings to your site", "video-conferencing-with-zoom-api" ); ?></h3>
-    <div class="vczapi-notification">
-        <p><?php _e( "This allows you to sync your live meetings from your Zoom Account to this site directly. Synced meetings will be inside Zoom Meeting > All Meetings page.", "video-conferencing-with-zoom-api" ); ?></p>
-        <p><?php _e( "Currently, you can only sync scheduled meetings.", "video-conferencing-with-zoom-api" ); ?></p>
-    </div>
+    <h3><?php _e( "Sync your Live Zoom Meetings/Webinars to your site", "video-conferencing-with-zoom-api" ); ?></h3>
+	<?php if ( ! vczapi_pro_version_active() ) { ?>
+        <div class="vczapi-notification">
+            <p><?php _e( "Sync your Zoom events from your Zoom Account to this site directly. Synced meetings will be inside Zoom Events > All Events page. You will require PRO version of the plugin in order to import your Zoom Webinars.", "video-conferencing-with-zoom-api" ); ?></p>
+        </div>
+	<?php } ?>
 
     <div class="vczapi-sync-admin-wrapper">
-		<?php if ( !vczapi_pro_version_active() ) { ?>
+		<?php if ( ! vczapi_pro_version_active() ) { ?>
             <form action="" method="POST">
                 <label><?php _e( "Choose a Zoom User", "video-conferencing-with-zoom-api" ); ?></label> : <select class="vczapi-sync-user-id zvc-hacking-select">
                     <option value=""><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>

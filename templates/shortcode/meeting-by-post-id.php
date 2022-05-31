@@ -18,7 +18,7 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
                 <img src="<?php echo esc_url( get_the_post_thumbnail_url() ); ?>" alt="<?php echo get_the_title(); ?>">
             </div>
 		<?php } ?>
-        <div class="vczapi-show-by-postid-contents-sections">
+        <div class="<?php echo empty( get_the_post_thumbnail_url() ) ? 'vczapi-show-by-postid-contents-sections vczapi-show-by-postid-contents-sections-full' : 'vczapi-show-by-postid-contents-sections'; ?>">
             <div class="vczapi-show-by-postid-contents-sections-description">
                 <h2 class="vczapi-show-by-postid-contents-sections-description-topic"><?php echo get_the_title(); ?></h2>
 				<?php if ( ! empty( $zoom['api']->start_time ) ) { ?>
@@ -60,8 +60,10 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
             </div>
             <div class="dpn-zvc-sidebar-content"></div>
         </div>
-        <div class="vczapi-show-by-postid-contents-sections-thecontent">
-			<?php the_content(); ?>
-        </div>
+		<?php if( ! empty( get_the_content() ) ) { ?>
+            <div class="vczapi-show-by-postid-contents-sections-thecontent">
+				<?php the_content(); ?>
+            </div>
+		<?php } ?>
     </div>
 </div>

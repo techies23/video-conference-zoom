@@ -26,23 +26,23 @@ $get_host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
                 <option value="trash"><?php _e( "Move to Trash", "video-conferencing-with-zoom-api" ); ?></option>
             </select>
             <input type="submit" id="bulk_delete_meeting_listings" data-type="webinar" class="button action" value="<?php _e( "Apply", "video-conferencing-with-zoom-api" ); ?>">
-            <a href="<?php echo add_query_arg( array(
+            <a href="<?php echo esc_url( add_query_arg( array(
 				'post_type' => 'zoom-meetings',
 				'new'       => 'zoom-video-conferencing-webinars-add'
-			) ); ?>" class="button action" title="Add new meeting"><?php _e( 'Add New Webinar', 'video-conferencing-with-zoom-api' ); ?></a>
+			) ) ); ?>" class="button action" title="Add new meeting"><?php _e( 'Add New Webinar', 'video-conferencing-with-zoom-api' ); ?></a>
         </div>
         <div class="alignright">
             <select onchange="location = this.value;" class="zvc-hacking-select">
-                <option value="<?php echo add_query_arg( array(
+                <option value="<?php echo esc_url( add_query_arg( array(
 					'post_type' => 'zoom-meetings',
 					'page'      => 'zoom-video-conferencing-webinars',
-				) ); ?>"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
+				) ) ); ?>"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
 				<?php foreach ( $users as $user ) { ?>
-                    <option value="<?php echo add_query_arg( array(
+                    <option value="<?php echo esc_url( add_query_arg( array(
 						'post_type' => 'zoom-meetings',
 						'page'      => 'zoom-video-conferencing-webinars',
 						'host_id'   => $user->id
-					) ); ?>"
+					) ) ); ?>"
 						<?php selected( $get_host_id, $user->id ); ?>
                     >
 						<?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?>

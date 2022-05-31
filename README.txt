@@ -3,7 +3,7 @@ Contributors: j__3rk, codemanas, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
-Tested up to: 5.9
+Tested up to: 6.0
 Stable tag: 3.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -149,6 +149,11 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 3.9.3 May 31st, 2022 =
+* Updated: Compatible with WordPress version 6.0
+* Fixed: Escaped all add_query_arg() function.
+* Removed: Live Meetings section for removing confusions.
 
 = 3.9.2 May 3rd, 2022 =
 * Fixed: Webinar view not working when using embed shortcode.

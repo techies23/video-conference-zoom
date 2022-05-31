@@ -324,7 +324,7 @@ function video_conferencing_zoom_api_pagination_prev( $type, $page_type = 'zoom-
  */
 function video_conferencing_zoom_api_show_like_popup() {
 	if ( isset( $_GET['vczapi_dismiss'] ) && $_GET['vczapi_dismiss'] == 1 ) {
-		update_option( '_vczapi_dismiss_notice', 1);
+		update_option( '_vczapi_dismiss_notice', 1 );
 	}
 
 	if ( ! get_option( '_vczapi_dismiss_notice' ) ) {
@@ -336,7 +336,7 @@ function video_conferencing_zoom_api_show_like_popup() {
 				printf( esc_html__( 'Please consider giving a %s if you found this useful at wordpress.org or ', 'video-conferencing-with-zoom-api' ), '<a href="https://wordpress.org/support/plugin/video-conferencing-with-zoom-api/reviews/#new-post">5 star thumbs up</a>' );
 				printf( esc_html__( 'check %s for shortcode references.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">settings</a>.' );
 				?>
-                <a href="<?php echo add_query_arg( 'vczapi_dismiss', 1 ) ?>" class="is-dismissible">I already rated you ! Don't show again !</a>
+                <a href="<?php echo esc_url( add_query_arg( 'vczapi_dismiss', 1 ) ); ?>" class="is-dismissible">I already rated you ! Don't show again !</a>
             </p>
         </div>
 		<?php
@@ -656,7 +656,7 @@ function vczapi_get_pwd_embedded_join_link( $join_url, $encrpyted_pwd ) {
 				$join_url = $explode_pwd[0];
 			}
 		} else {
-			$join_url = add_query_arg( array( 'pwd' => $encrpyted_pwd ), $join_url );
+			$join_url = esc_url( add_query_arg( array( 'pwd' => $encrpyted_pwd ), $join_url ) );
 		}
 	}
 
@@ -705,7 +705,7 @@ function vczapi_zoom_api_paginator( $response, $type = '' ) {
 	if ( ! empty( $response ) && $response->next_page_token ) {
 		$next_page = add_query_arg( array( 'pg' => $response->next_page_token, 'type' => $type ), $actual_link );
 		?>
-        <a href="<?php echo $next_page; ?>"><?php _e( 'Next Results', 'video-conferencing-with-zoom-api' ); ?></a>
+        <a href="<?php echo esc_url( $next_page ); ?>"><?php _e( 'Next Results', 'video-conferencing-with-zoom-api' ); ?></a>
 		<?php
 	}
 }

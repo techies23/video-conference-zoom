@@ -93,7 +93,7 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
                 <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->password; ?></div>
             </div>
             <div class="vczapi-jvb-countdown-content-links">
-                <a class="btn btn-join-link btn-join-via-app" href="<?php echo $join_via_browser_link; ?>"><?php _e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
+                <a class="btn btn-join-link btn-join-via-app" href="<?php echo esc_url( $join_via_browser_link ); ?>"><?php _e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
                 <!--            <a class="btn btn-join-link btn-join-via-browser" href="--><?php //echo $zoom->join_link; ?><!--">Join via Zoom App</a>-->
             </div>
         </div>

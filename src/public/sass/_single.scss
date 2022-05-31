@@ -264,6 +264,7 @@
       }
 
       &-sections {
+        flex: 70%;
 
         &-description {
           flex: 0 0 70%;
@@ -282,6 +283,15 @@
 
           .btn-start-link {
             margin-top: 0;
+          }
+        }
+
+        &-full {
+          flex: 100%;
+
+          .vczapi-show-by-postid-contents-sections-description,
+          .dpn-zvc-sidebar-box {
+            padding-left: 0;
           }
         }
       }

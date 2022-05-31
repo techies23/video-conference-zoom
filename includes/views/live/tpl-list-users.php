@@ -10,7 +10,9 @@ video_conferencing_zoom_api_show_like_popup();
 $users = video_conferencing_zoom_api_get_user_transients();
 ?>
 <div class="wrap">
-    <h2><?php _e( "Users", "video-conferencing-with-zoom-api" ); ?></h2>
+    <h1 class="wp-heading-inline"><?php _e( "Users", "video-conferencing-with-zoom-api" ); ?></h1>
+    <a href="<?php echo admin_url('/edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-users'); ?>" class="page-title-action">Add New</a>
+    <hr class="wp-header-end">
     <a href="?post_type=zoom-meetings&page=zoom-video-conferencing-list-users&flush=true"><?php _e( 'Flush User Cache', 'video-conferencing-with-zoom-api' ); ?></a>
      / <a href="?post_type=zoom-meetings&page=zoom-video-conferencing-list-users&status=pending"><?php _e( 'Check Pending Users', 'video-conferencing-with-zoom-api' ); ?></a>
     <div class="message">

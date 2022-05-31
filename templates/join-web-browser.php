@@ -46,26 +46,26 @@ if ( video_conference_zoom_check_login() ) {
             <form class="vczapi-zoom-browser-meeting--meeting-form" id="vczapi-zoom-browser-meeting-join-form" action="">
 				<?php $full_name = ! empty( $current_user->first_name ) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name; ?>
                 <div class="form-group">
-                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php _e('Your Name Here','video-conferencing-with-zoom-api'); ?>" class="form-control" required>
+                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php _e( "Your Name Here", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
                 </div>
 				<?php
 				$hide_email = get_option( 'zoom_api_hide_in_jvb' );
 				if ( empty( $hide_email ) ) {
 					if ( ! empty( $current_user ) && ! empty( $current_user->user_email ) ) {
 						?>
-                        <input type="hidden" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr($current_user->user_email); ?>">
+                        <input type="hidden" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr( $current_user->user_email ); ?>">
 						<?php
 					} else {
 						?>
                         <div class="form-group">
-                            <input type="email" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr($current_user->user_email); ?>" placeholder="Your Email Here" class="form-control">
+                            <input type="email" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr( $current_user->user_email ); ?>" placeholder="<?php _e( "Your Email Here", "video-conferencing-with-zoom-api" ); ?>" class="form-control">
                         </div>
 					<?php }
 				}
 
 				if ( ! isset( $_GET['pak'] ) && ! empty( $zoom['password'] ) ) { ?>
                     <div class="form-group">
-                        <input type="password" name="meeting_password" id="meeting_password" value="" placeholder="Meeting Password" class="form-control" required>
+                        <input type="password" name="meeting_password" id="meeting_password" value="" placeholder="<?php _e( "Meeting Password", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
                     </div>
 					<?php
 				}
