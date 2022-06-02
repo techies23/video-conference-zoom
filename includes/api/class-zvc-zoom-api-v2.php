@@ -116,8 +116,6 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				if ( ! empty( $debug_log ) ) {
 					if ( $responseCode == 400 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
-					} else if ( $responseCode == 400 ) {
-						$this->logMessage( $responseBody, $responseCode, $request );
 					} else if ( $responseCode == 401 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
 					} else if ( $responseCode == 403 ) {
@@ -133,6 +131,35 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}
 
 			return $responseBody;
+		}
+
+		/**
+		 * Check is given string a correct json object
+		 *
+		 * @param $string
+		 *
+		 * @return bool
+		 */
+		public function isJson( $string ) {
+			json_decode( $string );
+
+			return json_last_error() === JSON_ERROR_NONE;
+		}
+
+		/**
+		 * Check is Valid XML
+		 *
+		 * @param $xml
+		 *
+		 * @return bool
+		 */
+		public function isValidXML( $xml ) {
+			$doc = @simplexml_load_string( $xml );
+			if ( $doc ) {
+				return true; //this is valid
+			} else {
+				return false; //this is not valid
+			}
 		}
 
 		/**
@@ -157,8 +184,23 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}*/
 
 			if ( ! empty( $responseBody ) ) {
-				$responseBody = json_decode( $responseBody );
-				$message      .= ! empty( $responseBody ) && ! empty( $responseBody->message ) ? ' ::: MESSAGE => ' . $responseBody->message : '';
+
+				//Response body validation
+				if ( $this->isValidXML( $responseBody ) ) {
+					$responseBody = simplexml_load_string( $responseBody );
+				} else if ( $this->isJson( $responseBody ) ) {
+					$responseBody = json_decode( $responseBody );
+				}
+
+				if ( ! empty( $responseBody ) && ! empty( $responseBody->message ) ) {
+					$message .= ' ::: MESSAGE => ' . $responseBody->message;
+				} else if ( ! empty( $responseBody ) && is_string( $responseBody ) ) {
+					$message .= ' ::: MESSAGE => ' . $responseBody;
+				}
+
+				if ( ! empty( $responseBody ) && ! empty( $responseBody->errors ) && is_object( $responseBody->errors ) && ! empty( $responseBody->errors->message ) ) {
+					$message .= ' ::: ERRORS => ' . $responseBody->errors->message;
+				}
 			}
 
 //			$error = new \WP_Error( $responseCode, $message, $error_data );

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit98ae7fb49f6e611d69e0ae2332b40b38
+class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
 {
     public static $prefixLengthsPsr4 = array (
         'F' => 
@@ -24,15 +24,21 @@ class ComposerStaticInit98ae7fb49f6e611d69e0ae2332b40b38
         ),
         'Codemanas\\VczApi\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/includes',
+            0 => __DIR__ . '/../..' . '/legacy',
+            1 => __DIR__ . '/../..' . '/includes',
         ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit98ae7fb49f6e611d69e0ae2332b40b38::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit98ae7fb49f6e611d69e0ae2332b40b38::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit29e970424d857ac5707b04aab1a5ae60::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit29e970424d857ac5707b04aab1a5ae60::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit29e970424d857ac5707b04aab1a5ae60::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -133,6 +133,8 @@ function video_conference_zoom_meeting_join() {
 		);
 		$data               = apply_filters( 'vczapi_single_meeting_localized_data', $data );
 		wp_localize_script( 'video-conferencing-with-zoom-api', 'mtg_data', $data );
+	} else if ( ! empty( $zoom['api']->state ) && $zoom['api']->state == "ended" ) {
+		echo "<p>" . __( 'This meeting has ended.', 'video-conferencing-with-zoom-api' ) . "</p>";
 	} else {
 		echo "<p>" . __( 'Please login to join this meeting.', 'video-conferencing-with-zoom-api' ) . "</p>";
 	}
@@ -497,7 +499,7 @@ function video_conference_zoom_before_jbh_html( $zoom ) {
 
 /**
  * AFter join before host
-*/
+ */
 function video_conference_zoom_after_jbh_html() {
 	do_action( 'vczapi_join_via_browser_footer' );
 

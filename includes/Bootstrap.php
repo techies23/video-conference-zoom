@@ -49,6 +49,25 @@ final class Bootstrap {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
 		add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
+		add_filter( 'wp_headers', [ $this, 'set_corp_headers' ], 10, 2 );
+	}
+
+	/**
+	 * Add CORP headers for Zoom Meetings join via browser page
+	 *
+	 * @param $headers
+	 * @param $wp
+	 *
+	 * @return mixed
+	 */
+	function set_corp_headers( $headers, $wp ) {
+		$type = filter_input( INPUT_GET, 'type' );
+		if ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) {
+			$headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
+			$headers['Cross-Origin-Opener-Policy']   = 'same-origin';
+		}
+
+		return $headers;
 	}
 
 	public function autoloader() {
@@ -217,8 +236,8 @@ final class Bootstrap {
 			'ajaxurl'      => admin_url( 'admin-ajax.php' ),
 			'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
 			'lang'         => array(
-				'confirm_end'  => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" ),
-				'host_id_search'  => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" )
+				'confirm_end'    => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" ),
+				'host_id_search' => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" )
 			)
 		) );
 	}
