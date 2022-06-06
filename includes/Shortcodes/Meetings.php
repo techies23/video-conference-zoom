@@ -179,6 +179,7 @@ class Meetings {
 
 				//Set flag that this is coming from shortcode instance
 				$GLOBALS['zoom']['shortcode'] = true;
+				$GLOBALS['zoom']['post_id']   = get_the_id();
 
 				//Check if pro active
 				if ( vczapi_pro_version_active() && ! empty( $GLOBALS['zoom']['api']->registration_url ) ) {
