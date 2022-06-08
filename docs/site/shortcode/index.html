@@ -325,20 +325,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../meeting_types/" class="md-nav__link">
-        Meeting Types
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../webinars/" class="md-nav__link">
         Webinars
       </a>
@@ -953,19 +939,19 @@
                 <p>All these shortcodes are available as elementor and gutenberg modules.</p>
 <h3 id="types">Types</h3>
 <ol>
-<li><code>[zoom_api_link meeting_id="" link_only="no"]</code></li>
-<li><code>[zoom_meeting_post post_id="ZOOM MEETING POST ID"]</code></li>
+<li><code>[zoom_api_link meeting_id="1234567890" link_only="no"]</code></li>
+<li><code>[zoom_meeting_post post_id="ZOOM MEETING POST ID" template="none"]</code></li>
 <li><code>[zoom_list_meetings per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]</code> </li>
 <li><code>[zoom_list_webinars per_page="5" category="test,test2,test3" filter="no" type="upcoming" cols="3"]</code> </li>
 <li><code>[zoom_list_host_meetings host="YOUR_HOST_ID"]</code></li>
 <li><code>[zoom_api_webinar meeting_id="YOUR_WEBINAR_ID" link_only="no"]</code></li>
 <li><code>[zoom_list_host_webinars host="YOUR_HOST_ID"]</code></li>
-<li><code>[zoom_join_via_browser meeting_id="YOUR_MEETING_ID" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes"]</code></li>
+<li><code>[zoom_join_via_browser meeting_id="1234567890" login_required="no" help="yes" title="Test" height="500px" disable_countdown="yes"]</code></li>
 <li><code>[zoom_recordings host_id="YOUR_HOST_ID" downloadable="yes"]</code></li>
-<li><code>[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no"]</code></li>
+<li><code>[zoom_recordings_by_meeting meeting_id="1234567890" downloadable="no"]</code></li>
 </ol>
 <h3 id="1-show-single-zoom-meeting-detail">1. Show single Zoom meeting detail</h3>
-<p>Use: <code>[zoom_api_link meeting_id="" link_only="no"]</code></p>
+<p>Use: <code>[zoom_api_link meeting_id="1234567890" link_only="no"]</code></p>
 <p>Where,</p>
 <ul>
 <li><code>meeting_id</code> = Your meeting ID.</li>
@@ -974,10 +960,11 @@
 <p>Your frontend page should look like:</p>
 <p><img src="https://deepenbajracharya.com.np/wp-content/uploads/2019/11/Meetings-%E2%80%93-Plugin-Tester-1024x520.png"></p>
 <h3 id="2-show-a-meeting-post-with-countdown">2. Show a meeting post with Countdown</h3>
-<p>Use: <code>[zoom_meeting_post post_id=""]</code></p>
+<p>Use: <code>[zoom_meeting_post post_id="" template="none"]</code></p>
 <p>Where,</p>
 <ul>
 <li><code>post_id</code> = Zoom Meeting post ID.</li>
+<li><code>template</code> = "boxed" - changing to boxed will show meeting with timer.</li>
 </ul>
 <h3 id="3-list-upcoming-or-past-meetings">3. List Upcoming or Past Meetings</h3>
 <p>Use: <code>[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]</code></p>
@@ -1039,7 +1026,7 @@
 </ul>
 <h3 id="10-show-recordings-based-on-meeting-id">10. Show Recordings based on Meeting ID</h3>
 <p>Show recordings list based on your meeting ID</p>
-<p>Usage: <code>[zoom_recordings_by_meeting meeting_id="YOUR_MEETING_ID" downloadable="no" cache="true"]</code></p>
+<p>Usage: <code>[zoom_recordings_by_meeting meeting_id="1234567890" downloadable="no" cache="true"]</code></p>
 <p>Where,</p>
 <ul>
 <li><code>meeting_id</code> : YOUR MEETING ID to pull.</li>
