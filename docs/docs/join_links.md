@@ -1,4 +1,4 @@
-Video Conferencing with Zoom plugin easily allows your users to join your meetings or webinars using [Zoom's Native WebSDK](https://marketplace.zoom.us/docs/sdk/native-sdks/web/) WebSDK without needing to download Zoom App on your computer. <strong style="color:red;">Please note that join via browser is not natively supported for Mobile devices at the moment so you may find issues when joining from mobile when using this method.</strong>
+Video Conferencing with Zoom plugin easily allows your users to join your meetings or webinars using [Zoom's Native WebSDK](https://marketplace.zoom.us/docs/sdk/native-sdks/web/) WebSDK without needing to download Zoom App on your computer. 
 
 ### Embed or Join via Browser Method
 
@@ -60,11 +60,9 @@ If you do not want to allow users to directly join via browser then you can disa
 
 ### Browser Compatiblity
 
-**The following are not supported:**
-
--  **Mobile web browsers.**
--  **Internet Explorer (IE).**
--  **iFrames. iFrames make Cross-Origin Isolation doubly complex. Use at your own risk.**
+Mobile web browsers now supported
+Meeting SDK for Web v2.4.0 and higher supports the major Android and iOS browsers.
+Note that the Meeting SDK for Web on mobile browsers does not have complete feature parity with the Meeting SDK for Web on desktop browsers. Plugin currently uses webSDK higher than 2.4.0
 
 <a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web#browser-support" target="_blank">Official Doc here</a>
 
