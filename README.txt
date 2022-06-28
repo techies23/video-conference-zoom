@@ -150,7 +150,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 3.9.5 June 28th, 2022 =
+= 3.9.4 - 3.9.5 June 28th, 2022 =
 * Fixed: More robust information for error logs.
 * Updated: Live webinars and Meeting on by default.
 * Updated: WebSDK to version 2.4.5
