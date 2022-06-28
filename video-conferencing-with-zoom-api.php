@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'ZVC_PLUGIN_FILE', __FILE__ );
 define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
 define( 'ZVC_PLUGIN_VERSION', '3.9.4' );
-define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.4.0' );
+define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.4.5' );
 define( 'ZVC_PLUGIN_AUTHOR', 'https://deepenbajracharya.com.np' );
 define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );

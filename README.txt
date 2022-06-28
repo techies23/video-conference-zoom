@@ -1,5 +1,5 @@
 === Video Conferencing with Zoom ===
-Contributors: j__3rk, codemanas, digamberpradhan
+Contributors: j__3rk, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
@@ -152,6 +152,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 3.9.4 June 2nd, 2022 =
 * Fixed: More robust information for error logs.
+* Updated: WebSDK to version 2.4.5
 
 = 3.9.3 May 31st, 2022 =
 * Updated: Compatible with WordPress version 6.0
