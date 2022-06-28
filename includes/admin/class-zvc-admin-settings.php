@@ -27,7 +27,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 	 */
 	public function zoom_video_conference_menus() {
 		if ( get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients() ) {
-			if ( apply_filters( 'vczapi_show_live_meetings', false ) ) {
+			if ( apply_filters( 'vczapi_show_live_meetings', true ) ) {
 				add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Live Webinars', 'video-conferencing-with-zoom-api' ), __( 'Live Webinars', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-webinars', array(
 					'Zoom_Video_Conferencing_Admin_Webinars',
 					'list_webinars'
