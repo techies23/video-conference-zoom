@@ -28,6 +28,7 @@ $host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
             <tbody>
 			<?php
 			if ( ! empty( $recordings ) && ! empty( $recordings->meetings ) ) {
+				$meeting_count = 0;
 				foreach ( $recordings->meetings as $recording ) {
 					?>
                     <tr>
@@ -38,23 +39,29 @@ $host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
                         <td><?php echo vczapi_filesize_converter( $recording->total_size ); ?></td>
                         <td>
 							<?php if ( ! empty( $recording->recording_files ) ) { ?>
-                                <a href="#TB_inline?width=600&height=550&inlineId=recording-<?php echo $recording->id; ?>" class="thickbox">View
+                                <a href="#TB_inline?width=600&height=550&inlineId=recording-<?php echo $meeting_count; ?>" class="thickbox">View
                                     Recordings</a>
-                                <div id="recording-<?php echo $recording->id; ?>" style="display:none;">
-									<?php foreach ( $recording->recording_files as $files ) { ?>
-                                        <ul class="zvc-inside-table-wrapper zvc-inside-table-wrapper-<?php echo $files->id; ?>">
-                                            <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>
-                                                    :</strong> <?php echo $files->file_type; ?></li>
-                                            <li><strong><?php _e( 'File Size', 'video-conferencing-with-zoom-api' ); ?>
-                                                    :</strong> <?php echo vczapi_filesize_converter( $files->file_size ); ?></li>
-                                            <li><strong><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                                                <a href="<?php echo $files->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a>
-                                            </li>
-                                            <li><strong><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                                                <a href="<?php echo $files->download_url; ?>" target="_blank"><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?></a>
-                                            </li>
-                                        </ul>
-									<?php } ?>
+                                <div id="recording-<?php echo $meeting_count; ?>" style="display:none;">
+									<?php
+									$recording_by_uuid = zoom_conference()->recordingsByMeeting( $recording->uuid );
+									$recording_by_uuid = ! is_wp_error( $recording_by_uuid ) && is_string( $recording_by_uuid ) ? json_decode( $recording_by_uuid ) : null;
+									if ( ! is_null( $recording_by_uuid ) ) {
+										foreach ( $recording_by_uuid->recording_files as $files ) { ?>
+                                            <ul class="zvc-inside-table-wrapper zvc-inside-table-wrapper-<?php echo $files->id; ?>">
+                                                <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>
+                                                        :</strong> <?php echo $files->file_type; ?></li>
+                                                <li><strong><?php _e( 'File Size', 'video-conferencing-with-zoom-api' ); ?>
+                                                        :</strong> <?php echo vczapi_filesize_converter( $files->file_size ); ?></li>
+                                                <li><strong><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?>:</strong>
+                                                    <a href="<?php echo $files->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a>
+                                                </li>
+                                                <li><strong><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?>:</strong>
+                                                    <a href="<?php echo $files->download_url; ?>" target="_blank"><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?></a>
+                                                </li>
+                                            </ul>
+										<?php }
+									}
+									?>
                                 </div>
 							<?php } else {
 								echo "N/A";
@@ -62,6 +69,7 @@ $host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
                         </td>
                     </tr>
 					<?php
+					$meeting_count ++;
 				}
 			}
 			?>
