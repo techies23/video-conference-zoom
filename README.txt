@@ -149,6 +149,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+= 3.9.6 =
+* Fixed: Issue with recordings for multiple same meetings showing only latest recording
 
 = 3.9.4 - 3.9.5 June 28th, 2022 =
 * Fixed: More robust information for error logs.
