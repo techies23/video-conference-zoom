@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Includes\IncludesData;
+namespace Codemanas\VczApi\Includes\Data;
 
 /**
  * Class Datastore

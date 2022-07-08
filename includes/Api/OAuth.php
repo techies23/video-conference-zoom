@@ -10,7 +10,7 @@ use Codemanas\VczApi\Includes\Fields;
  * @since 4.0.0
  * @package Codemanas\VczApi\Includes\Api
  */
-class OAuth extends Methods {
+class OAuth extends ZoomClient {
 
 	//redirect uri required to generate request access token url
 	const REDIRECT_URI = 'https://oauth.codemanas.com/zprocess/';

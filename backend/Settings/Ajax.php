@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi\Backend\Settings;
 
-use Codemanas\VczApi\Includes\Api\Methods;
+use Codemanas\VczApi\Includes\Api\ZoomClient;
 use Codemanas\VczApi\Includes\Fields;
 
 class Ajax {
@@ -38,7 +38,7 @@ class Ajax {
 		Fields::set_option( 'using_oauth', '' ); //Set null value for backwards compatibility
 
 		//Check if JWT keys are valid
-		$api   = Methods::instance();
+		$api   = ZoomClient::instance();
 		$users = $api->listUsers();
 		if ( ! empty( $users->code ) && ! empty( $users->message ) ) {
 			wp_send_json_error( $users->message );

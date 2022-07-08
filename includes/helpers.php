@@ -244,7 +244,7 @@ function video_conferencing_zoom_api_get_user_transients() {
 		if ( ! empty( $check_existing ) ) {
 			$users = $check_existing;
 		} else {
-			$decoded_users = \Codemanas\VczApi\Includes\Api\Methods::instance()->listUsers();
+			$decoded_users = \Codemanas\VczApi\Includes\Api\ZoomClient::instance()->listUsers();
 			if ( ! empty( $decoded_users->code ) ) {
 				if ( is_admin() ) {
 					add_action( 'admin_notices', 'vczapi_check_connection_error' );

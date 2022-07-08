@@ -12,7 +12,7 @@ use \Firebase\JWT\JWT;
  * @author  Deepen
  * @modifiedn
  */
-class Methods {
+class ZoomClient {
 
 	/**
 	 * Zoom API KEY
@@ -559,7 +559,7 @@ class Methods {
 }
 
 function zoom_conference() {
-	return Methods::instance();
+	return ZoomClient::instance();
 }
 
 zoom_conference();
