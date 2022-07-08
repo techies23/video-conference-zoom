@@ -5,7 +5,7 @@
  *
  * @author  Deepen
  * @since  1.0.0
- * @modified in 3.0.0
+ * @modified in 4.0.0
  */
 (function ($) {
   //Cache
@@ -30,7 +30,6 @@
       $dom.toggleSecret = $('.toggle-secret');
       $dom.changeMeetingState = $('.vczapi-meeting-state-change');
       $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error');
-      this.$manualHostID = $('.vczapi-admin-hostID-manually-add');
     },
     eventListeners: function eventListeners() {
       //Check All Table Elements for Meetings List
@@ -57,7 +56,27 @@
 
       $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this)); //Manual Host Selector
 
-      this.$manualHostID.on('click', this.showManualHostIDField.bind(this));
+      $('.vczapi-admin-hostID-manually-add').on('click', this.showManualHostIDField.bind(this)); //Save JWT
+
+      $('#vczapi-api-connection-form').on('submit', this.submitJWT.bind(this));
+    },
+    submitJWT: function submitJWT(e) {
+      e.preventDefault();
+      var postData = $(e.currentTarget).serialize() + '&action=save_jwt_keys';
+      $.post(ajaxurl, postData).done(function (response) {
+        var data = '';
+
+        if (!response.success) {
+          data = '<div id="message" class="notice notice-error"><p>' + response.data + '</p></div>';
+          $('.vczapi-white-background').before(data);
+        } else {
+          data = '<div id="message" class="notice notice-success"><p>' + response.data + '</p></div>';
+          $('.vczapi-white-background').before(data);
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+      });
     },
 
     /**
@@ -68,7 +87,7 @@
     showManualHostIDField: function showManualHostIDField(e) {
       e.preventDefault();
       $('.vczapi-admin-post-type-host-selector').select2('destroy').remove();
-      $('.vczapi-manually-hostid-wrap').before('<input type="text" placeholder="' + zvc_ajax.lang.host_id_search + '" class="regular-text vczapi-search-host-id" name="userId" required>').remove();
+      $('.vczapi-manually-hostid-wrap').before('<input type="text" placeholder="' + vczapi_ajax.lang.host_id_search + '" class="regular-text vczapi-search-host-id" name="userId" required>').remove();
     },
     datePickers: function datePickers() {
       //For Datepicker
@@ -229,10 +248,10 @@
             meetings_id: arr_checkbox,
             type: type,
             action: 'zvc_bulk_meetings_delete',
-            security: zvc_ajax.zvc_security
+            security: vczapi_ajax.zvc_security
           };
           $dom.cover.show();
-          $.post(zvc_ajax.ajaxurl, data).done(function (response) {
+          $.post(ajaxurl, data).done(function (response) {
             $dom.cover.fadeOut('slow');
 
             if (response.error == 1) {
@@ -275,15 +294,15 @@
       var type = $(this).data('type');
       var r = confirm("Confirm Delete this Meeting?");
 
-      if (r == true) {
+      if (r === true) {
         var data = {
           meeting_id: meeting_id,
           type: type,
           action: 'zvc_delete_meeting',
-          security: zvc_ajax.zvc_security
+          security: vczapi_ajax.zvc_security
         };
         $dom.cover.show();
-        $.post(zvc_ajax.ajaxurl, data).done(function (result) {
+        $.post(ajaxurl, data).done(function (result) {
           $dom.cover.fadeOut('slow');
 
           if (result.error == 1) {
@@ -330,7 +349,7 @@
     dismissNotice: function dismissNotice(e) {
       e.preventDefault();
       $(e.currentTarget).closest('.notice-success').hide();
-      $.post(zvc_ajax.ajaxurl, {
+      $.post(ajaxurl, {
         action: 'zoom_dimiss_notice'
       }).done(function (result) {
         //Done
@@ -340,9 +359,9 @@
     checkConnection: function checkConnection(e) {
       e.preventDefault();
       $dom.cover.show();
-      $.post(zvc_ajax.ajaxurl, {
+      $.post(ajaxurl, {
         action: 'check_connection',
-        security: zvc_ajax.zvc_security
+        security: vczapi_ajax.zvc_security
       }).done(function (result) {
         //Done
         $dom.cover.hide();
@@ -364,13 +383,13 @@
         type: $(e.currentTarget).data('type'),
         post_id: post_id ? post_id : false,
         action: 'state_change',
-        accss: zvc_ajax.zvc_security
+        accss: vczapi_ajax.zvc_security
       };
 
       if (state === "resume") {
         this.changeState(postData);
       } else if (state === "end") {
-        var c = confirm(zvc_ajax.lang.confirm_end);
+        var c = confirm(vczapi_ajax.lang.confirm_end);
 
         if (c) {
           this.changeState(postData);
@@ -385,7 +404,7 @@
      * @param postData
      */
     changeState: function changeState(postData) {
-      $.post(zvc_ajax.ajaxurl, postData).done(function (response) {
+      $.post(ajaxurl, postData).done(function (response) {
         location.reload();
       });
     }

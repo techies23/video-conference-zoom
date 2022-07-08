@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi;
+namespace Codemanas\VczApi\Includes;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {

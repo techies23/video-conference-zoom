@@ -23,6 +23,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'VCZAPI_FILE', __FILE__ );
+define( 'VCZAPI_VERSION', '4.0.0' );
+define( 'VCZAPI_WEBSDK_VERSION', '2.4.0' );
+define( 'VCZAPI_DIR_PATH', plugin_dir_path( __FILE__ ) );
+define( 'VCZAPI_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'VCZAPI_FRONTEND_PATH', VCZAPI_DIR_PATH . 'frontend' );
+define( 'VCZAPI_INCLUDES_PATH', VCZAPI_DIR_PATH . 'includes' );
+define( 'VCZAPI_BACKEND_PATH', VCZAPI_DIR_PATH . 'backend' );
+define( 'VCZAPI_I18N_PATH', trailingslashit( basename( VCZAPI_DIR_PATH ) ) . 'languages/' );
+define( 'VCZAPI_ABS_NAME', plugin_basename( __FILE__ ) );
+
+//Legacy
 define( 'ZVC_PLUGIN_FILE', __FILE__ );
 define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
 define( 'ZVC_PLUGIN_VERSION', '3.9.4' );
@@ -42,9 +54,10 @@ define( 'ZVC_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
 $upload_dir = wp_upload_dir( null, false );
 define( 'ZVC_LOG_DIR', $upload_dir['basedir'] . '/vczapi-logs/' );
 
-// the main plugin class
+require_once ZVC_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 require_once ZVC_PLUGIN_INCLUDES_PATH . '/Bootstrap.php';
+require_once ZVC_PLUGIN_DIR_PATH . '/Backend/Plugin.php';
 
-add_action( 'plugins_loaded', 'Codemanas\VczApi\Bootstrap::instance', 99 );
-register_activation_hook( __FILE__, 'Codemanas\VczApi\Bootstrap::activate' );
-register_deactivation_hook( __FILE__, 'Codemanas\VczApi\Bootstrap::deactivate' );
+add_action( 'plugins_loaded', 'Codemanas\VczApi\Includes\Bootstrap::instance' );
+register_activation_hook( __FILE__, 'Codemanas\VczApi\Includes\Bootstrap::activate' );
+register_deactivation_hook( __FILE__, 'Codemanas\VczApi\Includes\Bootstrap::deactivate' );

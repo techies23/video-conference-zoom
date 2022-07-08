@@ -7,5 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
-    'Codemanas\\VczApi\\' => array($baseDir . '/legacy', $baseDir . '/includes'),
+    'Codemanas\\VczApi\\Includes\\' => array($baseDir . '/includes'),
+    'Codemanas\\VczApi\\Frontend\\' => array($baseDir . '/frontend'),
+    'Codemanas\\VczApi\\Backend\\' => array($baseDir . '/backend'),
 );

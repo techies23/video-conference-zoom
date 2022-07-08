@@ -1,15 +1,15 @@
 <?php
 
-namespace CodeManas\VczApi\Elementor;
+namespace Codemanas\VczApi\Includes\Elementor;
 
-use CodeManas\VczApi\Elementor\Widgets\MeetingByPostID;
-use CodeManas\VczApi\Elementor\Widgets\MeetingList;
-use CodeManas\VczApi\Elementor\Widgets\MeetingByID;
-use CodeManas\VczApi\Elementor\Widgets\MeetingHosts;
-use CodeManas\VczApi\Elementor\Widgets\EmbedMeetings;
-use CodeManas\VczApi\Elementor\Widgets\RecordingsByHost;
-use CodeManas\VczApi\Elementor\Widgets\RecordingByMeetingID;
-use CodeManas\VczApi\Elementor\Widgets\WebinarList;
+use Codemanas\VczApi\Includes\Elementor\Widgets\MeetingByPostID;
+use Codemanas\VczApi\Includes\Elementor\Widgets\MeetingList;
+use Codemanas\VczApi\Includes\Elementor\Widgets\MeetingByID;
+use Codemanas\VczApi\Includes\Elementor\Widgets\MeetingHosts;
+use Codemanas\VczApi\Includes\Elementor\Widgets\EmbedMeetings;
+use Codemanas\VczApi\Includes\Elementor\Widgets\RecordingsByHost;
+use Codemanas\VczApi\Includes\Elementor\Widgets\RecordingByMeetingID;
+use Codemanas\VczApi\Includes\Elementor\Widgets\WebinarList;
 use Elementor\Plugin;
 
 // Exit if accessed directly

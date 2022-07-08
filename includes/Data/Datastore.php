@@ -1,13 +1,13 @@
 <?php
 
-namespace Codemanas\VczApi\Data;
+namespace Codemanas\VczApi\Includes\IncludesData;
 
 /**
  * Class Datastore
  *
  * Will eventually handle all database functions
  *
- * @package Codemanas\VczApi\Data
+ * @package Codemanas\VczApi\Includes\Data
  * @created March 2nd, 2021
  * @author Deepen Bajracharya
  */

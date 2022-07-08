@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Data;
+namespace Codemanas\VczApi\Includes\Data;
 
 /**
  * Logger class for loggin debug messages.
@@ -10,7 +10,7 @@ namespace Codemanas\VczApi\Data;
  * @since 3.8.18
  * @author Deepen Bajracharya
  *
- * @package Codemanas\VczApi\Data
+ * @package Codemanas\VczApi\Includes\Data
  */
 class Logger {
 

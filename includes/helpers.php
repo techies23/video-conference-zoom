@@ -233,7 +233,7 @@ function vczapi_get_cache( $key ) {
 function video_conferencing_zoom_api_get_user_transients() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] === "zoom-video-conferencing-list-users" && isset( $_GET['pg'] ) ) {
 		$page          = $_GET['pg'];
-		$decoded_users = json_decode( zoom_conference()->listUsers( $page ) );
+		$decoded_users = zoom_conference()->listUsers( $page );
 		if ( ! empty( $decoded_users->code ) ) {
 			$users = false;
 		} else {
@@ -244,7 +244,7 @@ function video_conferencing_zoom_api_get_user_transients() {
 		if ( ! empty( $check_existing ) ) {
 			$users = $check_existing;
 		} else {
-			$decoded_users = json_decode( zoom_conference()->listUsers() );
+			$decoded_users = \Codemanas\VczApi\Includes\Api\Methods::instance()->listUsers();
 			if ( ! empty( $decoded_users->code ) ) {
 				if ( is_admin() ) {
 					add_action( 'admin_notices', 'vczapi_check_connection_error' );

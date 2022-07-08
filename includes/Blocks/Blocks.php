@@ -1,11 +1,11 @@
 <?php
 
-namespace Codemanas\VczApi\Blocks;
+namespace Codemanas\VczApi\Includes\Blocks;
 
 /**
  * Class Blocks
  *
- * @package Codemanas\VczApi\Blocks
+ * @package Codemanas\VczApi\Includes\Blocks
  * @since   3.7.5
  * @updated N/A
  */

@@ -1,0 +1,108 @@
+<?php
+
+namespace Codemanas\VczApi\Backend\Events;
+
+/**
+ * Class Events
+ * @since 3.5.0
+ * @updated 4.0.0
+ * @package Codemanas\VczApi\Backend\Events
+ */
+class Recordings {
+
+	private static $_instance = null;
+
+	/**
+	 * Create only one instance so that it may not Repeat
+	 *
+	 * @since 2.0.0
+	 */
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	/**
+	 * Zoom Recordings View
+	 *
+	 * @since   3.5.0
+	 * @changes in CodeBase
+	 * @author  Deepen Bajracharya
+	 */
+	public static function zoom_recordings() {
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-select2-js' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-js' );
+
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_style( 'thickbox' );
+
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
+
+		//Check if any transient by name is available
+		if ( isset( $_GET['host_id'] ) ) {
+			if ( isset( $_POST['check-recordings'] ) && isset( $_POST['date'] ) ) {
+				$search_date        = strtotime( $_POST['date'] );
+				$from               = date( 'Y-m-d', $search_date );
+				$to                 = date( 'Y-m-t', $search_date );
+				$postParams['from'] = $from;
+				$postParams['to']   = $to;
+				$recordings         = zoom_conference()->listRecording( $_GET['host_id'], $postParams );
+			} else {
+				$recordings = zoom_conference()->listRecording( $_GET['host_id'] );
+			}
+		}
+
+		if ( ! empty( $recordings ) && ! empty( $recordings->code ) ) {
+			echo '<p>' . $recordings->message . '</p>';
+		} else {
+			//Get Template
+			require_once ZVC_PLUGIN_VIEWS_PATH . '/live/tpl-list-recordings.php';
+		}
+	}
+
+	/**
+	 * Get Host selection HTML block
+	 *
+	 * @param $host_id
+	 * @param $datepicker
+	 */
+	public function get_hosts( $host_id, $datepicker = false ) {
+		$users = video_conferencing_zoom_api_get_user_transients();
+		?>
+        <div class="select_zvc_user_listings_wrapp">
+			<?php
+			if ( $datepicker ) {
+				?>
+                <div class="alignleft">
+                    <form action="" class="vczapi-datepicker-admin" method="POST">
+                        <label><?php _e( 'Enter the date to check:', 'video-conferencing-with-zoom-api' ); ?></label>
+                        <input name="date" id="vczapi-check-recording-date"/> <input type="submit" name="check-recordings" value="<?php _e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
+                    </form>
+                </div>
+				<?php
+			}
+			?>
+            <div class="alignright">
+                <select onchange="location = this.value;" class="zvc-hacking-select">
+                    <option value="?post_type=zoom-meetings&page=zoom-video-conferencing"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
+					<?php
+					foreach ( $users as $user ) {
+						$host_recordings_link = add_query_arg( array(
+							'post_type' => 'zoom-meetings',
+							'page'      => 'zoom-video-conferencing-recordings',
+							'host_id'   => $user->id
+						), admin_url( 'edit.php' ) );
+						?>
+                        <option value="<?php echo esc_url( $host_recordings_link ); ?>" <?php echo $host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+					<?php } ?>
+                </select>
+            </div>
+            <div class="clear"></div>
+        </div>
+		<?php
+	}
+}

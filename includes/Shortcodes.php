@@ -1,11 +1,11 @@
 <?php
 
-namespace Codemanas\VczApi;
+namespace Codemanas\VczApi\Includes;
 
-use Codemanas\VczApi\Shortcodes\Embed;
-use Codemanas\VczApi\Shortcodes\Meetings;
-use Codemanas\VczApi\Shortcodes\Recordings;
-use Codemanas\VczApi\Shortcodes\Webinars;
+use Codemanas\VczApi\Includes\Shortcodes\Embed;
+use Codemanas\VczApi\Includes\Shortcodes\Meetings;
+use Codemanas\VczApi\Includes\Shortcodes\Recordings;
+use Codemanas\VczApi\Includes\Shortcodes\Webinars;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

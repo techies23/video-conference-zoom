@@ -1,11 +1,11 @@
 <?php
 
-namespace Codemanas\VczApi\Shortcodes;
+namespace Codemanas\VczApi\Includes\Shortcodes;
 
 /**
  * Class Helpers for Shortcode helper functions
  *
- * @package Codemanas\VczApi\Shortcodes
+ * @package Codemanas\VczApi\Includes\Shortcodes
  */
 class Helpers {
 

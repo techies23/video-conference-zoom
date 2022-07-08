@@ -1,11 +1,12 @@
-/**
-*  Deepen
-*  @since  1.0.0
-*  @modified 3.0.0
-*/
+@import "grid";
 
-.zvc-row {
-  display: flex;
+.vczapi-white-background {
+  padding: 30px;
+  border: 1px solid #ccc;
+  background: #fff;
+  justify-content: space-between;
+  margin-top: 15px;
+  position:relative;
 }
 
 .zvc_listing_table {
@@ -13,7 +14,7 @@
 }
 
 .select_zvc_user_listings_wrapp {
-  margin: 20px 0px;
+  margin: 20px 0;
 }
 
 .zvc-text-left {
@@ -31,6 +32,8 @@
   width: 100%;
   z-index: 1;
   opacity: 0.5;
+  top: 0;
+  left: 0;
 }
 
 .zvc_getting_user_info_content p {
@@ -43,28 +46,6 @@
 
 .zvc_accounts_reports_check_form {
   padding-bottom: 20px;
-}
-
-.zvc-position-floater-left {
-  width: 100%;
-  padding: 30px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  background: #fff;
-  justify-content: space-between;
-}
-
-.zvc-position-floater-right {
-  width: 30%;
-  justify-content: space-between;
-}
-
-.zvc-position-floater-right .zvc-information-sec {
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
-  margin: 0 0 16px 0;
 }
 
 .zvc-position-clear {
@@ -340,3 +321,7 @@
 .notice-warning .vczapi-major-update-warning__icon {
   color: #f56e28;
 }
+
+
+
+

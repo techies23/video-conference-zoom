@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeManas\VczApi\Elementor\Widgets;
+namespace Codemanas\VczApi\Includes\Elementor\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
