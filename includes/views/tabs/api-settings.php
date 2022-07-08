@@ -4,10 +4,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$oauth = \Codemanas\Vczapi\Api\OAuth::get_instance();
 ?>
 <div id="zvc-cover" style="display: none;"></div>
 <div class="zvc-row" style="margin-top:10px;">
     <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
+	    <?php $oauth->maybe_connected_to_zoom_html(); ?>
         <h3><?php _e( 'Please follow', 'video-conferencing-with-zoom-api' ) ?>
             <a target="_blank" href="<?php echo ZVC_PLUGIN_AUTHOR; ?>/zoom-conference-wp-plugin-documentation/"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
         </h3>

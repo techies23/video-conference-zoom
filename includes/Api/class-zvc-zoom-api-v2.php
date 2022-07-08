@@ -78,10 +78,10 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		protected function sendRequest( $calledFunction, $data, $request = "GET" ) {
 			$request_url = $this->api_url . $calledFunction;
 			$args        = array(
-				'headers' => array(
+				'headers' => apply_filters('vczapi_core_api_request_headers',array(
 					'Authorization' => 'Bearer ' . $this->generateJWTKey(),
 					'Content-Type'  => 'application/json'
-				)
+				))
 			);
 
 			if ( $request == "GET" ) {
@@ -130,6 +130,12 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				}
 			}
 
+			$responseBody = apply_filters('vczapi_check_oauth_response',$responseBody,$calledFunction, $data, $request);
+			//@todo: Why are we returning false here ? 
+			if ( ! $responseBody ) {
+				return false;
+			}
+			
 			return $responseBody;
 		}
 
