@@ -919,7 +919,7 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
  * @return bool
  * @since 3.9.0
  */
-function vczapi_is_oauth_used_globally() {
+function vczapi_is_oauth_used_globally(): bool {
 	return ( get_option( 'vczapi_enable_oauth_individual_use' ) != 'yes' );
 }
 
@@ -929,7 +929,7 @@ function vczapi_is_oauth_used_globally() {
  * @return bool
  * @since 3.9.0
  */
-function vczapi_show_admin_menu_items() {
+function vczapi_show_admin_menu_items(): bool {
 	$user_oauth_data = ( ! vczapi_is_oauth_used_globally() ) ? get_user_meta( get_current_user_id(), 'vczapi_zoom_oauth', true ) : get_option( 'vczapi_global_zoom_oauth' );
 
 	return ! empty( $user_oauth_data ) || ( ! empty( get_option( 'zoom_api_key' ) ) && ! empty( get_option( 'zoom_api_secret' ) ) );

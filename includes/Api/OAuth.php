@@ -58,15 +58,7 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 	private $current_user_id = null;
 	private $user_oauth_data = null;
 	private $connected_user_info = null;
-
-	private $temp_jwt_key = null;
-
-	/**
-	 * @param null $temp_jwt_key
-	 */
-	public function setTempJwtKey( $temp_jwt_key ) {
-		$this->temp_jwt_key = $temp_jwt_key;
-	}
+	
 
 	/**
 	 * Get Instance
@@ -172,76 +164,6 @@ class OAuth extends Zoom_Video_Conferencing_Api {
 			}
 		}
 
-	}
-
-	/**
-	 * Overridden to check key using passed $key and $secret
-	 *
-	 * @param false $key
-	 * @param false $secret
-	 *
-	 * @return string
-	 * @since 3.9.0
-	 *
-	 */
-	private function generateJWTKey( $key = false, $secret = false ) {
-		if ( empty( $key ) || empty( $secret ) ) {
-			$key    = $this->zoom_api_key;
-			$secret = $this->zoom_api_secret;
-		}
-
-		$token = array(
-			"iss" => $key,
-			"exp" => time() + 3600 //60 seconds as suggested
-		);
-
-		return JWT::encode( $token, $secret );
-	}
-
-	/**
-	 * Verify JWT Keys
-	 *
-	 * @since 3.9.0
-	 */
-	public function verify_jwt_keys() {
-		$api_key    = filter_input( INPUT_POST, 'api_key' );
-		$secret_key = filter_input( INPUT_POST, 'secret_key' );
-
-		//so lets generate the JWT Keys first
-		$this->temp_jwt_key = $this->generateJWTKey( $api_key, $secret_key );
-		remove_filter( 'vczapi_core_api_request_headers', [ $this, 'change_request_headers' ], 10 );
-		add_filter( 'vczapi_core_api_request_headers', [ $this, 'set_temp_jwt_key_for_header' ], 20 );
-		$response = json_decode( $this->listUsers() );
-		if ( ! empty( $response->code ) ) {
-			wp_send_json( $response->message );
-		}
-
-		if ( http_response_code() === 200 ) {
-			//After user has been created delete this transient in order to fetch latest Data.
-			/**
-			 * @TODO: Correctly place users into the cache!
-			 */
-			#video_conferencing_zoom_api_delete_user_cache();
-
-			wp_send_json( __( "JWT keys verified - please save the settings now !", "video-conferencing-with-zoom-api" ) );
-		} else {
-			wp_send_json( $response );
-		}
-	}
-
-	/**
-	 * Set temporary JWT key to verify JWT keys
-	 *
-	 * @param $headers
-	 *
-	 * @return mixed
-	 * @since 3.9.0
-	 *
-	 */
-	public function set_temp_jwt_key_for_header( $headers ) {
-		$headers['Authorization'] = 'Bearer ' . $this->temp_jwt_key;
-
-		return $headers;
 	}
 
 	/**
