@@ -136,9 +136,6 @@ class Zoom_Video_Conferencing_Admin_Views {
 					//migrate to web sdk app
 					$vczapi_web_sdk_key        = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_web_sdk_key' ) );
 					$vczapi_web_sdk_secret_key = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_web_sdk_secret_key' ) );
-                    var_dump($vczapi_web_sdk_key);
-                    var_dump($vczapi_web_sdk_secret_key);
-                    die;
 
 					$zoom_api_key                       = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 					$zoom_api_secret                    = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
@@ -164,6 +161,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 
 					//individual oauth use - will be incorporated in future update
 					update_option( 'vczapi_enable_oauth_individual_use', $enable_oauth_individual_use );
+					update_option( 'vczapi_web_sdk_key', $vczapi_web_sdk_key );
+					update_option( 'vczapi_web_sdk_secret_key', $vczapi_web_sdk_secret_key );
 
 					update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
@@ -202,6 +201,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 				//Defining Varaibles
 				//zoom oauth
 				$enable_oauth_individual_use = get_option( 'vczapi_enable_oauth_individual_use' );
+				$vczapi_web_sdk_key          = get_option( 'vczapi_web_sdk_key' );
+				$vczapi_web_sdk_secret_key   = get_option( 'vczapi_web_sdk_secret_key' );
 
 				$zoom_api_key                = get_option( 'zoom_api_key' );
 				$zoom_api_secret             = get_option( 'zoom_api_secret' );

@@ -61,7 +61,9 @@ $oauth = \Codemanas\Vczapi\Api\OAuth::get_instance();
                                name="vczapi_web_sdk_secret_key"
                                id="vczapi_web_sdk_secret_key"
                                value="<?php echo ! empty( $vczapi_web_sdk_secret_key ) ? esc_html( $vczapi_web_sdk_secret_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
+                        <a href="javascript:void(0);" class="vczapi-toggle"
+                           data-element="vczapi_web_sdk_secret_key"
+                           data-visible="0">Show</a></td>
                     </td>
                 </tr>
 

@@ -49,7 +49,6 @@ jQuery(function ($) {
 
                         API_KEY = response.data.key;
                         SIGNATURE = response.data.sig;
-
                         if (API_KEY && SIGNATURE) {
                             var display_name = $('#vczapi-jvb-display-name');
                             var email = $('#vczapi-jvb-email');
