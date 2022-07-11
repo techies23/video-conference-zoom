@@ -9,7 +9,7 @@ $oauth = \Codemanas\Vczapi\Api\OAuth::get_instance();
 <div id="zvc-cover" style="display: none;"></div>
 <div class="zvc-row" style="margin-top:10px;">
     <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
-	    <?php $oauth->maybe_connected_to_zoom_html(); ?>
+		<?php $oauth->maybe_connected_to_zoom_html(); ?>
         <h3><?php _e( 'Please follow', 'video-conferencing-with-zoom-api' ) ?>
             <a target="_blank" href="<?php echo ZVC_PLUGIN_AUTHOR; ?>/zoom-conference-wp-plugin-documentation/"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
         </h3>
@@ -18,32 +18,68 @@ $oauth = \Codemanas\Vczapi\Api\OAuth::get_instance();
 			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
             <table class="form-table">
                 <tbody>
-                <?php 
-                /*
+				<?php
+				/*
+				<tr>
+					<th>
+						<label for="vczapi_enable_oauth_individual_use"><?php _e('Enable Individual Accounts','video-conferencing-with-zoom-api') ?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="vczapi_enable_oauth_individual_use" name="vczapi_enable_oauth_individual_use"
+						<?php checked($enable_oauth_individual_use,'on',true) ?>
+						>
+						<span class="description"><?php _e('This option will allow other users logged into this site to create Zoom Meetings using their own Zoom accounts','video-conferencing-with-zoom-api'); ?></span>
+					</td>
+				</tr>
+				*/
+				?>
+				<?php /* Web SDK */ ?>
                 <tr>
                     <th>
-                        <label for="vczapi_enable_oauth_individual_use"><?php _e('Enable Individual Accounts','video-conferencing-with-zoom-api') ?></label>
-                    </th>
+                        <label for="vczapi_web_sdk_key">
+							<?php _e( 'Web SDK Key', 'video-conferencing-with-zoom-api' ); ?>
+                        </label></th>
                     <td>
-                        <input type="checkbox" id="vczapi_enable_oauth_individual_use" name="vczapi_enable_oauth_individual_use"
-                        <?php checked($enable_oauth_individual_use,'on',true) ?>
-                        >
-                        <span class="description"><?php _e('This option will allow other users logged into this site to create Zoom Meetings using their own Zoom accounts','video-conferencing-with-zoom-api'); ?></span>
+                        <input type="password" style="width: 400px;"
+                               name="vczapi_web_sdk_key"
+                               id="vczapi_web_sdk_key"
+                               value="<?php echo ! empty( $vczapi_web_sdk_key ) ? esc_html( $vczapi_web_sdk_key ) : ''; ?>">
+                        <a href="javascript:void(0);" 
+                           class="vczapi-toggle" 
+                           data-element="vczapi_web_sdk_key" 
+                           data-visible="0">Show</a></td>
                     </td>
                 </tr>
-                */
-                ?>
+                <tr>
+                    <th>
+                        <label for="vczapi_web_sdk_secret_key">
+							<?php _e( 'Web SDK Secret Key', 'video-conferencing-with-zoom-api' ); ?>
+                        </label>
+                    </th>
+                    <td>
+                        <input type="password" style="width: 400px;"
+                               name="vczapi_web_sdk_secret_key"
+                               id="vczapi_web_sdk_secret_key"
+                               value="<?php echo ! empty( $vczapi_web_sdk_secret_key ) ? esc_html( $vczapi_web_sdk_secret_key ) : ''; ?>">
+                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
+                    </td>
+                </tr>
+
                 <tr>
                     <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
+                        <input type="password" 
+                               style="width: 400px;" 
+                               name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
+                        <a href="javascript:void(0);" class="vczapi-toggle" data-element="zoom_api_key"
+                           data-visible="0">Show</a></td>
                 </tr>
                 <tr>
                     <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
+                        <a href="javascript:void(0);" class="vczapi-toggle" data-element="zoom_api_secret"
+                           data-visible="0">Show</a></td>
                 </tr>
                 <tr class="enabled-vanity-url">
                     <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
@@ -51,7 +87,8 @@ $oauth = \Codemanas\Vczapi\Api\OAuth::get_instance();
                         <input type="url" name="vanity_url" class="regular-text" value="<?php echo ( $zoom_vanity_url ) ? esc_html( $zoom_vanity_url ) : ''; ?>" placeholder="https://example.zoom.us">
                         <p class="description"><?php _e( 'If you are using Zoom Vanity URL then please insert it here else leave it empty.', 'video-conferencing-with-zoom-api' ); ?></p>
                         <a href="https://support.zoom.us/hc/en-us/articles/215062646-Guidelines-for-Vanity-URL-Requests"><?php _e( 'Read more about Vanity
-                                URLs', 'video-conferencing-with-zoom-api' ); ?></a>
+                                URLs',
+								'video-conferencing-with-zoom-api' ); ?></a>
                     </td>
                 </tr>
                 <tr>

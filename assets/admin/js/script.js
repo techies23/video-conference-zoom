@@ -20,15 +20,16 @@
       $dom.changeSelectType = $('.zvc-hacking-select');
       $dom.dateTimePicker = $('#datetimepicker');
       $dom.reportsDatePicker = $('#reports_date');
-      $dom.zoomAccountDatepicker = $(".zoom_account_datepicker");
+      $dom.zoomAccountDatepicker = $('.zoom_account_datepicker');
       $dom.meetingListDTable = $('#zvc_users_list_table, #zvc_meetings_list_table');
-      $dom.meetingListTableCheck = $("#zvc_meetings_list_table");
+      $dom.meetingListTableCheck = $('#zvc_meetings_list_table');
       $dom.usersListTable = $('#vczapi-get-host-users-wp');
       $dom.meetingListTbl = $dom.meetingListTableCheck.find('input[type=checkbox]');
       $dom.cover = $('#zvc-cover');
       $dom.togglePwd = $('.toggle-api');
       $dom.toggleSecret = $('.toggle-secret');
       $dom.changeMeetingState = $('.vczapi-meeting-state-change');
+      $dom.toggleObj = $('.vczapi-toggle');
       $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error');
       this.$manualHostID = $('.vczapi-admin-hostID-manually-add');
     },
@@ -48,16 +49,35 @@
        * Confirm Deletion of the Meeting
        */
 
-      $('.delete-meeting').on('click', this.deleteMetting); //FOr the Password Hashing API
-
-      $dom.togglePwd.on('click', this.toggleAPISettings.bind(this));
-      $dom.toggleSecret.on('click', this.toggleSecretSettings.bind(this));
+      $('.delete-meeting').on('click', this.deleteMetting);
       $('.zvc-dismiss-message').on('click', this.dismissNotice.bind(this));
       $('.check-api-connection').on('click', this.checkConnection.bind(this)); //End and Resume Meetings
 
       $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this)); //Manual Host Selector
 
-      this.$manualHostID.on('click', this.showManualHostIDField.bind(this));
+      this.$manualHostID.on('click', this.showManualHostIDField.bind(this)); //hide show password
+
+      $($dom.toggleObj).on('click', this.togglePasswordText.bind(this));
+    },
+
+    /**
+     * Show or hide the password enabled input
+     */
+    togglePasswordText: function togglePasswordText(e) {
+      e.preventDefault();
+      var $currentElement = $(e.currentTarget);
+      var isVisible = $currentElement.data('visible');
+      var $targetElement = $('#' + $currentElement.data('element'));
+
+      if (isVisible === 0) {
+        $currentElement.data('visible', 1);
+        $targetElement.attr('type', 'text');
+        $currentElement.text('Hide');
+      } else {
+        $currentElement.data('visible', 0);
+        $targetElement.attr('type', 'password');
+        $currentElement.text('Show');
+      }
     },
 
     /**
@@ -76,7 +96,7 @@
         var d = new Date();
         var month = d.getMonth() + 1;
         var day = d.getDate();
-        var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        var time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
         var output = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day + ' ' + time;
         var start_date_check = $dom.dateTimePicker.data('existingdate');
 
@@ -103,8 +123,8 @@
           var thisCalendar = $(this);
           $('.ui-datepicker-calendar').detach();
           $('.ui-datepicker-close').click(function () {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year").html();
+            var month = $('#ui-datepicker-div .ui-datepicker-month :selected').val();
+            var year = $('#ui-datepicker-div .ui-datepicker-year').html();
             thisCalendar.datepicker('setDate', new Date(year, month, 1));
           });
         });
@@ -128,8 +148,8 @@
           var thisCalendar = $(this);
           $('.ui-datepicker-calendar').detach();
           $('.ui-datepicker-close').click(function () {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            var month = $('#ui-datepicker-div .ui-datepicker-month :selected').val();
+            var year = $('#ui-datepicker-div .ui-datepicker-year :selected').val();
             thisCalendar.datepicker('setDate', new Date(year, month, 1));
           });
         });
@@ -137,7 +157,7 @@
 
       if ($dom.zoomAccountDatepicker.length > 0) {
         $dom.zoomAccountDatepicker.datepicker({
-          dateFormat: "yy-mm-dd"
+          dateFormat: 'yy-mm-dd'
         });
       }
     },
@@ -154,20 +174,20 @@
 
       if ($dom.meetingListDTable.length > 0) {
         $dom.meetingListDTable.dataTable({
-          "pageLength": 25,
-          "columnDefs": [{
-            "targets": 0,
-            "orderable": false
+          'pageLength': 25,
+          'columnDefs': [{
+            'targets': 0,
+            'orderable': false
           }]
         });
       }
 
       if ($dom.usersListTable.length > 0) {
         $dom.usersListTable.dataTable({
-          "pageLength": 25,
-          "columnDefs": [{
-            "targets": 0,
-            "orderable": true
+          'pageLength': 25,
+          'columnDefs': [{
+            'targets': 0,
+            'orderable': true
           }],
           ajax: {
             url: ajaxurl + '?action=get_assign_host_id'
@@ -188,10 +208,10 @@
         $('#vczapi-select-wp-user-for-host').select2({
           ajax: {
             url: ajaxurl + '?action=vczapi_get_wp_users',
-            type: "GET",
+            type: 'GET',
             dataType: 'json'
           },
-          placeholder: "Select a WordPress User",
+          placeholder: 'Select a WordPress User',
           width: '300px'
         });
       }
@@ -199,11 +219,11 @@
     meetingListTableCheck: function meetingListTableCheck() {
       if ($(this).is(':checked')) {
         $dom.meetingListTbl.each(function () {
-          $(this).prop("checked", true);
+          $(this).prop('checked', true);
         });
       } else {
         $dom.meetingListTbl.each(function () {
-          $(this).prop("checked", false);
+          $(this).prop('checked', false);
         });
       }
     },
@@ -213,7 +233,7 @@
      * @returns {boolean}
      */
     bulkDeleteMeetings: function bulkDeleteMeetings() {
-      var r = confirm("Confirm bulk delete these Meeting?");
+      var r = confirm('Confirm bulk delete these Meeting?');
 
       if (r == true) {
         var arr_checkbox = [];
@@ -273,7 +293,7 @@
     deleteMetting: function deleteMetting() {
       var meeting_id = $(this).data('meetingid');
       var type = $(this).data('type');
-      var r = confirm("Confirm Delete this Meeting?");
+      var r = confirm('Confirm Delete this Meeting?');
 
       if (r == true) {
         var data = {
@@ -295,36 +315,6 @@
         });
       } else {
         return false;
-      }
-    },
-
-    /**
-     * Toggle API keys hide unhide
-     */
-    toggleAPISettings: function toggleAPISettings() {
-      var inputID = $('#zoom_api_key');
-
-      if ($dom.togglePwd.html() === "Show") {
-        $dom.togglePwd.html('Hide');
-        inputID.attr('type', 'text');
-      } else {
-        $dom.togglePwd.html('Show');
-        inputID.attr('type', 'password');
-      }
-    },
-
-    /**
-     * Toggle secret hide unhide
-     */
-    toggleSecretSettings: function toggleSecretSettings() {
-      var secretID = $('#zoom_api_secret');
-
-      if ($dom.toggleSecret.html() === "Show") {
-        $dom.toggleSecret.html('Hide');
-        secretID.attr('type', 'text');
-      } else {
-        $dom.toggleSecret.html('Show');
-        secretID.attr('type', 'password');
       }
     },
     dismissNotice: function dismissNotice(e) {
@@ -367,9 +357,9 @@
         accss: zvc_ajax.zvc_security
       };
 
-      if (state === "resume") {
+      if (state === 'resume') {
         this.changeState(postData);
-      } else if (state === "end") {
+      } else if (state === 'end') {
         var c = confirm(zvc_ajax.lang.confirm_end);
 
         if (c) {
@@ -431,7 +421,7 @@
           });
           page_html += '</select>';
           setTimeout(function () {
-            $(".vczapi-choose-meetings-to-sync-select2").select2({
+            $('.vczapi-choose-meetings-to-sync-select2').select2({
               maximumSelectionLength: 10,
               placeholder: vczapi_sync_i10n.select2_placeholder
             });
