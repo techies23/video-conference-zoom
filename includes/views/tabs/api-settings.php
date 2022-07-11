@@ -18,6 +18,21 @@ $oauth = \Codemanas\Vczapi\Api\OAuth::get_instance();
 			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
             <table class="form-table">
                 <tbody>
+                <?php 
+                /*
+                <tr>
+                    <th>
+                        <label for="vczapi_enable_oauth_individual_use"><?php _e('Enable Individual Accounts','video-conferencing-with-zoom-api') ?></label>
+                    </th>
+                    <td>
+                        <input type="checkbox" id="vczapi_enable_oauth_individual_use" name="vczapi_enable_oauth_individual_use"
+                        <?php checked($enable_oauth_individual_use,'on',true) ?>
+                        >
+                        <span class="description"><?php _e('This option will allow other users logged into this site to create Zoom Meetings using their own Zoom accounts','video-conferencing-with-zoom-api'); ?></span>
+                    </td>
+                </tr>
+                */
+                ?>
                 <tr>
                     <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>

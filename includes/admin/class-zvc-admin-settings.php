@@ -130,6 +130,9 @@ class Zoom_Video_Conferencing_Admin_Views {
 				if ( isset( $_POST['save_zoom_settings'] ) ) {
 					//Nonce
 					check_admin_referer( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' );
+                    
+                    $enable_oauth_individual_use = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_oauth_individual_use' ) );
+                    
 					$zoom_api_key                       = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 					$zoom_api_secret                    = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 					$vanity_url                         = esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) );
@@ -152,7 +155,10 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$disable_auto_pwd_generation        = sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) );
 					$debugger_logs                      = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) );
 
-					update_option( 'zoom_api_key', $zoom_api_key );
+					//individual oauth use - will be incorporated in future update
+                    update_option('vczapi_enable_oauth_individual_use',$enable_oauth_individual_use);
+                    
+                    update_option( 'zoom_api_key', $zoom_api_key );
 					update_option( 'zoom_api_secret', $zoom_api_secret );
 					update_option( 'zoom_vanity_url', $vanity_url );
 					update_option( 'zoom_api_donot_delete_on_zoom', $delete_zoom_meeting );
@@ -187,7 +193,10 @@ class Zoom_Video_Conferencing_Admin_Views {
 				}
 
 				//Defining Varaibles
-				$zoom_api_key                = get_option( 'zoom_api_key' );
+                //zoom oauth
+				$enable_oauth_individual_use = get_option('vczapi_enable_oauth_individual_use' );
+				
+                $zoom_api_key                = get_option( 'zoom_api_key' );
 				$zoom_api_secret             = get_option( 'zoom_api_secret' );
 				$zoom_vanity_url             = get_option( 'zoom_vanity_url' );
 				$past_join_links             = get_option( 'zoom_past_join_links' );

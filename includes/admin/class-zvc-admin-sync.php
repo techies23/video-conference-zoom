@@ -3,7 +3,7 @@
 /**
  * Class for Syncing Meeting/Webinars from live to WordPress
  *
- * @since 3.5.3
+ * @since  3.5.3
  * @author Deepen Bajracharya
  */
 class Zoom_Video_Conferencing_Admin_Sync {
@@ -30,7 +30,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	public static function render() {
 		$zoom_api_key    = get_option( 'zoom_api_key' );
 		$zoom_api_secret = get_option( 'zoom_api_secret' );
-		if ( empty( $zoom_api_key ) || empty( $zoom_api_secret ) ) {
+		if ( ! vczapi_show_admin_menu_items() ) {
 			echo '<p>' . __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) . '</p>';
 
 			return;
@@ -56,10 +56,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	 */
 	public function sync() {
 		$type = filter_input( INPUT_POST, 'type' );
-
-		$zoom_api_key    = get_option( 'zoom_api_key' );
-		$zoom_api_secret = get_option( 'zoom_api_secret' );
-		if ( empty( $zoom_api_key ) || empty( $zoom_api_secret ) ) {
+		if ( !vczapi_show_admin_menu_items() ) {
 			wp_send_json_error( __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) );
 		}
 
@@ -122,7 +119,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 			} else {
 				$data = array(
 					'msg'        => __( "No meeting is selected or selected meeting already exists", 'video-conferencing-with-zoom-api' ) . ': <strong>' . $meeting_id . '</strong>',
-					'meeting_id' => $meeting_id
+					'meeting_id' => $meeting_id,
 				);
 				wp_send_json_error( $data );
 			}
@@ -142,7 +139,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 			'post_title'   => $meeting_obj->topic,
 			'post_content' => ! empty( $meeting_obj->agenda ) ? $meeting_obj->agenda : '',
 			'post_status'  => 'publish',
-			'post_type'    => 'zoom-meetings'
+			'post_type'    => 'zoom-meetings',
 		);
 		$post_id  = wp_insert_post( $post_arr );
 		if ( ! empty( $post_id ) ) {
@@ -160,7 +157,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 				'option_participants_video' => ! empty( $meeting_obj->settings->participant_video ) ? absint( $meeting_obj->settings->participant_video ) : false,
 				'option_mute_participants'  => ! empty( $meeting_obj->settings->mute_upon_entry ) ? absint( $meeting_obj->settings->mute_upon_entry ) : false,
 				'option_auto_recording'     => ! empty( $meeting_obj->settings->auto_recording ) ? esc_html( $meeting_obj->settings->auto_recording ) : 'none',
-				'alternative_host_ids'      => $meeting_obj->settings->alternative_hosts
+				'alternative_host_ids'      => $meeting_obj->settings->alternative_hosts,
 			);
 
 			update_post_meta( $post_id, '_meeting_fields', $mtg_param );
@@ -183,13 +180,13 @@ class Zoom_Video_Conferencing_Admin_Sync {
 
 			$data = array(
 				'msg'        => __( "Successfully imported meeting with ID", 'video-conferencing-with-zoom-api' ) . ': <strong>' . $meeting_obj->id . '</strong>',
-				'meeting_id' => $meeting_obj->id
+				'meeting_id' => $meeting_obj->id,
 			);
 			wp_send_json_success( $data );
 		} else {
 			$data = array(
 				'msg'        => __( "Failed to import meeting with ID", 'video-conferencing-with-zoom-api' ) . ': <strong>' . $meeting_obj->id . '</strong>',
-				'meeting_id' => $meeting_obj->id
+				'meeting_id' => $meeting_obj->id,
 			);
 			wp_send_json_success( $data );
 		}
