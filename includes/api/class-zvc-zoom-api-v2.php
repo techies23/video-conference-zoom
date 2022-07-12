@@ -14,6 +14,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 	class Zoom_Video_Conferencing_Api {
 
+		public static $OAuth_revalidate_attempts = 0;
+
 		/**
 		 * Zoom API KEY
 		 *
@@ -77,25 +79,27 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 */
 		protected function sendRequest( $calledFunction, $data, $request = "GET" ) {
 			$request_url = $this->api_url . $calledFunction;
-			$args        = array(
+			$bearerToken = $this->getBearerToken();
+
+			$args = array(
 				'headers' => array(
-					'Authorization' => 'Bearer ' . $this->generateJWTKey(),
-					'Content-Type'  => 'application/json'
-				)
+					'Authorization' => 'Bearer ' . $bearerToken,
+					'Content-Type'  => 'application/json',
+				),
 			);
 
 			if ( $request == "GET" ) {
 				$args['body'] = ! empty( $data ) ? $data : array();
 				$request      = wp_remote_get( $request_url, $args );
-			} else if ( $request == "DELETE" ) {
+			} elseif ( $request == "DELETE" ) {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "DELETE";
 				$request        = wp_remote_request( $request_url, $args );
-			} else if ( $request == "PATCH" ) {
+			} elseif ( $request == "PATCH" ) {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "PATCH";
 				$request        = wp_remote_request( $request_url, $args );
-			} else if ( $request == "PUT" ) {
+			} elseif ( $request == "PUT" ) {
 				$args['body']   = ! empty( $data ) ? json_encode( $data ) : array();
 				$args['method'] = "PUT";
 				$request        = wp_remote_request( $request_url, $args );
@@ -111,20 +115,22 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				$responseCode = wp_remote_retrieve_response_code( $request );
 				$responseBody = wp_remote_retrieve_body( $request );
 
+				//@todo regenerate access token and run request again
+
 				$debug_log = get_option( 'zoom_api_enable_debug_log' );
 				//If Debug log is enabled.
 				if ( ! empty( $debug_log ) ) {
 					if ( $responseCode == 400 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
-					} else if ( $responseCode == 401 ) {
+					} elseif ( $responseCode == 401 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
-					} else if ( $responseCode == 403 ) {
+					} elseif ( $responseCode == 403 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
-					} else if ( $responseCode == 404 ) {
+					} elseif ( $responseCode == 404 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
-					} else if ( $responseCode == 409 ) {
+					} elseif ( $responseCode == 409 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
-					} else if ( $responseCode == 429 ) {
+					} elseif ( $responseCode == 429 ) {
 						$this->logMessage( $responseBody, $responseCode, $request );
 					}
 				}
@@ -171,7 +177,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 *
 		 * @author Deepen Bajracharya
 		 *
-		 * @since 3.8.18
+		 * @since  3.8.18
 		 */
 		public function logMessage( $responseBody, $responseCode, $request ) {
 			$message = $responseCode . ' ::: ';
@@ -188,13 +194,13 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				//Response body validation
 				if ( $this->isValidXML( $responseBody ) ) {
 					$responseBody = simplexml_load_string( $responseBody );
-				} else if ( $this->isJson( $responseBody ) ) {
+				} elseif ( $this->isJson( $responseBody ) ) {
 					$responseBody = json_decode( $responseBody );
 				}
 
 				if ( ! empty( $responseBody ) && ! empty( $responseBody->message ) ) {
 					$message .= ' ::: MESSAGE => ' . $responseBody->message;
-				} else if ( ! empty( $responseBody ) && is_string( $responseBody ) ) {
+				} elseif ( ! empty( $responseBody ) && is_string( $responseBody ) ) {
 					$message .= ' ::: MESSAGE => ' . $responseBody;
 				}
 
@@ -206,6 +212,18 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 //			$error = new \WP_Error( $responseCode, $message, $error_data );
 			$logger = new Logger();
 			$logger->error( $message );
+		}
+
+		private function getBearerToken() {
+			//@todo this will need to be modified for each user scenario
+			$OauthData = get_option( 'vczapi_global_oauth_data' );
+//			var_dump($OauthData); die;
+			if ( ! empty( $OauthData ) ) {
+				return $OauthData->access_token;
+			} else {
+				return $this->generateJWTKey();
+			}
+
 		}
 
 		/**
@@ -239,7 +257,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'email'      => $postedData['email'],
 				'type'       => $postedData['type'],
 				'first_name' => $postedData['first_name'],
-				'last_name'  => $postedData['last_name']
+				'last_name'  => $postedData['last_name'],
 			);
 			$createAUserArray              = apply_filters( 'vczapi_createAUser', $createAUserArray );
 
@@ -257,7 +275,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		public function listUsers( $page = 1, $args = array() ) {
 			$defaults = array(
 				'page_size'   => 300,
-				'page_number' => absint( $page )
+				'page_number' => absint( $page ),
 			);
 
 			// Parse incoming $args into an array and merge it with $defaults
@@ -351,7 +369,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ) ? true : false,
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
 				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : "",
-				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true
+				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true,
 			);
 
 			$createAMeetingArray = apply_filters( 'vczapi_createAmeeting', $createAMeetingArray );
@@ -398,7 +416,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ) ? true : false,
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
 				'alternative_hosts'      => isset( $alternative_host_ids ) ? $alternative_host_ids : "",
-				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true
+				'waiting_room'           => isset( $data['disable_waiting_room'] ) && ( $data['disable_waiting_room'] == 'yes' ) ? false : true,
 			);
 
 			$updateMeetingInfoArray = apply_filters( 'vczapi_updateMeetingInfo', $updateMeetingInfoArray );

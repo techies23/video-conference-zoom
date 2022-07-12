@@ -186,7 +186,7 @@ if ( ! function_exists( 'zvc_get_timezone_options' ) ) {
 			"Pacific/Noumea"                 => "(GMT+11:00) New Caledonia ",
 			"Asia/Kamchatka"                 => "(GMT+12:00) Kamchatka ",
 			"Pacific/Fiji"                   => "(GMT+12:00) Fiji Islands, Marshall Islands ",
-			"Pacific/Auckland"               => "(GMT+12:00) Auckland, Wellington"
+			"Pacific/Auckland"               => "(GMT+12:00) Auckland, Wellington",
 		);
 
 		return apply_filters( 'vczapi_timezone_list', $zones_array );
@@ -364,9 +364,9 @@ function video_conferencing_zoom_api_show_api_notice() {
 /**
  * Get the template
  *
- * @param      $template_name
- * @param bool $load
- * @param bool $require_once
+ * @param       $template_name
+ * @param bool  $load
+ * @param bool  $require_once
  * @param array $args
  *
  * @return bool|string
@@ -458,11 +458,11 @@ function vczapi_check_author( $post_id ) {
  * @param        $start_time
  * @param        $tz
  * @param string $format
- * @param bool $defaults
+ * @param bool   $defaults
  *
  * @return DateTime|string
- * @author Deepen
- * @since  1.0.0
+ * @author  Deepen
+ * @since   1.0.0
  * @updated 3.6.7
  */
 function vczapi_dateConverter( $start_time, $tz, $format = 'F j, Y, g:i a ( T )', $defaults = true ) {
@@ -544,7 +544,7 @@ function vczapi_encrypt_decrypt( $action, $string ) {
 	if ( $action == 'encrypt' ) {
 		$output = openssl_encrypt( $string, $encrypt_method, $key, 0, $iv );
 		$output = base64_encode( $output );
-	} else if ( $action == 'decrypt' ) {
+	} elseif ( $action == 'decrypt' ) {
 		$output = openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
 	}
 
@@ -562,7 +562,7 @@ if ( ! function_exists( 'vczapi_get_browser_agent_type' ) ) {
 		//do something with this information
 		if ( $iPod || $iPhone || $iPad ) {
 			$app_store_link = 'https://apps.apple.com/app/zoom-cloud-meetings/id546505307';
-		} else if ( $Android ) {
+		} elseif ( $Android ) {
 			$app_store_link = 'https://play.google.com/store/apps/details?id=us.zoom.videomeetings';
 		} else {
 			$app_store_link = 'https://zoom.us/support/download';
@@ -794,12 +794,12 @@ function vczapi_getWpUsers_basedon_UserRoles( $search = false ) {
 		'contributor',
 		'author',
 		'meeting_author',
-		'shop_manager'
+		'shop_manager',
 	) );
 
 	$query = array(
 		'number'   => - 1,
-		'role__in' => $roles_in
+		'role__in' => $roles_in,
 	);
 
 	if ( ! empty( $search ) ) {
@@ -893,7 +893,7 @@ function vczapi_convert_to_minutes( $hour, $minute ) {
 /**
  * Convert minutes to hour and minute format
  *
- * @param $minutes
+ * @param        $minutes
  * @param string $format
  *
  * @return array|bool|string
@@ -911,4 +911,16 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
 	}
 
 	return array( 'hr' => $hours, 'min' => $minutes );
+}
+
+/**
+ * @return bool
+ */
+function vczapi_is_zoom_activated(): bool {
+	$OauthData = get_option( 'vczapi_global_oauth_data' );
+	if ( ! empty( $OauthData ) ) {
+		return true;
+	} else {
+		return get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients();
+	}
 }
