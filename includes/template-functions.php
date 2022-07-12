@@ -129,6 +129,7 @@ function video_conference_zoom_meeting_join() {
 			'start_date' => $meeting_start_date,
 			'timezone'   => $zoom['timezone'],
 			'post_id'    => $post_id,
+            'meeting_type' => $zoom['api']->type,
 			'page'       => 'single-meeting'
 		);
 		$data               = apply_filters( 'vczapi_single_meeting_localized_data', $data );

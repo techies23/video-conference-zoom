@@ -97,6 +97,7 @@ jQuery(function ($) {
                         post_id: mtg_data.post_id,
                         mtg_timezone: mtg_data.timezone,
                         start_date: mtg_data.start_date,
+                        meeting_type: mtg_data.meeting_type,
                         type: 'page'
                     };
 
