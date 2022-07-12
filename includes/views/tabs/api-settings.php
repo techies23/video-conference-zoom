@@ -17,16 +17,33 @@ if ( ! defined( 'ABSPATH' ) ) {
             <table class="form-table">
                 <tbody>
                 <tr>
+                    <th><label for="vczapi_oauth_api_key"><?php _e( 'Oauth API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="password" style="width: 400px;"
+                               name="vczapi_oauth_api_key"
+                               id="vczapi_oauth_api_key" value="<?php echo ! empty( $vczapi_oauth_api_key ) ? esc_html( $vczapi_oauth_api_key ) : ''; ?>">
+                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_api_key">Show</a></td>
+                </tr>
+                <tr>
+                    <th><label for="vczapi_oauth_secret_key"><?php _e( 'Oauth API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                    <td>
+                        <input type="password" style="width: 400px;" 
+                               name="vczapi_oauth_secret_key" 
+                               id="vczapi_oauth_secret_key" 
+                               value="<?php echo ! empty( $vczapi_oauth_secret_key ) ? esc_html( $vczapi_oauth_secret_key ) : ''; ?>">
+                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_secret_key">Show</a></td>
+                </tr>
+                <tr>
                     <th><label><?php _e( 'API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-api">Show</a></td>
+                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#zoom_api_key">Show</a></td>
                 </tr>
                 <tr>
                     <th><label><?php _e( 'API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
                         <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
-                        <a href="javascript:void(0);" class="toggle-secret">Show</a></td>
+                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#zoom_api_secret">Show</a></td>
                 </tr>
                 <tr class="enabled-vanity-url">
                     <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
@@ -34,7 +51,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <input type="url" name="vanity_url" class="regular-text" value="<?php echo ( $zoom_vanity_url ) ? esc_html( $zoom_vanity_url ) : ''; ?>" placeholder="https://example.zoom.us">
                         <p class="description"><?php _e( 'If you are using Zoom Vanity URL then please insert it here else leave it empty.', 'video-conferencing-with-zoom-api' ); ?></p>
                         <a href="https://support.zoom.us/hc/en-us/articles/215062646-Guidelines-for-Vanity-URL-Requests"><?php _e( 'Read more about Vanity
-                                URLs', 'video-conferencing-with-zoom-api' ); ?></a>
+                                URLs',
+								'video-conferencing-with-zoom-api' ); ?></a>
                     </td>
                 </tr>
                 <tr>
