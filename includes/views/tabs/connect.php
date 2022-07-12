@@ -1,5 +1,6 @@
 <div id="zvc-cover" style="display: none;"></div>
 <div class="zvc-row">
+    <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
     <form action="" method="post">
 		<?php
 		wp_nonce_field( 'verify_vczapi_zoom_connect', 'vczapi_zoom_connect_nonce' );
@@ -62,4 +63,8 @@
             </tfoot>
         </table>
     </form>
+    </div>
+    <div class="zvc-position-floater-right">
+	    <?php require_once ZVC_PLUGIN_VIEWS_PATH.'/additional-info.php'; ?>
+    </div>
 </div>
