@@ -147,7 +147,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			return;
 		}
 
-		if ( ! video_conferencing_zoom_api_get_user_transients() ) {
+		if ( ! vczapi_is_zoom_activated() ) {
 			global $submenu;
 			unset( $submenu['edit.php?post_type=zoom-meetings'][5] );
 			unset( $submenu['edit.php?post_type=zoom-meetings'][10] );

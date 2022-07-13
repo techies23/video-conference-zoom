@@ -57,7 +57,6 @@
                                value="<?php echo ! empty( $vczapi_sdk_secret_key ) ? esc_html( $vczapi_sdk_secret_key ) : ''; ?>">
                         <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_secret_key">Show</a></td>
                 </tr>
-
                 <tr>
                     <th><label><?php _e( 'JWT API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
                     <td>
