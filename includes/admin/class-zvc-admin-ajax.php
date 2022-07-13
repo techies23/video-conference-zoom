@@ -51,7 +51,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		} else {
 			wp_send_json( array(
 				'error' => 1,
-				'msg'   => __( "An error occured. Host ID and Meeting ID not defined properly.", "video-conferencing-with-zoom-api" )
+				'msg'   => __( "An error occured. Host ID and Meeting ID not defined properly.", "video-conferencing-with-zoom-api" ),
 			) );
 		}
 
@@ -84,7 +84,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			if ( $deleted ) {
 				wp_send_json( array(
 					'error' => 0,
-					'msg'   => sprintf( __( "Deleted %d Meeting(s).", "video-conferencing-with-zoom-api" ), $meeting_count )
+					'msg'   => sprintf( __( "Deleted %d Meeting(s).", "video-conferencing-with-zoom-api" ), $meeting_count ),
 				) );
 			}
 		} else {
@@ -106,7 +106,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	/**
 	 * Check API connection
 	 *
-	 * @since 3.0.0
+	 * @since  3.0.0
 	 * @author Deepen Bajracharya
 	 */
 	public function check_connection() {
@@ -133,24 +133,45 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	/**
 	 * Get authenticated
 	 *
-	 * @since 3.2.0
+	 * @since  3.2.0
 	 * @author Deepen Bajracharya
 	 */
 	public function get_auth() {
 		check_ajax_referer( '_nonce_zvc_security', 'noncce' );
-
 		$zoom_api_key    = get_option( 'zoom_api_key' );
 		$zoom_api_secret = get_option( 'zoom_api_secret' );
 
 		$meeting_id = filter_input( INPUT_POST, 'meeting_id' );
-		if ( ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret ) ) {
+		if ( vczapi_is_sdk_enabled() ) {
+			$sdk_key    = get_option( 'vczapi_sdk_key' );
+			$secret_key = get_option( 'vczapi_sdk_secret_key' );
+			$signature  = $this->generate_sdk_signature( $sdk_key, $secret_key, $meeting_id, 0 );
+			wp_send_json_success( [ 'sig' => $signature, 'key' => $sdk_key, 'type' => 'sdk' ] );
+
+		} elseif ( ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret ) ) {
 			$signature = $this->generate_signature( $zoom_api_key, $zoom_api_secret, $meeting_id, 0 );
-			wp_send_json_success( array( 'sig' => $signature, 'key' => $zoom_api_key ) );
+			wp_send_json_success( [ 'sig' => $signature, 'key' => $zoom_api_key, 'type' => 'jwt' ] );
 		} else {
 			wp_send_json_error( 'Error occured!' );
 		}
 
 		wp_die();
+	}
+
+	private function generate_sdk_signature( $sdk_key, $secret_key, $meeting_number, $role ) {
+		$iat     = round( ( time() * 1000 - 30000 ) / 1000 );
+		$exp     = $iat + 60 * 60 * 2;
+		$payload = [
+			'sdkKey'   => $sdk_key,
+			'mn'       => $meeting_number,
+			'role'     => $role,
+			'iat'      => $iat,
+			'exp'      => $exp,
+			'appKey'   => $sdk_key,
+			'tokenExp' => $iat + 60 * 60 * 2,
+		];
+
+		return \Firebase\JWT\JWT::encode( $payload, $secret_key );
 	}
 
 	/**
@@ -166,11 +187,11 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 */
 	private function generate_signature( $api_key, $api_sercet, $meeting_number, $role ) {
 		//Set the timezone to UTC
-		$date_utc = new \DateTime("now", new \DateTimeZone("UTC"));
-		$time = $date_utc->getTimestamp() * 1000 - 30000; //time in milliclearseconds (or close enough)
-		$data = base64_encode( $api_key . $meeting_number . $time . $role );
-		$hash = hash_hmac( 'sha256', $data, $api_sercet, true );
-		$_sig = $api_key . "." . $meeting_number . "." . $time . "." . $role . "." . base64_encode( $hash );
+		$date_utc = new \DateTime( "now", new \DateTimeZone( "UTC" ) );
+		$time     = $date_utc->getTimestamp() * 1000 - 30000; //time in milliclearseconds (or close enough)
+		$data     = base64_encode( $api_key . $meeting_number . $time . $role );
+		$hash     = hash_hmac( 'sha256', $data, $api_sercet, true );
+		$_sig     = $api_key . "." . $meeting_number . "." . $time . "." . $role . "." . base64_encode( $hash );
 
 		//return signature, url safe base64 encoded
 		return rtrim( strtr( base64_encode( $_sig ), '+/', '-_' ), '=' );
@@ -269,7 +290,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 						'id'      => $user->ID,
 						'email'   => $user->user_email,
 						'name'    => empty( $user->first_name ) ? $user->display_name : $user->first_name . ' ' . $user->last_name,
-						'host_id' => $host_id_field
+						'host_id' => $host_id_field,
 					);
 				}
 			}
@@ -281,7 +302,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	}
 
 	public function get_wp_usersByRole() {
-		if( !current_user_can('manage_options') ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
@@ -292,7 +313,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			foreach ( $users as $user ) {
 				$results[] = array(
 					'id'   => $user->ID,
-					'text' => $user->user_email
+					'text' => $user->user_email,
 				);
 			}
 		}

@@ -932,3 +932,10 @@ function vczapi_is_oauth_active(): bool {
 
 	return ! empty( $OauthData ) && isset( $OauthData->access_token ) && ! empty( $OauthData->access_token );
 }
+
+/**
+ * @return bool
+ */
+function vczapi_is_sdk_enabled(): bool {
+	return ! empty( get_option( 'vczapi_sdk_key' ) ) && ! empty( get_option( 'vczapi_sdk_secret_key' ) );
+}

@@ -20,8 +20,8 @@ jQuery(function ($) {
       var exdays = 1;
       var d = new Date();
       d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-      var expires = "expires=" + d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      var expires = 'expires=' + d.toUTCString();
+      document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
     },
     loadMeeting: function loadMeeting(e) {
       e.preventDefault();
@@ -40,19 +40,20 @@ jQuery(function ($) {
           meeting_id: meeting_id
         }).done(function (response) {
           if (response.success) {
-            $("#zvc-cover").remove();
+            $('#zvc-cover').remove();
             $('#vczapi-zoom-browser-meeting').hide();
-            API_KEY = response.data.key;
-            SIGNATURE = response.data.sig;
+            var _API_KEY = response.data.key;
+            var _SIGNATURE = response.data.sig;
+            var REQUEST_TYPE = response.data.type;
 
-            if (API_KEY && SIGNATURE) {
+            if (_API_KEY && _SIGNATURE) {
               var display_name = $('#vczapi-jvb-display-name');
               var email = $('#vczapi-jvb-email');
               var pwd = $('#meeting_password');
 
               if (!display_name.val()) {
-                alert("Name is required to enter the meeting !");
-                $("#zvc-cover").remove();
+                alert('Name is required to enter the meeting !');
+                $('#zvc-cover').remove();
                 return false;
               } //Email Validation
 
@@ -68,18 +69,38 @@ jQuery(function ($) {
 
               var lang = $('#meeting_lang');
               var meetConfig = {
-                apiKey: API_KEY,
                 meetingNumber: parseInt(meeting_id, 10),
                 userName: display_name.val(),
                 passWord: PASSWD,
                 lang: lang.length > 0 ? lang.val() : 'en-US',
                 leaveUrl: REDIRECTION,
-                signaure: SIGNATURE,
+                signaure: _SIGNATURE,
                 email: EMAIL_USER
               };
 
               if (window.location !== window.parent.location) {
                 REDIRECTION = window.location.href;
+              }
+
+              var meetingJoinParams = {
+                meetingNumber: meetConfig.meetingNumber,
+                userName: meetConfig.userName,
+                signature: meetConfig.signaure,
+                apiKey: meetConfig.apiKey,
+                userEmail: meetConfig.email,
+                passWord: meetConfig.passWord,
+                success: function success(res) {
+                  console.log('Join Meeting Success');
+                },
+                error: function error(res) {
+                  console.log(res);
+                }
+              };
+
+              if (REQUEST_TYPE === 'jwt') {
+                meetingJoinParams.apiKey = _API_KEY;
+              } else if (REQUEST_TYPE === 'sdk') {
+                meetingJoinParams.sdkKey = _API_KEY;
               }
 
               ZoomMtg.init({
@@ -97,34 +118,21 @@ jQuery(function ($) {
                 success: function success() {
                   ZoomMtg.i18n.load(meetConfig.lang);
                   ZoomMtg.i18n.reload(meetConfig.lang);
-                  ZoomMtg.join({
-                    meetingNumber: meetConfig.meetingNumber,
-                    userName: meetConfig.userName,
-                    signature: meetConfig.signaure,
-                    apiKey: meetConfig.apiKey,
-                    userEmail: meetConfig.email,
-                    passWord: meetConfig.passWord,
-                    success: function success(res) {
-                      console.log('Join Meeting Success');
-                    },
-                    error: function error(res) {
-                      console.log(res);
-                    }
-                  });
+                  ZoomMtg.join(meetingJoinParams);
                 },
                 error: function error(res) {
                   console.log(res);
                 }
               });
             } else {
-              $("#zvc-cover").remove();
-              alert("NOT AUTHORIZED");
+              $('#zvc-cover').remove();
+              alert('NOT AUTHORIZED');
             }
           }
         });
       } else {
-        $("#zvc-cover").remove();
-        alert("Incorrect Meeting ID");
+        $('#zvc-cover').remove();
+        alert('Incorrect Meeting ID');
       }
     }
   };

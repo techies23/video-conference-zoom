@@ -29,6 +29,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 		$vczapi_oauth_account_id    = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_oauth_account_id' ) );
 		$vczapi_oauth_client_id     = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_oauth_client_id' ) );
 		$vczapi_oauth_client_secret = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_oauth_client_secret' ) );
+		$vczapi_sdk_key             = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_sdk_key' ) );
+		$vczapi_sdk_secret_key      = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_sdk_secret_key' ) );
 		$zoom_api_key               = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 		$zoom_api_secret            = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 
@@ -36,11 +38,15 @@ class Zoom_Video_Conferencing_Admin_Views {
 		update_option( 'vczapi_oauth_account_id', $vczapi_oauth_account_id );
 		update_option( 'vczapi_oauth_client_id', $vczapi_oauth_client_id );
 		update_option( 'vczapi_oauth_client_secret', $vczapi_oauth_client_secret );
+		//sdk app credentials
+		update_option( 'vczapi_sdk_key', $vczapi_sdk_key );
+		update_option( 'vczapi_sdk_secret_key', $vczapi_sdk_secret_key );
 
 		$OAuth_access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret, );
 
 		if ( is_wp_error( $OAuth_access_token ) ) {
 			$result = sprintf( __( 'Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
+			//error has not been displayed yet.
 		}
 
 		update_option( 'zoom_api_key', $zoom_api_key );
@@ -164,6 +170,9 @@ class Zoom_Video_Conferencing_Admin_Views {
 				$vczapi_oauth_account_id    = get_option( 'vczapi_oauth_account_id' );
 				$vczapi_oauth_client_id     = get_option( 'vczapi_oauth_client_id' );
 				$vczapi_oauth_client_secret = get_option( 'vczapi_oauth_client_secret' );
+				//app sdk
+				$vczapi_sdk_key        = get_option( 'vczapi_sdk_key' );
+				$vczapi_sdk_secret_key = get_option( 'vczapi_sdk_secret_key' );
 
 				$zoom_api_key    = get_option( 'zoom_api_key' );
 				$zoom_api_secret = get_option( 'zoom_api_secret' );
@@ -191,7 +200,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
 					$disable_auto_pwd_generation        = sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) );
 					$debugger_logs                      = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) );
-                    
+
 					update_option( 'zoom_vanity_url', $vanity_url );
 					update_option( 'zoom_api_donot_delete_on_zoom', $delete_zoom_meeting );
 					update_option( 'zoom_past_join_links', $join_links );
