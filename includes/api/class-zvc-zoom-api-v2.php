@@ -117,7 +117,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				$responseBody = wp_remote_retrieve_body( $request );
 
 				//@todo regenerate access token and run request again
-				if ( vczapi_is_oauth_active() ) {
+				if ( $responseCode == 401 && vczapi_is_oauth_active() ) {
 					//only regenerate access token if it's already active;
 					\vczapi\S2SOAuth::get_instance()->regenerateAccessTokenAndSave();
 					//only retry twice;
@@ -126,8 +126,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 						//resend the request after regenerating access token
 						$this->sendRequest( $calledFunction, $data, $request );
 					} else {
-						$this->logMessage( $responseBody, $responseCode, $request );
 						self::$OAuth_revalidate_attempts = 0;
+						$this->logMessage( $responseBody, $responseCode, $request );
 					}
 				}
 
