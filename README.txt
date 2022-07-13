@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 6.0
-Stable tag: 3.9.4
+Stable tag: 3.9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,7 +149,11 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
-= 3.9.6 =
+
+= 3.9.7 July 13th, 2022 =
+* Fixed: Issue showing "meeting no longer valid" when using no fixed time for meetings and webinars.
+
+= 3.9.6 July 11th, 2022 =
 * Fixed: Issue with recordings for multiple same meetings showing only latest recording
 
 = 3.9.4 - 3.9.5 June 28th, 2022 =
