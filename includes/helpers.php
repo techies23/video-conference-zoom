@@ -917,10 +917,18 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
  * @return bool
  */
 function vczapi_is_zoom_activated(): bool {
-	$OauthData = get_option( 'vczapi_global_oauth_data' );
-	if ( ! empty( $OauthData ) ) {
+	if ( vczapi_is_oauth_active() ) {
 		return true;
 	} else {
 		return get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients();
 	}
+}
+
+/**
+ * @return bool
+ */
+function vczapi_is_oauth_active(): bool {
+	$OauthData = get_option( 'vczapi_global_oauth_data' );
+
+	return ! empty( $OauthData ) && isset( $OauthData->access_token ) && ! empty( $OauthData->access_token );
 }

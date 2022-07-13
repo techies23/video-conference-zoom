@@ -79,4 +79,20 @@ class S2SOAuth {
 
 		return $result;
 	}
+
+	/**
+	 * Should only be used when regenerating access token from saved keys
+	 *
+	 * @return void
+	 */
+	public function regenerateAccessTokenAndSave() {
+		$account_id    = get_option( 'vczapi_oauth_account_id' );
+		$client_id     = get_option( 'vczapi_oauth_client_id' );
+		$client_secret = get_option( 'vczapi_oauth_client_secret' );
+
+		$result = $this->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
+		if(is_wp_error($result)){
+			//@todo log error if regenerating access token unsuccessful
+		}
+	}
 }
