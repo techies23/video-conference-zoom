@@ -232,7 +232,6 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		private function getBearerToken() {
 			//@todo this will need to be modified for each user scenario
 			$OauthData = get_option( 'vczapi_global_oauth_data' );
-//			var_dump($OauthData); die;
 			if ( ! empty( $OauthData ) ) {
 				return $OauthData->access_token;
 			} else {
