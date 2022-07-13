@@ -928,9 +928,7 @@ function vczapi_is_zoom_activated(): bool {
  * @return bool
  */
 function vczapi_is_oauth_active(): bool {
-	$OauthData = get_option( 'vczapi_global_oauth_data' );
-
-	return ! empty( $OauthData ) && isset( $OauthData->access_token ) && ! empty( $OauthData->access_token );
+	return ! empty( get_option( 'vczapi_oauth_account_id' ) ) && ! empty( get_option( 'vczapi_oauth_client_id' ) && ! empty( get_option( 'vczapi_oauth_client_secret' ) ) );
 }
 
 /**
