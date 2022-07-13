@@ -115,8 +115,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			} else {
 				$responseCode = wp_remote_retrieve_response_code( $request );
 				$responseBody = wp_remote_retrieve_body( $request );
+				$debug_log    = get_option( 'zoom_api_enable_debug_log' );
 
-				//@todo regenerate access token and run request again
 				if ( $responseCode == 401 && vczapi_is_oauth_active() ) {
 					//only regenerate access token if it's already active;
 					\vczapi\S2SOAuth::get_instance()->regenerateAccessTokenAndSave();
@@ -127,11 +127,12 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 						$this->sendRequest( $calledFunction, $data, $request );
 					} else {
 						self::$OAuth_revalidate_attempts = 0;
-						$this->logMessage( $responseBody, $responseCode, $request );
+						if ( ! empty( $debug_log ) ) {
+							$this->logMessage( $responseBody, $responseCode, $request );
+						}
 					}
 				}
 
-				$debug_log = get_option( 'zoom_api_enable_debug_log' );
 				//If Debug log is enabled.
 				if ( ! empty( $debug_log ) ) {
 					if ( $responseCode == 400 ) {
