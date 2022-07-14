@@ -6,6 +6,7 @@
 
 .zvc-row {
   display: flex;
+  margin-top: 10px;
 }
 
 .zvc_listing_table {
@@ -339,4 +340,64 @@
 
 .notice-warning .vczapi-major-update-warning__icon {
   color: #f56e28;
+}
+
+.vczapi-admin-accordion {
+  margin-bottom: 1.5em;
+  transition: 1s all;
+  will-change: auto;
+
+  &--header {
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    padding: 0.5rem;
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+
+    &-title {
+      width: 80%;
+
+      h3 {
+        margin: 0.5rem;
+        font-weight: 400;
+      }
+    }
+
+    &-trigger {
+      width: 20%;
+      text-align: right;
+
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+
+      .dashicons-arrow-up-alt2 {
+        transform: rotate(90deg);
+      }
+
+    }
+  }
+
+  &--content {
+    padding: 0.5rem 1rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 0 0 3px 3px;
+    display: none;
+  }
+
+  //show if it has expanded class
+  &.expanded &--content {
+    display: block;
+  }
+
+  &.expanded &--header {
+    &-trigger {
+      .dashicons-arrow-up-alt2 {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
 }

@@ -1,3 +1,7 @@
+<?php
+$depreciationLink = '<a href="' . esc_url( 'https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/#jwt-app-type-deprecation-faq--omit-in-toc-' ) . '"
+target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ', 'video-conferencing-with-zoom-api' ) . '</a>';
+?>
 <div id="zvc-cover" style="display: none;"></div>
 <div class="zvc-row">
     <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
@@ -5,79 +9,145 @@
 			<?php
 			wp_nonce_field( 'verify_vczapi_zoom_connect', 'vczapi_zoom_connect_nonce' );
 			?>
-            <table class="form-table">
-                <tbody>
-				<?php if ( isset( $oauth_error_message ) && ! empty( $oauth_error_message ) ) : ?>
-                    <tr>
-                        <th colspan="2">
-							<?php echo $oauth_error_message; ?>
-                        </th>
-                    </tr>
-				<?php endif; ?>
-                <tr>
-                    <th><label for="vczapi_oauth_account_id"><?php _e( 'Oauth Account ID', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;"
-                               name="vczapi_oauth_account_id"
-                               id="vczapi_oauth_account_id" value="<?php echo ! empty( $vczapi_oauth_account_id ) ? esc_html( $vczapi_oauth_account_id ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_account_id">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label for="vczapi_oauth_client_id"><?php _e( 'Oauth Client ID', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;"
-                               name="vczapi_oauth_client_id"
-                               id="vczapi_oauth_client_id" value="<?php echo ! empty( $vczapi_oauth_client_id ) ? esc_html( $vczapi_oauth_client_id ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_id">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label for="vczapi_oauth_client_secret"><?php _e( 'Oauth Client Secret', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;"
-                               name="vczapi_oauth_client_secret"
-                               id="vczapi_oauth_client_secret"
-                               value="<?php echo ! empty( $vczapi_oauth_client_secret ) ? esc_html( $vczapi_oauth_client_secret ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_secret">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label for="vczapi_sdk_key"><?php _e( 'SDK key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;"
-                               name="vczapi_sdk_key"
-                               id="vczapi_sdk_key"
-                               value="<?php echo ! empty( $vczapi_sdk_key ) ? esc_html( $vczapi_sdk_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_key">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label for="vczapi_sdk_secret_key"><?php _e( 'SDK Secret key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;"
-                               name="vczapi_sdk_secret_key"
-                               id="vczapi_sdk_secret_key"
-                               value="<?php echo ! empty( $vczapi_sdk_secret_key ) ? esc_html( $vczapi_sdk_secret_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_secret_key">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label><?php _e( 'JWT API Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#zoom_api_key">Show</a></td>
-                </tr>
-                <tr>
-                    <th><label><?php _e( 'JWT API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                    <td>
-                        <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
-                        <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#zoom_api_secret">Show</a></td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>
-                        <input type="submit" value="Save" class="button  button-primary">
-                    </th>
-                </tr>
-                </tfoot>
-            </table>
+            <div id="vczapi-s2sOauth-credentials" class="vczapi-admin-accordion expanded">
+                <div class="vczapi-admin-accordion--header">
+                    <div class="vczapi-admin-accordion--header-title">
+                        <h3><?php _e( 'Server to Server Oauth Credentials' ); ?></h3>
+                    </div>
+                    <div class="vczapi-admin-accordion--header-trigger">
+                        <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
+                    </div>
+                </div>
+                <div class="vczapi-admin-accordion--content" class="show">
+                    <p class="description">
+						<?php
+						$sdk_app_link = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion" onclick="javascript:void(0);">SDK App Credentials</a>';
+						printf( __( 'Server to server Oauth Credentials is required for basic functionality such as managing meetings, webinars, reports etc., if you have been using JWT keys (version 3.9.7 and below - please switch to Server to Server Oauth before June 2023, please see %s, for Join via Browser to work please also add %s', 'video-conferencing-with-zoom-api' ), $depreciationLink, $sdk_app_link );
+						?>
+                    </p>
+                    <table class="form-table">
+                        <tbody>
+						<?php if ( isset( $oauth_error_message ) && ! empty( $oauth_error_message ) ) : ?>
+                            <tr>
+                                <th colspan="2">
+									<?php echo $oauth_error_message; ?>
+                                </th>
+                            </tr>
+						<?php endif; ?>
+                        <tr>
+                            <th><label for="vczapi_oauth_account_id"><?php _e( 'Oauth Account ID', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;"
+                                       name="vczapi_oauth_account_id"
+                                       id="vczapi_oauth_account_id" value="<?php echo ! empty( $vczapi_oauth_account_id ) ? esc_html( $vczapi_oauth_account_id ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_account_id">Show</a></td>
+                        </tr>
+                        <tr>
+                            <th><label for="vczapi_oauth_client_id"><?php _e( 'Oauth Client ID', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;"
+                                       name="vczapi_oauth_client_id"
+                                       id="vczapi_oauth_client_id" value="<?php echo ! empty( $vczapi_oauth_client_id ) ? esc_html( $vczapi_oauth_client_id ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_id">Show</a></td>
+                        </tr>
+                        <tr>
+                            <th><label for="vczapi_oauth_client_secret"><?php _e( 'Oauth Client Secret', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;"
+                                       name="vczapi_oauth_client_secret"
+                                       id="vczapi_oauth_client_secret"
+                                       value="<?php echo ! empty( $vczapi_oauth_client_secret ) ? esc_html( $vczapi_oauth_client_secret ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_secret">Show</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- App SDK Credentials -->
+            <div id="vczapi-s2sOauth-app-sdk-credentials" class="vczapi-admin-accordion">
+                <div class="vczapi-admin-accordion--header">
+                    <div class="vczapi-admin-accordion--header-title">
+                        <h3><?php _e( 'SDK App Credentials', 'video-conferencing-with-zoom-api' ); ?></h3>
+                    </div>
+                    <div class="vczapi-admin-accordion--header-trigger">
+                        <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
+                    </div>
+                </div>
+                <div class="vczapi-admin-accordion--content">
+                    <table class="form-table">
+                        <tbody>
+                        <tr>
+                            <th><label for="vczapi_sdk_key"><?php _e( 'SDK key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;"
+                                       name="vczapi_sdk_key"
+                                       id="vczapi_sdk_key"
+                                       value="<?php echo ! empty( $vczapi_sdk_key ) ? esc_html( $vczapi_sdk_key ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_key">Show</a></td>
+                        </tr>
+                        <tr>
+                            <th><label for="vczapi_sdk_secret_key"><?php _e( 'SDK Secret key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;"
+                                       name="vczapi_sdk_secret_key"
+                                       id="vczapi_sdk_secret_key"
+                                       value="<?php echo ! empty( $vczapi_sdk_secret_key ) ? esc_html( $vczapi_sdk_secret_key ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_secret_key">Show</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End App SDK Credentials -->
+            <!-- Legacy JWT Implementation -->
+            <div id="vczapi-s2sOauth-jwt-credentials" class="vczapi-admin-accordion">
+                <div class="vczapi-admin-accordion--header">
+                    <div class="vczapi-admin-accordion--header-title">
+                        <h3><?php _e( 'JWT Credentials ( Legacy )', 'video-conferencing-with-zoom-api' ); ?></h3>
+                    </div>
+                    <div class="vczapi-admin-accordion--header-trigger">
+                        <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
+                    </div>
+                </div>
+                <div class="vczapi-admin-accordion--content" class="show">
+                    <p class="description">
+						<?php
+						$switch_to_oauth = '<a href="#vczapi-s2sOauth-credentials" class="vczapi-go-to-open-accordion" onclick="javascript:void(0);">Server to Server Oauth</a>';
+						printf( __( 'As of June 2023, JWT will be deprecated by zoom, please see %s, please move to %s for the replacement to JWT', 'video-conferencing-with-zoom-api' ),
+							$depreciationLink,
+							$switch_to_oauth
+						);
+						?></p>
+                    <table class="form-table">
+                        <tbody>
+                        <tr>
+                            <th><label><?php _e( 'JWT API Key', 'video-conferencing-with-zogit coom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;" name="zoom_api_key" id="zoom_api_key" value="<?php echo ! empty( $zoom_api_key ) ? esc_html( $zoom_api_key ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#zoom_api_key">Show</a></td>
+                        </tr>
+                        <tr>
+                            <th><label><?php _e( 'JWT API Secret Key', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="password" style="width: 400px;" name="zoom_api_secret" id="zoom_api_secret" value="<?php echo ! empty( $zoom_api_secret ) ? esc_html( $zoom_api_secret ) : ''; ?>">
+                                <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#zoom_api_secret">Show</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="vczapi-save-actions">
+                    <table class="form-table">
+                        <tfoot>
+                        <tr>
+                            <th>
+                                <input type="submit" value="Save" class="button  button-primary">
+                            </th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- End Legacy JWT Implementation -->
         </form>
     </div>
     <div class="zvc-position-floater-right">

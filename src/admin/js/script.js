@@ -21,6 +21,7 @@
     setupDOM: function () {
       $dom.changeSelectType = $('.zvc-hacking-select')
       $dom.dateTimePicker = $('#datetimepicker')
+      $dom.goToAccordionEl = $('.vczapi-go-to-open-accordion')
       $dom.reportsDatePicker = $('#reports_date')
       $dom.zoomAccountDatepicker = $('.zoom_account_datepicker')
       $dom.meetingListDTable = $('#zvc_users_list_table, #zvc_meetings_list_table')
@@ -33,10 +34,16 @@
       $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error')
       $dom.toggleTriggerElement = $('.vczapi-toggle-trigger')
       this.$manualHostID = $('.vczapi-admin-hostID-manually-add')
+      $dom.accordionElement = $('.vczapi-admin-accordion')
     },
     eventListeners: function () {
       //toggle show hide
       $dom.toggleTriggerElement.on('click', this.togglePasswordText.bind(this))
+      //accordion js
+      $dom.accordionElement.on('click', '.vczapi-admin-accordion--header', this.toggleAccordion.bind(this))
+      //go to accordiong
+      $dom.goToAccordionEl.on('click', this.expandAccordion.bind(this))
+
       //Check All Table Elements for Meetings List
       $dom.meetingListTableCheck.find('#checkall').on('click', this.meetingListTableCheck)
 
@@ -64,6 +71,28 @@
 
       //Manual Host Selector
       this.$manualHostID.on('click', this.showManualHostIDField.bind(this))
+    },
+    //Expand Accordion
+    expandAccordion: function (e) {
+      e.preventDefault()
+      let $el = $(e.currentTarget)
+      let $targetAccordionEl = $($el.attr('href'))
+      if ($targetAccordionEl !== undefined && $targetAccordionEl.length > 0) {
+        $targetAccordionEl.addClass('expanded')
+        $('html,body').animate({ scrollTop: $targetAccordionEl.offset().top }, 1000)
+        $targetAccordionEl.focus();
+      }
+    },
+
+    /**
+     * Toggle Accordiong Element
+     */
+    toggleAccordion: function (e) {
+      e.preventDefault()
+      let $accordionHeader = $(e.currentTarget)
+      let $accordionWrapper = $accordionHeader.parent()
+      $accordionWrapper.toggleClass('expanded')
+
     },
 
     /**
