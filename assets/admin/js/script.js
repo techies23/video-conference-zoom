@@ -667,10 +667,10 @@
           this.$wizardWrapper.find('.step.active').removeClass('active').fadeOut('slow', function () {
             goToStep.addClass('active').fadeIn('slow');
             $el.data('step', parseInt(nextStep) + 1);
+            $el.attr('disabled', true);
             passedThisRef.$messageWrapper.removeClass('show-message');
           });
         } else {
-          console.log('the champ is here');
           $el.hide();
         }
       }

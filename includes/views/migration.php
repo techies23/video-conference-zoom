@@ -103,7 +103,10 @@
             <tbody>
             <tr>
                 <th>
-                    <input type="button" class="button button-primary next-step" disabled data-step="2" value="<?php _e( 'Next Step', 'video-conferencing-with-zoom-api' ); ?>">
+                    <button class="button button-primary next-step" disabled data-step="2" value="">
+	                    <?php _e( 'Next Step', 'video-conferencing-with-zoom-api' ); ?>
+                        <span class="dashicons dashicons-arrow-right-alt2"></span>
+                    </button>
                 </th>
             </tr>
             </tbody>

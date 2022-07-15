@@ -106,7 +106,7 @@ $jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
                 <!-- End Oauth Credentials -->
 
                 <!-- App SDK Credentials -->
-                <div id="vczapi-s2sOauth-app-sdk-credentials" class="vczapi-admin-accordion">
+                <div id="vczapi-s2sOauth-app-sdk-credentials" class="vczapi-admin-accordion expanded">
                     <div class="vczapi-admin-accordion--header">
                         <div class="vczapi-admin-accordion--header-title">
                             <h3><?php _e( 'SDK App Credentials', 'video-conferencing-with-zoom-api' ); ?></h3>
@@ -116,6 +116,9 @@ $jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
                         </div>
                     </div>
                     <div class="vczapi-admin-accordion--content">
+                        <?php
+                        $appSDK_documentation_link = '<a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web/build/#get-meeting-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
+                        printf( __('SDK App Credentials are required for Join Via Browser to work, see documentation on how to generate you App SDK keys','video-conferencing-with-zoom-api'), $appSDK_documentation_link ) ?>
                         <table class="form-table">
                             <tbody>
                             <tr>
