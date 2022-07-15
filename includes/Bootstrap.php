@@ -70,22 +70,22 @@ final class Bootstrap {
 			return;
 		}
 		?>
-		<hr class="vczapi-major-update-warning__separator"/>
-		<div class="vczapi-major-update-warning">
-			<div class="vczapi-major-update-warning__icon">
-				<span class="dashicons dashicons-info-outline"></span>
-			</div>
-			<div class="vczapi-major-update-warning_wrapper">
-				<div class="vczapi-major-update-warning__title">
+        <hr class="vczapi-major-update-warning__separator"/>
+        <div class="vczapi-major-update-warning">
+            <div class="vczapi-major-update-warning__icon">
+                <span class="dashicons dashicons-info-outline"></span>
+            </div>
+            <div class="vczapi-major-update-warning_wrapper">
+                <div class="vczapi-major-update-warning__title">
 					<?php esc_html_e( 'Heads up, Please backup before upgrade!', 'video-conferencing-with-zoom-api' ); ?>
-				</div>
-				<div class="vczapi-major-update-warning__message">
+                </div>
+                <div class="vczapi-major-update-warning__message">
 					<?php
 					esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you backup your site before upgrading, and make sure you first update in a staging environment', 'video-conferencing-with-zoom-api' );
 					?>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 		<?php
 	}
 
@@ -137,13 +137,13 @@ final class Bootstrap {
 		wp_register_script( 'video-conferencing-with-zoom-api-moment', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment/moment.min.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-moment-locales', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment/moment-with-locales.min.js', array(
 			'jquery',
-			'video-conferencing-with-zoom-api-moment'
+			'video-conferencing-with-zoom-api-moment',
 		), $this->plugin_version, true );
 		//Enqueue MomentJS Timezone
 		wp_register_script( 'video-conferencing-with-zoom-api-moment-timezone', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment-timezone/moment-timezone-with-data-10-year-range.min.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_register_script( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/public' . $minified . '.js', array(
 			'jquery',
-			'video-conferencing-with-zoom-api-moment'
+			'video-conferencing-with-zoom-api-moment',
 		), $this->plugin_version, true );
 		if ( is_singular( 'zoom-meetings' ) ) {
 			wp_enqueue_style( 'video-conferencing-with-zoom-api' );
@@ -168,7 +168,7 @@ final class Bootstrap {
 				'meeting_started'  => ! empty( $zoom_started ) ? $zoom_started : __( 'Meeting Has Started ! Click below join button to join meeting now !', 'video-conferencing-with-zoom-api' ),
 				'meeting_starting' => ! empty( $zoom_going_to_start ) ? $zoom_going_to_start : __( 'Click join button below to join the meeting now !', 'video-conferencing-with-zoom-api' ),
 				'meeting_ended'    => ! empty( $zoom_ended ) ? $zoom_ended : __( 'This meeting has been ended by the host.', 'video-conferencing-with-zoom-api' ),
-				'date_format'      => $date_format
+				'date_format'      => $date_format,
 			) );
 			wp_localize_script( 'video-conferencing-with-zoom-api', 'zvc_strings', $translation_array );
 		}
@@ -213,6 +213,7 @@ final class Bootstrap {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
 
 		//Timezone
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Timezone.php';
@@ -267,7 +268,7 @@ final class Bootstrap {
 			'video-conferencing-with-zoom-api-select2-js',
 			'video-conferencing-with-zoom-api-timepicker-js',
 			'video-conferencing-with-zoom-api-datable-js',
-			'underscore'
+			'underscore',
 		), $this->plugin_version, true );
 
 		wp_localize_script( 'video-conferencing-with-zoom-api-js', 'zvc_ajax', array(
@@ -275,8 +276,8 @@ final class Bootstrap {
 			'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
 			'lang'         => array(
 				'confirm_end'    => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" ),
-				'host_id_search' => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" )
-			)
+				'host_id_search' => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" ),
+			),
 		) );
 	}
 

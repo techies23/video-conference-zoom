@@ -376,3 +376,60 @@
       -ms-transform: rotate(0deg);
           transform: rotate(0deg);
 }
+
+.vczapi-migrate-to-s2sOauth {
+  padding: 2em;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 3px;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 100;
+}
+.vczapi-migrate-to-s2sOauth--overlay {
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+}
+.vczapi-migrate-to-s2sOauth--overlay.expanded {
+  display: block;
+}
+.vczapi-migrate-to-s2sOauth .step {
+  display: none;
+}
+.vczapi-migrate-to-s2sOauth .step.active {
+  display: block;
+}
+.vczapi-migrate-to-s2sOauth--message {
+  padding: 1.5em;
+  border: 1px solid #c3c4c7;
+  border-left-width: 4px;
+  display: none;
+  margin-bottom: 1rem;
+}
+.vczapi-migrate-to-s2sOauth--message.show-message {
+  display: block;
+}
+.vczapi-migrate-to-s2sOauth--message.error-message {
+  border-left-color: #d63638;
+}
+.vczapi-migrate-to-s2sOauth--message.success-message {
+  border-left-color: #00a32a;
+}
+.vczapi-migrate-to-s2sOauth .vczapi-migration-form.submitting .spinner {
+  display: inline-block;
+}
+.vczapi-migrate-to-s2sOauth .vczapi-migration-form .spinner {
+  display: none;
+  float: none;
+}

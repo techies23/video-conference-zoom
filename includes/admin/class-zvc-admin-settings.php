@@ -11,11 +11,52 @@ use Codemanas\VczApi\Data\Logger;
 class Zoom_Video_Conferencing_Admin_Views {
 
 	public static $message = '';
+	//either error warning or success
+	public static $messageType = 'error';
+	public static $isDismissible = true;
 	public $settings;
 
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'zoom_video_conference_menus' ] );
 		add_action( 'admin_init', [ $this, 'zoomConnectHandler' ] );
+		add_action( 'admin_notices', [ $this, 'maybeShowMessage' ] );
+		$this->migration_notice();
+	}
+
+	public function migration_notice() {
+		$depreciationLink = '<a href="' . esc_url( 'https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/#jwt-app-type-deprecation-faq--omit-in-toc-' ) . '"
+target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ', 'video-conferencing-with-zoom-api' ) . '</a>';
+
+		$migration_wizard_url  = esc_url( add_query_arg(
+			[
+				'post_type' => 'zoom-meetings',
+				'page'      => 'zoom-video-conferencing-settings',
+				'migrate'   => 'now',
+			],
+			admin_url( 'edit.php' )
+		) );
+		$migration_wizard_link = '<a href="' . $migration_wizard_url . '">migration wizard</a>';
+
+		self::$message       = sprintf( __( 'Zoom is deprecating their JWT app from June of 2023, please see %s for more details, Until the deadline all your current settings will work, however to ensure a smooth transition to the new Server to Server OAuth system + New App SDK (required for Join Via Browser) - we recommend that you migrate as soon as possible. Run the %s now to complete the migration process in 2 easy steps ', 'video-conferencing-with-zoom-api' ), $depreciationLink, $migration_wizard_link );
+		self::$isDismissible = true;
+		self::$messageType   = 'error';
+	}
+
+	public function maybeShowMessage() {
+		if ( empty( self::$message ) ) {
+			return;
+		}
+		$message_classes   = [
+			'success' => 'notice-success',
+			'error'   => 'notice-error',
+			'warning' => 'notice-warning',
+		];
+		$additionalClasses = $message_classes[ self::$messageType ] . ' ' . ( self::$isDismissible ? 'is-dismissible' : '' );
+		?>
+        <div class="notice <?php _e( $additionalClasses ) ?>">
+            <p><?php _e( self::$message ); ?></p>
+        </div>
+		<?php
 	}
 
 	public function zoomConnectHandler() {

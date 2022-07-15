@@ -537,7 +537,147 @@
       }
     }
   };
+  var vczapiMigrationWizard = {
+    init: function init() {
+      this.cacheDOM();
+
+      if (this.$wizardWrapper !== undefined && this.$wizardWrapper.length > 0) {
+        this.eventListeners();
+      }
+    },
+    cacheDOM: function cacheDOM() {
+      this.$wizardOverlay = $('.vczapi-migrate-to-s2sOauth--overlay');
+      this.$wizardWrapper = $('.vczapi-migrate-to-s2sOauth');
+      this.$s2sOauthForm = $('#vczapi-s2sOauthCredentials-wizard-form');
+      this.$appSDKForm = $('#vczapi-s2soauth-app-sdk-form');
+      this.$messageWrapper = this.$wizardWrapper.find('.vczapi-migrate-to-s2sOauth--message');
+    },
+    eventListeners: function eventListeners() {
+      this.maybeTriggerMigrationWizard();
+      this.$wizardWrapper.find('.next-step').on('click', this.navigateToStep.bind(this));
+      this.$s2sOauthForm.on('submit', this.s2sOauthFormHandler.bind(this));
+      this.$appSDKForm.on('submit', this.appSDKFormHandler.bind(this));
+      $('body').on('click', this.maybeCloseWizard.bind(this));
+    },
+    maybeCloseWizard: function maybeCloseWizard(e) {
+      var clickTriggerEl = e.target;
+
+      if ($(clickTriggerEl)[0] === this.$wizardOverlay[0]) {
+        this.$wizardOverlay.removeClass('expanded');
+      }
+    },
+    showMessage: function showMessage(type) {
+      var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'text';
+      var messageClass = 'show-message ' + (type === 'success' ? 'success-message' : 'error-message');
+      this.$wizardWrapper.find('.vczapi-migrate-to-s2sOauth--message').removeClass(['error-message', 'success-message']);
+      this.$wizardWrapper.find('.vczapi-migrate-to-s2sOauth--message').addClass(messageClass).text(message);
+    },
+    s2sOauthFormHandler: function s2sOauthFormHandler(e) {
+      e.preventDefault();
+      var $form = $(e.target);
+      var data = $form.serialize();
+      $.ajax({
+        type: 'POST',
+        url: ajaxurl + '?action=vczapi_save_oauth_credentials',
+        context: this,
+        data: data,
+        beforeSend: function beforeSend() {
+          this.$s2sOauthForm.find('input').prop('disabled', true);
+          this.$s2sOauthForm.addClass('submitting');
+        },
+        success: function success(response) {
+          this.$s2sOauthForm.find('input').prop('disabled', false);
+          this.$s2sOauthForm.removeClass('submitting');
+
+          if (response.hasOwnProperty('success') && response.success) {
+            this.showMessage('success', response === null || response === void 0 ? void 0 : response.data.message);
+            this.$wizardWrapper.find('.next-step').attr('disabled', false);
+          } else {
+            this.showMessage('error', response === null || response === void 0 ? void 0 : response.data.message);
+          }
+        },
+        error: function error(MLHttpRequest, textStatus, errorThrown) {
+          console.log('Error thrown', errorThrown);
+        }
+      });
+    },
+    appSDKFormHandler: function appSDKFormHandler(e) {
+      e.preventDefault();
+      var $form = $(e.target);
+      var data = $form.serialize();
+      $.ajax({
+        type: 'POST',
+        url: ajaxurl + '?action=vczapi_save_app_sdk_credentials',
+        context: this,
+        data: data,
+        beforeSend: function beforeSend() {
+          this.$appSDKForm.find('input').prop('disabled', true);
+          this.$appSDKForm.addClass('submitting');
+        },
+        success: function success(response) {
+          this.$appSDKForm.find('input').prop('disabled', false);
+          this.$appSDKForm.removeClass('submitting');
+
+          if (response.hasOwnProperty('success') && response.success) {
+            this.showMessage('success', response === null || response === void 0 ? void 0 : response.data.message);
+            this.$wizardWrapper.find('.next-step').attr('disabled', false);
+          } else {
+            this.showMessage('error', response === null || response === void 0 ? void 0 : response.data.message);
+          }
+        },
+        error: function error(MLHttpRequest, textStatus, errorThrown) {
+          console.log('Error thrown', errorThrown);
+        }
+      });
+    },
+    maybeTriggerMigrationWizard: function maybeTriggerMigrationWizard() {
+      var params = this.getSearchParameters();
+
+      if (params.hasOwnProperty('page') && params.page === 'zoom-video-conferencing-settings' && params.hasOwnProperty('migrate') && params.migrate === 'now') {
+        this.$wizardOverlay.addClass('expanded');
+      }
+    },
+    getSearchParameters: function getSearchParameters() {
+      var prmstr = window.location.search.substring(1);
+      return prmstr != null && prmstr !== '' ? this.transformToAssocArray(prmstr) : {};
+    },
+    transformToAssocArray: function transformToAssocArray(prmstr) {
+      var params = {};
+      var prmarr = prmstr.split('&');
+
+      for (var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split('=');
+        params[tmparr[0]] = tmparr[1];
+      }
+
+      return params;
+    },
+    navigateToStep: function navigateToStep(e) {
+      e.preventDefault();
+      var $el = $(e.currentTarget);
+      var nextStep = $el.data('step');
+
+      if (nextStep === undefined) {
+        console.log('Error no steps defined');
+      } else {
+        var passedThisRef = this;
+        var goToStep = passedThisRef.$wizardWrapper.find('.step-' + nextStep);
+
+        if (goToStep.length > 0) {
+          this.$wizardWrapper.find('.step.active').removeClass('active').fadeOut('slow', function () {
+            goToStep.addClass('active').fadeIn('slow');
+            $el.data('step', parseInt(nextStep) + 1);
+            passedThisRef.$messageWrapper.removeClass('show-message');
+          });
+        } else {
+          console.log('the champ is here');
+          $el.hide();
+        }
+      }
+    }
+  };
   $(function () {
+    vczapiMigrationWizard.init();
     ZoomAPIJS.onReady();
     vczapi_sync_meetings.init();
     vczapi_webinars.init();
