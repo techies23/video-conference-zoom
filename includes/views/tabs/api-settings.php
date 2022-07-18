@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a target="_blank" href="<?php echo ZVC_PLUGIN_AUTHOR; ?>/zoom-conference-wp-plugin-documentation/"><?php _e( 'this guide', 'video-conferencing-with-zoom-api' ) ?> </a> <?php _e( 'to generate the below API values from your Zoom account', 'video-conferencing-with-zoom-api' ) ?>
         </h3>
 
-        <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings" method="POST">
+        <form action="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings&tab=api-settings" method="POST">
 			<?php wp_nonce_field( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' ); ?>
             <table class="form-table">
                 <tbody>
