@@ -2,6 +2,16 @@
 $depreciationLink = '<a href="' . esc_url( 'https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/#jwt-app-type-deprecation-faq--omit-in-toc-' ) . '"
 target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ', 'video-conferencing-with-zoom-api' ) . '</a>';
 
+$migration_wizard_url  = esc_url( add_query_arg(
+	[
+		'post_type' => 'zoom-meetings',
+		'page'      => 'zoom-video-conferencing-settings',
+		'migrate'   => 'now',
+	],
+	admin_url( 'edit.php' )
+) );
+$migration_wizard_link = '<a href="' . $migration_wizard_url . '">migration wizard</a>';
+
 $jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
 
 ?>
@@ -25,7 +35,7 @@ $jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
                         </div>
                         <div class="vczapi-admin-accordion--content" class="show">
 							<?php
-							printf( __( 'Zoom is deprecating their JWT app from June of 2023, please see %s and until then all your current settings will work, however to ensure a smooth transition to the new Server to Server OAuth system + New App SDK (required for Join Via Browser) - we recommend that you migrate as soon as possible. ', 'video-conferencing-with-zoom-api' ), $depreciationLink );
+							printf( __( 'Zoom is deprecating their JWT app from June of 2023, please see %s for more details, Until the deadline all your current settings will work, however to ensure a smooth transition to the new Server to Server OAuth system + New App SDK (required for Join Via Browser) - we recommend that you migrate as soon as possible. Run the %s now to complete the migration process in 2 easy steps ', 'video-conferencing-with-zoom-api' ), $depreciationLink, $migration_wizard_link );
 							?>
                             <table class="form-table">
                                 <tbody>

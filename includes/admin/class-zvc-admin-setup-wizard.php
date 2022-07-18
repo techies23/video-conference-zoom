@@ -9,12 +9,15 @@ class VCZAPI_Admin_Setup_Wizard {
 	public static function get_instance(): ?VCZAPI_Admin_Setup_Wizard {
 		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
-
+	
 	public function __construct() {
 		add_action( 'wp_ajax_vczapi_save_oauth_credentials', [ $this, 'save_oauth_credentials' ] );
 		add_action( 'wp_ajax_vczapi_save_app_sdk_credentials', [ $this, 'save_app_sdk_credentials' ] );
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save_oauth_credentials() {
 		$nonce = filter_input( INPUT_POST, 's2sOauth_wizard_nonce' );
 
@@ -43,6 +46,9 @@ class VCZAPI_Admin_Setup_Wizard {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save_app_sdk_credentials() {
 		$nonce = filter_input( INPUT_POST, 's2sOauth_wizard_nonce' );
 
