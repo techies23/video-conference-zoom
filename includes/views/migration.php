@@ -1,9 +1,17 @@
+<?php
+$settings_url = esc_url( add_query_arg(
+	[
+		'post_type' => 'zoom-meetings',
+		'page'      => 'zoom-video-conferencing-settings',
+		'tab'       => 'api-settings',
+	],
+	admin_url( 'edit.php' )
+) );
+?>
 <div class="vczapi-migrate-to-s2sOauth--overlay">
     <div class="vczapi-migrate-to-s2sOauth">
         <h3><?php _e( 'Migration Wizard', 'video-conferencing-with-zoom-api' ) ?></h3>
-        <p>
-			<?php _e( 'Migrate from JWT to Server to Server Oauth in 2 easy steps', 'video-conferencing-with-zoom-api' ); ?>
-        </p>
+        <p><?php _e( 'Migrate from JWT to Server to Server Oauth in 2 easy steps', 'video-conferencing-with-zoom-api' ); ?></p>
         <div class="vczapi-migrate-to-s2sOauth--message error-message"></div>
         <div class="step step-1 active">
             <form id="vczapi-s2sOauthCredentials-wizard-form" class="vczapi-migration-form" method="post" action="">
@@ -98,13 +106,14 @@
         </div>
         <div class="step step-3">
             <h4><?php _e( 'That\'s it, we\'re all done, thank you for continuing to choose Video Conferencing with Zoom API', 'video-conferencing-with-zoom-api' ); ?></h4>
+            <a href="<?php echo $settings_url; ?>" class="button button-primary"><?php _e( 'Finish', 'video-conferencing-with-zoom-api' ); ?></a>
         </div>
         <table class="form-table">
             <tbody>
             <tr>
                 <th>
-                    <button class="button button-primary next-step" disabled data-step="2" value="">
-	                    <?php _e( 'Next Step', 'video-conferencing-with-zoom-api' ); ?>
+                    <button class="button button-primary next-step" disabled data-step="2" data-final_step="3" value="">
+						<?php _e( 'Next Step', 'video-conferencing-with-zoom-api' ); ?>
                         <span class="dashicons dashicons-arrow-right-alt2"></span>
                     </button>
                 </th>

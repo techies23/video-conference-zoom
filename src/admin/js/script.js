@@ -632,17 +632,23 @@
     navigateToStep: function (e) {
       e.preventDefault()
       let $el = $(e.currentTarget)
-      let nextStep = $el.data('step')
-      if (nextStep === undefined) {
+      let currentStep = $el.data('step')
+      let finalStep = $el.data('final_step')
+      if (currentStep === undefined) {
         console.log('Error no steps defined')
       } else {
         let passedThisRef = this
-        let goToStep = passedThisRef.$wizardWrapper.find('.step-' + nextStep)
+        let goToStep = passedThisRef.$wizardWrapper.find('.step-' + currentStep)
         if (goToStep.length > 0) {
+          let nextStep = parseInt(currentStep) + 1
+          //check if it's final step
           this.$wizardWrapper.find('.step.active').removeClass('active').fadeOut('slow', function () {
             goToStep.addClass('active').fadeIn('slow')
-            $el.data('step', parseInt(nextStep) + 1)
+            $el.data('step', nextStep)
             $el.attr('disabled', true)
+            if (nextStep > parseInt(finalStep)) {
+              $el.hide()
+            }
             passedThisRef.$messageWrapper.removeClass('show-message')
           })
         } else {

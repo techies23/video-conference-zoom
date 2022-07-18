@@ -655,19 +655,27 @@
     navigateToStep: function navigateToStep(e) {
       e.preventDefault();
       var $el = $(e.currentTarget);
-      var nextStep = $el.data('step');
+      var currentStep = $el.data('step');
+      var finalStep = $el.data('final_step');
 
-      if (nextStep === undefined) {
+      if (currentStep === undefined) {
         console.log('Error no steps defined');
       } else {
         var passedThisRef = this;
-        var goToStep = passedThisRef.$wizardWrapper.find('.step-' + nextStep);
+        var goToStep = passedThisRef.$wizardWrapper.find('.step-' + currentStep);
 
         if (goToStep.length > 0) {
+          var nextStep = parseInt(currentStep) + 1; //check if it's final step
+
           this.$wizardWrapper.find('.step.active').removeClass('active').fadeOut('slow', function () {
             goToStep.addClass('active').fadeIn('slow');
-            $el.data('step', parseInt(nextStep) + 1);
+            $el.data('step', nextStep);
             $el.attr('disabled', true);
+
+            if (nextStep > parseInt(finalStep)) {
+              $el.hide();
+            }
+
             passedThisRef.$messageWrapper.removeClass('show-message');
           });
         } else {
