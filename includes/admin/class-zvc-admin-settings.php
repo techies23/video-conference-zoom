@@ -23,7 +23,17 @@ class Zoom_Video_Conferencing_Admin_Views {
 		$this->migration_notice();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function migration_notice() {
+
+		$is_jwt_active = vczapi_is_jwt_active();
+		//don't show admin notice is JWT Keys are empty
+		if ( ! apply_filters( 'vczapi_show_jwt_keys', ( $is_jwt_active ) ) ) {
+			return;
+		}
+
 		$depreciationLink = '<a href="' . esc_url( 'https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/#jwt-app-type-deprecation-faq--omit-in-toc-' ) . '"
 target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ', 'video-conferencing-with-zoom-api' ) . '</a>';
 
@@ -186,7 +196,13 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
         <div class="wrap">
             <h1><?php _e( 'Zoom Integration Settings', 'video-conferencing-with-zoom-api' ); ?></h1>
             <h2 class="nav-tab-wrapper">
-                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'connect' ) ) ); ?>" class="nav-tab <?php echo ( 'connect' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a href="<?php echo esc_url( add_query_arg(
+					[
+						'post_type' => 'zoom-meetings',
+						'page'      => 'zoom-video-conferencing-settings',
+					],
+					admin_url( 'edit.php' )
+				) ); ?>" class="nav-tab <?php echo ( 'connect' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Connect', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
                 <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'api-settings' ) ) ); ?>" class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">

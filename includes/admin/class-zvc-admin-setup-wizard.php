@@ -33,6 +33,11 @@ class VCZAPI_Admin_Setup_Wizard {
 		$client_id     = filter_input( INPUT_POST, 'vczapi_wizard_oauth_client_id' );
 		$client_secret = filter_input( INPUT_POST, 'vczapi_wizard_oauth_client_secret' );
 
+		//added for Oauth S2S
+		update_option( 'vczapi_oauth_account_id', $account_id );
+		update_option( 'vczapi_oauth_client_id', $client_id );
+		update_option( 'vczapi_oauth_client_secret', $client_secret );
+
 		$result = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
 		if ( ! is_wp_error( $result ) ) {
 			$decoded_users = json_decode( zoom_conference()->listUsers() );
@@ -62,14 +67,13 @@ class VCZAPI_Admin_Setup_Wizard {
 
 		$vczapi_sdk_key        = filter_input( INPUT_POST, 'vczapi_wizard_sdk_key' );
 		$vczapi_sdk_secret_key = filter_input( INPUT_POST, 'vczapi_wizard_sdk_secret_key' );
+		update_option( 'vczapi_sdk_key', $vczapi_sdk_key );
+		update_option( 'vczapi_sdk_secret_key', $vczapi_sdk_secret_key );
 		if ( empty( $vczapi_sdk_key) ) {
 			wp_send_json_error(['message' => 'SDK Key is missing, please double check your credentials'] );
 		}else if( empty($vczapi_sdk_secret_key)){
 			wp_send_json_error(['message' => 'SDK Secret Key is missing, please double check your credentials'] );
 		}
-
-		update_option( 'vczapi_sdk_key', $vczapi_sdk_key );
-		update_option( 'vczapi_sdk_secret_key', $vczapi_sdk_secret_key );
 		
 		wp_send_json_success(['message' => 'App SDK Keys succesfully saved, please check that join via browser is working on your site.']);
 	}

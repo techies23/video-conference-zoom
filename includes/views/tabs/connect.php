@@ -12,7 +12,7 @@ $migration_wizard_url  = esc_url( add_query_arg(
 ) );
 $migration_wizard_link = '<a href="' . $migration_wizard_url . '">migration wizard</a>';
 
-$jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
+$is_jwt_active   = vczapi_is_jwt_active();
 
 ?>
     <div id="zvc-cover" style="display: none;"></div>
@@ -22,7 +22,7 @@ $jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
 				<?php
 				wp_nonce_field( 'verify_vczapi_zoom_connect', 'vczapi_zoom_connect_nonce' );
 				?>
-				<?php if ( apply_filters( 'vczapi_show_jwt_keys', $jwt_keys_exist ) ): ?>
+				<?php if ( apply_filters( 'vczapi_show_jwt_keys', ( $is_jwt_active ) ) ): ?>
                     <!-- Legacy JWT Implementation -->
                     <div id="vczapi-s2sOauth-jwt-credentials" class="vczapi-admin-accordion expanded">
                         <div class="vczapi-admin-accordion--header">
@@ -126,9 +126,9 @@ $jwt_keys_exist = ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
                         </div>
                     </div>
                     <div class="vczapi-admin-accordion--content">
-                        <?php
-                        $appSDK_documentation_link = '<a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web/build/#get-meeting-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
-                        printf( __('SDK App Credentials are required for Join Via Browser to work, see documentation on how to generate you App SDK keys','video-conferencing-with-zoom-api'), $appSDK_documentation_link ) ?>
+						<?php
+						$appSDK_documentation_link = '<a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web/build/#get-meeting-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
+						printf( __( 'SDK App Credentials are required for Join Via Browser to work, see documentation on how to generate you App SDK keys', 'video-conferencing-with-zoom-api' ), $appSDK_documentation_link ) ?>
                         <table class="form-table">
                             <tbody>
                             <tr>

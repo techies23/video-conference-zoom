@@ -927,6 +927,15 @@ function vczapi_is_zoom_activated(): bool {
 /**
  * @return bool
  */
+function vczapi_is_jwt_active(): bool {
+	$zoom_api_key    = get_option( 'zoom_api_key' );
+	$zoom_api_secret = get_option( 'zoom_api_secret' );
+	return ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret );
+}
+
+/**
+ * @return bool
+ */
 function vczapi_is_oauth_active(): bool {
 	return ! empty( get_option( 'vczapi_oauth_account_id' ) ) && ! empty( get_option( 'vczapi_oauth_client_id' ) && ! empty( get_option( 'vczapi_oauth_client_secret' ) ) );
 }
