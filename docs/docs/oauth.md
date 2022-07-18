@@ -1,42 +1,25 @@
-**Note: This feature is not yet available on WordPress plugin stable version. It's in development. Please use `API Keys Integration` section for the moment.**
+#Setup Video Conferencing with Zoom API
 
-Here below are the steps to integrate Zoom into WordPress using OAuth. There are no complicated processes. Just the basic steps.
+Here below are the steps to setup Zoom into WordPress.
+## Setup Server-to-Server OAuth
+###Generating API Credentials:
 
-**Why use this method ? Use thiss because it's the easiet way to connect your Zoom account with your WordPress site.**
+For this plugin you will be using Server-to-Server OAuth app type.
 
-**Check out the <a href="https://www.youtube.com/watch?v=S_uS5Q3nZEE" target="_blank">video documentation</a> if you want to see live demo.**
+1. First go to [Create Page](https://marketplace.zoom.us/develop/create)
+2. Find Server-to-Server OAuth and click create ![Create Server to Server Oauth](img/s2s-oauth/create-s2s-oauth.png)
+3. Add your app name ![Give your app a name](img/s2s-oauth/app-name.png)
+4. Once App is created - you will be taken to an App Overview page where you can see App Credentials ![App Credentials](img/s2s-oauth/app-credentials.png)
+5. You will need to add Contact name, Contact email and Company name on the information page ![App Informaiton](img/s2s-oauth/s2s-info.png)
+6. For the plugin to work - you will need to define the correct scopes for the App. Go to scopes and click "Add Scopes" and add Meeting, Webinar, Report, User, Recording, Report and select all options on each selected scopes ![Add Scopes](img/s2s-oauth/add-scopes.png)
 
-### How to Connect ?
+###Adding Keys to the plugin
+1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/plugin-settings-s2s-oauth.png)
+2. Add the account credentials that can be viewed in the app ![App Credentials](img/s2s-oauth/app-credentials.png)
 
-Follow the instructions below to connect using OAuth:
+##Setup App SDK Credentials
+App SDK are required for Join via Browser/Web SDK to work properly.
 
-1. Go to **Dashboard->Zoom Meeting->Settings** and check the ***Oauth*** radiobox in **Connection Options**
-
-	---
-	
-	![OAuth setting](img/oauth-setting.png "OAuth Setting")
-	
-	---
-
-2. Then click **Connect Zoom** button. You will be redirected to signin page in **Zoom**.
-3. After signing in, you are asked to authorize CodeManas's **Integration for WordPress** app to use your information on your account.
-	
-	*Below are the access you will be providing the app:*
-
-    * View all user meetings
-    * View and manage all user meetings
-    * View all user information
-    * View and manage all users
-
-	---
-	
-	![OAuth Authorize](img/oauth-authorize.png "OAuth Authorize") <br />
-
-	---
-
-4. After you are authorized, you will be redirected to the setting page on your Dashboard. Then click **"Save Changes"** button to save the authorization code. 
-
-***Note:*** It's quite important that you click **"Save Changes"** button after redirection.
-
-Then you are good to go!!! You can create Zoom meetings from your WordPress Dashboard easily.
-
+###Generating App SDK Credentials
+1. Go to [Create Page](https://marketplace.zoom.us/develop/create)
+2. Find 
