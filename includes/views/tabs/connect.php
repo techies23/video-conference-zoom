@@ -12,7 +12,7 @@ $migration_wizard_url  = esc_url( add_query_arg(
 ) );
 $migration_wizard_link = '<a href="' . $migration_wizard_url . '">migration wizard</a>';
 
-$is_jwt_active   = vczapi_is_jwt_active();
+$is_jwt_active = vczapi_is_jwt_active();
 
 ?>
     <div id="zvc-cover" style="display: none;"></div>
@@ -109,6 +109,14 @@ $is_jwt_active   = vczapi_is_jwt_active();
                                            value="<?php echo ! empty( $vczapi_oauth_client_secret ) ? esc_html( $vczapi_oauth_client_secret ) : ''; ?>">
                                     <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_secret">Show</a></td>
                             </tr>
+							<?php if ( $is_jwt_active ): ?>
+                                <tr>
+                                    <th><?php _e( 'Delete JWT Keys', 'video-conferencing-with-zoom-api' ); ?></th>
+                                    <td><input type="checkbox" id="vczapi-delete-jwt-keys" name="vczapi-delete-jwt-keys"/>
+                                        <span class="description"><?php _e('Check this box to delete JWT (legacy keys) after saving and verifying Server-to-Server Oauth Keys','video-conferencing-with-zoom-api'); ?></span>
+                                    </td>
+                                </tr>
+							<?php endif; ?>
                             </tbody>
                         </table>
                     </div>

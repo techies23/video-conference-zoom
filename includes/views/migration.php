@@ -47,6 +47,14 @@ $settings_url = esc_url( add_query_arg(
                                    value="<?php echo ! empty( $vczapi_oauth_client_secret ) ? esc_html( $vczapi_oauth_client_secret ) : ''; ?>">
                             <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_wizard_oauth_client_secret">Show</a></td>
                     </tr>
+                    <?php if ( vczapi_is_jwt_active() ): ?>
+                        <tr>
+                            <th><?php _e( 'Delete JWT Keys', 'video-conferencing-with-zoom-api' ); ?></th>
+                            <td><input type="checkbox" id="vczapi_wizard_delete_jwt_keys" name="vczapi_wizard_delete_jwt_keys"/>
+                                <span class="description"><?php _e('Check this box to delete JWT (legacy keys) after saving and verifying Server-to-Server Oauth Keys','video-conferencing-with-zoom-api'); ?></span>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                     </tbody>
                     <tfoot>
                     <tr>
