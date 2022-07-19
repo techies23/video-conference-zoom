@@ -71,8 +71,9 @@ $is_jwt_active = vczapi_is_jwt_active();
                     <div class="vczapi-admin-accordion--content" class="show">
                         <p class="description">
 							<?php
+                            $oauth_documentation_link = '<a href="https://zoom.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
 							$sdk_app_link = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion" onclick="javascript:void(0);">SDK App Credentials</a>';
-							printf( __( 'Server to server Oauth Credentials is required for basic functionality such as managing meetings, webinars, reports etc., if you have been using JWT keys (version 3.9.7 and below - please switch to Server to Server Oauth before June 2023, please see %s, for Join via Browser to work please also add %s', 'video-conferencing-with-zoom-api' ), $depreciationLink, $sdk_app_link );
+							printf( __( 'Please see %s on how to generate credentials, additionally for Join via Browser to work please also add %s', 'video-conferencing-with-zoom-api' ), $oauth_documentation_link, $sdk_app_link );
 							?>
                         </p>
                         <table class="form-table">
