@@ -85,7 +85,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		$zoom_api_key               = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
 		$zoom_api_secret            = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
 		$delete_jwt_keys            = sanitize_text_field( filter_input( INPUT_POST, 'vczapi-delete-jwt-keys' ) );
-        
+
 
 		//added for Oauth S2S
 		update_option( 'vczapi_oauth_account_id', $vczapi_oauth_account_id );
@@ -94,19 +94,23 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		//sdk app credentials
 		update_option( 'vczapi_sdk_key', $vczapi_sdk_key );
 		update_option( 'vczapi_sdk_secret_key', $vczapi_sdk_secret_key );
-        
-        //jwt keys update
+
+		//jwt keys update
 		update_option( 'zoom_api_key', $zoom_api_key );
 		update_option( 'zoom_api_secret', $zoom_api_secret );
 
 		$OAuth_access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret, );
 
 		if ( is_wp_error( $OAuth_access_token ) ) {
-			$result = sprintf( __( 'Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
+			self::$message     = sprintf( __( 'Zoom Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
+			self::$messageType = 'error';
 			//error has not been displayed yet.
-		}else if($delete_jwt_keys == 'on'){
-		    delete_option('zoom_api_key');
-            delete_option('zoom_api_secret');
+		} elseif ( $delete_jwt_keys == 'on' ) {
+			delete_option( 'zoom_api_key' );
+			delete_option( 'zoom_api_secret' );
+		} else {
+			self::$message     = __( 'Zoom: Credentials successfully verified and saved ', 'video-conferencing-with-zoom-api' );
+			self::$messageType = 'success';
 		}
 	}
 
