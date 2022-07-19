@@ -124,7 +124,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 					if ( self::$OAuth_revalidate_attempts <= 2 ) {
 						self::$OAuth_revalidate_attempts ++;
 						//resend the request after regenerating access token
-						$this->sendRequest( $calledFunction, $data, $initialRequest );
+						return $this->sendRequest( $calledFunction, $data, $initialRequest );
 					} else {
 						self::$OAuth_revalidate_attempts = 0;
 						if ( ! empty( $debug_log ) ) {
