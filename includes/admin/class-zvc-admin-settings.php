@@ -109,8 +109,20 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 			delete_option( 'zoom_api_key' );
 			delete_option( 'zoom_api_secret' );
 		} else {
+            //probably need a helper function or code to save keys on save differently
+			$decoded_users = json_decode( zoom_conference()->listUsers() );
+			if ( ! empty( $decoded_users->code ) ) {
+				if ( is_admin() ) {
+					add_action( 'admin_notices', 'vczapi_check_connection_error' );
+				}
+			} else {
+				$users = ! empty( $decoded_users->users ) ? $decoded_users->users : false;
+				vczapi_set_cache( '_zvc_user_lists', $users, 108000 );
+			}
+			//vczapi_set_cache( '_zvc_user_lists', $users, 108000 );
 			self::$message     = __( 'Zoom: Credentials successfully verified and saved ', 'video-conferencing-with-zoom-api' );
 			self::$messageType = 'success';
+            video_conferencing_zoom_api_get_user_transients();
 		}
 	}
 
