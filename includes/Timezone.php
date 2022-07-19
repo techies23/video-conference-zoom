@@ -38,7 +38,7 @@ class Timezone {
 		$show_defined_post = apply_filters( 'vczapi_show_join_links_specific_postID', array() );
 		$past_join_links   = get_option( 'zoom_past_join_links' );
 		$post_id           = absint( filter_input( INPUT_POST, 'post_id' ) );
-		if ( $start_time >= $current_user_time || $past_join_links || in_array( $post_id, $show_defined_post ) || $meeting_type == 3 || $meeting_type == 6 ) {
+		if ( $start_time >= $current_user_time || $past_join_links || in_array( $post_id, $show_defined_post ) || $meeting_type == 3 || $meeting_type == 6  ) {
 			if ( $type === "page" ) {
 				wp_send_json_success( $this->output_join_links_page( $post_id ) );
 			} else {
