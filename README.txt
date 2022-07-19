@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 4.9
 Tested up to: 6.0
-Stable tag: 3.9.7
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+= 4.0.0 July 19th, 2022 =
+* Major Change: Update, Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoom.codemanas.com/setup/)
+* Update web sdk to version 2.5.0
 
 = 3.9.7 July 13th, 2022 =
 * Fixed: Issue showing "meeting no longer valid" when using no fixed time for meetings and webinars.
