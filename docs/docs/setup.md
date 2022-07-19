@@ -1,6 +1,10 @@
 #Setup Video Conferencing with Zoom API
 
 Here below are the steps to setup Zoom into WordPress.
+
+From version 4.0.0 of Video Conferencing with Zoom API - the plugin has moved to Server-to-Server OAuth from JWT, this is because Zoom is deprecating JWT App type from June 2023,
+For more info see [JWT App Type Depecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), please see [migration guide](migration.md) to go to new Server-to-Server OAuth / App SDK
+
 ## Setup Server-to-Server OAuth
 ###Generating API Credentials:
 

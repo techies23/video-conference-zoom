@@ -15,7 +15,7 @@
     
     
       
-        <title>Uninstalling App - Video Conferencing with Zoom Documentation</title>
+        <title>Migration from JWT - Video Conferencing with Zoom Documentation</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#uninstalling-app" class="md-skip">
+        <a href="#migration-from-jwt" class="md-skip">
           Skip to content
         </a>
       
@@ -87,7 +87,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Uninstalling App
+              Migration from JWT
             
           </span>
         </div>
@@ -221,20 +221,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../integration/" class="md-nav__link">
-      API Keys Integration
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../oauth/" class="md-nav__link">
-      OAuth Connection
+    <a href="../setup/" class="md-nav__link">
+      Setup
     </a>
   </li>
 
@@ -250,19 +238,23 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Uninstalling App
+        Migration from JWT
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      Uninstalling App
+      Migration from JWT
     </a>
     
       
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -272,9 +264,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#uninstalling-app" class="md-nav__link">
-    Uninstalling App
+  <a href="#reason" class="md-nav__link">
+    Reason
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-wizard" class="md-nav__link">
+    Migration Wizard
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Wizard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    Step 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    Step 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    Step 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -620,6 +646,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -628,9 +656,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#uninstalling-app" class="md-nav__link">
-    Uninstalling App
+  <a href="#reason" class="md-nav__link">
+    Reason
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-wizard" class="md-nav__link">
+    Migration Wizard
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Wizard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    Step 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    Step 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    Step 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -646,21 +708,33 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/uninstalling.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/migration.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Uninstalling App</h1>
-                
-                <p>This is related OAuth connection. So, please avoid users in current version as this has not been published in public version.</p>
-<h3 id="uninstalling-app">Uninstalling App</h3>
-<ol>
-<li>Login to your Zoom Account and navigate to the Zoom App Marketplace.</li>
-<li>Click <strong>Manage &gt; Installed App</strong> or serach for the Integration for WordPress.</li>
-<li>Click the <strong>Integration for WordPress</strong> app.</li>
-<li>CLick on <strong>Uninstall</strong></li>
-</ol>
+                <h1 id="migration-from-jwt">Migration from JWT</h1>
+<h2 id="reason">Reason</h2>
+<p>Previous versions of Video Conferencing with Zoom API ( version 3.9.7 and below) - used JWT credentials to connect and utlize zoom.
+As of June 2023, Zoom will deprecate JWT App type - please see <a href="https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/">JWT App Type Deprecation FAQ</a>
+From version 4.0.0 and above the plugin has moved to <a href="https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/">Server-to-Server OAuth App</a> and <a href="https://marketplace.zoom.us/docs/guides/build/sdk-app/">SDK App type</a> for Join via Browser / Web SDK support</p>
+<h2 id="migration-wizard">Migration Wizard</h2>
+<p>As of version 4.0.0 of Video Conferencing with Zoom Api users will see a migration wizard </p>
+<p><img alt="Migration notice" src="../img/s2s-oauth/migration-notice.png" /></p>
+<p>that prompts to add Server-to-Server OAuth Keys and App SDK keys to transition to new system.
+Clicking on migration wizard will show you the migration wizard</p>
+<h3 id="step-1">Step 1</h3>
+<p>First step is to add the OAuth App Credentials - you can follow the <a href="../setup/#generating-api-credentials">steps in the setup guide</a> to generate Server-to-Server OAuth credentials.
+- then add the Account ID, Client ID and Client Secret to the form shown below, checking the box Delete JWT Keys - will delete the JWT keys upon successfully validating and saving OAuth keys</p>
+<p><img alt="Migration Wizard Step 1" src="../img/s2s-oauth/migration-wizard-step-1.png" /> 
+Once saved successfully click Next Step</p>
+<p><img alt="Migration Wizard Step 1 Next Step" src="../img/s2s-oauth/migration-wizard-step-1-next-step.png" /></p>
+<h3 id="step-2">Step 2</h3>
+<p>Step 2 will prompt you to add SDK App credentials, SDK Credentials are required to use Join via Browser feature without JWT, please see <a href="../setup/##generating-app-sdk-credentials">steps in the setup guide</a> to generate App SDK credentials.
+Then add the SDK Key and SDK Secret Key and Save App SDK Keys. Please note to test join via browser option on your site to verify you've added SDK keys correctly as it's the only way to verify you've entered the correct keys.</p>
+<h3 id="step-3">Step 3</h3>
+<p>You're all done - the keys have already been saved on Step 1 and Step 2, the migration is now complete.</p>
+<p><img alt="Migration Complete" src="../img/s2s-oauth/migration-complete.png" /></p>
                 
               
               
@@ -679,7 +753,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../oauth/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../setup/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -688,7 +762,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                OAuth Connection
+                Setup
               </div>
             </div>
           </a>

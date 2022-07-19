@@ -15,7 +15,7 @@
     
     
       
-        <title>OAuth Connection - Video Conferencing with Zoom Documentation</title>
+        <title>Setup - Video Conferencing with Zoom Documentation</title>
       
     
     
@@ -87,7 +87,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              OAuth Connection
+              Setup
             
           </span>
         </div>
@@ -219,18 +219,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../integration/" class="md-nav__link">
-      API Keys Integration
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -242,12 +230,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        OAuth Connection
+        Setup
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      OAuth Connection
+      Setup
     </a>
     
       
@@ -330,8 +318,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../uninstalling/" class="md-nav__link">
-      Uninstalling App
+    <a href="../migration/" class="md-nav__link">
+      Migration from JWT
     </a>
   </li>
 
@@ -746,13 +734,15 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/oauth.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/techies23/video-conference-zoom/edit/master/docs/setup.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
                 <h1 id="setup-video-conferencing-with-zoom-api">Setup Video Conferencing with Zoom API</h1>
 <p>Here below are the steps to setup Zoom into WordPress.</p>
+<p>From version 4.0.0 of Video Conferencing with Zoom API - the plugin has moved to Server-to-Server OAuth from JWT, this is because Zoom is deprecating JWT App type from June 2023,
+For more info see <a href="https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/">JWT App Type Depecation FAQ</a>, please see <a href="../migration/">migration guide</a> to go to new Server-to-Server OAuth / App SDK</p>
 <h2 id="setup-server-to-server-oauth">Setup Server-to-Server OAuth</h2>
 <h3 id="generating-api-credentials">Generating API Credentials:</h3>
 <p>For this plugin you will be using Server-to-Server OAuth app type.</p>
@@ -803,7 +793,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../integration/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -812,19 +802,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                API Keys Integration
+                Getting Started
               </div>
             </div>
           </a>
         
         
-          <a href="../uninstalling/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../migration/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Uninstalling App
+                Migration from JWT
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

@@ -5,9 +5,8 @@ copyright: Deepen Bajracharya
 nav:
   - Getting Started: index.md
   - Installation:
-      - API Keys Integration: integration.md
-      - OAuth Connection: oauth.md
-      - Uninstalling App: uninstalling.md
+      - Setup: setup.md
+      - Migration from JWT: migration.md
   - Usage:
 #      - Meeting Types: meeting_types.md
       - Webinars: webinars.md
