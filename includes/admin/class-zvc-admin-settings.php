@@ -25,6 +25,8 @@ class Zoom_Video_Conferencing_Admin_Views {
 
 	/**
 	 * @return void
+	 * @since 4.0.0
+	 *        Show migration notice if JWT keys are still being shown
 	 */
 	public function migration_notice() {
 
@@ -32,13 +34,13 @@ class Zoom_Video_Conferencing_Admin_Views {
 		$is_jwt_active   = vczapi_is_jwt_active();
 		$is_oauth_active = vczapi_is_oauth_active();
 		$is_sdk_active   = vczapi_is_sdk_enabled();
-        
-        $sdk_not_active_notice_dismissed = get_option('vczapi_dismiss_sdk_not_active_notice');
+
+		$sdk_not_active_notice_dismissed = get_option( 'vczapi_dismiss_sdk_not_active_notice' );
 
 		self::$isDismissible = true;
 		self::$messageType   = 'error';
 
-		if ( ($is_oauth_active && ! $is_sdk_active) && !$sdk_not_active_notice_dismissed ) {
+		if ( ( $is_oauth_active && ! $is_sdk_active ) && ! $sdk_not_active_notice_dismissed ) {
 			$admin_page_url  = esc_url( add_query_arg( [
 				'post_type' => 'zoom-meetings',
 				'page'      => 'zoom-video-conferencing-settings',
@@ -47,8 +49,9 @@ class Zoom_Video_Conferencing_Admin_Views {
 			) );
 			$admin_page_link = '<a href="' . $admin_page_url . '">here</a>';
 
-			$dismiss_button  = '<a href="#" class="vczapi-dismiss-admin-notice" data-id="vczapi_dismiss_sdk_not_active_notice" data-security="'.wp_create_nonce('vczapi-dismiss-nonce').'" >don\'t show this message again</a>.';
-			self::$message   = '<strong>Video Conferencing Zoom: </strong>' . sprintf( __( 'The SDK App credentials have not been added, without SDK app credentials - Join via Browser functionality will not work, to add SDK app credentials click %s. If you understand and don\'t want the to see this message click %s' ), $admin_page_link, $dismiss_button );
+			$dismiss_button = '<a href="#" class="vczapi-dismiss-admin-notice" data-id="vczapi_dismiss_sdk_not_active_notice" data-security="' . wp_create_nonce( 'vczapi-dismiss-nonce' ) . '" >don\'t show this message again</a>.';
+			self::$message  = '<strong>Video Conferencing Zoom: </strong>' . sprintf( __( 'The SDK App credentials have not been added, without SDK app credentials - Join via Browser functionality will not work, to add SDK app credentials click %s. If you understand and don\'t want the to see this message click %s' ), $admin_page_link, $dismiss_button );
+			wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
 
 			return;
 		} elseif ( ! apply_filters( 'vczapi_show_jwt_keys', ( $is_jwt_active ) ) || $sdk_not_active_notice_dismissed ) {
@@ -73,6 +76,12 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		self::$message = $message;
 	}
 
+	/**
+	 * @return void
+	 * @since 4.0.0
+	 *        Show message if any messages are active
+	 *        hooked admin_notices
+	 */
 	public function maybeShowMessage() {
 		if ( empty( self::$message ) ) {
 			return;
@@ -90,6 +99,11 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		<?php
 	}
 
+	/**
+	 * @return void
+	 * @since 4.0.0
+	 *        Handles saving of Connection tab Zoom credentials
+	 */
 	public function zoomConnectHandler() {
 		$nonce = filter_input( INPUT_POST, 'vczapi_zoom_connect_nonce' );
 		if ( ! current_user_can( 'manage_options' ) ) {

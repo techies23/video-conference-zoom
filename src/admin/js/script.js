@@ -670,12 +670,14 @@
         type: 'POST',
         url: ajaxurl,
         data: { action: 'vczapi_dismiss_admin_notice', option: option, security: security },
+        beforeSend: function () {
+          if ($el.parents('.vczapi-notice').length > 0) {
+            $el.parents('.vczapi-notice').fadeOut()
+          }
+        },
         success: function (response) {
-          console.log(response)
           if (response.hasOwnProperty('success') && response.success) {
-            if ($el.parents('.vczapi-notice').length > 0) {
-              $el.parents('.vczapi-notice').fadeOut()
-            }
+              console.log(response)
           }
         }
       })

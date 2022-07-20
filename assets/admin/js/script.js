@@ -701,13 +701,14 @@
           option: option,
           security: security
         },
+        beforeSend: function beforeSend() {
+          if ($el.parents('.vczapi-notice').length > 0) {
+            $el.parents('.vczapi-notice').fadeOut();
+          }
+        },
         success: function success(response) {
-          console.log(response);
-
           if (response.hasOwnProperty('success') && response.success) {
-            if ($el.parents('.vczapi-notice').length > 0) {
-              $el.parents('.vczapi-notice').fadeOut();
-            }
+            console.log(response);
           }
         }
       });
