@@ -497,7 +497,7 @@
    * Webinar Functions
    * @type {{init: init, cacheDOM: cacheDOM, evntHandlers: evntHandlers, webinarElementsShow: webinarElementsShow}}
    */
-  var vczapi_webinars = {
+  const vczapi_webinars = {
     init: function () {
       this.cacheDOM()
       this.evntHandlers()
@@ -657,9 +657,33 @@
       }
     }
   }
-
+  const vczapi_dismiss_notice = {
+    init: function () {
+      $('.vczapi-dismiss-admin-notice').on('click', this.dismissNotice.bind(this))
+    },
+    dismissNotice: function (e) {
+      e.preventDefault()
+      let $el = $(e.target)
+      let option = $el.data('id')
+      let security = $el.data('security')
+      $.ajax({
+        type: 'POST',
+        url: ajaxurl,
+        data: { action: 'vczapi_dismiss_admin_notice', option: option, security: security },
+        success: function (response) {
+          console.log(response)
+          if (response.hasOwnProperty('success') && response.success) {
+            if ($el.parents('.vczapi-notice').length > 0) {
+              $el.parents('.vczapi-notice').fadeOut()
+            }
+          }
+        }
+      })
+    }
+  }
   $(function () {
     vczapiMigrationWizard.init()
+    vczapi_dismiss_notice.init()
     ZoomAPIJS.onReady()
     vczapi_sync_meetings.init()
     vczapi_webinars.init()

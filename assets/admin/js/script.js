@@ -684,8 +684,38 @@
       }
     }
   };
+  var vczapi_dismiss_notice = {
+    init: function init() {
+      $('.vczapi-dismiss-admin-notice').on('click', this.dismissNotice.bind(this));
+    },
+    dismissNotice: function dismissNotice(e) {
+      e.preventDefault();
+      var $el = $(e.target);
+      var option = $el.data('id');
+      var security = $el.data('security');
+      $.ajax({
+        type: 'POST',
+        url: ajaxurl,
+        data: {
+          action: 'vczapi_dismiss_admin_notice',
+          option: option,
+          security: security
+        },
+        success: function success(response) {
+          console.log(response);
+
+          if (response.hasOwnProperty('success') && response.success) {
+            if ($el.parents('.vczapi-notice').length > 0) {
+              $el.parents('.vczapi-notice').fadeOut();
+            }
+          }
+        }
+      });
+    }
+  };
   $(function () {
     vczapiMigrationWizard.init();
+    vczapi_dismiss_notice.init();
     ZoomAPIJS.onReady();
     vczapi_sync_meetings.init();
     vczapi_webinars.init();

@@ -26,6 +26,25 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		//AJAX call for fetching users
 		add_action( 'wp_ajax_get_assign_host_id', [ $this, 'assign_host_id' ] );
 		add_action( 'wp_ajax_vczapi_get_wp_users', [ $this, 'get_wp_usersByRole' ] );
+
+		//Ajax called for dismissing notice
+		add_action( 'wp_ajax_vczapi_dismiss_admin_notice', [ $this, 'admin_notice' ] );
+	}
+
+	public function admin_notice() {
+		$option = filter_input( INPUT_POST, 'option' );
+		$nonce  = filter_input( INPUT_POST, 'security' );
+		if ( ! wp_verify_nonce( $nonce, 'vczapi-dismiss-nonce' ) ) {
+			wp_send_json_error( [ 'message' => 'Error' ] );
+		} elseif ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( [ 'message' => 'Error' ] );
+		}
+		
+		
+		if ( $option == 'vczapi_dismiss_sdk_not_active_notice' ) {
+			update_option( 'vczapi_dismiss_sdk_not_active_notice', true );
+		}
+		wp_send_json_success();
 	}
 
 	/**

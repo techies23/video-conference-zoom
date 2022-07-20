@@ -28,9 +28,29 @@ class Zoom_Video_Conferencing_Admin_Views {
 	 */
 	public function migration_notice() {
 
-		$is_jwt_active = vczapi_is_jwt_active();
-		//don't show admin notice is JWT Keys are empty
-		if ( ! apply_filters( 'vczapi_show_jwt_keys', ( $is_jwt_active ) ) ) {
+
+		$is_jwt_active   = vczapi_is_jwt_active();
+		$is_oauth_active = vczapi_is_oauth_active();
+		$is_sdk_active   = vczapi_is_sdk_enabled();
+        
+        $sdk_not_active_notice_dismissed = get_option('vczapi_dismiss_sdk_not_active_notice');
+
+		self::$isDismissible = true;
+		self::$messageType   = 'error';
+
+		if ( ($is_oauth_active && ! $is_sdk_active) && !$sdk_not_active_notice_dismissed ) {
+			$admin_page_url  = esc_url( add_query_arg( [
+				'post_type' => 'zoom-meetings',
+				'page'      => 'zoom-video-conferencing-settings',
+			],
+				admin_url( 'edit.php' ),
+			) );
+			$admin_page_link = '<a href="' . $admin_page_url . '">here</a>';
+			$dismiss_button  = '<a href="#" class="button button-primary vczapi-dismiss-admin-notice" data-id="vczapi_dismiss_sdk_not_active_notice" data-security="'.wp_create_nonce('vczapi-dismiss-nonce').'" >Don\'t show this message again</a>';
+			self::$message   = sprintf( __( 'Zoom : The SDK App credentials have not been added, without SDK app credentials - Join via Browser functionality will not work, to add SDK app credentials click %s. If you understand and don\'t want the to see this message click %s' ), $admin_page_link, $dismiss_button );
+
+			return;
+		} elseif ( ! apply_filters( 'vczapi_show_jwt_keys', ( $is_jwt_active ) ) || $sdk_not_active_notice_dismissed ) {
 			return;
 		}
 
@@ -46,10 +66,10 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 			admin_url( 'edit.php' )
 		) );
 		$migration_wizard_link = '<a href="' . $migration_wizard_url . '">migration wizard</a>';
+		$message               = sprintf( __( 'Zoom is deprecating their JWT app from June of 2023, please see %s for more details, Until the deadline all your current settings will work, however to ensure a smooth transition to the new Server to Server OAuth system + New App SDK (required for Join Via Browser) - we recommend that you migrate as soon as possible. Run the %s now to complete the migration process in 2 easy steps ', 'video-conferencing-with-zoom-api' ), $depreciationLink, $migration_wizard_link );
 
-		self::$message       = sprintf( __( 'Zoom is deprecating their JWT app from June of 2023, please see %s for more details, Until the deadline all your current settings will work, however to ensure a smooth transition to the new Server to Server OAuth system + New App SDK (required for Join Via Browser) - we recommend that you migrate as soon as possible. Run the %s now to complete the migration process in 2 easy steps ', 'video-conferencing-with-zoom-api' ), $depreciationLink, $migration_wizard_link );
-		self::$isDismissible = true;
-		self::$messageType   = 'error';
+
+		self::$message = $message;
 	}
 
 	public function maybeShowMessage() {
@@ -63,7 +83,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		];
 		$additionalClasses = $message_classes[ self::$messageType ] . ' ' . ( self::$isDismissible ? 'is-dismissible' : '' );
 		?>
-        <div class="notice <?php _e( $additionalClasses ) ?>">
+        <div class="vczapi-notice notice <?php _e( $additionalClasses ) ?>">
             <p><?php _e( self::$message ); ?></p>
         </div>
 		<?php
@@ -109,7 +129,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 			delete_option( 'zoom_api_key' );
 			delete_option( 'zoom_api_secret' );
 		} else {
-            //probably need a helper function or code to save keys on save differently
+			//probably need a helper function or code to save keys on save differently
 			$decoded_users = json_decode( zoom_conference()->listUsers() );
 			if ( ! empty( $decoded_users->code ) ) {
 				if ( is_admin() ) {
@@ -122,7 +142,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 			//vczapi_set_cache( '_zvc_user_lists', $users, 108000 );
 			self::$message     = __( 'Zoom: Credentials successfully verified and saved ', 'video-conferencing-with-zoom-api' );
 			self::$messageType = 'success';
-            video_conferencing_zoom_api_get_user_transients();
+			video_conferencing_zoom_api_get_user_transients();
 		}
 	}
 
