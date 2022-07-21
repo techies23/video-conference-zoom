@@ -91,7 +91,7 @@ class S2SOAuth {
 		$client_secret = get_option( 'vczapi_oauth_client_secret' );
 
 		$result = $this->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
-		if(is_wp_error($result)){
+		if ( is_wp_error( $result ) ) {
 			//@todo log error if regenerating access token unsuccessful
 		}
 	}
