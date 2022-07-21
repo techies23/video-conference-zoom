@@ -14,17 +14,17 @@ In simple terms, webhook functionality can be used to notify your WordPress site
 
 ### Initial Setup
 
-* This section assumes that you have succesfully created a JWT token and API Keys have been added and succesfully connected to your WordPress site. If you have not created JWT token yet then please visit this [tutorial](/integration).
+* This section assumes that you have successfully setup Server-to-Server Oauth and credentials have been added and successfully connected to your WordPress site. If you have not created Server-to-Server OAuth yet then please visit this [tutorial](/setup).
 
 * Copy Verification Token Key.
 
 ![Verification Key](webhooks/verification-key-zoom.png "Verification Key")
 
-* **_Event Subscriptions_** should be turned on from JWT app page inside "**_Features_**" section
+* **_Event Subscriptions_** should be turned on from Server-to-Server app page inside "**_Features_**" section go to [https://marketplace.zoom.us](https://marketplace.zoom.us) > Click Server-to-Server OAuth App > Click feature
 
-![Event Subscriptions](webhooks/event-subscriptions.png "Event Subscriptions")
+![Event Subscriptions](webhooks/event-subscriptions-oauth.png "Event Subscriptions")
 
-* After that click on **Add new Event Subscription button**
+* After that click on **Add new Event Subscription button** - to complete the steps you will first need to go to your WordPress admin panel and see the step [described below](#getting-endpoint-urls)
 
 ### Getting Endpoint URLs
 
