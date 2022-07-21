@@ -43,9 +43,10 @@ Video conferencing with Zoom plugin gives you the extensive functionality to man
 
 **DOCUMENTATION LINKS:**
 
-* [Installation](https://zoom.codemanas.com/integration/ "Installation")
-* [Full Shortcode Documentation](https://zoom.codemanas.com/shortcode/ "Shortcodes")
-* [Full Documentation](https://zoom.codemanas.com/ "Usage Documentation")
+* [Migration from JWT](https://zoom.codemanas.com/migration/ "Migration from JWT")
+* [Installation](https://zoom.codemanas.com/setup/ "Installation")
+* [Shortcodes](https://zoom.codemanas.com/shortcode/ "Shortcodes")
+* [Documentation](https://zoom.codemanas.com/ "Usage Documentation")
 * [Usage Documentation /w WP](https://deepenbajracharya.com.np/zoom-api-integration-with-wordpress/ "Usage Documentation")
 * [Webhooks](https://zoom.codemanas.com/webhooks/ "Webhooks")
 
@@ -77,10 +78,6 @@ REFER FAQ to override page templates!
 * Elementor
 * Beaver Builder
 
-**SHORTCODE:**
-
-[Full Shortcode Documentation](https://zoom.codemanas.com/shortcode/ "Shortcodes")
-
 **CONTRIBUTING**
 
 There’s a [GIT repository](https://github.com/techies23/video-conference-zoom "GIT repository") if you want to contribute a patch. Please check issues. Pull requests are welcomed and your contributions will be appreciated.
@@ -97,6 +94,10 @@ Lastly, Thank you all to those contributors who have contributed for this plugin
 Search for the plugin -> add new dialog and click install, or download and extract the plugin, and copy the the Zoom plugin folder into your wp-content/plugins directory and activate.
 
 == Frequently Asked Questions ==
+
+= Updating to version 4.0.0 =
+
+Please check how you can do the [Migration from JWT](https://zoom.codemanas.com/migration/ "Migration from JWT")
 
 = Add users not working for me =
 
