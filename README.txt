@@ -43,10 +43,9 @@ Video conferencing with Zoom plugin gives you the extensive functionality to man
 
 **DOCUMENTATION LINKS:**
 
-* [Migration from JWT](https://zoom.codemanas.com/migration/ "Migration from JWT")
 * [Installation](https://zoom.codemanas.com/setup/ "Installation")
 * [Shortcodes](https://zoom.codemanas.com/shortcode/ "Shortcodes")
-* [Documentation](https://zoom.codemanas.com/ "Usage Documentation")
+* [Documentation](https://zoom.codemanas.com/ "Documentation")
 * [Usage Documentation /w WP](https://deepenbajracharya.com.np/zoom-api-integration-with-wordpress/ "Usage Documentation")
 * [Webhooks](https://zoom.codemanas.com/webhooks/ "Webhooks")
 

@@ -9,7 +9,7 @@
  * Description:       Video Conferencing with Zoom Meetings and Webinars plugin provides you with great functionality of managing Zoom meetings, Webinar scheduling options, and users directly from your WordPress dashboard.
  * Version:           4.0.0
  * Author:            Deepen Bajracharya
- * Author URI:        https://www.deepenbajracharya.com.np
+ * Author URI:        https://www.imdpen.com
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       video-conferencing-with-zoom-api
