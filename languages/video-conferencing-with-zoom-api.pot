@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2022-07-20 11:30+0000\n"
+"POT-Creation-Date: 2022-07-21 07:10+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Action (Required)."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:374
+#: includes/admin/class-zvc-admin-settings.php:389
 msgid "Action failed. Please refresh the page and retry."
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Add a Webinar"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:170
+#: includes/admin/class-zvc-admin-settings.php:185
 msgid "Add Live Meeting"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Add New Webinar"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:181
+#: includes/admin/class-zvc-admin-settings.php:196
 msgid "Add Users"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgid ""
 "API keys are not configured properly ! Please configure them before syncing."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:251
+#: includes/admin/class-zvc-admin-settings.php:266
 msgid "API Settings"
 msgstr ""
 
@@ -359,7 +359,7 @@ msgstr ""
 msgid "Column Layout"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:248
+#: includes/admin/class-zvc-admin-settings.php:263
 msgid "Connect"
 msgstr ""
 
@@ -458,10 +458,6 @@ msgstr ""
 msgid "Debug Log"
 msgstr ""
 
-#. Author of the plugin
-msgid "Deepen Bajracharya"
-msgstr ""
-
 #: includes/views/tabs/api-settings.php:90
 msgid "Default Language for Join via browser page ?"
 msgstr ""
@@ -547,7 +543,7 @@ msgstr ""
 msgid "Disable Waiting Room"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:329
+#: includes/admin/class-zvc-admin-settings.php:344
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -670,7 +666,7 @@ msgstr ""
 msgid "ERROR: "
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:196
+#: includes/admin/class-zvc-admin-settings.php:211
 msgid "Extensions"
 msgstr ""
 
@@ -770,7 +766,7 @@ msgstr ""
 msgid "Host join start"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:203
+#: includes/admin/class-zvc-admin-settings.php:218
 msgid "Host to WP Users"
 msgstr ""
 
@@ -790,14 +786,6 @@ msgstr ""
 #: templates/fragments/countdown-timer.php:32
 #: templates/shortcode/embed-session.php:53
 msgid "hours"
-msgstr ""
-
-#. URI of the plugin
-msgid "https://wordpress.org/plugins/video-conferencing-with-zoom-api/"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://www.deepenbajracharya.com.np"
 msgstr ""
 
 #: includes/helpers.php:358
@@ -824,7 +812,7 @@ msgstr ""
 msgid "Image URL"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:209
+#: includes/admin/class-zvc-admin-settings.php:224
 msgid "Import"
 msgstr ""
 
@@ -893,7 +881,7 @@ msgstr ""
 msgid "JWT API Secret Key"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:58
+#: includes/admin/class-zvc-admin-settings.php:62
 #: includes/views/tabs/connect.php:3
 msgid "JWT App Type Depreciation FAQ"
 msgstr ""
@@ -930,11 +918,11 @@ msgstr ""
 msgid "Like this plugin ?"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:165
+#: includes/admin/class-zvc-admin-settings.php:180
 msgid "Live Meetings"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:160
+#: includes/admin/class-zvc-admin-settings.php:175
 msgid "Live Webinars"
 msgstr ""
 
@@ -953,7 +941,7 @@ msgstr ""
 msgid "Local"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:260
+#: includes/admin/class-zvc-admin-settings.php:275
 msgid "Logs"
 msgstr ""
 
@@ -1489,7 +1477,7 @@ msgstr ""
 msgid "Recording by Meeting"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:191
+#: includes/admin/class-zvc-admin-settings.php:206
 #: includes/views/live/tpl-list-recordings.php:10
 msgid "Recordings"
 msgstr ""
@@ -1517,7 +1505,7 @@ msgstr ""
 msgid "Refresh is needed to change status."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:186
+#: includes/admin/class-zvc-admin-settings.php:201
 #: includes/views/live/tpl-reports.php:12
 msgid "Reports"
 msgstr ""
@@ -1693,12 +1681,12 @@ msgid ""
 "meeting date has passed. This will only work if Meeting Type is defined."
 msgstr ""
 
-#: includes/Bootstrap.php:340 includes/admin/class-zvc-admin-settings.php:215
-#: includes/admin/class-zvc-admin-settings.php:215
+#: includes/Bootstrap.php:340 includes/admin/class-zvc-admin-settings.php:230
+#: includes/admin/class-zvc-admin-settings.php:230
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:254
+#: includes/admin/class-zvc-admin-settings.php:269
 #: includes/views/webinars/tpl-list-webinars.php:62
 #: includes/views/live/tpl-list-meetings.php:63
 msgid "Shortcode"
@@ -1883,11 +1871,11 @@ msgstr ""
 msgid "Successfully imported meeting with ID"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:327
+#: includes/admin/class-zvc-admin-settings.php:342
 msgid "Successfully Updated. Please refresh this page."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:257
+#: includes/admin/class-zvc-admin-settings.php:272
 msgid "Support"
 msgstr ""
 
@@ -2326,15 +2314,6 @@ msgstr ""
 msgid "Zoom"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:50
-#, php-format
-msgid ""
-"Zoom : The SDK App credentials have not been added, without SDK app "
-"credentials - Join via Browser functionality will not work, to add SDK app "
-"credentials click %s. If you understand and don't want the to see this "
-"message click %s"
-msgstr ""
-
 #: includes/admin/class-zvc-admin-post-type.php:294
 msgctxt "Zoom Category Name"
 msgid "Category"
@@ -2351,11 +2330,11 @@ msgctxt "Zoom Events"
 msgid "Zoom Events"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:239
+#: includes/admin/class-zvc-admin-settings.php:254
 msgid "Zoom Integration Settings"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:69
+#: includes/admin/class-zvc-admin-settings.php:73
 #: includes/views/tabs/connect.php:38
 #, php-format
 msgid ""
@@ -2389,7 +2368,7 @@ msgstr ""
 msgid "Zoom Meetings via Host"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:125
+#: includes/admin/class-zvc-admin-settings.php:140
 #, php-format
 msgid "Zoom Oauth Error Code: \"%s\"  -  %s "
 msgstr ""
@@ -2398,7 +2377,7 @@ msgstr ""
 msgid "Zoom Recordings by Host"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:176
+#: includes/admin/class-zvc-admin-settings.php:191
 msgid "Zoom Users"
 msgstr ""
 
@@ -2410,6 +2389,6 @@ msgstr ""
 msgid "Zoom Webinars List"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:143
+#: includes/admin/class-zvc-admin-settings.php:158
 msgid "Zoom: Credentials successfully verified and saved "
 msgstr ""

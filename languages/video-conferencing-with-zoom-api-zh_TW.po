@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Video Conferencing with Zoom - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-06-28 09:34+0000\n"
+"PO-Revision-Date: 2022-07-21 07:11+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,7 +62,7 @@ msgstr "執行"
 msgid "Action (Required)."
 msgstr "操作 (必填)"
 
-#: includes/admin/class-zvc-admin-settings.php:231
+#: includes/admin/class-zvc-admin-settings.php:389
 msgid "Action failed. Please refresh the page and retry."
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr "新增會議"
 msgid "Add a User"
 msgstr "新增 Zoom 使用者"
 
-#: includes/Bootstrap.php:277
+#: includes/Bootstrap.php:279
 msgid "Add a valid Host ID or Email address."
 msgstr "新增有效的主持人 ID 或是電子郵件信箱"
 
@@ -87,7 +87,7 @@ msgstr "新增有效的主持人 ID 或是電子郵件信箱"
 msgid "Add a Webinar"
 msgstr "新增網路研討會"
 
-#: includes/admin/class-zvc-admin-settings.php:41
+#: includes/admin/class-zvc-admin-settings.php:185
 msgid "Add Live Meeting"
 msgstr "新增線上會議"
 
@@ -107,15 +107,15 @@ msgstr "新增會議"
 msgid "Add New Webinar"
 msgstr "新增網路研討會文章"
 
-#: includes/admin/class-zvc-admin-settings.php:52
+#: includes/admin/class-zvc-admin-settings.php:196
 msgid "Add Users"
 msgstr "新增 Zoom 使用者"
 
-#: includes/views/tabs/api-settings.php:213
+#: includes/views/additional-info.php:10
 msgid "Addons"
 msgstr "附加元件"
 
-#: includes/views/tabs/api-settings.php:196
+#: includes/views/tabs/api-settings.php:181
 msgid ""
 "After you enter your keys. Do save changes before doing \"Check API "
 "Connection\"."
@@ -157,13 +157,9 @@ msgstr "聯合主持人"
 msgid "Alternative hosts IDs. Multiple value separated by comma."
 msgstr "聯合主持人 ID，可使用半形逗號分隔多個 ID"
 
-#: includes/admin/class-zvc-admin-ajax.php:54
+#: includes/admin/class-zvc-admin-ajax.php:73
 msgid "An error occured. Host ID and Meeting ID not defined properly."
 msgstr "發生錯誤，主持人 ID 及會議 ID 沒有正確設定。"
-
-#: includes/views/tabs/api-settings.php:20
-msgid "API Key"
-msgstr "API 金鑰"
 
 #: includes/admin/class-zvc-admin-sync.php:34
 #: includes/admin/class-zvc-admin-sync.php:63
@@ -171,11 +167,7 @@ msgid ""
 "API keys are not configured properly ! Please configure them before syncing."
 msgstr "API 金鑰尚未設置，在同步前請先設定好！"
 
-#: includes/views/tabs/api-settings.php:26
-msgid "API Secret Key"
-msgstr "API 密鑰"
-
-#: includes/admin/class-zvc-admin-settings.php:113
+#: includes/admin/class-zvc-admin-settings.php:266
 msgid "API Settings"
 msgstr "API 設定"
 
@@ -184,7 +176,7 @@ msgstr "API 設定"
 msgid "Apply"
 msgstr "套用"
 
-#: includes/Bootstrap.php:276 includes/template-functions.php:95
+#: includes/Bootstrap.php:278 includes/template-functions.php:95
 msgid ""
 "Are you sure you want to end this meeting ? Users won't be able to join this "
 "meeting shown from the shortcode."
@@ -255,7 +247,7 @@ msgstr "由"
 msgid "Category"
 msgstr "分類"
 
-#: includes/views/tabs/api-settings.php:165
+#: includes/views/tabs/api-settings.php:150
 msgid ""
 "Change date time formats according to your choice. Please edit this properly."
 " Failure to correctly put value will result in failure to show date in "
@@ -272,7 +264,7 @@ msgstr "檢查"
 msgid "check %s for shortcode references."
 msgstr "或是在 %s 看看短代碼怎麼設定。"
 
-#: includes/views/tabs/api-settings.php:199
+#: includes/views/tabs/api-settings.php:184
 msgid "Check API Connection"
 msgstr "檢查 API 連線"
 
@@ -284,45 +276,51 @@ msgstr "取得使用者清單"
 msgid "Check Pending Users"
 msgstr "取得待審使用者清單"
 
-#: includes/views/tabs/api-settings.php:51
+#: includes/views/migration.php:54 includes/views/tabs/connect.php:117
+msgid ""
+"Check this box to delete JWT (legacy keys) after saving and verifying Server-"
+"to-Server Oauth Keys"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:36
 msgid ""
 "Checking this option will disable auto password generation for new meetings "
 "which are created from Zoom meeting > Add new section."
 msgstr "啟用這個選項後，建立新的會議時將不會自動產生密碼"
 
-#: includes/views/tabs/api-settings.php:58
+#: includes/views/tabs/api-settings.php:43
 msgid ""
 "Checking this option will hide join links from your shortcode for non-"
 "loggedin users."
 msgstr "啟用這個選項後，未登入的使用者在包含短代碼的頁面中將無法看到加入會議的連結。"
 
-#: includes/views/tabs/api-settings.php:177
+#: includes/views/tabs/api-settings.php:162
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr "啟用這個選項將會在所有會議時間採用 24 小時格式。"
 
-#: includes/views/tabs/api-settings.php:184
+#: includes/views/tabs/api-settings.php:169
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
 msgstr "啟用這個選項，將會在頁面中顯示完整的月份名稱，例如：六月、七月、八月等等。"
 
-#: includes/views/tabs/api-settings.php:94
+#: includes/views/tabs/api-settings.php:79
 msgid "Checking this show will hide email field in Join via Browser window."
 msgstr "啟用這個選項後，經由瀏覽器視窗加入會議時將會隱藏電子郵件欄位。"
 
-#: includes/views/tabs/api-settings.php:79
+#: includes/views/tabs/api-settings.php:64
 msgid ""
 "Checking this show Zoom original Author in single meetings page which are "
 "created from"
 msgstr "啟用這個選項將會在 Zoom 頁面顯示 Zoom 會議文章的文章作者"
 
-#: includes/views/tabs/api-settings.php:101
+#: includes/views/tabs/api-settings.php:86
 msgid ""
 "Checking this will disable invite button when user joins meeting via Join "
 "via Browser window."
 msgstr "啟用這個選項後，經由瀏覽器視窗加入會議時將會隱藏邀請按鈕。"
 
-#: includes/views/tabs/api-settings.php:87
+#: includes/views/tabs/api-settings.php:72
 msgid "Checking this will hide all Join via Browser Buttons."
 msgstr "啟用這個選項後，系統將會隱藏所有「使用網頁瀏覽器加入會議」按鈕。"
 
@@ -355,7 +353,11 @@ msgstr "雲端"
 msgid "Column Layout"
 msgstr "欄位版型"
 
-#: includes/views/tabs/api-settings.php:209
+#: includes/admin/class-zvc-admin-settings.php:263
+msgid "Connect"
+msgstr ""
+
+#: includes/views/additional-info.php:6
 msgid "Contact for additional Support"
 msgstr "聯繫支援"
 
@@ -435,7 +437,7 @@ msgstr "日期"
 msgid "Date field cannot be Empty !!"
 msgstr "日期欄位不能空白！"
 
-#: includes/views/tabs/api-settings.php:144
+#: includes/views/tabs/api-settings.php:129
 msgid "DateTime Format"
 msgstr "日期時間格式"
 
@@ -448,7 +450,7 @@ msgstr "日"
 msgid "Debug Log"
 msgstr "除錯用記錄檔"
 
-#: includes/views/tabs/api-settings.php:105
+#: includes/views/tabs/api-settings.php:90
 msgid "Default Language for Join via browser page ?"
 msgstr "「使用網頁瀏覽器加入會議」的預設語言？"
 
@@ -466,15 +468,19 @@ msgstr "預設標題"
 msgid "Defaults to HD video."
 msgstr "預設為高畫質影片。"
 
+#: includes/views/migration.php:52 includes/views/tabs/connect.php:115
+msgid "Delete JWT Keys"
+msgstr ""
+
 #: includes/views/tabs/debug.php:23
 msgid "Delete log"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-ajax.php:87
+#: includes/admin/class-zvc-admin-ajax.php:106
 msgid "Deleted %d Meeting(s)."
 msgstr "已刪除 %d 個會議"
 
-#: includes/admin/class-zvc-admin-ajax.php:50
+#: includes/admin/class-zvc-admin-ajax.php:69
 msgid "Deleted Meeting with ID"
 msgstr "已根據 ID 刪除會議"
 
@@ -482,7 +488,7 @@ msgstr "已根據 ID 刪除會議"
 msgid "Details"
 msgstr "詳細資料"
 
-#: includes/views/tabs/api-settings.php:211
+#: includes/views/additional-info.php:8
 msgid "Developer"
 msgstr "開發者"
 
@@ -494,7 +500,7 @@ msgid ""
 "are working correctly."
 msgstr "沒有成功取得主持人清單？請%s在這裡檢查%s你的 API 金鑰是否正常運作。"
 
-#: includes/views/tabs/api-settings.php:48
+#: includes/views/tabs/api-settings.php:33
 msgid "Disable Auto Password Generation ?"
 msgstr "取消自動產生密碼？"
 
@@ -502,15 +508,15 @@ msgstr "取消自動產生密碼？"
 msgid "Disable Countdown Timer?"
 msgstr "取消倒數計時器？"
 
-#: includes/views/tabs/api-settings.php:91
+#: includes/views/tabs/api-settings.php:76
 msgid "Disable Email field when join via browser ?"
 msgstr "經由瀏覽器加入會議時取消電子郵件欄位？"
 
-#: includes/views/tabs/api-settings.php:62
+#: includes/views/tabs/api-settings.php:47
 msgid "Disable Embed password in Link ?"
 msgstr "在連結中取消內嵌密碼？"
 
-#: includes/views/tabs/api-settings.php:98
+#: includes/views/tabs/api-settings.php:83
 msgid "Disable Invite field when join via browser ?"
 msgstr "經由瀏覽器加入會議時取消邀請欄位？"
 
@@ -519,7 +525,7 @@ msgstr "經由瀏覽器加入會議時取消邀請欄位？"
 msgid "Disable Join"
 msgstr "不允許加入"
 
-#: includes/views/tabs/api-settings.php:84
+#: includes/views/tabs/api-settings.php:69
 msgid "Disable Join via browser ?"
 msgstr "取消「使用網頁瀏覽器加入會議」？"
 
@@ -527,11 +533,11 @@ msgstr "取消「使用網頁瀏覽器加入會議」？"
 msgid "Disable Waiting Room"
 msgstr "取消等候室"
 
-#: includes/admin/class-zvc-admin-settings.php:183
+#: includes/admin/class-zvc-admin-settings.php:344
 msgid "Dismiss this notice."
 msgstr "關閉這項通知"
 
-#: includes/views/tabs/api-settings.php:44
+#: includes/views/tabs/api-settings.php:29
 msgid ""
 "Do not delete your meetings on Zoom, when you delete your meeting from Zoom "
 "Meetings > All Meetings page."
@@ -541,18 +547,18 @@ msgstr "啟用這個選項後，刪除會議時不會同步將 Zoom 裡面的會
 msgid "Do not get confused here !!"
 msgstr "無需感到困惑！"
 
-#: includes/views/tabs/api-settings.php:206
+#: includes/views/additional-info.php:3
 msgid "Documentation"
 msgstr "文件"
 
 #: includes/Shortcodes/Recordings.php:64 includes/Shortcodes/Recordings.php:65
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:53
-#: includes/views/live/tpl-list-recordings.php:54
+#: includes/views/live/tpl-list-recordings.php:58
+#: includes/views/live/tpl-list-recordings.php:59
 msgid "Download"
 msgstr "下載"
 
-#: includes/template-functions.php:410
+#: includes/template-functions.php:411
 #: templates/fragments/meeting-details.php:54
 #: templates/shortcode/zoom-webinar.php:98
 #: templates/shortcode/meeting-by-post-id.php:40
@@ -610,7 +616,7 @@ msgstr "啟用除錯記錄？"
 msgid "Enable Join"
 msgstr "允許加入"
 
-#: includes/views/tabs/api-settings.php:188
+#: includes/views/tabs/api-settings.php:173
 msgid "Enable Logs"
 msgstr ""
 
@@ -650,11 +656,11 @@ msgstr "請輸入日期:"
 msgid "ERROR: "
 msgstr "錯誤："
 
-#: includes/admin/class-zvc-admin-settings.php:67
+#: includes/admin/class-zvc-admin-settings.php:211
 msgid "Extensions"
 msgstr "擴充套件"
 
-#: includes/views/tabs/api-settings.php:216
+#: includes/views/additional-info.php:13
 msgid "Facebook Group"
 msgstr "Facebook 社團"
 
@@ -669,17 +675,21 @@ msgid ""
 msgstr "取得資料中 .. 請稍候，這將會需要一點時間，這取決於你有多少 Zoom 會議。"
 
 #: includes/Shortcodes/Recordings.php:54
-#: includes/views/live/tpl-list-recordings.php:48
+#: includes/views/live/tpl-list-recordings.php:53
 msgid "File Size"
 msgstr "檔案大小"
 
 #: includes/Shortcodes/Recordings.php:53
-#: includes/views/live/tpl-list-recordings.php:46
+#: includes/views/live/tpl-list-recordings.php:51
 msgid "File Type"
 msgstr "檔案類型"
 
 #: includes/Shortcodes.php:99
 msgid "filtered from %s total entries"
+msgstr ""
+
+#: includes/views/migration.php:117
+msgid "Finish"
 msgstr ""
 
 #: includes/Shortcodes.php:106
@@ -724,7 +734,7 @@ msgstr "高畫質影片"
 msgid "Heads up, Please backup before upgrade!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:55
+#: includes/views/tabs/api-settings.php:40
 msgid "Hide Join Links for Non-Loggedin ?"
 msgstr "僅允許登入的使用者看到連結？"
 
@@ -745,7 +755,7 @@ msgstr "使用這個短代碼時必須要設定主持人 ID "
 msgid "Host join start"
 msgstr "由主持人開始會議"
 
-#: includes/admin/class-zvc-admin-settings.php:74
+#: includes/admin/class-zvc-admin-settings.php:218
 msgid "Host to WP Users"
 msgstr "讓 WP 使用者主持"
 
@@ -775,7 +785,7 @@ msgstr "我了解！請不要在顯示！"
 msgid "ID"
 msgstr "ID"
 
-#: includes/views/tabs/api-settings.php:35
+#: includes/views/tabs/api-settings.php:19
 msgid ""
 "If you are using Zoom Vanity URL then please insert it here else leave it "
 "empty."
@@ -791,7 +801,7 @@ msgstr "如果你需要將此會議顯示在其他頁面或文章，請使用這
 msgid "Image URL"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:80
+#: includes/admin/class-zvc-admin-settings.php:224
 msgid "Import"
 msgstr "匯入"
 
@@ -834,7 +844,7 @@ msgid ""
 "meetings."
 msgstr "在主持人開始會議之前，參與者可以會前先加入會議，此功能僅於排程或是定期會議才能使用"
 
-#: includes/template-functions.php:157
+#: includes/template-functions.php:158
 msgid "Join Meeting via Zoom App"
 msgstr "使用 Zoom App 加入會議"
 
@@ -857,6 +867,19 @@ msgstr "使用網頁瀏覽器加入會議"
 #: templates/shortcode/webinar-join-links.php:17
 msgid "Join via Zoom App"
 msgstr "使用 Zoom App 加入會議"
+
+#: includes/views/tabs/connect.php:49
+msgid "JWT API Secret Key"
+msgstr ""
+
+#: includes/admin/class-zvc-admin-settings.php:62
+#: includes/views/tabs/connect.php:3
+msgid "JWT App Type Depreciation FAQ"
+msgstr ""
+
+#: includes/views/tabs/connect.php:30
+msgid "JWT Credentials ( Legacy )"
+msgstr ""
 
 #: includes/Shortcodes.php:107
 msgid "Last"
@@ -886,11 +909,11 @@ msgstr "使用者的姓氏 (必填)"
 msgid "Like this plugin ?"
 msgstr "喜歡這個外掛嗎？"
 
-#: includes/admin/class-zvc-admin-settings.php:36
+#: includes/admin/class-zvc-admin-settings.php:180
 msgid "Live Meetings"
 msgstr "線上會議"
 
-#: includes/admin/class-zvc-admin-settings.php:31
+#: includes/admin/class-zvc-admin-settings.php:175
 msgid "Live Webinars"
 msgstr "線上網路研討會"
 
@@ -909,11 +932,11 @@ msgstr "載入錄影中 ... 請稍候.."
 msgid "Local"
 msgstr "本機端"
 
-#: includes/admin/class-zvc-admin-settings.php:122
+#: includes/admin/class-zvc-admin-settings.php:275
 msgid "Logs"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:191
+#: includes/views/tabs/api-settings.php:176
 msgid "Logs are here."
 msgstr ""
 
@@ -950,16 +973,16 @@ msgstr "顯示逾時會議"
 msgid "Meeting duration (minutes). (optional)"
 msgstr "會議長度 (分鐘) (選填)"
 
-#: includes/views/tabs/api-settings.php:138
+#: includes/views/tabs/api-settings.php:123
 msgid "Meeting Ended Text"
 msgstr "自訂會議結束的文字"
 
-#: includes/views/tabs/api-settings.php:132
+#: includes/views/tabs/api-settings.php:117
 msgid "Meeting going to start Text"
 msgstr "自訂會議即將開始的文字"
 
-#: includes/template-functions.php:358 includes/template-functions.php:367
-#: includes/template-functions.php:377 templates/shortcode/zoom-webinar.php:55
+#: includes/template-functions.php:359 includes/template-functions.php:368
+#: includes/template-functions.php:378 templates/shortcode/zoom-webinar.php:55
 #: templates/shortcode/zoom-webinar.php:64
 #: templates/shortcode/zoom-webinar.php:74
 msgid "Meeting has ended !"
@@ -984,7 +1007,7 @@ msgstr "會議已經開始！點擊底下的按鈕可以立即加入會議！"
 msgid "Meeting Host *"
 msgstr "會議主持人 *"
 
-#: includes/template-functions.php:309
+#: includes/template-functions.php:310
 #: includes/admin/class-zvc-admin-post-type.php:194
 #: includes/admin/class-zvc-admin-post-type.php:440
 #: templates/shortcode/zoom-webinar.php:21
@@ -997,11 +1020,11 @@ msgstr "會議主持人 *"
 msgid "Meeting ID"
 msgstr "會議 ID"
 
-#: includes/template-functions.php:323
+#: includes/template-functions.php:324
 msgid "Meeting is in Progress"
 msgstr "會議正在進行中"
 
-#: includes/template-functions.php:243
+#: includes/template-functions.php:244
 msgid "Meeting is not defined. Try updating this meeting"
 msgstr "找不到會議，請修正會議資訊"
 
@@ -1024,14 +1047,14 @@ msgstr "會議還沒有建立。"
 msgid "Meeting Password"
 msgstr "會議密碼"
 
-#: includes/views/tabs/api-settings.php:65
+#: includes/views/tabs/api-settings.php:50
 msgid ""
 "Meeting password will not be included in the invite link to allow "
 "participants to join with just one click without having to enter the "
 "password."
 msgstr "邀請連結中將不會包含會議密碼，點擊連結的人將必須手動輸入密碼後才能參加會議。"
 
-#: includes/views/tabs/api-settings.php:126
+#: includes/views/tabs/api-settings.php:111
 msgid "Meeting Started Text"
 msgstr "自訂會議已開始的文字"
 
@@ -1045,7 +1068,7 @@ msgstr ""
 msgid "Meeting State"
 msgstr "會議狀態"
 
-#: includes/template-functions.php:317
+#: includes/template-functions.php:318
 #: templates/shortcode/list-meetings-host.php:17
 msgid "Meeting Status"
 msgstr "會議狀態"
@@ -1085,7 +1108,7 @@ msgstr "會議"
 msgid "Meetings Category"
 msgstr "會議分類"
 
-#: includes/views/tabs/api-settings.php:41
+#: includes/views/tabs/api-settings.php:26
 msgid "Meetings Deletion ?"
 msgstr "刪除會議？"
 
@@ -1100,6 +1123,14 @@ msgstr "會議排序"
 #: includes/Elementor/Widgets/MeetingList.php:134
 msgid "Meetings Type"
 msgstr "會議類型"
+
+#: includes/views/migration.php:14
+msgid "Migrate from JWT to Server to Server Oauth in 2 easy steps"
+msgstr ""
+
+#: includes/views/migration.php:13
+msgid "Migration Wizard"
+msgstr ""
 
 #: templates/fragments/countdown-timer.php:38
 #: templates/shortcode/embed-session.php:59
@@ -1147,9 +1178,13 @@ msgstr "下一次會議"
 msgid "Next Results"
 msgstr "下一筆"
 
-#: includes/template-functions.php:344 templates/shortcode/zoom-webinar.php:41
+#: includes/template-functions.php:345 templates/shortcode/zoom-webinar.php:41
 msgid "Next Start Time"
 msgstr "下一次開始時間"
+
+#: includes/views/migration.php:124
+msgid "Next Step"
+msgstr ""
 
 #: includes/Shortcodes.php:96
 msgid "No data available in table"
@@ -1224,11 +1259,23 @@ msgstr "在回收桶找不到會議"
 msgid "No zoom events found."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-ajax.php:260
+#: includes/admin/class-zvc-admin-ajax.php:300
 msgid "Not a Host"
 msgstr "選擇一位主持人"
 
-#: includes/template-functions.php:340 templates/shortcode/zoom-webinar.php:37
+#: includes/views/migration.php:26 includes/views/tabs/connect.php:89
+msgid "Oauth Account ID"
+msgstr ""
+
+#: includes/views/migration.php:34 includes/views/tabs/connect.php:97
+msgid "Oauth Client ID"
+msgstr ""
+
+#: includes/views/migration.php:42 includes/views/tabs/connect.php:105
+msgid "Oauth Client Secret"
+msgstr ""
+
+#: includes/template-functions.php:341 templates/shortcode/zoom-webinar.php:37
 msgid "Ocurrences"
 msgstr "會議次數"
 
@@ -1305,14 +1352,14 @@ msgstr "結束的會議"
 msgid "Pending Approval Users"
 msgstr "待審使用者清單"
 
-#: includes/template-functions.php:392
+#: includes/template-functions.php:393
 msgid "Personal Meeting Room"
 msgstr "個人會議室"
 
 #: includes/Shortcodes/Recordings.php:61
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:50
-#: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:55
+#: includes/views/live/tpl-list-recordings.php:56
 msgid "Play"
 msgstr "播放"
 
@@ -1332,17 +1379,13 @@ msgid ""
 "Please consider giving a %s if you found this useful at wordpress.org or "
 msgstr "如果你覺得這個 wordpress.org 外掛非常有用，請給我們 %s"
 
-#: includes/views/tabs/api-settings.php:11
-msgid "Please follow"
-msgstr "請依據"
-
 #: includes/views/post-type/tpl-meeting-fields.php:201
 msgid ""
 "Please keep in mind anyone with the meeting link will be able to join "
 "without you allowing them into the meeting."
 msgstr "請注意，任何取得會議連結的人不需要你的允許進入會議"
 
-#: includes/template-functions.php:139
+#: includes/template-functions.php:140
 msgid "Please login to join this meeting."
 msgstr "加入此會議前請先登入。"
 
@@ -1359,9 +1402,16 @@ msgstr ""
 "請詳細閱讀！以下所列出的會議是經由 API 自你的 zoom.us 帳號取得的資料，所顯示的會議不會顯示在你的文章類型列表， 系統只會使用 API "
 "在你的 zoom.us 帳號建立會議。"
 
-#: includes/views/tabs/api-settings.php:168
+#: includes/views/tabs/api-settings.php:153
 msgid "Please see %s on how to format date"
 msgstr "可透過 %s 了解日期格式"
+
+#: includes/views/tabs/connect.php:76
+#, php-format
+msgid ""
+"Please see %s on how to generate credentials, additionally for Join via "
+"Browser to work please also add %s"
+msgstr ""
 
 #: includes/Shortcodes/Embed.php:122 includes/Shortcodes/Meetings.php:94
 msgid ""
@@ -1403,7 +1453,7 @@ msgstr "必須為 Pro、商務、企業、教育或 API 帳戶。查看更多"
 msgid "Processing"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:36
+#: includes/views/tabs/api-settings.php:20
 msgid ""
 "Read more about Vanity\n"
 "                                URLs"
@@ -1420,7 +1470,7 @@ msgstr "錄影"
 msgid "Recording by Meeting"
 msgstr "會議錄影"
 
-#: includes/admin/class-zvc-admin-settings.php:62
+#: includes/admin/class-zvc-admin-settings.php:206
 #: includes/views/live/tpl-list-recordings.php:10
 msgid "Recordings"
 msgstr "錄製"
@@ -1433,7 +1483,7 @@ msgstr "會議錄影"
 msgid "Recurring"
 msgstr "週期會議"
 
-#: includes/template-functions.php:337
+#: includes/template-functions.php:338
 #: includes/admin/class-zvc-admin-post-type.php:244
 #: templates/shortcode/zoom-webinar.php:34
 #: includes/views/live/tpl-list-meetings.php:124
@@ -1444,11 +1494,11 @@ msgstr "定期會議"
 msgid "Recurring Webinar"
 msgstr "定期網路研討會"
 
-#: includes/template-functions.php:328
+#: includes/template-functions.php:329
 msgid "Refresh is needed to change status."
 msgstr "需要重新整理頁面後才能變更狀態。"
 
-#: includes/admin/class-zvc-admin-settings.php:57
+#: includes/admin/class-zvc-admin-settings.php:201
 #: includes/views/live/tpl-reports.php:12
 msgid "Reports"
 msgstr "報表"
@@ -1486,13 +1536,37 @@ msgstr "點擊此按鈕將會開放使用者可以加入這場會議，適用於
 msgid "Save"
 msgstr "儲存"
 
-#: includes/views/tabs/api-settings.php:198
+#: includes/views/migration.php:107
+msgid "Save App SDK Keys"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:183
 msgid "Save Changes"
 msgstr "儲存設定"
 
 #: includes/admin/class-zvc-admin-users.php:90
 msgid "Saved !"
 msgstr "已儲存！"
+
+#: includes/views/tabs/connect.php:131
+msgid "SDK App Credentials"
+msgstr ""
+
+#: includes/views/tabs/connect.php:140
+msgid ""
+"SDK App Credentials are required for Join Via Browser to work, see "
+"documentation on how to generate you App SDK keys"
+msgstr ""
+
+#: includes/views/migration.php:84 includes/views/tabs/connect.php:144
+msgid "SDK key"
+msgstr ""
+
+#: includes/views/migration.php:93 includes/views/tabs/connect.php:153
+#, fuzzy
+#| msgid "API Secret Key"
+msgid "SDK Secret key"
+msgstr "API 密鑰"
 
 #: includes/Shortcodes.php:103
 msgid "Search"
@@ -1519,11 +1593,18 @@ msgstr "秒"
 msgid "See More"
 msgstr "了解更多"
 
+#: includes/views/migration.php:21
+#, php-format
+msgid ""
+"See the documentation on how to generate Server to Server Oauth Credentials "
+"%s"
+msgstr ""
+
 #: includes/views/live/tpl-reports.php:80
 msgid "Select a Date to Check"
 msgstr "請輸入檢查的日期:"
 
-#: includes/views/tabs/api-settings.php:122
+#: includes/views/tabs/api-settings.php:107
 msgid "Select a default language for your join meeting via browser page."
 msgstr "請選擇「使用網頁瀏覽器加入會議」頁面的預設語言。"
 
@@ -1595,12 +1676,12 @@ msgid ""
 "meeting date has passed. This will only work if Meeting Type is defined."
 msgstr "啟用這個選項後，會議進行三十分鐘內，頁面仍然會顯示會議相關資訊。必須設定會議類型，此項功能才會生效"
 
-#: includes/Bootstrap.php:338 includes/admin/class-zvc-admin-settings.php:86
-#: includes/admin/class-zvc-admin-settings.php:86
+#: includes/Bootstrap.php:340 includes/admin/class-zvc-admin-settings.php:230
+#: includes/admin/class-zvc-admin-settings.php:230
 msgid "Settings"
 msgstr "設定"
 
-#: includes/admin/class-zvc-admin-settings.php:116
+#: includes/admin/class-zvc-admin-settings.php:269
 #: includes/views/webinars/tpl-list-webinars.php:62
 #: includes/views/live/tpl-list-meetings.php:63
 msgid "Shortcode"
@@ -1610,7 +1691,7 @@ msgstr "短代碼"
 msgid "Show %s entries"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:108
+#: includes/views/tabs/api-settings.php:93
 msgid "Show All"
 msgstr "顯示全部"
 
@@ -1637,7 +1718,7 @@ msgstr "依據 Zoom 使用者顯示會議"
 msgid "Show meeting posts based on Author ID"
 msgstr "根據作者 ID 顯示錄影"
 
-#: includes/views/tabs/api-settings.php:69
+#: includes/views/tabs/api-settings.php:54
 msgid "Show Past Join Link ?"
 msgstr "顯示過往會議連結？"
 
@@ -1645,7 +1726,7 @@ msgstr "顯示過往會議連結？"
 msgid "Show Recordings via Host ID"
 msgstr "根據主持人 ID 顯示錄影"
 
-#: includes/views/tabs/api-settings.php:76
+#: includes/views/tabs/api-settings.php:61
 msgid "Show Zoom Author ?"
 msgstr "顯示會議文章作者？"
 
@@ -1705,8 +1786,8 @@ msgstr "開始日期/時間 *"
 msgid "Start Meeting"
 msgstr "開始進行會議"
 
-#: includes/template-functions.php:376 includes/template-functions.php:384
-#: includes/template-functions.php:398 templates/content-meeting.php:49
+#: includes/template-functions.php:377 includes/template-functions.php:385
+#: includes/template-functions.php:399 templates/content-meeting.php:49
 #: templates/shortcode/zoom-webinar.php:73
 #: templates/shortcode/zoom-webinar.php:81
 #: templates/shortcode/zoom-webinar.php:88
@@ -1783,11 +1864,11 @@ msgstr "狀態"
 msgid "Successfully imported meeting with ID"
 msgstr "成功透過 ID 匯入會議"
 
-#: includes/admin/class-zvc-admin-settings.php:181
+#: includes/admin/class-zvc-admin-settings.php:342
 msgid "Successfully Updated. Please refresh this page."
 msgstr "已成功更新，請重新整理這個頁面。"
 
-#: includes/admin/class-zvc-admin-settings.php:119
+#: includes/admin/class-zvc-admin-settings.php:272
 msgid "Support"
 msgstr "支援"
 
@@ -1806,6 +1887,12 @@ msgid ""
 "Sync your Zoom events from your Zoom Account to this site directly. Synced "
 "meetings will be inside Zoom Events > All Events page. You will require PRO "
 "version of the plugin in order to import your Zoom Webinars."
+msgstr ""
+
+#: includes/views/migration.php:116
+msgid ""
+"That's it, we're all done, thank you for continuing to choose Video "
+"Conferencing with Zoom API"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-reports.php:96
@@ -1864,15 +1951,11 @@ msgstr ""
 msgid "This address is used for zoom (Required)."
 msgstr "此地址僅於 Zoom 使用 (必填)"
 
-#: includes/views/tabs/api-settings.php:191
+#: includes/views/tabs/api-settings.php:176
 msgid "This can be helpful in finding issues related to Zoom."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:12
-msgid "this guide"
-msgstr "說明書"
-
-#: includes/template-functions.php:385 templates/shortcode/zoom-webinar.php:82
+#: includes/template-functions.php:386 templates/shortcode/zoom-webinar.php:82
 msgid "This is a meeting with no Fixed Time."
 msgstr "此會議沒有固定時間"
 
@@ -1898,11 +1981,11 @@ msgstr "會議已經結束。"
 msgid "This meeting has been ended by the host."
 msgstr "這場會議已經結束。"
 
-#: includes/template-functions.php:137
+#: includes/template-functions.php:138
 msgid "This meeting has ended."
 msgstr ""
 
-#: includes/Timezone.php:49
+#: includes/Timezone.php:50
 msgid "This meeting is no longer valid and cannot be joined !"
 msgstr "此會議已經不再有效所以無法加入！"
 
@@ -1924,13 +2007,13 @@ msgstr ""
 msgid "This will disable join via browser link in frontend page."
 msgstr "這將會隱藏「使用網頁瀏覽器加入會議」按鈕"
 
-#: includes/views/tabs/api-settings.php:72
+#: includes/views/tabs/api-settings.php:57
 msgid ""
 "This will show join meeting links on frontend even after meeting time is "
 "already past."
 msgstr "啟用選項後，前端將不論會議是否結束，都會顯示加入會議的連結"
 
-#: includes/template-functions.php:404 templates/content-meeting.php:68
+#: includes/template-functions.php:405 templates/content-meeting.php:68
 #: templates/shortcode/zoom-webinar.php:93
 #: templates/shortcode/zoom-listing.php:71
 #: templates/shortcode/embed-session.php:92
@@ -1953,11 +2036,7 @@ msgstr "標題"
 msgid "To"
 msgstr "到"
 
-#: includes/views/tabs/api-settings.php:12
-msgid "to generate the below API values from your Zoom account"
-msgstr "的指示，在你的 Zoom 帳戶建立以下 API 欄位所需的資訊"
-
-#: includes/template-functions.php:313
+#: includes/template-functions.php:314
 #: templates/fragments/meeting-details.php:32
 #: templates/shortcode/zoom-webinar.php:25
 #: templates/shortcode/list-webinars-host.php:16
@@ -2011,11 +2090,11 @@ msgstr "總計大小"
 msgid "Trash"
 msgstr "回收桶"
 
-#: includes/views/tabs/api-settings.php:230
+#: includes/views/additional-info.php:27
 msgid "Try inactive logout"
 msgstr "試試 Inactive Logout"
 
-#: includes/template-functions.php:336 includes/template-functions.php:391
+#: includes/template-functions.php:337 includes/template-functions.php:392
 #: templates/content-meeting.php:56
 #: includes/admin/class-zvc-admin-post-type.php:191
 #: templates/shortcode/zoom-webinar.php:33
@@ -2049,11 +2128,11 @@ msgstr "會議已更新"
 msgid "Updated Webinar."
 msgstr "網路研討會已更新"
 
-#: includes/views/tabs/api-settings.php:174
+#: includes/views/tabs/api-settings.php:159
 msgid "Use 24-hour format"
 msgstr "使用 24 小時格式"
 
-#: includes/views/tabs/api-settings.php:181
+#: includes/views/tabs/api-settings.php:166
 msgid "Use full month label format ?"
 msgstr "顯示完整月份名稱？"
 
@@ -2083,7 +2162,7 @@ msgstr ""
 msgid "Users"
 msgstr "使用者"
 
-#: includes/views/tabs/api-settings.php:32
+#: includes/views/tabs/api-settings.php:16
 msgid "Vanity URL"
 msgstr "虛名 URL"
 
@@ -2114,7 +2193,7 @@ msgstr "檢視會議文章"
 msgid "View Recordings"
 msgstr "檢視錄影"
 
-#: includes/template-functions.php:321
+#: includes/template-functions.php:322
 msgid "Waiting - Not started"
 msgstr "請稍候 - 會議還沒開始"
 
@@ -2149,7 +2228,7 @@ msgstr "網路研討會主持人 *"
 msgid "Webinar ID"
 msgstr "網路研討會 ID"
 
-#: includes/template-functions.php:187
+#: includes/template-functions.php:188
 msgid "Webinar is not defined. Try updating this Webinar"
 msgstr "找不到網路研討會，請修正網路研討會資訊"
 
@@ -2255,9 +2334,21 @@ msgctxt "Zoom Events"
 msgid "Zoom Events"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:110
+#: includes/admin/class-zvc-admin-settings.php:254
 msgid "Zoom Integration Settings"
 msgstr "Zoom 整合設定"
+
+#: includes/admin/class-zvc-admin-settings.php:73
+#: includes/views/tabs/connect.php:38
+#, php-format
+msgid ""
+"Zoom is deprecating their JWT app from June of 2023, please see %s for more "
+"details, Until the deadline all your current settings will work, however to "
+"ensure a smooth transition to the new Server to Server OAuth system + New "
+"App SDK (required for Join Via Browser) - we recommend that you migrate as "
+"soon as possible. Run the %s now to complete the migration process in 2 easy "
+"steps "
+msgstr ""
 
 #: includes/Elementor/Widgets/MeetingByID.php:43
 #: includes/views/post-type/tpl-meeting-fields.php:63
@@ -2281,11 +2372,16 @@ msgstr "Zoom 會議清單"
 msgid "Zoom Meetings via Host"
 msgstr "主持人的會議"
 
+#: includes/admin/class-zvc-admin-settings.php:140
+#, php-format
+msgid "Zoom Oauth Error Code: \"%s\"  -  %s "
+msgstr ""
+
 #: includes/Elementor/Widgets/RecordingsByHost.php:44
 msgid "Zoom Recordings by Host"
 msgstr "主持人的 Zoom 錄影"
 
-#: includes/admin/class-zvc-admin-settings.php:47
+#: includes/admin/class-zvc-admin-settings.php:191
 msgid "Zoom Users"
 msgstr "Zoom 使用者"
 
@@ -2296,3 +2392,7 @@ msgstr "Zoom 網路研討會"
 #: includes/Elementor/Widgets/WebinarList.php:44
 msgid "Zoom Webinars List"
 msgstr "Zoom 網路研討會清單"
+
+#: includes/admin/class-zvc-admin-settings.php:158
+msgid "Zoom: Credentials successfully verified and saved "
+msgstr ""

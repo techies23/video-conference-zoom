@@ -29,7 +29,7 @@ Video conferencing with Zoom plugin gives you the extensive functionality to man
 * Gutenberg Blocks Support
 * Elementor Support
 
-**PRO FEATURES**
+**ADDON FEATURES**
 
 * Recurring meetings and Webinars (PRO)
 * Enable registrations (PRO)
@@ -149,9 +149,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
-= 4.0.0 July 19th, 2022 =
-* Major Change: Update, Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoom.codemanas.com/setup/)
-* Update web sdk to version 2.5.0
+
+= 4.0.0 July 21st, 2022 =
+* Major Update: Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoom.codemanas.com/setup/)
+* Updated: WebSDK to version 2.5.0
 
 = 3.9.7 July 13th, 2022 =
 * Fixed: Issue showing "meeting no longer valid" when using no fixed time for meetings and webinars.
