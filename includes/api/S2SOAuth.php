@@ -3,9 +3,9 @@
 namespace vczapi;
 
 class S2SOAuth {
-	public static ?S2SOAuth $instance = null;
+	public static $instance = null;
 
-	public static function get_instance(): ?S2SOAuth {
+	public static function get_instance() {
 		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
 

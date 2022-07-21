@@ -1,12 +1,13 @@
 <?php
 
 class VCZAPI_Admin_Setup_Wizard {
-	public static ?VCZAPI_Admin_Setup_Wizard $instance = null;
+
+	public static $instance = null;
 
 	/**
 	 * @return VCZAPI_Admin_Setup_Wizard|null
 	 */
-	public static function get_instance(): ?VCZAPI_Admin_Setup_Wizard {
+	public static function get_instance() {
 		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
 

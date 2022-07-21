@@ -150,6 +150,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
+= 4.0.1 July 21st, 2022 =
+* Fixed: PHP 7.4 below - class strict type declaration removed for backwards compatiblity.
+
 = 4.0.0 July 21st, 2022 =
 * Major Update: Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoom.codemanas.com/setup/)
 * Updated: WebSDK to version 2.5.0
