@@ -2,9 +2,9 @@
 Contributors: j__3rk, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
-Requires at least: 4.9
+Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
