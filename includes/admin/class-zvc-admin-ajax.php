@@ -39,8 +39,8 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		} elseif ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( [ 'message' => 'Error' ] );
 		}
-		
-		
+
+
 		if ( $option == 'vczapi_dismiss_sdk_not_active_notice' ) {
 			update_option( 'vczapi_dismiss_sdk_not_active_notice', true );
 		}
@@ -179,7 +179,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 
 	private function generate_sdk_signature( $sdk_key, $secret_key, $meeting_number, $role ) {
 		$iat     = round( ( time() * 1000 - 30000 ) / 1000 );
-		$exp     = $iat + 60 * 60 * 2;
+		$exp     = $iat + 86400;
 		$payload = [
 			'sdkKey'   => $sdk_key,
 			'mn'       => $meeting_number,
@@ -187,7 +187,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			'iat'      => $iat,
 			'exp'      => $exp,
 			'appKey'   => $sdk_key,
-			'tokenExp' => $iat + 60 * 60 * 2,
+			'tokenExp' => $exp
 		];
 
 		return \Firebase\JWT\JWT::encode( $payload, $secret_key );

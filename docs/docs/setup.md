@@ -17,6 +17,33 @@ For this plugin you will be using Server-to-Server OAuth app type.
 5. You will need to add Contact name, Contact email and Company name on the information page ![App Informaiton](img/s2s-oauth/s2s-info.png)
 6. For the plugin to work - you will need to define the correct scopes for the App. Go to scopes and click "Add Scopes" and add Meeting, Webinar, Report, User, Recording, Report and select all options on each selected scopes ![Add Scopes](img/s2s-oauth/add-scopes.png)
 
+###Below are permissions that are needed/required:
+
+####Meetings
+* View and manage sub account’s user meetings/meeting:master
+* View all user meetings/meeting:read:admin
+* View and manage all user meetings/meeting:write:admin
+
+####Recordings
+* View and manage sub account’s user recordings/recording:master
+* View all user recordings/recording:read:admin
+* View and manage all user recordings/recording:write:admin
+
+####Reports
+* View sub account’s report data/report:master
+* View report data/report:read:admin
+* View your chat history report/report_chat:read:admin
+
+####Users
+* View and manage sub account’s user information/user:master
+* View all user information/user:read:admin
+* View users information and manage users/user:write:admin
+
+####WEebinars
+* View and manage sub account’s user webinars/webinar:master
+* View all user Webinars/webinar:read:admin
+* View and manage all user Webinars/webinar:write:admin
+
 ###Adding Server-to-Server OAuth Credentials to the plugin
 1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/plugin-settings-s2s-oauth.png)
 2. Add the Server-to-Server credentials ( Account ID, Client ID, Client Secret ) that can be viewed in the app under credentials (see step 4 above) ![App Credentials](img/s2s-oauth/app-credentials.png)
