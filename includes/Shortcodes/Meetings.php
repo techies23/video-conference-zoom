@@ -112,7 +112,7 @@ class Meetings {
 	public function show_meeting_by_postTypeID( $atts ) {
 		extract( shortcode_atts( array(
 			'post_id'  => '',
-			'template' => ''
+			'template' => '',
 		), $atts ) );
 
 		ob_start();
@@ -144,15 +144,13 @@ class Meetings {
 			'meeting_started'  => ! empty( $zoom_started ) ? $zoom_started : __( 'Meeting Has Started ! Click below join button to join meeting now !', 'video-conferencing-with-zoom-api' ),
 			'meeting_starting' => ! empty( $zoom_going_to_start ) ? $zoom_going_to_start : __( 'Click join button below to join the meeting now !', 'video-conferencing-with-zoom-api' ),
 			'meeting_ended'    => ! empty( $zoom_ended ) ? $zoom_ended : __( 'This meeting has been ended by the host.', 'video-conferencing-with-zoom-api' ),
-			'date_format'      => $date_format
+			'date_format'      => $date_format,
 		) );
 		wp_localize_script( 'video-conferencing-with-zoom-api', 'zvc_strings', $translation_array );
 
 		$meeting = new \WP_Query( [ 'p' => $post_id, 'post_type' => $this->post_type ] );
 		if ( $meeting->have_posts() ) {
-			while ( $meeting->have_posts() ) {
-				$meeting->the_post();
-
+			while ( $meeting->have_posts() ) :$meeting->the_post();
 				$show_zoom_author_name = get_option( 'zoom_show_author' );
 				$GLOBALS['zoom']       = get_post_meta( get_the_id(), '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
 				$meeting_details       = get_post_meta( get_the_id(), '_meeting_zoom_details', true );
@@ -192,7 +190,8 @@ class Meetings {
 				} else {
 					vczapi_get_template_part( 'content', 'single-meeting' );
 				}
-			}
+			endwhile;
+			wp_reset_postdata();
 		} else {
 			echo "<p>" . __( 'This post does not exist.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
@@ -219,9 +218,10 @@ class Meetings {
 				'type'         => '',
 				'filter'       => 'yes',
 				'show_on_past' => 'yes',
-				'cols'         => 3
+				'cols'         => 3,
 			),
-			$atts, 'zoom_list_meetings'
+			$atts,
+			'zoom_list_meetings'
 		);
 
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
@@ -248,14 +248,14 @@ class Meetings {
 					array(
 						'key'     => '_vczapi_meeting_type',
 						'value'   => 'meeting',
-						'compare' => '='
+						'compare' => '=',
 					),
 					array(
 						'key'     => '_vczapi_meeting_type',
-						'compare' => 'NOT EXISTS'
+						'compare' => 'NOT EXISTS',
 					),
-				)
-			)
+				),
+			),
 		);
 
 		if ( ! empty( $atts['author'] ) ) {
@@ -276,7 +276,7 @@ class Meetings {
 				'key'     => '_meeting_field_start_date_utc',
 				'value'   => $threshold,
 				'compare' => $type,
-				'type'    => 'DATETIME'
+				'type'    => 'DATETIME',
 			);
 			array_push( $query_args['meta_query'], $meta_query );
 		}
@@ -288,8 +288,8 @@ class Meetings {
 					'taxonomy' => 'zoom-meeting',
 					'field'    => 'slug',
 					'terms'    => $category,
-					'operator' => 'IN'
-				]
+					'operator' => 'IN',
+				],
 			];
 		}
 
@@ -310,7 +310,7 @@ class Meetings {
 	/**
 	 * Ajax handler for pagination
 	 *
-	 * @since 3.8.5 ( July 8th, 2021 )
+	 * @since  3.8.5 ( July 8th, 2021 )
 	 * @author Digamber
 	 */
 	public function list_meeting_ajax_handler() {
@@ -332,9 +332,10 @@ class Meetings {
 				'cols'         => 3,
 				'page_num'     => 1,
 				'base_url'     => '',
-				'meeting_type' => 'meetings'
+				'meeting_type' => 'meetings',
 			),
-			$data, 'zoom_list_meetings'
+			$data,
+			'zoom_list_meetings'
 		);
 		$paged = isset( $data['page_num'] ) ? $data['page_num'] : 1;
 
@@ -357,15 +358,15 @@ class Meetings {
 					array(
 						'key'     => '_vczapi_meeting_type',
 						'value'   => 'meeting',
-						'compare' => '='
+						'compare' => '=',
 					),
 					array(
 						'key'     => '_vczapi_meeting_type',
-						'compare' => 'NOT EXISTS'
+						'compare' => 'NOT EXISTS',
 					),
-				)
+				),
 			);
-		} else if ( $atts['meeting_type'] == 'webinars' ) {
+		} elseif ( $atts['meeting_type'] == 'webinars' ) {
 			$query_args['meta_query'] = array(
 				'relation' => 'AND',
 				array(
@@ -373,9 +374,9 @@ class Meetings {
 					array(
 						'key'     => '_vczapi_meeting_type',
 						'value'   => 'webinar',
-						'compare' => '='
-					)
-				)
+						'compare' => '=',
+					),
+				),
 			);
 		}
 
@@ -397,7 +398,7 @@ class Meetings {
 				'key'     => '_meeting_field_start_date_utc',
 				'value'   => $threshold,
 				'compare' => $type,
-				'type'    => 'DATETIME'
+				'type'    => 'DATETIME',
 			);
 			array_push( $query_args['meta_query'], $meta_query );
 		}
@@ -409,18 +410,18 @@ class Meetings {
 					'taxonomy' => 'zoom-meeting',
 					'field'    => 'slug',
 					'terms'    => $form_data['taxonomy'],
-					'operator' => 'IN'
-				]
+					'operator' => 'IN',
+				],
 			];
-		} else if ( ! empty( $atts['category'] ) ) {
+		} elseif ( ! empty( $atts['category'] ) ) {
 			$category                = array_map( 'trim', explode( ',', $atts['category'] ) );
 			$query_args['tax_query'] = [
 				[
 					'taxonomy' => 'zoom-meeting',
 					'field'    => 'slug',
 					'terms'    => $category,
-					'operator' => 'IN'
-				]
+					'operator' => 'IN',
+				],
 			];
 		}
 
@@ -480,7 +481,7 @@ class Meetings {
 	public function list_live_host_meetings( $atts ) {
 		$atts = shortcode_atts(
 			[
-				'host' => ''
+				'host' => '',
 			],
 			$atts
 		);
