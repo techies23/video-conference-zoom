@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.0.2 August 4th, 2022 =
+* Dev Fix: wp_reset_postdata() was not called after looping in shortcode show_meeting_by_postTypeID
 
 = 4.0.1 July 21st, 2022 =
 * Fixed: PHP 7.4 below - class strict type declaration removed for backwards compatiblity.
