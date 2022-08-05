@@ -826,7 +826,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	 */
 	public function template_filter( $template_name ) {
 		if ( is_post_type_archive( $this->post_type ) && isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
-			$template_name = ZVC_PLUGIN_DIR_PATH . 'templates/join-web-browser.php';
+			$template_name = vczapi_get_template( 'join-web-browser.php' );
 		}
 
 		return $template_name;

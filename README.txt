@@ -150,8 +150,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.0.2 August 4th, 2022 =
-* Dev Fix: wp_reset_postdata() was not called after looping in shortcode show_meeting_by_postTypeID
+= 4.0.2 August 5th, 2022 =
+* Fixed: wp_reset_postdata() was not called after looping in shortcode show_meeting_by_postTypeID
+* Fixed: Join via web browser theme router template not being called correctly for pages that uses builders or editor.
+* Updated: WebSDK to version 2.6.0
 
 = 4.0.1 July 21st, 2022 =
 * Fixed: PHP 7.4 below - class strict type declaration removed for backwards compatiblity.
