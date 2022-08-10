@@ -125,12 +125,12 @@ function video_conference_zoom_meeting_join() {
 		$post_id            = get_the_id();
 		$meeting_start_date = get_post_meta( $post_id, '_meeting_field_start_date_utc', true );
 		$data               = array(
-			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-			'start_date' => $meeting_start_date,
-			'timezone'   => $zoom['timezone'],
-			'post_id'    => $post_id,
-            'meeting_type' => $zoom['api']->type,
-			'page'       => 'single-meeting'
+			'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+			'start_date'   => $meeting_start_date,
+			'timezone'     => $zoom['timezone'],
+			'post_id'      => $post_id,
+			'meeting_type' => $zoom['api']->type,
+			'page'         => 'single-meeting'
 		);
 		$data               = apply_filters( 'vczapi_single_meeting_localized_data', $data );
 		wp_localize_script( 'video-conferencing-with-zoom-api', 'mtg_data', $data );
@@ -506,7 +506,13 @@ function video_conference_zoom_after_jbh_html() {
 
 	ob_start( 'vczapi_removeWhitespace' );
 	global $post;
-	$post_link = ! empty( $post ) && ! empty( $post->ID ) ? get_permalink( $post->ID ) : home_url( '/' );
+	if ( isset( $_GET['redirect'] ) && ! empty( $_GET['redirect'] ) ) {
+		$post_link = esc_url( $_GET['redirect'] );
+	} else if ( ! empty( $post ) && ! empty( $post->ID ) ) {
+		$post_link = get_permalink( $post->ID );
+	} else {
+		$post_link = home_url( '/' );
+	}
 
 	$localize = array(
 		'ajaxurl'       => admin_url( 'admin-ajax.php' ),
