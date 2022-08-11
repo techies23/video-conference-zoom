@@ -28,9 +28,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	 * Render HTML
 	 */
 	public static function render() {
-		$zoom_api_key    = get_option( 'zoom_api_key' );
-		$zoom_api_secret = get_option( 'zoom_api_secret' );
-		if ( empty( $zoom_api_key ) || empty( $zoom_api_secret ) ) {
+		if ( !vczapi_is_oauth_active() ) {
 			echo '<p>' . __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) . '</p>';
 
 			return;
@@ -57,9 +55,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	public function sync() {
 		$type = filter_input( INPUT_POST, 'type' );
 
-		$zoom_api_key    = get_option( 'zoom_api_key' );
-		$zoom_api_secret = get_option( 'zoom_api_secret' );
-		if ( empty( $zoom_api_key ) || empty( $zoom_api_secret ) ) {
+		if ( !vczapi_is_oauth_active() ) {
 			wp_send_json_error( __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) );
 		}
 

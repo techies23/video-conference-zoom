@@ -265,9 +265,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
                 <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'api-settings' ) ) ); ?>" class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'API Settings', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
-                <a style="background: #bf5252;color: #fff;" href="<?php echo esc_url( add_query_arg( array( 'tab' => 'shortcode' ) ) ); ?>" class="nav-tab <?php echo ( 'shortcode' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
-					<?php esc_html_e( 'Shortcode', 'video-conferencing-with-zoom-api' ); ?>
-                </a>
                 <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'support' ) ) ); ?>" class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Support', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
@@ -370,8 +367,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';
-			} elseif ( 'shortcode' === $active_tab ) {
-				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/shortcode.php';
 			} elseif ( 'support' == $active_tab ) {
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/support.php';
 			} elseif ( 'debug' == $active_tab ) {
