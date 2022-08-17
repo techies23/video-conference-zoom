@@ -7,7 +7,7 @@
  * Plugin Name:       Video Conferencing with Zoom
  * Plugin URI:        https://wordpress.org/plugins/video-conferencing-with-zoom-api/
  * Description:       Video Conferencing with Zoom Meetings and Webinars plugin provides you with great functionality of managing Zoom meetings, Webinar scheduling options, and users directly from your WordPress dashboard.
- * Version:           4.0.4
+ * Version:           4.0.5
  * Author:            Deepen Bajracharya
  * Author URI:        https://www.imdpen.com
  * License:           GPL-2.0+
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ZVC_PLUGIN_FILE', __FILE__ );
 define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
-define( 'ZVC_PLUGIN_VERSION', '4.0.4' );
+define( 'ZVC_PLUGIN_VERSION', '4.0.5' );
 define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.5.0' );
 define( 'ZVC_PLUGIN_AUTHOR', 'https://deepenbajracharya.com.np' );
 define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
