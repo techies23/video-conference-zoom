@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 	}
 
-	if ( ! empty( $meeting_details ) && ! empty( $meeting_details->id ) && ( $post->post_status === 'publish' || $post->post_status === 'draft' || $post->post_status === 'pending' ) ) { ?>
+	if ( ! empty( $meeting_details ) && ! empty( $meeting_details->id ) && ( $post->post_status === 'publish' || $post->post_status === 'draft' || $post->post_status === 'pending' || $post->post_status == 'private' ) ) { ?>
         <tr class="zoom-host-id-selection-admin">
             <th scope="row"><label for="userId"><?php _e( 'Meeting Host *', 'video-conferencing-with-zoom-api' ); ?></label></th>
             <td>
