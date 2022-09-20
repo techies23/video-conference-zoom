@@ -62,6 +62,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#setup" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -453,9 +458,51 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Host to WP
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Host to WP
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-link-zoom-host-to-your-wordpress-hosts" class="md-nav__link">
+    How to link Zoom Host to your WordPress Hosts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    How it Works?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -665,6 +712,50 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-link-zoom-host-to-your-wordpress-hosts" class="md-nav__link">
+    How to link Zoom Host to your WordPress Hosts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    How it Works?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -677,9 +768,16 @@
                 
                   <h1>Host to WP</h1>
                 
-                <p>This allows you to link your Users to your WordPress site using the <code>get_user_meta</code> function.</p>
-<p><strong>I won't go in detail here for the explanation. This is intended for Developers only.</strong></p>
-<p>Just define <code>define("VIDEO_CONFERENCING_HOST_ASSIGN_PAGE", true);</code> into your wp-config.php file to enable this menu in wp-admin side.</p>
+                <p>This allows you to link your Users to your WordPress site using the <code>get_user_meta</code> function. The purpose is to reduce the need to select a host each time a new meeting is created. So, that in the case of allowing to create meetings via multiple existing users ( for example admin 1 and admin 2) they won't get confused on which host to select.</p>
+<h3 id="setup">Setup</h3>
+<p><code>define("VIDEO_CONFERENCING_HOST_ASSIGN_PAGE", true);</code> into your wp-config.php file to enable this menu in wp-admin side.</p>
+<h3 id="how-to-link-zoom-host-to-your-wordpress-hosts">How to link Zoom Host to your WordPress Hosts</h3>
+<p>After completing the setup process, you should see a new option on your wp-admin portal called <strong>"Host to WP users"</strong>. Like show below:</p>
+<p><img alt="Zoom Blocks Cat" src="../img/host-to-wp.png" /></p>
+<p>Goto this page and link a Zoom host to your desired WordPress user. </p>
+<h3 id="how-it-works">How it Works?</h3>
+<p>After you link the Host to WP user - When trying to create the meeting that user will only see the details that is linked to that account. This way it won't confuse your users and they won't have to choose a host everytime they create a meeting/webinar.</p>
+<p><img alt="Zoom Blocks Cat" src="../img/assigned-host-add-new-event.png" /></p>
                 
               
               
