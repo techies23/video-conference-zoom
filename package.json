@@ -56,7 +56,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.14",
     "@babel/preset-env": "^7.12.11",
-    "@wordpress/scripts": "^19.2.2",
+    "@wordpress/scripts": "^24.1.0",
     "autoprefixer": "^10.2.5",
     "copy-webpack-plugin": "^10.0.0",
     "del": "^6.0.0",
