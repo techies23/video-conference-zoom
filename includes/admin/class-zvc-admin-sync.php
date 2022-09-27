@@ -28,7 +28,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	 * Render HTML
 	 */
 	public static function render() {
-		if ( !vczapi_is_oauth_active() ) {
+		if ( ! vczapi_is_oauth_active() ) {
 			echo '<p>' . __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) . '</p>';
 
 			return;
@@ -55,7 +55,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	public function sync() {
 		$type = filter_input( INPUT_POST, 'type' );
 
-		if ( !vczapi_is_oauth_active() ) {
+		if ( ! vczapi_is_oauth_active() ) {
 			wp_send_json_error( __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) );
 		}
 
@@ -200,7 +200,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 		$query_args           = array(
 			'post_type'      => 'zoom-meetings',
 			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
+			'post_status'    => [ 'pending', 'draft', 'future', 'publish' ]
 		);
 		$meetings             = get_posts( $query_args );
 		$existing_meeting_ids = array();
