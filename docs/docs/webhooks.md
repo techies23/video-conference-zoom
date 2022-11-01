@@ -18,11 +18,11 @@ In simple terms, webhook functionality can be used to notify your WordPress site
 
 * Copy Secret Token Key.
 
-![Verification Key](webhooks/verification-key-zoom.png "Verification Key")
+![Verification Key](webhooks/verification-key-zoom-v2.png "Verification Key")
 
 * **_Event Subscriptions_** should be turned on from Server-to-Server app page inside "**_Features_**" section go to [https://marketplace.zoom.us](https://marketplace.zoom.us) > Click Server-to-Server OAuth App > Click feature
 
-![Event Subscriptions](webhooks/event-subscriptions-oauth.png "Event Subscriptions")
+![Event Subscriptions](webhooks/event-subscriptions-oauth-v2.png "Event Subscriptions")
 
 * After that click on **Add new Event Subscription button** - to complete the steps you will first need to go to your WordPress admin panel and see the step [described below](#getting-endpoint-urls)
 
@@ -32,7 +32,7 @@ Goto **wp-admin > Zoom Meetings > Settings > Webhooks**
 
 Each endpoint for certain events are defined in this page. All you need to do is copy it from here to Zoom side. See below for where to copy these URLs.
 
-![Webhooks](webhooks/settings.png "Webhooks")
+![Webhooks](webhooks/settings-v2.png "Webhooks")
 
 ### Automate Meeting Flow
 
