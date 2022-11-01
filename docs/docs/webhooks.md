@@ -16,7 +16,7 @@ In simple terms, webhook functionality can be used to notify your WordPress site
 
 * This section assumes that you have successfully setup Server-to-Server Oauth and credentials have been added and successfully connected to your WordPress site. If you have not created Server-to-Server OAuth yet then please visit this [tutorial](/setup).
 
-* Copy Verification Token Key.
+* Copy Secret Token Key.
 
 ![Verification Key](webhooks/verification-key-zoom.png "Verification Key")
 
@@ -46,8 +46,14 @@ Each endpoint for certain events are defined in this page. All you need to do is
 
 ![Meeting Event Types](webhooks/meeting-event-types.png "Meeting Event Types")
 
-* Select 5 events which are **`"Meeting has been created", "Meeting has been updated", "Meeting has been deleted", "Meeting has been recovered" and "Meeting has been permanently deleted"`**
+* Select 3 events which are **`"Meeting has been created", "Meeting has been updated", "Meeting has been deleted"`**
+
+### Enabling Webinars
+
+* Goto Webinars
+
+* Select 3 events which are **`"Webinar has been created", "Webinar has been updated", "Webinar has been deleted"`**
+
 
 Please note that choosing any additional events will not work.
-
 
