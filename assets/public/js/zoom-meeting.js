@@ -6,8 +6,7 @@ jQuery(function ($) {
       var browseinfo = ZoomMtg.checkSystemRequirements();
       var page_html = '<ul><li><strong>Browser Info:</strong> ' + browseinfo.browserInfo + '</li>';
       page_html += '<li><strong>Browser Name:</strong> ' + browseinfo.browserName + '</li>';
-      page_html += '<li><strong>Browser Version:</strong> ' + browseinfo.browserVersion + '</li></ul>'; // page_html += '<li><strong>Available:</strong> ' + browseinfo.features + '</li></ul>';
-
+      page_html += '<li><strong>Browser Version:</strong> ' + browseinfo.browserVersion + '</li></ul>';
       $('.vczapi-zoom-browser-meeting--info__browser').html(page_html);
       ZoomMtg.preLoadWasm();
       ZoomMtg.prepareJssdk();

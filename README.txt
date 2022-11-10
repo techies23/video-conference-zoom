@@ -150,8 +150,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.0.7 September 27th, 2022 =
+= 4.0.7 November 10th, 2022 =
 * Fixed: Import get meetings functions to fetch draft posts.
+* Updated: Elementor widget showing minus values.
 
 = 4.0.6 September 13th, 2022 =
 * Updated: Minimum PHP version to 7.3

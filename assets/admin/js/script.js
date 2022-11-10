@@ -228,7 +228,26 @@
             data: 'name'
           }, {
             data: 'host_id'
-          }]
+          }],
+          initComplete: function initComplete(settings, json) {
+            $('.vczapi-get-zoom-hosts').select2({
+              ajax: {
+                url: ajaxurl + '?action=vczapi_get_zoom_host_query',
+                type: 'GET',
+                dataType: 'json',
+                delay: 1000,
+                cache: true
+              },
+              placeholder: 'Filter a zoom user by email ID or host ID...',
+              width: '400px'
+            }).on('select2:select', function (event) {
+              if ($('.vczapi-host-email-field-' + $(this).data('userid')).length > 0) {
+                $('.vczapi-host-email-field-' + $(this).data('userid')).val(event.params.data.text);
+              } else {
+                $('<input type="hidden" class="vczapi-host-email-field-' + $(this).data('userid') + '" name="zoom_host_email[' + $(this).data('userid') + ']" value="' + event.params.data.text + '" />').insertAfter(this);
+              }
+            });
+          }
         });
       }
 

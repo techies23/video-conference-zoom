@@ -46,7 +46,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				'page'      => 'zoom-video-conferencing-settings',
 			],
 				admin_url( 'edit.php' ),
-			) );
+				) );
 			$admin_page_link = '<a href="' . $admin_page_url . '">here</a>';
 
 			$dismiss_button = '<a href="#" class="vczapi-dismiss-admin-notice" data-id="vczapi_dismiss_sdk_not_active_notice" data-security="' . wp_create_nonce( 'vczapi-dismiss-nonce' ) . '" >don\'t show this message again</a>.';
@@ -259,16 +259,20 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 						'page'      => 'zoom-video-conferencing-settings',
 					],
 					admin_url( 'edit.php' )
-				) ); ?>" class="nav-tab <?php echo ( 'connect' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+				) ); ?>"
+                   class="nav-tab <?php echo ( 'connect' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Connect', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
-                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'api-settings' ) ) ); ?>" class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'api-settings' ) ) ); ?>"
+                   class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'API Settings', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
-                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'support' ) ) ); ?>" class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'support' ) ) ); ?>"
+                   class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Support', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
-                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'debug' ) ) ); ?>" class="nav-tab <?php echo ( 'debug' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
+                <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'debug' ) ) ); ?>"
+                   class="nav-tab <?php echo ( 'debug' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
 					<?php esc_html_e( 'Logs', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
 				<?php do_action( 'vczapi_admin_tabs_heading', $active_tab ); ?>

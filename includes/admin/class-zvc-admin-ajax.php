@@ -26,6 +26,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		//AJAX call for fetching users
 		add_action( 'wp_ajax_get_assign_host_id', [ $this, 'assign_host_id' ] );
 		add_action( 'wp_ajax_vczapi_get_wp_users', [ $this, 'get_wp_usersByRole' ] );
+		add_action( 'wp_ajax_vczapi_get_zoom_host_query', [ $this, 'getZoomHostByQuery' ] );
 
 		//Ajax called for dismissing notice
 		add_action( 'wp_ajax_vczapi_dismiss_admin_notice', [ $this, 'admin_notice' ] );
@@ -66,7 +67,10 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 				zoom_conference()->deleteAMeeting( $meeting_id );
 			}
 
-			wp_send_json( array( 'error' => 0, 'msg' => __( "Deleted Meeting with ID", "video-conferencing-with-zoom-api" ) . ': ' . $meeting_id ) );
+			wp_send_json( array(
+				'error' => 0,
+				'msg'   => __( "Deleted Meeting with ID", "video-conferencing-with-zoom-api" ) . ': ' . $meeting_id
+			) );
 		} else {
 			wp_send_json( array(
 				'error' => 1,
@@ -107,7 +111,10 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 				) );
 			}
 		} else {
-			wp_send_json( array( 'error' => 1, 'msg' => __( "You need to select a data in order to initiate this action." ) ) );
+			wp_send_json( array(
+				'error' => 1,
+				'msg'   => __( "You need to select a data in order to initiate this action." )
+			) );
 		}
 
 		wp_die();
@@ -294,30 +301,72 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		if ( ! empty( $users ) ) {
 			foreach ( $users as $user ) {
 				$user_zoom_hostid = get_user_meta( $user->ID, 'user_zoom_hostid', true );
+				$email_address    = get_user_meta( $user->ID, 'vczapi_user_zoom_email_address', true );
 				$host_id_field    = '';
-				if ( ! empty( $zoom_users ) ) {
-					$host_id_field .= '<select name="zoom_host_id[' . $user->ID . ']" style="width:100%">';
-					$host_id_field .= '<option value="">' . __( 'Not a Host', 'video-conferencing-with-zoom-api' ) . '</option>';
+				$host_id_field    .= '<select data-userid="' . $user->ID . '" name="zoom_host_id[' . $user->ID . ']" class="vczapi-get-zoom-hosts" style="width:100%">';
+				if ( ! empty( $user_zoom_hostid ) && ! empty( $email_address ) ) {
+					$host_id_field .= '<option value="' . $user_zoom_hostid . '" selected>' . $email_address . '</option>';
+				}
+
+				//This is for backwards compatibility before version 4.0.7
+				if ( ! empty( $zoom_users ) && ! empty( $user_zoom_hostid ) && empty( $email_address ) ) {
 					foreach ( $zoom_users as $zoom_usr ) {
 						$selected_host_id = ! empty( $user_zoom_hostid ) && $user_zoom_hostid === $zoom_usr->id ? 'selected="selected"' : false;
 						$full_name        = ! empty( $zoom_usr->first_name ) ? $zoom_usr->first_name . ' ' . $zoom_usr->last_name : $zoom_usr->email;
 						$host_id_field    .= '<option value="' . $zoom_usr->id . '" ' . $selected_host_id . '>' . $full_name . '</option>';
 					}
-					$host_id_field .= '</select>';
-
-					$result[] = array(
-						'id'      => $user->ID,
-						'email'   => $user->user_email,
-						'name'    => empty( $user->first_name ) ? $user->display_name : $user->first_name . ' ' . $user->last_name,
-						'host_id' => $host_id_field,
-					);
 				}
+
+				$host_id_field .= '</select>';
+
+				if ( ! empty( $email_address ) ) {
+					$host_id_field .= '<input type="hidden" class="vczapi-host-email-field-' . $user->ID . '" name="zoom_host_email[' . $user->ID . ']" value="' . $email_address . '" />';
+				}
+
+				$result[] = array(
+					'id'      => $user->ID,
+					'email'   => $user->user_email,
+					'name'    => empty( $user->first_name ) ? $user->display_name : $user->first_name . ' ' . $user->last_name,
+					'host_id' => $host_id_field,
+				);
 			}
 
 			wp_send_json_success( $result );
 
 			wp_die();
 		}
+	}
+
+	public function getZoomHostByQuery() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$search_string = filter_input( INPUT_GET, 'term' );
+		$results       = array();
+		if ( ! empty( $search_string ) ) {
+			$user = json_decode( zoom_conference()->getUserInfo( $search_string ) );
+			if ( empty( $user->code ) && ! empty( $user ) ) {
+				$results[] = array(
+					'id'   => $user->id,
+					'text' => $user->email,
+				);
+			}
+		} else {
+			$users = json_decode( zoom_conference()->listUsers() );
+			if ( empty( $users->code ) && ! empty( $users->users ) ) {
+				foreach ( $users->users as $user ) {
+					$results[] = array(
+						'id'   => $user->id,
+						'text' => $user->email,
+					);
+				}
+			}
+		}
+
+		wp_send_json( array( 'results' => $results ) );
+
+		wp_die();
 	}
 
 	public function get_wp_usersByRole() {

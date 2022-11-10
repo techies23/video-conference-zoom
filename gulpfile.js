@@ -75,12 +75,6 @@ function compileVendorScripts() {
     ])
         .pipe(gulp.dest('./assets/vendor/dtimepicker'));
 
-    //Crypto JS
-    gulp.src([
-        './node_modules/crypto-js/crypto-js.js',
-    ])
-        .pipe(gulp.dest('./assets/vendor/crypto-js'));
-
     //MomentJS
     gulp.src([
         './node_modules/moment/min/**/*',
@@ -94,7 +88,7 @@ function compileVendorScripts() {
         .pipe(gulp.dest('./assets/vendor/moment-timezone'));
 
     //React Production Copy
-    gulp.src([
+    /*gulp.src([
         './node_modules/jquery/dist/jquery.min.js',
         './node_modules/react/umd/react.production.min.js',
         './node_modules/react-dom/umd/react-dom.production.min.js',
@@ -104,7 +98,7 @@ function compileVendorScripts() {
         './node_modules/@zoomus/websdk/dist/css/bootstrap.css',
         './node_modules/@zoomus/websdk/dist/css/react-select.css',
     ])
-        .pipe(gulp.dest('./assets/vendor/zoom'));
+        .pipe(gulp.dest('./assets/vendor/zoom'));*/
 }
 
 /*

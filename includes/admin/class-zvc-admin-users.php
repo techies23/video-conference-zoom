@@ -75,6 +75,9 @@ class Zoom_Video_Conferencing_Admin_Users {
 		require_once ZVC_PLUGIN_VIEWS_PATH . '/live/tpl-add-user.php';
 	}
 
+	/**
+	 * Assign Host ID
+	 */
 	static function assign_host_id() {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
@@ -82,9 +85,18 @@ class Zoom_Video_Conferencing_Admin_Users {
 		if ( isset( $_POST['saving_host_id'] ) ) {
 			check_admin_referer( '_zoom_assign_hostid_nonce_action', '_zoom_assign_hostid_nonce' );
 
-			$host_ids = filter_input( INPUT_POST, 'zoom_host_id', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-			foreach ( $host_ids as $k => $host_id ) {
-				update_user_meta( $k, 'user_zoom_hostid', $host_id );
+			$host_ids  = filter_input( INPUT_POST, 'zoom_host_id', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			$email_ids = filter_input( INPUT_POST, 'zoom_host_email', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			if ( ! empty( $host_ids ) ) {
+				foreach ( $host_ids as $k => $host_id ) {
+					update_user_meta( $k, 'user_zoom_hostid', $host_id );
+				}
+			}
+
+			if ( ! empty( $email_ids ) ) {
+				foreach ( $email_ids as $k => $email_id ) {
+					update_user_meta( $k, 'vczapi_user_zoom_email_address', $email_id );
+				}
 			}
 
 			self::set_message( 'updated', __( "Saved !", "video-conferencing-with-zoom-api" ) );
