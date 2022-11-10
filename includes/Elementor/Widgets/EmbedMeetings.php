@@ -147,7 +147,8 @@ class EmbedMeetings extends Widget_Base {
 				'type'        => \Elementor\Controls_Manager::NUMBER,
 				'description' => __( 'Only valid when show in iframe is enabled.', 'video-conferencing-with-zoom-api' ),
 				'placeholder' => '500',
-				'default'     => 500
+				'default'     => 500,
+				'min'         => 1
 			]
 		);
 
