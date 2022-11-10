@@ -93,6 +93,7 @@ class WebinarList extends Widget_Base {
 				'label'       => __( 'Author ID', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::NUMBER,
 				'label_block' => true,
+				'min'         => 1,
 				'description' => __( 'Show meeting posts based on Author ID', 'video-conferencing-with-zoom-api' )
 			]
 		);
@@ -163,6 +164,7 @@ class WebinarList extends Widget_Base {
 				'label'       => __( 'Count of Webinars', 'video-conferencing-with-zoom-api' ),
 				'type'        => \Elementor\Controls_Manager::NUMBER,
 				'label_block' => true,
+				'min'         => 1,
 				'default'     => 3
 			]
 		);
