@@ -151,8 +151,9 @@ class MeetingHosts extends Widget_Base {
 
 		$host_id = ! empty( $settings['host_id'] ) ? $settings['host_id'] : false;
 		$type    = ! empty( $settings['type'] ) ? $settings['type'] : 1;
+
 		if ( ! empty( $host_id ) ) {
-			if ( $type === 1 ) {
+			if ( $type === '1' ) {
 				echo do_shortcode( '[zoom_list_host_meetings host=' . esc_attr( $host_id ) . ']' );
 			} else {
 				echo do_shortcode( '[zoom_list_host_webinars host=' . esc_attr( $host_id ) . ']' );
