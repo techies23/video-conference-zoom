@@ -241,6 +241,7 @@
                 delay: 1000,
                 cache: true
               },
+              allowClear: true,
               placeholder: 'Filter a zoom user by email ID or host ID...',
               width: '400px'
             }).on('select2:select', function (event) {

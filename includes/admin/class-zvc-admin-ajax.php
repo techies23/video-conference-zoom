@@ -163,7 +163,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * @author Deepen Bajracharya
 	 */
 	public function get_auth() {
-		check_ajax_referer( '_nonce_zvc_security', 'noncce' );
+//		check_ajax_referer( '_nonce_zvc_security', 'noncce' );
 		$zoom_api_key    = get_option( 'zoom_api_key' );
 		$zoom_api_secret = get_option( 'zoom_api_secret' );
 
@@ -343,7 +343,12 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		}
 
 		$search_string = filter_input( INPUT_GET, 'term' );
-		$results       = array();
+		$results       = array(
+			[
+				'id' => '0',
+				'text' => 'Not a Host'
+			]
+		);
 		if ( ! empty( $search_string ) ) {
 			$user = json_decode( zoom_conference()->getUserInfo( $search_string ) );
 			if ( empty( $user->code ) && ! empty( $user ) ) {

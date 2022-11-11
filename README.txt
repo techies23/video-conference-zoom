@@ -150,9 +150,12 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.0.7 November 10th, 2022 =
+= 4.0.7 November 11th, 2022 =
 * Fixed: Import get meetings functions to fetch draft posts.
-* Updated: Elementor widget showing minus values.
+* Fixed: Show all zoom users on Host to WP page.
+* Fixed: Elementor widget showing minus values.
+* Fixed: Elementor widget meeting by host was not working when switching between webinar and meeting view.
+* Updated: WebSDK to version 2.9.0
 
 = 4.0.6 September 13th, 2022 =
 * Updated: Minimum PHP version to 7.3

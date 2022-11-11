@@ -89,13 +89,21 @@ class Zoom_Video_Conferencing_Admin_Users {
 			$email_ids = filter_input( INPUT_POST, 'zoom_host_email', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 			if ( ! empty( $host_ids ) ) {
 				foreach ( $host_ids as $k => $host_id ) {
-					update_user_meta( $k, 'user_zoom_hostid', $host_id );
+					if ( $host_id == "0" ) {
+						update_user_meta( $k, 'user_zoom_hostid', '' );
+					} else {
+						update_user_meta( $k, 'user_zoom_hostid', $host_id );
+					}
 				}
 			}
 
 			if ( ! empty( $email_ids ) ) {
 				foreach ( $email_ids as $k => $email_id ) {
-					update_user_meta( $k, 'vczapi_user_zoom_email_address', $email_id );
+					if ( $email_id == "Not a Host" ) {
+						update_user_meta( $k, 'vczapi_user_zoom_email_address', '' );
+					} else {
+						update_user_meta( $k, 'vczapi_user_zoom_email_address', $email_id );
+					}
 				}
 			}
 
