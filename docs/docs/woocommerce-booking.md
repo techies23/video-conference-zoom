@@ -16,6 +16,24 @@ Zoom Integration for WooCommerce Booking allows you to automate your zoom meetin
 
 Implementaion of the plugin video above.
 
+## How to link meetings/webinar to booking product?
+
+* Goto wp-admin > Products > Add New
+* Add your Booking title and Description.
+* Select product data as "Bookable Product" and under general section > Booking Duration should be either **hour(s) or minute(s).** like in the below screenshot.
+
+**Note: You must either select hour(s) or minute(s) only otherwise the meeting/webinar won't be created.**
+
+![Minutes and hours only](img/wc-bookings/minutes-hours.png)
+
+* Select **Zoom** tab now - you should see a screen like shown in below screenshot. Check the "**Enable Zoom Meeting**" and select the type of your meeting you want it to be - for example: normal zoom meetings or webinars.
+
+![Enable Zoom](img/wc-bookings/enable-zoom.png)
+
+* Publish the post 
+
+Now, your users should be able to book from the frontend.
+
 ## Features
 
 Below are few features listed.
