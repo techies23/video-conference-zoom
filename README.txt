@@ -94,6 +94,10 @@ Search for the plugin -> add new dialog and click install, or download and extra
 
 == Frequently Asked Questions ==
 
+= Join via Browser showing Signature Invalid or Timeout =
+
+Please check if you SDK app type is activated and re-check all the app credentials are valid.
+
 = Updating to version 4.0.0 =
 
 Please check how you can do the [Migration from JWT](https://zoom.codemanas.com/migration/ "Migration from JWT")
@@ -152,6 +156,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 4.0.8 December 1st, 2022 =
 * Fixed: Host to WP User linking.
+* Updated: WebSDK to version 2.9.5
+* Added: Email Validation to join via browser window.
+* Bug Fixes.
 
 = 4.0.7 November 11th, 2022 =
 * Fixed: Import get meetings functions to fetch draft posts.

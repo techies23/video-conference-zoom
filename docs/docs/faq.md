@@ -1,3 +1,9 @@
+### Join via Browser Signature in Invalid or Connection Timeout.
+
+In this case please check your **SDK app type credential are valid and activated.** Please note that the app type must be **activated**. You can also check if all the api credential values are correct. 
+
+If everything is ok on your side, reach out to us with your site details as this issue can not be debugged without looking at the code.
+
 ### Embedded Join via Web Browser Issues
 Few of the known issues when using embed join via web browser i.e only when used with <a href="https://zoom.codemanas.com/shortcode/#8-embed-zoom-meeting-in-your-browser">embed join via browser shortcode</a> or Join via Browser gutenberg Block.
 

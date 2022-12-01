@@ -19,6 +19,8 @@ For this plugin you will be using Server-to-Server OAuth app type.
 
 ###Below are permissions that are needed/required:
 
+**Note: Not adding any of the below permissions may result in permission issue error notices when trying to create your meeting/webinars.**
+
 ####Meetings
 * View and manage sub account’s user meetings/meeting:master
 * View all user meetings/meeting:read:admin
@@ -39,7 +41,7 @@ For this plugin you will be using Server-to-Server OAuth app type.
 * View all user information/user:read:admin
 * View users information and manage users/user:write:admin
 
-####WEebinars
+####Webinars
 * View and manage sub account’s user webinars/webinar:master
 * View all user Webinars/webinar:read:admin
 * View and manage all user Webinars/webinar:write:admin
@@ -57,6 +59,7 @@ App SDK are required for Join via Browser/Web SDK to work properly.
 3. The next screen will prompt you for an App Name & ask you if you want to publish this app on Zoom App Marketplace. Add a name and toggle publish off ![Name SDK App](img/s2s-oauth/sdk-app-name.png)
 4. Once App is created - you will need to add Company name, Name and Contact email ![SDK Information](img/s2s-oauth/sdk-info.png)
 5. Once the information has been added go to the App Credentials and you can view the SDK Credentials there ![SDK App Credentials](img/s2s-oauth/sdk-app-credentials.png)
+6. Ensure that your SDK app is activated in order to use the Join via browser features otherwise, you might get a **signature invalid error message.**
 
 ###Adding SDK Credentials to the plugin
 1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/sdk-credentials-plugin-creds.png)

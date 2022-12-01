@@ -25,8 +25,6 @@ jQuery(function ($) {
     loadMeeting: function loadMeeting(e) {
       e.preventDefault();
       var meeting_id = atob(zvc_ajx.meeting_id);
-      var API_KEY = false;
-      var SIGNATURE = false;
       var REDIRECTION = zvc_ajx.redirect_page;
       var PASSWD = zvc_ajx.meeting_pwd !== false ? atob(zvc_ajx.meeting_pwd) : false;
       var EMAIL_USER = '';
@@ -40,25 +38,26 @@ jQuery(function ($) {
         }).done(function (response) {
           if (response.success) {
             $('#zvc-cover').remove();
-            $('#vczapi-zoom-browser-meeting').hide();
-            var _API_KEY = response.data.key;
-            var _SIGNATURE = response.data.sig;
+            var API_KEY = response.data.key;
+            var SIGNATURE = response.data.sig;
             var REQUEST_TYPE = response.data.type;
 
-            if (_API_KEY && _SIGNATURE) {
+            if (API_KEY && SIGNATURE) {
               var display_name = $('#vczapi-jvb-display-name');
               var email = $('#vczapi-jvb-email');
               var pwd = $('#meeting_password');
 
               if (!display_name.val()) {
-                alert('Name is required to enter the meeting !');
+                $('.vczapi-zoom-browser-meeting--info__browser').html('Error: Name is Required!').css('color', 'red');
                 $('#zvc-cover').remove();
                 return false;
               } //Email Validation
 
 
-              if (email.length > 0 && email.val().length > 0) {
+              if (email.val() === '') {
+                $('.vczapi-zoom-browser-meeting--info__browser').html('Error: Email is Required!').css('color', 'red');
                 EMAIL_USER = email.val();
+                return false;
               } //Password Validation
 
 
@@ -66,6 +65,7 @@ jQuery(function ($) {
                 PASSWD = pwd.val();
               }
 
+              $('#vczapi-zoom-browser-meeting').remove();
               var lang = $('#meeting_lang');
               var meetConfig = {
                 meetingNumber: parseInt(meeting_id, 10),
@@ -73,7 +73,7 @@ jQuery(function ($) {
                 passWord: PASSWD,
                 lang: lang.length > 0 ? lang.val() : 'en-US',
                 leaveUrl: REDIRECTION,
-                signaure: _SIGNATURE,
+                signaure: SIGNATURE,
                 email: EMAIL_USER
               };
 
@@ -97,9 +97,9 @@ jQuery(function ($) {
               };
 
               if (REQUEST_TYPE === 'jwt') {
-                meetingJoinParams.apiKey = _API_KEY;
+                meetingJoinParams.apiKey = API_KEY;
               } else if (REQUEST_TYPE === 'sdk') {
-                meetingJoinParams.sdkKey = _API_KEY;
+                meetingJoinParams.sdkKey = API_KEY;
               }
 
               ZoomMtg.init({

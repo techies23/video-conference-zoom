@@ -29,12 +29,10 @@ jQuery(function ($) {
 
     loadMeeting: function (e) {
       e.preventDefault()
-      var meeting_id = atob(zvc_ajx.meeting_id)
-      var API_KEY = false
-      var SIGNATURE = false
-      var REDIRECTION = zvc_ajx.redirect_page
-      var PASSWD = (zvc_ajx.meeting_pwd !== false) ? atob(zvc_ajx.meeting_pwd) : false
-      var EMAIL_USER = ''
+      const meeting_id = atob(zvc_ajx.meeting_id)
+      let REDIRECTION = zvc_ajx.redirect_page
+      let PASSWD = (zvc_ajx.meeting_pwd !== false) ? atob(zvc_ajx.meeting_pwd) : false
+      let EMAIL_USER = ''
       $('body').append('<span id="zvc-cover"></span>')
       if (meeting_id) {
         $.post(zvc_ajx.ajaxurl, {
@@ -44,31 +42,34 @@ jQuery(function ($) {
         }).done(function (response) {
           if (response.success) {
             $('#zvc-cover').remove()
-            $('#vczapi-zoom-browser-meeting').hide()
 
             const API_KEY = response.data.key
             const SIGNATURE = response.data.sig
             const REQUEST_TYPE = response.data.type
 
             if (API_KEY && SIGNATURE) {
-              var display_name = $('#vczapi-jvb-display-name')
-              var email = $('#vczapi-jvb-email')
-              var pwd = $('#meeting_password')
+              const display_name = $('#vczapi-jvb-display-name')
+              const email = $('#vczapi-jvb-email')
+              const pwd = $('#meeting_password')
               if (!display_name.val()) {
-                alert('Name is required to enter the meeting !')
+                $('.vczapi-zoom-browser-meeting--info__browser').html('Error: Name is Required!').css('color', 'red');
                 $('#zvc-cover').remove()
                 return false
               }
 
               //Email Validation
-              if (email.length > 0 && email.val().length > 0) {
+              if (email.val() === '') {
+                $('.vczapi-zoom-browser-meeting--info__browser').html('Error: Email is Required!').css('color', 'red');
                 EMAIL_USER = email.val()
+                return false;
               }
 
               //Password Validation
               if (!PASSWD && pwd.length > 0 && pwd.val().length > 0) {
                 PASSWD = pwd.val()
               }
+
+              $('#vczapi-zoom-browser-meeting').remove();
 
               var lang = $('#meeting_lang')
               var meetConfig = {
