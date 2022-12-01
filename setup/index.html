@@ -333,8 +333,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#weebinars" class="md-nav__link">
-    WEebinars
+  <a href="#webinars" class="md-nav__link">
+    Webinars
   </a>
   
 </li>
@@ -867,8 +867,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#weebinars" class="md-nav__link">
-    WEebinars
+  <a href="#webinars" class="md-nav__link">
+    Webinars
   </a>
   
 </li>
@@ -950,6 +950,7 @@ For more info see <a href="https://marketplace.zoom.us/docs/guides/build/jwt-app
 <li>For the plugin to work - you will need to define the correct scopes for the App. Go to scopes and click "Add Scopes" and add Meeting, Webinar, Report, User, Recording, Report and select all options on each selected scopes <img alt="Add Scopes" src="../img/s2s-oauth/add-scopes.png" /></li>
 </ol>
 <h3 id="below-are-permissions-that-are-neededrequired">Below are permissions that are needed/required:</h3>
+<p><strong>Note: Not adding any of the below permissions may result in permission issue error notices when trying to create your meeting/webinars.</strong></p>
 <h4 id="meetings">Meetings</h4>
 <ul>
 <li>View and manage sub account’s user meetings/meeting:master</li>
@@ -974,7 +975,7 @@ For more info see <a href="https://marketplace.zoom.us/docs/guides/build/jwt-app
 <li>View all user information/user:read:admin</li>
 <li>View users information and manage users/user:write:admin</li>
 </ul>
-<h4 id="weebinars">WEebinars</h4>
+<h4 id="webinars">Webinars</h4>
 <ul>
 <li>View and manage sub account’s user webinars/webinar:master</li>
 <li>View all user Webinars/webinar:read:admin</li>
@@ -994,6 +995,7 @@ For more info see <a href="https://marketplace.zoom.us/docs/guides/build/jwt-app
 <li>The next screen will prompt you for an App Name &amp; ask you if you want to publish this app on Zoom App Marketplace. Add a name and toggle publish off <img alt="Name SDK App" src="../img/s2s-oauth/sdk-app-name.png" /></li>
 <li>Once App is created - you will need to add Company name, Name and Contact email <img alt="SDK Information" src="../img/s2s-oauth/sdk-info.png" /></li>
 <li>Once the information has been added go to the App Credentials and you can view the SDK Credentials there <img alt="SDK App Credentials" src="../img/s2s-oauth/sdk-app-credentials.png" /></li>
+<li>Ensure that your SDK app is activated in order to use the Join via browser features otherwise, you might get a <strong>signature invalid error message.</strong></li>
 </ol>
 <h3 id="adding-sdk-credentials-to-the-plugin">Adding SDK Credentials to the plugin</h3>
 <ol>
