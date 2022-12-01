@@ -71,7 +71,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                     <div class="vczapi-admin-accordion--content" class="show">
                         <p class="description">
 							<?php
-                            $oauth_documentation_link = '<a href="https://zoom.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
+                            $oauth_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
 							$sdk_app_link = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion" onclick="javascript:void(0);">SDK App Credentials</a>';
 							printf( __( 'Please see %s on how to generate credentials, additionally for Join via Browser to work please also add %s', 'video-conferencing-with-zoom-api' ), $oauth_documentation_link, $sdk_app_link );
 							?>

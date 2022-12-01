@@ -43,11 +43,11 @@ Video conferencing with Zoom plugin gives you the extensive functionality to man
 
 **DOCUMENTATION LINKS:**
 
-* [Installation](https://zoom.codemanas.com/setup/ "Installation")
-* [Shortcodes](https://zoom.codemanas.com/shortcode/ "Shortcodes")
-* [Documentation](https://zoom.codemanas.com/ "Documentation")
+* [Installation](https://zoomdocs.codemanas.com/setup/ "Installation")
+* [Shortcodes](https://zoomdocs.codemanas.com/shortcode/ "Shortcodes")
+* [Documentation](https://zoomdocs.codemanas.com/ "Documentation")
 * [Usage Documentation /w WP](https://deepenbajracharya.com.np/zoom-api-integration-with-wordpress/ "Usage Documentation")
-* [Webhooks](https://zoom.codemanas.com/webhooks/ "Webhooks")
+* [Webhooks](https://zoomdocs.codemanas.com/webhooks/ "Webhooks")
 
 **EXTENDING AND MAKING MEETINGS PURCHASABLE:**
 
@@ -100,7 +100,7 @@ Please check if you SDK app type is activated and re-check all the app credentia
 
 = Updating to version 4.0.0 =
 
-Please check how you can do the [Migration from JWT](https://zoom.codemanas.com/migration/ "Migration from JWT")
+Please check how you can do the [Migration from JWT](https://zoomdocs.codemanas.com/migration/ "Migration from JWT")
 
 = Add users not working for me =
 
@@ -112,7 +112,7 @@ This issue is because of HTTPS protocol. You need to use HTTPS to be able to all
 
 = Blank page for Single Meetings page =
 
-If you face blank page in this situation you should refer to [Template Overriding](https://zoom.codemanas.com/template_override/#content-not-showing "Template Overriding") and see Template override section.
+If you face blank page in this situation you should refer to [Template Overriding](https://zoomdocs.codemanas.com/template_override/#content-not-showing "Template Overriding") and see Template override section.
 
 This happens because of the single meeting page template from the plugin not being supported by your theme and i cannot make my plugin support for every theme page template because of which you'll need to override the plugin template from my plugin to your theme's standard. ( Basically, like how WooCommerce does!! )
 
@@ -188,7 +188,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Fixed: PHP 7.4 below - class strict type declaration removed for backwards compatiblity.
 
 = 4.0.0 July 21st, 2022 =
-* Major Update: Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoom.codemanas.com/setup/)
+* Major Update: Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoomdocs.codemanas.com/setup/)
 * Updated: WebSDK to version 2.5.0
 
 = 3.9.7 July 13th, 2022 =
@@ -286,7 +286,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Fixed: Join via browser block fix for webinar.
 
 = 3.8.5 July 8th, 2021 =
-* Added: Ajax pagination for shortcode meeting/webinar list page (https://zoom.codemanas.com/shortcode/#3-list-upcoming-or-past-meetings).
+* Added: Ajax pagination for shortcode meeting/webinar list page (https://zoomdocs.codemanas.com/shortcode/#3-list-upcoming-or-past-meetings).
 
 = 3.8.4 July 1st, 2021 =
 * Changed: Inceased default duration from 40 to 45 as per zoom change.
@@ -368,7 +368,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Fixed: Post Author Name not showing in single meeting page.
 
 = 3.6.24 January 29th, 2021 =
-* Added filter hook to show or enable different views in join via browser window. See https://zoom.codemanas.com/filters_hooks/#join-via-browser-show-fields
+* Added filter hook to show or enable different views in join via browser window. See https://zoomdocs.codemanas.com/filters_hooks/#join-via-browser-show-fields
 
 = 3.6.23 January 28th, 2021 =
 * Updated: Duration selector when creating meeting.

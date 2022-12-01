@@ -167,7 +167,7 @@ Where,
 ###Recurring Meetings + WooCommerce :
 Simply create a [Zoom Recurring Meeting](#recurring-meetings) and then enable purchase of the product.
 You can use follow the same steps as here : 
-[https://zoom.codemanas.com/woocommerce/#1-product-linked-with-zoom-meeting](https://zoom.codemanas.com/woocommerce/#1-product-linked-with-zoom-meeting) or if you want a more visual representation please check out the video [https://www.youtube.com/watch?v=V6SfMFatOH8](https://www.youtube.com/watch?v=V6SfMFatOH8)
+[https://zoomdocs.codemanas.com/woocommerce/#1-product-linked-with-zoom-meeting](https://zoomdocs.codemanas.com/woocommerce/#1-product-linked-with-zoom-meeting) or if you want a more visual representation please check out the video [https://www.youtube.com/watch?v=V6SfMFatOH8](https://www.youtube.com/watch?v=V6SfMFatOH8)
 
 Once a recurring Product is Purchased - the customer if logged in will be able to view the meeting details on their my accounts > meetings [ https://examplle.com/my-account/wc-zoom-meetings/ ](https://examplle.com/my-account/wc-zoom-meetings/) 
 Only the next occurrence of meeting will be shown here,

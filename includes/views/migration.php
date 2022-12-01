@@ -17,7 +17,7 @@ $settings_url = esc_url( add_query_arg(
             <form id="vczapi-s2sOauthCredentials-wizard-form" class="vczapi-migration-form" method="post" action="">
 				<?php
 				wp_nonce_field( 'verify_s2sOauth_wizard_nonce', 's2sOauth_wizard_nonce' );
-				$oauth_documentation_link = '<a href="https://zoom.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">Here</a>';
+				$oauth_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">Here</a>';
 				printf( __( 'See the documentation on how to generate Server to Server Oauth Credentials %s', 'video-conferencing-with-zoom-api' ), $oauth_documentation_link );
 				?>
                 <table class="form-table">
@@ -71,7 +71,7 @@ $settings_url = esc_url( add_query_arg(
         </div>
         <div class="step step-2">
 			<?php
-			$appSDK_documentation_link = '<a href="https://zoom.codemanas.com/setup/#generating-app-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
+			$appSDK_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-app-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
 			?>
             <p class="description"><?php printf( __( 'App SDK credentails are required to enable the join via broswer feature, to do so first generate your app keys, %s' ), $appSDK_documentation_link ); ?></p>
             <form id="vczapi-s2soauth-app-sdk-form" class="vczapi-migration-form" action="" method="post">
