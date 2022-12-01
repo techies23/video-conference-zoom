@@ -295,11 +295,19 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * Assign Host ID page
 	 */
 	public function assign_host_id() {
-		$users      = vczapi_getWpUsers_basedon_UserRoles();
-		$result     = array();
+		$draw   = filter_input( INPUT_GET, 'draw' );
+		$length = filter_input( INPUT_GET, 'length' );
+		$start  = filter_input( INPUT_GET, 'start' );
+		$args   = [
+			'number' => ! empty( $length ) ? absint( $length ) : 10,
+			'paged'  => $start == 0 ? 1 : $start / $length + 1
+		];
+
+		$users      = vczapi_getWpUsers_basedon_UserRoles( $args );
+		$tableData  = array();
 		$zoom_users = video_conferencing_zoom_api_get_user_transients();
 		if ( ! empty( $users ) ) {
-			foreach ( $users as $user ) {
+			foreach ( $users->get_results() as $user ) {
 				$user_zoom_hostid = get_user_meta( $user->ID, 'user_zoom_hostid', true );
 				$email_address    = get_user_meta( $user->ID, 'vczapi_user_zoom_email_address', true );
 				$host_id_field    = '';
@@ -323,15 +331,22 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 					$host_id_field .= '<input type="hidden" class="vczapi-host-email-field-' . $user->ID . '" name="zoom_host_email[' . $user->ID . ']" value="' . $email_address . '" />';
 				}
 
-				$result[] = array(
+				$tableData[] = [
 					'id'      => $user->ID,
 					'email'   => $user->user_email,
 					'name'    => empty( $user->first_name ) ? $user->display_name : $user->first_name . ' ' . $user->last_name,
 					'host_id' => $host_id_field,
-				);
+				];
 			}
 
-			wp_send_json_success( $result );
+			$results = [
+				'draw'            => absint( $draw ),
+				'recordsTotal'    => $users->get_total(),
+				'recordsFiltered' => $users->get_total(),
+				'data'            => $tableData
+			];
+
+			wp_send_json( $results );
 
 			wp_die();
 		}
@@ -345,7 +360,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		$search_string = filter_input( INPUT_GET, 'term' );
 		$results       = array(
 			[
-				'id' => '0',
+				'id'   => '0',
 				'text' => 'Not a Host'
 			]
 		);
@@ -374,16 +389,21 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		wp_die();
 	}
 
+	/**
+	 * Get WP Users query by user role.
+	 */
 	public function get_wp_usersByRole() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
 		$search_string = filter_input( INPUT_GET, 'term' );
-		$users         = vczapi_getWpUsers_basedon_UserRoles( $search_string );
+		$users         = vczapi_getWpUsers_basedon_UserRoles( [
+			'search' => $search_string
+		] );
 		$results       = array();
-		if ( ! empty( $users ) ) {
-			foreach ( $users as $user ) {
+		if ( ! empty( $users->get_results() ) ) {
+			foreach ( $users->get_results() as $user ) {
 				$results[] = array(
 					'id'   => $user->ID,
 					'text' => $user->user_email,

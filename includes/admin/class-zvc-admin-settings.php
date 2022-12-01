@@ -265,7 +265,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
                 </a>
                 <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'api-settings' ) ) ); ?>"
                    class="nav-tab <?php echo ( 'api-settings' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">
-					<?php esc_html_e( 'API Settings', 'video-conferencing-with-zoom-api' ); ?>
+					<?php esc_html_e( 'Settings', 'video-conferencing-with-zoom-api' ); ?>
                 </a>
                 <a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'support' ) ) ); ?>"
                    class="nav-tab <?php echo ( 'support' === $active_tab ) ? esc_attr( 'nav-tab-active' ) : ''; ?>">

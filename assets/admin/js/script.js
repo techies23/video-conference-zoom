@@ -212,11 +212,9 @@
 
       if ($dom.usersListTable.length > 0) {
         $dom.usersListTable.dataTable({
-          'pageLength': 25,
-          'columnDefs': [{
-            'targets': 0,
-            'orderable': true
-          }],
+          processing: true,
+          serverSide: true,
+          pageLength: 25,
           ajax: {
             url: ajaxurl + '?action=get_assign_host_id'
           },
@@ -229,7 +227,7 @@
           }, {
             data: 'host_id'
           }],
-          initComplete: function initComplete(settings, json) {
+          drawCallback: function drawCallback(settings) {
             $('.vczapi-get-zoom-hosts').select2({
               ajax: {
                 url: ajaxurl + '?action=vczapi_get_zoom_host_query',
@@ -240,7 +238,7 @@
               },
               allowClear: true,
               placeholder: 'Filter a zoom user by email ID or host ID...',
-              width: '400px'
+              width: '100%'
             }).on('select2:select', function (event) {
               if ($('.vczapi-host-email-field-' + $(this).data('userid')).length > 0) {
                 $('.vczapi-host-email-field-' + $(this).data('userid')).val(event.params.data.text);

@@ -336,7 +336,8 @@ function video_conferencing_zoom_api_show_like_popup() {
 				printf( esc_html__( 'Please consider giving a %s if you found this useful at wordpress.org or ', 'video-conferencing-with-zoom-api' ), '<a href="https://wordpress.org/support/plugin/video-conferencing-with-zoom-api/reviews/#new-post">5 star thumbs up</a>' );
 				printf( esc_html__( 'check %s for shortcode references.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">settings</a>.' );
 				?>
-                <a href="<?php echo esc_url( add_query_arg( 'vczapi_dismiss', 1 ) ); ?>" class="is-dismissible">I already rated you ! Don't show again !</a>
+                <a href="<?php echo esc_url( add_query_arg( 'vczapi_dismiss', 1 ) ); ?>" class="is-dismissible">I
+                    already rated you ! Don't show again !</a>
             </p>
         </div>
 		<?php
@@ -355,7 +356,8 @@ function video_conferencing_zoom_api_show_api_notice() {
                 <strong><?php _e( "Do not get confused here !!", "video-conferencing-with-zoom-api" ); ?></strong>
             <p>
                 <strong><?php _e( "Please read !!! These below meetings are directly from your zoom.us account via API connection. Meetings added from here won't show up on your Post Type list. This will only create meeting in your zoom.us account !", "video-conferencing-with-zoom-api" ); ?></strong>
-                <a href="javascript:void(0);" class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
+                <a href="javascript:void(0);"
+                   class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
             </p></div>
 		<?php
 	}
@@ -591,11 +593,20 @@ function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false
 	$seperator                = ! empty( $seperator ) ? '<span class="vczapi-seperator">' . $seperator . '</span>' : false;
 	if ( ! vczapi_check_disable_joinViaBrowser() ) {
 		if ( ! empty( $password ) && empty( $embed_password_join_link ) ) {
-			$query = add_query_arg( array( 'pak' => $encrypt_pwd, 'join' => $encrypt_meeting_id, 'type' => 'meeting', 'redirect' => esc_url( $redirect ) ), $link );
+			$query = add_query_arg( array(
+				'pak'      => $encrypt_pwd,
+				'join'     => $encrypt_meeting_id,
+				'type'     => 'meeting',
+				'redirect' => esc_url( $redirect )
+			), $link );
 
 			return $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
 		} else {
-			$query = add_query_arg( array( 'join' => $encrypt_meeting_id, 'type' => 'meeting', 'redirect' => esc_url( $redirect ) ), $link );
+			$query = add_query_arg( array(
+				'join'     => $encrypt_meeting_id,
+				'type'     => 'meeting',
+				'redirect' => esc_url( $redirect )
+			), $link );
 
 			return $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
 		}
@@ -621,11 +632,20 @@ function vczapi_get_browser_join_shortcode( $meeting_id, $password = false, $lin
 	if ( ! vczapi_check_disable_joinViaBrowser() ) {
 		if ( ! empty( $password ) && empty( $embed_password_join_link ) ) {
 			$encrypt_pwd = vczapi_encrypt_decrypt( 'encrypt', $password );
-			$query       = add_query_arg( array( 'pak' => $encrypt_pwd, 'join' => $encrypt_meeting_id, 'type' => 'meeting', 'redirect' => esc_url( $redirect ) ), $link );
+			$query       = add_query_arg( array(
+				'pak'      => $encrypt_pwd,
+				'join'     => $encrypt_meeting_id,
+				'type'     => 'meeting',
+				'redirect' => esc_url( $redirect )
+			), $link );
 			$result      = $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
 			$link        = esc_url( $query );
 		} else {
-			$query  = add_query_arg( array( 'join' => $encrypt_meeting_id, 'type' => 'meeting', 'redirect' => esc_url( $redirect ) ), $link );
+			$query  = add_query_arg( array(
+				'join'     => $encrypt_meeting_id,
+				'type'     => 'meeting',
+				'redirect' => esc_url( $redirect )
+			), $link );
 			$result = $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
 			$link   = esc_url( $query );
 		}
@@ -785,11 +805,11 @@ function vczapi_get_meeting_author( $post_id, $meeting_details = false, $wp_auth
 /**
  * Get WP roles
  *
- * @param $search
+ * @param array $defaults
  *
- * @return mixed|void
+ * @return WP_User_Query
  */
-function vczapi_getWpUsers_basedon_UserRoles( $search = false ) {
+function vczapi_getWpUsers_basedon_UserRoles( $defaults = [] ) {
 	$roles_in = apply_filters( 'zvc_allow_zoom_host_id_user_role', array(
 		'subscriber',
 		'administrator',
@@ -799,17 +819,17 @@ function vczapi_getWpUsers_basedon_UserRoles( $search = false ) {
 		'shop_manager',
 	) );
 
-	$query = array(
+	$args = array(
 		'number'   => - 1,
 		'role__in' => $roles_in,
 	);
 
 	if ( ! empty( $search ) ) {
-		$query['search'] = $search;
+		$args['search'] = $search;
 	}
 
-	$users = get_users( $query );
-
+	$query = wp_parse_args( $defaults, $args );
+	$users = new WP_User_Query( $query );
 	return $users;
 }
 
