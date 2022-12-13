@@ -586,6 +586,10 @@ if ( ! function_exists( 'vczapi_get_browser_agent_type' ) ) {
  * @return string
  */
 function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false, $seperator = false, $redirect = false ) {
+	if ( ! vczapi_is_sdk_enabled() ) {
+		return;
+	}
+
 	$link                     = get_permalink( $post_id );
 	$encrypt_pwd              = vczapi_encrypt_decrypt( 'encrypt', $password );
 	$encrypt_meeting_id       = vczapi_encrypt_decrypt( 'encrypt', $meeting_id );
@@ -625,6 +629,10 @@ function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false
  * @return string
  */
 function vczapi_get_browser_join_shortcode( $meeting_id, $password = false, $link_only = false, $seperator = false, $redirect = false ) {
+	if ( ! vczapi_is_sdk_enabled() ) {
+		return;
+	}
+
 	$link                     = get_post_type_archive_link( 'zoom-meetings' );
 	$encrypt_meeting_id       = vczapi_encrypt_decrypt( 'encrypt', $meeting_id );
 	$embed_password_join_link = get_option( 'zoom_api_embed_pwd_join_link' );
@@ -830,6 +838,7 @@ function vczapi_getWpUsers_basedon_UserRoles( $defaults = [] ) {
 
 	$query = wp_parse_args( $defaults, $args );
 	$users = new WP_User_Query( $query );
+
 	return $users;
 }
 

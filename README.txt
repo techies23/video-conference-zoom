@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.0.8
+Stable tag: 4.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,11 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.0.9 December 7th, 2022 =
+* Fixed: If meeting is expired, ajax fails and shows nothing.
+* Added: If SDK keys are not added then join via browser options won't show.
+* Updated: SDK script updated to latest standards
 
 = 4.0.8 December 1st, 2022 =
 * Fixed: Host to WP User linking.
