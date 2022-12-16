@@ -154,7 +154,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.0.9 December 7th, 2022 =
+= 4.0.9 December 16th, 2022 =
+* Added: Disable momentJS conflict script incase of countdown failure.
 * Fixed: If meeting is expired, ajax fails and shows nothing.
 * Added: If SDK keys are not added then join via browser options won't show.
 * Updated: SDK script updated to latest standards
