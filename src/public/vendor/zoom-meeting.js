@@ -93,33 +93,12 @@ const ZoomMtgApp = {
 
     //Show Loader
     document.body.appendChild(this.loader())
-    if (this.meetingID != null || this.meetingID !== '') {
-      this.generateSignature().then(result => {
-        if (result.success) {
-          //remove the loader
-          this.removeLoader()
-          this.validateBeforeJoining(result)
-        }
-      })
-    }
-  },
-
-  /**
-   * Validate the elements before joining the meeting
-   *
-   * @param response
-   * @returns {boolean}
-   */
-  validateBeforeJoining: function (response) {
-    const API_KEY = response.data.key
-    const SIGNATURE = response.data.sig
-    const REQUEST_TYPE = response.data.type
 
     const display_name = document.getElementById('vczapi-jvb-display-name')
     const email = document.getElementById('vczapi-jvb-email')
     const pwd = document.getElementById('meeting_password')
 
-    if (display_name.value === null || display_name.value === '') {
+    if (display_name !== null && (display_name.value === null || display_name.value === '')) {
       this.infoContainer.innerHTML = 'Error: Name is Required!'
       this.infoContainer.style.color = 'red'
       this.removeLoader()
@@ -127,7 +106,7 @@ const ZoomMtgApp = {
     }
 
     //Email Validation
-    if (email.value === null || email.value === '') {
+    if (email !== null && (email.value === null || email.value === '')) {
       this.infoContainer.innerHTML = 'Error: Email is Required!'
       this.infoContainer.style.color = 'red'
       this.removeLoader()
@@ -142,8 +121,41 @@ const ZoomMtgApp = {
       return false
     }
 
+    if (this.meetingID != null || this.meetingID !== '') {
+      this.generateSignature().then(result => {
+        if (result.success) {
+          //remove the loader
+          this.removeLoader()
+
+          const validatedObjects = {
+            name: display_name !== null ? display_name.value : false,
+            password: pwd !== null ? pwd.value : false,
+            email: email !== null ? email.value : false
+          }
+          this.prepBeforeJoin(result, validatedObjects)
+        }
+      })
+    }
+  },
+
+  /**
+   * Validate the elements before joining the meeting
+   *
+   * @param response
+   * @param validatedObjects
+   * @returns {boolean}
+   */
+  prepBeforeJoin: function (response, validatedObjects) {
+    const API_KEY = response.data.key
+    const SIGNATURE = response.data.sig
+    const REQUEST_TYPE = response.data.type
+
     //validation complete now remove the main form page and attach zoom screen
-    document.getElementById('vczapi-zoom-browser-meeting').remove()
+    const mainWindow = document.getElementById('vczapi-zoom-browser-meeting')
+    if (mainWindow !== null) {
+      mainWindow.remove()
+    }
+
     const locale = document.getElementById('meeting_lang')
 
     //Set this for the additional props to pass before the actual meeting
@@ -155,10 +167,10 @@ const ZoomMtgApp = {
     //Actual meeting join props
     let meetingJoinParams = {
       meetingNumber: parseInt(this.meetingID, 10),
-      userName: display_name.value,
+      userName: validatedObjects.name,
       signature: SIGNATURE,
-      userEmail: email.value,
-      passWord: pwd !== null && pwd.value ? pwd.value : this.password,
+      userEmail: validatedObjects.email,
+      passWord: validatedObjects.password ? validatedObjects.password : this.password,
       success: function (res) {
         console.log('Join Meeting Success')
       },

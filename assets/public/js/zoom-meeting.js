@@ -127,34 +127,11 @@ var ZoomMtgApp = {
     e.preventDefault(); //Show Loader
 
     document.body.appendChild(this.loader());
-
-    if (this.meetingID != null || this.meetingID !== '') {
-      this.generateSignature().then(function (result) {
-        if (result.success) {
-          //remove the loader
-          _this.removeLoader();
-
-          _this.validateBeforeJoining(result);
-        }
-      });
-    }
-  },
-
-  /**
-   * Validate the elements before joining the meeting
-   *
-   * @param response
-   * @returns {boolean}
-   */
-  validateBeforeJoining: function validateBeforeJoining(response) {
-    var API_KEY = response.data.key;
-    var SIGNATURE = response.data.sig;
-    var REQUEST_TYPE = response.data.type;
     var display_name = document.getElementById('vczapi-jvb-display-name');
     var email = document.getElementById('vczapi-jvb-email');
     var pwd = document.getElementById('meeting_password');
 
-    if (display_name.value === null || display_name.value === '') {
+    if (display_name !== null && (display_name.value === null || display_name.value === '')) {
       this.infoContainer.innerHTML = 'Error: Name is Required!';
       this.infoContainer.style.color = 'red';
       this.removeLoader();
@@ -162,7 +139,7 @@ var ZoomMtgApp = {
     } //Email Validation
 
 
-    if (email.value === null || email.value === '') {
+    if (email !== null && (email.value === null || email.value === '')) {
       this.infoContainer.innerHTML = 'Error: Email is Required!';
       this.infoContainer.style.color = 'red';
       this.removeLoader();
@@ -175,10 +152,44 @@ var ZoomMtgApp = {
       this.infoContainer.style.color = 'red';
       this.removeLoader();
       return false;
-    } //validation complete now remove the main form page and attach zoom screen
+    }
 
+    if (this.meetingID != null || this.meetingID !== '') {
+      this.generateSignature().then(function (result) {
+        if (result.success) {
+          //remove the loader
+          _this.removeLoader();
 
-    document.getElementById('vczapi-zoom-browser-meeting').remove();
+          var validatedObjects = {
+            name: display_name !== null ? display_name.value : false,
+            password: pwd !== null ? pwd.value : false,
+            email: email !== null ? email.value : false
+          };
+
+          _this.prepBeforeJoin(result, validatedObjects);
+        }
+      });
+    }
+  },
+
+  /**
+   * Validate the elements before joining the meeting
+   *
+   * @param response
+   * @param validatedObjects
+   * @returns {boolean}
+   */
+  prepBeforeJoin: function prepBeforeJoin(response, validatedObjects) {
+    var API_KEY = response.data.key;
+    var SIGNATURE = response.data.sig;
+    var REQUEST_TYPE = response.data.type; //validation complete now remove the main form page and attach zoom screen
+
+    var mainWindow = document.getElementById('vczapi-zoom-browser-meeting');
+
+    if (mainWindow !== null) {
+      mainWindow.remove();
+    }
+
     var locale = document.getElementById('meeting_lang'); //Set this for the additional props to pass before the actual meeting
 
     var meetConfig = {
@@ -188,10 +199,10 @@ var ZoomMtgApp = {
 
     var meetingJoinParams = {
       meetingNumber: parseInt(this.meetingID, 10),
-      userName: display_name.value,
+      userName: validatedObjects.name,
       signature: SIGNATURE,
-      userEmail: email.value,
-      passWord: pwd !== null && pwd.value ? pwd.value : this.password,
+      userEmail: validatedObjects.email,
+      passWord: validatedObjects.password ? validatedObjects.password : this.password,
       success: function success(res) {
         console.log('Join Meeting Success');
       },
