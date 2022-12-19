@@ -37,16 +37,16 @@ $atts = shortcode_atts(
 
 ?>
 <div class="vczapi-list-zoom-meetings"
-     data-author="<?php echo $atts['author']; ?>"
-     data-per_page="<?php echo $atts['per_page']; ?>"
-     data-category="<?php echo $atts['category']; ?>"
-     data-order="<?php echo $atts['order']; ?>"
-     data-type="<?php echo $atts['type']; ?>"
-     data-filter="<?php echo $atts['filter']; ?>"
-     data-show_on_past="<?php echo $atts['show_on_past']; ?>"
-     data-cols="<?php echo $atts['cols']; ?>"
+     data-author="<?php echo esc_attr( $atts['author'] ); ?>"
+     data-per_page="<?php echo esc_attr( $atts['per_page'] ); ?>"
+     data-category="<?php echo esc_attr( $atts['category'] ); ?>"
+     data-order="<?php echo esc_attr( $atts['order'] ); ?>"
+     data-type="<?php echo esc_attr( $atts['type'] ); ?>"
+     data-filter="<?php echo esc_attr( $atts['filter'] ); ?>"
+     data-show_on_past="<?php echo esc_attr( $atts['show_on_past'] ); ?>"
+     data-cols="<?php echo esc_attr( $atts['cols'] ); ?>"
      data-base_url="<?php echo esc_url( get_pagenum_link( 999999999999999 ) ); ?>"
-     data-meeting_type="<?php echo $atts['meeting_type']; ?>"
+     data-meeting_type="<?php echo esc_attr( $atts['meeting_type'] ); ?>"
 >
     <div class="vczapi-loader">
         <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/ajax-loader.gif'; ?>" alt="loading..."/>

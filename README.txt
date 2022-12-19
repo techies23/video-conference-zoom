@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.0.9
+Stable tag: 4.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,7 @@ Video conferencing with Zoom plugin gives you the extensive functionality to man
 
 **EXTENDING AND MAKING MEETINGS PURCHASABLE:**
 
+Addon: **[Video Conferencing with Zoom Pro](https://www.codemanas.com/downloads/video-conferencing-with-zoom-pro/ "Video Conferencing with Zoom Pro")**:
 Addon: **[WooCommerce Integration](https://www.codemanas.com/downloads/zoom-meetings-for-woocommerce/ "WooCommerce Integration")**:
 Addon: **[WCFM Integration](https://www.codemanas.com/downloads/wcfm-integration-for-zoom/ "WCFM Integration")**:
 Addon: **[WooCommerce Booking Integration](https://www.codemanas.com/downloads/zoom-integration-for-woocommerce-booking/ "WooCommerce Booking Integration")**:
@@ -153,6 +154,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.0.10 December 19th, 2022 =
+* Fixed: Validate and Escaping on a shortcode reported by WPScan.
 
 = 4.0.9 December 16th, 2022 =
 * Added: Disable momentJS conflict script incase of countdown failure.

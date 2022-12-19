@@ -220,8 +220,7 @@ class Meetings {
 				'show_on_past' => 'yes',
 				'cols'         => 3,
 			),
-			$atts,
-			'zoom_list_meetings'
+			$atts,'zoom_list_meetings'
 		);
 
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
