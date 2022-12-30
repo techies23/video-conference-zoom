@@ -96,7 +96,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <td>
                         <input type="checkbox"
                                name="meeting_show_email_field" <?php ! empty( $hide_email_jvb ) ? checked( $hide_email_jvb, 'on' ) : false; ?>>
-                        <span class="description"><?php _e( 'Checking this show will hide email field in Join via Browser window.', 'video-conferencing-with-zoom-api' ); ?></span>
+                        <span class="description"><?php _e( 'Checking this show will hide email field in Join via Browser window. Email field is shown if the event is a webinar because email field is required in order to join a webinar.', 'video-conferencing-with-zoom-api' ); ?></span>
                     </td>
                 </tr>
                 <tr>

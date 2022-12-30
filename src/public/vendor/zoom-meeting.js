@@ -128,9 +128,9 @@ const ZoomMtgApp = {
           this.removeLoader()
 
           const validatedObjects = {
-            name: display_name !== null ? display_name.value : false,
-            password: pwd !== null ? pwd.value : false,
-            email: email !== null ? email.value : false
+            name: display_name !== null ? display_name.value : "",
+            password: pwd !== null ? pwd.value : "",
+            email: email !== null ? email.value : ""
           }
           this.prepBeforeJoin(result, validatedObjects)
         }

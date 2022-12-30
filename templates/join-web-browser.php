@@ -50,7 +50,7 @@ if ( video_conference_zoom_check_login() ) {
                 </div>
 				<?php
 				$hide_email = get_option( 'zoom_api_hide_in_jvb' );
-				if ( empty( $hide_email ) ) {
+				if ( empty( $hide_email ) || ( ! empty( $zoom["meeting_type"] ) && $zoom["meeting_type"] == "2" ) ) {
 					if ( ! empty( $current_user ) && ! empty( $current_user->user_email ) ) {
 						?>
                         <input type="hidden" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr( $current_user->user_email ); ?>">

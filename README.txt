@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.0.10
+Stable tag: 4.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.0.11 December 30th, 2022 =
+* Fixed: Join via browser showing invalid parameters when email field was disabled.
+* Added: Checker if the meeting is webinar then email field will show up regardless of the setting because email field is required to join a webinar.
 
 = 4.0.10 December 19th, 2022 =
 * Fixed: Validate and Escaping on a shortcode reported by WPScan.
