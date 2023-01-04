@@ -15,7 +15,7 @@ For this plugin you will be using Server-to-Server OAuth app type.
 3. Add your app name ![Give your app a name](img/s2s-oauth/app-name.png)
 4. Once App is created - you will be taken to an App Overview page where you can see App Credentials ![App Credentials](img/s2s-oauth/app-credentials.png)
 5. You will need to add Contact name, Contact email and Company name on the information page ![App Informaiton](img/s2s-oauth/s2s-info.png)
-6. For the plugin to work - you will need to define the correct scopes for the App. Go to scopes and click "Add Scopes" and add Meeting, Webinar, Report, User, Recording, Report and select all options on each selected scopes ![Add Scopes](img/s2s-oauth/add-scopes.png)
+6. For the plugin to work - you will need to define the correct scopes for the App. Go to scopes and click "Add Scopes" and add Meeting, Webinar, Report, User, Recording, Report and select all options on each selected scopes. See below section for the exact permissions to add. ![Add Scopes](img/s2s-oauth/add-scopes.png)
 
 ###Below are permissions that are needed/required:
 
@@ -26,25 +26,35 @@ For this plugin you will be using Server-to-Server OAuth app type.
 * View all user meetings/meeting:read:admin
 * View and manage all user meetings/meeting:write:admin
 
+![App Credentials](img/s2s-oauth/meetings-permissions.png)
+
 ####Recordings
 * View and manage sub account’s user recordings/recording:master
 * View all user recordings/recording:read:admin
 * View and manage all user recordings/recording:write:admin
+
+![App Credentials](img/s2s-oauth/recording-permissions.png)
 
 ####Reports
 * View sub account’s report data/report:master
 * View report data/report:read:admin
 * View your chat history report/report_chat:read:admin
 
+![App Credentials](img/s2s-oauth/report-permissions.png)
+
 ####Users
 * View and manage sub account’s user information/user:master
 * View all user information/user:read:admin
 * View users information and manage users/user:write:admin
 
+![App Credentials](img/s2s-oauth/user-permissions.png)
+
 ####Webinars
 * View and manage sub account’s user webinars/webinar:master
 * View all user Webinars/webinar:read:admin
 * View and manage all user Webinars/webinar:write:admin
+
+![App Credentials](img/s2s-oauth/webinar-permissions.png)
 
 ###Adding Server-to-Server OAuth Credentials to the plugin
 1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/plugin-settings-s2s-oauth.png)
@@ -55,11 +65,15 @@ App SDK are required for Join via Browser/Web SDK to work properly.
 
 ###Generating App SDK Credentials
 1. Go to [Create Page](https://marketplace.zoom.us/develop/create)
-2. Find SDK and click create ![Create SDK App](img/s2s-oauth/create-sdk-app.png)
-3. The next screen will prompt you for an App Name & ask you if you want to publish this app on Zoom App Marketplace. Add a name and toggle publish off ![Name SDK App](img/s2s-oauth/sdk-app-name.png)
+2. Find SDK and click create ![Create SDK App](img/s2s-oauth/marketplace.png)
+3. The next screen will prompt you for an App Name & ask you if you want to publish this app on Zoom App Marketplace. **Add a name and toggle publish off** . ![Name SDK App](img/s2s-oauth/sdk-app-name.png)
 4. Once App is created - you will need to add Company name, Name and Contact email ![SDK Information](img/s2s-oauth/sdk-info.png)
 5. Once the information has been added go to the App Credentials and you can view the SDK Credentials there ![SDK App Credentials](img/s2s-oauth/sdk-app-credentials.png)
 6. Ensure that your SDK app is activated in order to use the Join via browser features otherwise, you might get a **signature invalid error message.**
+
+**<div style="color:red">NOTE: In case you forgot to toggle the below button(shown in screenshot) you can still use the SDK credentials however, you won't be able to complete the SDK activation step. That's completely ok.</div>**
+
+![Name SDK App](img/s2s-oauth/sdk-app-name.png)
 
 ###Adding SDK Credentials to the plugin
 1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/sdk-credentials-plugin-creds.png)

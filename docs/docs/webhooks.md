@@ -26,6 +26,16 @@ In simple terms, webhook functionality can be used to notify your WordPress site
 
 * After that click on **Add new Event Subscription button** - to complete the steps you will first need to go to your WordPress admin panel and see the step [described below](#getting-endpoint-urls)
 
+* Enter your Subscription name to anything you want, and add the **_Event Notification endpoint URL_** like:
+ 
+ **https://yoursite.com/wp-json/vczapi/v1/meeting** - Replace **https://yoursite.com** with your site url. Complete url would be something like 
+ 
+**<div style="color:red;">https://yoursite.com/wp-json/vczapi/v1/meeting</div>**
+
+![Webhook Validation](webhooks/webhook-validation.png "Webhook Validation")
+
+* After you have added your URL endpoint. Click on **Validate** button to check if the url is valid which should show "validated" on success. Click on save and done.
+
 ### Getting Endpoint URLs
 
 Goto **wp-admin > Zoom Meetings > Settings > Webhooks**
