@@ -103,7 +103,8 @@ class Embed {
 			$occurrences  = ( isset( $meeting->occurrences ) && is_array( $meeting->occurrences ) ) ? $meeting->occurrences : '';
 			$meeting_time = is_array( $occurrences ) ? $occurrences[0]->start_time : date( 'Y-m-d h:i a', time() );
 		} else {
-			$meeting_time = date( 'Y-m-d h:i a', strtotime( $meeting->start_time ) );
+			$start_time   = ! empty( $meeting->start_time ) ? $meeting->start_time : 'now';
+			$meeting_time = date( 'Y-m-d h:i a', strtotime( $start_time ) );
 		}
 
 		$meeting->meeting_timezone_time = vczapi_dateConverter( 'now', $meeting->timezone, false );
