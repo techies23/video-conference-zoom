@@ -1,6 +1,5 @@
 <?php
 /**
- * @link              https://www.deepenbajracharya.com.np
  * @since             1.0.0
  * @package           Video Conferencing with Zoom
  *
@@ -27,7 +26,6 @@ define( 'ZVC_PLUGIN_FILE', __FILE__ );
 define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
 define( 'ZVC_PLUGIN_VERSION', '4.1.0' );
 define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.9.7' );
-define( 'ZVC_PLUGIN_AUTHOR', 'https://deepenbajracharya.com.np' );
 define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin' );
