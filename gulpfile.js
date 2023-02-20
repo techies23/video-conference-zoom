@@ -1,5 +1,7 @@
 /**
- * Load Plugins.
+ * !IMPORTANT
+ *
+ * This isnt used from version 4.1.0 - This file is here for legacy purpose only and will not be updated.
  *
  * Load gulp plugins and assing them semantic names.
  */
