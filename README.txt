@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.0.12
+Stable tag: 4.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,7 +155,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.0.12 February 20th, 2023 =
+= 4.1.0 February 20th, 2023 =
 * Updated: WebSDK to version 2.9.7
 * Fixed: removed wc_date_format() function from core.
 * Fixed: Undefined property: stdClass::$start_time in shortcode embed.
