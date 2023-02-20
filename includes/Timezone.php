@@ -15,6 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Timezone {
 
+	private static ?Timezone $_instance = null;
+
+	/**
+	 * Create only one instance so that it may not Repeat
+	 *
+	 * @since 2.0.0
+	 */
+	public static function get_instance(): ?Timezone {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
 	public function __construct() {
 		add_action( 'wp_ajax_set_timezone', array( $this, 'set_timezone' ) );
 		add_action( 'wp_ajax_nopriv_set_timezone', array( $this, 'set_timezone' ) );
@@ -38,7 +53,7 @@ class Timezone {
 		$show_defined_post = apply_filters( 'vczapi_show_join_links_specific_postID', array() );
 		$past_join_links   = get_option( 'zoom_past_join_links' );
 		$post_id           = absint( filter_input( INPUT_POST, 'post_id' ) );
-		if ( $start_time >= $current_user_time || $past_join_links || in_array( $post_id, $show_defined_post ) || $meeting_type == 3 || $meeting_type == 6  ) {
+		if ( $start_time >= $current_user_time || $past_join_links || in_array( $post_id, $show_defined_post ) || $meeting_type == 3 || $meeting_type == 6 ) {
 			if ( $type === "page" ) {
 				wp_send_json_success( $this->output_join_links_page( $post_id ) );
 			} else {
@@ -97,7 +112,4 @@ class Timezone {
 
 		return $content;
 	}
-
 }
-
-new Timezone();

@@ -15,19 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Filters {
 
-	/**
-	 * Instance
-	 *
-	 * @var null
-	 */
-	private static $_instance = null;
+	private static ?Filters $_instance = null;
 
 	/**
 	 * Create only one instance so that it may not Repeat
 	 *
 	 * @since 2.0.0
 	 */
-	public static function get_instance() {
+	public static function get_instance(): ?Filters {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -40,7 +35,7 @@ class Filters {
 	 *
 	 * @var string
 	 */
-	private $post_type = 'zoom-meetings';
+	private string $post_type = 'zoom-meetings';
 
 	/**
 	 * Zoom_Video_Conferencing_Filters constructor.
@@ -184,5 +179,3 @@ class Filters {
 		return $tax_query;
 	}
 }
-
-new Filters();

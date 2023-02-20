@@ -1,4 +1,7 @@
-"use strict";
+/******/ (function() { // webpackBootstrap
+/******/ 	"use strict";
+var __webpack_exports__ = {};
+
 
 /**
  * Jquery Scripts
@@ -7,16 +10,17 @@
  * @since  1.0.0
  * @modified in 3.0.0
  */
+
 (function ($) {
   //Cache
   var $dom = {};
   var ZoomAPIJS = {
-    onReady: function onReady() {
+    onReady: function () {
       this.setupDOM();
       this.eventListeners();
       this.initializeDependencies();
     },
-    setupDOM: function setupDOM() {
+    setupDOM: function () {
       $dom.changeSelectType = $('.zvc-hacking-select');
       $dom.dateTimePicker = $('#datetimepicker');
       $dom.goToAccordionEl = $('.vczapi-go-to-open-accordion');
@@ -33,42 +37,45 @@
       this.$manualHostID = $('.vczapi-admin-hostID-manually-add');
       $dom.accordionElement = $('.vczapi-admin-accordion');
     },
-    eventListeners: function eventListeners() {
+    eventListeners: function () {
       //toggle show hide
-      $dom.toggleTriggerElement.on('click', this.togglePasswordText.bind(this)); //accordion js
+      $dom.toggleTriggerElement.on('click', this.togglePasswordText.bind(this));
+      //accordion js
+      $dom.accordionElement.on('click', '.vczapi-admin-accordion--header', this.toggleAccordion.bind(this));
+      //go to accordiong
+      $dom.goToAccordionEl.on('click', this.expandAccordion.bind(this));
 
-      $dom.accordionElement.on('click', '.vczapi-admin-accordion--header', this.toggleAccordion.bind(this)); //go to accordiong
-
-      $dom.goToAccordionEl.on('click', this.expandAccordion.bind(this)); //Check All Table Elements for Meetings List
-
+      //Check All Table Elements for Meetings List
       $dom.meetingListTableCheck.find('#checkall').on('click', this.meetingListTableCheck);
+
       /**
        * Bulk Delete Function
        * @author  Deepen
        * @since 2.0.0
        */
+      $('#bulk_delete_meeting_listings').on('click', this.bulkDeleteMeetings);
 
-      $('#bulk_delete_meeting_listings').on('click', this.bulkDeleteMeetings); //For Password field
-
+      //For Password field
       $('.zvc-meetings-form').find('input[name="password"]').on('keypress', this.meetingPassword);
+
       /**
        * Confirm Deletion of the Meeting
        */
-
       $('.delete-meeting').on('click', this.deleteMetting);
       $('.zvc-dismiss-message').on('click', this.dismissNotice.bind(this));
-      $('.check-api-connection').on('click', this.checkConnection.bind(this)); //End and Resume Meetings
+      $('.check-api-connection').on('click', this.checkConnection.bind(this));
 
-      $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this)); //Manual Host Selector
+      //End and Resume Meetings
+      $($dom.changeMeetingState).on('click', this.meetingStateChange.bind(this));
 
+      //Manual Host Selector
       this.$manualHostID.on('click', this.showManualHostIDField.bind(this));
     },
     //Expand Accordion
-    expandAccordion: function expandAccordion(e) {
+    expandAccordion: function (e) {
       e.preventDefault();
-      var $el = $(e.currentTarget);
-      var $targetAccordionEl = $($el.attr('href'));
-
+      let $el = $(e.currentTarget);
+      let $targetAccordionEl = $($el.attr('href'));
       if ($targetAccordionEl !== undefined && $targetAccordionEl.length > 0) {
         $targetAccordionEl.addClass('expanded');
         $('html,body').animate({
@@ -77,26 +84,23 @@
         $targetAccordionEl.focus();
       }
     },
-
     /**
      * Toggle Accordiong Element
      */
-    toggleAccordion: function toggleAccordion(e) {
+    toggleAccordion: function (e) {
       e.preventDefault();
-      var $accordionHeader = $(e.currentTarget);
-      var $accordionWrapper = $accordionHeader.parent();
+      let $accordionHeader = $(e.currentTarget);
+      let $accordionWrapper = $accordionHeader.parent();
       $accordionWrapper.toggleClass('expanded');
     },
-
     /**
      * Toggle Show or hide
      */
-    togglePasswordText: function togglePasswordText(e) {
+    togglePasswordText: function (e) {
       e.preventDefault();
-      var $triggerElement = $(e.currentTarget);
-      var $targetElement = $($triggerElement.data('element'));
-      var isElementVisible = $triggerElement.data('visible');
-
+      let $triggerElement = $(e.currentTarget);
+      let $targetElement = $($triggerElement.data('element'));
+      let isElementVisible = $triggerElement.data('visible');
       if (isElementVisible === 0) {
         $targetElement.attr('type', 'text');
         $triggerElement.data('visible', 1);
@@ -107,18 +111,17 @@
         $triggerElement.text('Show');
       }
     },
-
     /**
      * Show Manual Host ID selector field
      *
      * @param e
      */
-    showManualHostIDField: function showManualHostIDField(e) {
+    showManualHostIDField: function (e) {
       e.preventDefault();
       $('.vczapi-admin-post-type-host-selector').select2('destroy').remove();
       $('.vczapi-manually-hostid-wrap').before('<input type="text" placeholder="' + zvc_ajax.lang.host_id_search + '" class="regular-text vczapi-search-host-id" name="userId" required>').remove();
     },
-    datePickers: function datePickers() {
+    datePickers: function () {
       //For Datepicker
       if ($dom.dateTimePicker.length > 0) {
         var d = new Date();
@@ -127,20 +130,18 @@
         var time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
         var output = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day + ' ' + time;
         var start_date_check = $dom.dateTimePicker.data('existingdate');
-
         if (start_date_check) {
           output = start_date_check;
         }
-
         $dom.dateTimePicker.datetimepicker({
           value: output,
           step: 15,
           minDate: 0,
           format: 'Y-m-d H:i'
         });
-      } //For Reports Section
+      }
 
-
+      //For Reports Section
       if ($dom.reportsDatePicker.length > 0) {
         $dom.reportsDatePicker.datepicker({
           changeMonth: true,
@@ -157,14 +158,13 @@
           });
         });
       }
-
       if ($('#vczapi-check-recording-date').length > 0) {
         $('#vczapi-check-recording-date').datepicker({
           changeMonth: true,
           changeYear: true,
           showButtonPanel: true,
           dateFormat: 'MM yy',
-          beforeShow: function beforeShow(input, inst) {
+          beforeShow: function (input, inst) {
             setTimeout(function () {
               inst.dpDiv.css({
                 top: $('#vczapi-check-recording-date').offset().top + 35,
@@ -182,24 +182,23 @@
           });
         });
       }
-
       if ($dom.zoomAccountDatepicker.length > 0) {
         $dom.zoomAccountDatepicker.datepicker({
           dateFormat: 'yy-mm-dd'
         });
       }
     },
-    initializeDependencies: function initializeDependencies() {
+    initializeDependencies: function () {
       if ($dom.changeSelectType.length > 0) {
         $dom.changeSelectType.select2();
-      } //DatePickers
+      }
 
-
+      //DatePickers
       this.datePickers();
+
       /***********************************************************
        * Start For Users and Meeting DATA table Listing Section
        **********************************************************/
-
       if ($dom.meetingListDTable.length > 0) {
         $dom.meetingListDTable.dataTable({
           'pageLength': 25,
@@ -209,7 +208,6 @@
           }]
         });
       }
-
       if ($dom.usersListTable.length > 0) {
         $dom.usersListTable.dataTable({
           processing: true,
@@ -227,7 +225,7 @@
           }, {
             data: 'host_id'
           }],
-          drawCallback: function drawCallback(settings) {
+          drawCallback: function (settings) {
             $('.vczapi-get-zoom-hosts').select2({
               ajax: {
                 url: ajaxurl + '?action=vczapi_get_zoom_host_query',
@@ -249,7 +247,6 @@
           }
         });
       }
-
       if ($('#vczapi-select-wp-user-for-host').length > 0) {
         $('#vczapi-select-wp-user-for-host').select2({
           ajax: {
@@ -262,7 +259,7 @@
         });
       }
     },
-    meetingListTableCheck: function meetingListTableCheck() {
+    meetingListTableCheck: function () {
       if ($(this).is(':checked')) {
         $dom.meetingListTbl.each(function () {
           $(this).prop('checked', true);
@@ -273,14 +270,12 @@
         });
       }
     },
-
     /**
      * Bulk Meeting DELETE Function
      * @returns {boolean}
      */
-    bulkDeleteMeetings: function bulkDeleteMeetings() {
+    bulkDeleteMeetings: function () {
       var r = confirm('Confirm bulk delete these Meeting?');
-
       if (r == true) {
         var arr_checkbox = [];
         $dom.meetingListTableCheck.find('input.checkthis').each(function () {
@@ -288,8 +283,8 @@
             arr_checkbox.push($(this).val());
           }
         });
-        var type = $(this).data('type'); //Process bulk delete
-
+        var type = $(this).data('type');
+        //Process bulk delete
         if (arr_checkbox) {
           var data = {
             meetings_id: arr_checkbox,
@@ -300,7 +295,6 @@
           $dom.cover.show();
           $.post(zvc_ajax.ajaxurl, data).done(function (response) {
             $dom.cover.fadeOut('slow');
-
             if (response.error == 1) {
               $dom.show_on_meeting_delete_error.show().html('<p>' + response.msg + '</p>');
             } else {
@@ -313,34 +307,29 @@
         return false;
       }
     },
-
     /**
      * Meeting Password Selector
      * @param e
      * @returns {boolean}
      */
-    meetingPassword: function meetingPassword(e) {
+    meetingPassword: function (e) {
       if (!/([a-zA-Z0-9])+/.test(String.fromCharCode(e.which))) {
         return false;
       }
-
       var text = $(this).val();
       var maxlength = $(this).data('maxlength');
-
       if (maxlength > 0) {
         $(this).val(text.substr(0, maxlength));
       }
     },
-
     /**
      * Delete meeting funciton
      * @returns {boolean}
      */
-    deleteMetting: function deleteMetting() {
+    deleteMetting: function () {
       var meeting_id = $(this).data('meetingid');
       var type = $(this).data('type');
       var r = confirm('Confirm Delete this Meeting?');
-
       if (r == true) {
         var data = {
           meeting_id: meeting_id,
@@ -351,7 +340,6 @@
         $dom.cover.show();
         $.post(zvc_ajax.ajaxurl, data).done(function (result) {
           $dom.cover.fadeOut('slow');
-
           if (result.error == 1) {
             $dom.show_on_meeting_delete_error.show().html('<p>' + result.msg + '</p>');
           } else {
@@ -363,7 +351,7 @@
         return false;
       }
     },
-    dismissNotice: function dismissNotice(e) {
+    dismissNotice: function (e) {
       e.preventDefault();
       $(e.currentTarget).closest('.notice-success').hide();
       $.post(zvc_ajax.ajaxurl, {
@@ -373,7 +361,7 @@
         console.log(result);
       });
     },
-    checkConnection: function checkConnection(e) {
+    checkConnection: function (e) {
       e.preventDefault();
       $dom.cover.show();
       $.post(zvc_ajax.ajaxurl, {
@@ -385,12 +373,11 @@
         alert(result);
       });
     },
-
     /**
      * Change Meeting State
      * @param e
      */
-    meetingStateChange: function meetingStateChange(e) {
+    meetingStateChange: function (e) {
       e.preventDefault();
       var state = $(e.currentTarget).data('state');
       var post_id = $(e.currentTarget).data('postid');
@@ -402,12 +389,10 @@
         action: 'state_change',
         accss: zvc_ajax.zvc_security
       };
-
       if (state === 'resume') {
         this.changeState(postData);
       } else if (state === 'end') {
         var c = confirm(zvc_ajax.lang.confirm_end);
-
         if (c) {
           this.changeState(postData);
         } else {
@@ -415,36 +400,35 @@
         }
       }
     },
-
     /**
      * Change the state triggere now
      * @param postData
      */
-    changeState: function changeState(postData) {
+    changeState: function (postData) {
       $.post(zvc_ajax.ajaxurl, postData).done(function (response) {
         location.reload();
       });
     }
   };
+
   /**
    * Sync Meeting Functions
    * @type {{init: init, fetchMeetingsByUser: fetchMeetingsByUser, cacheDOM: cacheDOM, evntHandlers: evntHandlers, syncMeeting: syncMeeting}}
    */
-
   var vczapi_sync_meetings = {
-    init: function init() {
+    init: function () {
       this.cacheDOM();
       this.evntHandlers();
     },
-    cacheDOM: function cacheDOM() {
+    cacheDOM: function () {
       //Sync DOMS
       this.notificationWrapper = $('.vczapi-status-notification');
       this.syncUserId = $('.vczapi-sync-user-id');
     },
-    evntHandlers: function evntHandlers() {
+    evntHandlers: function () {
       this.syncUserId.on('change', this.fetchMeetingsByUser.bind(this));
     },
-    fetchMeetingsByUser: function fetchMeetingsByUser(e) {
+    fetchMeetingsByUser: function (e) {
       e.preventDefault();
       var that = this;
       var user_id = $(this.syncUserId).val();
@@ -481,11 +465,10 @@
         }
       });
     },
-    syncMeeting: function syncMeeting(e) {
+    syncMeeting: function (e) {
       e.preventDefault();
       $(e.currentTarget).attr('disabled', 'disabled');
       var sync_meeting_ids = $('.vczapi-choose-meetings-to-sync-select2').val();
-
       if (_.size(sync_meeting_ids) > 0) {
         this.notificationWrapper.show().html('<p>' + vczapi_sync_i10n.sync_start + '</p>').removeClass('vczapi-error');
         this.doSync(0, sync_meeting_ids);
@@ -494,13 +477,12 @@
         $(e.currentTarget).removeAttr('disabled');
       }
     },
-
     /**
      * Run AJAX call based on per meeting selected
      * @param arrCount
      * @param sync_meeting_ids
      */
-    doSync: function doSync(arrCount, sync_meeting_ids) {
+    doSync: function (arrCount, sync_meeting_ids) {
       var that = this;
       var postData = {
         action: 'vczapi_sync_user',
@@ -510,7 +492,6 @@
       $.post(ajaxurl, postData).done(function (response) {
         arrCount++;
         that.notificationWrapper.show().append('<p> ' + response.data.msg + '</p>');
-
         if (arrCount < _.size(sync_meeting_ids)) {
           vczapi_sync_meetings.doSync(arrCount, sync_meeting_ids);
         } else {
@@ -525,27 +506,26 @@
       });
     }
   };
+
   /**
    * Webinar Functions
    * @type {{init: init, cacheDOM: cacheDOM, evntHandlers: evntHandlers, webinarElementsShow: webinarElementsShow}}
    */
-
-  var vczapi_webinars = {
-    init: function init() {
+  const vczapi_webinars = {
+    init: function () {
       this.cacheDOM();
       this.evntHandlers();
     },
-    cacheDOM: function cacheDOM() {
+    cacheDOM: function () {
       this.meetingSelector = $('#vczapi-admin-meeting-ype');
       this.hideOnWebinarSelector = $('.vczapi-admin-hide-on-webinar');
       this.showOnWebinarSelector = $('.vczapi-admin-show-on-webinar');
     },
-    evntHandlers: function evntHandlers() {
+    evntHandlers: function () {
       this.meetingSelector.on('change', this.webinarElementsShow.bind(this));
     },
-    webinarElementsShow: function webinarElementsShow(e) {
+    webinarElementsShow: function (e) {
       var meeting_type = $(e.currentTarget).val();
-
       if (meeting_type === '2') {
         this.hideOnWebinarSelector.hide();
         this.showOnWebinarSelector.show();
@@ -555,145 +535,133 @@
       }
     }
   };
-  var vczapiMigrationWizard = {
-    init: function init() {
+  const vczapiMigrationWizard = {
+    init: function () {
       this.cacheDOM();
-
       if (this.$wizardWrapper !== undefined && this.$wizardWrapper.length > 0) {
         this.eventListeners();
       }
     },
-    cacheDOM: function cacheDOM() {
+    cacheDOM: function () {
       this.$wizardOverlay = $('.vczapi-migrate-to-s2sOauth--overlay');
       this.$wizardWrapper = $('.vczapi-migrate-to-s2sOauth');
       this.$s2sOauthForm = $('#vczapi-s2sOauthCredentials-wizard-form');
       this.$appSDKForm = $('#vczapi-s2soauth-app-sdk-form');
       this.$messageWrapper = this.$wizardWrapper.find('.vczapi-migrate-to-s2sOauth--message');
     },
-    eventListeners: function eventListeners() {
+    eventListeners: function () {
       this.maybeTriggerMigrationWizard();
       this.$wizardWrapper.find('.next-step').on('click', this.navigateToStep.bind(this));
       this.$s2sOauthForm.on('submit', this.s2sOauthFormHandler.bind(this));
       this.$appSDKForm.on('submit', this.appSDKFormHandler.bind(this));
       $('body').on('click', this.maybeCloseWizard.bind(this));
     },
-    maybeCloseWizard: function maybeCloseWizard(e) {
-      var clickTriggerEl = e.target;
-
+    maybeCloseWizard: function (e) {
+      const clickTriggerEl = e.target;
       if ($(clickTriggerEl)[0] === this.$wizardOverlay[0]) {
         this.$wizardOverlay.removeClass('expanded');
       }
     },
-    showMessage: function showMessage(type) {
-      var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'text';
-      var messageClass = 'show-message ' + (type === 'success' ? 'success-message' : 'error-message');
+    showMessage: function (type, message = 'text') {
+      const messageClass = 'show-message ' + (type === 'success' ? 'success-message' : 'error-message');
       this.$wizardWrapper.find('.vczapi-migrate-to-s2sOauth--message').removeClass(['error-message', 'success-message']);
       this.$wizardWrapper.find('.vczapi-migrate-to-s2sOauth--message').addClass(messageClass).text(message);
     },
-    s2sOauthFormHandler: function s2sOauthFormHandler(e) {
+    s2sOauthFormHandler: function (e) {
       e.preventDefault();
-      var $form = $(e.target);
-      var data = $form.serialize();
+      const $form = $(e.target);
+      const data = $form.serialize();
       $.ajax({
         type: 'POST',
         url: ajaxurl + '?action=vczapi_save_oauth_credentials',
         context: this,
         data: data,
-        beforeSend: function beforeSend() {
+        beforeSend: function () {
           this.$s2sOauthForm.find('input').prop('disabled', true);
           this.$s2sOauthForm.addClass('submitting');
         },
-        success: function success(response) {
+        success: function (response) {
           this.$s2sOauthForm.find('input').prop('disabled', false);
           this.$s2sOauthForm.removeClass('submitting');
-
           if (response.hasOwnProperty('success') && response.success) {
-            this.showMessage('success', response === null || response === void 0 ? void 0 : response.data.message);
+            this.showMessage('success', response?.data.message);
             this.$wizardWrapper.find('.next-step').attr('disabled', false);
           } else {
-            this.showMessage('error', response === null || response === void 0 ? void 0 : response.data.message);
+            this.showMessage('error', response?.data.message);
           }
         },
-        error: function error(MLHttpRequest, textStatus, errorThrown) {
+        error: function (MLHttpRequest, textStatus, errorThrown) {
           console.log('Error thrown', errorThrown);
         }
       });
     },
-    appSDKFormHandler: function appSDKFormHandler(e) {
+    appSDKFormHandler: function (e) {
       e.preventDefault();
-      var $form = $(e.target);
-      var data = $form.serialize();
+      const $form = $(e.target);
+      const data = $form.serialize();
       $.ajax({
         type: 'POST',
         url: ajaxurl + '?action=vczapi_save_app_sdk_credentials',
         context: this,
         data: data,
-        beforeSend: function beforeSend() {
+        beforeSend: function () {
           this.$appSDKForm.find('input').prop('disabled', true);
           this.$appSDKForm.addClass('submitting');
         },
-        success: function success(response) {
+        success: function (response) {
           this.$appSDKForm.find('input').prop('disabled', false);
           this.$appSDKForm.removeClass('submitting');
-
           if (response.hasOwnProperty('success') && response.success) {
-            this.showMessage('success', response === null || response === void 0 ? void 0 : response.data.message);
+            this.showMessage('success', response?.data.message);
             this.$wizardWrapper.find('.next-step').attr('disabled', false);
           } else {
-            this.showMessage('error', response === null || response === void 0 ? void 0 : response.data.message);
+            this.showMessage('error', response?.data.message);
           }
         },
-        error: function error(MLHttpRequest, textStatus, errorThrown) {
+        error: function (MLHttpRequest, textStatus, errorThrown) {
           console.log('Error thrown', errorThrown);
         }
       });
     },
-    maybeTriggerMigrationWizard: function maybeTriggerMigrationWizard() {
-      var params = this.getSearchParameters();
-
+    maybeTriggerMigrationWizard: function () {
+      let params = this.getSearchParameters();
       if (params.hasOwnProperty('page') && params.page === 'zoom-video-conferencing-settings' && params.hasOwnProperty('migrate') && params.migrate === 'now') {
         this.$wizardOverlay.addClass('expanded');
       }
     },
-    getSearchParameters: function getSearchParameters() {
-      var prmstr = window.location.search.substring(1);
+    getSearchParameters: function () {
+      let prmstr = window.location.search.substring(1);
       return prmstr != null && prmstr !== '' ? this.transformToAssocArray(prmstr) : {};
     },
-    transformToAssocArray: function transformToAssocArray(prmstr) {
+    transformToAssocArray: function (prmstr) {
       var params = {};
       var prmarr = prmstr.split('&');
-
       for (var i = 0; i < prmarr.length; i++) {
         var tmparr = prmarr[i].split('=');
         params[tmparr[0]] = tmparr[1];
       }
-
       return params;
     },
-    navigateToStep: function navigateToStep(e) {
+    navigateToStep: function (e) {
       e.preventDefault();
-      var $el = $(e.currentTarget);
-      var currentStep = $el.data('step');
-      var finalStep = $el.data('final_step');
-
+      let $el = $(e.currentTarget);
+      let currentStep = $el.data('step');
+      let finalStep = $el.data('final_step');
       if (currentStep === undefined) {
         console.log('Error no steps defined');
       } else {
-        var passedThisRef = this;
-        var goToStep = passedThisRef.$wizardWrapper.find('.step-' + currentStep);
-
+        let passedThisRef = this;
+        let goToStep = passedThisRef.$wizardWrapper.find('.step-' + currentStep);
         if (goToStep.length > 0) {
-          var nextStep = parseInt(currentStep) + 1; //check if it's final step
-
+          let nextStep = parseInt(currentStep) + 1;
+          //check if it's final step
           this.$wizardWrapper.find('.step.active').removeClass('active').fadeOut('slow', function () {
             goToStep.addClass('active').fadeIn('slow');
             $el.data('step', nextStep);
             $el.attr('disabled', true);
-
             if (nextStep > parseInt(finalStep)) {
               $el.hide();
             }
-
             passedThisRef.$messageWrapper.removeClass('show-message');
           });
         } else {
@@ -702,15 +670,15 @@
       }
     }
   };
-  var vczapi_dismiss_notice = {
-    init: function init() {
+  const vczapi_dismiss_notice = {
+    init: function () {
       $('.vczapi-dismiss-admin-notice').on('click', this.dismissNotice.bind(this));
     },
-    dismissNotice: function dismissNotice(e) {
+    dismissNotice: function (e) {
       e.preventDefault();
-      var $el = $(e.target);
-      var option = $el.data('id');
-      var security = $el.data('security');
+      let $el = $(e.target);
+      let option = $el.data('id');
+      let security = $el.data('security');
       $.ajax({
         type: 'POST',
         url: ajaxurl,
@@ -719,12 +687,12 @@
           option: option,
           security: security
         },
-        beforeSend: function beforeSend() {
+        beforeSend: function () {
           if ($el.parents('.vczapi-notice').length > 0) {
             $el.parents('.vczapi-notice').fadeOut();
           }
         },
-        success: function success(response) {
+        success: function (response) {
           if (response.hasOwnProperty('success') && response.success) {
             console.log(response);
           }
@@ -740,3 +708,5 @@
     vczapi_webinars.init();
   });
 })(jQuery);
+/******/ })()
+;

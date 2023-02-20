@@ -5,16 +5,16 @@
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
-import './editor.scss';
+import './style.scss'
+import './editor.scss'
 
 /**
  * Import all the modules
  */
 
-import './list-meetings-webinar';
-import './show-meeting-post';
-import './show-live-meeting';
-import './list-host-meetings';
-import './join-via-browser';
-import './recordings';
+import './list-meetings-webinar'
+import './show-meeting-post'
+import './show-live-meeting'
+import './list-host-meetings'
+import './join-via-browser'
+import './recordings'

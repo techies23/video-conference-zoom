@@ -80,11 +80,15 @@ class Embed {
 			return;
 		}
 
-		if ( ! empty( $attributes['webinar'] ) && $attributes['webinar'] == "yes" ) {
-			$meeting = json_decode( zoom_conference()->getWebinarInfo( $meeting_id ) );
+		$meetingInfo = ! empty( $attributes['webinar'] ) && $attributes['webinar'] == "yes" ? zoom_conference()->getWebinarInfo( $meeting_id ) : zoom_conference()->getMeetingInfo( $meeting_id );
+
+		if ( is_wp_error( $meetingInfo ) ) {
+			echo $meetingInfo->get_error_message();
+			return;
 		} else {
-			$meeting = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
+			$meeting = json_decode( $meetingInfo );
 		}
+
 		$meeting = apply_filters( 'vczapi_join_via_browser_shortcode_meetings', $meeting );
 
 		$zoom_states = get_option( 'zoom_api_meeting_options' );

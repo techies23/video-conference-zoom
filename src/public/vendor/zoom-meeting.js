@@ -30,7 +30,7 @@ const ZoomMtgApp = {
     this.infoContainer.appendChild(unorderedLists)
 
     ZoomMtg.preLoadWasm()
-    ZoomMtg.prepareJssdk()
+    ZoomMtg.prepareWebSDK()
   },
 
   /**
@@ -128,9 +128,9 @@ const ZoomMtgApp = {
           this.removeLoader()
 
           const validatedObjects = {
-            name: display_name !== null ? display_name.value : "",
-            password: pwd !== null ? pwd.value : "",
-            email: email !== null ? email.value : ""
+            name: display_name !== null ? display_name.value : '',
+            password: pwd !== null ? pwd.value : '',
+            email: email !== null ? email.value : ''
           }
           this.prepBeforeJoin(result, validatedObjects)
         }
@@ -177,6 +177,12 @@ const ZoomMtgApp = {
       error: function (res) {
         console.log(res)
       }
+    }
+
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(urlSearchParams.entries())
+    if (params.tk !== null) {
+      meetingJoinParams.tk = params.tk
     }
 
     if (window.location !== window.parent.location) {

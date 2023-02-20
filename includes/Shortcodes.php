@@ -19,12 +19,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Shortcodes {
 
+	public static ?Shortcodes $_instance = null;
+
+	public static function get_instance(): ?Shortcodes {
+		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
+	}
+
 	/**
 	 * Shortcodes container
 	 *
 	 * @var array
 	 */
-	private $shortcodes;
+	private array $shortcodes;
 
 	/**
 	 * Zoom_Video_Conferencing_Shorcodes constructor.
@@ -111,5 +117,3 @@ class Shortcodes {
 		) );
 	}
 }
-
-new Shortcodes();

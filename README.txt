@@ -155,8 +155,12 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.0.12 January 6th, 2023 =
+= 4.0.12 February 20th, 2023 =
+* Updated: WebSDK to version 2.9.7
+* Fixed: removed wc_date_format() function from core.
 * Fixed: Undefined property: stdClass::$start_time in shortcode embed.
+* Added: Ability to join meetings with registrations enabled for PRO version.
+* Developer: Script bundler changed to webpack.
 
 = 4.0.11 December 30th, 2022 =
 * Fixed: Join via browser showing invalid parameters when email field was disabled.

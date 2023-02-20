@@ -11,15 +11,12 @@ namespace Codemanas\VczApi\Blocks;
  */
 class Blocks {
 
-	/**
-	 * @var null
-	 */
-	public static $_instance = null;
+	public static ?Blocks $_instance = null;
 
 	/**
 	 * @return Blocks|null
 	 */
-	public static function get_instance() {
+	public static function get_instance(): ?Blocks {
 		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
 	}
 
@@ -30,7 +27,7 @@ class Blocks {
 		global $wp_version;
 		if ( version_compare( $wp_version, '5.8', '>=' ) ) {
 			add_filter( 'block_categories_all', [ $this, 'register_block_categories' ], 10, 2 );
-		}else{
+		} else {
 			add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
 		}
 		if ( function_exists( 'register_block_type' ) ) {
@@ -95,7 +92,7 @@ class Blocks {
 	 * @updated N/A
 	 *
 	 */
-	public function register_block_categories( $categories, $post ) {
+	public function register_block_categories( $categories, $post ): array {
 		return array_merge(
 			[
 				[
@@ -274,10 +271,6 @@ class Blocks {
 					"type"    => "string",
 					"default" => "no"
 				],
-				"help"              => [
-					"type"    => "string",
-					"default" => "no"
-				],
 				"disable_countdown" => [
 					"type"    => "string",
 					"default" => "no"
@@ -400,11 +393,16 @@ class Blocks {
 		}
 
 		if ( empty( $host_id ) ) {
-			wp_send_json( [] );
+			wp_send_json( false );
 		}
 
-		$encoded_meetings_webinar  = ( $show_meeting_or_webinar == 'webinar' ) ? zoom_conference()->listWebinar( $host_id, $args ) : zoom_conference()->listMeetings( $host_id, $args );
-		$decoded_meetings_webinars = json_decode( $encoded_meetings_webinar );
+		$encoded_meetings_webinar = ( $show_meeting_or_webinar == 'webinar' ) ? zoom_conference()->listWebinar( $host_id, $args ) : zoom_conference()->listMeetings( $host_id, $args );
+		if ( is_wp_error( $encoded_meetings_webinar ) ) {
+			wp_send_json( $encoded_meetings_webinar->get_error_message() );
+		} else {
+			$decoded_meetings_webinars = json_decode( $encoded_meetings_webinar );
+		}
+
 		if ( $show_meeting_or_webinar == 'webinar' ) {
 			$meetings_or_webinars = ! empty( $decoded_meetings_webinars->webinars ) ? $decoded_meetings_webinars->webinars : [];
 		} else {
@@ -439,7 +437,7 @@ class Blocks {
 	 * @updated N/A
 	 *
 	 */
-	public function render_list_meetings( $attributes ) {
+	public function render_list_meetings( $attributes ): string {
 		$shortcode = isset( $attributes['shortcodeType'] ) && ( $attributes['shortcodeType'] == 'webinar' ) ? 'zoom_list_webinars' : 'zoom_list_meetings';
 
 		if ( isset( $attributes['postsToShow'] ) && ! empty( $attributes['postsToShow'] ) ) {
@@ -559,33 +557,21 @@ class Blocks {
 	 *
 	 * @param $attributes
 	 *
-	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
+	 * @return string
 	 */
-	public function render_join_via_browser( $attributes ) {
+	public function render_join_via_browser( $attributes ): string {
 		$shortcode_args = '';
 		if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
 			$shortcode_args .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
 		}
-		if ( isset( $attributes['title'] ) && ! empty( $attributes['title'] ) ) {
-			$shortcode_args .= ' title="' . $attributes['title'] . '"';
-		}
 		if ( isset( $attributes['login_required'] ) && ! empty( $attributes['login_required'] ) ) {
 			$shortcode_args .= ' login_required="' . $attributes['login_required'] . '"';
-		}
-		if ( isset( $attributes['help'] ) && ! empty( $attributes['help'] ) ) {
-			$shortcode_args .= ' help="' . $attributes['help'] . '"';
 		}
 		if ( isset( $attributes['disable_countdown'] ) && ! empty( $attributes['disable_countdown'] ) ) {
 			$shortcode_args .= ' disable_countdown="' . $attributes['disable_countdown'] . '"';
 		}
 		if ( isset( $attributes['passcode'] ) && ! empty( $attributes['passcode'] ) ) {
 			$shortcode_args .= ' passcode="' . $attributes['passcode'] . '"';
-		}
-		if ( isset( $attributes['height'] ) && ! empty( $attributes['height'] ) ) {
-			$shortcode_args .= ' height="' . $attributes['height'] . 'px"';
 		}
 		if ( ! empty( $attributes['shouldShow'] ) && ! empty( $attributes['shouldShow']['value'] ) && $attributes['shouldShow']['value'] == "webinar" ) {
 			$shortcode_args .= ' webinar="yes"';
@@ -594,7 +580,7 @@ class Blocks {
 		ob_start();
 
 		#dump($shortcode_args);
-		echo do_shortcode( '[zoom_join_via_browser' . $shortcode_args . ']' );
+		echo do_shortcode( '[zoom_join_via_browser iframe="no" ' . $shortcode_args . ']' );
 
 		return ob_get_clean();
 	}
@@ -635,5 +621,3 @@ class Blocks {
 		return ob_get_clean();
 	}
 }
-
-Blocks::get_instance();

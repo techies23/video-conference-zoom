@@ -2,9 +2,7 @@
 
 This functionality allows you to import your Zoom Meetings from your Zoom Account to your WordPress site if that meeting already does not exists on your site.
 
-### Limitations
-
-Currently, import only allows you to import your Zoom Meetings which are scheduled meeting. Recurring Meetings and webinars are not allowed to be imported yet. This will be coming soon.
+**If you need to import recurring meetings and webinars, [PRO VERSION](https://www.codemanas.com/downloads/video-conferencing-with-zoom-pro/) plugin is required.**
 
 ### How to ?
 

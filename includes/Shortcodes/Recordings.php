@@ -108,8 +108,6 @@ class Recordings {
 		}
 
 		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css', false, ZVC_PLUGIN_VERSION );
-
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );

@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi;
 
+use Codemanas\VczApi\Blocks\Blocks;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( "Not Allowed Here !" ); // If this file is called directly, abort.
 }
@@ -70,22 +72,22 @@ final class Bootstrap {
 			return;
 		}
 		?>
-        <hr class="vczapi-major-update-warning__separator"/>
-        <div class="vczapi-major-update-warning">
-            <div class="vczapi-major-update-warning__icon">
-                <span class="dashicons dashicons-info-outline"></span>
-            </div>
-            <div class="vczapi-major-update-warning_wrapper">
-                <div class="vczapi-major-update-warning__title">
-					<?php esc_html_e( 'Heads up, Please backup before upgrade!', 'video-conferencing-with-zoom-api' ); ?>
-                </div>
-                <div class="vczapi-major-update-warning__message">
-					<?php
-					esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you backup your site before upgrading, and make sure you first update in a staging environment', 'video-conferencing-with-zoom-api' );
-					?>
-                </div>
-            </div>
+      <hr class="vczapi-major-update-warning__separator"/>
+      <div class="vczapi-major-update-warning">
+        <div class="vczapi-major-update-warning__icon">
+          <span class="dashicons dashicons-info-outline"></span>
         </div>
+        <div class="vczapi-major-update-warning_wrapper">
+          <div class="vczapi-major-update-warning__title">
+			  <?php esc_html_e( 'Heads up, Please backup before upgrade!', 'video-conferencing-with-zoom-api' ); ?>
+          </div>
+          <div class="vczapi-major-update-warning__message">
+			  <?php
+			  esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you backup your site before upgrading, and make sure you first update in a staging environment', 'video-conferencing-with-zoom-api' );
+			  ?>
+          </div>
+        </div>
+      </div>
 		<?php
 	}
 
@@ -203,7 +205,6 @@ final class Bootstrap {
 
 		//Loading Includes
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/Datastore.php';
 
 		//AJAX CALLS SCRIPTS
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-ajax.php';
@@ -221,20 +222,20 @@ final class Bootstrap {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
 
 		//Timezone
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Timezone.php';
+		Timezone::get_instance();
 
 		//Templates
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-hooks.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Filters.php';
+		Filters::get_instance();
 
 		//Shortcode
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Shortcodes.php';
+		Shortcodes::get_instance();
 
 		if ( did_action( 'elementor/loaded' ) ) {
 			require ZVC_PLUGIN_INCLUDES_PATH . '/Elementor/Elementor.php';
 		}
 
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Blocks/Blocks.php';
+		Blocks::get_instance();
 	}
 
 	/**
@@ -261,10 +262,6 @@ final class Bootstrap {
 		wp_register_script( 'video-conferencing-with-zoom-api-select2-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/select2/js/select2.min.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-timepicker-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/dtimepicker/jquery.datetimepicker.full.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', array( 'jquery' ), $this->plugin_version, true );
-
-		if ( $hook === $pg . "video-conferencing-reports" || $hook === $pg . "video-conferencing-recordings" ) {
-			wp_enqueue_style( 'jquery-ui-datepicker-vczapi', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/jquery-ui.css', false, $this->plugin_version );
-		}
 
 		//Plugin Scripts
 		wp_enqueue_style( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/style.min.css', false, $this->plugin_version );

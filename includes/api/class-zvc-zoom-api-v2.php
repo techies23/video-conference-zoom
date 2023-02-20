@@ -83,6 +83,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$bearerToken    = $this->getBearerToken();
 
 			$args = array(
+				'timeout' => 30,
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $bearerToken,
 					'Content-Type'  => 'application/json',
@@ -111,6 +112,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			}
 
 			if ( is_wp_error( $request ) ) {
+				$this->logMessage( $request->get_error_message(), $request->get_error_code(), $request );
+
 				return $request; // Bail early
 			} else {
 				$responseCode = wp_remote_retrieve_response_code( $request );
@@ -123,6 +126,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 					//only retry twice;
 					if ( self::$OAuth_revalidate_attempts <= 2 ) {
 						self::$OAuth_revalidate_attempts ++;
+
 						//resend the request after regenerating access token
 						return $this->sendRequest( $calledFunction, $data, $initialRequest );
 					} else {

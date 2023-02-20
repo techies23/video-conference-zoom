@@ -32,9 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 						?>
                         <select name="log_file">
 							<?php
+							$date_format = get_option( 'date_format' );
 							foreach ( $log_files as $k => $log_file ) {
 								$timestamp     = filemtime( ZVC_LOG_DIR . $log_file );
-								$log_file_date = wp_date( wc_date_format(), $timestamp );
+								$log_file_date = wp_date( $date_format, $timestamp );
 								?>
                                 <option value="<?php echo esc_html( $log_file ); ?>" <?php selected( sanitize_title( $viewed_log ), $k ); ?>><?php echo esc_html( $log_file_date ); ?></option>
 							<?php } ?>

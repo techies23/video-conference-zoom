@@ -1,3 +1,5 @@
+import '../sass/style.scss'
+
 /**
  * Jquery Scripts
  *
@@ -197,7 +199,7 @@
 
     initializeDependencies: function () {
       if ($dom.changeSelectType.length > 0) {
-        $dom.changeSelectType.select2()
+        $dom.changeSelectType.select2();
       }
 
       //DatePickers

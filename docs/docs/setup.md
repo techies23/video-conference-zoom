@@ -6,9 +6,12 @@ From version 4.0.0 of Video Conferencing with Zoom API - the plugin has moved to
 For more info see [JWT App Type Depecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), please see [migration guide](migration.md) to go to new Server-to-Server OAuth / App SDK
 
 ## Setup Server-to-Server OAuth
+
 ###Generating API Credentials:
 
 For this plugin you will be using Server-to-Server OAuth app type.
+
+**In order to setup the plugin you'll first need a Zoom Account. So, [sign up](https://zoom.us/signin#/login) if you don't have a Zoom account already or just sign in with your existing Zoom Account and follow the next steps.**
 
 1. First go to [Create Page](https://marketplace.zoom.us/develop/create)
 2. Find Server-to-Server OAuth and click create ![Create Server to Server Oauth](img/s2s-oauth/create-s2s-oauth.png)
@@ -16,6 +19,7 @@ For this plugin you will be using Server-to-Server OAuth app type.
 4. Once App is created - you will be taken to an App Overview page where you can see App Credentials ![App Credentials](img/s2s-oauth/app-credentials.png)
 5. You will need to add Contact name, Contact email and Company name on the information page ![App Informaiton](img/s2s-oauth/s2s-info.png)
 6. For the plugin to work - you will need to define the correct scopes for the App. Go to scopes and click "Add Scopes" and add Meeting, Webinar, Report, User, Recording, Report and select all options on each selected scopes. See below section for the exact permissions to add. ![Add Scopes](img/s2s-oauth/add-scopes.png)
+7. Finally, activate the Server-to-Server App. ![Activation](img/s2s-oauth/s2s-activation.png)
 
 ###Below are permissions that are needed/required:
 
