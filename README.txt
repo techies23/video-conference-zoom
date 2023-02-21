@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,11 +155,16 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
+= 4.1.1 February 21st, 2023 =
+* Removed sorting by meeting ID fields
+* Fixed: JWT signature not generating because of firebase library update.
+
 = 4.1.0 February 21st, 2023 =
 * Updated: WebSDK to version 2.9.7
 * Fixed: removed wc_date_format() function from core.
 * Fixed: Undefined property: stdClass::$start_time in shortcode embed.
 * Added: Ability to join meetings with registrations enabled for PRO version.
+* Fixed: A bug where WP_Error was giving a fatal error in rare case.
 * Developer: Script bundler changed to webpack.
 * Huge bug fixes and code refactoring.
 

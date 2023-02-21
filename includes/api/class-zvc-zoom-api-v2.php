@@ -258,7 +258,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				"exp" => time() + 3600 //60 seconds as suggested
 			);
 
-			return JWT::encode( $token, $secret );
+			return JWT::encode( $token, $secret, 'HS256' );
 		}
 
 		/**

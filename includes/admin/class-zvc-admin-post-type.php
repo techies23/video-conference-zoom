@@ -88,7 +88,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			return $query;
 		}
 
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'zoom-meetings' && $query->query['post_type'] === $this->post_type ) {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] === $this->post_type && $query->query['post_type'] === $this->post_type ) {
 			$type = isset( $_GET['type'] ) ? $_GET['type'] : false;
 			$now  = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
 			if ( $type === "upcoming" ) {
@@ -207,7 +207,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	 */
 	public function sortable_data( $columns ) {
 		$columns['start_date'] = 'zoom_meeting_startdate';
-		$columns['meeting_id'] = 'zoom_meeting_id';
+//		$columns['meeting_id'] = 'zoom_meeting_id';
 
 		return $columns;
 	}
