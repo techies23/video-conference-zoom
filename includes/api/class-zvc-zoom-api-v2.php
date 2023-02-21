@@ -114,7 +114,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			if ( is_wp_error( $request ) ) {
 				$this->logMessage( $request->get_error_message(), $request->get_error_code(), $request );
 
-				return $request; // Bail early
+				return false; // Bail early
 			} else {
 				$responseCode = wp_remote_retrieve_response_code( $request );
 				$responseBody = wp_remote_retrieve_body( $request );

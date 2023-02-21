@@ -3,6 +3,34 @@
 .zvc-row {
   display: flex;
   margin-top: 10px;
+
+  .zvc-position-floater-left {
+    width: 100%;
+    padding: 20px 30px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+    justify-content: space-between;
+  }
+
+  .zvc-position-floater-right {
+    width: 30%;
+    justify-content: space-between;
+  }
+
+  .zvc-position-floater-right .zvc-information-sec {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 0 0 16px 0;
+  }
+
+  .description {
+    font-style: italic;
+    display: block;
+    margin-top: 10px;
+  }
 }
 
 .zvc_listing_table {
@@ -10,7 +38,7 @@
 }
 
 .select_zvc_user_listings_wrapp {
-  margin: 20px 0px;
+  margin: 20px 0;
 }
 
 .zvc-text-left {
@@ -40,28 +68,6 @@
 
 .zvc_accounts_reports_check_form {
   padding-bottom: 20px;
-}
-
-.zvc-position-floater-left {
-  width: 100%;
-  padding: 30px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  background: #fff;
-  justify-content: space-between;
-}
-
-.zvc-position-floater-right {
-  width: 30%;
-  justify-content: space-between;
-}
-
-.zvc-position-floater-right .zvc-information-sec {
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
-  margin: 0 0 16px 0;
 }
 
 .zvc-position-clear {
@@ -346,16 +352,14 @@
   &--header {
     display: flex;
     align-items: center;
-    background: #f0f0f0;
-    padding: 0.5rem;
-    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 10px;
     cursor: pointer;
 
     &-title {
       width: 80%;
 
       h3 {
-        margin: 0.5rem;
         font-weight: 400;
       }
     }
@@ -372,14 +376,10 @@
       .dashicons-arrow-up-alt2 {
         transform: rotate(90deg);
       }
-
     }
   }
 
   &--content {
-    padding: 0.5rem 1rem;
-    border: 1px solid #f0f0f0;
-    border-radius: 0 0 3px 3px;
     display: none;
   }
 
@@ -395,7 +395,6 @@
       }
     }
   }
-
 }
 
 .vczapi-migrate-to-s2sOauth {

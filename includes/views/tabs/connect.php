@@ -62,7 +62,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                 <div id="vczapi-s2sOauth-credentials" class="vczapi-admin-accordion expanded">
                     <div class="vczapi-admin-accordion--header">
                         <div class="vczapi-admin-accordion--header-title">
-                            <h3><?php _e( 'Server to Server Oauth Credentials' ); ?></h3>
+                            <h3><?php _e( 'Server to Server Oauth Credentials', 'video-conferencing-with-zoom-api' ); ?></h3>
                         </div>
                         <div class="vczapi-admin-accordion--header-trigger">
                             <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
@@ -71,8 +71,8 @@ $is_jwt_active = vczapi_is_jwt_active();
                     <div class="vczapi-admin-accordion--content" class="show">
                         <p class="description">
 							<?php
-                            $oauth_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
-							$sdk_app_link = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion" onclick="javascript:void(0);">SDK App Credentials</a>';
+							$oauth_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
+							$sdk_app_link             = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion" onclick="javascript:void(0);">SDK App Credentials</a>';
 							printf( __( 'Please see %s on how to generate credentials, additionally for Join via Browser to work please also add %s', 'video-conferencing-with-zoom-api' ), $oauth_documentation_link, $sdk_app_link );
 							?>
                         </p>
@@ -114,7 +114,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                                 <tr>
                                     <th><?php _e( 'Delete JWT Keys', 'video-conferencing-with-zoom-api' ); ?></th>
                                     <td><input type="checkbox" id="vczapi-delete-jwt-keys" name="vczapi-delete-jwt-keys"/>
-                                        <span class="description"><?php _e('Check this box to delete JWT (legacy keys) after saving and verifying Server-to-Server Oauth Keys','video-conferencing-with-zoom-api'); ?></span>
+                                        <span class="description"><?php _e( 'Check this box to delete JWT (legacy keys) after saving and verifying Server-to-Server Oauth Keys', 'video-conferencing-with-zoom-api' ); ?></span>
                                     </td>
                                 </tr>
 							<?php endif; ?>
@@ -128,7 +128,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                 <div id="vczapi-s2sOauth-app-sdk-credentials" class="vczapi-admin-accordion expanded">
                     <div class="vczapi-admin-accordion--header">
                         <div class="vczapi-admin-accordion--header-title">
-                            <h3><?php _e( 'SDK App Credentials', 'video-conferencing-with-zoom-api' ); ?></h3>
+                            <h3><?php _e( 'Meeting SDK App Credentials', 'video-conferencing-with-zoom-api' ); ?></h3>
                         </div>
                         <div class="vczapi-admin-accordion--header-trigger">
                             <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
@@ -136,8 +136,8 @@ $is_jwt_active = vczapi_is_jwt_active();
                     </div>
                     <div class="vczapi-admin-accordion--content">
 						<?php
-						$appSDK_documentation_link = '<a href="https://marketplace.zoom.us/docs/sdk/native-sdks/web/build/#get-meeting-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
-						printf( __( 'SDK App Credentials are required for Join Via Browser to work, see documentation on how to generate you App SDK keys', 'video-conferencing-with-zoom-api' ), $appSDK_documentation_link ) ?>
+						$appSDK_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#setup-app-sdk-credentials" target="_blank" rel="noreferrer noopener">see the documentation</a>';
+						echo '<p class="description">' . sprintf( __( 'SDK App Credentials are required for Join Via Browser to work, %s on how to generate you App SDK keys', 'video-conferencing-with-zoom-api' ), $appSDK_documentation_link ) . '</p>'; ?>
                         <table class="form-table">
                             <tbody>
                             <tr>

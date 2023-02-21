@@ -168,11 +168,9 @@ final class Bootstrap {
 				$date_format = vczapi_convertPHPToMomentFormat( $date_format );
 			}
 
-			$zoom_started        = get_option( 'zoom_started_meeting_text' );
 			$zoom_going_to_start = get_option( 'zoom_going_tostart_meeting_text' );
 			$zoom_ended          = get_option( 'zoom_ended_meeting_text' );
 			$translation_array   = apply_filters( 'vczapi_meeting_event_text', array(
-				'meeting_started'  => ! empty( $zoom_started ) ? $zoom_started : __( 'Meeting Has Started ! Click below join button to join meeting now !', 'video-conferencing-with-zoom-api' ),
 				'meeting_starting' => ! empty( $zoom_going_to_start ) ? $zoom_going_to_start : __( 'Click join button below to join the meeting now !', 'video-conferencing-with-zoom-api' ),
 				'meeting_ended'    => ! empty( $zoom_ended ) ? $zoom_ended : __( 'This meeting has been ended by the host.', 'video-conferencing-with-zoom-api' ),
 				'date_format'      => $date_format,

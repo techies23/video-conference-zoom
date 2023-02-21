@@ -29,8 +29,6 @@ class Zoom_Video_Conferencing_Admin_Views {
 	 *        Show migration notice if JWT keys are still being shown
 	 */
 	public function migration_notice() {
-
-
 		$is_jwt_active   = vczapi_is_jwt_active();
 		$is_oauth_active = vczapi_is_oauth_active();
 		$is_sdk_active   = vczapi_is_sdk_enabled();
@@ -46,7 +44,7 @@ class Zoom_Video_Conferencing_Admin_Views {
 				'page'      => 'zoom-video-conferencing-settings',
 			],
 				admin_url( 'edit.php' ),
-				) );
+			) );
 			$admin_page_link = '<a href="' . $admin_page_url . '">here</a>';
 
 			$dismiss_button = '<a href="#" class="vczapi-dismiss-admin-notice" data-id="vczapi_dismiss_sdk_not_active_notice" data-security="' . wp_create_nonce( 'vczapi-dismiss-nonce' ) . '" >don\'t show this message again</a>.';
@@ -296,47 +294,54 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				if ( isset( $_POST['save_zoom_settings'] ) ) {
 					//Nonce
 					check_admin_referer( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' );
-					$vanity_url                         = esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) );
-					$delete_zoom_meeting                = filter_input( INPUT_POST, 'donot_delete_zom_meeting_also' );
-					$join_links                         = filter_input( INPUT_POST, 'meeting_end_join_link' );
-					$zoom_author_show                   = filter_input( INPUT_POST, 'meeting_show_zoom_author_original' );
-					$started_mtg                        = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_started_text' ) );
-					$going_to_start                     = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_goingtostart_text' ) );
-					$ended_mtg                          = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_ended_text' ) );
-					$locale_format                      = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_date_time_format' ) );
-					$custom_date_time_format            = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_custom_date_time_format' ) );
-					$twentyfour_format                  = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_twenty_fourhour_format' ) );
-					$full_month_format                  = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_full_month_format' ) );
-					$embed_pwd_in_join_link             = sanitize_text_field( filter_input( INPUT_POST, 'embed_password_join_link' ) );
-					$hide_join_links_non_loggedin_users = sanitize_text_field( filter_input( INPUT_POST, 'hide_join_links_non_loggedin_users' ) );
-					$hide_email_jvb                     = sanitize_text_field( filter_input( INPUT_POST, 'meeting_show_email_field' ) );
-					$vczapi_disable_invite              = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_disable_invite' ) );
-					$disable_join_via_browser           = sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) );
-					$join_via_browser_default_lang      = sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) );
-					$disable_auto_pwd_generation        = sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) );
-					$disableMomentJs                    = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_disable_moment_js' ) );
-					$debugger_logs                      = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) );
 
-					update_option( 'zoom_vanity_url', $vanity_url );
-					update_option( 'zoom_api_donot_delete_on_zoom', $delete_zoom_meeting );
-					update_option( 'zoom_past_join_links', $join_links );
-					update_option( 'zoom_show_author', $zoom_author_show );
-					update_option( 'zoom_started_meeting_text', $started_mtg );
-					update_option( 'zoom_going_tostart_meeting_text', $going_to_start );
-					update_option( 'zoom_ended_meeting_text', $ended_mtg );
-					update_option( 'zoom_api_date_time_format', $locale_format );
-					update_option( 'zoom_api_custom_date_time_format', $custom_date_time_format );
-					update_option( 'zoom_api_full_month_format', $full_month_format );
-					update_option( 'zoom_api_twenty_fourhour_format', $twentyfour_format );
-					update_option( 'zoom_api_embed_pwd_join_link', $embed_pwd_in_join_link );
-					update_option( 'zoom_api_hide_shortcode_join_links', $hide_join_links_non_loggedin_users );
-					update_option( 'zoom_api_hide_in_jvb', $hide_email_jvb );
-					update_option( 'vczapi_disable_invite', $vczapi_disable_invite );
-					update_option( 'zoom_api_disable_jvb', $disable_join_via_browser );
-					update_option( 'zoom_api_default_lang_jvb', $join_via_browser_default_lang );
-					update_option( 'zoom_api_disable_auto_meeting_pwd', $disable_auto_pwd_generation );
-					update_option( 'zoom_api_disable_moment_js', $disableMomentJs );
-					update_option( 'zoom_api_enable_debug_log', $debugger_logs );
+					$posted_data = [
+						'vanity_url'                         => esc_url_raw( filter_input( INPUT_POST, 'vanity_url' ) ),
+						'delete_zoom_meeting'                => filter_input( INPUT_POST, 'donot_delete_zom_meeting_also' ),
+						'join_links'                         => filter_input( INPUT_POST, 'meeting_end_join_link' ),
+						'zoom_author_show'                   => filter_input( INPUT_POST, 'meeting_show_zoom_author_original' ),
+						'enable_block_editor'                => filter_input( INPUT_POST, 'enable_block_editor' ),
+						'disable_countdown_timer'            => filter_input( INPUT_POST, 'disable_countdown_timer' ),
+						'going_to_start'                     => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_goingtostart_text' ) ),
+						'ended_mtg'                          => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_ended_text' ) ),
+						'locale_format'                      => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_date_time_format' ) ),
+						'custom_date_time_format'            => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_custom_date_time_format' ) ),
+						'twentyfour_format'                  => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_twenty_fourhour_format' ) ),
+						'full_month_format'                  => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_full_month_format' ) ),
+						'embed_pwd_in_join_link'             => sanitize_text_field( filter_input( INPUT_POST, 'embed_password_join_link' ) ),
+						'hide_join_links_non_loggedin_users' => sanitize_text_field( filter_input( INPUT_POST, 'hide_join_links_non_loggedin_users' ) ),
+						'hide_email_jvb'                     => sanitize_text_field( filter_input( INPUT_POST, 'meeting_show_email_field' ) ),
+						'vczapi_disable_invite'              => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_disable_invite' ) ),
+						'disable_join_via_browser'           => sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) ),
+						'join_via_browser_default_lang'      => sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) ),
+						'disable_auto_pwd_generation'        => sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) ),
+						'debugger_logs'                      => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) )
+					];
+
+					/**
+					 * New way to save
+					 * @added in 4.1.0
+					 */
+					update_option( '_vczapi_zoom_settings', $posted_data );
+
+					//Legacy Approach - To be removed soon
+					update_option( 'zoom_vanity_url', $posted_data['vanity_url'] );
+					update_option( 'zoom_api_donot_delete_on_zoom', $posted_data['delete_zoom_meeting'] );
+					update_option( 'zoom_past_join_links', $posted_data['join_links'] );
+					update_option( 'zoom_show_author', $posted_data['zoom_author_show'] );
+					update_option( 'zoom_going_tostart_meeting_text', $posted_data['going_to_start'] );
+					update_option( 'zoom_ended_meeting_text', $posted_data['ended_mtg'] );
+					update_option( 'zoom_api_date_time_format', $posted_data['locale_format'] );
+					update_option( 'zoom_api_custom_date_time_format', $posted_data['custom_date_time_format'] );
+					update_option( 'zoom_api_full_month_format', $posted_data['full_month_format'] );
+					update_option( 'zoom_api_twenty_fourhour_format', $posted_data['twentyfour_format'] );
+					update_option( 'zoom_api_embed_pwd_join_link', $posted_data['embed_pwd_in_join_link'] );
+					update_option( 'zoom_api_hide_shortcode_join_links', $posted_data['hide_join_links_non_loggedin_users'] );
+					update_option( 'zoom_api_hide_in_jvb', $posted_data['hide_email_jvb'] );
+					update_option( 'vczapi_disable_invite', $posted_data['vczapi_disable_invite'] );
+					update_option( 'zoom_api_disable_jvb', $posted_data['disable_join_via_browser'] );
+					update_option( 'zoom_api_default_lang_jvb', $posted_data['join_via_browser_default_lang'] );
+					update_option( 'zoom_api_disable_auto_meeting_pwd', $posted_data['disable_auto_pwd_generation'] );
 
 					//After user has been created delete this transient in order to fetch latest Data.
 					video_conferencing_zoom_api_delete_user_cache();
@@ -350,10 +355,10 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 					<?php
 				}
 
+				//Legacy Approach - To be removed soon
 				$zoom_vanity_url             = get_option( 'zoom_vanity_url' );
 				$past_join_links             = get_option( 'zoom_past_join_links' );
 				$zoom_author_show            = get_option( 'zoom_show_author' );
-				$zoom_started                = get_option( 'zoom_started_meeting_text' );
 				$zoom_going_to_start         = get_option( 'zoom_going_tostart_meeting_text' );
 				$zoom_ended                  = get_option( 'zoom_ended_meeting_text' );
 				$locale_format               = get_option( 'zoom_api_date_time_format' );
@@ -370,7 +375,13 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				$disable_auto_pwd_generation = get_option( 'zoom_api_disable_auto_meeting_pwd' );
 				$donot_delete_zoom           = get_option( 'zoom_api_donot_delete_on_zoom' );
 				$debug_logs                  = get_option( 'zoom_api_enable_debug_log' );
-				$disable_moment_js           = get_option( 'zoom_api_disable_moment_js' );
+
+				/**
+				 * New Method
+				 * @added in 4.1.0
+				 */
+				$settings = get_option( '_vczapi_zoom_settings' );
+				$settings = ! empty( $settings ) ? $settings : false;
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';

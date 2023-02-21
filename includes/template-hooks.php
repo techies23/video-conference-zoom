@@ -18,7 +18,11 @@ add_action( 'vczoom_single_content_left', 'video_conference_zoom_featured_image'
 add_action( 'vczoom_single_content_left', 'video_conference_zoom_main_content', 20 );
 
 //Right Section Single Content
-add_action( 'vczoom_single_content_right', 'video_conference_zoom_countdown_timer', 10 );
+$settings = get_option( '_vczapi_zoom_settings' );
+$settings = ! empty( $settings ) ? $settings : false;
+if ( empty( $settings['disable_countdown_timer'] ) ) {
+	add_action( 'vczoom_single_content_right', 'video_conference_zoom_countdown_timer', 10 );
+}
 add_action( 'vczoom_single_content_right', 'video_conference_zoom_meeting_details', 20 );
 add_action( 'vczoom_single_content_right', 'video_conference_zoom_meeting_join', 30 );
 add_action( 'vczoom_single_content_right', 'video_conference_zoom_meeting_end_author', 40 );

@@ -14,7 +14,8 @@ For this plugin you will be using Server-to-Server OAuth app type.
 **In order to setup the plugin you'll first need a Zoom Account. So, [sign up](https://zoom.us/signin#/login) if you don't have a Zoom account already or just sign in with your existing Zoom Account and follow the next steps.**
 
 1. First go to [Create Page](https://marketplace.zoom.us/develop/create)
-2. Find Server-to-Server OAuth and click create ![Create Server to Server Oauth](img/s2s-oauth/create-s2s-oauth.png)
+2. Find Server-to-Server OAuth and click create 
+   ![Create Server to Server Oauth](img/s2s-oauth/create-s2s-oauth.png)
 3. Add your app name ![Give your app a name](img/s2s-oauth/app-name.png)
 4. Once App is created - you will be taken to an App Overview page where you can see App Credentials ![App Credentials](img/s2s-oauth/app-credentials.png)
 5. You will need to add Contact name, Contact email and Company name on the information page ![App Informaiton](img/s2s-oauth/s2s-info.png)

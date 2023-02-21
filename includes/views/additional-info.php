@@ -17,7 +17,7 @@
     <p>Protect your WordPress users' sessions from shoulder surfers and snoopers!</p>
     <p>Use the Inactive Logout plugin to automatically terminate idle user sessions, thus protecting the site if the users leave unattended sessions.</p>
     <p>
-        <a target="_blank" href="https://wordpress.org/plugins/inactive-logout/">Try inactive logout</a>
+        <a target="_blank" href="https://inactive-logout.com/">Try inactive logout</a>
 </div>
 <div class="zvc-information-sec">
     <h3>Turbocharge your WordPress search ?</h3>
