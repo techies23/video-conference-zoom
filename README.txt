@@ -3,8 +3,8 @@ Contributors: j__3rk, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
-Tested up to: 6.0
-Stable tag: 4.1.1
+Tested up to: 6.1
+Stable tag: 4.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,12 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.1.3 February 23rd, 2023 =
+* Updated SDK key and SDK secret text on connect tab to sync with Zoom new changes.
+
+= 4.1.2 February 22nd, 2023 =
+* Updated: plugin now requires PHP version 7.4
 
 = 4.1.1 February 21st, 2023 =
 * Removed sorting by meeting ID fields
