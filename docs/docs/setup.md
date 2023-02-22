@@ -73,7 +73,7 @@ App SDK are required for Join via Browser/Web SDK to work properly.
 2. Find SDK and click create ![Create SDK App](img/s2s-oauth/marketplace.png)
 3. The next screen will prompt you for an App Name & ask you if you want to publish this app on Zoom App Marketplace. **Add a name and toggle publish off** . ![Name SDK App](img/s2s-oauth/sdk-app-name.png)
 4. Once App is created - you will need to add Company name, Name and Contact email ![SDK Information](img/s2s-oauth/sdk-info.png)
-5. Once the information has been added go to the App Credentials and you can view the SDK Credentials there ![SDK App Credentials](img/s2s-oauth/sdk-app-credentials.png)
+5. Once the information has been added go to the App Credentials and copy SDK key(Client ID) and SDK Secret(Client Secret) and see Adding SDK credentials section. ![SDK App Credentials](img/s2s-oauth/meetingsdk-credentials.png)
 6. Ensure that your SDK app is activated in order to use the Join via browser features otherwise, you might get a **signature invalid error message.**
 
 **<div style="color:red">NOTE: In case you forgot to toggle the below button(shown in screenshot) you can still use the SDK credentials however, you won't be able to complete the SDK activation step. That's completely ok.</div>**
