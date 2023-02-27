@@ -19,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Shortcodes {
 
-	public static ?Shortcodes $_instance = null;
+	public static $_instance = null;
 
-	public static function get_instance(): ?Shortcodes {
+	public static function get_instance() {
 		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
 	}
 
