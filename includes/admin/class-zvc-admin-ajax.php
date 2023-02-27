@@ -197,6 +197,10 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			'tokenExp' => $exp
 		];
 
+		if ( empty( $secret_key ) ) {
+			return false;
+		}
+
 		return \Firebase\JWT\JWT::encode( $payload, $secret_key, 'HS256' );
 	}
 

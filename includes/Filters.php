@@ -15,14 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Filters {
 
-	private static ?Filters $_instance = null;
+	private static $_instance = null;
 
 	/**
 	 * Create only one instance so that it may not Repeat
 	 *
 	 * @since 2.0.0
 	 */
-	public static function get_instance(): ?Filters {
+	public static function get_instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}

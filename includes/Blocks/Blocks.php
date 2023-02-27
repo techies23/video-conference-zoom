@@ -11,12 +11,12 @@ namespace Codemanas\VczApi\Blocks;
  */
 class Blocks {
 
-	public static ?Blocks $_instance = null;
+	public static $_instance = null;
 
 	/**
 	 * @return Blocks|null
 	 */
-	public static function get_instance(): ?Blocks {
+	public static function get_instance() {
 		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
 	}
 

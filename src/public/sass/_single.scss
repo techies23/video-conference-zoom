@@ -152,8 +152,6 @@
 }
 
 .vczapi-show-by-postid {
-  padding: 60px 0;
-
   .dpn-zvc-sidebar-state {
     display: none;
   }
@@ -178,12 +176,13 @@
     border-radius: 10px;
   }
 
-  .dpn-zvc-timer.vczapi-show-by-postid-countdown-timer {
+  .dpn-zvc-timer {
     display: flex;
     width: 100%;
     border-spacing: 2px;
     border-collapse: separate;
     justify-content: center;
+    margin-bottom: 20px;
 
     .dpn-zvc-meeting-ended {
       background: #3a3a3a;
@@ -224,75 +223,34 @@
   }
 
   .vczapi-show-by-postid-contents {
-    padding: 25px 0;
-    display: flex;
-    width: 1200px;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 100%;
-    flex-wrap: wrap;
-    margin-top: 20px;
-
-    &-sections {
-
-      &-thecontent {
-        margin-top: 20px;
+    .dpn-zvc-sidebar-box {
+      .btn {
+        margin-top:10px;
+        padding: 10px 20px;
+        color: #fff;
+        display: block;
+        margin-right: 10px;
+        text-align: center;
       }
 
-      .dpn-zvc-sidebar-box {
-        .btn {
-          padding: 10px 20px;
-          color: #fff;
-          display: block;
-          margin-right: 10px;
-          text-align: center;
-        }
-
-        .btn-join-link {
-          background: #a5452d;
-        }
+      .btn-join-link {
+        background: #a5452d;
       }
     }
 
     @media (min-width: 769px) {
-      &-image {
-        flex: 0 0 30%;
-
-        img {
-          border-radius: 10px;
+      .dpn-zvc-sidebar-box {
+        .join-links {
+          display: flex;
         }
       }
 
-      &-sections {
-        flex: 70%;
+      &-full {
+        flex: 100%;
 
-        &-description {
-          flex: 0 0 70%;
-          display: flex;
-          flex-direction: column;
-          padding-left: 20px;
-        }
-
+        .vczapi-show-by-postid-contents-sections-description,
         .dpn-zvc-sidebar-box {
-          margin-top: 10px;
-          padding-left: 20px;
-
-          .join-links {
-            display: flex;
-          }
-
-          .btn-start-link {
-            margin-top: 0;
-          }
-        }
-
-        &-full {
-          flex: 100%;
-
-          .vczapi-show-by-postid-contents-sections-description,
-          .dpn-zvc-sidebar-box {
-            padding-left: 0;
-          }
+          padding-left: 0;
         }
       }
     }

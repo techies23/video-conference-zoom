@@ -15,14 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Timezone {
 
-	private static ?Timezone $_instance = null;
+	private static $_instance = null;
 
 	/**
 	 * Create only one instance so that it may not Repeat
 	 *
 	 * @since 2.0.0
 	 */
-	public static function get_instance(): ?Timezone {
+	public static function get_instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
