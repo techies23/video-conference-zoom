@@ -88,7 +88,9 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
         <div class="vczapi-jvb-countdown-content-contents">
             <div class="vczapi-jvb-countdown-content-description">
                 <h2 class="vczapi-jvb-countdown-content-description-topic"><?php echo $zoom->topic; ?></h2>
-                <div class="vczapi-jvb-countdown-content-description-time"><strong><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo vczapi_dateConverter( $zoom->start_time, $zoom->timezone, true ); ?></div>
+				<?php if ( ! empty( $zoom->start_time ) ) { ?>
+                    <div class="vczapi-jvb-countdown-content-description-time"><strong><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo vczapi_dateConverter( $zoom->start_time, $zoom->timezone, true ); ?></div>
+				<?php } ?>
                 <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->timezone; ?></div>
                 <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->password; ?></div>
             </div>

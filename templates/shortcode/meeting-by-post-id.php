@@ -66,12 +66,12 @@ if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) 
                 </div>
                 <div class="dpn-zvc-sidebar-content"></div>
             </div>
-			<?php if ( ! empty( get_the_content() ) ) { ?>
-                <div class="vczapi-show-by-postid-contents-sections-thecontent">
-					<?php the_content(); ?>
-                </div>
-			<?php } ?>
         </div>
+	    <?php if ( ! empty( get_the_content() ) ) { ?>
+            <div class="vczapi-show-by-postid-contents-sections-thecontent">
+			    <?php the_content(); ?>
+            </div>
+	    <?php } ?>
     </div>
 	<?php
 }
