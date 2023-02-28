@@ -222,10 +222,15 @@
     }
   }
 
-  .vczapi-show-by-postid-contents {
+  &-flex {
+    display: flex;
+    margin-top: 20px;
+  }
+
+  &-contents {
     .dpn-zvc-sidebar-box {
       .btn {
-        margin-top:10px;
+        margin-top: 10px;
         padding: 10px 20px;
         color: #fff;
         display: block;
@@ -239,6 +244,16 @@
     }
 
     @media (min-width: 769px) {
+      &-image {
+        width: 24%;
+        margin-right:10px;
+      }
+
+      &-sections {
+        width: 74%;
+        margin-left: 10px;
+      }
+
       .dpn-zvc-sidebar-box {
         .join-links {
           display: flex;
