@@ -43,13 +43,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </td>
                         </tr>
                         <tr>
-                            <th><label><?php _e( 'Enable Block Editor ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
-                            <td>
-                                <input type="checkbox" name="enable_block_editor" <?php ! empty( $settings['enable_block_editor'] ) ? checked( $settings['enable_block_editor'], 'on' ) : false; ?>>
-                                <span class="description"><?php _e( 'This setting will enable block editor when you create meetings from Zoom Events section.', 'video-conferencing-with-zoom-api' ); ?></span>
-                            </td>
-                        </tr>
-                        <tr>
                             <th><label><?php _e( 'Disable Countdown Timer', 'video-conferencing-with-zoom-api' ); ?></label></th>
                             <td>
                                 <input type="checkbox" name="disable_countdown_timer" <?php echo ! empty( $settings['disable_countdown_timer'] ) ? checked( $settings['disable_countdown_timer'], 'on' ) : false; ?> class="form-control">

@@ -300,7 +300,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 						'delete_zoom_meeting'                => filter_input( INPUT_POST, 'donot_delete_zom_meeting_also' ),
 						'join_links'                         => filter_input( INPUT_POST, 'meeting_end_join_link' ),
 						'zoom_author_show'                   => filter_input( INPUT_POST, 'meeting_show_zoom_author_original' ),
-						'enable_block_editor'                => filter_input( INPUT_POST, 'enable_block_editor' ),
 						'disable_countdown_timer'            => filter_input( INPUT_POST, 'disable_countdown_timer' ),
 						'going_to_start'                     => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_goingtostart_text' ) ),
 						'ended_mtg'                          => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_meeting_ended_text' ) ),
