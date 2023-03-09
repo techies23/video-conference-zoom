@@ -72,6 +72,17 @@ class Zoom_Video_Conferencing_Admin_PostType {
 		add_action( 'manage_edit-' . $this->post_type . '_sortable_columns', array( $this, 'sortable_data' ), 30 );
 		add_filter( 'views_edit-' . $this->post_type, [ $this, 'addFiltersOnSubSubSub' ] );
 		add_filter( 'pre_get_posts', [ $this, 'filter_posts' ] );
+
+		//use classic editor instead of gutenberg
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'disable_block_editor' ], 10, 2 );
+	}
+
+	public function disable_block_editor( $enabled, $post_type ) {
+		if ( $post_type == $this->post_type ) {
+			$enabled = false;
+		}
+
+		return $enabled;
 	}
 
 	/**
@@ -97,19 +108,19 @@ class Zoom_Video_Conferencing_Admin_PostType {
 						'key'     => '_meeting_field_start_date_utc',
 						'value'   => $now,
 						'compare' => '>=',
-						'type'    => 'DATETIME'
-					]
+						'type'    => 'DATETIME',
+					],
 				];
 
 				$query->set( 'meta_query', $meta_query );
-			} else if ( $type === "past" ) {
+			} elseif ( $type === "past" ) {
 				$meta_query = [
 					[
 						'key'     => '_meeting_field_start_date_utc',
 						'value'   => $now,
 						'compare' => '<=',
-						'type'    => 'DATETIME'
-					]
+						'type'    => 'DATETIME',
+					],
 				];
 
 				$query->set( 'meta_query', $meta_query );
@@ -176,7 +187,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			'value_field'     => 'slug',
 			'selected'        => $selected,
 			'hierarchical'    => true,
-			'hide_if_empty'   => true
+			'hide_if_empty'   => true,
 		) );
 	}
 
@@ -207,6 +218,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	 */
 	public function sortable_data( $columns ) {
 		$columns['start_date'] = 'zoom_meeting_startdate';
+
 //		$columns['meeting_id'] = 'zoom_meeting_id';
 
 		return $columns;
@@ -238,9 +250,9 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			case 'start_date' :
 				if ( ! empty( $meeting ) && ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
 					echo $meeting->message;
-				} else if ( ! empty( $meeting ) && ! empty( $meeting->type ) && ( $meeting->type === 2 || $meeting->type === 5 ) && ! empty( $meeting->start_time ) ) {
+				} elseif ( ! empty( $meeting ) && ! empty( $meeting->type ) && ( $meeting->type === 2 || $meeting->type === 5 ) && ! empty( $meeting->start_time ) ) {
 					echo vczapi_dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' );
-				} else if ( ! empty( $meeting ) && vczapi_pro_check_type( $meeting->type ) ) {
+				} elseif ( ! empty( $meeting ) && vczapi_pro_check_type( $meeting->type ) ) {
 					_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
 				} else {
 					_e( 'Meeting not created yet.', 'video-conferencing-with-zoom-api' );
@@ -249,7 +261,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			case 'meeting_id' :
 				if ( ! empty( $meeting ) && ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
 					echo $meeting->message;
-				} else if ( ! empty( $meeting ) && ! empty( $meeting->id ) ) {
+				} elseif ( ! empty( $meeting ) && ! empty( $meeting->id ) ) {
 					echo $meeting->id;
 				} else {
 					_e( 'Meeting not created yet.', 'video-conferencing-with-zoom-api' );
@@ -260,7 +272,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 				if ( ! empty( $meeting ) ) {
 					if ( ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
 						echo $meeting->message;
-					} else if ( empty( $meeting->state ) ) { ?>
+					} elseif ( empty( $meeting->state ) ) { ?>
                         <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="end" data-postid="<?php echo $post_id; ?>" data-id="<?php echo $meeting->id ?>"><?php _e( 'Disable Join', 'video-conferencing-with-zoom-api' ); ?></a>
                         <p class="description"><?php _e( 'Restrict users to join this meeting before the start time or after the meeting is completed.', 'video-conferencing-with-zoom-api' ); ?></p>
 					<?php } else { ?>
@@ -365,20 +377,20 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	public function add_metabox() {
 		add_meta_box( 'zoom-meeting-meta', __( 'Zoom Details', 'video-conferencing-with-zoom-api' ), array(
 			$this,
-			'render_metabox'
+			'render_metabox',
 		), $this->post_type, 'normal' );
 		add_meta_box( 'zoom-meeting-meta-side', __( 'Meeting Details', 'video-conferencing-with-zoom-api' ), array(
 			$this,
-			'rendor_sidebox'
+			'rendor_sidebox',
 		), $this->post_type, 'side', 'high' );
 		add_meta_box( 'zoom-meeting-debug-meta', __( 'Debug Log', 'video-conferencing-with-zoom-api' ), array(
 			$this,
-			'debug_metabox'
+			'debug_metabox',
 		), $this->post_type, 'normal' );
 		if ( is_plugin_inactive( 'vczapi-woo-addon/vczapi-woo-addon.php' ) && is_plugin_inactive( 'vczapi-woocommerce-addon/vczapi-woocommerce-addon.php' ) ) {
 			add_meta_box( 'zoom-meeting-woo-integration-info', __( 'WooCommerce Integration?', 'video-conferencing-with-zoom-api' ), array(
 				$this,
-				'render_woo_sidebox'
+				'render_woo_sidebox',
 			), $this->post_type, 'side', 'normal' );
 		}
 	}
@@ -512,8 +524,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int $post_id Post ID.
-	 * @param \WP_Post $post Post object.
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.
