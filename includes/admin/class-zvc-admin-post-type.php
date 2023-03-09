@@ -79,7 +79,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 	public function disable_block_editor( $enabled, $post_type ) {
 		if ( $post_type == $this->post_type ) {
-			$enabled = false;
+			$enabled = apply_filters('vczapi_enable_block_editor',false);
 		}
 
 		return $enabled;
