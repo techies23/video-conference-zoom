@@ -48,6 +48,8 @@ final class Bootstrap {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_backend' ) );
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
+        //Block Themes Compat: register scripts on init - required as block themes fire the content before page render
+		add_action( 'init', [ $this, 'register_scripts' ] );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
 		add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
@@ -72,22 +74,22 @@ final class Bootstrap {
 			return;
 		}
 		?>
-      <hr class="vczapi-major-update-warning__separator"/>
-      <div class="vczapi-major-update-warning">
-        <div class="vczapi-major-update-warning__icon">
-          <span class="dashicons dashicons-info-outline"></span>
+        <hr class="vczapi-major-update-warning__separator"/>
+        <div class="vczapi-major-update-warning">
+            <div class="vczapi-major-update-warning__icon">
+                <span class="dashicons dashicons-info-outline"></span>
+            </div>
+            <div class="vczapi-major-update-warning_wrapper">
+                <div class="vczapi-major-update-warning__title">
+					<?php esc_html_e( 'Heads up, Please backup before upgrade!', 'video-conferencing-with-zoom-api' ); ?>
+                </div>
+                <div class="vczapi-major-update-warning__message">
+					<?php
+					esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you backup your site before upgrading, and make sure you first update in a staging environment', 'video-conferencing-with-zoom-api' );
+					?>
+                </div>
+            </div>
         </div>
-        <div class="vczapi-major-update-warning_wrapper">
-          <div class="vczapi-major-update-warning__title">
-			  <?php esc_html_e( 'Heads up, Please backup before upgrade!', 'video-conferencing-with-zoom-api' ); ?>
-          </div>
-          <div class="vczapi-major-update-warning__message">
-			  <?php
-			  esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you backup your site before upgrading, and make sure you first update in a staging environment', 'video-conferencing-with-zoom-api' );
-			  ?>
-          </div>
-        </div>
-      </div>
 		<?php
 	}
 
@@ -127,12 +129,9 @@ final class Bootstrap {
 	}
 
 	/**
-	 * Load Frontend Scriptsssssss
-	 *
-	 * @since   3.0.0
-	 * @author  Deepen Bajracharya
+	 * @return void
 	 */
-	function enqueue_scripts() {
+	public function register_scripts(  ) {
 		$minified = SCRIPT_DEBUG ? '' : '.min';
 		wp_register_style( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style' . $minified . '.css', false, $this->plugin_version );
 
@@ -151,7 +150,15 @@ final class Bootstrap {
 				'video-conferencing-with-zoom-api-moment',
 			), $this->plugin_version, true );
 		}
-
+    }
+    
+	/**
+	 * Load Frontend Scriptsssssss
+	 *
+	 * @since   3.0.0
+	 * @author  Deepen Bajracharya
+	 */
+	function enqueue_scripts() {
 		if ( is_singular( 'zoom-meetings' ) ) {
 			wp_enqueue_style( 'video-conferencing-with-zoom-api' );
 			wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
