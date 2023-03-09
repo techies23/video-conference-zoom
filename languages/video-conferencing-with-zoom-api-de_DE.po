@@ -18,30 +18,32 @@ msgstr ""
 "Last-Translator: Deepen Bajracharya <dpen.connectify@gmail.com>\n"
 "Language: de_DE\n"
 "POT-Creation-Date: 2020-08-04 11:15+0000\n"
-"PO-Revision-Date: 2022-07-21 07:12+0000\n"
+"PO-Revision-Date: 2023-03-09 11:19+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Loco-Version: 2.3.1; wp-5.4.2"
 
+#: templates/join-web-browser.php:39
+msgid "!!!ALERT!!!: "
+msgstr ""
+
 #: templates/fragments/meeting-details.php:58
-#: templates/shortcode/meeting-by-post-id.php:44
-msgid " hour"
-msgid_plural " hours"
+#: templates/shortcode/meeting-by-post-id.php:50
+#, php-format
+msgid "%s hour"
+msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
 #: templates/fragments/meeting-details.php:58
 #: templates/fragments/meeting-details.php:60
-#: templates/shortcode/meeting-by-post-id.php:44
-#: templates/shortcode/meeting-by-post-id.php:46
-msgid " minute"
-msgid_plural " minutes"
+#: templates/shortcode/meeting-by-post-id.php:50
+#: templates/shortcode/meeting-by-post-id.php:52
+#, php-format
+msgid "%s minute"
+msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
-
-#: templates/join-web-browser.php:39
-msgid "!!!ALERT!!!: "
-msgstr ""
 
 #: templates/fragments/meeting-details.php:75
 #, php-format
@@ -75,7 +77,7 @@ msgstr ""
 msgid "Action (Required)."
 msgstr "Aktion (Pflichtfeld)"
 
-#: includes/admin/class-zvc-admin-settings.php:389
+#: includes/admin/class-zvc-admin-settings.php:401
 msgid "Action failed. Please refresh the page and retry."
 msgstr ""
 
@@ -92,7 +94,7 @@ msgstr "Meeting hinzufügen"
 msgid "Add a User"
 msgstr "Benutzer hinzufügen"
 
-#: includes/Bootstrap.php:279
+#: includes/Bootstrap.php:282
 msgid "Add a valid Host ID or Email address."
 msgstr ""
 
@@ -100,15 +102,15 @@ msgstr ""
 msgid "Add a Webinar"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:185
+#: includes/admin/class-zvc-admin-settings.php:183
 msgid "Add Live Meeting"
 msgstr "Live Meeting hinzufügen"
 
-#: includes/admin/class-zvc-admin-post-type.php:319
+#: includes/admin/class-zvc-admin-post-type.php:331
 msgid "Add New"
 msgstr "Neu hinzufügen"
 
-#: includes/admin/class-zvc-admin-post-type.php:320
+#: includes/admin/class-zvc-admin-post-type.php:332
 msgid "Add New Event"
 msgstr ""
 
@@ -120,27 +122,15 @@ msgstr ""
 msgid "Add New Webinar"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:196
+#: includes/admin/class-zvc-admin-settings.php:194
 msgid "Add Users"
 msgstr "Benutzer hinzufügen"
-
-#: includes/views/additional-info.php:10
-msgid "Addons"
-msgstr "Addons"
-
-#: includes/views/tabs/api-settings.php:181
-msgid ""
-"After you enter your keys. Do save changes before doing \"Check API "
-"Connection\"."
-msgstr ""
-"Änderungen speichern, nachdem Du die Schlüssel eingegeben hast, bevor Du die "
-"API Verbindung testest."
 
 #: templates/fragments/filters.php:22
 msgid "All Category"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:324
+#: includes/admin/class-zvc-admin-post-type.php:336
 msgid "All Events"
 msgstr ""
 
@@ -172,20 +162,16 @@ msgstr "Alternative Gastgeber"
 msgid "Alternative hosts IDs. Multiple value separated by comma."
 msgstr "Alternative Gastgeber IDs. Mehrere Werte durch Komma trennen."
 
-#: includes/admin/class-zvc-admin-ajax.php:73
+#: includes/admin/class-zvc-admin-ajax.php:77
 msgid "An error occured. Host ID and Meeting ID not defined properly."
 msgstr ""
 "Ein Fehler ist aufgetreten. Gastgeber und Meeting ID sind nicht richtig "
 "definiert."
 
-#: includes/admin/class-zvc-admin-sync.php:34
-#: includes/admin/class-zvc-admin-sync.php:63
+#: includes/admin/class-zvc-admin-sync.php:32
+#: includes/admin/class-zvc-admin-sync.php:59
 msgid ""
 "API keys are not configured properly ! Please configure them before syncing."
-msgstr ""
-
-#: includes/admin/class-zvc-admin-settings.php:266
-msgid "API Settings"
 msgstr ""
 
 #: includes/views/webinars/tpl-list-webinars.php:28
@@ -193,7 +179,7 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: includes/Bootstrap.php:278 includes/template-functions.php:95
+#: includes/Bootstrap.php:281 includes/template-functions.php:95
 msgid ""
 "Are you sure you want to end this meeting ? Users won't be able to join this "
 "meeting shown from the shortcode."
@@ -258,11 +244,11 @@ msgid "By"
 msgstr "Durch"
 
 #: templates/fragments/meeting-details.php:46
-#: templates/shortcode/meeting-by-post-id.php:32
+#: templates/shortcode/meeting-by-post-id.php:38
 msgid "Category"
 msgstr "Kategorie"
 
-#: includes/views/tabs/api-settings.php:150
+#: includes/views/tabs/api-settings.php:278
 msgid ""
 "Change date time formats according to your choice. Please edit this properly."
 " Failure to correctly put value will result in failure to show date in "
@@ -280,7 +266,7 @@ msgstr ""
 msgid "check %s for shortcode references."
 msgstr "Schau unter %s für die Beschreibung des Shortcodes."
 
-#: includes/views/tabs/api-settings.php:184
+#: includes/views/tabs/api-settings.php:312
 msgid "Check API Connection"
 msgstr "API Verbindung überprüfen"
 
@@ -298,45 +284,48 @@ msgid ""
 "to-Server Oauth Keys"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:36
+#: includes/views/tabs/api-settings.php:58
 msgid ""
 "Checking this option will disable auto password generation for new meetings "
 "which are created from Zoom meeting > Add new section."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:43
+#: includes/views/tabs/api-settings.php:68
 msgid ""
 "Checking this option will hide join links from your shortcode for non-"
 "loggedin users."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:162
+#: includes/views/tabs/api-settings.php:292
 msgid "Checking this option will show 24 hour time format in all event dates."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:169
+#: includes/views/tabs/api-settings.php:303
 msgid ""
 "Checking this option will show full month label for example: June, July, "
 "August etc."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:79
-msgid "Checking this show will hide email field in Join via Browser window."
+#: includes/views/tabs/api-settings.php:161
+msgid ""
+"Checking this show will hide email field in Join via Browser window. Email "
+"field is shown if the event is a webinar because email field is required in "
+"order to join a webinar."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:64
+#: includes/views/tabs/api-settings.php:94
 msgid ""
 "Checking this show Zoom original Author in single meetings page which are "
 "created from"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:86
+#: includes/views/tabs/api-settings.php:171
 msgid ""
 "Checking this will disable invite button when user joins meeting via Join "
 "via Browser window."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:72
+#: includes/views/tabs/api-settings.php:151
 msgid "Checking this will hide all Join via Browser Buttons."
 msgstr ""
 
@@ -344,11 +333,11 @@ msgstr ""
 msgid "Choose a Zoom User"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:44
+#: includes/admin/class-zvc-admin-sync.php:42
 msgid "Choose meeting from here to sync."
 msgstr ""
 
-#: includes/Bootstrap.php:169 includes/Shortcodes/Meetings.php:145
+#: includes/Bootstrap.php:178 includes/Shortcodes/Meetings.php:143
 msgid "Click join button below to join the meeting now !"
 msgstr ""
 
@@ -364,25 +353,21 @@ msgstr "Anklicken, um Shortcode zu kopieren !"
 msgid "Cloud"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:190
-#: includes/Elementor/Widgets/MeetingList.php:192
+#: includes/Elementor/Widgets/WebinarList.php:192
+#: includes/Elementor/Widgets/MeetingList.php:194
 msgid "Column Layout"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:263
+#: includes/admin/class-zvc-admin-settings.php:262
 msgid "Connect"
 msgstr ""
-
-#: includes/views/additional-info.php:6
-msgid "Contact for additional Support"
-msgstr "Für weiteren Support kontaktieren"
 
 #: includes/Elementor/Widgets/WebinarList.php:85
 #: includes/Elementor/Widgets/MeetingList.php:87
 msgid "Content"
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:507
+#: includes/Shortcodes/Meetings.php:505
 msgid "Could not retrieve meetings, check Host ID"
 msgstr ""
 
@@ -390,11 +375,11 @@ msgstr ""
 msgid "Could not retrieve webinars, check Host ID"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:165
+#: includes/Elementor/Widgets/MeetingList.php:166
 msgid "Count of meetings"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:163
+#: includes/Elementor/Widgets/WebinarList.php:164
 msgid "Count of Webinars"
 msgstr ""
 
@@ -457,7 +442,11 @@ msgstr "Datum"
 msgid "Date field cannot be Empty !!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:129
+#: includes/views/tabs/api-settings.php:230
+msgid "Date Settings"
+msgstr ""
+
+#: includes/views/tabs/api-settings.php:240
 msgid "DateTime Format"
 msgstr ""
 
@@ -466,11 +455,11 @@ msgstr ""
 msgid "days"
 msgstr "Tage"
 
-#: includes/admin/class-zvc-admin-post-type.php:371
+#: includes/admin/class-zvc-admin-post-type.php:386
 msgid "Debug Log"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:90
+#: includes/views/tabs/api-settings.php:176
 msgid "Default Language for Join via browser page ?"
 msgstr ""
 
@@ -496,22 +485,18 @@ msgstr ""
 msgid "Delete log"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-ajax.php:106
+#: includes/admin/class-zvc-admin-ajax.php:110
 #, php-format
 msgid "Deleted %d Meeting(s)."
 msgstr "%d Meeting(s) gelöscht."
 
-#: includes/admin/class-zvc-admin-ajax.php:69
+#: includes/admin/class-zvc-admin-ajax.php:72
 msgid "Deleted Meeting with ID"
 msgstr ""
 
 #: templates/fragments/meeting-details.php:25
 msgid "Details"
 msgstr "Details"
-
-#: includes/views/additional-info.php:8
-msgid "Developer"
-msgstr "Entwickler"
 
 #: includes/views/post-type/tpl-meeting-fields.php:55
 #: includes/views/post-type/tpl-meeting-fields.php:115
@@ -522,32 +507,36 @@ msgid ""
 "are working correctly."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:33
+#: includes/views/tabs/api-settings.php:54
 msgid "Disable Auto Password Generation ?"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:158
+#: includes/views/tabs/api-settings.php:46
+msgid "Disable Countdown Timer"
+msgstr ""
+
+#: includes/Elementor/Widgets/EmbedMeetings.php:159
 msgid "Disable Countdown Timer?"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:76
+#: includes/views/tabs/api-settings.php:156
 msgid "Disable Email field when join via browser ?"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:47
+#: includes/views/tabs/api-settings.php:73
 msgid "Disable Embed password in Link ?"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:83
+#: includes/views/tabs/api-settings.php:166
 msgid "Disable Invite field when join via browser ?"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:264
+#: includes/admin/class-zvc-admin-post-type.php:276
 #: includes/views/live/tpl-list-meetings.php:132
 msgid "Disable Join"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:69
+#: includes/views/tabs/api-settings.php:146
 msgid "Disable Join via browser ?"
 msgstr ""
 
@@ -555,17 +544,17 @@ msgstr ""
 msgid "Disable Waiting Room"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:344
+#: includes/admin/class-zvc-admin-settings.php:351
 msgid "Dismiss this notice."
 msgstr "Diese Nachricht ignorieren."
 
-#: includes/views/tabs/api-settings.php:29
+#: includes/views/tabs/api-settings.php:42
 msgid ""
 "Do not delete your meetings on Zoom, when you delete your meeting from Zoom "
 "Meetings > All Meetings page."
 msgstr ""
 
-#: includes/helpers.php:355
+#: includes/helpers.php:356
 msgid "Do not get confused here !!"
 msgstr "Lass Dich hier nicht verwirren !!"
 
@@ -580,10 +569,10 @@ msgstr "Anleitung"
 msgid "Download"
 msgstr ""
 
-#: includes/template-functions.php:411
+#: includes/template-functions.php:425
 #: templates/fragments/meeting-details.php:54
 #: templates/shortcode/zoom-webinar.php:98
-#: templates/shortcode/meeting-by-post-id.php:40
+#: templates/shortcode/meeting-by-post-id.php:46
 #: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
@@ -603,7 +592,7 @@ msgstr "Meeting bearbeiten"
 msgid "Edit Webinar"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:322
+#: includes/admin/class-zvc-admin-post-type.php:334
 msgid "Edit Zoom Event"
 msgstr ""
 
@@ -629,20 +618,20 @@ msgstr ""
 msgid "Embed Zoom Meeting"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:476
+#: includes/admin/class-zvc-admin-post-type.php:491
 msgid "Enable Debug?"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:267
+#: includes/admin/class-zvc-admin-post-type.php:279
 #: includes/views/live/tpl-list-meetings.php:138
 msgid "Enable Join"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:173
+#: includes/views/tabs/api-settings.php:118
 msgid "Enable Logs"
 msgstr ""
 
-#: includes/template-functions.php:104
+#: includes/template-functions.php:112
 msgid "Enable Meeting Join ?"
 msgstr ""
 
@@ -654,7 +643,7 @@ msgstr ""
 msgid "End Date"
 msgstr ""
 
-#: includes/template-functions.php:102
+#: includes/template-functions.php:108
 msgid "End Meeting ?"
 msgstr ""
 
@@ -678,19 +667,15 @@ msgstr "Gib das Datum zur Überprüfung ein:"
 msgid "ERROR: "
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:211
+#: includes/admin/class-zvc-admin-settings.php:209
 msgid "Extensions"
 msgstr ""
 
-#: includes/views/additional-info.php:13
-msgid "Facebook Group"
-msgstr ""
-
-#: includes/admin/class-zvc-admin-sync.php:191
+#: includes/admin/class-zvc-admin-sync.php:187
 msgid "Failed to import meeting with ID"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:41
+#: includes/admin/class-zvc-admin-sync.php:39
 msgid ""
 "Fetching data.. Please wait this might take some time depending on how many "
 "Zoom Meetings you have."
@@ -706,7 +691,7 @@ msgstr ""
 msgid "File Type"
 msgstr ""
 
-#: includes/Shortcodes.php:99
+#: includes/Shortcodes.php:105
 #, php-format
 msgid "filtered from %s total entries"
 msgstr ""
@@ -715,7 +700,7 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: includes/Shortcodes.php:106
+#: includes/Shortcodes.php:112
 msgid "First"
 msgstr ""
 
@@ -743,6 +728,10 @@ msgstr "Von"
 msgid "Full Name"
 msgstr ""
 
+#: includes/views/tabs/api-settings.php:18
+msgid "General Settings"
+msgstr ""
+
 #: includes/views/live/tpl-reports.php:119
 msgid "Get account report for a specified period."
 msgstr "Einen Kontobericht für einen bestimmten Zeitraum abrufen."
@@ -753,15 +742,15 @@ msgstr "Einen Kontobericht für einen bestimmten Zeitraum abrufen."
 msgid "HD Video"
 msgstr ""
 
-#: includes/Bootstrap.php:80
+#: includes/Bootstrap.php:84
 msgid "Heads up, Please backup before upgrade!"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:40
+#: includes/views/tabs/api-settings.php:63
 msgid "Hide Join Links for Non-Loggedin ?"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:456
+#: includes/admin/class-zvc-admin-post-type.php:471
 msgid "Hide Join via browser link ?"
 msgstr "Link zur Anmeldung über Browser verbergen ?"
 
@@ -769,7 +758,7 @@ msgstr "Link zur Anmeldung über Browser verbergen ?"
 msgid "Host ID"
 msgstr "Gastgeber ID"
 
-#: includes/Shortcodes/Webinars.php:108 includes/Shortcodes/Meetings.php:489
+#: includes/Shortcodes/Webinars.php:108 includes/Shortcodes/Meetings.php:487
 msgid "Host ID should be given when defining this shortcode."
 msgstr ""
 
@@ -778,7 +767,7 @@ msgstr ""
 msgid "Host join start"
 msgstr "Gastgeber video starten"
 
-#: includes/admin/class-zvc-admin-settings.php:218
+#: includes/admin/class-zvc-admin-settings.php:216
 msgid "Host to WP Users"
 msgstr ""
 
@@ -791,7 +780,7 @@ msgstr ""
 msgid "Hosted By"
 msgstr "Eingeladen von"
 
-#: templates/content-meeting.php:31 templates/shortcode/zoom-listing.php:33
+#: templates/content-meeting.php:31 templates/shortcode/zoom-listing.php:34
 msgid "Hosted By:"
 msgstr "Eingeladen von:"
 
@@ -800,7 +789,7 @@ msgstr "Eingeladen von:"
 msgid "hours"
 msgstr "Stunden"
 
-#: includes/helpers.php:358
+#: includes/helpers.php:360
 msgid "I understand ! Don't show this again !"
 msgstr "Verstanden !  Bitte nicht mehr anzeigen !"
 
@@ -808,7 +797,7 @@ msgstr "Verstanden !  Bitte nicht mehr anzeigen !"
 msgid "ID"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:19
+#: includes/views/tabs/api-settings.php:33
 msgid ""
 "If you are using Zoom Vanity URL then please insert it here else leave it "
 "empty."
@@ -822,11 +811,11 @@ msgstr ""
 "Verwende diesen Shortcode, um das Meeting auf einer anderen Seite zu "
 "verlinken"
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:183
+#: includes/Elementor/Widgets/EmbedMeetings.php:184
 msgid "Image URL"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:224
+#: includes/admin/class-zvc-admin-settings.php:222
 msgid "Import"
 msgstr ""
 
@@ -835,11 +824,11 @@ msgid ""
 "Invalid HOST ID. Please define a host ID to show recordings based on host."
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:178
+#: includes/Shortcodes/Recordings.php:176
 msgid "Invalid Meeting ID."
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:195
+#: includes/Elementor/Widgets/EmbedMeetings.php:196
 msgid "Is Webinar ?"
 msgstr ""
 
@@ -856,7 +845,7 @@ msgstr "Teilnehmen"
 msgid "Join Before Host"
 msgstr "Vor dem Gastgeber teilnehmen"
 
-#: includes/admin/class-zvc-admin-post-type.php:438
+#: includes/admin/class-zvc-admin-post-type.php:453
 msgid "Join Meeting"
 msgstr ""
 
@@ -869,7 +858,7 @@ msgstr ""
 "Teilnahme vor dem Gastgeber ermöglichen. Nur verfügbar für geplante oder "
 "wiederkehrende Meetings."
 
-#: includes/template-functions.php:158
+#: includes/template-functions.php:172
 msgid "Join Meeting via Zoom App"
 msgstr "Über Zoom App teilnehmen"
 
@@ -878,15 +867,19 @@ msgstr "Über Zoom App teilnehmen"
 msgid "Join via App"
 msgstr ""
 
-#: templates/shortcode/embed-session.php:96
+#: templates/shortcode/embed-session.php:98
 msgid "Join via Browser"
 msgstr ""
 
-#: includes/helpers.php:595 includes/helpers.php:599 includes/helpers.php:623
-#: includes/helpers.php:627 templates/shortcode/join-links.php:26
+#: includes/helpers.php:607 includes/helpers.php:615 includes/helpers.php:649
+#: includes/helpers.php:657 templates/shortcode/join-links.php:26
 #: templates/shortcode/webinar-join-links.php:26
 msgid "Join via Web Browser"
 msgstr "Über Web Browser teilnehmen"
+
+#: includes/views/tabs/api-settings.php:136
+msgid "Join via Web Browser Settings"
+msgstr ""
 
 #: templates/shortcode/join-links.php:17
 #: templates/shortcode/webinar-join-links.php:17
@@ -897,7 +890,7 @@ msgstr "Über Zoom App teilnehmen"
 msgid "JWT API Secret Key"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:62
+#: includes/admin/class-zvc-admin-settings.php:60
 #: includes/views/tabs/connect.php:3
 msgid "JWT App Type Depreciation FAQ"
 msgstr ""
@@ -906,7 +899,7 @@ msgstr ""
 msgid "JWT Credentials ( Legacy )"
 msgstr ""
 
-#: includes/Shortcodes.php:107
+#: includes/Shortcodes.php:113
 msgid "Last"
 msgstr ""
 
@@ -934,19 +927,19 @@ msgstr "Nachname des Benutzers (Pflichtfeld)"
 msgid "Like this plugin ?"
 msgstr "Gefällt Dir dieses Plugin ?"
 
-#: includes/admin/class-zvc-admin-settings.php:180
+#: includes/admin/class-zvc-admin-settings.php:178
 msgid "Live Meetings"
 msgstr "Live Meetings"
 
-#: includes/admin/class-zvc-admin-settings.php:175
+#: includes/admin/class-zvc-admin-settings.php:173
 msgid "Live Webinars"
 msgstr ""
 
-#: includes/Shortcodes.php:101
+#: includes/Shortcodes.php:107
 msgid "Loading"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:119
+#: includes/Shortcodes/Recordings.php:117
 msgid "Loading recordings.. Please wait.."
 msgstr ""
 
@@ -957,15 +950,15 @@ msgstr ""
 msgid "Local"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:275
+#: includes/admin/class-zvc-admin-settings.php:274
 msgid "Logs"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:176
+#: includes/views/tabs/api-settings.php:124
 msgid "Logs are here."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:228
+#: includes/admin/class-zvc-admin-post-type.php:240
 #: includes/Elementor/Widgets/MeetingByPostID.php:88
 #: includes/Elementor/Widgets/MeetingByID.php:90
 msgid "Meeting"
@@ -985,11 +978,11 @@ msgstr ""
 msgid "Meeting Description."
 msgstr "Meeting Beschreibung."
 
-#: includes/admin/class-zvc-admin-post-type.php:367
+#: includes/admin/class-zvc-admin-post-type.php:382
 msgid "Meeting Details"
 msgstr "Meeting Details"
 
-#: includes/Elementor/Widgets/MeetingList.php:176
+#: includes/Elementor/Widgets/MeetingList.php:178
 msgid "Meeting Display Threshold"
 msgstr ""
 
@@ -998,30 +991,26 @@ msgstr ""
 msgid "Meeting duration (minutes). (optional)"
 msgstr "Meeting Dauer (in Minuten). (optional)"
 
-#: includes/views/tabs/api-settings.php:123
+#: includes/views/tabs/api-settings.php:109
 msgid "Meeting Ended Text"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:117
+#: includes/views/tabs/api-settings.php:99
 msgid "Meeting going to start Text"
 msgstr ""
 
-#: includes/template-functions.php:359 includes/template-functions.php:368
-#: includes/template-functions.php:378 templates/shortcode/zoom-webinar.php:55
+#: includes/template-functions.php:373 includes/template-functions.php:382
+#: includes/template-functions.php:392 templates/shortcode/zoom-webinar.php:55
 #: templates/shortcode/zoom-webinar.php:64
 #: templates/shortcode/zoom-webinar.php:74
 msgid "Meeting has ended !"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:426
-#: includes/admin/class-zvc-admin-post-type.php:448
+#: includes/admin/class-zvc-admin-post-type.php:441
+#: includes/admin/class-zvc-admin-post-type.php:463
 msgid ""
 "Meeting has not been created for this post yet. Publish your meeting or hit "
 "update to create a new one for this post !"
-msgstr ""
-
-#: includes/Bootstrap.php:168 includes/Shortcodes/Meetings.php:144
-msgid "Meeting Has Started ! Click below join button to join meeting now !"
 msgstr ""
 
 #: includes/views/live/tpl-edit-meeting.php:54
@@ -1032,9 +1021,9 @@ msgstr ""
 msgid "Meeting Host *"
 msgstr "Meeting Gastgeber *"
 
-#: includes/template-functions.php:310
-#: includes/admin/class-zvc-admin-post-type.php:194
-#: includes/admin/class-zvc-admin-post-type.php:440
+#: includes/template-functions.php:324
+#: includes/admin/class-zvc-admin-post-type.php:205
+#: includes/admin/class-zvc-admin-post-type.php:455
 #: templates/shortcode/zoom-webinar.php:21
 #: templates/shortcode/zoom-recordings.php:22
 #: templates/shortcode/zoom-recordings-by-meeting.php:42
@@ -1045,11 +1034,11 @@ msgstr "Meeting Gastgeber *"
 msgid "Meeting ID"
 msgstr "Meeting ID"
 
-#: includes/template-functions.php:324
+#: includes/template-functions.php:338
 msgid "Meeting is in Progress"
 msgstr ""
 
-#: includes/template-functions.php:244
+#: includes/template-functions.php:258
 msgid "Meeting is not defined. Try updating this meeting"
 msgstr ""
 
@@ -1057,30 +1046,30 @@ msgstr ""
 msgid "Meeting Minutes"
 msgstr "Meeting Protokoll"
 
-#: includes/admin/class-zvc-admin-post-type.php:235
-#: includes/admin/class-zvc-admin-post-type.php:246
-#: includes/admin/class-zvc-admin-post-type.php:255
-#: includes/admin/class-zvc-admin-post-type.php:271
+#: includes/admin/class-zvc-admin-post-type.php:247
+#: includes/admin/class-zvc-admin-post-type.php:258
+#: includes/admin/class-zvc-admin-post-type.php:267
+#: includes/admin/class-zvc-admin-post-type.php:283
 msgid "Meeting not created yet."
 msgstr ""
 
 #: templates/join-web-browser.php:68
-#: includes/Elementor/Widgets/EmbedMeetings.php:173
-#: includes/Elementor/Widgets/EmbedMeetings.php:175
+#: includes/Elementor/Widgets/EmbedMeetings.php:174
+#: includes/Elementor/Widgets/EmbedMeetings.php:176
 #: includes/views/live/tpl-edit-meeting.php:99
 #: includes/views/live/tpl-add-meetings.php:81
 msgid "Meeting Password"
 msgstr "Meeting Passwort"
 
-#: includes/views/tabs/api-settings.php:50
+#: includes/views/tabs/api-settings.php:78
 msgid ""
 "Meeting password will not be included in the invite link to allow "
 "participants to join with just one click without having to enter the "
 "password."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:111
-msgid "Meeting Started Text"
+#: includes/views/tabs/connect.php:131
+msgid "Meeting SDK App Credentials"
 msgstr ""
 
 #: templates/fragments/countdown-timer.php:51
@@ -1088,17 +1077,17 @@ msgstr ""
 msgid "Meeting starts in"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:195
+#: includes/admin/class-zvc-admin-post-type.php:206
 #: includes/views/live/tpl-list-meetings.php:67
 msgid "Meeting State"
 msgstr ""
 
-#: includes/template-functions.php:318
+#: includes/template-functions.php:332
 #: templates/shortcode/list-meetings-host.php:17
 msgid "Meeting Status"
 msgstr "Meetingstatus"
 
-#: includes/admin/class-zvc-admin-sync.php:48
+#: includes/admin/class-zvc-admin-sync.php:46
 msgid "Meeting sync has been completed !"
 msgstr ""
 
@@ -1129,11 +1118,11 @@ msgstr ""
 msgid "Meetings"
 msgstr "Meetings"
 
-#: includes/Elementor/Widgets/MeetingList.php:106
+#: includes/Elementor/Widgets/MeetingList.php:107
 msgid "Meetings Category"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:26
+#: includes/views/tabs/api-settings.php:39
 msgid "Meetings Deletion ?"
 msgstr ""
 
@@ -1141,11 +1130,11 @@ msgstr ""
 msgid "Meetings Held"
 msgstr "Durchgeführte Meetings"
 
-#: includes/Elementor/Widgets/MeetingList.php:119
+#: includes/Elementor/Widgets/MeetingList.php:120
 msgid "Meetings Order By"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingList.php:134
+#: includes/Elementor/Widgets/MeetingList.php:135
 msgid "Meetings Type"
 msgstr ""
 
@@ -1187,23 +1176,23 @@ msgstr "Name"
 msgid "New Users"
 msgstr "Neue Benutzer"
 
-#: includes/admin/class-zvc-admin-post-type.php:321
+#: includes/admin/class-zvc-admin-post-type.php:333
 msgid "New Zoom Event"
 msgstr ""
 
-#: includes/Shortcodes.php:108
+#: includes/Shortcodes.php:114
 msgid "Next"
 msgstr ""
 
-#: templates/content-meeting.php:42 templates/shortcode/zoom-listing.php:45
+#: templates/content-meeting.php:42 templates/shortcode/zoom-listing.php:46
 msgid "Next Occurrence"
 msgstr ""
 
-#: includes/helpers.php:708
+#: includes/helpers.php:738
 msgid "Next Results"
 msgstr ""
 
-#: includes/template-functions.php:345 templates/shortcode/zoom-webinar.php:41
+#: includes/template-functions.php:359 templates/shortcode/zoom-webinar.php:41
 msgid "Next Start Time"
 msgstr ""
 
@@ -1211,15 +1200,15 @@ msgstr ""
 msgid "Next Step"
 msgstr ""
 
-#: includes/Shortcodes.php:96
+#: includes/Shortcodes.php:102
 msgid "No data available in table"
 msgstr ""
 
-#: includes/Shortcodes.php:104
+#: includes/Shortcodes.php:110
 msgid "No matching records found"
 msgstr ""
 
-#: includes/Elementor/Widgets/EmbedMeetings.php:236
+#: includes/Elementor/Widgets/EmbedMeetings.php:237
 msgid "No Meeting ID is defined."
 msgstr ""
 
@@ -1231,17 +1220,17 @@ msgstr ""
 msgid "No meeting id set in the shortcode"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:124
+#: includes/admin/class-zvc-admin-sync.php:120
 msgid "No meeting is selected or selected meeting already exists"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:93
-#: includes/admin/class-zvc-admin-sync.php:96
+#: includes/admin/class-zvc-admin-sync.php:89
+#: includes/admin/class-zvc-admin-sync.php:92
 msgid "No Meetings Found !"
 msgstr ""
 
 #: templates/shortcode-listing.php:73 templates/archive-meetings.php:55
-#: includes/Shortcodes/Meetings.php:454
+#: includes/Shortcodes/Meetings.php:452
 msgid "No Meetings found."
 msgstr ""
 
@@ -1256,8 +1245,8 @@ msgstr ""
 msgid "No Recordings"
 msgstr ""
 
-#: includes/Shortcodes/Recordings.php:152
-#: includes/Shortcodes/Recordings.php:230
+#: includes/Shortcodes/Recordings.php:150
+#: includes/Shortcodes/Recordings.php:228
 msgid "No recordings found."
 msgstr ""
 
@@ -1266,7 +1255,7 @@ msgid "No Records Found.."
 msgstr "Keine Einträge gefunden."
 
 #: includes/Elementor/Widgets/RecordingsByHost.php:157
-#: includes/Elementor/Widgets/MeetingHosts.php:161
+#: includes/Elementor/Widgets/MeetingHosts.php:162
 msgid "No user selected."
 msgstr ""
 
@@ -1274,18 +1263,13 @@ msgstr ""
 msgid "No webinar id set in the shortcode"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:328
-#, fuzzy
+#: includes/admin/class-zvc-admin-post-type.php:340
 #| msgid "No meetings found in Trash."
 msgid "No zoom events found in Trash."
-msgstr "Keine Meetings im Papierkorb gefunden."
+msgstr "Keine Zoom-Ereignisse im Papierkorb gefunden."
 
-#: includes/admin/class-zvc-admin-post-type.php:327
+#: includes/admin/class-zvc-admin-post-type.php:339
 msgid "No zoom events found."
-msgstr ""
-
-#: includes/admin/class-zvc-admin-ajax.php:300
-msgid "Not a Host"
 msgstr ""
 
 #: includes/views/migration.php:26 includes/views/tabs/connect.php:89
@@ -1300,11 +1284,11 @@ msgstr ""
 msgid "Oauth Client Secret"
 msgstr ""
 
-#: includes/template-functions.php:341 templates/shortcode/zoom-webinar.php:37
+#: includes/template-functions.php:355 templates/shortcode/zoom-webinar.php:37
 msgid "Ocurrences"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:455
+#: includes/admin/class-zvc-admin-post-type.php:470
 msgid "Only logged in users of this site will be able to join this meeting."
 msgstr "Nur angemeldete Benutzer können an diesem Meeting teilnehmen."
 
@@ -1316,7 +1300,7 @@ msgstr ""
 msgid "Only valid when show in iframe is enabled."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:47
+#: includes/admin/class-zvc-admin-sync.php:45
 msgid ""
 "Opps ! You have not selected any meeting to sync yet. Select one or two and "
 "this section will be filled by happiness for you !!"
@@ -1337,7 +1321,7 @@ msgstr ""
 msgid "Panelists Video"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:326
+#: includes/admin/class-zvc-admin-post-type.php:338
 msgid "Parent meetings:"
 msgstr "Übergeordnete Meetings:"
 
@@ -1351,7 +1335,7 @@ msgstr "Teilnehmer"
 msgid "Participants Video"
 msgstr "Teilnehmer Video starten"
 
-#: templates/shortcode/embed-session.php:93
+#: templates/shortcode/embed-session.php:95
 #: includes/views/post-type/tpl-meeting-fields.php:188
 msgid "Password"
 msgstr ""
@@ -1371,7 +1355,7 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:137
+#: includes/admin/class-zvc-admin-post-type.php:148
 msgid "Past"
 msgstr ""
 
@@ -1379,7 +1363,7 @@ msgstr ""
 msgid "Pending Approval Users"
 msgstr ""
 
-#: includes/template-functions.php:393
+#: includes/template-functions.php:407
 msgid "Personal Meeting Room"
 msgstr ""
 
@@ -1415,7 +1399,7 @@ msgid ""
 "without you allowing them into the meeting."
 msgstr ""
 
-#: includes/template-functions.php:140
+#: includes/template-functions.php:153
 msgid "Please login to join this meeting."
 msgstr ""
 
@@ -1423,7 +1407,7 @@ msgstr ""
 msgid "Please note this requires a PRO Zoom account or Higher."
 msgstr ""
 
-#: includes/helpers.php:357
+#: includes/helpers.php:358
 msgid ""
 "Please read !!! These below meetings are directly from your zoom.us account "
 "via API connection. Meetings added from here won't show up on your Post Type "
@@ -1434,7 +1418,7 @@ msgstr ""
 "Wordpress-Meetings aufscheinen. Von hier werden nur Meetings in Deinem Zoom-"
 "Account angelegt !"
 
-#: includes/views/tabs/api-settings.php:153
+#: includes/views/tabs/api-settings.php:281
 #, php-format
 msgid "Please see %s on how to format date"
 msgstr ""
@@ -1446,7 +1430,7 @@ msgid ""
 "Browser to work please also add %s"
 msgstr ""
 
-#: includes/Shortcodes/Embed.php:122 includes/Shortcodes/Meetings.php:94
+#: includes/Shortcodes/Embed.php:127 includes/Shortcodes/Meetings.php:94
 #, php-format
 msgid ""
 "Please try again ! Some error occured while trying to fetch meeting with id: "
@@ -1466,7 +1450,7 @@ msgstr ""
 msgid "Practise Session"
 msgstr ""
 
-#: includes/Shortcodes.php:109
+#: includes/Shortcodes.php:115
 msgid "Previous"
 msgstr ""
 
@@ -1486,11 +1470,11 @@ msgstr ""
 msgid "Pro, Business, Enterprise, Education, or API Account. Check more"
 msgstr ""
 
-#: includes/Shortcodes.php:102
+#: includes/Shortcodes.php:108
 msgid "Processing"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:20
+#: includes/views/tabs/api-settings.php:34
 msgid ""
 "Read more about Vanity\n"
 "                                URLs"
@@ -1505,7 +1489,7 @@ msgstr ""
 msgid "Recording by Meeting"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:206
+#: includes/admin/class-zvc-admin-settings.php:204
 #: includes/views/live/tpl-list-recordings.php:10
 msgid "Recordings"
 msgstr ""
@@ -1514,12 +1498,12 @@ msgstr ""
 msgid "Recordings by Meeting"
 msgstr ""
 
-#: templates/content-meeting.php:57 templates/shortcode/zoom-listing.php:60
+#: templates/content-meeting.php:57 templates/shortcode/zoom-listing.php:61
 msgid "Recurring"
 msgstr ""
 
-#: includes/template-functions.php:338
-#: includes/admin/class-zvc-admin-post-type.php:244
+#: includes/template-functions.php:352
+#: includes/admin/class-zvc-admin-post-type.php:256
 #: templates/shortcode/zoom-webinar.php:34
 #: includes/views/live/tpl-list-meetings.php:124
 msgid "Recurring Meeting"
@@ -1529,21 +1513,21 @@ msgstr ""
 msgid "Recurring Webinar"
 msgstr ""
 
-#: includes/template-functions.php:329
+#: includes/template-functions.php:343
 msgid "Refresh is needed to change status."
 msgstr "Neu laden, um Statusänderungen anzuzeigen."
 
-#: includes/admin/class-zvc-admin-settings.php:201
+#: includes/admin/class-zvc-admin-settings.php:199
 #: includes/views/live/tpl-reports.php:12
 msgid "Reports"
 msgstr "Berichte"
 
-#: includes/admin/class-zvc-admin-post-type.php:452
+#: includes/admin/class-zvc-admin-post-type.php:467
 #: includes/Elementor/Widgets/EmbedMeetings.php:105
 msgid "Requires Login?"
 msgstr "Anmeldung benötigt?"
 
-#: includes/admin/class-zvc-admin-post-type.php:265
+#: includes/admin/class-zvc-admin-post-type.php:277
 msgid ""
 "Restrict users to join this meeting before the start time or after the "
 "meeting is completed."
@@ -1557,7 +1541,7 @@ msgstr ""
 msgid "results"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:268
+#: includes/admin/class-zvc-admin-post-type.php:280
 msgid "Resuming this will enable users to join this meeting."
 msgstr ""
 
@@ -1575,39 +1559,43 @@ msgstr ""
 msgid "Save App SDK Keys"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:183
+#: includes/views/tabs/api-settings.php:311
 msgid "Save Changes"
 msgstr "Änderungen speichern"
 
-#: includes/admin/class-zvc-admin-users.php:90
+#: includes/admin/class-zvc-admin-users.php:110
 msgid "Saved !"
 msgstr "Gespeichert !"
 
-#: includes/views/tabs/connect.php:131
-msgid "SDK App Credentials"
+#: includes/views/tabs/connect.php:153
+msgid "SDK / Client Secret"
 msgstr ""
 
 #: includes/views/tabs/connect.php:140
+#, php-format
 msgid ""
-"SDK App Credentials are required for Join Via Browser to work, see "
-"documentation on how to generate you App SDK keys"
+"SDK App Credentials are required for Join Via Browser to work, %s on how to "
+"generate you App SDK keys"
 msgstr ""
 
-#: includes/views/migration.php:84 includes/views/tabs/connect.php:144
+#: includes/views/migration.php:84
 msgid "SDK key"
 msgstr ""
 
-#: includes/views/migration.php:93 includes/views/tabs/connect.php:153
-#, fuzzy
+#: includes/views/tabs/connect.php:144
+msgid "SDK key / Client ID"
+msgstr ""
+
+#: includes/views/migration.php:93
 #| msgid "API Secret Key"
 msgid "SDK Secret key"
-msgstr "Geheimer API Schlüssel"
+msgstr "Geheimer SDK-Schlüssel"
 
-#: includes/Shortcodes.php:103
+#: includes/Shortcodes.php:109
 msgid "Search"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:325
+#: includes/admin/class-zvc-admin-post-type.php:337
 msgid "Search meetings"
 msgstr "Meetings durchsuchen"
 
@@ -1639,7 +1627,7 @@ msgstr ""
 msgid "Select a Date to Check"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:107
+#: includes/views/tabs/api-settings.php:218
 msgid "Select a default language for your join meeting via browser page."
 msgstr ""
 
@@ -1691,7 +1679,11 @@ msgid ""
 "user approves your Zoom Invitation."
 msgstr ""
 
-#: templates/shortcode/meeting-by-post-id.php:26
+#: includes/views/tabs/connect.php:65
+msgid "Server to Server Oauth Credentials"
+msgstr ""
+
+#: templates/shortcode/meeting-by-post-id.php:32
 msgid "Session date"
 msgstr ""
 
@@ -1706,30 +1698,34 @@ msgstr ""
 "Wähle aus, welche Art von Auto-Aufnahme Du hinzufügen willst. Standardwert "
 "is keines."
 
-#: includes/Elementor/Widgets/WebinarList.php:182
-#: includes/Elementor/Widgets/MeetingList.php:184
+#: includes/Elementor/Widgets/WebinarList.php:184
+#: includes/Elementor/Widgets/MeetingList.php:186
 msgid ""
 "Setting this to yes will display meetings for 30 minutes more after the "
 "meeting date has passed. This will only work if Meeting Type is defined."
 msgstr ""
 
-#: includes/Bootstrap.php:340 includes/admin/class-zvc-admin-settings.php:230
-#: includes/admin/class-zvc-admin-settings.php:230
+#: includes/Bootstrap.php:343 includes/admin/class-zvc-admin-settings.php:228
+#: includes/admin/class-zvc-admin-settings.php:228
+#: includes/admin/class-zvc-admin-settings.php:266
 msgid "Settings"
 msgstr "Eigenschaften"
 
-#: includes/admin/class-zvc-admin-settings.php:269
 #: includes/views/webinars/tpl-list-webinars.php:62
 #: includes/views/live/tpl-list-meetings.php:63
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: includes/Shortcodes.php:100
+#: includes/views/additional-info.php:6
+msgid "Shortcode Documentation"
+msgstr ""
+
+#: includes/Shortcodes.php:106
 #, php-format
 msgid "Show %s entries"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:93
+#: includes/views/tabs/api-settings.php:180
 msgid "Show All"
 msgstr ""
 
@@ -1738,8 +1734,8 @@ msgstr ""
 msgid "Show Downloadable Link"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:148
-#: includes/Elementor/Widgets/MeetingList.php:150
+#: includes/Elementor/Widgets/WebinarList.php:149
+#: includes/Elementor/Widgets/MeetingList.php:151
 msgid "Show Filter"
 msgstr ""
 
@@ -1751,12 +1747,12 @@ msgstr ""
 msgid "Show Meeting by Zoom User"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:96
-#: includes/Elementor/Widgets/MeetingList.php:98
+#: includes/Elementor/Widgets/WebinarList.php:97
+#: includes/Elementor/Widgets/MeetingList.php:99
 msgid "Show meeting posts based on Author ID"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:54
+#: includes/views/tabs/api-settings.php:82
 msgid "Show Past Join Link ?"
 msgstr "Vergangene Meetings anzeigen ?"
 
@@ -1764,11 +1760,11 @@ msgstr "Vergangene Meetings anzeigen ?"
 msgid "Show Recordings via Host ID"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:61
+#: includes/views/tabs/api-settings.php:90
 msgid "Show Zoom Author ?"
 msgstr ""
 
-#: includes/Shortcodes.php:97
+#: includes/Shortcodes.php:103
 #, php-format
 msgid "Showing %s to %s of %s entries"
 msgstr ""
@@ -1802,11 +1798,11 @@ msgid "SSO Create"
 msgstr "SSO hinzufügen"
 
 #: templates/content-meeting.php:63 templates/fragments/meeting-details.php:40
-#: templates/shortcode/zoom-listing.php:66
+#: templates/shortcode/zoom-listing.php:67
 msgid "Start"
 msgstr "Beginn"
 
-#: includes/admin/class-zvc-admin-post-type.php:193
+#: includes/admin/class-zvc-admin-post-type.php:204
 #: templates/shortcode/zoom-recordings-by-meeting.php:53
 msgid "Start Date"
 msgstr ""
@@ -1819,19 +1815,19 @@ msgstr ""
 msgid "Start Date/Time *"
 msgstr "Start Datum/Zeit *"
 
-#: includes/admin/class-zvc-admin-post-type.php:192
-#: includes/admin/class-zvc-admin-post-type.php:437
+#: includes/admin/class-zvc-admin-post-type.php:203
+#: includes/admin/class-zvc-admin-post-type.php:452
 #: templates/fragments/join-links.php:28
 msgid "Start Meeting"
 msgstr "Meeting starten"
 
-#: includes/template-functions.php:377 includes/template-functions.php:385
-#: includes/template-functions.php:399 templates/content-meeting.php:49
+#: includes/template-functions.php:391 includes/template-functions.php:399
+#: includes/template-functions.php:413 templates/content-meeting.php:49
 #: templates/shortcode/zoom-webinar.php:73
 #: templates/shortcode/zoom-webinar.php:81
 #: templates/shortcode/zoom-webinar.php:88
-#: templates/shortcode/zoom-listing.php:52
-#: templates/shortcode/embed-session.php:91
+#: templates/shortcode/zoom-listing.php:53
+#: templates/shortcode/embed-session.php:92
 #: templates/shortcode/list-webinars-host.php:17
 #: templates/shortcode/list-meetings-host.php:18
 #: includes/views/webinars/tpl-list-webinars.php:65
@@ -1844,7 +1840,7 @@ msgstr "Beginn"
 msgid "Start via App"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:439
+#: includes/admin/class-zvc-admin-post-type.php:454
 #: includes/views/webinars/tpl-list-webinars.php:88
 #: includes/views/live/tpl-list-meetings.php:89
 msgid "Start via Browser"
@@ -1888,7 +1884,7 @@ msgstr "Start Datum und Zeit des Meetings (Pflichtfeld)"
 msgid "Starting Date and Time of the Webinar (Required)."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:46
+#: includes/admin/class-zvc-admin-sync.php:44
 msgid ""
 "Starting sync process.. Please wait for some time. Do not close this window "
 "until completed."
@@ -1899,19 +1895,19 @@ msgstr ""
 msgid "Status"
 msgstr "Status"
 
-#: includes/admin/class-zvc-admin-sync.php:185
+#: includes/admin/class-zvc-admin-sync.php:181
 msgid "Successfully imported meeting with ID"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:342
+#: includes/admin/class-zvc-admin-settings.php:349
 msgid "Successfully Updated. Please refresh this page."
 msgstr "Erfolgreich aktualisiert. Bitte Seite neu laden."
 
-#: includes/admin/class-zvc-admin-settings.php:272
+#: includes/admin/class-zvc-admin-settings.php:270
 msgid "Support"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-sync.php:45
+#: includes/admin/class-zvc-admin-sync.php:43
 msgid "Sync Now"
 msgstr ""
 
@@ -1936,7 +1932,7 @@ msgstr ""
 msgid "The fields cannot be Empty !!"
 msgstr ""
 
-#: includes/Bootstrap.php:84
+#: includes/Bootstrap.php:88
 msgid ""
 "The latest update includes some substantial changes across different areas "
 "of the plugin. We highly recommend you backup your site before upgrading, "
@@ -1952,7 +1948,7 @@ msgid ""
 "will be “2020-06-30”."
 msgstr ""
 
-#: includes/views/tabs/debug.php:53
+#: includes/views/tabs/debug.php:54
 msgid "There aren't any new logs to view at the moment."
 msgstr ""
 
@@ -1983,11 +1979,11 @@ msgstr ""
 msgid "This address is used for zoom (Required)."
 msgstr "Diese Adresse wird für Zoom benötigt (Pflichtfeld)."
 
-#: includes/views/tabs/api-settings.php:176
+#: includes/views/tabs/api-settings.php:123
 msgid "This can be helpful in finding issues related to Zoom."
 msgstr ""
 
-#: includes/template-functions.php:386 templates/shortcode/zoom-webinar.php:82
+#: includes/template-functions.php:400 templates/shortcode/zoom-webinar.php:82
 msgid "This is a meeting with no Fixed Time."
 msgstr ""
 
@@ -2009,19 +2005,19 @@ msgstr "Das ist die Gastgeber ID für das Meeting (Pflichtfeld)"
 msgid "This meeting has been ended by host."
 msgstr ""
 
-#: includes/Bootstrap.php:170 includes/Shortcodes/Meetings.php:146
+#: includes/Bootstrap.php:179 includes/Shortcodes/Meetings.php:144
 msgid "This meeting has been ended by the host."
 msgstr ""
 
-#: includes/template-functions.php:138
+#: includes/template-functions.php:151
 msgid "This meeting has ended."
 msgstr ""
 
-#: includes/Timezone.php:50
+#: includes/Timezone.php:65
 msgid "This meeting is no longer valid and cannot be joined !"
 msgstr "Dieses Meeting ist abgelaufen und kann nicht mehr betreten werden !"
 
-#: includes/Shortcodes/Meetings.php:197
+#: includes/Shortcodes/Meetings.php:194
 msgid "This post does not exist."
 msgstr ""
 
@@ -2033,23 +2029,29 @@ msgid ""
 "for administrator."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:459
+#: includes/views/tabs/api-settings.php:49
+msgid ""
+"This setting will disable countdown timer on single Zoom Events page. Check "
+"this option if you want to disable the countdown."
+msgstr ""
+
+#: includes/admin/class-zvc-admin-post-type.php:474
 msgid "This will disable join via browser link in frontend page."
 msgstr "Dies verbirgt den Link zur Browser-Anmeldung von der Seite."
 
-#: includes/views/tabs/api-settings.php:57
+#: includes/views/tabs/api-settings.php:86
 msgid ""
 "This will show join meeting links on frontend even after meeting time is "
 "already past."
 msgstr ""
 "Dies zeigt die Teilnahmelinks auch für vergangene Meetings auf der Seite an."
 
-#: includes/template-functions.php:405 templates/content-meeting.php:68
+#: includes/template-functions.php:419 templates/content-meeting.php:68
 #: templates/shortcode/zoom-webinar.php:93
-#: templates/shortcode/zoom-listing.php:71
-#: templates/shortcode/embed-session.php:92
+#: templates/shortcode/zoom-listing.php:72
+#: templates/shortcode/embed-session.php:94
 #: templates/shortcode/list-webinars-host.php:18
-#: templates/shortcode/meeting-by-post-id.php:54
+#: templates/shortcode/meeting-by-post-id.php:60
 #: templates/shortcode/list-meetings-host.php:19
 #: includes/views/webinars/tpl-edit-webinar.php:58
 #: includes/views/webinars/tpl-add-webinar.php:62
@@ -2067,7 +2069,7 @@ msgstr ""
 msgid "To"
 msgstr "An"
 
-#: includes/template-functions.php:314
+#: includes/template-functions.php:328
 #: templates/fragments/meeting-details.php:32
 #: templates/shortcode/zoom-webinar.php:25
 #: templates/shortcode/list-webinars-host.php:16
@@ -2092,7 +2094,7 @@ msgstr "Anzahl gesamter Meeting Minuten: "
 msgid "Total Meetings Held: "
 msgstr "Anzahl durchgeführter Meetings: "
 
-#: includes/admin/class-zvc-admin-sync.php:43
+#: includes/admin/class-zvc-admin-sync.php:41
 msgid "Total Not Synced Records"
 msgstr ""
 
@@ -2104,7 +2106,7 @@ msgstr "Anzahl Teilnehmer"
 msgid "Total Participants Involved: "
 msgstr "Anzahl Teilnehmer: "
 
-#: includes/admin/class-zvc-admin-sync.php:42
+#: includes/admin/class-zvc-admin-sync.php:40
 msgid "Total Records Found"
 msgstr ""
 
@@ -2121,15 +2123,11 @@ msgstr ""
 msgid "Trash"
 msgstr "Papierkorb"
 
-#: includes/views/additional-info.php:27
-msgid "Try inactive logout"
-msgstr "Versuchen, Dich inaktiv abzumelden"
-
-#: includes/template-functions.php:337 includes/template-functions.php:392
+#: includes/template-functions.php:351 includes/template-functions.php:406
 #: templates/content-meeting.php:56
-#: includes/admin/class-zvc-admin-post-type.php:191
+#: includes/admin/class-zvc-admin-post-type.php:202
 #: templates/shortcode/zoom-webinar.php:33
-#: templates/shortcode/zoom-listing.php:59
+#: templates/shortcode/zoom-listing.php:60
 #: includes/Elementor/Widgets/MeetingHosts.php:106
 msgid "Type"
 msgstr ""
@@ -2143,7 +2141,7 @@ msgstr "Benutzertyp (Pflichtfeld)"
 msgid "Type your title here"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:136
+#: includes/admin/class-zvc-admin-post-type.php:147
 msgid "Upcoming"
 msgstr ""
 
@@ -2159,11 +2157,11 @@ msgstr "Aktualisiertes Meeting."
 msgid "Updated Webinar."
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:159
+#: includes/views/tabs/api-settings.php:287
 msgid "Use 24-hour format"
 msgstr ""
 
-#: includes/views/tabs/api-settings.php:166
+#: includes/views/tabs/api-settings.php:297
 msgid "Use full month label format ?"
 msgstr ""
 
@@ -2191,7 +2189,7 @@ msgstr ""
 msgid "Users"
 msgstr "Benutzer"
 
-#: includes/views/tabs/api-settings.php:16
+#: includes/views/tabs/api-settings.php:28
 msgid "Vanity URL"
 msgstr "Vanity URL"
 
@@ -2206,15 +2204,15 @@ msgid ""
 "and users directly from your WordPress dashboard."
 msgstr ""
 
-#: includes/views/tabs/debug.php:42
+#: includes/views/tabs/debug.php:43
 msgid "View"
 msgstr ""
 
-#: templates/shortcode/zoom-listing.php:76
+#: templates/shortcode/zoom-listing.php:79
 msgid "View Event"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:323
+#: includes/admin/class-zvc-admin-post-type.php:335
 msgid "View meetings"
 msgstr "Meetings anzeigen"
 
@@ -2222,11 +2220,11 @@ msgstr "Meetings anzeigen"
 msgid "View Recordings"
 msgstr ""
 
-#: includes/template-functions.php:322
+#: includes/template-functions.php:336
 msgid "Waiting - Not started"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:226
+#: includes/admin/class-zvc-admin-post-type.php:238
 msgid "Webinar"
 msgstr ""
 
@@ -2240,7 +2238,7 @@ msgstr ""
 msgid "Webinar Description."
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:174
+#: includes/Elementor/Widgets/WebinarList.php:176
 msgid "Webinar Display Threshold"
 msgstr ""
 
@@ -2257,7 +2255,7 @@ msgstr ""
 msgid "Webinar ID"
 msgstr ""
 
-#: includes/template-functions.php:188
+#: includes/template-functions.php:202
 msgid "Webinar is not defined. Try updating this Webinar"
 msgstr ""
 
@@ -2285,15 +2283,15 @@ msgstr ""
 msgid "Webinars"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:104
+#: includes/Elementor/Widgets/WebinarList.php:105
 msgid "Webinars Category"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:117
+#: includes/Elementor/Widgets/WebinarList.php:118
 msgid "Webinars Order By"
 msgstr ""
 
-#: includes/Elementor/Widgets/WebinarList.php:132
+#: includes/Elementor/Widgets/WebinarList.php:133
 msgid "Webinars Type"
 msgstr ""
 
@@ -2315,11 +2313,11 @@ msgid ""
 "Webinar Plan enabled in your account."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:376
+#: includes/admin/class-zvc-admin-post-type.php:391
 msgid "WooCommerce Integration?"
 msgstr "WooCommerce Integeration?"
 
-#: includes/template-functions.php:106
+#: includes/template-functions.php:114
 msgid "You are seeing this because you are the author of this post."
 msgstr ""
 
@@ -2345,31 +2343,31 @@ msgstr ""
 msgid "Your Name Here"
 msgstr ""
 
-#: includes/Blocks/Blocks.php:103
+#: includes/Blocks/Blocks.php:100
 msgid "Zoom"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:294
+#: includes/admin/class-zvc-admin-post-type.php:306
 msgctxt "Zoom Category Name"
 msgid "Category"
 msgstr "Kategorie"
 
-#: includes/admin/class-zvc-admin-post-type.php:363
+#: includes/admin/class-zvc-admin-post-type.php:378
 msgid "Zoom Details"
 msgstr "Zoom Details"
 
-#: includes/admin/class-zvc-admin-post-type.php:316
-#: includes/admin/class-zvc-admin-post-type.php:317
-#: includes/admin/class-zvc-admin-post-type.php:318
+#: includes/admin/class-zvc-admin-post-type.php:328
+#: includes/admin/class-zvc-admin-post-type.php:329
+#: includes/admin/class-zvc-admin-post-type.php:330
 msgctxt "Zoom Events"
 msgid "Zoom Events"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:254
+#: includes/admin/class-zvc-admin-settings.php:252
 msgid "Zoom Integration Settings"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:73
+#: includes/admin/class-zvc-admin-settings.php:71
 #: includes/views/tabs/connect.php:38
 #, php-format
 msgid ""
@@ -2390,7 +2388,7 @@ msgstr ""
 msgid "Zoom Meeting by Post ID"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-post-type.php:315
+#: includes/admin/class-zvc-admin-post-type.php:327
 msgctxt "Zoom Meetings and Webinars"
 msgid "Zoom Meetings and Webinars"
 msgstr ""
@@ -2403,7 +2401,7 @@ msgstr ""
 msgid "Zoom Meetings via Host"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:140
+#: includes/admin/class-zvc-admin-settings.php:138
 #, php-format
 msgid "Zoom Oauth Error Code: \"%s\"  -  %s "
 msgstr ""
@@ -2412,7 +2410,7 @@ msgstr ""
 msgid "Zoom Recordings by Host"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:191
+#: includes/admin/class-zvc-admin-settings.php:189
 msgid "Zoom Users"
 msgstr "Zoom Benutzer"
 
@@ -2424,6 +2422,6 @@ msgstr ""
 msgid "Zoom Webinars List"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-settings.php:158
+#: includes/admin/class-zvc-admin-settings.php:156
 msgid "Zoom: Credentials successfully verified and saved "
 msgstr ""

@@ -47,9 +47,9 @@ if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) 
                             <span>
                     <?php
                     if ( ! empty( $duration['hr'] ) ) {
-	                    echo _n( $duration['hr'] . ' hour', $duration['hr'] . ' hours', absint( $duration['hr'] ), 'video-conferencing-with-zoom-api' ) . ' ' . _n( $duration['min'] . ' minute', $duration['min'] . ' minutes', absint( $duration['min'] ), 'video-conferencing-with-zoom-api' );
+	                    printf( _n( '%s hour', '%s hours', $duration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['hr'] ) . ' ' . _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) );
                     } else {
-	                    echo _n( $duration['min'] . ' minute', $duration['min'] . ' minutes', absint( $duration['min'] ), 'video-conferencing-with-zoom-api' );
+	                    printf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) );
                     }
                     ?>
                 </span>
@@ -67,11 +67,11 @@ if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) 
                 <div class="dpn-zvc-sidebar-content"></div>
             </div>
         </div>
-	    <?php if ( ! empty( get_the_content() ) ) { ?>
+		<?php if ( ! empty( get_the_content() ) ) { ?>
             <div class="vczapi-show-by-postid-contents-sections-thecontent">
-			    <?php the_content(); ?>
+				<?php the_content(); ?>
             </div>
-	    <?php } ?>
+		<?php } ?>
     </div>
 	<?php
 }

@@ -167,9 +167,6 @@ final class Bootstrap {
 			wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 			// Localize the script with new data
 			$date_format = get_option( 'zoom_api_date_time_format' );
-			//check if custom time format
-			// that is it is in either of L LT, l LT,llll,lll,LLLL
-
 			if ( $date_format == 'custom' ) {
 				$date_format = get_option( 'zoom_api_custom_date_time_format' );
 				$date_format = vczapi_convertPHPToMomentFormat( $date_format );
@@ -184,7 +181,6 @@ final class Bootstrap {
 			) );
 			wp_localize_script( 'video-conferencing-with-zoom-api', 'zvc_strings', $translation_array );
 		}
-
 	}
 
 	/**
