@@ -39,16 +39,23 @@ class Zoom_Video_Conferencing_Recordings {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
 
 		//Check if any transient by name is available
+		$zoom_user_host_id = get_user_meta( get_current_user_id(), 'user_zoom_hostid', true );
 		if ( isset( $_GET['host_id'] ) ) {
+			$host_id = $_GET['host_id'];
+		} else if ( ! empty( $zoom_user_host_id ) ) {
+			$host_id = $zoom_user_host_id;
+		}
+
+		if ( ! empty( $host_id ) ) {
 			if ( isset( $_POST['check-recordings'] ) && isset( $_POST['date'] ) ) {
 				$search_date        = strtotime( $_POST['date'] );
 				$from               = date( 'Y-m-d', $search_date );
 				$to                 = date( 'Y-m-t', $search_date );
 				$postParams['from'] = $from;
 				$postParams['to']   = $to;
-				$recordings = json_decode( zoom_conference()->listRecording( $_GET['host_id'], $postParams ) );
+				$recordings         = json_decode( zoom_conference()->listRecording( $host_id, $postParams ) );
 			} else {
-				$recordings = json_decode( zoom_conference()->listRecording( $_GET['host_id'] ) );
+				$recordings = json_decode( zoom_conference()->listRecording( $host_id ) );
 			}
 		}
 

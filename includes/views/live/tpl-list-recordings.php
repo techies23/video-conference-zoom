@@ -11,7 +11,9 @@ $host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
     <p style="padding: 20px;" class="vczapi-notification vczapi-error"><strong><?php _e( "The maximum range can be a month. If no value is provided for this field, the default will be current date. For example, if you make the API request on June 30, 2020, without providing the “from” parameter, by default the value of ‘from’ field will be “2020-05-30” and the value of the ‘to’ field will be “2020-06-30”.", "video-conferencing-with-zoom-api" ); ?></strong></p>
 	<?php
 	video_conferencing_zoom_api_show_like_popup();
-	zvc_recordings()->get_hosts( $host_id, true );
+	if ( current_user_can('manage_options') ) {
+		zvc_recordings()->get_hosts( $host_id, true );
+	}
 	?>
     <div class="zvc_listing_table">
         <table id="zvc_meetings_list_table" class="display" width="100%">

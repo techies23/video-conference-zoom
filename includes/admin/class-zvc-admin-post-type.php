@@ -79,7 +79,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 	public function disable_block_editor( $enabled, $post_type ) {
 		if ( $post_type == $this->post_type ) {
-			$enabled = apply_filters('vczapi_enable_block_editor',false);
+			$enabled = apply_filters( 'vczapi_enable_block_editor', false );
 		}
 
 		return $enabled;
@@ -95,7 +95,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	public function filter_posts( $query ) {
 		global $pagenow;
 
-		if ( 'edit.php' != $pagenow || ! $query->is_admin || $query->query['post_type'] != $this->post_type ) {
+		if ( 'edit.php' != $pagenow || ! $query->is_admin || ( ! empty( $query->query['post_type'] ) && $query->query['post_type'] != $this->post_type ) ) {
 			return $query;
 		}
 
@@ -524,8 +524,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int      $post_id Post ID.
-	 * @param \WP_Post $post    Post object.
+	 * @param int $post_id Post ID.
+	 * @param \WP_Post $post Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.

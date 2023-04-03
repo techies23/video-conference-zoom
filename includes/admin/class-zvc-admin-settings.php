@@ -201,7 +201,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				'zoom_reports',
 			) );
 
-			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Recordings', 'video-conferencing-with-zoom-api' ), __( 'Recordings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-recordings', array(
+			add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Recordings', 'video-conferencing-with-zoom-api' ), __( 'Recordings', 'video-conferencing-with-zoom-api' ), apply_filters( 'vczapi_admin_settings_capabilities', 'edit_published_posts' ), 'zoom-video-conferencing-recordings', array(
 				'Zoom_Video_Conferencing_Recordings',
 				'zoom_recordings',
 			) );
