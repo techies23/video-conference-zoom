@@ -157,6 +157,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 4.1.8 Arpil 3rd, 2023 =
 * Added capability to view recordings by roles who have edit_posts capbilities.
+* Fixed: Duration of meeting not showing correctly when in hours and minutes.
 
 = 4.1.7 March 13th, 2023 =
 * Fix: Admin CSS not working in some pages.
