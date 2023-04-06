@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 11:15+0000\n"
-"PO-Revision-Date: 2023-03-09 11:02+0000\n"
+"PO-Revision-Date: 2023-04-05 07:44+0000\n"
 "Last-Translator: Deepen Bajracharya\n"
 "Language-Team: French (France)\n"
 "Language: fr_FR\n"
@@ -20,7 +20,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: fr_FR\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.3; wp-6.1.1\n"
+"X-Loco-Version: 2.6.3; wp-6.2\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: templates/join-web-browser.php:39
@@ -1151,7 +1151,7 @@ msgstr ""
 #: templates/fragments/countdown-timer.php:38
 #: templates/shortcode/embed-session.php:59
 msgid "minutes"
-msgstr "minutesss"
+msgstr "minutes"
 
 #: includes/views/webinars/tpl-list-webinars.php:26
 #: includes/views/live/tpl-list-meetings.php:38
