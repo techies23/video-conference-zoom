@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Video Conferencing with Zoom - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-03-09 11:15+0000\n"
+"PO-Revision-Date: 2023-04-07 04:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,10 +17,6 @@ msgstr ""
 "POT-Creation-Date: 2023-03-09 11:13+0000\n"
 "Last-Translator: Deepen Bajracharya\n"
 "X-Loco-Version: 2.6.3; wp-6.1.1"
-
-#: templates/join-web-browser.php:39
-msgid "!!!ALERT!!!: "
-msgstr "!!!ВНИМАНИЕ!!!:"
 
 #: templates/fragments/meeting-details.php:58
 #: templates/shortcode/meeting-by-post-id.php:50
@@ -71,7 +67,7 @@ msgstr ""
 
 #: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
-#: includes/views/live/tpl-list-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:27
 msgid "Action"
 msgstr "Действие"
 
@@ -242,7 +238,7 @@ msgstr "Вернуться к списку выбора вебинаров вы�
 msgid "Basic User"
 msgstr "Обычный пользователь"
 
-#: templates/join-web-browser.php:39
+#: templates/join-web-browser.php:54
 msgid ""
 "Browser did not detect a valid SSL certificate. Audio and Video for Zoom "
 "meeting will not work on a non HTTPS site, please install a valid SSL "
@@ -272,7 +268,7 @@ msgstr ""
 "это правильно. Неправильная установка значения приведет к невозможности "
 "отображения даты во внешнем интерфейсе."
 
-#: includes/admin/class-zvc-admin-recordings.php:79
+#: includes/admin/class-zvc-admin-recordings.php:86
 #: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
@@ -587,8 +583,8 @@ msgstr "Документация"
 
 #: includes/Shortcodes/Recordings.php:64 includes/Shortcodes/Recordings.php:65
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:58
-#: includes/views/live/tpl-list-recordings.php:59
+#: includes/views/live/tpl-list-recordings.php:60
+#: includes/views/live/tpl-list-recordings.php:61
 msgid "Download"
 msgstr "Скачать"
 
@@ -600,7 +596,7 @@ msgstr "Скачать"
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
 #: includes/views/live/tpl-edit-meeting.php:92
-#: includes/views/live/tpl-list-recordings.php:22
+#: includes/views/live/tpl-list-recordings.php:24
 #: includes/views/live/tpl-add-meetings.php:74
 #: includes/views/post-type/tpl-meeting-fields.php:167
 msgid "Duration"
@@ -619,6 +615,7 @@ msgstr "Редактировать вебинар"
 msgid "Edit Zoom Event"
 msgstr ""
 
+#: templates/join-web-browser.php:76
 #: includes/views/live/tpl-list-pending-users.php:18
 #: includes/views/live/tpl-assign-host-id.php:31
 #: includes/views/live/tpl-list-users.php:34
@@ -682,7 +679,11 @@ msgstr ""
 msgid "Enter a value to Check..."
 msgstr "Введите значение для проверки ..."
 
-#: includes/admin/class-zvc-admin-recordings.php:78
+#: templates/join-web-browser.php:48
+msgid "Enter below details to join this Zoom Event."
+msgstr ""
+
+#: includes/admin/class-zvc-admin-recordings.php:85
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
 msgstr "Введите дату для проверки:"
@@ -709,12 +710,12 @@ msgstr ""
 "зависимости от того, сколько у вас конференции Zoom."
 
 #: includes/Shortcodes/Recordings.php:54
-#: includes/views/live/tpl-list-recordings.php:53
+#: includes/views/live/tpl-list-recordings.php:55
 msgid "File Size"
 msgstr "Размер файла"
 
 #: includes/Shortcodes/Recordings.php:53
-#: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:53
 msgid "File Type"
 msgstr "Тип файла"
 
@@ -864,8 +865,7 @@ msgstr "Неверный ID конференции"
 msgid "Is Webinar ?"
 msgstr "Вебинар ?"
 
-#: templates/join-web-browser.php:103 templates/shortcode/join-links.php:19
-#: templates/shortcode/join-links.php:28
+#: templates/shortcode/join-links.php:19 templates/shortcode/join-links.php:28
 #: templates/shortcode/webinar-join-links.php:19
 #: templates/shortcode/webinar-join-links.php:28
 msgid "Join"
@@ -876,6 +876,10 @@ msgstr "Подключиться"
 #: includes/views/post-type/tpl-meeting-fields.php:214
 msgid "Join Before Host"
 msgstr "Вход перед ведущим"
+
+#: templates/join-web-browser.php:121
+msgid "Join Event via Browser"
+msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:453
 msgid "Join Meeting"
@@ -982,6 +986,10 @@ msgstr ""
 msgid "Local"
 msgstr "Локальный"
 
+#: templates/join-web-browser.php:100
+msgid "Locale"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-settings.php:274
 msgid "Logs"
 msgstr ""
@@ -1064,7 +1072,7 @@ msgstr "Учетная запись ZOOM"
 #: includes/Elementor/Widgets/EmbedMeetings.php:94
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:93
 #: includes/views/live/tpl-list-meetings.php:62
-#: includes/views/live/tpl-list-recordings.php:20
+#: includes/views/live/tpl-list-recordings.php:22
 msgid "Meeting ID"
 msgstr "ID конференции"
 
@@ -1087,7 +1095,7 @@ msgstr "Минуты конференции"
 msgid "Meeting not created yet."
 msgstr "Конференция еще не создана."
 
-#: templates/join-web-browser.php:68
+#: templates/join-web-browser.php:85
 #: includes/Elementor/Widgets/EmbedMeetings.php:174
 #: includes/Elementor/Widgets/EmbedMeetings.php:176
 #: includes/views/live/tpl-edit-meeting.php:99
@@ -1204,7 +1212,7 @@ msgstr "Отключить звук участников при входе"
 msgid "Mutes Participants when entering the meeting."
 msgstr "Отключение звука участников при входе в конференцию."
 
-#: includes/views/live/tpl-list-users.php:35
+#: templates/join-web-browser.php:63 includes/views/live/tpl-list-users.php:35
 msgid "Name"
 msgstr "Имя"
 
@@ -1308,6 +1316,10 @@ msgstr "В корзине не найдено событий масштабир�
 msgid "No zoom events found."
 msgstr ""
 
+#: templates/join-web-browser.php:53
+msgid "NOTICE"
+msgstr ""
+
 #: includes/views/migration.php:26 includes/views/tabs/connect.php:89
 msgid "Oauth Account ID"
 msgstr ""
@@ -1377,7 +1389,7 @@ msgstr "Участники "
 msgid "Participants Video"
 msgstr "Видео участников"
 
-#: templates/shortcode/embed-session.php:95
+#: templates/join-web-browser.php:84 templates/shortcode/embed-session.php:95
 #: includes/views/post-type/tpl-meeting-fields.php:188
 msgid "Password"
 msgstr "Пароль"
@@ -1414,8 +1426,8 @@ msgstr "Персональная комната"
 
 #: includes/Shortcodes/Recordings.php:61
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:55
-#: includes/views/live/tpl-list-recordings.php:56
+#: includes/views/live/tpl-list-recordings.php:57
+#: includes/views/live/tpl-list-recordings.php:58
 msgid "Play"
 msgstr "Воспроизвести"
 
@@ -1528,7 +1540,7 @@ msgstr ""
 "URL"
 
 #: templates/shortcode/zoom-recordings.php:25
-#: includes/views/live/tpl-list-recordings.php:23
+#: includes/views/live/tpl-list-recordings.php:25
 msgid "Recorded"
 msgstr "Записано"
 
@@ -1704,7 +1716,7 @@ msgstr "Выбрать конференцию"
 msgid "Select a month to filter:"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:21
+#: includes/admin/class-zvc-admin-recordings.php:94 includes/views/sync.php:21
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
@@ -1829,7 +1841,7 @@ msgstr ""
 
 #: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
-#: includes/views/live/tpl-list-recordings.php:24
+#: includes/views/live/tpl-list-recordings.php:26
 msgid "Size"
 msgstr "Размер"
 
@@ -2171,7 +2183,7 @@ msgstr "Для "
 #: templates/shortcode/list-meetings-host.php:16
 #: includes/views/webinars/tpl-list-webinars.php:63
 #: includes/views/live/tpl-list-meetings.php:64
-#: includes/views/live/tpl-list-recordings.php:21
+#: includes/views/live/tpl-list-recordings.php:23
 msgid "Topic"
 msgstr "Тема"
 
@@ -2432,7 +2444,7 @@ msgstr ""
 "Вы не можете обновить тип встречи. Это не позволяет избежать конфликтных "
 "ситуаций."
 
-#: templates/join-web-browser.php:114
+#: templates/join-web-browser.php:134
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
@@ -2440,11 +2452,11 @@ msgstr ""
 "У вас недостаточно прав для доступа к этой странице. Пожалуйста, войдите, "
 "чтобы продолжить, или обратитесь к администратору."
 
-#: templates/join-web-browser.php:61
+#: templates/join-web-browser.php:77
 msgid "Your Email Here"
 msgstr "Ваш адрес электронной почты здесь"
 
-#: templates/join-web-browser.php:49
+#: templates/join-web-browser.php:64
 msgid "Your Name Here"
 msgstr "Ваше имя"
 

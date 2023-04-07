@@ -22,20 +22,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZVC_PLUGIN_FILE', __FILE__ );
-define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
-define( 'ZVC_PLUGIN_VERSION', '4.1.9' );
-define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.11.0' );
-define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
-define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
-define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin' );
-define( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/public' );
-define( 'ZVC_PLUGIN_VENDOR_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/vendor' );
-define( 'ZVC_PLUGIN_VIEWS_PATH', ZVC_PLUGIN_DIR_PATH . 'includes/views' );
-define( 'ZVC_PLUGIN_INCLUDES_PATH', ZVC_PLUGIN_DIR_PATH . 'includes' );
-define( 'ZVC_PLUGIN_IMAGES_PATH', ZVC_PLUGIN_DIR_URL . 'assets/images' );
-define( 'ZVC_PLUGIN_LANGUAGE_PATH', trailingslashit( basename( ZVC_PLUGIN_DIR_PATH ) ) . 'languages/' );
-define( 'ZVC_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
+defined( 'ZVC_PLUGIN_FILE' ) || define( 'ZVC_PLUGIN_FILE', __FILE__ );
+defined( 'ZVC_PLUGIN_SLUG' ) || define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
+defined( 'ZVC_PLUGIN_VERSION' ) || define( 'ZVC_PLUGIN_VERSION', '4.1.9' );
+defined( 'ZVC_ZOOM_WEBSDK_VERSION' ) || define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.11.0' );
+defined( 'ZVC_PLUGIN_DIR_PATH' ) || define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+defined( 'ZVC_PLUGIN_DIR_URL' ) || define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
+defined( 'ZVC_PLUGIN_ADMIN_ASSETS_URL' ) || define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin' );
+defined( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL' ) || define( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/public' );
+defined( 'ZVC_PLUGIN_VENDOR_ASSETS_URL' ) || define( 'ZVC_PLUGIN_VENDOR_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/vendor' );
+defined( 'ZVC_PLUGIN_VIEWS_PATH' ) || define( 'ZVC_PLUGIN_VIEWS_PATH', ZVC_PLUGIN_DIR_PATH . 'includes/views' );
+defined( 'ZVC_PLUGIN_INCLUDES_PATH' ) || define( 'ZVC_PLUGIN_INCLUDES_PATH', ZVC_PLUGIN_DIR_PATH . 'includes' );
+defined( 'ZVC_PLUGIN_IMAGES_PATH' ) || define( 'ZVC_PLUGIN_IMAGES_PATH', ZVC_PLUGIN_DIR_URL . 'assets/images' );
+defined( 'ZVC_PLUGIN_LANGUAGE_PATH' ) || define( 'ZVC_PLUGIN_LANGUAGE_PATH', trailingslashit( basename( ZVC_PLUGIN_DIR_PATH ) ) . 'languages/' );
+defined( 'ZVC_PLUGIN_ABS_NAME' ) || define( 'ZVC_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
 
 $upload_dir = wp_upload_dir( null, false );
 define( 'ZVC_LOG_DIR', $upload_dir['basedir'] . '/vczapi-logs/' );

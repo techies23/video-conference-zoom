@@ -18,14 +18,10 @@ msgstr ""
 "Last-Translator: Deepen Bajracharya <dpen.connectify@gmail.com>\n"
 "Language: de_DE\n"
 "POT-Creation-Date: 2020-08-04 11:15+0000\n"
-"PO-Revision-Date: 2023-03-09 11:19+0000\n"
+"PO-Revision-Date: 2023-04-07 04:01+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Loco-Version: 2.3.1; wp-5.4.2"
-
-#: templates/join-web-browser.php:39
-msgid "!!!ALERT!!!: "
-msgstr ""
 
 #: templates/fragments/meeting-details.php:58
 #: templates/shortcode/meeting-by-post-id.php:50
@@ -69,7 +65,7 @@ msgstr ""
 
 #: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
-#: includes/views/live/tpl-list-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:27
 msgid "Action"
 msgstr ""
 
@@ -232,7 +228,7 @@ msgstr ""
 msgid "Basic User"
 msgstr "Basislizenz"
 
-#: templates/join-web-browser.php:39
+#: templates/join-web-browser.php:54
 msgid ""
 "Browser did not detect a valid SSL certificate. Audio and Video for Zoom "
 "meeting will not work on a non HTTPS site, please install a valid SSL "
@@ -255,7 +251,7 @@ msgid ""
 "frontend."
 msgstr ""
 
-#: includes/admin/class-zvc-admin-recordings.php:79
+#: includes/admin/class-zvc-admin-recordings.php:86
 #: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
@@ -564,8 +560,8 @@ msgstr "Anleitung"
 
 #: includes/Shortcodes/Recordings.php:64 includes/Shortcodes/Recordings.php:65
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:58
-#: includes/views/live/tpl-list-recordings.php:59
+#: includes/views/live/tpl-list-recordings.php:60
+#: includes/views/live/tpl-list-recordings.php:61
 msgid "Download"
 msgstr ""
 
@@ -577,7 +573,7 @@ msgstr ""
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
 #: includes/views/live/tpl-edit-meeting.php:92
-#: includes/views/live/tpl-list-recordings.php:22
+#: includes/views/live/tpl-list-recordings.php:24
 #: includes/views/live/tpl-add-meetings.php:74
 #: includes/views/post-type/tpl-meeting-fields.php:167
 msgid "Duration"
@@ -596,6 +592,7 @@ msgstr ""
 msgid "Edit Zoom Event"
 msgstr ""
 
+#: templates/join-web-browser.php:76
 #: includes/views/live/tpl-list-pending-users.php:18
 #: includes/views/live/tpl-assign-host-id.php:31
 #: includes/views/live/tpl-list-users.php:34
@@ -657,7 +654,11 @@ msgstr ""
 msgid "Enter a value to Check..."
 msgstr "Einen Wert zur Überprüfung eingeben..."
 
-#: includes/admin/class-zvc-admin-recordings.php:78
+#: templates/join-web-browser.php:48
+msgid "Enter below details to join this Zoom Event."
+msgstr ""
+
+#: includes/admin/class-zvc-admin-recordings.php:85
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
 msgstr "Gib das Datum zur Überprüfung ein:"
@@ -682,12 +683,12 @@ msgid ""
 msgstr ""
 
 #: includes/Shortcodes/Recordings.php:54
-#: includes/views/live/tpl-list-recordings.php:53
+#: includes/views/live/tpl-list-recordings.php:55
 msgid "File Size"
 msgstr ""
 
 #: includes/Shortcodes/Recordings.php:53
-#: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:53
 msgid "File Type"
 msgstr ""
 
@@ -832,8 +833,7 @@ msgstr ""
 msgid "Is Webinar ?"
 msgstr ""
 
-#: templates/join-web-browser.php:103 templates/shortcode/join-links.php:19
-#: templates/shortcode/join-links.php:28
+#: templates/shortcode/join-links.php:19 templates/shortcode/join-links.php:28
 #: templates/shortcode/webinar-join-links.php:19
 #: templates/shortcode/webinar-join-links.php:28
 msgid "Join"
@@ -844,6 +844,10 @@ msgstr "Teilnehmen"
 #: includes/views/post-type/tpl-meeting-fields.php:214
 msgid "Join Before Host"
 msgstr "Vor dem Gastgeber teilnehmen"
+
+#: templates/join-web-browser.php:121
+msgid "Join Event via Browser"
+msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:453
 msgid "Join Meeting"
@@ -950,6 +954,10 @@ msgstr ""
 msgid "Local"
 msgstr ""
 
+#: templates/join-web-browser.php:100
+msgid "Locale"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-settings.php:274
 msgid "Logs"
 msgstr ""
@@ -1030,7 +1038,7 @@ msgstr "Meeting Gastgeber *"
 #: includes/Elementor/Widgets/EmbedMeetings.php:94
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:93
 #: includes/views/live/tpl-list-meetings.php:62
-#: includes/views/live/tpl-list-recordings.php:20
+#: includes/views/live/tpl-list-recordings.php:22
 msgid "Meeting ID"
 msgstr "Meeting ID"
 
@@ -1053,7 +1061,7 @@ msgstr "Meeting Protokoll"
 msgid "Meeting not created yet."
 msgstr ""
 
-#: templates/join-web-browser.php:68
+#: templates/join-web-browser.php:85
 #: includes/Elementor/Widgets/EmbedMeetings.php:174
 #: includes/Elementor/Widgets/EmbedMeetings.php:176
 #: includes/views/live/tpl-edit-meeting.php:99
@@ -1168,7 +1176,7 @@ msgstr "Teilnehmer beim Betreten stumm schalten"
 msgid "Mutes Participants when entering the meeting."
 msgstr "Schaltet die Teilnehmer beim Betreten des Meetings stumm."
 
-#: includes/views/live/tpl-list-users.php:35
+#: templates/join-web-browser.php:63 includes/views/live/tpl-list-users.php:35
 msgid "Name"
 msgstr "Name"
 
@@ -1272,6 +1280,10 @@ msgstr "Keine Zoom-Ereignisse im Papierkorb gefunden."
 msgid "No zoom events found."
 msgstr ""
 
+#: templates/join-web-browser.php:53
+msgid "NOTICE"
+msgstr ""
+
 #: includes/views/migration.php:26 includes/views/tabs/connect.php:89
 msgid "Oauth Account ID"
 msgstr ""
@@ -1335,7 +1347,7 @@ msgstr "Teilnehmer"
 msgid "Participants Video"
 msgstr "Teilnehmer Video starten"
 
-#: templates/shortcode/embed-session.php:95
+#: templates/join-web-browser.php:84 templates/shortcode/embed-session.php:95
 #: includes/views/post-type/tpl-meeting-fields.php:188
 msgid "Password"
 msgstr ""
@@ -1369,8 +1381,8 @@ msgstr ""
 
 #: includes/Shortcodes/Recordings.php:61
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:55
-#: includes/views/live/tpl-list-recordings.php:56
+#: includes/views/live/tpl-list-recordings.php:57
+#: includes/views/live/tpl-list-recordings.php:58
 msgid "Play"
 msgstr ""
 
@@ -1481,7 +1493,7 @@ msgid ""
 msgstr ""
 
 #: templates/shortcode/zoom-recordings.php:25
-#: includes/views/live/tpl-list-recordings.php:23
+#: includes/views/live/tpl-list-recordings.php:25
 msgid "Recorded"
 msgstr ""
 
@@ -1652,7 +1664,7 @@ msgstr ""
 msgid "Select a month to filter:"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:21
+#: includes/admin/class-zvc-admin-recordings.php:94 includes/views/sync.php:21
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
@@ -1775,7 +1787,7 @@ msgstr ""
 
 #: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
-#: includes/views/live/tpl-list-recordings.php:24
+#: includes/views/live/tpl-list-recordings.php:26
 msgid "Size"
 msgstr ""
 
@@ -2078,7 +2090,7 @@ msgstr "An"
 #: templates/shortcode/list-meetings-host.php:16
 #: includes/views/webinars/tpl-list-webinars.php:63
 #: includes/views/live/tpl-list-meetings.php:64
-#: includes/views/live/tpl-list-recordings.php:21
+#: includes/views/live/tpl-list-recordings.php:23
 msgid "Topic"
 msgstr "Thema"
 
@@ -2327,7 +2339,7 @@ msgid ""
 "issues."
 msgstr ""
 
-#: templates/join-web-browser.php:114
+#: templates/join-web-browser.php:134
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
@@ -2335,11 +2347,11 @@ msgstr ""
 "Zu hast keinen Zugang zu dieser Seite. Bitte melde Dich an um fortzufahren "
 "oder kontaktiere den Administrator."
 
-#: templates/join-web-browser.php:61
+#: templates/join-web-browser.php:77
 msgid "Your Email Here"
 msgstr ""
 
-#: templates/join-web-browser.php:49
+#: templates/join-web-browser.php:64
 msgid "Your Name Here"
 msgstr ""
 

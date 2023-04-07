@@ -18,14 +18,10 @@ msgstr ""
 "Last-Translator: Deepen Bajracharya <dpen.connectify@gmail.com>\n"
 "Language: nl_NL\n"
 "POT-Creation-Date: 2020-08-04 11:15+0000\n"
-"PO-Revision-Date: 2023-03-09 11:04+0000\n"
+"PO-Revision-Date: 2023-04-07 04:00+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.1; wp-5.4.2\n"
 "X-Poedit-SearchPath-0: ..\n"
-
-#: templates/join-web-browser.php:39
-msgid "!!!ALERT!!!: "
-msgstr "!!! WAARSCHUWING !!!:"
 
 #: templates/fragments/meeting-details.php:58
 #: templates/shortcode/meeting-by-post-id.php:50
@@ -72,7 +68,7 @@ msgstr ""
 
 #: templates/shortcode/zoom-recordings.php:27
 #: templates/shortcode/zoom-recordings-by-meeting.php:56
-#: includes/views/live/tpl-list-recordings.php:25
+#: includes/views/live/tpl-list-recordings.php:27
 msgid "Action"
 msgstr "Aktie"
 
@@ -238,7 +234,7 @@ msgstr "Terug naar de geselecteerde lijst met hostwebinars"
 msgid "Basic User"
 msgstr "Basis licentie"
 
-#: templates/join-web-browser.php:39
+#: templates/join-web-browser.php:54
 msgid ""
 "Browser did not detect a valid SSL certificate. Audio and Video for Zoom "
 "meeting will not work on a non HTTPS site, please install a valid SSL "
@@ -268,7 +264,7 @@ msgstr ""
 "correct. Als de waarde niet correct wordt geplaatst, kan de datum niet in de "
 "frontend worden weergegeven."
 
-#: includes/admin/class-zvc-admin-recordings.php:79
+#: includes/admin/class-zvc-admin-recordings.php:86
 #: templates/shortcode/zoom-recordings.php:16
 #: includes/views/live/tpl-reports.php:51
 msgid "Check"
@@ -589,8 +585,8 @@ msgstr "Documentatie"
 
 #: includes/Shortcodes/Recordings.php:64 includes/Shortcodes/Recordings.php:65
 #: templates/shortcode/zoom-recordings-by-meeting.php:30
-#: includes/views/live/tpl-list-recordings.php:58
-#: includes/views/live/tpl-list-recordings.php:59
+#: includes/views/live/tpl-list-recordings.php:60
+#: includes/views/live/tpl-list-recordings.php:61
 msgid "Download"
 msgstr "Download"
 
@@ -602,7 +598,7 @@ msgstr "Download"
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
 #: includes/views/live/tpl-edit-meeting.php:92
-#: includes/views/live/tpl-list-recordings.php:22
+#: includes/views/live/tpl-list-recordings.php:24
 #: includes/views/live/tpl-add-meetings.php:74
 #: includes/views/post-type/tpl-meeting-fields.php:167
 msgid "Duration"
@@ -621,6 +617,7 @@ msgstr "Webinar Bewerken"
 msgid "Edit Zoom Event"
 msgstr ""
 
+#: templates/join-web-browser.php:76
 #: includes/views/live/tpl-list-pending-users.php:18
 #: includes/views/live/tpl-assign-host-id.php:31
 #: includes/views/live/tpl-list-users.php:34
@@ -684,7 +681,11 @@ msgstr ""
 msgid "Enter a value to Check..."
 msgstr "Voer een waarde in om te controleren ..."
 
-#: includes/admin/class-zvc-admin-recordings.php:78
+#: templates/join-web-browser.php:48
+msgid "Enter below details to join this Zoom Event."
+msgstr ""
+
+#: includes/admin/class-zvc-admin-recordings.php:85
 #: includes/views/live/tpl-reports.php:50
 msgid "Enter the date to check:"
 msgstr "Voer de datum in om te controleren:"
@@ -711,12 +712,12 @@ msgstr ""
 "van het aantal Zoom-Meetings dat u heeft."
 
 #: includes/Shortcodes/Recordings.php:54
-#: includes/views/live/tpl-list-recordings.php:53
+#: includes/views/live/tpl-list-recordings.php:55
 msgid "File Size"
 msgstr "Bestandsgrootte"
 
 #: includes/Shortcodes/Recordings.php:53
-#: includes/views/live/tpl-list-recordings.php:51
+#: includes/views/live/tpl-list-recordings.php:53
 msgid "File Type"
 msgstr "Bestandstype"
 
@@ -863,8 +864,7 @@ msgstr "Ongeldige Meeting ID."
 msgid "Is Webinar ?"
 msgstr ""
 
-#: templates/join-web-browser.php:103 templates/shortcode/join-links.php:19
-#: templates/shortcode/join-links.php:28
+#: templates/shortcode/join-links.php:19 templates/shortcode/join-links.php:28
 #: templates/shortcode/webinar-join-links.php:19
 #: templates/shortcode/webinar-join-links.php:28
 msgid "Join"
@@ -875,6 +875,10 @@ msgstr "Deelnemen"
 #: includes/views/post-type/tpl-meeting-fields.php:214
 msgid "Join Before Host"
 msgstr "Deelnemen voordat Host inlogd"
+
+#: templates/join-web-browser.php:121
+msgid "Join Event via Browser"
+msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:453
 msgid "Join Meeting"
@@ -981,6 +985,10 @@ msgstr ""
 msgid "Local"
 msgstr "Lokaal"
 
+#: templates/join-web-browser.php:100
+msgid "Locale"
+msgstr ""
+
 #: includes/admin/class-zvc-admin-settings.php:274
 msgid "Logs"
 msgstr ""
@@ -1063,7 +1071,7 @@ msgstr "Meeting Host *"
 #: includes/Elementor/Widgets/EmbedMeetings.php:94
 #: includes/Elementor/Widgets/RecordingByMeetingID.php:93
 #: includes/views/live/tpl-list-meetings.php:62
-#: includes/views/live/tpl-list-recordings.php:20
+#: includes/views/live/tpl-list-recordings.php:22
 msgid "Meeting ID"
 msgstr "Meeting ID"
 
@@ -1086,7 +1094,7 @@ msgstr "Notulen van de Vergadering"
 msgid "Meeting not created yet."
 msgstr "Meeting nog niet aangemaakt."
 
-#: templates/join-web-browser.php:68
+#: templates/join-web-browser.php:85
 #: includes/Elementor/Widgets/EmbedMeetings.php:174
 #: includes/Elementor/Widgets/EmbedMeetings.php:176
 #: includes/views/live/tpl-edit-meeting.php:99
@@ -1204,7 +1212,7 @@ msgstr "Deelnemers dempen bij deelname"
 msgid "Mutes Participants when entering the meeting."
 msgstr "Dempt deelnemers bij het betreden van de vergadering."
 
-#: includes/views/live/tpl-list-users.php:35
+#: templates/join-web-browser.php:63 includes/views/live/tpl-list-users.php:35
 msgid "Name"
 msgstr "Naam"
 
@@ -1308,6 +1316,10 @@ msgstr "Geen zoomgebeurtenissen gevonden in de prullenbak."
 msgid "No zoom events found."
 msgstr ""
 
+#: templates/join-web-browser.php:53
+msgid "NOTICE"
+msgstr ""
+
 #: includes/views/migration.php:26 includes/views/tabs/connect.php:89
 msgid "Oauth Account ID"
 msgstr ""
@@ -1377,7 +1389,7 @@ msgstr "Deelnemer"
 msgid "Participants Video"
 msgstr "Deelnemersvideo starten"
 
-#: templates/shortcode/embed-session.php:95
+#: templates/join-web-browser.php:84 templates/shortcode/embed-session.php:95
 #: includes/views/post-type/tpl-meeting-fields.php:188
 msgid "Password"
 msgstr "Wachtwoord"
@@ -1414,8 +1426,8 @@ msgstr "Persoonlijke vergaderruimte"
 
 #: includes/Shortcodes/Recordings.php:61
 #: templates/shortcode/zoom-recordings-by-meeting.php:28
-#: includes/views/live/tpl-list-recordings.php:55
-#: includes/views/live/tpl-list-recordings.php:56
+#: includes/views/live/tpl-list-recordings.php:57
+#: includes/views/live/tpl-list-recordings.php:58
 msgid "Play"
 msgstr "Afspelem"
 
@@ -1532,7 +1544,7 @@ msgstr ""
 "                                URL's"
 
 #: templates/shortcode/zoom-recordings.php:25
-#: includes/views/live/tpl-list-recordings.php:23
+#: includes/views/live/tpl-list-recordings.php:25
 msgid "Recorded"
 msgstr "Opgenomen"
 
@@ -1707,7 +1719,7 @@ msgstr "Selecteer een Meeting"
 msgid "Select a month to filter:"
 msgstr ""
 
-#: includes/admin/class-zvc-admin-recordings.php:87 includes/views/sync.php:21
+#: includes/admin/class-zvc-admin-recordings.php:94 includes/views/sync.php:21
 #: includes/views/webinars/tpl-list-webinars.php:39
 #: includes/views/live/tpl-list-meetings.php:44
 msgid "Select a User"
@@ -1830,7 +1842,7 @@ msgstr "Alles weergeven"
 
 #: templates/shortcode/zoom-recordings.php:26
 #: templates/shortcode/zoom-recordings-by-meeting.php:55
-#: includes/views/live/tpl-list-recordings.php:24
+#: includes/views/live/tpl-list-recordings.php:26
 msgid "Size"
 msgstr "Grootte"
 
@@ -2152,7 +2164,7 @@ msgstr "Aan"
 #: templates/shortcode/list-meetings-host.php:16
 #: includes/views/webinars/tpl-list-webinars.php:63
 #: includes/views/live/tpl-list-meetings.php:64
-#: includes/views/live/tpl-list-recordings.php:21
+#: includes/views/live/tpl-list-recordings.php:23
 msgid "Topic"
 msgstr "Onderwerp"
 
@@ -2412,7 +2424,7 @@ msgstr ""
 "U kunt het vergadertype niet bijwerken. Dit is niet toegestaan ​​om "
 "eventuele conflictkwesties te vermijden."
 
-#: templates/join-web-browser.php:114
+#: templates/join-web-browser.php:134
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."
@@ -2420,11 +2432,11 @@ msgstr ""
 "U heeft niet voldoende rechten om toegang te krijgen tot deze pagina. Log in "
 "om door te gaan of neem contact op met de beheerder."
 
-#: templates/join-web-browser.php:61
+#: templates/join-web-browser.php:77
 msgid "Your Email Here"
 msgstr ""
 
-#: templates/join-web-browser.php:49
+#: templates/join-web-browser.php:64
 msgid "Your Name Here"
 msgstr ""
 
