@@ -8,59 +8,104 @@
   top: 0;
 }
 
-#vczapi-zoom-browser-meeting {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
+#zmmtg-root {
+  display: none;
+}
 
-  &--container {
-    width: 400px;
-  }
+.join-via-browser-body {
+  background: #f2f2f2;
+  min-width: 100vw !important;
+  width: 100vw !important;
 
-  .vczapi-zoom-browser-meeting--meeting-form {
-    input[type=text],
-    input[type=password],
-    button[type=submit],
-    input[type=email],
-    select {
-      height: 40px;
-      border-radius: 0;
+  #vczapi-zoom-browser-meeting {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+
+    .logo {
+      text-align: center;
     }
 
-    button[type=submit] {
-      background-color: #2d8cff;
-      width: 100%;
-      color: #fff;
+    #vczapi-zoom-browser-meeting--container {
+      background: #fff;
+      padding: 40px;
+      box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+      -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+      -webkit-box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+      -o-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+      -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+
+      @media only screen and (max-width: 767px) {
+        margin-inline: 20px;
+        padding: 20px;
+
+        .vczapi-zoom-browser-meeting--meeting-form {
+          input, button {
+            width: 100%;
+          }
+        }
+
+        .logo {
+          img {
+            width: 70px;
+          }
+
+          h3 {
+            font-size: 18px;
+          }
+
+          p {
+            font-size: 14px;
+          }
+        }
+      }
     }
 
-    .form-group {
+    @media only screen and (min-width: 767px) {
+      .container {
+        width: 500px;
+      }
+
+      .vczapi-zoom-browser-meeting--meeting-form {
+        input[type=text],
+        input[type=password],
+        button[type=submit],
+        input[type=email],
+        select {
+          height: 40px;
+        }
+
+        button[type=submit] {
+          background-color: #2d8cff;
+          width: 100%;
+          color: #fff;
+        }
+      }
+    }
+
+    .img-fluid {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h3 {
+      line-height: 1.5;
+    }
+
+    .mb-4 {
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      color: #838383;
+      font-weight: 300;
+    }
+
+    label {
+      font-weight: bold;
       margin-bottom: 10px;
-    }
-  }
-
-  .vczapi-zoom-browser-meeting--info {
-    background: #fff;
-    padding: 20px 30px;
-    margin-bottom: 10px;
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-  }
-
-  @media only screen and (max-width: 767px) {
-    .vczapi-zoom-browser-meeting--info {
-      width: 300px;
-    }
-
-    #vczapi-zoom-browser-meeting--container,
-    .vczapi-zoom-browser-meeting--meeting-form input[type=text],
-    .vczapi-zoom-browser-meeting--meeting-form button[type=submit] {
-      width: 300px;
     }
   }
 }
@@ -146,7 +191,7 @@
   }
 
   &-links {
-    margin-top:10px;
+    margin-top: 10px;
     display: flex;
 
     .btn {

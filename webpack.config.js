@@ -43,8 +43,7 @@ const publicConfig = {
   entry: {
     'join-via-browser': './src/public/js/join-via-browser.js',
     public: './src/public/js/public.js',
-    shortcode: './src/public/js/shortcode.js',
-    'zoom-meeting': './src/public/vendor/zoom-meeting.js',
+    shortcode: './src/public/js/shortcode.js'
   },
   output: {
     filename: './assets/public/js/[name].min.js',
@@ -76,4 +75,59 @@ const wp = {
   }
 }
 
-module.exports = [wp, publicConfig, backendConfig]
+let modules = [wp, publicConfig, backendConfig]
+if (isProduction) {
+  let webSDKConfig = {
+    cache: false,
+    entry: {
+      'zoom-meeting': {
+        import: './src/public/vendor/zoom-meeting.js',
+        dependOn: 'websdk',
+      },
+      'websdk': '@zoomus/websdk'
+    },
+    output: {
+      filename: './assets/vendor/zoom/websdk/[name].bundle.js',
+      path: path.resolve(__dirname)
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader'
+        },
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader']
+        },
+        {
+          test: /\.(jpg|png|svg)$/,
+          type: 'asset'
+        }
+      ]
+    },
+    resolve: {
+      extensions: ['.js', '.jsx']
+    },
+    externals: {
+      'babel-polyfill': 'babel-polyfill',
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      redux: 'Redux',
+      'redux-thunk': 'ReduxThunk',
+      lodash: {
+        commonjs: 'lodash',
+        amd: 'lodash',
+        root: '_',
+        var: '_'
+      }
+    },
+    target: 'web',
+    mode: 'production'
+  }
+
+  modules.push(webSDKConfig)
+}
+
+module.exports = modules

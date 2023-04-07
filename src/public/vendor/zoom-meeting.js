@@ -1,3 +1,5 @@
+import { ZoomMtg } from '@zoomus/websdk'
+
 /**
  * Zoom Meeting Join via Browser App
  *
@@ -21,14 +23,7 @@ const ZoomMtgApp = {
    * Initialize the SDK
    */
   initSDK: function () {
-    const browseinfo = ZoomMtg.checkSystemRequirements()
-    const unorderedLists = document.createElement('ul')
-    let listElements = '<li><strong>Browser Info:</strong> ' + browseinfo.browserInfo + '</li>'
-    listElements += '<li><strong>Browser Name:</strong> ' + browseinfo.browserName + '</li>'
-    listElements += '<li><strong>Browser Version:</strong> ' + browseinfo.browserVersion + '</li>'
-    unorderedLists.innerHTML = listElements
-    this.infoContainer.appendChild(unorderedLists)
-
+    ZoomMtg.setZoomJSLib('https://source.zoom.us/' + zvc_ajx.sdk_version + '/lib', '/av')
     ZoomMtg.preLoadWasm()
     ZoomMtg.prepareWebSDK()
   },
@@ -99,7 +94,7 @@ const ZoomMtgApp = {
     const pwd = document.getElementById('meeting_password')
 
     if (display_name !== null && (display_name.value === null || display_name.value === '')) {
-      this.infoContainer.innerHTML = 'Error: Name is Required!'
+      this.infoContainer.innerHTML = 'Validation: Name is Required!'
       this.infoContainer.style.color = 'red'
       this.removeLoader()
       return false
@@ -107,7 +102,7 @@ const ZoomMtgApp = {
 
     //Email Validation
     if (email !== null && (email.value === null || email.value === '')) {
-      this.infoContainer.innerHTML = 'Error: Email is Required!'
+      this.infoContainer.innerHTML = 'Validation: Email is Required!'
       this.infoContainer.style.color = 'red'
       this.removeLoader()
       return false
@@ -115,7 +110,7 @@ const ZoomMtgApp = {
 
     //Password Validation
     if (pwd !== null && (pwd.value === null || pwd.value === '')) {
-      this.infoContainer.innerHTML = 'Error: Password is Required!'
+      this.infoContainer.innerHTML = 'Validation: Password is Required!'
       this.infoContainer.style.color = 'red'
       this.removeLoader()
       return false
@@ -124,6 +119,8 @@ const ZoomMtgApp = {
     if (this.meetingID != null || this.meetingID !== '') {
       this.generateSignature().then(result => {
         if (result.success) {
+          document.getElementById('zmmtg-root').style.display = 'block';
+
           //remove the loader
           this.removeLoader()
 
