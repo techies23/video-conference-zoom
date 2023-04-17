@@ -78,8 +78,7 @@ if ( video_conference_zoom_check_login() ) {
                                 </div>
 							<?php }
 						}
-
-						if ( ! isset( $_GET['pak'] ) || empty( $zoom['password'] ) ) { ?>
+						if ( ! isset( $_GET['pak'] ) && !empty( $zoom['password'] ) ) { ?>
                             <div class="form-group">
                                 <label for="meeting_password"><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label>
                                 <input type="password" name="meeting_password" id="meeting_password" value="<?php echo ! empty( $zoom['password'] ) ? $zoom['password'] : ''; ?>" placeholder="<?php _e( "Meeting Password", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
