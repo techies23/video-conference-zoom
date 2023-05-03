@@ -16,8 +16,6 @@ export default function Edit (props) {
   const { attributes, setAttributes } = props
   const { postID, preview, template, countdown, description, details } = attributes
 
-  console.log(attributes)
-
   const [availableMeetings, setAvailableMeetings] = useState([])
   const [isEditing, setIsEditing] = useState(false)
 
@@ -119,33 +117,37 @@ export default function Edit (props) {
                 }}
               />
             </div>
-            <div className="vczapi-blocks-form--group">
-              <CheckboxControl
-                label={__('Display Countdown?', 'video-conferencing-with-zoom-api')}
-                checked={countdown}
-                onChange={(selectedOption) => {
-                  setAttributes({ countdown: selectedOption })
-                }}
-              />
-            </div>
-            <div className="vczapi-blocks-form--group">
-              <CheckboxControl
-                label={__('Display Description?', 'video-conferencing-with-zoom-api')}
-                checked={description}
-                onChange={(selectedOption) => {
-                  setAttributes({ description: selectedOption })
-                }}
-              />
-            </div>
-            <div className="vczapi-blocks-form--group">
-              <CheckboxControl
-                label={__('Display Details Section?', 'video-conferencing-with-zoom-api')}
-                checked={details}
-                onChange={(selectedOption) => {
-                  setAttributes({ details: selectedOption })
-                }}
-              />
-            </div>
+            {(template !== 'boxed') &&
+              <>
+                <div className="vczapi-blocks-form--group">
+                  <CheckboxControl
+                    label={__('Display Countdown?', 'video-conferencing-with-zoom-api')}
+                    checked={countdown}
+                    onChange={(selectedOption) => {
+                      setAttributes({ countdown: selectedOption })
+                    }}
+                  />
+                </div>
+                <div className="vczapi-blocks-form--group">
+                  <CheckboxControl
+                    label={__('Display Description?', 'video-conferencing-with-zoom-api')}
+                    checked={description}
+                    onChange={(selectedOption) => {
+                      setAttributes({ description: selectedOption })
+                    }}
+                  />
+                </div>
+                <div className="vczapi-blocks-form--group">
+                  <CheckboxControl
+                    label={__('Display Details Section?', 'video-conferencing-with-zoom-api')}
+                    checked={details}
+                    onChange={(selectedOption) => {
+                      setAttributes({ details: selectedOption })
+                    }}
+                  />
+                </div>
+              </>
+            }
           </div>
         </Placeholder>
       }

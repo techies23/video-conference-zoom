@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.2
-Stable tag: 4.1.10
+Stable tag: 4.1.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.1.11 May 3rd, 2023 =
+* Added: Capaibility to only show meeting counter when using [zoom_meeting_post] - See [Documentation https://zoomdocs.codemanas.com/shortcode/#2-show-a-meeting-post-with-countdown].
+* Updated: Embed Post by ID block.
 
 = 4.1.10 Arpil 10th, 2023 =
 * Fixed: Join via Browser password field fix.

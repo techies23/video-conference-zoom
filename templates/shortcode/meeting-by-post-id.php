@@ -4,18 +4,17 @@ defined( 'ABSPATH' ) || exit;
 
 global $zoom;
 
-if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) ) {
-	?>
-    <div class="vczapi-show-by-postid">
+?>
+<div class="vczapi-show-by-postid">
+	<?php
+	if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) ) {
+		?>
         <div class="vczapi-show-by-postid-contents">
 			<?php do_action( 'vczoom_single_content_right' );
 			?>
         </div>
-    </div>
-	<?php
-} else {
-	?>
-    <div class="vczapi-show-by-postid">
+	<?php } else { ?>
+
 		<?php do_action( 'vczoom_single_content_right' ); ?>
 
         <div class="vczapi-show-by-postid-contents vczapi-show-by-postid-flex">
@@ -71,10 +70,10 @@ if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) 
             <div class="vczapi-show-by-postid-contents-sections-thecontent">
 				<?php the_content(); ?>
             </div>
-		<?php } ?>
-    </div>
-	<?php
-}
-?>
+			<?php
+		}
+	}
+	?>
+</div>
 
 
