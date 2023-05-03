@@ -195,13 +195,29 @@ class Blocks {
 		register_block_type( 'vczapi/show-meeting-post', [
 			"title"           => "Embed Zoom Post",
 			"attributes"      => [
-				"preview" => [
+				"preview"     => [
 					"type"    => "boolean",
 					"default" => false
 				],
-				"postID"  => [
+				"postID"      => [
 					"type"    => "number",
 					"default" => 0
+				],
+				"template"    => [
+					"type"    => "string",
+					"default" => "none"
+				],
+				"description" => [
+					"type"    => "boolean",
+					"default" => true
+				],
+				"countdown"   => [
+					"type"    => "boolean",
+					"default" => true
+				],
+				"details"     => [
+					"type"    => "boolean",
+					"default" => true
 				]
 			],
 			"category"        => "vczapi-blocks",
@@ -500,6 +516,19 @@ class Blocks {
 		if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
 			$shortcode .= ' post_id="' . $attributes['postID'] . '"';
 		}
+
+		if ( isset( $attributes['template'] ) && ! empty( $attributes['template'] ) ) {
+			$shortcode .= ' template="' . $attributes['template'] . '"';
+		}
+
+		$description = $attributes['description'] ? "true" : "false";
+		$shortcode   .= ' description="' . $description . '"';
+
+		$countdown = $attributes['countdown'] ? "true" : "false";
+		$shortcode .= ' countdown="' . $countdown . '"';
+
+		$details   = $attributes['details'] ? "true" : "false";
+		$shortcode .= ' details="' . $details . '"';
 
 		ob_start();
 		echo do_shortcode( '[' . $shortcode . ']' );

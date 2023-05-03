@@ -20,12 +20,8 @@ if ( ! empty( $zoom['shortcode_post_by_id'] ) ) {
 }
 
 if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['details'] ) && $zoom['parameters']['details'] == "false" ) {
-	?>
-<!--    <div class="dpn-zvc-sidebar-content" style="display: none;"></div>-->
-	<?php
 	return;
 }
-
 
 ?>
 <div class="dpn-zvc-sidebar-box">

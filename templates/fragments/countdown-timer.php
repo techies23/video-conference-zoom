@@ -11,7 +11,6 @@
 
 global $zoom;
 
-
 if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['countdown'] ) && $zoom['parameters']['countdown'] == "false" ) {
 	return;
 }
@@ -23,7 +22,6 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
     </div>
 	<?php
 }
-
 
 $countdown_html = '<div class="dpn-zvc-timer-cell">
                     <div class="dpn-zvc-timer-cell-number">

@@ -47,7 +47,6 @@ class Shortcodes {
 			'zoom_meeting_post'          => array( $meetings, 'show_meeting_by_postTypeID' ),
 			'zoom_list_meetings'         => array( $meetings, 'list_cpt_meetings' ),
 			'zoom_list_host_meetings'    => array( $meetings, 'list_live_host_meetings' ),
-            'zoom_meetings_option'       => array( $meetings, 'show_meeting_by_optionSelected'),
 
 			//Embed Browser
 			'zoom_join_via_browser'      => array( $embedded, 'join_via_browser' ),
