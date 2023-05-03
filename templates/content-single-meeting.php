@@ -26,9 +26,24 @@ if ( post_password_required() ) {
  *  Hook: vczoom_before_content
  */
 do_action( 'vczoom_before_content' );
-?>
+global $zoom;
 
-    <div class="vczapi-wrap dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>" id="dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>">
+if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['description'] ) && $zoom['parameters']['description'] == "false" ) {
+	?>
+    <div class="vczapi-wrap dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>"
+         id="dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>">
+        <div class="dpn-zvc-sidebar-wrapper">
+			<?php
+			do_action( 'vczoom_single_content_right' );
+			?>
+        </div>
+    </div>
+	<?php
+} else {
+	?>
+    <div class="vczapi-wrap dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>"
+         id="dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>">
+
         <div class="vczapi-col-8">
 			<?php
 			/**
@@ -40,6 +55,7 @@ do_action( 'vczoom_before_content' );
 			do_action( 'vczoom_single_content_left' );
 			?>
         </div>
+
         <div class="vczapi-col-4">
             <div class="dpn-zvc-sidebar-wrapper">
 				<?php
@@ -57,8 +73,9 @@ do_action( 'vczoom_before_content' );
         </div>
         <div class="clearfix"></div>
     </div>
+	<?php
+}
 
-<?php
 /**
  *  Hook: vczoom_after_content
  */

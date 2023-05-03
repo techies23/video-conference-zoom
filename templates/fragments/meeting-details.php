@@ -19,6 +19,14 @@ if ( ! empty( $zoom['shortcode_post_by_id'] ) ) {
 	return;
 }
 
+if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['details'] ) && $zoom['parameters']['details'] == "false" ) {
+	?>
+<!--    <div class="dpn-zvc-sidebar-content" style="display: none;"></div>-->
+	<?php
+	return;
+}
+
+
 ?>
 <div class="dpn-zvc-sidebar-box">
     <div class="dpn-zvc-sidebar-tile">
@@ -29,7 +37,8 @@ if ( ! empty( $zoom['shortcode_post_by_id'] ) ) {
 		<?php do_action( 'vczapi_html_before_meeting_details' ); ?>
 
         <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-topic-wrap">
-            <span><strong><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong></span> <span><?php the_title(); ?></span>
+            <span><strong><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
+            <span><?php the_title(); ?></span>
         </div>
         <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-list-wrap">
             <span><strong><?php _e( 'Hosted By', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
@@ -75,3 +84,4 @@ if ( ! empty( $zoom['shortcode_post_by_id'] ) ) {
         <p class="dpn-zvc-display-or-hide-localtimezone-notice"><?php printf( __( '%sNote%s: Countdown time is shown based on your local timezone.', 'video-conferencing-with-zoom-api' ), '<strong>', '</strong>' ); ?></p>
     </div>
 </div>
+
