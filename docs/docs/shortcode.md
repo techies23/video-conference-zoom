@@ -28,12 +28,15 @@ Your frontend page should look like:
 
 ### 2. Show a meeting post with Countdown
 
-Use: `[zoom_meeting_post post_id="" template="none"]`
+Use: `[zoom_meeting_post post_id="" template="none" description="true" countdown="true" details="true"]`
 
 Where,
 
 * `post_id` = Zoom Meeting post ID.
 * `template` = "boxed" - changing to boxed will show meeting with timer.
+* `description` = "false", default is true. This will hide description field.
+* `countdown` = "false", default is true. This will hide countdown.
+* `details` = "false", default is true. This will hide detail and join links. If you just want to hide details field, you can do so with CSS.
 
 ### 3. List Upcoming or Past Meetings
 
