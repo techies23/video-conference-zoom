@@ -946,11 +946,14 @@
 <p>Your frontend page should look like:</p>
 <p><img src="https://deepenbajracharya.com.np/wp-content/uploads/2019/11/Meetings-%E2%80%93-Plugin-Tester-1024x520.png"></p>
 <h3 id="2-show-a-meeting-post-with-countdown">2. Show a meeting post with Countdown</h3>
-<p>Use: <code>[zoom_meeting_post post_id="" template="none"]</code></p>
+<p>Use: <code>[zoom_meeting_post post_id="" template="none" description="true" countdown="true" details="true"]</code></p>
 <p>Where,</p>
 <ul>
 <li><code>post_id</code> = Zoom Meeting post ID.</li>
 <li><code>template</code> = "boxed" - changing to boxed will show meeting with timer.</li>
+<li><code>description</code> = "false", default is true. This will hide description field.</li>
+<li><code>countdown</code> = "false", default is true. This will hide countdown.</li>
+<li><code>details</code> = "false", default is true. This will hide detail and join links. If you just want to hide details field, you can do so with CSS.</li>
 </ul>
 <h3 id="3-list-upcoming-or-past-meetings">3. List Upcoming or Past Meetings</h3>
 <p>Use: <code>[zoom_list_meetings per_page="5" category="test,test2,test3" order="ASC" type="upcoming" cols="3"]</code></p>
