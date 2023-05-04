@@ -86,9 +86,62 @@ class MeetingByPostID extends Widget_Base {
 			[
 				'name'        => 'post_id',
 				'label'       => __( 'Meeting', 'video-conferencing-with-zoom-api' ),
-				'type'        => \Elementor\Controls_Manager::SELECT,
+				'type'        => \Elementor\Controls_Manager::SELECT2,
 				'label_block' => true,
 				'options'     => $this->getMeetings(),
+			]
+		);
+		$this->add_control(
+			'layout',
+			[
+				'label' => __( 'Select Layout', 'video-conferencing-with-zoom-api' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'options' => [
+					'none' => __( 'Default', 'video-conferencing-with-zoom-api' ),
+					'boxed' => __( 'Boxed', 'video-conferencing-with-zoom-api' ),
+				],
+				'default' => 'none',
+			]
+		);
+
+		$this->add_control(
+			'display_description',
+			[
+				'label' => __( 'Hide Description', 'video-conferencing-with-zoom-api' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'video-conferencing-with-zoom-api' ),
+				'label_off' => __( 'Hide', 'video-conferencing-with-zoom-api' ),
+				'default' => "no",
+				'condition' => [
+					'layout' => 'none',
+				],
+			]
+		);
+		$this->add_control(
+			'display_countdown',
+			[
+				'label' => __( 'Hide Countdown', 'video-conferencing-with-zoom-api' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'video-conferencing-with-zoom-api' ),
+				'label_off' => __( 'Hide', 'video-conferencing-with-zoom-api' ),
+				'default' =>  "no",
+				'condition' => [
+					'layout' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'display_details',
+			[
+				'label' => __( 'Hide Details', 'video-conferencing-with-zoom-api' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'video-conferencing-with-zoom-api' ),
+				'label_off' => __( 'Hide', 'video-conferencing-with-zoom-api' ),
+				'default' =>  "no",
+				'condition' => [
+					'layout' => 'none',
+				],
 			]
 		);
 
@@ -132,7 +185,22 @@ class MeetingByPostID extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		if ( ! empty( $settings['post_id'] ) ) {
-			echo do_shortcode( '[zoom_meeting_post post_id="' . $settings['post_id'] . '"]' );
+			$shortcode = '[zoom_meeting_post post_id="' . $settings['post_id'] . '"';
+			if ( $settings['layout'] == 'boxed' ) {
+				$shortcode .= ' template="boxed"';
+			}
+			if ( $settings['display_description'] == 'yes' ) {
+				$shortcode .= ' description="false"';
+			}
+			if ( $settings['display_countdown'] == 'yes' ) {
+				$shortcode .= ' countdown="false"';
+			}
+			if ( $settings['display_details'] == 'yes' ) {
+				$shortcode .= ' details="false"';
+			}
+
+			$shortcode .= ']';
+			echo do_shortcode( $shortcode );
 		}
 	}
 
