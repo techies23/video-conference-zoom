@@ -255,7 +255,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 			$token = array(
 				"iss" => $key,
-				"exp" => time() + 3600 //60 seconds as suggested
+				"exp" => time() + 3600, //60 seconds as suggested
 			);
 
 			if ( empty( $secret ) ) {
@@ -662,6 +662,18 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$data         = apply_filters( 'vczapi_listRecording', $data );
 
 			return $this->sendRequest( 'users/' . $host_id . '/recordings', $data, "GET" );
+		}
+
+		/**
+		 * Will end meeting via the meeting status end point
+		 * https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meetingStatus
+		 *
+		 * @param $meetingID
+		 *
+		 * @return array|bool|string|WP_Error
+		 */
+		public function end_meeting( $meetingID ) {
+			return $this->sendRequest( "/meetings/" . $meetingID . "/status", [ 'action' => 'end' ], 'PUT' );
 		}
 	}
 

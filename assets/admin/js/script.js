@@ -32,6 +32,7 @@ var __webpack_exports__ = {};
       $dom.meetingListTbl = $dom.meetingListTableCheck.find('input[type=checkbox]');
       $dom.cover = $('#zvc-cover');
       $dom.changeMeetingState = $('.vczapi-meeting-state-change');
+      $dom.endMeetingEl = $('.vczapi-meeting-state-end_meeting');
       $dom.show_on_meeting_delete_error = $('.show_on_meeting_delete_error');
       $dom.toggleTriggerElement = $('.vczapi-toggle-trigger');
       this.$manualHostID = $('.vczapi-admin-hostID-manually-add');
@@ -70,6 +71,25 @@ var __webpack_exports__ = {};
 
       //Manual Host Selector
       this.$manualHostID.on('click', this.showManualHostIDField.bind(this));
+
+      //End Meeting 
+      $dom.endMeetingEl.on('click', this.endMeeting.bind(this));
+    },
+    endMeeting: function (e) {
+      e.preventDefault();
+      let el = e.target;
+      let meetingID = el.getAttribute('data-id');
+      let postData = {
+        'action': 'vczapi_end_meeting',
+        'access': zvc_ajax.zvc_security,
+        'meeting_id': meetingID
+      };
+      let endMeeting = confirm('Are you sure you want to end this meeting');
+      if (endMeeting) {
+        $.post(zvc_ajax.ajaxurl, postData).done(function (response) {
+          location.reload();
+        });
+      }
     },
     //Expand Accordion
     expandAccordion: function (e) {
