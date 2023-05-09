@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi;
 
 use Codemanas\VczApi\Blocks\Blocks;
+use Codemanas\VczApi\Blocks\BlockTemplates;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die( "Not Allowed Here !" ); // If this file is called directly, abort.
@@ -237,6 +238,7 @@ final class Bootstrap {
 		}
 
 		Blocks::get_instance();
+		BlockTemplates::get_instance();
 	}
 
 	/**
