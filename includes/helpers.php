@@ -262,13 +262,13 @@ function video_conferencing_zoom_api_get_user_transients() {
 
 function vczapi_check_connection_error() {
 	?>
-    <div id="message" class="notice notice-warning is-dismissible">
-        <p>
+	<div id="message" class="notice notice-warning is-dismissible">
+		<p>
 			<?php
 			esc_html_e( 'Please check your internet connection or API keys. Zoom API is not able to connect with Zoom servers at the moment.', 'video-conferencing-with-zoom-api' );
 			?>
-        </p>
-    </div>
+		</p>
+	</div>
 	<?php
 }
 
@@ -329,17 +329,17 @@ function video_conferencing_zoom_api_show_like_popup() {
 
 	if ( ! get_option( '_vczapi_dismiss_notice' ) ) {
 		?>
-        <div id="message" class="notice notice-warning is-dismissible">
-            <h3><?php esc_html_e( 'Like this plugin ?', 'video-conferencing-with-zoom-api' ); ?></h3>
-            <p>
+		<div id="message" class="notice notice-warning is-dismissible">
+			<h3><?php esc_html_e( 'Like this plugin ?', 'video-conferencing-with-zoom-api' ); ?></h3>
+			<p>
 				<?php
 				printf( esc_html__( 'Please consider giving a %s if you found this useful at wordpress.org or ', 'video-conferencing-with-zoom-api' ), '<a href="https://wordpress.org/support/plugin/video-conferencing-with-zoom-api/reviews/#new-post">5 star thumbs up</a>' );
 				printf( esc_html__( 'check %s for shortcode references.', 'video-conferencing-with-zoom-api' ), '<a href="' . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">settings</a>.' );
 				?>
-                <a href="<?php echo esc_url( add_query_arg( 'vczapi_dismiss', 1 ) ); ?>" class="is-dismissible">I
-                    already rated you ! Don't show again !</a>
-            </p>
-        </div>
+				<a href="<?php echo esc_url( add_query_arg( 'vczapi_dismiss', 1 ) ); ?>" class="is-dismissible">I
+					already rated you ! Don't show again !</a>
+			</p>
+		</div>
 		<?php
 	}
 }
@@ -352,13 +352,13 @@ function video_conferencing_zoom_api_show_api_notice() {
 	$notice = get_option( 'zoom_api_notice' );
 	if ( empty( $notice ) ) {
 		?>
-        <div id="message" class="notice notice-success"><p style="font-size:16px;">
-                <strong><?php _e( "Do not get confused here !!", "video-conferencing-with-zoom-api" ); ?></strong>
-            <p>
-                <strong><?php _e( "Please read !!! These below meetings are directly from your zoom.us account via API connection. Meetings added from here won't show up on your Post Type list. This will only create meeting in your zoom.us account !", "video-conferencing-with-zoom-api" ); ?></strong>
-                <a href="javascript:void(0);"
-                   class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
-            </p></div>
+		<div id="message" class="notice notice-success"><p style="font-size:16px;">
+				<strong><?php _e( "Do not get confused here !!", "video-conferencing-with-zoom-api" ); ?></strong>
+			<p>
+				<strong><?php _e( "Please read !!! These below meetings are directly from your zoom.us account via API connection. Meetings added from here won't show up on your Post Type list. This will only create meeting in your zoom.us account !", "video-conferencing-with-zoom-api" ); ?></strong>
+				<a href="javascript:void(0);"
+				   class="zvc-dismiss-message"><?php _e( "I understand ! Don't show this again !", "video-conferencing-with-zoom-api" ); ?></a>
+			</p></div>
 		<?php
 	}
 }
@@ -735,7 +735,7 @@ function vczapi_zoom_api_paginator( $response, $type = '' ) {
 	if ( ! empty( $response ) && $response->next_page_token ) {
 		$next_page = add_query_arg( array( 'pg' => $response->next_page_token, 'type' => $type ), $actual_link );
 		?>
-        <a href="<?php echo esc_url( $next_page ); ?>"><?php _e( 'Next Results', 'video-conferencing-with-zoom-api' ); ?></a>
+		<a href="<?php echo esc_url( $next_page ); ?>"><?php _e( 'Next Results', 'video-conferencing-with-zoom-api' ); ?></a>
 		<?php
 	}
 }
@@ -977,4 +977,17 @@ function vczapi_is_oauth_active(): bool {
  */
 function vczapi_is_sdk_enabled(): bool {
 	return ! empty( get_option( 'vczapi_sdk_key' ) ) && ! empty( get_option( 'vczapi_sdk_secret_key' ) );
+}
+
+if ( ! function_exists( 'vczapi_is_fse_theme' ) ) {
+	function vczapi_is_fse_theme(): bool {
+		if ( function_exists( 'wp_is_block_theme' ) ) {
+			return wp_is_block_theme();
+		}
+		if ( function_exists( 'gutenberg_is_fse_theme' ) ) {
+			return (bool) gutenberg_is_fse_theme();
+		}
+
+		return false;
+	}
 }

@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Blocks;
 
+use function Composer\Autoload\includeFile;
+
 /**
  * Class Blocks
  *
@@ -346,6 +348,62 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_recordings' ]
 		] );
+
+		register_block_type( 'vczapi/single-zoom-meeting', [
+			"title"           => "Zoom - Single Meeting Page",
+			"category"        => "vczapi-blocks",
+			"icon"            => "page",
+			"description"     => "Single Zoom Meeting Page",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_single_meeting' ]
+		] );
+	}
+
+	public function render_single_meeting() {
+		global $post;
+		if ( ! empty( $post ) && $post->post_type == 'zoom-meetings' ) {
+			unset( $GLOBALS['zoom'] );
+
+			$show_zoom_author_name = get_option( 'zoom_show_author' );
+
+			$GLOBALS['zoom'] = get_post_meta( $post->ID, '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
+			$meeting_details = get_post_meta( $post->ID, '_meeting_zoom_details', true );
+
+			if ( ! empty( $show_zoom_author_name ) ) {
+				$meeting_author = vczapi_get_meeting_author( $post->ID, $meeting_details );
+			} else {
+				$meeting_author = get_userdata( $post->post_author );
+				$meeting_author = ! empty( $meeting_author ) && ! empty( $meeting_author->first_name ) ? $meeting_author->first_name . ' ' . $meeting_author->last_name : $meeting_author->display_name;
+			}
+
+			$GLOBALS['zoom']['host_name'] = ! empty( $meeting_author ) ? $meeting_author : false;
+			if ( ! empty( $meeting_details ) ) {
+				$GLOBALS['zoom']['api'] = get_post_meta( $post->ID, '_meeting_zoom_details', true );
+			}
+
+			$terms = get_the_terms( $post->ID, 'zoom-meeting' );
+			if ( ! empty( $terms ) ) {
+				$set_terms = array();
+				foreach ( $terms as $term ) {
+					$set_terms[] = $term->name;
+				}
+				$GLOBALS['zoom']['terms'] = $set_terms;
+			}
+
+			if ( isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
+				$template = vczapi_get_template( 'join-web-browser.php' );
+			} else {
+				//Render View
+				$template = vczapi_get_template( 'single-meeting.php' );
+			}
+
+			ob_start();
+			include $template;
+
+			return ob_get_clean();
+		}
 	}
 
 	/**

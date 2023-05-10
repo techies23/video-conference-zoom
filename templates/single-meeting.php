@@ -13,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-get_header();
+if ( ! vczapi_is_fse_theme() ) {
+	get_header();
+}
 
 /**
  * vczoom_before_main_content hook.
@@ -35,5 +37,7 @@ while ( have_posts() ) {
  */
 do_action( 'vczoom_after_main_content' );
 
-get_footer();
+if ( ! vczapi_is_fse_theme() ) {
+	get_footer();
+}
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */

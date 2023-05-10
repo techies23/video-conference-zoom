@@ -273,10 +273,14 @@ class Zoom_Video_Conferencing_Admin_PostType {
 					if ( ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
 						echo $meeting->message;
 					} elseif ( empty( $meeting->state ) ) { ?>
-						<a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="end" data-postid="<?php echo $post_id; ?>" data-id="<?php echo $meeting->id ?>"><?php _e( 'Disable Join', 'video-conferencing-with-zoom-api' ); ?></a>
+						<a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type"
+						   data-state="end" data-postid="<?php echo $post_id; ?>"
+						   data-id="<?php echo $meeting->id ?>"><?php _e( 'Disable Join', 'video-conferencing-with-zoom-api' ); ?></a>
 						<p class="description"><?php _e( 'Restrict users to join this meeting before the start time or after the meeting is completed.', 'video-conferencing-with-zoom-api' ); ?></p>
 					<?php } else { ?>
-						<a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="resume" data-postid="<?php echo $post_id; ?>" data-id="<?php echo $meeting->id ?>"><?php _e( 'Enable Join', 'video-conferencing-with-zoom-api' ); ?></a>
+						<a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type"
+						   data-state="resume" data-postid="<?php echo $post_id; ?>"
+						   data-id="<?php echo $meeting->id ?>"><?php _e( 'Enable Join', 'video-conferencing-with-zoom-api' ); ?></a>
 						<p class="description"><?php _e( 'Resuming this will enable users to join this meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
 					<?php }
 
@@ -286,8 +290,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 						<a href="javascript:void(0);"
 						   class="vczapi-meeting-state-end_meeting"
 						   data-id="<?php echo $meeting->id; ?>"
-						><?php _e('End Meeting','video-conferencing-with-zoom-api'); ?></a>
-						<p class="description"><?php _e('This will end the on-going meeting','video-conferencing-with-zoom-api'); ?></p>
+						><?php _e( 'End Meeting', 'video-conferencing-with-zoom-api' ); ?></a>
+						<p class="description"><?php _e( 'This will end the on-going meeting', 'video-conferencing-with-zoom-api' ); ?></p>
 						<?php
 					}
 
@@ -461,10 +465,17 @@ class Zoom_Video_Conferencing_Admin_PostType {
 					$join_url = ! empty( $meeting_details->encrypted_password ) ? vczapi_get_pwd_embedded_join_link( $meeting_details->join_url, $meeting_details->encrypted_password ) : $meeting_details->join_url;
 					?>
 					<div class="zoom-metabox-content">
-						<p><a target="_blank" href="<?php echo esc_url( $meeting_details->start_url ); ?>" title="Start URL"><?php _e( 'Start Meeting', 'video-conferencing-with-zoom-api' ) ?></a></p>
-						<p><a target="_blank" href="<?php echo esc_url( $join_url ); ?>" title="Start URL"><?php _e( 'Join Meeting', 'video-conferencing-with-zoom-api' ) ?></a></p>
-						<p><a target="_blank" href="<?php echo esc_url( $zoom_host_url ); ?>" title="Start URL"><?php _e( 'Start via Browser', 'video-conferencing-with-zoom-api' ) ?></a></p>
-						<p><strong><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ) ?>:</strong> <?php echo $meeting_details->id; ?></p>
+						<p><a target="_blank" href="<?php echo esc_url( $meeting_details->start_url ); ?>"
+						      title="Start URL"><?php _e( 'Start Meeting', 'video-conferencing-with-zoom-api' ) ?></a>
+						</p>
+						<p><a target="_blank" href="<?php echo esc_url( $join_url ); ?>"
+						      title="Start URL"><?php _e( 'Join Meeting', 'video-conferencing-with-zoom-api' ) ?></a>
+						</p>
+						<p><a target="_blank" href="<?php echo esc_url( $zoom_host_url ); ?>"
+						      title="Start URL"><?php _e( 'Start via Browser', 'video-conferencing-with-zoom-api' ) ?></a>
+						</p>
+						<p><strong><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ) ?>
+								:</strong> <?php echo $meeting_details->id; ?></p>
 						<?php do_action( 'vczapi_meeting_details_admin', $meeting_details ); ?>
 					</div>
 					<hr>
@@ -477,11 +488,15 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			<?php } ?>
 			<div class="zoom-metabox-content">
 				<p><?php _e( 'Requires Login?', 'video-conferencing-with-zoom-api' ); ?>
-					<input type="checkbox" name="option_logged_in" value="1" <?php ! empty( $meeting_fields['site_option_logged_in'] ) ? checked( '1', $meeting_fields['site_option_logged_in'] ) : false; ?> class="regular-text">
+					<input type="checkbox" name="option_logged_in"
+					       value="1" <?php ! empty( $meeting_fields['site_option_logged_in'] ) ? checked( '1', $meeting_fields['site_option_logged_in'] ) : false; ?>
+					       class="regular-text">
 				</p>
 				<p class="description"><?php _e( 'Only logged in users of this site will be able to join this meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
 				<p><?php _e( 'Hide Join via browser link ?', 'video-conferencing-with-zoom-api' ); ?>
-					<input type="checkbox" name="option_browser_join" value="1" <?php ! empty( $meeting_fields['site_option_browser_join'] ) ? checked( '1', $meeting_fields['site_option_browser_join'] ) : false; ?> class="regular-text">
+					<input type="checkbox" name="option_browser_join"
+					       value="1" <?php ! empty( $meeting_fields['site_option_browser_join'] ) ? checked( '1', $meeting_fields['site_option_browser_join'] ) : false; ?>
+					       class="regular-text">
 				</p>
 				<p class="description"><?php _e( 'This will disable join via browser link in frontend page.', 'video-conferencing-with-zoom-api' ); ?></p>
 			</div>
@@ -501,7 +516,9 @@ class Zoom_Video_Conferencing_Admin_PostType {
 		<div class="zoom-metabox-wrapper">
 			<div class="zoom-metabox-content">
 				<p><?php _e( 'Enable Debug?', 'video-conferencing-with-zoom-api' ); ?>
-					<input type="checkbox" name="option_enable_debug_logs" value="1" <?php ! empty( $meeting_fields['site_option_enable_debug_log'] ) ? checked( '1', $meeting_fields['site_option_enable_debug_log'] ) : false; ?> class="regular-text">
+					<input type="checkbox" name="option_enable_debug_logs"
+					       value="1" <?php ! empty( $meeting_fields['site_option_enable_debug_log'] ) ? checked( '1', $meeting_fields['site_option_enable_debug_log'] ) : false; ?>
+					       class="regular-text">
 				</p>
 			</div>
 		</div>
@@ -536,8 +553,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int      $post_id Post ID.
-	 * @param \WP_Post $post    Post object.
+	 * @param int $post_id Post ID.
+	 * @param \WP_Post $post Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.
@@ -733,6 +750,9 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	public function single( $template ): string {
 		global $post;
 
+		if ( vczapi_is_fse_theme() ) {
+			return $template;
+		}
 		if ( ! empty( $post ) && $post->post_type == $this->post_type ) {
 			unset( $GLOBALS['zoom'] );
 

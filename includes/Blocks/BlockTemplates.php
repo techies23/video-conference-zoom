@@ -13,50 +13,134 @@ class BlockTemplates {
 	}
 
 	protected function __construct() {
+		//used when saving /wp-includes/rest-api/endpoints/class-wp-rest-templates-controller.php used by block templates
+		add_filter( 'pre_get_block_file_template', [ $this, 'get_templates' ], 10, 3 );
 		add_filter( 'get_block_templates', [ $this, 'add_meetings_block_template' ], 10, 2 );
 	}
 
 	public function add_meetings_block_template( $query_results, $query ) {
 
+//		var_dump($query_results);
+
 		$slugs = $query['slug__in'] ?? [];
 
-		if ( ! is_admin() && ! in_array( 'single-zoom-meetings', $slugs ) ) {
+		if ( ! is_admin() && ! empty( $slugs ) && ! in_array( 'single-zoom-meetings', $slugs ) ) {
 			return $query_results;
 		}
-		//test change
-		$template                 = new WP_Block_Template();
-		$template->type           = 'wp_template';
-		$template->theme          = 'vczapi/vczapi';
-		$template->slug           = 'single-zoom-meetings';
-		$template->id             = 'vczapi/vczapi//single-zoom-meeting';
+
+		$template_from_db = $this->get_template_from_db( $slugs );
+		if ( $template_from_db !== null ) {
+			$query_results[] = $template_from_db;
+
+			return $query_results;
+		}
+
+
+		$query_results[] = $this->single_meeting_template();
+
+
+		return $query_results;
+	}
+
+	private function get_template_from_db( $slugs ): ?WP_Block_Template {
+		$template = null;
+		//check if template is saved in DB and retrieve it from their
+		$args = [
+			'post_type' => 'wp_template',
+			'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				array(
+					'taxonomy' => 'wp_theme',
+					'field'    => 'name',
+					'terms'    => [ 'vczapi' ],
+				),
+			),
+		];
+
+
+		if ( is_array( $slugs ) && count( $slugs ) > 0 ) {
+			$args['post_name__in'] = $slugs;
+		}
+
+		$check_templates = new \WP_Query( $args );
+
+		if ( $check_templates->found_posts > 0 ) {
+			foreach ( $check_templates->posts as $post ) {
+				$template = $this->create_template_from_db( $post );
+				break;
+			}
+		}
+
+		return $template;
+	}
+
+	private function create_template_from_db( $post ): WP_Block_Template {
+		$terms = get_the_terms( $post, 'wp_theme' );
+		$theme = $terms[0]->name;
+
+		$template = new \WP_Block_Template();
+
+		$template->wp_id          = $post->ID;
+		$template->id             = $theme . '//' . $post->post_name;
+		$template->theme          = $theme;
+		$template->content        = $post->post_content;
+		$template->slug           = $post->post_name;
+		$template->source         = 'custom';
+		$template->type           = $post->post_type;
+		$template->description    = $post->post_excerpt;
+		$template->title          = $post->post_title;
+		$template->status         = $post->post_status;
+		$template->has_theme_file = false;
+		$template->is_custom      = false;
+		$template->post_types     = array(); //
+
+		return $template;
+	}
+
+	public function get_templates( $template, $id, $template_type ) {
+		if ( $template_type != 'wp_template' ) {
+			return $template;
+		}
+
+		$template_name_parts = explode( '//', $id );
+		if ( count( $template_name_parts ) < 2 ) {
+			return $template;
+		}
+
+		list( $template_id, $template_slug ) = $template_name_parts;
+
+		if ( $template_id != 'vczapi' ) {
+			return $template;
+		}
+
+		if ( $template_slug == 'single-zoom-meetings' ) {
+			return $this->single_meeting_template();
+		}
+
+		return $template;
+	}
+
+	private function single_meeting_template(): WP_Block_Template {
+		$template        = new WP_Block_Template();
+		$template->type  = 'wp_template';
+		$template->theme = 'vczapi';
+		$template->slug  = 'single-zoom-meetings';
+		//id needs to be combination of $template->theme and $template->slug
+		$template->id             = 'vczapi//single-zoom-meetings';
 		$template->title          = 'Single Meeting';
 		$template->content        = '<!-- wp:template-part {"slug":"header","tagName":"header","theme":"twentytwentythree"} /-->
 <!-- wp:group {"layout":{"inherit":true}} -->
-<div class="wp-block-group"><!-- wp:paragraph --><p>digthis is testing</p><!-- /wp:paragraph --></div>
+<div class="wp-block-group"><!-- wp:vczapi/single-zoom-meeting /--></div>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"twentytwentythree"} /-->';
 		$template->description    = 'Displays a single meeting';
 		$template->source         = 'plugin';
 		$template->origin         = 'plugin';
 		$template->status         = 'publish';
-		$template->has_theme_file = true;
+		$template->has_theme_file = false;
 		$template->is_custom      = false;
 		$template->author         = null;
 		$template->post_types     = [];
 
-		$query_results[] = $template;
-
-		return $query_results;
-	}
-
-	public function default_content(): array {
-		return array(
-			array(
-				'blockName' => 'core / paragraph',
-				'attrs'     => array(
-					'content' => 'This is the default content for the Zoom Meetings . ',
-				),
-			),
-		);
+		return $template;
 	}
 }
