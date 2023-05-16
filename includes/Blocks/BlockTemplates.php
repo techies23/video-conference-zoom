@@ -92,6 +92,7 @@ class BlockTemplates {
 		$template->has_theme_file = false;
 		$template->is_custom      = false;
 		$template->post_types     = array(); //
+		$template->area           = 'uncategorized';
 
 		return $template;
 	}
