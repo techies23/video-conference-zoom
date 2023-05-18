@@ -170,6 +170,7 @@ class BlockTemplates {
 		$template->is_custom      = false;
 		$template->author         = null;
 		$template->post_types     = [];
+		$template->area           = 'uncategorized';
 
 		return $template;
 	}
