@@ -16,6 +16,21 @@ class BlockTemplates {
 		//used when saving /wp-includes/rest-api/endpoints/class-wp-rest-templates-controller.php used by block templates
 		add_filter( 'pre_get_block_file_template', [ $this, 'get_templates' ], 10, 3 );
 		add_filter( 'get_block_templates', [ $this, 'add_meetings_block_template' ], 10, 2 );
+		//remove from other post types
+		add_filter( 'allowed_block_types_all', [ $this, 'remove_template_blocks' ], 10, 2 );
+	}
+
+	public function remove_template_blocks( $allowed_block_types, $block_editor_context ) {
+		$registered_blocks = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+		if ( $block_editor_context->name == 'core/edit-post' ) {
+			unset( $registered_blocks['vczapi/single-zoom-meeting'] );
+
+			return array_keys( $registered_blocks );
+		}
+
+
+		return $allowed_block_types;
 	}
 
 	public function add_meetings_block_template( $query_results, $query ) {
@@ -128,11 +143,11 @@ class BlockTemplates {
 		//id needs to be combination of $template->theme and $template->slug
 		$template->id             = 'vczapi//single-zoom-meetings';
 		$template->title          = 'Single Meeting';
-		$template->content        = '<!-- wp:template-part {"slug":"header","tagName":"header","theme":"twentytwentythree"} /-->
+		$template->content        = '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 <!-- wp:group {"layout":{"inherit":true}} -->
 <div class="wp-block-group"><!-- wp:vczapi/single-zoom-meeting /--></div>
 <!-- /wp:group -->
-<!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"twentytwentythree"} /-->';
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->';
 		$template->description    = 'Displays a single meeting';
 		$template->source         = 'plugin';
 		$template->origin         = 'plugin';

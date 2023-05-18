@@ -79,6 +79,7 @@ class Blocks {
 				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
 				'embed_post_preview'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/embed_post_preview.png',
 				'join_via_browser'                 => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/join-via-browser.png',
+				'single_zoom_meeting_page'         => ZVC_PLUGIN_IMAGES_PATH . '/skeleton.png'
 			]
 		);
 	}
@@ -352,7 +353,7 @@ class Blocks {
 		register_block_type( 'vczapi/single-zoom-meeting', [
 			"title"           => "Zoom - Single Meeting Page",
 			"category"        => "vczapi-blocks",
-			"icon"            => "page",
+			"icon"            => "dashicons-text-page",
 			"description"     => "Single Zoom Meeting Page",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
@@ -363,6 +364,7 @@ class Blocks {
 
 	public function render_single_meeting() {
 		global $post;
+		//@todo 
 		if ( ! empty( $post ) && $post->post_type == 'zoom-meetings' ) {
 			unset( $GLOBALS['zoom'] );
 
