@@ -258,7 +258,7 @@ import '../sass/style.scss'
                 url: ajaxurl + '?action=vczapi_get_zoom_host_query',
                 type: 'GET',
                 dataType: 'json',
-                delay: 1000,
+                delay: 200,
                 cache: true
               },
               allowClear: true,

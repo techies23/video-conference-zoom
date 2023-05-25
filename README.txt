@@ -163,6 +163,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Added: FSE Support
 * Added: End meeting from backend using Zoom status api.
 * Updated: Elementor Modules for shortcode changes related with [zoom_meeting_post]
+* Fixed: Search in host to WP page.
 * Bug fixes
 
 = 4.1.11 May 3rd, 2023 =

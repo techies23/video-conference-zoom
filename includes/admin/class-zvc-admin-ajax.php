@@ -315,10 +315,15 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		$draw   = filter_input( INPUT_GET, 'draw' );
 		$length = filter_input( INPUT_GET, 'length' );
 		$start  = filter_input( INPUT_GET, 'start' );
+		$search = filter_input( INPUT_GET, 'search', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		$args   = [
 			'number' => ! empty( $length ) ? absint( $length ) : 10,
 			'paged'  => $start == 0 ? 1 : $start / $length + 1,
 		];
+
+		if ( ! empty( $search['value'] ) ) {
+			$args['search'] = '*' . $search['value'] . '*';
+		}
 
 		$users      = vczapi_getWpUsers_basedon_UserRoles( $args );
 		$tableData  = array();
