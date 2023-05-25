@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Video Conferencing with Zoom API\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/video-"
 "conferencing-with-zoom-api\n"
-"POT-Creation-Date: 2023-04-07 03:58+0000\n"
+"POT-Creation-Date: 2023-05-04 05:49+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,25 +17,25 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
-#: templates/fragments/meeting-details.php:58
-#: templates/shortcode/meeting-by-post-id.php:50
+#: templates/fragments/meeting-details.php:63
+#: templates/shortcode/meeting-by-post-id.php:49
 #, php-format
 msgid "%s hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/fragments/meeting-details.php:58
-#: templates/fragments/meeting-details.php:60
-#: templates/shortcode/meeting-by-post-id.php:50
-#: templates/shortcode/meeting-by-post-id.php:52
+#: templates/fragments/meeting-details.php:63
+#: templates/fragments/meeting-details.php:65
+#: templates/shortcode/meeting-by-post-id.php:49
+#: templates/shortcode/meeting-by-post-id.php:51
 #, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/fragments/meeting-details.php:75
+#: templates/fragments/meeting-details.php:80
 #, php-format
 msgid "%sNote%s: Countdown time is shown based on your local timezone."
 msgstr ""
@@ -220,6 +220,10 @@ msgstr ""
 msgid "Basic User"
 msgstr ""
 
+#: includes/Elementor/Widgets/MeetingByPostID.php:101
+msgid "Boxed"
+msgstr ""
+
 #: templates/join-web-browser.php:54
 msgid ""
 "Browser did not detect a valid SSL certificate. Audio and Video for Zoom "
@@ -231,8 +235,8 @@ msgstr ""
 msgid "By"
 msgstr ""
 
-#: templates/fragments/meeting-details.php:46
-#: templates/shortcode/meeting-by-post-id.php:38
+#: templates/fragments/meeting-details.php:51
+#: templates/shortcode/meeting-by-post-id.php:37
 msgid "Category"
 msgstr ""
 
@@ -325,7 +329,7 @@ msgstr ""
 msgid "Choose meeting from here to sync."
 msgstr ""
 
-#: includes/Bootstrap.php:178 includes/Shortcodes/Meetings.php:143
+#: includes/Bootstrap.php:178 includes/Shortcodes/Meetings.php:146
 msgid "Click join button below to join the meeting now !"
 msgstr ""
 
@@ -355,7 +359,7 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:505
+#: includes/Shortcodes/Meetings.php:513
 msgid "Could not retrieve meetings, check Host ID"
 msgstr ""
 
@@ -411,7 +415,7 @@ msgstr ""
 msgid "Created webinar %s at %s. Join %s"
 msgstr ""
 
-#: templates/fragments/meeting-details.php:68
+#: templates/fragments/meeting-details.php:73
 msgid "Current Timezone"
 msgstr ""
 
@@ -436,13 +440,17 @@ msgstr ""
 msgid "DateTime Format"
 msgstr ""
 
-#: templates/fragments/countdown-timer.php:26
+#: templates/fragments/countdown-timer.php:30
 #: templates/shortcode/embed-session.php:47
 msgid "days"
 msgstr ""
 
 #: includes/admin/class-zvc-admin-post-type.php:386
 msgid "Debug Log"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingByPostID.php:100
+msgid "Default"
 msgstr ""
 
 #: includes/views/tabs/api-settings.php:176
@@ -480,7 +488,7 @@ msgstr ""
 msgid "Deleted Meeting with ID"
 msgstr ""
 
-#: templates/fragments/meeting-details.php:25
+#: templates/fragments/meeting-details.php:29
 msgid "Details"
 msgstr ""
 
@@ -556,9 +564,9 @@ msgid "Download"
 msgstr ""
 
 #: includes/template-functions.php:425
-#: templates/fragments/meeting-details.php:54
+#: templates/fragments/meeting-details.php:59
 #: templates/shortcode/zoom-webinar.php:98
-#: templates/shortcode/meeting-by-post-id.php:46
+#: templates/shortcode/meeting-by-post-id.php:45
 #: templates/shortcode/zoom-recordings.php:24
 #: includes/views/webinars/tpl-edit-webinar.php:70
 #: includes/views/webinars/tpl-add-webinar.php:74
@@ -654,7 +662,7 @@ msgid "Enter the date to check:"
 msgstr ""
 
 #: includes/Shortcodes/Webinars.php:60 includes/Shortcodes/Embed.php:72
-#: includes/Shortcodes/Meetings.php:66 includes/Shortcodes/Meetings.php:121
+#: includes/Shortcodes/Meetings.php:66 includes/Shortcodes/Meetings.php:124
 msgid "ERROR: "
 msgstr ""
 
@@ -737,6 +745,24 @@ msgstr ""
 msgid "Heads up, Please backup before upgrade!"
 msgstr ""
 
+#: includes/Elementor/Widgets/MeetingByPostID.php:113
+#: includes/Elementor/Widgets/MeetingByPostID.php:126
+#: includes/Elementor/Widgets/MeetingByPostID.php:140
+msgid "Hide"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingByPostID.php:123
+msgid "Hide Countdown"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingByPostID.php:110
+msgid "Hide Description"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingByPostID.php:137
+msgid "Hide Details"
+msgstr ""
+
 #: includes/views/tabs/api-settings.php:63
 msgid "Hide Join Links for Non-Loggedin ?"
 msgstr ""
@@ -749,7 +775,7 @@ msgstr ""
 msgid "Host ID"
 msgstr ""
 
-#: includes/Shortcodes/Webinars.php:108 includes/Shortcodes/Meetings.php:487
+#: includes/Shortcodes/Webinars.php:108 includes/Shortcodes/Meetings.php:495
 msgid "Host ID should be given when defining this shortcode."
 msgstr ""
 
@@ -767,7 +793,7 @@ msgstr ""
 msgid "Host Video"
 msgstr ""
 
-#: templates/fragments/meeting-details.php:35
+#: templates/fragments/meeting-details.php:40
 msgid "Hosted By"
 msgstr ""
 
@@ -775,7 +801,7 @@ msgstr ""
 msgid "Hosted By:"
 msgstr ""
 
-#: templates/fragments/countdown-timer.php:32
+#: templates/fragments/countdown-timer.php:36
 #: templates/shortcode/embed-session.php:53
 msgid "hours"
 msgstr ""
@@ -833,7 +859,7 @@ msgstr ""
 msgid "Join Before Host"
 msgstr ""
 
-#: templates/join-web-browser.php:121
+#: templates/join-web-browser.php:120
 msgid "Join Event via Browser"
 msgstr ""
 
@@ -940,7 +966,7 @@ msgstr ""
 msgid "Local"
 msgstr ""
 
-#: templates/join-web-browser.php:100
+#: templates/join-web-browser.php:99
 msgid "Locale"
 msgstr ""
 
@@ -1047,7 +1073,7 @@ msgstr ""
 msgid "Meeting not created yet."
 msgstr ""
 
-#: templates/join-web-browser.php:85
+#: templates/join-web-browser.php:84
 #: includes/Elementor/Widgets/EmbedMeetings.php:174
 #: includes/Elementor/Widgets/EmbedMeetings.php:176
 #: includes/views/live/tpl-edit-meeting.php:99
@@ -1066,7 +1092,7 @@ msgstr ""
 msgid "Meeting SDK App Credentials"
 msgstr ""
 
-#: templates/fragments/countdown-timer.php:51
+#: templates/fragments/countdown-timer.php:55
 #: templates/shortcode/embed-session.php:41
 msgid "Meeting starts in"
 msgstr ""
@@ -1140,7 +1166,7 @@ msgstr ""
 msgid "Migration Wizard"
 msgstr ""
 
-#: templates/fragments/countdown-timer.php:38
+#: templates/fragments/countdown-timer.php:42
 #: templates/shortcode/embed-session.php:59
 msgid "minutes"
 msgstr ""
@@ -1224,11 +1250,11 @@ msgid "No Meetings Found !"
 msgstr ""
 
 #: templates/shortcode-listing.php:73 templates/archive-meetings.php:55
-#: includes/Shortcodes/Meetings.php:452
+#: includes/Shortcodes/Meetings.php:460
 msgid "No Meetings found."
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:121
+#: includes/Shortcodes/Meetings.php:124
 msgid "No post id set in the shortcode"
 msgstr ""
 
@@ -1330,7 +1356,7 @@ msgstr ""
 msgid "Participants Video"
 msgstr ""
 
-#: templates/join-web-browser.php:84 templates/shortcode/embed-session.php:95
+#: templates/join-web-browser.php:83 templates/shortcode/embed-session.php:95
 #: includes/views/post-type/tpl-meeting-fields.php:188
 msgid "Password"
 msgstr ""
@@ -1449,7 +1475,7 @@ msgstr ""
 msgid "Pro User"
 msgstr ""
 
-#: templates/fragments/countdown-timer.php:17
+#: templates/fragments/countdown-timer.php:21
 msgid "PRO version is required for this meeting to be displayed."
 msgstr ""
 
@@ -1593,7 +1619,7 @@ msgstr ""
 msgid "Searching From: "
 msgstr ""
 
-#: templates/fragments/countdown-timer.php:44
+#: templates/fragments/countdown-timer.php:48
 #: templates/shortcode/embed-session.php:65
 msgid "seconds"
 msgstr ""
@@ -1629,7 +1655,7 @@ msgstr ""
 msgid "Select a Host"
 msgstr ""
 
-#: includes/Elementor/Widgets/MeetingByPostID.php:111
+#: includes/Elementor/Widgets/MeetingByPostID.php:164
 #: includes/Elementor/Widgets/MeetingByID.php:113
 msgid "Select a Meeting"
 msgstr ""
@@ -1654,6 +1680,10 @@ msgstr ""
 msgid "Select bulk action"
 msgstr ""
 
+#: includes/Elementor/Widgets/MeetingByPostID.php:97
+msgid "Select Layout"
+msgstr ""
+
 #: includes/Elementor/Widgets/RecordingsByHost.php:93
 #: includes/Elementor/Widgets/MeetingHosts.php:93
 msgid "Select User"
@@ -1669,7 +1699,7 @@ msgstr ""
 msgid "Server to Server Oauth Credentials"
 msgstr ""
 
-#: templates/shortcode/meeting-by-post-id.php:32
+#: templates/shortcode/meeting-by-post-id.php:31
 msgid "Session date"
 msgstr ""
 
@@ -1702,6 +1732,12 @@ msgstr ""
 
 #: includes/views/additional-info.php:6
 msgid "Shortcode Documentation"
+msgstr ""
+
+#: includes/Elementor/Widgets/MeetingByPostID.php:112
+#: includes/Elementor/Widgets/MeetingByPostID.php:125
+#: includes/Elementor/Widgets/MeetingByPostID.php:139
+msgid "Show"
 msgstr ""
 
 #: includes/Shortcodes.php:106
@@ -1781,7 +1817,7 @@ msgstr ""
 msgid "SSO Create"
 msgstr ""
 
-#: templates/content-meeting.php:63 templates/fragments/meeting-details.php:40
+#: templates/content-meeting.php:63 templates/fragments/meeting-details.php:45
 #: templates/shortcode/zoom-listing.php:67
 msgid "Start"
 msgstr ""
@@ -1989,7 +2025,7 @@ msgstr ""
 msgid "This meeting has been ended by host."
 msgstr ""
 
-#: includes/Bootstrap.php:179 includes/Shortcodes/Meetings.php:144
+#: includes/Bootstrap.php:179 includes/Shortcodes/Meetings.php:147
 msgid "This meeting has been ended by the host."
 msgstr ""
 
@@ -2001,7 +2037,7 @@ msgstr ""
 msgid "This meeting is no longer valid and cannot be joined !"
 msgstr ""
 
-#: includes/Shortcodes/Meetings.php:194
+#: includes/Shortcodes/Meetings.php:202
 msgid "This post does not exist."
 msgstr ""
 
@@ -2034,7 +2070,7 @@ msgstr ""
 #: templates/shortcode/zoom-listing.php:72
 #: templates/shortcode/embed-session.php:94
 #: templates/shortcode/list-webinars-host.php:18
-#: templates/shortcode/meeting-by-post-id.php:60
+#: templates/shortcode/meeting-by-post-id.php:59
 #: templates/shortcode/list-meetings-host.php:19
 #: includes/views/webinars/tpl-edit-webinar.php:58
 #: includes/views/webinars/tpl-add-webinar.php:62
@@ -2053,7 +2089,7 @@ msgid "To"
 msgstr ""
 
 #: includes/template-functions.php:328
-#: templates/fragments/meeting-details.php:32
+#: templates/fragments/meeting-details.php:36
 #: templates/shortcode/zoom-webinar.php:25
 #: templates/shortcode/list-webinars-host.php:16
 #: templates/shortcode/zoom-recordings.php:23
@@ -2310,7 +2346,7 @@ msgid ""
 "issues."
 msgstr ""
 
-#: templates/join-web-browser.php:134
+#: templates/join-web-browser.php:133
 msgid ""
 "You do not have enough priviledge to access this page. Please login to "
 "continue or contact administrator."

@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.2
-Stable tag: 4.1.11
+Stable tag: 4.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,10 @@ Search for the plugin -> add new dialog and click install, or download and extra
 
 == Frequently Asked Questions ==
 
+= Migrating from JWT to Server to Server method =
+
+As of June 2023, Zoom will deprecate JWT App type - the plugin has moved to Server-to-Server OAuth App and SDK App type for Join via Browser / Web SDK support. If you face any Zoom connection issues then this might be the issue. Refer to this [Documentation](https://zoomdocs.codemanas.com/migration/ "Documentation") on how to migrate your old JWT method.
+
 = Join via Browser showing Signature Invalid or Timeout =
 
 Please check if you SDK app type is activated and re-check all the app credentials are valid.
@@ -154,6 +158,12 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.2.0 May 25th, 2023 =
+* Added: FSE Support
+* Added: End meeting from backend using Zoom status api.
+* Updated: Elementor Modules for shortcode changes related with [zoom_meeting_post]
+* Bug fixes
 
 = 4.1.11 May 3rd, 2023 =
 * Added: Capaibility to only show meeting counter when using [zoom_meeting_post] - See [Documentation https://zoomdocs.codemanas.com/shortcode/#2-show-a-meeting-post-with-countdown].
