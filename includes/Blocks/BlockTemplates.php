@@ -104,7 +104,7 @@ class BlockTemplates {
 		$template->description    = $post->post_excerpt;
 		$template->title          = $post->post_title;
 		$template->status         = $post->post_status;
-		$template->has_theme_file = false;
+		$template->has_theme_file = true;
 		$template->is_custom      = false;
 		$template->post_types     = array(); //
 		$template->area           = 'uncategorized';

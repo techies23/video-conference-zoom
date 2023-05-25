@@ -298,7 +298,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		wp_die();
 	}
 
-	public function end_meeting() {
+	public function end_meeting(): void {
 		check_ajax_referer( '_nonce_zvc_security', 'access' );
 		//only people who can create meeting can end them.  
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -311,7 +311,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	/**
 	 * Assign Host ID page
 	 */
-	public function assign_host_id() {
+	public function assign_host_id(): void {
 		$draw   = filter_input( INPUT_GET, 'draw' );
 		$length = filter_input( INPUT_GET, 'length' );
 		$start  = filter_input( INPUT_GET, 'start' );
