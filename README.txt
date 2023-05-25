@@ -166,6 +166,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Fixed: Search in host to WP page.
 * Fixed: FSE theme join via browser page not working.
 * Updated: WebSDK to version 2.12.2
+* Fixed: Responsive fixed for shortcode table views.
 * Bug fixes
 
 = 4.1.11 May 3rd, 2023 =

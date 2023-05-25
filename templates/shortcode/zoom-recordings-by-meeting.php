@@ -47,7 +47,7 @@ foreach ( $zoom_recordings as $zoom_recording ) {
         </li>
     </ul>
 </div>
-<table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table-meeting-id vczapi-user-meeting-list">
+<table id="vczapi-recordings-list-table" class="responsive nowrap vczapi-recordings-list-table-meeting-id vczapi-user-meeting-list">
     <thead>
     <tr>
         <th><?php _e( 'Start Date', 'video-conferencing-with-zoom-api' ); ?></th>

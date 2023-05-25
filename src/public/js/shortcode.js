@@ -156,6 +156,7 @@
             $(document).on('click', '.vczapi-modal-close', this.closeModal.bind(this));
 
             if ($('.vczapi-recordings-list-table').length > 0) {
+                console.log('here');
                 $('.vczapi-recordings-list-table').DataTable({
                     responsive: true,
                     language: vczapi_dt_i18n,

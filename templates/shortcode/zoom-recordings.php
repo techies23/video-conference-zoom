@@ -16,7 +16,7 @@ global $zoom_recordings;
             <input type="text" name="date" id="vczapi-check-recording-date" class="vczapi-check-recording-date" value="<?php echo isset( $_GET['date'] ) ? esc_html( $_GET['date'] ) : date( 'F Y' ); ?>"/> <input type="submit" name="fetch_recordings" value="<?php _e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
         </form>
     </div>
-    <table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table">
+    <table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table responsive nowrap">
         <thead>
         <tr>
             <th><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></th>

@@ -10,7 +10,7 @@
  */
 ?>
 
-<table id="vczapi-show-webinars-list-table" class="vczapi-user-meeting-list">
+<table id="vczapi-show-webinars-list-table" class="responsive nowrap vczapi-user-meeting-list">
     <thead>
     <tr>
         <th><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
