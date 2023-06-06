@@ -141,7 +141,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                         <table class="form-table">
                             <tbody>
                             <tr>
-                                <th><label for="vczapi_sdk_key"><?php _e( 'SDK key / Client ID', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                                <th><label for="vczapi_sdk_key"><?php _e( 'Client ID', 'video-conferencing-with-zoom-api' ); ?></label></th>
                                 <td>
                                     <input type="password" style="width: 400px;"
                                            name="vczapi_sdk_key"
@@ -150,7 +150,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                                     <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_key">Show</a></td>
                             </tr>
                             <tr>
-                                <th><label for="vczapi_sdk_secret_key"><?php _e( 'SDK / Client Secret', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                                <th><label for="vczapi_sdk_secret_key"><?php _e( 'Client Secret', 'video-conferencing-with-zoom-api' ); ?></label></th>
                                 <td>
                                     <input type="password" style="width: 400px;"
                                            name="vczapi_sdk_secret_key"
