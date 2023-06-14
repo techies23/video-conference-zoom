@@ -4,6 +4,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if(!function_exists('vczapi_is_plugin_active')){
+	function vczapi_is_plugin_active( $plugin ) {
+		$active = false;
+		// check for plugin using plugin name
+		if ( in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+			$active = true;
+		}
+
+		return $active;
+	}
+}
+
+
 if ( ! function_exists( 'dump' ) ) {
 	/**
 	 * @author Deepen
