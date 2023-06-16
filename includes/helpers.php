@@ -585,7 +585,7 @@ if ( ! function_exists( 'vczapi_get_browser_agent_type' ) ) {
  *
  * @return string
  */
-function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false, $seperator = false, $redirect = true ) {
+function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false, $seperator = false, $redirect = false ) {
 	if ( ! vczapi_is_sdk_enabled() ) {
 		return;
 	}
