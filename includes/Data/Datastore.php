@@ -99,12 +99,10 @@ class Datastore {
 
 	public static function get_plugin_settings( $type = '' ) {
 		$settings = get_option( '_vczapi_zoom_settings' );
-		if ( ! empty( $type ) && ! empty( $settings[ $type ] ) ) {
+		if ( ! empty( $type ) && ! empty( $settings ) && ! empty( $settings[ $type ] ) ) {
 			return $settings[ $type ];
-		} else {
-			return false;
 		}
 
-		return $settings;
+		return false;
 	}
 }
