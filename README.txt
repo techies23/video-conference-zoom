@@ -163,6 +163,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Updated: Admin SDK text changed to Client ID and Client Secret.
 * Fixed: Timezone Fix
 * Fixed: Spectra plugin blocks template compatibility issue.
+* Added: Join from browser directly without name, email field.
 
 = 4.2.0 May 25th, 2023 =
 * Added: FSE Support

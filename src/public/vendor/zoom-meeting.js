@@ -1,4 +1,5 @@
 import {ZoomMtg} from '@zoomus/websdk'
+
 /**
  * Zoom Meeting Join via Browser App
  *
@@ -17,7 +18,9 @@ const ZoomMtgApp = {
         this.initSDK()
         this.eventHandlers()
         //direct browser join enabled
-        this.handleJoinOnInit()
+        if (zvc_ajx.enable_direct_join_via_browser === 'yes') {
+            this.handleJoinOnInit()
+        }
     },
 
     /**
@@ -40,16 +43,11 @@ const ZoomMtgApp = {
     },
 
     handleJoinOnInit: function () {
-
         // Access the localized values from currentUser object
-        let userName = zvc_ajx.user_name;
-        let userEmail = zvc_ajx.user_mail;
-        let password = zvc_ajx.user_pass;
-
-
-        if (zvc_ajx.enable_direct_join_via_browser === 'yes') {
+        const userName = zvc_ajx.user_name;
+        const userEmail = zvc_ajx.user_mail;
+        const password = this.password;
         this.handleJoinMeeting(userName, password, userEmail);
-        }
     },
 
     /**
@@ -93,7 +91,6 @@ const ZoomMtgApp = {
     },
 
     handleJoinMeeting: function (display_name, pwd, email) {
-        console.log(display_name, pwd, email);
         if (this.meetingID != null || this.meetingID !== '') {
             this.generateSignature().then(result => {
                 if (result.success) {
@@ -128,7 +125,7 @@ const ZoomMtgApp = {
         const pwd = document.getElementById('meeting_password')
 
         if (display_name !== null && (display_name.value === null || display_name.value === '')) {
-            this.infoContainer.innerHTML = 'Validation: Name is Required!'
+            this.infoContainer.innerHTML = 'Name is a Required field!'
             this.infoContainer.style.color = 'red'
             this.removeLoader()
             return false
@@ -136,7 +133,7 @@ const ZoomMtgApp = {
 
         //Email Validation
         if (email !== null && (email.value === null || email.value === '')) {
-            this.infoContainer.innerHTML = 'Validation: Email is Required!'
+            this.infoContainer.innerHTML = 'Email is a Required field!'
             this.infoContainer.style.color = 'red'
             this.removeLoader()
             return false
@@ -151,13 +148,10 @@ const ZoomMtgApp = {
         }
 
         //values
-        let name = display_name !== null ? display_name.value : '';
-        let password = pwd !== null ? pwd.value : '';
-        let userEmail = email !== null ? email.value : '';
-
+        const name = display_name !== null ? display_name.value : '';
+        const password = pwd !== null ? pwd.value : '';
+        const userEmail = email !== null ? email.value : '';
         this.handleJoinMeeting(name, password, userEmail)
-
-
     },
 
     /**

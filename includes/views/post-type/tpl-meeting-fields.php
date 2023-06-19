@@ -124,8 +124,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <option value="1" <?php ! empty( $meeting_fields['meeting_type'] ) ? selected( esc_attr( absint( $meeting_fields['meeting_type'] ) ), 1 ) : false; ?>>Meeting</option>
                     <option value="2" <?php ! empty( $meeting_fields['meeting_type'] ) ? selected( esc_attr( absint( $meeting_fields['meeting_type'] ) ), 2 ) : false; ?>>Webinar</option>
                 </select>
-                <p class="description" id="userId-description"><?php _e( 'Which type of meeting do you want to create. Note: Webinar requires Zoom Webinar Plan enabled in your account.', 'video-conferencing-with-zoom-api' ); ?>
-                    ?</p>
+                <p class="description" id="userId-description"><?php _e( 'Which type of meeting do you want to create.', 'video-conferencing-with-zoom-api' ); ?></p>
+                <p class="description" id="userId-description"><?php _e( 'Note: Webinar requires Zoom Webinar Plan enabled in your account.', 'video-conferencing-with-zoom-api' ); ?>?</p>
+
             </td>
         </tr>
 		<?php

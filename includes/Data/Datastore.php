@@ -96,4 +96,15 @@ class Datastore {
 
 		return $result;
 	}
+
+	public static function get_plugin_settings( $type = '' ) {
+		$settings = get_option( '_vczapi_zoom_settings' );
+		if ( ! empty( $type ) && ! empty( $settings[ $type ] ) ) {
+			return $settings[ $type ];
+		} else {
+			return false;
+		}
+
+		return $settings;
+	}
 }

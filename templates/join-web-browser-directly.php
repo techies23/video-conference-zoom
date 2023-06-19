@@ -17,10 +17,6 @@ global $zoom;
 global $current_user;
 
 if ( video_conference_zoom_check_login() ) {
-	if ( ! empty( $zoom['api']->state ) && $zoom['api']->state === "ended" ) {
-		echo "<h3>" . __( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api' ) . "</h3>";
-		die;
-	}
 
 	/**
 	 * Trigger before the content
