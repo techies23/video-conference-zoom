@@ -314,7 +314,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 						'disable_join_via_browser'           => sanitize_text_field( filter_input( INPUT_POST, 'meeting_disable_join_via_browser' ) ),
 						'join_via_browser_default_lang'      => sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) ),
 						'disable_auto_pwd_generation'        => sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) ),
-						'debugger_logs'                      => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) )
+						'debugger_logs'                      => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) ),
+						'enable_direct_join_via_browser'     => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_direct_join' ) )
 					];
 
 					/**

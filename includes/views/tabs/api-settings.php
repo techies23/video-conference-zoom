@@ -173,6 +173,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                         </tr>
                         <tr>
                             <th>
+                                <label for="vczapi_enable_direct_join"><?php _e( 'Enable direct join via web browser?', 'video-conferencing-with-zoom-api' ); ?></label>
+                            </th>
+                            <td>
+                                <input type="checkbox" id="vczapi_enable_direct_join" name="vczapi_enable_direct_join"
+                                       value="yes" <?php ! empty( $settings['enable_direct_join_via_browser'] ) ? checked( $settings['enable_direct_join_via_browser'], 'yes' ) : false; ?>>
+                                <span class="description"><?php _e( 'Checking this will enable direct join via web browser.', 'video-conferencing-with-zoom-api' ); ?></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 <label><?php _e( 'Default Language for Join via browser page ?', 'video-conferencing-with-zoom-api' ); ?></label>
                             </th>
                             <td>
@@ -215,7 +225,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         Italian italiano
                                     </option>
                                 </select>
-                                <p class="description"><?php _e( 'Select a default language for your join meeting via browser page.', 'video-conferencing-with-zoom-api' ); ?></p>
+                                <span class="description"><?php _e( 'Select a default language for your join meeting via browser page.', 'video-conferencing-with-zoom-api' ); ?></span>
                             </td>
                         </tr>
                         </tbody>

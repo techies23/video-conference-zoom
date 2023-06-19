@@ -533,7 +533,12 @@ function video_conference_zoom_after_jbh_html() {
 	} else {
 		$post_link = home_url( '/' );
 	}
-
+	global $zoom;
+	$current_user = wp_get_current_user();
+	$full_name    = ! empty( $current_user->first_name ) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name;
+	$pass = isset( $_GET['pak'] ) || empty( $zoom['password'] ) ? '' : ( ! empty( $zoom['password'] ) ? $zoom['password'] : '' );
+    $setting = get_option('_vczapi_zoom_settings');
+    $enable_direct_via_browser= $setting['enable_direct_join_via_browser'];
 	$localize = array(
 		'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 		'zvc_security'  => wp_create_nonce( "_nonce_zvc_security" ),
@@ -541,12 +546,17 @@ function video_conference_zoom_after_jbh_html() {
 		'meeting_id'    => base64_encode( vczapi_encrypt_decrypt( 'decrypt', $_GET['join'] ) ),
 		'meeting_pwd'   => ! empty( $_GET['pak'] ) ? base64_encode( vczapi_encrypt_decrypt( 'decrypt', $_GET['pak'] ) ) : false,
 		'disableInvite' => ( get_option( 'vczapi_disable_invite' ) == 'yes' ),
-		'sdk_version'   => ZVC_ZOOM_WEBSDK_VERSION
+		'sdk_version'   => ZVC_ZOOM_WEBSDK_VERSION,
+		'user_mail' => $current_user->user_email,
+		'user_name'  => $full_name,
+		'user_pass'   => $pass,
+        'enable_direct_join_via_browser' => $enable_direct_via_browser,
 	);
 
 	/**
 	 * Additional Data
 	 */
+
 	$additional_data = apply_filters( 'vczapi_api_join_via_browser_params', array(
 		'meetingInfo'       => [
 			'topic',
@@ -563,7 +573,7 @@ function video_conference_zoom_after_jbh_html() {
 	$localize        = array_merge( $localize, $additional_data );
 	?>
     <script id='video-conferencing-with-zoom-api-browser-js-extra'>
-      var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
+        var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
     </script>
 
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
@@ -656,6 +666,7 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 	$GLOBALS['zoom'] = get_post_meta( $post->ID, '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
 	$meeting_details = get_post_meta( $post->ID, '_meeting_zoom_details', true );
 
+
 	if ( ! empty( $show_zoom_author_name ) ) {
 		$meeting_author = vczapi_get_meeting_author( $post->ID, $meeting_details );
 	} else {
@@ -678,7 +689,12 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 	}
 
 	if ( isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
-		$template = vczapi_get_template( 'join-web-browser.php' );
+		$setting = get_option('_vczapi_zoom_settings');
+		$enable_direct_via_browser= $setting['enable_direct_join_via_browser'];
+          if($enable_direct_via_browser === 'yes'){
+	          $template = vczapi_get_template( 'join-web-browser-directly.php' );
+          }else
+	      $template = vczapi_get_template( 'join-web-browser.php' );
 	} else if ( ! empty( $template ) && vczapi_is_fse_theme() ) {
 		return $template;
 	} else {
