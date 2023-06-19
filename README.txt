@@ -159,8 +159,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.2.1 June 6th, 2023 =
+= 4.2.1 June 19th, 2023 =
 * Updated: Admin SDK text changed to Client ID and Client Secret.
+* Fixed: Timezone Fix
+* Fixed: Spectra plugin blocks template compatibility issue.
 
 = 4.2.0 May 25th, 2023 =
 * Added: FSE Support
