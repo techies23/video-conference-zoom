@@ -241,7 +241,6 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			} else {
 				return $this->generateJWTKey();
 			}
-
 		}
 
 		/**

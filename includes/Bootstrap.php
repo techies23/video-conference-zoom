@@ -222,6 +222,7 @@ final class Bootstrap {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
+        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-connect-user-account.php';
 
 		//Timezone
 		Timezone::get_instance();

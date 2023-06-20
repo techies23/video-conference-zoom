@@ -70,11 +70,13 @@ class S2SOAuth {
 	 *
 	 * @return mixed
 	 */
-	public function generateAndSaveAccessToken( $account_id, $client_id, $client_secret ) {
+	public function generateAndSaveAccessToken( $account_id, $client_id, $client_secret, $save_to_user = false ) {
 		$result = $this->generateAccessToken( $account_id, $client_id, $client_secret );
 		if ( ! is_wp_error( $result ) ) {
 			//@todo - implement a per person option to allow other users to add their own API Credentials and generate own access token
-			update_option( 'vczapi_global_oauth_data', $result );
+			if(!$save_to_user){
+				update_option( 'vczapi_global_oauth_data', $result );
+			}
 		}
 
 		return $result;
