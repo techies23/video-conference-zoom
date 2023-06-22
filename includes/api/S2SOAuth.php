@@ -74,8 +74,17 @@ class S2SOAuth {
 		$result = $this->generateAccessToken( $account_id, $client_id, $client_secret );
 		if ( ! is_wp_error( $result ) ) {
 			//@todo - implement a per person option to allow other users to add their own API Credentials and generate own access token
-			if(!$save_to_user){
+			if ( ! $save_to_user ) {
 				update_option( 'vczapi_global_oauth_data', $result );
+			} else {
+				//@todo check if allowed to use
+				//check current user capability minimum edit_posts
+				//check if global option is checked to allow user to add their own zoom account
+				$setting                = get_option( '_vczapi_zoom_settings' );
+				$enable_individual_zoom = $setting['enable_individual_zoom'];
+				if ( current_user_can( 'edit_posts' ) && $enable_individual_zoom == "on" ) {
+					update_user_meta( get_current_user_id(), 'zoom_user_access_token', $result );
+				}
 			}
 		}
 

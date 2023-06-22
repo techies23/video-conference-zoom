@@ -223,19 +223,23 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				'Zoom_Video_Conferencing_Admin_Sync',
 				'render',
 			) );
-
-			add_submenu_page(
-				'edit.php?post_type=zoom-meetings',
-				__( 'Connect User Account', 'video-conferencing-with-zoom-api' ),
-				__( 'Connect User Account', 'video-conferencing-with-zoom-api' ),
-				'read',
-				'zoom-video-conferencing-connect',
-				function () {
-					$zoom_connect_user_account = Zoom_Connect_User_Account::get_instance();
-					$zoom_connect_user_account->save_api_credentials();
-					$zoom_connect_user_account->render();
-				}
-			);
+			$setting                = get_option( '_vczapi_zoom_settings' );
+			$enable_individual_zoom = $setting['enable_individual_zoom'];
+            //this condition only works on page refresh since data saved in same admin call
+			if ( $enable_individual_zoom == 'on' ) {
+				add_submenu_page(
+					'edit.php?post_type=zoom-meetings',
+					__( 'Connect User Account', 'video-conferencing-with-zoom-api' ),
+					__( 'Connect User Account', 'video-conferencing-with-zoom-api' ),
+					'read',
+					'zoom-video-conferencing-connect',
+					function () {
+						$zoom_connect_user_account = Zoom_Connect_User_Account::get_instance();
+						$zoom_connect_user_account->save_api_credentials();
+						$zoom_connect_user_account->render();
+					}
+				);
+			}
 		}
 
 		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Settings', 'video-conferencing-with-zoom-api' ), __( 'Settings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-settings', array(
@@ -328,7 +332,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 						'join_via_browser_default_lang'      => sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) ),
 						'disable_auto_pwd_generation'        => sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) ),
 						'debugger_logs'                      => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) ),
-						'enable_direct_join_via_browser'     => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_direct_join' ) )
+						'enable_direct_join_via_browser'     => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_direct_join' ) ),
+						'enable_individual_zoom'             => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_individual_zoom' ) ),
 					];
 
 					/**

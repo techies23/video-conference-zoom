@@ -10,7 +10,6 @@ class Zoom_Connect_User_Account {
 	public function __construct() {
 	}
 
-
 	public function render() {
 		$account_id    = get_user_meta( get_current_user_id(), 'zoom_user_account_id', true );
 		$client_id     = get_user_meta( get_current_user_id(), 'zoom_user_client_id', true );
@@ -36,6 +35,16 @@ class Zoom_Connect_User_Account {
             </form>
         </div>
 		<?php
+		$access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $account_id, $client_id, $client_secret, true );
+		if ( is_wp_error( $access_token ) ) {
+			// Handle the error appropriately
+			$error_message = $access_token->get_error_message();
+			// Display the error message to the user
+			echo '<p>Error: ' . esc_html( $error_message ) . '</p>';
+		} else {
+			// Access token generated successfully
+			echo '<p>Access token generated and saved successfully!</p>';
+		}
 	}
 
 	public function save_api_credentials() {
