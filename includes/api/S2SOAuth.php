@@ -97,10 +97,18 @@ class S2SOAuth {
 	 * @return void
 	 */
 	public function regenerateAccessTokenAndSave() {
-		$account_id    = get_option( 'vczapi_oauth_account_id' );
-		$client_id     = get_option( 'vczapi_oauth_client_id' );
-		$client_secret = get_option( 'vczapi_oauth_client_secret' );
+		$setting                = get_option( '_vczapi_zoom_settings' );
+		$enable_individual_zoom = $setting['enable_individual_zoom'];
 
+		if ( $enable_individual_zoom == "on" ) {
+			$account_id    = get_user_meta( get_current_user_id(), 'zoom_user_account_id', true );
+			$client_id     = get_user_meta( get_current_user_id(), 'zoom_user_client_id', true );
+			$client_secret = get_user_meta( get_current_user_id(), 'zoom_user_client_', true );
+		} else {
+			$account_id    = get_option( 'vczapi_oauth_account_id' );
+			$client_id     = get_option( 'vczapi_oauth_client_id' );
+			$client_secret = get_option( 'vczapi_oauth_client_secret' );
+		}
 		$result = $this->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
 		if ( is_wp_error( $result ) ) {
 			//@todo log error if regenerating access token unsuccessful
