@@ -14,7 +14,8 @@ class Zoom_Connect_User_Account {
 		$account_id    = get_user_meta( get_current_user_id(), 'zoom_user_account_id', true );
 		$client_id     = get_user_meta( get_current_user_id(), 'zoom_user_client_id', true );
 		$client_secret = get_user_meta( get_current_user_id(), 'zoom_user_client_secret', true );
-		// Output the form
+
+        // Output the form
 		?>
         <div style="padding: 20px; background: #cccccc">
             <h2>Users Server to Server Oauth Credentials</h2>
@@ -46,7 +47,6 @@ class Zoom_Connect_User_Account {
 			echo '<p>Access token generated and saved successfully!</p>';
 		}
 	}
-
 	public function save_api_credentials() {
 		if ( isset( $_POST['save_user_credentials'] ) ) {
 			$account_id    = sanitize_text_field( $_POST['account_id'] );

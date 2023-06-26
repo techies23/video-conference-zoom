@@ -235,8 +235,14 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 		private function getBearerToken() {
 			//@todo this will need to be modified for each user scenario
-			$OauthData = get_option( 'vczapi_global_oauth_data' );
-			if ( ! empty( $OauthData ) ) {
+			$OauthData              = get_option( 'vczapi_global_oauth_data' );
+			$userOauthData          = get_user_meta( get_current_user_id(), 'zoom_user_access_token', true );
+			$setting                = get_option( '_vczapi_zoom_settings' );
+			$enable_individual_zoom = $setting['enable_individual_zoom'];
+
+			if (current_user_can( 'edit_posts' ) && $enable_individual_zoom == "on" && ! empty( $userOauthData ) ) {
+				return $userOauthData->access_token;
+			} elseif ( ! empty( $OauthData ) ) {
 				return $OauthData->access_token;
 			} else {
 				return $this->generateJWTKey();
@@ -247,6 +253,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 * Generate JWT key
 		 *
 		 * @return string
+		 * @deprcated 4.2.2.
 		 */
 		private function generateJWTKey() {
 			$key    = $this->zoom_api_key;
