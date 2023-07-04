@@ -536,14 +536,16 @@ function video_conference_zoom_after_jbh_html() {
 	}
 
 	global $current_user;
+	global $zoom;
+	$meeting_id                = ! empty( $zoom['api'] ) && ! empty( $zoom['api']->id ) ? $zoom['api']->id : '';
 	$full_name                 = ! empty( $current_user->display_name ) ? $current_user->display_name : 'Guest';
-	$enable_direct_via_browser = \Codemanas\VczApi\Data\Datastore::get_plugin_settings('enable_direct_join_via_browser');
+	$enable_direct_via_browser = \Codemanas\VczApi\Data\Datastore::get_plugin_settings( 'enable_direct_join_via_browser' );
 	$localize                  = array(
 		'ajaxurl'                        => admin_url( 'admin-ajax.php' ),
 		'zvc_security'                   => wp_create_nonce( "_nonce_zvc_security" ),
 		'redirect_page'                  => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( $post_link ) ),
-		'meeting_id'                     => base64_encode( vczapi_encrypt_decrypt( 'decrypt', $_GET['join'] ) ),
-		'meeting_pwd'                    => ! empty( $_GET['pak'] ) ? base64_encode( vczapi_encrypt_decrypt( 'decrypt', $_GET['pak'] ) ) : false,
+		'meeting_id'                     => base64_encode( vczapi_encrypt_decrypt( 'decrypt', $_GET['join'], $meeting_id ) ),
+		'meeting_pwd'                    => ! empty( $_GET['pak'] ) ? base64_encode( vczapi_encrypt_decrypt( 'decrypt', $_GET['pak'], $meeting_id ) ) : false,
 		'disableInvite'                  => ( get_option( 'vczapi_disable_invite' ) == 'yes' ),
 		'sdk_version'                    => ZVC_ZOOM_WEBSDK_VERSION,
 		'user_mail'                      => ! empty( $current_user->user_email ) ? $current_user->user_email : '',
@@ -686,7 +688,7 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 	}
 
 	if ( isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
-		$enable_direct_via_browser = \Codemanas\VczApi\Data\Datastore::get_plugin_settings('enable_direct_join_via_browser');
+		$enable_direct_via_browser = \Codemanas\VczApi\Data\Datastore::get_plugin_settings( 'enable_direct_join_via_browser' );
 		if ( $enable_direct_via_browser == 'yes' ) {
 			$template = vczapi_get_template( 'join-web-browser-directly.php' );
 		} else {

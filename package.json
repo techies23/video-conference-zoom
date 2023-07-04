@@ -36,7 +36,7 @@
     "@wordpress/element": "^5.7.0",
     "@wordpress/i18n": "^4.30.0",
     "@wordpress/server-side-render": "^4.7.0",
-    "@zoomus/websdk": "^2.12.2",
+    "@zoomus/websdk": "^2.13.0",
     "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.11.3",
     "datatables.net-responsive": "^2.2.5",
