@@ -25,11 +25,11 @@ if ( ! empty( $zoom->shortcode_attributes['title'] ) ) {
 
 $post_type_link    = get_post_type_archive_link( 'zoom-meetings' );
 $browser_join_link = array(
-	'join' => vczapi_encrypt_decrypt( 'encrypt', $meeting_id, $meeting_id ),
+	'join' => \Codemanas\VczApi\Helpers\Encryption::encrypt( $meeting_id ),
 	'type' => 'meeting'
 );
 if ( ! empty( $zoom->shortcode_attributes['passcode'] ) ) {
-	$browser_join_link['pak'] = vczapi_encrypt_decrypt( 'encrypt', $zoom->shortcode_attributes['passcode'], $meeting_id );
+	$browser_join_link['pak'] = \Codemanas\VczApi\Helpers\Encryption::encrypt( $zoom->shortcode_attributes['passcode'] );
 }
 $join_via_browser_link = add_query_arg( $browser_join_link, $post_type_link );
 

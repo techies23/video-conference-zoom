@@ -146,8 +146,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <th scope="row"><label for="timezone"><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
 			<?php
-			$tzlists     = zvc_get_timezone_options();
-			$wp_timezone = zvc_get_timezone_offset_wp();
+			$tzlists     = \Codemanas\VczApi\Helpers\Date::timezone_list();
+			$wp_timezone = \Codemanas\VczApi\Helpers\Date::get_timezone_offset();
 			?>
             <select id="timezone" name="timezone" class="zvc-hacking-select">
 				<?php foreach ( $tzlists as $k => $tzlist ) {

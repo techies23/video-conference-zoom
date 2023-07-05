@@ -160,8 +160,11 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 == Changelog ==
 
 = 4.2.2 July 4th, 2023 =
-* Fixed: vczapi_encrypt_decrypt() to generate dynamic key when generating value.
+* Deprecated: vczapi_encrypt_decrypt() to generate dynamic key when generating value.
+* Added: New Encrypt Decrypt methods
+* Added: Helper functions
 * Updated: WebSDK to version 2.13.0
+* Few updates to Codebase into PSR-4
 
 = 4.2.1 June 19th, 2023 =
 * Updated: Admin SDK text changed to Client ID and Client Secret.
