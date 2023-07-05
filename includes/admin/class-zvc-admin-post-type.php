@@ -1,5 +1,7 @@
 <?php
 
+use Codemanas\VczApi\Data\Datastore;
+
 /**
  * Meeting Post Type Controller
  *
@@ -431,10 +433,14 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 		$meeting_fields = get_post_meta( $post->ID, '_meeting_fields', true );
 
+		$is_individual_account = Datastore::get_vczapi_zoom_settings( 'enable_individual_zoom' );
+
 		do_action( 'vczapi_before_fields_admin', $post );
 
 		//Get Template
-		require_once ZVC_PLUGIN_VIEWS_PATH . '/post-type/tpl-meeting-fields.php';
+		$template = $is_individual_account ? '/post-type/tpl-meeting-fields-view-only.php' : '/post-type/tpl-meeting-fields.php';
+		require_once ZVC_PLUGIN_VIEWS_PATH . $template;
+
 	}
 
 	/**

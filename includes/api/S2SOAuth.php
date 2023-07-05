@@ -1,16 +1,20 @@
 <?php
 
-namespace vczapi;
+namespace Codemanas\VczApi\Api;
+
+use Codemanas\VczApi\Data\Datastore;
 
 class S2SOAuth {
 	public static $instance = null;
+
+	public bool $enable_individual_zoom = false;
 
 	public static function get_instance() {
 		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
 
 	public function __construct() {
-
+		$this->enable_individual_zoom = Datastore::get_vczapi_zoom_settings('enable_individual_zoom');
 	}
 
 	/**
@@ -76,15 +80,8 @@ class S2SOAuth {
 			//@todo - implement a per person option to allow other users to add their own API Credentials and generate own access token
 			if ( ! $save_to_user ) {
 				update_option( 'vczapi_global_oauth_data', $result );
-			} else {
-				//@todo check if allowed to use
-				//check current user capability minimum edit_posts
-				//check if global option is checked to allow user to add their own zoom account
-				$setting                = get_option( '_vczapi_zoom_settings' );
-				$enable_individual_zoom = $setting['enable_individual_zoom'];
-				if ( current_user_can( 'edit_posts' ) && $enable_individual_zoom == "on" ) {
-					update_user_meta( get_current_user_id(), 'zoom_user_access_token', $result );
-				}
+			} else if ( current_user_can( 'edit_posts' ) && $this->enable_individual_zoom ) {
+				update_user_meta( get_current_user_id(), 'zoom_user_access_token', $result );
 			}
 		}
 
@@ -97,19 +94,16 @@ class S2SOAuth {
 	 * @return void
 	 */
 	public function regenerateAccessTokenAndSave() {
-		$setting                = get_option( '_vczapi_zoom_settings' );
-		$enable_individual_zoom = $setting['enable_individual_zoom'];
-
-		if ( $enable_individual_zoom == "on" ) {
+		if ( $this->enable_individual_zoom ) {
 			$account_id    = get_user_meta( get_current_user_id(), 'zoom_user_account_id', true );
 			$client_id     = get_user_meta( get_current_user_id(), 'zoom_user_client_id', true );
-			$client_secret = get_user_meta( get_current_user_id(), 'zoom_user_client_', true );
+			$client_secret = get_user_meta( get_current_user_id(), 'zoom_user_client_secret', true );
 		} else {
 			$account_id    = get_option( 'vczapi_oauth_account_id' );
 			$client_id     = get_option( 'vczapi_oauth_client_id' );
 			$client_secret = get_option( 'vczapi_oauth_client_secret' );
 		}
-		$result = $this->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
+		$result = $this->generateAndSaveAccessToken( $account_id, $client_id, $client_secret, $this->enable_individual_zoom );
 		if ( is_wp_error( $result ) ) {
 			//@todo log error if regenerating access token unsuccessful
 		}

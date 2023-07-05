@@ -96,4 +96,20 @@ class Datastore {
 
 		return $result;
 	}
+
+	/**
+	 * Retrives zoom setting options.
+	 *
+	 * @param $key
+	 *
+	 * @return false|mixed
+	 */
+	public static function get_vczapi_zoom_settings( $key = '' ) {
+		$setting = get_option( '_vczapi_zoom_settings' );
+		if ( ! empty( $setting ) && ! empty( $key ) ) {
+			return ! empty( $setting[ $key ] ) ? $setting[ $key ] : false;
+		}
+
+		return ! empty( $setting ) ? $setting : false;
+	}
 }

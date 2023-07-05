@@ -2,6 +2,7 @@
 
 use \Firebase\JWT\JWT;
 use Codemanas\VczApi\Data\Logger;
+use Codemanas\VczApi\Data\Datastore;
 
 /**
  * Class Connecting Zoom API V2
@@ -122,7 +123,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 				if ( $responseCode == 401 && vczapi_is_oauth_active() ) {
 					//only regenerate access token if it's already active;
-					\vczapi\S2SOAuth::get_instance()->regenerateAccessTokenAndSave();
+					\Codemanas\VczApi\Api\S2SOAuth::get_instance()->regenerateAccessTokenAndSave();
 					//only retry twice;
 					if ( self::$OAuth_revalidate_attempts <= 2 ) {
 						self::$OAuth_revalidate_attempts ++;
@@ -237,8 +238,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			//@todo this will need to be modified for each user scenario
 			$OauthData              = get_option( 'vczapi_global_oauth_data' );
 			$userOauthData          = get_user_meta( get_current_user_id(), 'zoom_user_access_token', true );
-			$setting                = get_option( '_vczapi_zoom_settings' );
-			$enable_individual_zoom = $setting['enable_individual_zoom'];
+			$enable_individual_zoom = Datastore::get_vczapi_zoom_settings('enable_individual_zoom');
 
 			if (current_user_can( 'edit_posts' ) && $enable_individual_zoom == "on" && ! empty( $userOauthData ) ) {
 				return $userOauthData->access_token;

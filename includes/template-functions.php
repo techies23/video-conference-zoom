@@ -1,4 +1,6 @@
 <?php
+use Codemanas\VczApi\Data\Datastore;
+
 /**
  * @author     Deepen.
  * @created_on 11/20/19
@@ -537,8 +539,7 @@ function video_conference_zoom_after_jbh_html() {
 	$current_user = wp_get_current_user();
 	$full_name    = ! empty( $current_user->first_name ) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name;
 	$pass = isset( $_GET['pak'] ) || empty( $zoom['password'] ) ? '' : ( ! empty( $zoom['password'] ) ? $zoom['password'] : '' );
-    $setting = get_option('_vczapi_zoom_settings');
-    $enable_direct_via_browser= $setting['enable_direct_join_via_browser'];
+    $enable_direct_via_browser= Datastore::get_vczapi_zoom_settings('enable_direct_join_via_browser');
 	$localize = array(
 		'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 		'zvc_security'  => wp_create_nonce( "_nonce_zvc_security" ),

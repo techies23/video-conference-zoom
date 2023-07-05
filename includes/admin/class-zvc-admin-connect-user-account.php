@@ -15,6 +15,11 @@ class Zoom_Connect_User_Account {
 		$client_id     = get_user_meta( get_current_user_id(), 'zoom_user_client_id', true );
 		$client_secret = get_user_meta( get_current_user_id(), 'zoom_user_client_secret', true );
 
+        //saving the host id to the hostid meta
+		$list_user = json_decode(zoom_conference()->listUsers());
+		$host_id = $list_user->users[0]->id;
+        update_user_meta(get_current_user_id(), 'user_zoom_hostid', $host_id);
+
         // Output the form
 		?>
         <div style="padding: 20px; background: #cccccc">
@@ -36,7 +41,7 @@ class Zoom_Connect_User_Account {
             </form>
         </div>
 		<?php
-		$access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $account_id, $client_id, $client_secret, true );
+		$access_token = \Codemanas\VczApi\Api\S2SOAuth::get_instance()->generateAndSaveAccessToken( $account_id, $client_id, $client_secret, true );
 		if ( is_wp_error( $access_token ) ) {
 			// Handle the error appropriately
 			$error_message = $access_token->get_error_message();

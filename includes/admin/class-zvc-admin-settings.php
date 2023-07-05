@@ -1,6 +1,7 @@
 <?php
 
 use Codemanas\VczApi\Data\Logger;
+use Codemanas\VczApi\Data\Datastore;
 
 /**
  * Registering the Pages Here
@@ -132,7 +133,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		update_option( 'zoom_api_key', $zoom_api_key );
 		update_option( 'zoom_api_secret', $zoom_api_secret );
 
-		$OAuth_access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret, );
+		$OAuth_access_token = \Codemanas\VczApi\Api\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret );
 
 		if ( is_wp_error( $OAuth_access_token ) ) {
 			self::$message     = sprintf( __( 'Zoom Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
@@ -223,8 +224,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				'Zoom_Video_Conferencing_Admin_Sync',
 				'render',
 			) );
-			$setting                = get_option( '_vczapi_zoom_settings' );
-			$enable_individual_zoom = $setting['enable_individual_zoom'];
+            var_dump(Datastore::get_vczapi_zoom_settings());
+			$enable_individual_zoom = Datastore::get_vczapi_zoom_settings('enable_individual_zoom');
             //this condition only works on page refresh since data saved in same admin call
 			if ( $enable_individual_zoom == 'on' ) {
 				add_submenu_page(
