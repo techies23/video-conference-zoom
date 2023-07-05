@@ -399,8 +399,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				 * New Method
 				 * @added in 4.1.0
 				 */
-				$settings = get_option( '_vczapi_zoom_settings' );
-				$settings = ! empty( $settings ) ? $settings : false;
+				Datastore::get_vczapi_zoom_settings();
+
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';

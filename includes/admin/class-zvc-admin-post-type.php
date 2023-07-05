@@ -358,8 +358,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			'not_found_in_trash' => __( 'No zoom events found in Trash.', 'video-conferencing-with-zoom-api' ),
 		) );
 
-		$settings = get_option( '_vczapi_zoom_settings' );
-		$settings = ! empty( $settings ) ? $settings : false;
+        Datastore::get_vczapi_zoom_settings();
 
 		$args = array(
 			'labels'             => $labels,
