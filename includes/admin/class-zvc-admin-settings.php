@@ -224,7 +224,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				'Zoom_Video_Conferencing_Admin_Sync',
 				'render',
 			) );
-            var_dump(Datastore::get_vczapi_zoom_settings());
+
 			$enable_individual_zoom = Datastore::get_vczapi_zoom_settings('enable_individual_zoom');
             //this condition only works on page refresh since data saved in same admin call
 			if ( $enable_individual_zoom == 'on' ) {
