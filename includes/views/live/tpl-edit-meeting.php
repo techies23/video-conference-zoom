@@ -79,7 +79,7 @@ if ( ! empty( $meeting_info ) ) {
             <tr>
                 <th scope="row"><label for="timezone"><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-					<?php $tzlists = zvc_get_timezone_options(); ?>
+					<?php $tzlists = \Codemanas\VczApi\Helpers\Date::timezone_list(); ?>
                     <select id="timezone" name="timezone" class="zvc-hacking-select">
 						<?php foreach ( $tzlists as $k => $tzlist ) { ?>
                             <option value="<?php echo esc_attr( $k ); ?>" <?php echo $meeting_info->timezone == $k ? 'selected' : null; ?>><?php echo $tzlist; ?></option>

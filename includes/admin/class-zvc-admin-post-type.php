@@ -436,8 +436,11 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 		do_action( 'vczapi_before_fields_admin', $post );
 
+		$current_user_id = get_current_user_id();
+		$is_post_author = ($current_user_id == $post->post_author);
+
 		//Get Template
-		$template = $is_individual_account ? '/post-type/tpl-meeting-fields-view-only.php' : '/post-type/tpl-meeting-fields.php';
+		$template = $is_individual_account && !$is_post_author ? '/post-type/tpl-meeting-fields-view-only.php' : '/post-type/tpl-meeting-fields.php';
 		require_once ZVC_PLUGIN_VIEWS_PATH . $template;
 
 	}

@@ -124,8 +124,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <option value="1" <?php ! empty( $meeting_fields['meeting_type'] ) ? selected( esc_attr( absint( $meeting_fields['meeting_type'] ) ), 1 ) : false; ?>>Meeting</option>
                     <option value="2" <?php ! empty( $meeting_fields['meeting_type'] ) ? selected( esc_attr( absint( $meeting_fields['meeting_type'] ) ), 2 ) : false; ?>>Webinar</option>
                 </select>
-                <p class="description" id="userId-description"><?php _e( 'Which type of meeting do you want to create. Note: Webinar requires Zoom Webinar Plan enabled in your account.', 'video-conferencing-with-zoom-api' ); ?>
-                    ?</p>
+                <p class="description" id="userId-description"><?php _e( 'Which type of meeting do you want to create.', 'video-conferencing-with-zoom-api' ); ?></p>
+                <p class="description" id="userId-description"><?php _e( 'Note: Webinar requires Zoom Webinar Plan enabled in your account.', 'video-conferencing-with-zoom-api' ); ?>?</p>
+
             </td>
         </tr>
 		<?php
@@ -145,8 +146,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <th scope="row"><label for="timezone"><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
 			<?php
-			$tzlists     = zvc_get_timezone_options();
-			$wp_timezone = zvc_get_timezone_offset_wp();
+			$tzlists     = \Codemanas\VczApi\Helpers\Date::timezone_list();
+			$wp_timezone = \Codemanas\VczApi\Helpers\Date::get_timezone_offset();
 			?>
             <select id="timezone" name="timezone" class="zvc-hacking-select">
 				<?php foreach ( $tzlists as $k => $tzlist ) {

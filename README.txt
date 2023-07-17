@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.2
-Stable tag: 4.2.1
+Stable tag: 4.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,8 +159,18 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.2.1 June 6th, 2023 =
+= 4.2.2 July 4th, 2023 =
+* Deprecated: vczapi_encrypt_decrypt() to generate dynamic key when generating value.
+* Added: New Encrypt Decrypt methods
+* Added: Helper functions
+* Updated: WebSDK to version 2.13.0
+* Few updates to Codebase into PSR-4
+
+= 4.2.1 June 19th, 2023 =
 * Updated: Admin SDK text changed to Client ID and Client Secret.
+* Fixed: Timezone Fix
+* Fixed: Spectra plugin blocks template compatibility issue.
+* Added: Join from browser directly without name, email field.
 
 = 4.2.0 May 25th, 2023 =
 * Added: FSE Support

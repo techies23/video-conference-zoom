@@ -385,7 +385,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				$twentyfour_format           = get_option( 'zoom_api_twenty_fourhour_format' );
 				$full_month_format           = get_option( 'zoom_api_full_month_format' );
 				$embed_password_join_link    = get_option( 'zoom_api_embed_pwd_join_link' );
-				$embed_password_join_link    = get_option( 'zoom_api_embed_pwd_join_link' );
 				$hide_join_link_nloggedusers = get_option( 'zoom_api_hide_shortcode_join_links' );
 				$hide_email_jvb              = get_option( 'zoom_api_hide_in_jvb' );
 				$vczapi_disable_invite       = get_option( 'vczapi_disable_invite' );

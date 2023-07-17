@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Data;
 
+use Codemanas\VczApi\Helpers\Date;
+
 /**
  * Class Datastore
  *
@@ -69,7 +71,7 @@ class Datastore {
 			$type                     = ( $args['meeting_sort'] === "upcoming" ) ? '>=' : '<=';
 			$post_arr['meta_query'][] = array(
 				'key'     => '_meeting_field_start_date_utc',
-				'value'   => vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false ),
+				'value'   => Date::dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false ),
 				'compare' => $type,
 				'type'    => 'DATETIME'
 			);

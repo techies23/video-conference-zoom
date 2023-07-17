@@ -61,7 +61,7 @@ $users = video_conferencing_zoom_api_get_user_transients();
             <tr>
                 <th scope="row"><label for="timezone"><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-					<?php $tzlists = zvc_get_timezone_options(); ?>
+					<?php $tzlists = \Codemanas\VczApi\Helpers\Date::timezone_list(); ?>
                     <select id="timezone" name="timezone" class="zvc-hacking-select">
 						<?php foreach ( $tzlists as $k => $tzlist ) { ?>
                             <option value="<?php echo $k; ?>"><?php echo $tzlist; ?></option>

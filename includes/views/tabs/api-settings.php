@@ -185,7 +185,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <td>
                                 <input type="checkbox" id="vczapi_enable_direct_join" name="vczapi_enable_direct_join"
                                        value="yes" <?php ! empty( $settings['enable_direct_join_via_browser'] ) ? checked( $settings['enable_direct_join_via_browser'], 'yes' ) : false; ?>>
-                                <span class="description"><?php _e( 'Checking this will enable direct join via web browser.', 'video-conferencing-with-zoom-api' ); ?></span>
+                                <span class="description"><?php _e( 'Checking this will allow users to join via web browser directly. Without needing to enter any names or passwords.', 'video-conferencing-with-zoom-api' ); ?></span>
                             </td>
                         </tr>
                         <tr>

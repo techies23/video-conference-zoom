@@ -4,6 +4,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'vczapi_is_plugin_active' ) ) {
+	function vczapi_is_plugin_active( $plugin ) {
+		$active = false;
+		// check for plugin using plugin name
+		if ( in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+			$active = true;
+		}
+
+		return $active;
+	}
+}
+
+
 if ( ! function_exists( 'dump' ) ) {
 	/**
 	 * @author Deepen
@@ -17,6 +30,10 @@ if ( ! function_exists( 'dump' ) ) {
 }
 
 if ( ! function_exists( 'zvc_get_timezone_offset_wp' ) ) {
+	/**
+	 * @return false|mixed|string|null
+	 * @deprecated 4.2.2
+	 */
 	function zvc_get_timezone_offset_wp() {
 		$tz = get_option( 'timezone_string' );
 		if ( ! empty( $tz ) ) {
@@ -49,6 +66,7 @@ if ( ! function_exists( 'zvc_get_timezone_offset_wp' ) ) {
 if ( ! function_exists( 'zvc_get_timezone_options' ) ) {
 	/**
 	 * @author Deepen
+	 * @deprecated 4.2.2
 	 * @since  1.0.0
 	 */
 	function zvc_get_timezone_options() {
@@ -463,6 +481,7 @@ function vczapi_check_author( $post_id ) {
  * @param bool $defaults
  *
  * @return DateTime|string
+ * @deprecated 4.2.2
  * @author  Deepen
  * @since   1.0.0
  * @updated 3.6.7
@@ -529,6 +548,7 @@ function vczapi_dateConverter( $start_time, $tz, $format = 'F j, Y, g:i a ( T )'
  * @param $string
  *
  * @return bool|string
+ * @deprecated 4.2.2
  */
 function vczapi_encrypt_decrypt( $action, $string ) {
 	$output = false;
@@ -584,37 +604,35 @@ if ( ! function_exists( 'vczapi_get_browser_agent_type' ) ) {
  * @param
  *
  * @return string
+ * @deprecated 4.2.2
  */
 function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false, $seperator = false, $redirect = false ) {
 	if ( ! vczapi_is_sdk_enabled() ) {
-		return;
+		return false;
+	}
+
+	if ( vczapi_check_disable_joinViaBrowser() ) {
+		return false;
 	}
 
 	$link                     = get_permalink( $post_id );
-	$encrypt_pwd              = vczapi_encrypt_decrypt( 'encrypt', $password );
-	$encrypt_meeting_id       = vczapi_encrypt_decrypt( 'encrypt', $meeting_id );
-	$embed_password_join_link = get_option( 'zoom_api_embed_pwd_join_link' );
+	$encrypt_meeting_id       = \Codemanas\VczApi\Helpers\Encryption::encrypt( $meeting_id );
+	$embed_password_join_link = \Codemanas\VczApi\Data\Metastore::dettachPasswordToLink();
 	$seperator                = ! empty( $seperator ) ? '<span class="vczapi-seperator">' . $seperator . '</span>' : false;
-	if ( ! vczapi_check_disable_joinViaBrowser() ) {
-		if ( ! empty( $password ) && empty( $embed_password_join_link ) ) {
-			$query = add_query_arg( array(
-				'pak'      => $encrypt_pwd,
-				'join'     => $encrypt_meeting_id,
-				'type'     => 'meeting',
-				'redirect' => esc_url( $redirect )
-			), $link );
+	$query                    = [
+		'join'     => $encrypt_meeting_id,
+		'type'     => 'meeting',
+		'redirect' => esc_url( $redirect )
+	];
 
-			return $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
-		} else {
-			$query = add_query_arg( array(
-				'join'     => $encrypt_meeting_id,
-				'type'     => 'meeting',
-				'redirect' => esc_url( $redirect )
-			), $link );
-
-			return $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
-		}
+	if ( ! empty( $password ) && ! $embed_password_join_link ) {
+		$encrypt_pwd  = \Codemanas\VczApi\Helpers\Encryption::encrypt( $password );
+		$query['pak'] = $encrypt_pwd;
 	}
+
+	$query = add_query_arg( $query, $link );
+
+	return $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
 }
 
 /**
@@ -627,44 +645,40 @@ function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false
  * @param      $redirect
  *
  * @return string
+ * @deprecated 4.2.2
  */
 function vczapi_get_browser_join_shortcode( $meeting_id, $password = false, $link_only = false, $seperator = false, $redirect = false ) {
 	if ( ! vczapi_is_sdk_enabled() ) {
-		return;
+		return false;
+	}
+
+	if ( vczapi_check_disable_joinViaBrowser() ) {
+		return false;
 	}
 
 	$link                     = get_post_type_archive_link( 'zoom-meetings' );
-	$encrypt_meeting_id       = vczapi_encrypt_decrypt( 'encrypt', $meeting_id );
-	$embed_password_join_link = get_option( 'zoom_api_embed_pwd_join_link' );
+	$encrypt_meeting_id       = \Codemanas\VczApi\Helpers\Encryption::encrypt( $meeting_id );
+	$embed_password_join_link = \Codemanas\VczApi\Data\Metastore::dettachPasswordToLink();
 	$seperator                = ! empty( $seperator ) ? '<span class="vczapi-seperator">' . $seperator . '</span>' : false;
-	if ( ! vczapi_check_disable_joinViaBrowser() ) {
-		if ( ! empty( $password ) && empty( $embed_password_join_link ) ) {
-			$encrypt_pwd = vczapi_encrypt_decrypt( 'encrypt', $password );
-			$query       = add_query_arg( array(
-				'pak'      => $encrypt_pwd,
-				'join'     => $encrypt_meeting_id,
-				'type'     => 'meeting',
-				'redirect' => esc_url( $redirect )
-			), $link );
-			$result      = $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
-			$link        = esc_url( $query );
-		} else {
-			$query  = add_query_arg( array(
-				'join'     => $encrypt_meeting_id,
-				'type'     => 'meeting',
-				'redirect' => esc_url( $redirect )
-			), $link );
-			$result = $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
-			$link   = esc_url( $query );
-		}
+	$query                    = [
+		'join'     => $encrypt_meeting_id,
+		'type'     => 'meeting',
+		'redirect' => esc_url( $redirect )
+	];
 
-		if ( $link_only ) {
-			return $link;
-		} else {
-			return $result;
-		}
+	if ( ! empty( $password ) && ! $embed_password_join_link ) {
+		$encrypt_pwd  = \Codemanas\VczApi\Helpers\Encryption::encrypt( $password );
+		$query['pak'] = $encrypt_pwd;
+	}
+
+	$query  = add_query_arg( $query, $link );
+	$result = $seperator . '<a target="_blank" rel="nofollow" href="' . esc_url( $query ) . '" class="btn btn-join-link btn-join-via-browser">' . apply_filters( 'vczapi_join_meeting_via_browser_text', __( 'Join via Web Browser', 'video-conferencing-with-zoom-api' ) ) . '</a>';
+	$link   = esc_url( $query );
+
+	if ( $link_only ) {
+		return $link;
 	} else {
-		return false;
+		return $result;
 	}
 }
 
@@ -675,16 +689,15 @@ function vczapi_get_browser_join_shortcode( $meeting_id, $password = false, $lin
  * @param $encrpyted_pwd
  *
  * @return string
+ * @deprecated 4.2.2
  */
 function vczapi_get_pwd_embedded_join_link( $join_url, $encrpyted_pwd ) {
 	if ( ! empty( $encrpyted_pwd ) ) {
 		$explode_pwd              = array_map( 'trim', explode( '?pwd', $join_url ) );
-		$embed_password_join_link = get_option( 'zoom_api_embed_pwd_join_link' );
-		$password_exists          = count( $explode_pwd ) > 1 ? true : false;
-		if ( $password_exists ) {
-			if ( ! empty( $embed_password_join_link ) ) {
-				$join_url = $explode_pwd[0];
-			}
+		$embed_password_join_link = \Codemanas\VczApi\Data\Metastore::dettachPasswordToLink();
+		$password_exists          = count( $explode_pwd ) > 1;
+		if ( $password_exists && $embed_password_join_link ) {
+			$join_url = $explode_pwd[0];
 		} else {
 			$join_url = esc_url( add_query_arg( array( 'pwd' => $encrpyted_pwd ), $join_url ) );
 		}

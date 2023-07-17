@@ -38,6 +38,8 @@ jQuery(function ($) {
         var source_timezone = moment.tz(valueDate, mtgTimezone).format()
         var converted_timezone = moment.tz(source_timezone, user_timezone).format('MMM D, YYYY HH:mm:ss')
         var convertedTimezonewithoutFormat = moment.tz(source_timezone, user_timezone).format()
+        let meetingUTCTime = moment.utc(source_timezone).valueOf()
+        let usersDate = new Date(meetingUTCTime)
 
         //Check Time Difference for Validations
         var currentTime = moment().unix()
@@ -46,7 +48,7 @@ jQuery(function ($) {
 
         var lang = document.documentElement.lang
         var dateFormat = zvc_strings.date_format !== '' ? zvc_strings.date_format : 'LLLL'
-        $('.sidebar-start-time').html(moment.parseZone(convertedTimezonewithoutFormat).locale(lang).format(dateFormat))
+        $('.sidebar-start-time').html(moment.parseZone(usersDate).locale(lang).format(dateFormat))
         $('.vczapi-single-meeting-timezone').html(user_timezone)
 
         var second = 1000,

@@ -10,8 +10,7 @@ global $zoom;
 	if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) ) {
 		?>
         <div class="vczapi-show-by-postid-contents">
-			<?php do_action( 'vczoom_single_content_right' );
-			?>
+			<?php do_action( 'vczoom_single_content_right' ); ?>
         </div>
 	<?php } else { ?>
 
