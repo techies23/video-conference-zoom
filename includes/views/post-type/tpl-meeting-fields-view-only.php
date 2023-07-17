@@ -38,32 +38,32 @@ if (!defined('ABSPATH')) {
         <?php
     }
     if (!empty($meeting_details) && !empty($meeting_details->id) && ($post->post_status === 'publish' || $post->post_status === 'draft' || $post->post_status === 'pending' || $post->post_status == 'private')) {
-        if ($is_post_author) {?>
-        <tr class="zoom-host-id-selection-admin">
-            <th scope="row"><label
-                        for="userId"><?php _e('Meeting Host *', 'video-conferencing-with-zoom-api'); ?></label></th>
-            <td>
-                <?php
-                if (!empty($meeting_details->host_id)) {
-                    $user = json_decode(zoom_conference()->getUserInfo($meeting_details->host_id));
-                    if (!empty($user)) {
-                        if (!empty($user->code)) {
-                            echo $user->message;
+        if ($is_post_author) { ?>
+            <tr class="zoom-host-id-selection-admin">
+                <th scope="row"><label
+                            for="userId"><?php _e('Meeting Host *', 'video-conferencing-with-zoom-api'); ?></label></th>
+                <td>
+                    <?php
+                    if (!empty($meeting_details->host_id)) {
+                        $user = json_decode(zoom_conference()->getUserInfo($meeting_details->host_id));
+                        if (!empty($user)) {
+                            if (!empty($user->code)) {
+                                echo $user->message;
+                            } else {
+                                echo '<input type="hidden" name="userId" value="' . $user->id . '">';
+                                echo esc_html($user->first_name) . ' ( ' . esc_html($user->email) . ' )';
+                            }
                         } else {
-                            echo '<input type="hidden" name="userId" value="' . $user->id . '">';
-                            echo esc_html($user->first_name) . ' ( ' . esc_html($user->email) . ' )';
+                            _e('Please check your internet connection or API connection.', 'video-conferencing-with-zoom-api');
                         }
                     } else {
-                        _e('Please check your internet connection or API connection.', 'video-conferencing-with-zoom-api');
-                    }
-                } else {
-                    printf(__('Did not find any hosts here ? Please %scheck here%s to verify your API keys are working correctly.', 'video-conferencing-with-zoom-api'), '<a href="' . admin_url('edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings') . '">', '</a>');
-                } ?>
-                <p class="description"
-                   id="userId-description"><?php _e('This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api'); ?></p>
-            </td>
-        </tr>
-            <?php }?>
+                        printf(__('Did not find any hosts here ? Please %scheck here%s to verify your API keys are working correctly.', 'video-conferencing-with-zoom-api'), '<a href="' . admin_url('edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings') . '">', '</a>');
+                    } ?>
+                    <p class="description"
+                       id="userId-description"><?php _e('This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api'); ?></p>
+                </td>
+            </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label
                         for="meeting_type"><?php _e('Meeting Type', 'video-conferencing-with-zoom-api'); ?></label></th>
@@ -418,29 +418,28 @@ if (!defined('ABSPATH')) {
         <th scope="row">
             <label for="option_mute_participants_upon_entry"><?php _e('Mute Participants upon entry', 'video-conferencing-with-zoom-api'); ?></label>
         </th>
-        <?php if ( $is_post_author ) { ?>
-        <td>
-            <p class="description" id="option_mute_participants_upon_entry">
-                <input type="checkbox" name="option_mute_participants"
-                       value="1" <?php !empty($meeting_fields['option_mute_participants']) ? checked('1', $meeting_fields['option_mute_participants']) : false; ?>
-                       class="regular-text"><?php _e('Mutes Participants when entering the meeting.', 'video-conferencing-with-zoom-api'); ?>
-            </p>
-        </td>
-        <?php }
-        else{ ?>
-        <td>
-            <p class="description" id="option_mute_participants_upon_entry">
-                <?php
-                $option_mute_participants = !empty($meeting_fields['option_mute_participants']) ? $meeting_fields['option_mute_participants'] : '';
-                if ($option_mute_participants === '1') {
-                    echo __('Enabled', 'video-conferencing-with-zoom-api');
-                } else {
-                    echo __('Disabled', 'video-conferencing-with-zoom-api');
-                }
-                ?>
+        <?php if ($is_post_author) { ?>
+            <td>
+                <p class="description" id="option_mute_participants_upon_entry">
+                    <input type="checkbox" name="option_mute_participants"
+                           value="1" <?php !empty($meeting_fields['option_mute_participants']) ? checked('1', $meeting_fields['option_mute_participants']) : false; ?>
+                           class="regular-text"><?php _e('Mutes Participants when entering the meeting.', 'video-conferencing-with-zoom-api'); ?>
+                </p>
+            </td>
+        <?php } else { ?>
+            <td>
+                <p class="description" id="option_mute_participants_upon_entry">
+                    <?php
+                    $option_mute_participants = !empty($meeting_fields['option_mute_participants']) ? $meeting_fields['option_mute_participants'] : '';
+                    if ($option_mute_participants === '1') {
+                        echo __('Enabled', 'video-conferencing-with-zoom-api');
+                    } else {
+                        echo __('Disabled', 'video-conferencing-with-zoom-api');
+                    }
+                    ?>
                 <div> <?php _e('Mutes participants when entering the meeting.', 'video-conferencing-with-zoom-api'); ?> </div>
-            </p>
-        </td>
+                </p>
+            </td>
         <?php } ?>
     </tr>
     <tr class="vczapi-admin-show-on-webinar" <?php echo !empty($meeting_fields['meeting_type']) && $meeting_fields['meeting_type'] === 1 ? 'style="display: none;"' : false; ?>>
