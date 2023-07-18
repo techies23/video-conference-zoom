@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Shortcodes;
 
+use Codemanas\VczApi\Helpers\Date;
+
 class Embed {
 
 	/**
@@ -111,8 +113,11 @@ class Embed {
 			$meeting_time = date( 'Y-m-d h:i a', strtotime( $start_time ) );
 		}
 
-		$meeting->meeting_timezone_time = vczapi_dateConverter( 'now', $meeting->timezone, false );
-		$meeting->meeting_time_check    = vczapi_dateConverter( $meeting_time, $meeting->timezone, false );
+		if( !empty($meeting->timezone) ) {
+			$meeting->meeting_timezone_time = Date::dateConverter( 'now', $meeting->timezone, false );
+			$meeting->meeting_time_check    = Date::dateConverter( $meeting_time, $meeting->timezone, false );
+		}
+
 		$meeting->shortcode_attributes  = $attributes;
 
 		$GLOBALS['zoom'] = $meeting;

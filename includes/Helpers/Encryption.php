@@ -17,7 +17,29 @@ class Encryption {
 	private static string $site_key;
 
 	protected function __construct() {
-		self::$site_key = get_site_url();
+		self::$site_key = $this->generateRandomKey();
+	}
+
+	/**
+	 * Generate random key and store first
+	 *
+	 * @param int $length
+	 *
+	 * @return string
+	 */
+	public function generateRandomKey( int $length = 50 ): string {
+		$secret = get_option( '_vczapi_secret' );
+		if ( empty( $secret ) ) {
+			$stringSpace  = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$stringLength = strlen( $stringSpace );
+			for ( $i = 0; $i < $length; $i ++ ) {
+				$secret = $secret . $stringSpace[ rand( 0, $stringLength - 1 ) ];
+			}
+
+			update_option( '_vczapi_secret', $secret );
+		}
+
+		return $secret;
 	}
 
 	/**
