@@ -159,7 +159,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.2.2 July 18th, 2023 =
+= 4.3.0 July 18th, 2023 =
 * Deprecated: vczapi_encrypt_decrypt() to generate dynamic key when generating value.
 * Added: New Encrypt Decrypt methods
 * Added: Helper functions
