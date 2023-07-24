@@ -18,7 +18,7 @@ const ZoomMtgApp = {
         this.initSDK()
         this.eventHandlers()
         //direct browser join enabled
-        if (zvc_ajx.enable_direct_join_via_browser === 'yes') {
+        if (zvc_ajx.enable_direct_join_via_browser) {
             this.handleJoinOnInit()
         }
     },
