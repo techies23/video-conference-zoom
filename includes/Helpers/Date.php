@@ -20,13 +20,14 @@ class Date {
 	 * @return false|mixed|string|null
 	 */
 	public static function get_timezone_offset() {
+		$tz = get_option( 'timezone_string' );
 		if ( ! empty( $tz ) ) {
 			return $tz;
 		}
 		$offset = get_option( 'gmt_offset' );
 		//correction for system sending Azores when timezone was set to zero
 		//bail early is offset is 0
-		if ( empty( $tz ) && $offset == 0 ) {
+		if ( $offset == 0 ) {
 			return 'UTC';
 		}
 		$hours   = (int) $offset;
