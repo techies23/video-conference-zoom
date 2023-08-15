@@ -148,7 +148,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php
 			$tzlists     = \Codemanas\VczApi\Helpers\Date::timezone_list();
 			$wp_timezone = \Codemanas\VczApi\Helpers\Date::get_timezone_offset();
-            var_dump($wp_timezone); 
 			?>
             <select id="timezone" name="timezone" class="zvc-hacking-select">
 				<?php foreach ( $tzlists as $k => $tzlist ) {
