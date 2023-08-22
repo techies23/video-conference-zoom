@@ -387,7 +387,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 			} elseif ( 'support' == $active_tab ) {
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/support.php';
 			} elseif ( 'debug' == $active_tab ) {
-				$debug_log = get_option( 'zoom_api_enable_debug_log' );
+				$settings  = get_option( '_vczapi_zoom_settings' );
+				$debug_log = ! empty( $settings['debugger_logs'] ) ? $settings['debugger_logs'] : false;
 				$logs      = Logger::get_log_files();
 
 				if ( ! empty( $_REQUEST['log_file'] ) && isset( $logs[ sanitize_title( wp_unslash( $_REQUEST['log_file'] ) ) ] ) ) {

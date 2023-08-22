@@ -118,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <th><label><?php _e( 'Enable Logs', 'video-conferencing-with-zoom-api' ); ?></label></th>
                             <td>
                                 <input type="checkbox"
-                                       name="zoom_api_debugger_logs" <?php echo ! empty( $debug_logs ) ? checked( $debug_logs, 'on' ) : false; ?>
+                                       name="zoom_api_debugger_logs" <?php echo ! empty( $settings['debugger_logs'] ) ? checked( $settings['debugger_logs'], 'on' ) : false; ?>
                                        class="zoom_api_debugger_logs">
                                 <span class="description"><?php _e( 'This can be helpful in finding issues related to Zoom.', 'video-conferencing-with-zoom-api' ); ?> <a
                                             href="<?php echo admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings&tab=debug' ); ?>"><?php esc_html_e( 'Logs are here.', 'video-conferencing-with-zoom-api' ); ?></a></span>
