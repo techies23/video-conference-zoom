@@ -37,26 +37,9 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	private $post_type = 'zoom-meetings';
 
 	/**
-	 * Hold API KEY
-	 *
-	 * @var mixed|void
-	 */
-	private $api_key;
-
-	/**
-	 * HOLD API SECRET KEY
-	 *
-	 * @var mixed|void
-	 */
-	private $api_secret;
-
-	/**
 	 * Zoom_Video_Conferencing_Admin_PostType constructor.
 	 */
 	public function __construct() {
-		$this->api_key    = get_option( 'zoom_api_key' );
-		$this->api_secret = get_option( 'zoom_api_secret' );
-
 		add_action( 'restrict_manage_posts', [ $this, 'filtering' ], 10 );
 		add_action( 'init', array( $this, 'register' ) );
 		add_action( 'admin_menu', [ $this, 'hide_post_type' ] );
@@ -160,7 +143,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 		if ( ! vczapi_is_zoom_activated() ) {
 			global $submenu;
-			unset( $submenu['edit.php?post_type=zoom-meetings'][5] );
+//			unset( $submenu['edit.php?post_type=zoom-meetings'][5] );
 			unset( $submenu['edit.php?post_type=zoom-meetings'][10] );
 			unset( $submenu['edit.php?post_type=zoom-meetings'][15] );
 		}
@@ -553,8 +536,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 	/**
 	 * Handles saving the meta box.
 	 *
-	 * @param int $post_id Post ID.
-	 * @param \WP_Post $post Post object.
+	 * @param  int  $post_id  Post ID.
+	 * @param  \WP_Post  $post  Post object.
 	 */
 	public function save_metabox( $post_id, $post ) {
 		// Add nonce for security and authentication.
@@ -822,9 +805,19 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 		//If not on the screen with ID 'edit-post' abort.
 		if ( $screen->id === 'edit-zoom-meetings' || $screen->id === $this->post_type ) {
+			if ( !vczapi_is_zoom_activated() ) {
+				?>
+                <div id="message" class="notice notice-error is-dismissible">
+                    <h3><?php esc_html_e( 'Zoom API Connection is not established yet.', 'video-conferencing-with-zoom-api' ); ?></h3>
+                    <p>
+						<?php
+						printf( esc_html__( 'Add your Zoom API keys and check if your Zoom Account is properly connected or not by going to %s page and click on "Check Connection" button. You can follow this %s to setup your API keys.' ), '<a href="' . admin_url( '/edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . '">settings</a>', '<a target="_blank" href="https://zoomdocs.codemanas.com/setup/">guide</a>' );
+						?>
+                    </p>
+                </div>
+				<?php
+			}
 			video_conferencing_zoom_api_show_like_popup();
-		} else {
-			return;
 		}
 	}
 

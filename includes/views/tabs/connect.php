@@ -17,7 +17,7 @@ $is_jwt_active = vczapi_is_jwt_active();
 ?>
     <div id="zvc-cover" style="display: none;"></div>
     <div class="zvc-row">
-        <div class="zvc-position-floater-left" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
+        <div class="zvc-position-floater-left vczapi-connect-box" style="width: 70%;margin-right:10px;border-top:1px solid #ccc;">
             <form action="" method="post">
 				<?php
 				wp_nonce_field( 'verify_vczapi_zoom_connect', 'vczapi_zoom_connect_nonce' );
@@ -171,6 +171,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                         <tr>
                             <th>
                                 <input type="submit" value="Save" class="button  button-primary">
+                                <a href="javascript:void(0);" class="button button-primary check-api-connection"><?php esc_html_e( 'Check API Connection', 'video-conferencing-with-zoom-api' ); ?></a>
                             </th>
                         </tr>
                         </tfoot>
