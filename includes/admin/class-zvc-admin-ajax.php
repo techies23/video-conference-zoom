@@ -150,33 +150,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 
 			//After user has been created delete this transient in order to fetch latest Data.
 			video_conferencing_zoom_api_delete_user_cache();
-			wp_send_json_success( [ 'msg' => "API Connection is good.", 'test_meeting_id' => '6154833659' ] );
-		}
-
-		if ( $type === "sdk" ) {
-			$test_meeting_id = filter_input( INPUT_POST, 'test_meeting_id' );
-			$sdk_key         = get_option( 'vczapi_sdk_key' );
-			$secret_key      = get_option( 'vczapi_sdk_secret_key' );
-			$signature       = $this->generate_sdk_signature( $sdk_key, $secret_key, $test_meeting_id, 0 );
-
-			try {
-				// Attempt to decode the JWT token
-				$decoded_token = \Firebase\JWT\JWT::decode( $signature, new \Firebase\JWT\Key( $secret_key, 'HS256' ) );
-				// If decoding is successful, the signature is valid
-				wp_send_json_success( "SDK is good!" );
-			} catch ( \Firebase\JWT\BeforeValidException $e ) {
-				// The token is not yet valid (optional)
-				wp_send_json_error( "Token not yet valid" );
-			} catch ( \Firebase\JWT\ExpiredException $e ) {
-				// The token has expired (optional)
-				wp_send_json_error( "Token has expired" );
-			} catch ( \Firebase\JWT\SignatureInvalidException $e ) {
-				// The token signature is invalid
-				wp_send_json_error( "Invalid token signature" );
-			} catch ( Exception $e ) {
-				// Other exceptions (optional)
-				wp_send_json_error( "An error occurred: " . $e->getMessage() );
-			}
+			wp_send_json_success( [ 'msg' => "API Connection is good."] );
 		}
 
 		wp_die();

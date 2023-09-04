@@ -384,7 +384,6 @@ var __webpack_exports__ = {};
     },
     checkConnection: function (e) {
       e.preventDefault();
-      let self = this;
       $dom.connectBox.html('<pre>Making demo request to Zoom Servers... Please wait.</pre>');
       $.post(zvc_ajax.ajaxurl, {
         action: 'check_connection',
@@ -396,26 +395,6 @@ var __webpack_exports__ = {};
         } else {
           $dom.connectBox.append(`<pre style="color:red;">${result.data.msg}</pre>`);
         }
-        self.checkSDKConnection(result.data.test_meeting_id);
-        // alert(result)
-      });
-    },
-
-    checkSDKConnection: function (test_meeting_id = null) {
-      $dom.connectBox.append('<pre>Checking SDK keys... Please wait.</pre>');
-      $.post(zvc_ajax.ajaxurl, {
-        action: 'check_connection',
-        security: zvc_ajax.zvc_security,
-        type: 'sdk',
-        test_meeting_id: test_meeting_id
-      }).done(function (result) {
-        if (result.success) {
-          $dom.connectBox.append(`<pre style="color:green;">${result.data}</pre>`);
-        } else {
-          $dom.connectBox.append(`<pre style="color:red;">${result.data}!!</pre>`);
-        }
-        // alert(result)
-        $dom.connectBox.append('<pre>Please refresh the page manually to navigate away from this.</pre>');
       });
     },
     /**

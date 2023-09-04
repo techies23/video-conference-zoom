@@ -189,20 +189,6 @@ $is_jwt_active = vczapi_is_jwt_active();
                             </tr>
                             </tbody>
                         </table>
-						<?php
-						$zoom_users = video_conferencing_zoom_api_get_user_transients();
-						$rand_user  = array_shift( $zoom_users );
-						$join_link  = Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks( [ 'link_only' => true ], $rand_user->pmi );
-						$join_link  = add_query_arg(
-							[
-								'TB_iframe' => true,
-								'width'     => '900',
-                                'height' => '700'
-							], $join_link );
-						add_thickbox();
-						?>
-                        <a href="<?php echo $join_link ?>"
-                           class="thickbox button">Verify Credentials</a>
                         <span class="description">If credentials have been correctly added you will go to a screen where it
                             says "Meeting has not started". This also requires for you to correctly setup Server to Server OAuth Credentials first.</span>
                     </div>
@@ -217,7 +203,26 @@ $is_jwt_active = vczapi_is_jwt_active();
                             <th>
                                 <input type="submit" value="Save" class="button  button-primary">
                                 <a href="javascript:void(0);"
-                                   class="button button-primary check-api-connection"><?php esc_html_e( 'Check API Connection', 'video-conferencing-with-zoom-api' ); ?></a>
+                                   class="button button-primary check-api-connection"><?php esc_html_e( 'Verify oAuth Credentials', 'video-conferencing-with-zoom-api' ); ?></a>
+								<?php
+								$zoom_users = video_conferencing_zoom_api_get_user_transients();
+								if ( ! empty( $zoom_users ) ) {
+									$user      = $zoom_users[0];
+									$join_link = Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks( [ 'link_only' => true, 'direct_join' => 1 ], $user->pmi );
+									$join_link = add_query_arg(
+										[
+											'TB_iframe' => true,
+											'width'     => '900',
+											'height'    => '700'
+										], $join_link );
+									add_thickbox();
+									?>
+                                    <a href="<?php echo $join_link ?>" onclick="alert('If you receive signature timeout message when trying to join this meeting then your meeting SDK credentials are incorrect.')"
+                                       class="thickbox button"><?php esc_html_e( 'Verify SDK Credentials', 'video-conferencing-with-zoom-api' ); ?></a>
+									<?php
+								}
+								?>
+
                             </th>
                         </tr>
                         </tfoot>
