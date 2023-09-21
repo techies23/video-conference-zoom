@@ -153,7 +153,7 @@ By using the shortcode [vczapi_zoom_calendar] - you can show a calendar that sho
 ![Calendar Default View](img/zoom-pro/calendar-default.png)
 If a meeting is clicked - it will show you more of the events details.
 
-Use: `[vczapi_zoom_calendar  author="" show="" calendar_default_view="dayGridMonth" show_calendar_views="yes"]`
+Use: `[vczapi_zoom_calendar  author="" show="" calendar_default_view="dayGridMonth" show_calendar_views="yes" category="all"]`
 
 Where,
 
@@ -162,6 +162,7 @@ Where,
 * **show** = use "meeting" or "webinar" to either show only meetings or only webinars leave empty or do not use if you want to show all.
 * **calendar_default_view** = options => dayGridMonth,timeGridWeek,timeGridDay,listWeek
 * **show_calendar_views** = give ability to user to see calendar in different views - default value is "no", use "yes" to show other views
+* **category** = gives ability to user to choose the categories to show - default value is "all", use `category="category-slug"` or comma separated `category="category1,category2"`
 
 ##Integration with WooCommerce (Pro Addon):
 ###Recurring Meetings + WooCommerce :
