@@ -150,7 +150,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 
 			//After user has been created delete this transient in order to fetch latest Data.
 			video_conferencing_zoom_api_delete_user_cache();
-			wp_send_json_success( [ 'msg' => "API Connection is good."] );
+			wp_send_json_success( [ 'msg' => "API Connection is good. You can refresh this and start creating your Zoom Events."] );
 		}
 
 		wp_die();
