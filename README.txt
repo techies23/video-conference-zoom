@@ -3,7 +3,7 @@ Contributors: j__3rk, digamberpradhan
 Tags: zoom video conference, video conference, zoom, zoom video conferencing, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 4.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -159,8 +159,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.3.2 August 22nd, 2023 =
+= 4.3.2 September 25th 22nd, 2023 =
 * Fixed: Debugger log not working.
+* Added: WebSDK validator.
+* Updated: Websdk to version 2.16.0
 
 = 4.3.1 August 18th, 2023 =
 * Fixed: Timezone issue not showing correctly in backend.

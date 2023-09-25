@@ -157,7 +157,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	}
 
 	/**
-	 * Get authenticated
+	 * Get authenticated io
 	 *
 	 * @since  3.2.0
 	 * @author Deepen Bajracharya

@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 defined( 'ZVC_PLUGIN_FILE' ) || define( 'ZVC_PLUGIN_FILE', __FILE__ );
 defined( 'ZVC_PLUGIN_SLUG' ) || define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
 defined( 'ZVC_PLUGIN_VERSION' ) || define( 'ZVC_PLUGIN_VERSION', '4.3.2' );
-defined( 'ZVC_ZOOM_WEBSDK_VERSION' ) || define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.13.0' );
+defined( 'ZVC_ZOOM_WEBSDK_VERSION' ) || define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.16.0' );
 defined( 'ZVC_PLUGIN_DIR_PATH' ) || define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'ZVC_PLUGIN_DIR_URL' ) || define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 defined( 'ZVC_PLUGIN_ADMIN_ASSETS_URL' ) || define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin' );
