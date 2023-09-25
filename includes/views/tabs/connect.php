@@ -79,7 +79,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                             <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
                         </div>
                     </div>
-                    <div class="vczapi-admin-accordion--content" class="show">
+                    <div class="vczapi-admin-accordion--content" >
                         <p class="description">
 							<?php
 							$oauth_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
