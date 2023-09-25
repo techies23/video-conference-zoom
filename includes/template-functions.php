@@ -147,7 +147,7 @@ function video_conference_zoom_meeting_join() {
 			wp_localize_script( 'video-conferencing-with-zoom-api', 'mtg_data', $data );
 		}
 
-	} else if ( ! empty( $zoom['api']->state ) && $zoom['api']->state == "ended" ) {
+	} elseif ( ! empty( $zoom['api']->state ) && $zoom['api']->state == "ended" ) {
 		echo "<p>" . __( 'This meeting has ended.', 'video-conferencing-with-zoom-api' ) . "</p>";
 	} else {
 		echo "<p>" . __( 'Please login to join this meeting.', 'video-conferencing-with-zoom-api' ) . "</p>";
@@ -221,9 +221,9 @@ function video_conference_zoom_shortcode_join_link_webinar( $zoom_webinars ) {
 				}
 			}
 		}
-	} else if ( empty( $zoom_webinars->occurrences ) ) {
+	} elseif ( empty( $zoom_webinars->occurrences ) ) {
 		$zoom_webinars->start_time = false;
-	} else if ( ! empty( $zoom_webinars->type ) && $zoom_webinars->type === 6 ) {
+	} elseif ( ! empty( $zoom_webinars->type ) && $zoom_webinars->type === 6 ) {
 		$zoom_webinars->start_time = false;
 	}
 
@@ -284,11 +284,11 @@ function video_conference_zoom_shortcode_join_link( $zoom_meetings ) {
 				}
 			}
 		}
-	} else if ( empty( $zoom_meetings->occurrences ) ) {
+	} elseif ( empty( $zoom_meetings->occurrences ) ) {
 		$zoom_meetings->start_time = false;
-	} else if ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 3 ) {
+	} elseif ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 3 ) {
 		$zoom_meetings->start_time = false;
-	} else if ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 4 ) {
+	} elseif ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 4 ) {
 		$zoom_meetings->start_time = false;
 	}
 
@@ -345,7 +345,7 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
 					<?php
 					if ( $zoom_meetings->status === "waiting" ) {
 						_e( 'Waiting - Not started', 'video-conferencing-with-zoom-api' );
-					} else if ( $zoom_meetings->status === "started" ) {
+					} elseif ( $zoom_meetings->status === "started" ) {
 						_e( 'Meeting is in Progress', 'video-conferencing-with-zoom-api' );
 					} else {
 						echo $zoom_meetings->status;
@@ -404,21 +404,21 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
                     </tr>
 					<?php
 				}
-			} else if ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 3 ) {
+			} elseif ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 3 ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td><?php _e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
 				<?php
-			} else if ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 4 ) {
+			} elseif ( ! empty( $zoom_meetings->type ) && $zoom_meetings->type === 4 ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td><?php _e( 'Personal Meeting Room', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
 				<?php
-			} else if ( ! empty( $zoom_meetings->start_time ) ) {
+			} elseif ( ! empty( $zoom_meetings->start_time ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
@@ -540,7 +540,7 @@ function video_conference_zoom_after_jbh_html() {
 	global $post;
 	if ( ! empty( $_GET['redirect'] ) ) {
 		$post_link = esc_url( $_GET['redirect'] );
-	} else if ( ! empty( $post ) && ! empty( $post->ID ) ) {
+	} elseif ( ! empty( $post ) && ! empty( $post->ID ) ) {
 		$post_link = get_permalink( $post->ID );
 	} else {
 		$post_link = home_url( '/' );
@@ -561,7 +561,7 @@ function video_conference_zoom_after_jbh_html() {
 		'sdk_version'                    => ZVC_ZOOM_WEBSDK_VERSION,
 		'user_mail'                      => ! empty( $current_user->user_email ) ? $current_user->user_email : '',
 		'user_name'                      => $full_name,
-		'enable_direct_join_via_browser' => $enable_direct_via_browser,
+		'enable_direct_join_via_browser' => ! empty( $_GET['direct_join'] ) ? (bool) $_GET['direct_join'] : $enable_direct_via_browser,
 	);
 
 	/**
@@ -701,7 +701,7 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 		$enable_direct_via_browser = \Codemanas\VczApi\Data\Metastore::enabledDirectJoinViaBrowser();
 		$whichTemplate             = $enable_direct_via_browser ? 'join-web-browser-directly.php' : 'join-web-browser.php';
 		$template                  = vczapi_get_template( $whichTemplate );
-	} else if ( ! empty( $template ) && vczapi_is_fse_theme() ) {
+	} elseif ( ! empty( $template ) && vczapi_is_fse_theme() ) {
 		return $template;
 	} else {
 		//Render View

@@ -137,6 +137,9 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		if ( is_wp_error( $OAuth_access_token ) ) {
 			self::$message     = sprintf( __( 'Zoom Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
 			self::$messageType = 'error';
+
+			video_conferencing_zoom_api_delete_user_cache();
+			delete_option( 'vczapi_global_oauth_data' );
 			//error has not been displayed yet.
 		} elseif ( $delete_jwt_keys == 'on' ) {
 			delete_option( 'zoom_api_key' );
@@ -245,7 +248,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 
 		video_conferencing_zoom_api_show_like_popup();
 
-		$tab        = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
+		$tab        = filter_input( INPUT_GET, 'tab' );
 		$active_tab = $tab ?? 'connect';
 		?>
         <div class="wrap">

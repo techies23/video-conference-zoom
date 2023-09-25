@@ -37,6 +37,7 @@ var __webpack_exports__ = {};
       $dom.toggleTriggerElement = $('.vczapi-toggle-trigger');
       this.$manualHostID = $('.vczapi-admin-hostID-manually-add');
       $dom.accordionElement = $('.vczapi-admin-accordion');
+      $dom.connectBox = $('.vczapi-connect-box');
     },
     eventListeners: function () {
       //toggle show hide
@@ -72,7 +73,7 @@ var __webpack_exports__ = {};
       //Manual Host Selector
       this.$manualHostID.on('click', this.showManualHostIDField.bind(this));
 
-      //End Meeting 
+      //End Meeting
       $dom.endMeetingEl.on('click', this.endMeeting.bind(this));
     },
     endMeeting: function (e) {
@@ -383,14 +384,17 @@ var __webpack_exports__ = {};
     },
     checkConnection: function (e) {
       e.preventDefault();
-      $dom.cover.show();
+      $dom.connectBox.html('<pre>Making demo request to Zoom Servers... Please wait.</pre>');
       $.post(zvc_ajax.ajaxurl, {
         action: 'check_connection',
-        security: zvc_ajax.zvc_security
+        security: zvc_ajax.zvc_security,
+        type: 'oAuth'
       }).done(function (result) {
-        //Done
-        $dom.cover.hide();
-        alert(result);
+        if (result.success) {
+          $dom.connectBox.append(`<pre style="color:green;">${result.data.msg}</pre>`);
+        } else {
+          $dom.connectBox.append(`<pre style="color:red;">${result.data.msg}</pre>`);
+        }
       });
     },
     /**
