@@ -79,7 +79,7 @@ $is_jwt_active = vczapi_is_jwt_active();
                             <a href="#"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
                         </div>
                     </div>
-                    <div class="vczapi-admin-accordion--content" class="show">
+                    <div class="vczapi-admin-accordion--content" >
                         <p class="description">
 							<?php
 							$oauth_documentation_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">setup guide</a>';
@@ -202,8 +202,11 @@ $is_jwt_active = vczapi_is_jwt_active();
                         <tr>
                             <th>
                                 <input type="submit" value="Save" class="button  button-primary">
+                                <?php
+                                /*
                                 <a href="javascript:void(0);"
                                    class="button button-primary check-api-connection"><?php esc_html_e( 'Verify oAuth Credentials', 'video-conferencing-with-zoom-api' ); ?></a>
+                                */ ?>
 								<?php
 								$zoom_users = video_conferencing_zoom_api_get_user_transients();
 								if ( ! empty( $zoom_users ) ) {
