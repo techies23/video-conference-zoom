@@ -161,6 +161,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 4.3.3 October 31st, 2023 =
 * Fixed: Conflict with Meow Gallery
+* Updated: Vendor Library
 
 = 4.3.2 September 25th 22nd, 2023 =
 * Fixed: Debugger log not working.
