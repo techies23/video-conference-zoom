@@ -22,7 +22,7 @@ class BlockTemplates {
 
 	public function remove_template_blocks( $allowed_block_types, $block_editor_context ) {
 		//spectra plugin aka ultimate addons for gutenberg does not register blocks properly so they would be hidden
-		if ( vczapi_is_plugin_active( 'ultimate-addons-for-gutenberg/ultimate-addons-for-gutenberg.php' ) ) {
+		if ( vczapi_is_plugin_active( 'ultimate-addons-for-gutenberg/ultimate-addons-for-gutenberg.php' ) || vczapi_is_plugin_active( 'meow-gallery/meow-gallery.php' ) ) {
 			return $allowed_block_types;
 		}
 		$registered_blocks = \WP_Block_Type_Registry::get_instance()->get_all_registered();
