@@ -62,7 +62,27 @@ global $zoom;
 
 					<?php do_action( 'vczapi_html_after_meeting_details' ); ?>
                 </div>
-                <div class="dpn-zvc-sidebar-content"></div>
+<!--                <div class="dpn-zvc-sidebar-content"></div>-->
+                <div class="dpn-zvc-meeting-by-post-id-links ">
+                <?php
+
+                $join_url = $zoom['api']->join_url;
+                $args = [
+	                'link_only' => true
+                ];
+
+                if ( ! empty( $zoom['api']->password ) ) {
+	                $args['password'] = $zoom['api']->password;
+                }
+                $browser_join     = \Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks($args, $zoom['api']->id );
+
+                if ( ! empty( $join_url ) ) {
+	                ?>
+                            <a target="_blank" href="<?php echo esc_url( $join_url ); ?>" title="Join via App"><?php _e( 'Join via Zoom App', 'video-conferencing-with-zoom-api' ); ?></a>
+                            <a target="_blank" href="<?php echo esc_url(  $browser_join ); ?>" title="Join via Browser"><?php _e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
+                <?php } ?>
+
+                </div>
             </div>
         </div>
 		<?php if ( ! empty( get_the_content() ) ) { ?>
