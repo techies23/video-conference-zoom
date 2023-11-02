@@ -24,6 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="vczapi-admin-accordion--content" class="show">
                     <table class="form-table">
                         <tbody>
+                        <tr>
+                            <th><label><?php _e( ' Enable Individual Zoom Account ?', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                            <td>
+                                <input type="checkbox" name="vczapi_enable_individual_zoom" <?php ! empty( $settings['enable_individual_zoom'] ) ? checked( $settings['enable_individual_zoom'], 'on' ) : false; ?>>
+                                <span class="description"><?php _e( 'Checking this option will enable you to connect users individual zoom account instead of global.', 'video-conferencing-with-zoom-api' ); ?></span>
+                            </td>
+                        </tr>
                         <tr class="enabled-vanity-url">
                             <th><label><?php _e( 'Vanity URL', 'video-conferencing-with-zoom-api' ); ?></label></th>
                             <td>

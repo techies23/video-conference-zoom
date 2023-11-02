@@ -1,4 +1,6 @@
 <?php
+use Codemanas\VczApi\Data\Datastore;
+
 /**
  * @author Deepen.
  * @created_on 11/20/19
@@ -18,9 +20,8 @@ add_action( 'vczoom_single_content_left', 'video_conference_zoom_featured_image'
 add_action( 'vczoom_single_content_left', 'video_conference_zoom_main_content', 20 );
 
 //Right Section Single Content
-$settings = get_option( '_vczapi_zoom_settings' );
-$settings = ! empty( $settings ) ? $settings : false;
-if ( empty( $settings['disable_countdown_timer'] ) ) {
+$disable_counter_timer = Datastore::get_vczapi_zoom_settings('disable_countdown_timer');
+if ( empty( $disable_counter_timer) ) {
 	add_action( 'vczoom_single_content_right', 'video_conference_zoom_countdown_timer', 10 );
 }
 add_action( 'vczoom_single_content_right', 'video_conference_zoom_meeting_details', 20 );

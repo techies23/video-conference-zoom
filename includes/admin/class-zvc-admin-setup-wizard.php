@@ -40,7 +40,7 @@ class VCZAPI_Admin_Setup_Wizard {
 		update_option( 'vczapi_oauth_client_id', $client_id );
 		update_option( 'vczapi_oauth_client_secret', $client_secret );
 
-		$result = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
+		$result = \Codemanas\VczApi\Api\S2SOAuth::get_instance()->generateAndSaveAccessToken( $account_id, $client_id, $client_secret );
 		if ( ! is_wp_error( $result ) ) {
 			//this can't be a cached request
 			$decoded_users = json_decode( zoom_conference()->listUsers() );

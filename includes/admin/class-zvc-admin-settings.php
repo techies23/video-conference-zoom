@@ -1,6 +1,7 @@
 <?php
 
 use Codemanas\VczApi\Data\Logger;
+use Codemanas\VczApi\Data\Datastore;
 
 /**
  * Registering the Pages Here
@@ -132,7 +133,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		update_option( 'zoom_api_key', $zoom_api_key );
 		update_option( 'zoom_api_secret', $zoom_api_secret );
 
-		$OAuth_access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret, );
+		$OAuth_access_token = \Codemanas\VczApi\Api\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret );
 
 		if ( is_wp_error( $OAuth_access_token ) ) {
 			self::$message     = sprintf( __( 'Zoom Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
@@ -226,6 +227,23 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				'Zoom_Video_Conferencing_Admin_Sync',
 				'render',
 			) );
+
+			$enable_individual_zoom = Datastore::get_vczapi_zoom_settings('enable_individual_zoom');
+            //this condition only works on page refresh since data saved in same admin call
+			if ( $enable_individual_zoom == 'on' ) {
+				add_submenu_page(
+					'edit.php?post_type=zoom-meetings',
+					__( 'Connect User Account', 'video-conferencing-with-zoom-api' ),
+					__( 'Connect User Account', 'video-conferencing-with-zoom-api' ),
+					'read',
+					'zoom-video-conferencing-connect',
+					function () {
+						$zoom_connect_user_account = Zoom_Connect_User_Account::get_instance();
+						$zoom_connect_user_account->save_api_credentials();
+						$zoom_connect_user_account->render();
+					}
+				);
+			}
 		}
 
 		add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Settings', 'video-conferencing-with-zoom-api' ), __( 'Settings', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-settings', array(
@@ -318,7 +336,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 						'join_via_browser_default_lang'      => sanitize_text_field( filter_input( INPUT_POST, 'meeting-lang' ) ),
 						'disable_auto_pwd_generation'        => sanitize_text_field( filter_input( INPUT_POST, 'disable_auto_pwd_generation' ) ),
 						'debugger_logs'                      => sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_debugger_logs' ) ),
-						'enable_direct_join_via_browser'     => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_direct_join' ) )
+						'enable_direct_join_via_browser'     => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_direct_join' ) ),
+						'enable_individual_zoom'             => sanitize_text_field( filter_input( INPUT_POST, 'vczapi_enable_individual_zoom' ) ),
 					];
 
 					/**
@@ -382,8 +401,8 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				 * New Method
 				 * @added in 4.1.0
 				 */
-				$settings = get_option( '_vczapi_zoom_settings' );
-				$settings = ! empty( $settings ) ? $settings : false;
+				Datastore::get_vczapi_zoom_settings();
+
 
 				//Get Template
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/api-settings.php';
