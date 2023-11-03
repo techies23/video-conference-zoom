@@ -19,7 +19,8 @@ global $zoom;
         <div class="vczapi-show-by-postid-contents vczapi-show-by-postid-flex">
 			<?php if ( ! empty( get_the_post_thumbnail_url() ) ) { ?>
                 <div class="vczapi-show-by-postid-contents-image">
-                    <img src="<?php echo esc_url( get_the_post_thumbnail_url() ); ?>" alt="<?php echo get_the_title(); ?>">
+                    <img src="<?php echo esc_url( get_the_post_thumbnail_url() ); ?>"
+                         alt="<?php echo get_the_title(); ?>">
                 </div>
 			<?php } ?>
             <div class="<?php echo empty( get_the_post_thumbnail_url() ) ? 'vczapi-show-by-postid-contents-sections vczapi-show-by-postid-contents-sections-full' : 'vczapi-show-by-postid-contents-sections'; ?>">
@@ -62,25 +63,29 @@ global $zoom;
 
 					<?php do_action( 'vczapi_html_after_meeting_details' ); ?>
                 </div>
-<!--                <div class="dpn-zvc-sidebar-content"></div>-->
+
+                <!--join links rendered using js-->
+                <!--<div class="dpn-zvc-sidebar-content"></div>-->
+
                 <div class="dpn-zvc-meeting-by-post-id-links ">
-                <?php
+					<?php
+					$args = [
+						'link_only' => true
+					];
 
-                $join_url = $zoom['api']->join_url;
-                $args = [
-	                'link_only' => true
-                ];
+					if ( ! empty( $zoom['api']->password ) ) {
+						$args['password'] = $zoom['api']->password;
+					}
+					$browser_join = \Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks( $args, $zoom['api']->id );
+					$join_url     = $zoom['api']->join_url;
 
-                if ( ! empty( $zoom['api']->password ) ) {
-	                $args['password'] = $zoom['api']->password;
-                }
-                $browser_join     = \Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks($args, $zoom['api']->id );
-
-                if ( ! empty( $join_url ) ) {
-	                ?>
-                            <a target="_blank" href="<?php echo esc_url( $join_url ); ?>" title="Join via App"><?php _e( 'Join via Zoom App', 'video-conferencing-with-zoom-api' ); ?></a>
-                            <a target="_blank" href="<?php echo esc_url(  $browser_join ); ?>" title="Join via Browser"><?php _e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
-                <?php } ?>
+					if ( ! empty( $join_url ) ) {
+						?>
+                        <a target="_blank" href="<?php echo esc_url( $join_url ); ?>"
+                           title="Join via App"><?php _e( 'Join via Zoom App', 'video-conferencing-with-zoom-api' ); ?></a>
+                        <a target="_blank" href="<?php echo esc_url( $browser_join ); ?>"
+                           title="Join via Browser"><?php _e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
+					<?php } ?>
 
                 </div>
             </div>
