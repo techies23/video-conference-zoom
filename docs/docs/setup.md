@@ -58,7 +58,7 @@ Scopes are basically added in order to allow permissions to access your Zoom mee
 
 ![Scopes Page](img/s2s-oauth/05-01-2024/scopes.png)
 
-See **[Required Scopes section](setup.md/#below-are-permissions-that-are-neededrequired).** in order to add necessary permissions. Come back to this step after you've added all the necessary permissions.
+See **[Required Scopes section](setup.md/#required-scopes).** in order to add necessary permissions. Come back to this step after you've added all the necessary permissions.
 
 #### 5. Activation
 
