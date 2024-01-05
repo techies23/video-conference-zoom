@@ -8,10 +8,11 @@ Use: `[vczapi_pro_author_registrants]`
 
 You can find more information for this in [PRO version widget documentation.](/vczapi-pro/#calendar-widget).
 
-Use: `[vczapi_zoom_calendar author="" show="" calendar_default_view="dayGridMonth" show_calendar_views="yes"]`
+Use: `[vczapi_zoom_calendar host_id="" author="" show="" calendar_default_view="dayGridMonth" show_calendar_views="yes"]`
 
 Where,
 
+* **host_id** = (Not required). However, if added you should only see list of meetings based on zoom host ID where you can fetch from wp-admin > Zoom Events > Users > HOST ID column.
 * **class** = Ability to add custom css classes to modify design of calendar
 * **author** = The user id of an Author, will show only the meetings/webinars of that particular author
 * **show** = use "meeting" or "webinar" to either show only meetings or only webinars leave empty or do not use if you want to show all.
