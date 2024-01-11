@@ -34,7 +34,7 @@ class Recordings {
 	 */
 	public function get_recordings() {
 		$meeting_id = filter_input( INPUT_GET, 'recording_id' );
-		$downloable = filter_input( INPUT_GET, 'downlable' );
+		$downloadable = filter_input( INPUT_GET, 'downloadable' );
 		if ( ! empty( $meeting_id ) ) {
 			ob_start();
 			?>
@@ -60,7 +60,7 @@ class Recordings {
 								?>
                                 <li><strong><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?>: </strong><a href="<?php echo $files->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a></li>
 
-								<?php if ( ! empty( $downloable ) && $downloable ) { ?>
+								<?php if ( ! empty( $downloadable ) && $downloadable ) { ?>
                                     <li><strong><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?>: </strong>
                                         <a href="<?php echo $files->download_url; ?>" target="_blank"><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?></a>
                                     </li>
@@ -112,10 +112,6 @@ class Recordings {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
-		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_recordings_data', array(
-			'downloadable' => $downloadable,
-			'loading'      => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' ),
-		) );
 
 		$postParams = array(
 			'page_size' => 300 //$atts['per_page'] disbled for now
@@ -144,7 +140,7 @@ class Recordings {
 			} else {
 				$GLOBALS['zoom_recordings']               = $recordings;
 				$GLOBALS['zoom_recordings']->downloadable = $downloadable;
-				vczapi_get_template( 'shortcode/zoom-recordings.php', true, false );
+				vczapi_get_template( 'shortcode/zoom-recordings.php', true, false, $atts );
 			}
 		} else {
 			_e( "No recordings found.", "video-conferencing-with-zoom-api" );

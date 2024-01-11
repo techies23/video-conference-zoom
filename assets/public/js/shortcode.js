@@ -149,7 +149,6 @@ var __webpack_exports__ = {};
       $(document).on('click', '.vczapi-view-recording', this.openModal.bind(this));
       $(document).on('click', '.vczapi-modal-close', this.closeModal.bind(this));
       if ($('.vczapi-recordings-list-table').length > 0) {
-        console.log('here');
         $('.vczapi-recordings-list-table').DataTable({
           responsive: true,
           language: vczapi_dt_i18n,
@@ -191,14 +190,15 @@ var __webpack_exports__ = {};
       $('.vczapi-modal').hide();
     },
     openModal: function (e) {
+      //localization no longer works with block themes have to use data attributes for this now.
       e.preventDefault();
       var recording_id = $(e.currentTarget).data('recording-id');
       var postData = {
         recording_id: recording_id,
         action: 'get_recording',
-        downlable: vczapi_recordings_data.downloadable
+        downloadable: $(e.currentTarget).data('downloadable')
       };
-      $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_recordings_data.loading + '</p>').show();
+      $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading_recordings + '</p>').show();
       $.get(vczapi_ajax.ajaxurl, postData).done(function (response) {
         $('.vczapi-modal').html(response.data).show();
       });

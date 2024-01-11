@@ -97,6 +97,7 @@ class Shortcodes {
 		], ZVC_PLUGIN_VERSION, true );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'loading_recordings' => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
 		) );
 		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(
 			'emptyTable'     => __( 'No data available in table', 'video-conferencing-with-zoom-api' ),
