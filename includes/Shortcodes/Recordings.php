@@ -49,7 +49,7 @@ class Recordings {
 								continue;
 							}
 							?>
-                            <ul class="vczapi-modal-list vczapi-modal-list-<?php echo $files->id; ?>">
+                            <ul class="vczapi-modal-list vczapi-modal-list__<?php echo esc_attr(strtolower( $files->file_type) ); ?> vczapi-modal-list-<?php echo $files->id; ?>">
                                 <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo $files->file_type; ?></li>
                                 <li><strong><?php _e( 'File Size', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo vczapi_filesize_converter( $files->file_size ); ?></li>
 								<?php
