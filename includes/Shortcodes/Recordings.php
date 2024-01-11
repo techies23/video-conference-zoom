@@ -58,11 +58,18 @@ class Recordings {
                                     <li><strong><?php _e( 'Password:', 'video-conferencing-with-zoom-api' ); ?></strong> <?php echo $recording->password; ?></li>
 								<?php }
 								?>
-                                <li><strong><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?>: </strong><a href="<?php echo $files->play_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a></li>
+                                <li><strong><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?>: </strong>
+                                    <a href="<?php echo $files->play_url; ?>"
+                                       target="_blank"
+                                       class="vczapi-recording__play-link"
+                                    ><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a></li>
 
 								<?php if ( ! empty( $downloadable ) && $downloadable ) { ?>
                                     <li><strong><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?>: </strong>
-                                        <a href="<?php echo $files->download_url; ?>" target="_blank"><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?></a>
+                                        <a href="<?php echo $files->download_url; ?>"
+                                           target="_blank"
+                                           class="vczapi-recording__download-link"
+                                        ><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?></a>
                                     </li>
 								<?php } ?>
                             </ul>
