@@ -307,3 +307,18 @@
     }
   }
 }
+.dpn-zvc-meeting-by-post-id-links{
+  display: flex;
+  gap: 25px;
+  padding: 20px 0;
+  a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #a5452d;
+    text-align: center;
+    width: 50%;
+    color: white;
+    padding: 20px;
+  }
+}
