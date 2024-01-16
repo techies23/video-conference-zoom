@@ -119,11 +119,12 @@ Where,
 
 Show recordings list based on your meeting ID
 
-Usage: `[zoom_recordings_by_meeting meeting_id="1234567890"]`
+Usage: `[zoom_recordings_by_meeting meeting_id="1234567890" passcode="yes"]`
 
 Where,
 
 * `meeting_id` : YOUR MEETING ID to pull.
+* `passcode` : Set to "yes" or "no" to show passcode.
 
 ### How to get Meeting ID
 

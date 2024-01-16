@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Shortcodes;
 
+use Codemanas\VczApi\Requests\Zoom;
+
 class Recordings {
 
 	/**
@@ -171,6 +173,7 @@ class Recordings {
 		$atts = shortcode_atts(
 			array(
 				'meeting_id' => '',
+				'passcode'   => 'no'
 			),
 			$atts,
 			'zoom_recordings'
@@ -183,12 +186,11 @@ class Recordings {
 		}
 
 		$meeting_id = esc_attr( $atts['meeting_id'] );
-		$post_id    = get_the_ID();
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 
 		ob_start();
 		$loading_text = esc_html__( "Loading recordings.. Please wait..", "video-conferencing-with-zoom-api" );
-		echo '<div class="vczapi-recordings-by-meeting-id" data-meeting="' . $meeting_id . '" data-post="' . $post_id . '" data-loading="' . $loading_text . '"></div>';
+		echo '<div class="vczapi-recordings-by-meeting-id" data-meeting="' . $meeting_id . '" data-passcode="' . $atts['passcode'] . '" data-loading="' . $loading_text . '"></div>';
 
 		return ob_get_clean();
 	}
@@ -199,29 +201,24 @@ class Recordings {
 	 * @return void
 	 */
 	public function getRecordingsByMeetingID() {
-		$recordings  = [];
-		$flush_cache = filter_input( INPUT_GET, 'flush_cache' );
+		$recordings = [];
 
-		$post_id    = filter_input( INPUT_GET, 'post_id' );
 		$meeting_id = filter_input( INPUT_GET, 'meeting_id' );
+		$passcode   = filter_input( INPUT_GET, 'passcode' );
 
-		$cached_recordings = ! empty( $atts['cache'] ) && $atts['cache'] == "true" ? Helpers::get_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id' ) : false;
+		if ( empty( $meeting_id ) ) {
+			wp_send_json_error( __( 'Meeting ID is not specified', "video-conferencing-with-zoom-api" ) );
+		}
 
-		if ( ! empty( $cached_recordings ) && isset( $cached_recordings[ $meeting_id ] ) && $flush_cache != 'yes' ) {
-			//if cached recordings exist use that
-			$recordings = $cached_recordings[ $meeting_id ];
-		} else {
-			$all_past_meetings = json_decode( zoom_conference()->getPastMeetingDetails( $meeting_id ) );
-			if ( ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
-				//loop through all instance of past / completed meetings and get recordings
-				foreach ( $all_past_meetings->meetings as $meeting ) {
-					$recordings[] = json_decode( zoom_conference()->recordingsByMeeting( $meeting->uuid ) );
-				}
-				Helpers::set_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id', [ $meeting_id => $recordings ], 86400 );
-			} else {
-				$recordings[] = json_decode( zoom_conference()->recordingsByMeeting( $meeting_id ) );
-				Helpers::set_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id', [ $meeting_id => $recordings ], 86400 );
+		$zoomObj           = Zoom::instance();
+		$all_past_meetings = $zoomObj->getPastMeetingDetails( $meeting_id );
+		if ( ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
+			//loop through all instance of past / completed meetings and get recordings
+			foreach ( $all_past_meetings->meetings as $meeting ) {
+				$recordings[] = $zoomObj->recordingsByMeeting( $meeting->uuid );
 			}
+		} else {
+			$recordings[] = $zoomObj->recordingsByMeeting( $meeting_id );
 		}
 
 		if ( ! empty( $recordings ) ) {
@@ -231,7 +228,8 @@ class Recordings {
 				$template = '';
 				ob_start();
 				vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true, false, [
-					'recordings' => $recordings
+					'recordings' => $recordings,
+					'passcode'   => $passcode
 				] );
 				$template .= ob_get_clean();
 				wp_send_json_success( $template );

@@ -5,7 +5,7 @@ namespace vczapi;
 class S2SOAuth {
 	public static $instance = null;
 
-	public static function get_instance() {
+	public static function get_instance(): ?S2SOAuth {
 		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
 
@@ -51,9 +51,9 @@ class S2SOAuth {
 		if ( $responseCode == 200 && strtolower( $response_message ) == 'ok' ) {
 			$responseBody          = wp_remote_retrieve_body( $response );
 			$decoded_response_body = json_decode( $responseBody );
-			if ( isset( $decoded_response_body->access_token ) && ! empty( $decoded_response_body->access_token ) ) {
+			if ( ! empty( $decoded_response_body->access_token ) ) {
 				$result = $decoded_response_body;
-			} elseif ( isset( $decoded_response_body->errorCode ) && ! empty( $decoded_response_body->errorCode ) ) {
+			} elseif ( ! empty( $decoded_response_body->errorCode ) ) {
 				$result = new \WP_Error( $decoded_response_body->errorCode, $decoded_response_body->errorMessage );
 			}
 		} else {
