@@ -51,7 +51,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
-    "@wordpress/scripts": "^26.1.0",
+    "@wordpress/scripts": "^26.19.0",
     "autoprefixer": "^10.4.13",
     "css-loader": "^6.7.1",
     "mini-css-extract-plugin": "^2.7.2",
