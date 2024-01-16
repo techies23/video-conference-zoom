@@ -9,6 +9,7 @@
  */
 
 global $zoom_recordings;
+$args = $args ?? []
 ?>
     <div class="vczapi-recordings-range-selector-wrap">
         <form action="" class="vczapi-recording-range-selector" method="GET">
@@ -44,7 +45,11 @@ global $zoom_recordings;
                 <td data-sort="<?php echo strtotime( $recording->start_time ); ?>"><?php echo vczapi_dateConverter( $recording->start_time, $recording->timezone ); ?></td>
                 <td><?php echo vczapi_filesize_converter( $recording->total_size ); ?></td>
                 <td>
-                    <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo $recording_uuid; ?>"><?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
+                    <a href="javascript:void(0);" class="vczapi-view-recording"
+                       data-recording-id="<?php echo $recording_uuid; ?>"
+                       data-downloadable="<?php echo $args['downloadable']== 'yes' ? 1: 0; ?>"
+                    >
+                        <?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
                     <div class="vczapi-modal"></div>
                 </td>
             </tr>
