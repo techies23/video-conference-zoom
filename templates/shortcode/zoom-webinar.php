@@ -59,7 +59,7 @@ global $zoom_webinars;
 						}
 
 						if ( $closest_occurence ) {
-							echo vczapi_dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' );
+							echo \Codemanas\VczApi\Helpers\Date::dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' );
 						} else {
 							_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 						}
@@ -86,7 +86,7 @@ global $zoom_webinars;
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
                 <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo vczapi_dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ); ?></td>
+                <td><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ); ?></td>
             </tr>
 		<?php } ?>
         <tr class="vczapi-shortcode-meeting-table--row7">

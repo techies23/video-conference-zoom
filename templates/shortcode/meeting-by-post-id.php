@@ -28,7 +28,7 @@ global $zoom;
 					<?php if ( ! empty( $zoom['api']->start_time ) ) { ?>
                         <div class="vczapi-hosted-by-start-time-wrap">
                             <span><strong><?php _e( 'Session date', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                            <span class="sidebar-start-time"><?php echo vczapi_dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
+                            <span class="sidebar-start-time"><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
                         </div>
 					<?php } ?>
 					<?php if ( ! empty( $zoom['terms'] ) ) { ?>

@@ -405,10 +405,10 @@ class Meetings {
 				'compare' => $type,
 				'type'    => 'DATETIME',
 			);
-			array_push( $query_args['meta_query'], $meta_query );
+			$query_args['meta_query'][] = $meta_query;
 		}
 
-		if ( isset( $form_data['taxonomy'] ) && ! empty( $form_data['taxonomy'] ) && $form_data['taxonomy'] != 'category_order' ) {
+		if ( ! empty( $form_data['taxonomy'] ) && $form_data['taxonomy'] != 'category_order' ) {
 
 			$query_args['tax_query'] = [
 				[
@@ -437,7 +437,7 @@ class Meetings {
 			$query_args['order'] = $orderby;
 		}
 
-		if ( isset( $form_data['search'] ) && ! empty( $form_data['search'] ) ) {
+		if ( ! empty( $form_data['search'] ) ) {
 			$query_args['s'] = esc_attr( $form_data['search'] );
 		}
 

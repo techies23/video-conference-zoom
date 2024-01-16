@@ -27,13 +27,17 @@ class Recordings {
 	public function __construct() {
 		add_action( 'wp_ajax_nopriv_get_recording', array( $this, 'get_recordings' ) );
 		add_action( 'wp_ajax_get_recording', array( $this, 'get_recordings' ) );
+
+		//Ajax fetch for Meeting by ID
+		add_action( 'wp_ajax_nopriv_getRecordingByMeetingID', [ $this, 'getRecordingsByMeetingID' ] );
+		add_action( 'wp_ajax_getRecordingByMeetingID', [ $this, 'getRecordingsByMeetingID' ] );
 	}
 
 	/**
 	 * Get Recordings via AJAX
 	 */
 	public function get_recordings() {
-		$meeting_id = filter_input( INPUT_GET, 'recording_id' );
+		$meeting_id   = filter_input( INPUT_GET, 'recording_id' );
 		$downloadable = filter_input( INPUT_GET, 'downloadable' );
 		if ( ! empty( $meeting_id ) ) {
 			ob_start();
@@ -49,7 +53,7 @@ class Recordings {
 								continue;
 							}
 							?>
-                            <ul class="vczapi-modal-list vczapi-modal-list__<?php echo esc_attr(strtolower( $files->file_type) ); ?> vczapi-modal-list-<?php echo $files->id; ?>">
+                            <ul class="vczapi-modal-list vczapi-modal-list__<?php echo esc_attr( strtolower( $files->file_type ) ); ?> vczapi-modal-list-<?php echo $files->id; ?>">
                                 <li><strong><?php _e( 'File Type', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo $files->file_type; ?></li>
                                 <li><strong><?php _e( 'File Size', 'video-conferencing-with-zoom-api' ); ?>: </strong> <?php echo vczapi_filesize_converter( $files->file_size ); ?></li>
 								<?php
@@ -64,7 +68,7 @@ class Recordings {
                                        class="vczapi-recording__play-link"
                                     ><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a></li>
 
-								<?php if ( ! empty( $downloadable ) && $downloadable ) { ?>
+								<?php if ( ! empty( $downloadable ) ) { ?>
                                     <li><strong><?php _e( 'Download', 'video-conferencing-with-zoom-api' ); ?>: </strong>
                                         <a href="<?php echo $files->download_url; ?>"
                                            target="_blank"
@@ -107,7 +111,7 @@ class Recordings {
 			'zoom_recordings'
 		);
 
-		$downloadable = ( ! empty( $atts['downloadable'] ) && $atts['downloadable'] === "yes" ) ? true : false;
+		$downloadable = ! empty( $atts['downloadable'] ) && $atts['downloadable'] === "yes";
 		if ( empty( $atts['host_id'] ) ) {
 			echo '<h3 class="no-host-id-defined"><strong style="color:red;">' . __( 'Invalid HOST ID. Please define a host ID to show recordings based on host.', 'video-conferencing-with-zoom-api' ) . '</h3>';
 
@@ -164,16 +168,13 @@ class Recordings {
 	 * @return bool|false|string
 	 */
 	public function recordings_by_meeting_id( $atts ) {
-		$atts    = shortcode_atts(
+		$atts = shortcode_atts(
 			array(
-				'meeting_id'   => '',
-				'downloadable' => 'no',
-				'cache'        => 'true',
+				'meeting_id' => '',
 			),
 			$atts,
 			'zoom_recordings'
 		);
-		$post_id = get_the_ID();
 
 		if ( empty( $atts['meeting_id'] ) ) {
 			echo '<h3 class="no-meeting-id-defined"><strong style="color:red;">' . __( 'Invalid Meeting ID.', 'video-conferencing-with-zoom-api' ) . '</h3>';
@@ -181,26 +182,37 @@ class Recordings {
 			return false;
 		}
 
-		$meeting_id = $atts['meeting_id'];
-		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
+		$meeting_id = esc_attr( $atts['meeting_id'] );
+		$post_id    = get_the_ID();
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 
-		$recordings        = [];
-		$flush_cache       = filter_input( INPUT_GET, 'flush_cache' );
-		$cached_recordings = ! empty( $atts['cache'] ) && $atts['cache'] == "true" ? Helpers::get_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id' ) : false;
-
 		ob_start();
-		unset( $GLOBALS['zoom_recordings'] );
-		unset( $GLOBALS['zoom_recordings_is_downloadable'] );
+		$loading_text = esc_html__( "Loading recordings.. Please wait..", "video-conferencing-with-zoom-api" );
+		echo '<div class="vczapi-recordings-by-meeting-id" data-meeting="' . $meeting_id . '" data-post="' . $post_id . '" data-loading="' . $loading_text . '"></div>';
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Get Meeting recording ajax call function
+	 *
+	 * @return void
+	 */
+	public function getRecordingsByMeetingID() {
+		$recordings  = [];
+		$flush_cache = filter_input( INPUT_GET, 'flush_cache' );
+
+		$post_id    = filter_input( INPUT_GET, 'post_id' );
+		$meeting_id = filter_input( INPUT_GET, 'meeting_id' );
+
+		$cached_recordings = ! empty( $atts['cache'] ) && $atts['cache'] == "true" ? Helpers::get_post_cache( $post_id, '_vczapi_shortcode_recordings_by_meeting_id' ) : false;
 
 		if ( ! empty( $cached_recordings ) && isset( $cached_recordings[ $meeting_id ] ) && $flush_cache != 'yes' ) {
 			//if cached recordings exist use that
 			$recordings = $cached_recordings[ $meeting_id ];
 		} else {
 			$all_past_meetings = json_decode( zoom_conference()->getPastMeetingDetails( $meeting_id ) );
-			if ( isset( $all_past_meetings->meetings ) && ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
+			if ( ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
 				//loop through all instance of past / completed meetings and get recordings
 				foreach ( $all_past_meetings->meetings as $meeting ) {
 					$recordings[] = json_decode( zoom_conference()->recordingsByMeeting( $meeting->uuid ) );
@@ -213,28 +225,21 @@ class Recordings {
 		}
 
 		if ( ! empty( $recordings ) ) {
-			if ( ! empty( $recordings->code ) && ! empty( $recordings->message ) ) {
-				echo $recordings->message;
+			if ( ! empty( $recordings[0]->code ) && ! empty( $recordings[0]->message ) ) {
+				wp_send_json_error( $recordings[0]->message );
 			} else {
-				foreach ( $recordings as $recording ) {
-					if ( ! empty( $recording->recording_files ) ) {
-						$GLOBALS['zoom_recordings'][]               = $recording;
-						$GLOBALS['zoom_recordings_is_downloadable'] = ( ! empty( $atts['downloadable'] ) && $atts['downloadable'] === "yes" ) ? true : false;
-					}
-				}
+				$template = '';
+				ob_start();
+				vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true, false, [
+					'recordings' => $recordings
+				] );
+				$template .= ob_get_clean();
+				wp_send_json_success( $template );
 			}
-		}
-
-		if ( ! empty( $GLOBALS['zoom_recordings'] ) ) {
-			vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true, false );
 		} else {
-			_e( "No recordings found.", "video-conferencing-with-zoom-api" );
-			?>
-            <a href="<?php echo esc_url( add_query_arg( [ 'flush_cache' => 'yes' ], get_the_permalink() ) ); ?>"><?php _e( 'Check for latest' ); ?></a>
-			<?php
+			wp_send_json_success( __( "No recordings found.", "video-conferencing-with-zoom-api" ) );
 		}
 
-
-		return ob_get_clean();
+		wp_die();
 	}
 }

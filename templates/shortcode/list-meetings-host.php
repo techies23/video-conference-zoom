@@ -46,7 +46,7 @@
 
 			echo '<td>' . $meeting->topic . '</td>';
 			echo '<td>' . $meeting_status . '</td>';
-			echo '<td>' . vczapi_dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) . '</td>';
+			echo '<td>' . \Codemanas\VczApi\Helpers\Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) . '</td>';
 			echo '<td>' . $meeting->timezone . '</td>';
 			echo '<td><div class="view">
 <a href="' . $meeting->join_url . '" rel="permalink" target="_blank">' . __( 'Join via App', 'video-conferencing-with-zoom-api' ) . '</a></div><div class="view">' . vczapi_get_browser_join_shortcode( $meeting->id, $meeting->password, false, ' / ' ) . '</div></td>';

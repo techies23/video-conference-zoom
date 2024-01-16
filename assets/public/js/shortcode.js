@@ -211,5 +211,42 @@ var __webpack_exports__ = {};
     vczAPIRecordingsGenerateModal.init();
   });
 })(jQuery);
+
+/**
+ * Javascript Migration
+ *
+ * @since v4.4.0
+ *
+ * @type {{init: init}}
+ */
+const vczapiRecordingsByMeetingID = (() => {
+  let config = {};
+  const cacheDOM = () => {
+    config.domElement = document.querySelectorAll('.vczapi-recordings-by-meeting-id');
+  };
+  const fetchRecordings = elem => {
+    let {
+      meeting,
+      post,
+      loading
+    } = elem.dataset;
+    elem.innerHTML = loading;
+    fetch(vczapi_ajax.ajaxurl + `?action=getRecordingByMeetingID&meeting_id=${meeting}&post_id=${post}`).then(res => res.json()).then(result => {
+      elem.innerHTML = result.data;
+    });
+  };
+  const init = () => {
+    cacheDOM();
+    config.domElement.forEach(elem => {
+      fetchRecordings(elem);
+    });
+  };
+  return {
+    init
+  };
+})();
+document.addEventListener('DOMContentLoaded', () => {
+  vczapiRecordingsByMeetingID.init();
+});
 /******/ })()
 ;

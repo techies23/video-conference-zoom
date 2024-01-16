@@ -397,10 +397,10 @@ function vczapi_get_template( $template_name, $load = false, $require_once = tru
 	}
 
 	$located = false;
-	if ( file_exists( STYLESHEETPATH . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
-		$located = STYLESHEETPATH . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
-	} elseif ( file_exists( TEMPLATEPATH . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
-		$located = TEMPLATEPATH . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
+	if ( file_exists( get_stylesheet_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
+		$located = get_stylesheet_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
+	} elseif ( file_exists( get_template_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
+		$located = get_template_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
 	} elseif ( file_exists( ZVC_PLUGIN_DIR_PATH . 'templates/' . $template_name ) ) {
 		$located = ZVC_PLUGIN_DIR_PATH . 'templates/' . $template_name;
 	}

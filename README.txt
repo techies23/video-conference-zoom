@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 4.3.3
+Stable tag: 4.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -158,6 +158,12 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.4.0 January 16th, 2023 =
+* Recordings hidable and bug fixes.
+* Updated websdk to version 2.18.2
+* Bump WP scripts version
+* Bug Fixes
 
 = 4.3.3 October 31st, 2023 =
 * Fixed: Conflict with Meow Gallery

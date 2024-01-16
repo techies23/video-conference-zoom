@@ -44,14 +44,14 @@ $columns = ! empty( $zoom['columns'] ) ? $zoom['columns'] : 'vczapi-col-4';
 							?>
                             <div class="start-date meta">
                                 <strong><?php _e( 'Next Occurrence', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                                <span><?php echo vczapi_dateConverter( $start_time, $timezone, 'F j, Y @ g:i a' ); ?></span>
+                                <span><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $start_time, $timezone, 'F j, Y @ g:i a' ); ?></span>
                             </div>
 							<?php
 						} else {
 							?>
                             <div class="start-date meta">
                                 <strong><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                                <span><?php echo vczapi_dateConverter( $zoom['start_date'], 'UTC', 'F j, Y @ g:i a' ); ?></span>
+                                <span><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom['start_date'], 'UTC', 'F j, Y @ g:i a' ); ?></span>
                             </div>
 							<?php
 						}
@@ -65,7 +65,7 @@ $columns = ! empty( $zoom['columns'] ) ? $zoom['columns'] : 'vczapi-col-4';
 						?>
                         <div class="start-date meta">
                             <strong><?php _e( 'Start', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                            <span><?php echo vczapi_dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
+                            <span><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
                         </div>
 					<?php } ?>
                     <div class="timezone meta">
