@@ -161,6 +161,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 = 4.4.0 January 16th, 2023 =
 * Recordings hidable and bug fixes.
+* Updated: Fetch Meeting ID recordings asynchronously.
 * Updated websdk to version 2.18.2
 * Bump WP scripts version
 * Bug Fixes
