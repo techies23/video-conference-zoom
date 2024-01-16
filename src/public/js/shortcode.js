@@ -251,9 +251,11 @@ const vczapiRecordingsByMeetingID = (() => {
 
     const init = () => {
         cacheDOM()
-        config.domElement.forEach((elem) => {
-            fetchRecordings(elem)
-        })
+        if (config.domElement !== null && config.domElement.length > 0) {
+            config.domElement.forEach((elem) => {
+                fetchRecordings(elem)
+            })
+        }
     }
 
     return {
