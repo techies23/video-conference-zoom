@@ -45,10 +45,6 @@ class Zoom {
 	 * Zoom_Video_Conferencing_Api constructor.
 	 */
 	protected function __construct() {
-		$this->_setKeys();
-	}
-
-	private function _setKeys() {
 	}
 
 	/**
@@ -188,5 +184,25 @@ class Zoom {
 
 	public function me() {
 		return $this->sendRequest( '/users/me' );
+	}
+
+	/**
+	 * Get recording by meeting ID
+	 *
+	 * @param $meetingId
+	 *
+	 * @return array|bool|WP_Error|string
+	 */
+	public function recordingsByMeeting( $meetingId ) {
+		return $this->sendRequest( '/meetings/' . $meetingId . '/recordings' );
+	}
+
+	/**
+	 * @param $meetingid
+	 *
+	 * @return array|bool|string
+	 */
+	public function getPastMeetingDetails( $meetingid ) {
+		return $this->sendRequest( '/past_meetings/' . $meetingid . '/instances' );
 	}
 }

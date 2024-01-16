@@ -240,9 +240,9 @@ const vczapiRecordingsByMeetingID = (() => {
     }
 
     const fetchRecordings = (elem) => {
-        let {meeting, post, loading} = elem.dataset;
+        let {meeting, loading, passcode} = elem.dataset;
         elem.innerHTML = loading;
-        fetch(vczapi_ajax.ajaxurl + `?action=getRecordingByMeetingID&meeting_id=${meeting}&post_id=${post}`)
+        fetch(vczapi_ajax.ajaxurl + `?action=getRecordingByMeetingID&meeting_id=${meeting}&passcode=${passcode}`)
             .then(res => res.json())
             .then(result => {
                 elem.innerHTML = result.data;
@@ -251,9 +251,11 @@ const vczapiRecordingsByMeetingID = (() => {
 
     const init = () => {
         cacheDOM()
-        config.domElement.forEach((elem) => {
-            fetchRecordings(elem)
-        })
+        if (config.domElement !== null && config.domElement.length > 0) {
+            config.domElement.forEach((elem) => {
+                fetchRecordings(elem)
+            })
+        }
     }
 
     return {
