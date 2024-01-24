@@ -50,7 +50,7 @@ final class Bootstrap {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_backend' ) );
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-        //Block Themes Compat: register scripts on init - required as block themes fire the content before page render
+		//Block Themes Compat: register scripts on init - required as block themes fire the content before page render
 		add_action( 'init', [ $this, 'register_scripts' ] );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
@@ -105,7 +105,7 @@ final class Bootstrap {
 	 */
 	function set_corp_headers( $headers, $wp ) {
 		$type = filter_input( INPUT_GET, 'type' );
-		if ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) {
+		if ( ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) || has_shortcode( get_post()->post_content, 'zoom_join_via_browser' ) ) {
 			$headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
 			$headers['Cross-Origin-Opener-Policy']   = 'same-origin';
 		}
@@ -133,7 +133,7 @@ final class Bootstrap {
 	/**
 	 * @return void
 	 */
-	public function register_scripts(  ) {
+	public function register_scripts() {
 		$minified = SCRIPT_DEBUG ? '' : '.min';
 		wp_register_style( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style' . $minified . '.css', false, $this->plugin_version );
 
@@ -152,8 +152,8 @@ final class Bootstrap {
 				'video-conferencing-with-zoom-api-moment',
 			), $this->plugin_version, true );
 		}
-    }
-    
+	}
+
 	/**
 	 * Load Frontend Scriptsssssss
 	 *
@@ -241,8 +241,8 @@ final class Bootstrap {
 		Blocks::get_instance();
 		BlockTemplates::get_instance();
 
-        //Helpers
-        Encryption::get_instance();
+		//Helpers
+		Encryption::get_instance();
 	}
 
 	/**

@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, zoom, zoom video conferencing, we
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 4.4.0
+Stable tag: 4.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,7 +159,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.4.0 January 16th, 2023 =
+= 4.4.1 January 2th, 2024 =
+* Fixed: Gallery View should now be supported for IFrame join via browser shortcode.
+
+= 4.4.0 January 16th, 2024 =
 * Recordings hidable and bug fixes.
 * Updated: Fetch Meeting ID recordings asynchronously.
 * Updated websdk to version 2.18.2
