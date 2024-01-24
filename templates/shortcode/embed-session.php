@@ -73,7 +73,7 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
 		?>
         <div class="vczapi-jvb-wrapper zoom-window-wrap">
             <div id="<?php echo ! empty( $zoom->shortcode_attributes['id'] ) ? esc_attr( $zoom->shortcode_attributes['id'] ) : 'video-conferncing-embed-iframe'; ?>" class="zoom-iframe-container">
-                <iframe style="width:100%; <?php echo ! empty( $zoom->shortcode_attributes['height'] ) ? "height: " . $zoom->shortcode_attributes['height'] : "height: 500px;"; ?>" sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation" allow="cross-origin-isolated; encrypted-media; autoplay; microphone; camera" src="<?php echo esc_url( $join_via_browser_link ); ?>"></iframe>
+                <iframe style="width:100%; <?php echo ! empty( $zoom->shortcode_attributes['height'] ) ? "height: " . $zoom->shortcode_attributes['height'] : "height: 500px;"; ?>" allow="microphone; camera" src="<?php echo esc_url( $join_via_browser_link ); ?>"></iframe>
             </div>
         </div>
 		<?php
