@@ -210,16 +210,25 @@ class Recordings {
 			wp_send_json_error( __( 'Meeting ID is not specified', "video-conferencing-with-zoom-api" ) );
 		}
 
-		$zoomObj           = Zoom::instance();
-		$all_past_meetings = $zoomObj->getPastMeetingDetails( $meeting_id );
-		if ( ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
-			//loop through all instance of past / completed meetings and get recordings
-			foreach ( $all_past_meetings->meetings as $meeting ) {
-				$recordings[] = $zoomObj->recordingsByMeeting( $meeting->uuid );
-			}
-		} else {
+		$zoomObj      = Zoom::instance();
+		$meeting_info = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
+		//if it's a regular meeting or webinar use the meeting id as it seems it's more reliable
+		//https://devforum.zoom.us/t/recording-api-issue/102992
+		if ( $meeting_info->type == '2' || $meeting_info->type == '5' ) {
 			$recordings[] = $zoomObj->recordingsByMeeting( $meeting_id );
+		} else {
+			//if it's a recurring meeting / webinar we're going to need to get pass meeting details
+			$all_past_meetings = $zoomObj->getPastMeetingDetails( $meeting_id );
+			if ( ! empty( $all_past_meetings->meetings ) && ! isset( $all_past_meetings->code ) ) {
+				//loop through all instance of past / completed meetings and get recordings
+				foreach ( $all_past_meetings->meetings as $meeting ) {
+					$recordings[] = $zoomObj->recordingsByMeeting( $meeting->uuid );
+				}
+			} else {
+				$recordings[] = $zoomObj->recordingsByMeeting( $meeting_id );
+			}
 		}
+
 
 		if ( ! empty( $recordings ) ) {
 			if ( ! empty( $recordings[0]->code ) && ! empty( $recordings[0]->message ) ) {
