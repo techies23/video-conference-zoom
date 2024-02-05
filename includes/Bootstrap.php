@@ -105,7 +105,7 @@ final class Bootstrap {
 	 */
 	function set_corp_headers( $headers, $wp ) {
 		$type = filter_input( INPUT_GET, 'type' );
-		if ( ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) || has_shortcode( get_post()->post_content, 'zoom_join_via_browser' ) ) {
+		if ( ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) || ( ! empty( get_post()->post_content ) && has_shortcode( get_post()->post_content, 'zoom_join_via_browser' ) ) ) {
 			$headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
 			$headers['Cross-Origin-Opener-Policy']   = 'same-origin';
 		}
