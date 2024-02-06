@@ -172,8 +172,9 @@ class Recordings {
 	public function recordings_by_meeting_id( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'meeting_id' => '',
-				'passcode'   => 'no'
+				'meeting_id'   => '',
+				'passcode'     => 'no',
+				'downloadable' => 'no'
 			),
 			$atts,
 			'zoom_recordings'
@@ -190,7 +191,7 @@ class Recordings {
 
 		ob_start();
 		$loading_text = esc_html__( "Loading recordings.. Please wait..", "video-conferencing-with-zoom-api" );
-		echo '<div class="vczapi-recordings-by-meeting-id" data-meeting="' . $meeting_id . '" data-passcode="' . $atts['passcode'] . '" data-loading="' . $loading_text . '"></div>';
+		echo '<div class="vczapi-recordings-by-meeting-id" data-downloadable="' . $atts['downloadable'] . '" data-meeting="' . $meeting_id . '" data-passcode="' . $atts['passcode'] . '" data-loading="' . $loading_text . '"></div>';
 
 		return ob_get_clean();
 	}
@@ -203,8 +204,9 @@ class Recordings {
 	public function getRecordingsByMeetingID() {
 		$recordings = [];
 
-		$meeting_id = filter_input( INPUT_GET, 'meeting_id' );
-		$passcode   = filter_input( INPUT_GET, 'passcode' );
+		$meeting_id   = filter_input( INPUT_GET, 'meeting_id' );
+		$passcode     = filter_input( INPUT_GET, 'passcode' );
+		$downloadable = filter_input( INPUT_GET, 'downloadable' );
 
 		if ( empty( $meeting_id ) ) {
 			wp_send_json_error( __( 'Meeting ID is not specified', "video-conferencing-with-zoom-api" ) );
@@ -237,8 +239,9 @@ class Recordings {
 				$template = '';
 				ob_start();
 				vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true, false, [
-					'recordings' => $recordings,
-					'passcode'   => $passcode
+					'recordings'   => $recordings,
+					'passcode'     => $passcode,
+					'downloadable' => $downloadable
 				] );
 				$template .= ob_get_clean();
 				wp_send_json_success( $template );

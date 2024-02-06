@@ -8,8 +8,9 @@
  * @version     3.5.0
  */
 
-$recordings = ! empty( $args['recordings'] ) ? $args['recordings'] : false;
-$passcode   = ! empty( $args['passcode'] ) && $args['passcode'] == "yes";
+$recordings  = ! empty( $args['recordings'] ) ? $args['recordings'] : false;
+$passcode    = ! empty( $args['passcode'] ) && $args['passcode'] == "yes";
+$downlodable = ! empty( $args['downloadable'] ) && $args['downloadable'] == "yes";
 if ( $recordings ) {
 	?>
     <div class="vczapi-recordings-meeting-id-description">
@@ -43,7 +44,10 @@ if ( $recordings ) {
 					<?php } ?>
                     <td><?php echo vczapi_filesize_converter( $zoom_recording->total_size ); ?></td>
                     <td>
-                        <a href="<?php echo $zoom_recording->share_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a>
+                        <a href="<?php echo $zoom_recording->share_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a> &nbsp;/&nbsp;
+                        <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo $zoom_recording->uuid; ?>" data-downloadable="<?php echo $downlodable ? 1 : 0; ?>">
+		                    <?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
+                        <div class="vczapi-modal"></div>
                     </td>
                 </tr>
 				<?php

@@ -98,6 +98,22 @@ class RecordingByMeetingID extends Widget_Base {
 		);
 
 		$this->add_control(
+			'downloadable',
+			[
+				'name'        => 'downloadable',
+				'label'       => __( 'Show Downloadable Link', 'video-conferencing-with-zoom-api' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'label_block' => true,
+				'multiple'    => false,
+				'options'     => [
+					'yes' => 'Yes',
+					'no'  => 'No'
+				],
+				'default'     => 'no'
+			]
+		);
+
+		$this->add_control(
 			'passcode',
 			[
 				'name'        => 'passcode',
@@ -132,8 +148,9 @@ class RecordingByMeetingID extends Widget_Base {
 
 		$meeting_id   = ! empty( $settings['meeting_id'] ) ? $settings['meeting_id'] : false;
 		$passcode = ! empty( $settings['passcode'] ) ? $settings['passcode'] : 'no';
+		$downloadable = ! empty( $settings['downloadable'] ) ? $settings['downloadable'] : 'no';
 		if ( ! empty( $meeting_id ) ) {
-			echo do_shortcode( '[zoom_recordings_by_meeting meeting_id=' . esc_attr( $meeting_id ) . ' passcode=' . esc_attr( $passcode ) . ']' );
+			echo do_shortcode( '[zoom_recordings_by_meeting meeting_id=' . esc_attr( $meeting_id ) . ' passcode=' . esc_attr( $passcode ) . ' downloadable=' . esc_attr( $downloadable ) . ']' );
 		} else {
 			_e( 'No meeting ID is defined.', 'video-conferencing-with-zoom-api' );
 		}
