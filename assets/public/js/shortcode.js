@@ -228,10 +228,11 @@ const vczapiRecordingsByMeetingID = (() => {
     let {
       meeting,
       loading,
-      passcode
+      passcode,
+      downloadable
     } = elem.dataset;
     elem.innerHTML = loading;
-    fetch(vczapi_ajax.ajaxurl + `?action=getRecordingByMeetingID&meeting_id=${meeting}&passcode=${passcode}`).then(res => res.json()).then(result => {
+    fetch(vczapi_ajax.ajaxurl + `?action=getRecordingByMeetingID&meeting_id=${meeting}&passcode=${passcode}&downloadable=${downloadable}`).then(res => res.json()).then(result => {
       elem.innerHTML = result.data;
     });
   };
