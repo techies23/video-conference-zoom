@@ -1,0 +1,59 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "vczapi/join-via-browser",
+	"version": "1.0.0",
+	"title": "Zoom - Join via Browser",
+	"category": "vczapi-blocks",
+	"icon": "archive",
+	"description": "Show  Join via Browser on any page or post ",
+	"attributes": {
+		"preview": {
+			"type": "boolean",
+			"default": false
+		},
+		"shouldShow": {
+			"type": "object",
+			"default": {
+				"label": "Meeting",
+				"value": "meeting"
+			}
+		},
+		"host": {
+			"type": "object"
+		},
+		"selectedMeeting": {
+			"type": "object"
+		},
+		"login_required": {
+			"type": "string",
+			"default": "no"
+		},
+		"disable_countdown": {
+			"type": "string",
+			"default": "no"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"passcode": {
+			"type": "string",
+			"default": ""
+		},
+		"height": {
+			"type": "number",
+			"default": 500
+		}
+	},
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "video-conferencing-with-zoom-api",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}
