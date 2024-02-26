@@ -115,8 +115,8 @@ class Blocks {
 	 * @updated N/A
 	 */
 	public function register_blocks() {
-		$registerd = register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/join-via-browser' );
-
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/join-via-browser' );
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-host-meetings' );
 		return;
 		register_block_type( 'vczapi/list-meetings', [
 			"title"           => "List Zoom Meetings",
@@ -543,24 +543,6 @@ class Blocks {
 			$shortcode .= ' link_only="' . $attributes['link_only'] . '"';
 		}
 		echo do_shortcode( '[' . $shortcode . ']' );
-
-		return ob_get_clean();
-	}
-
-	/**
-	 * Render host meeting list.
-	 *
-	 * @param $attributes
-	 *
-	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
-	 */
-	public function render_host_meeting_list( $attributes ) {
-		$shortcode = ( $attributes['shouldShow']['value'] == "webinar" ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
-		ob_start();
-		echo do_shortcode( '[' . $shortcode . ' host="' . $attributes['host']['value'] . '"]' );
 
 		return ob_get_clean();
 	}

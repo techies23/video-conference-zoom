@@ -48,7 +48,16 @@
   },
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
   },
   "textdomain": "video-conferencing-with-zoom-api",
   "editorScript": "file:./index.js",

@@ -1,3 +1,4 @@
+import "./editor.scss"
 import ServerSideRender from '@wordpress/server-side-render'
 import { BlockControls, useBlockProps } from '@wordpress/block-editor'
 import { debounce } from 'lodash'
