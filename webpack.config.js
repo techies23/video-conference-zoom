@@ -67,13 +67,7 @@ const backendConfig = {
 }
 
 //Default WP configs
-const wp = {
-  ...defaultConfig,
-  entry: {
-    ...defaultConfig.entry,
-    index: path.resolve(process.cwd(), 'src/block', 'index.js'),
-  }
-}
+const wp = defaultConfig
 
 let modules = [wp, publicConfig, backendConfig]
 if (isProduction) {

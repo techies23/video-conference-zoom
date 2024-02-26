@@ -33,7 +33,7 @@ class Blocks {
 			add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
 		}
 		if ( function_exists( 'register_block_type' ) ) {
-			add_action( 'init', [ $this, 'register_scripts' ] );
+			//add_action( 'init', [ $this, 'register_scripts' ] );
 			add_action( 'init', [ $this, 'register_blocks' ] );
 		}
 
@@ -115,6 +115,57 @@ class Blocks {
 	 * @updated N/A
 	 */
 	public function register_blocks() {
+		register_block_type( 'vczapi/join-via-browser', [
+			"title"           => "Zoom - Join via Browser",
+			"attributes"      => [
+				"preview"           => [
+					"type"    => "boolean",
+					"default" => false
+				],
+				"shouldShow"        => [
+					"type"    => "object",
+					"default" => [
+						"label" => "Meeting",
+						"value" => "meeting"
+					]
+				],
+				"host"              => [
+					"type" => "object",
+				],
+				"selectedMeeting"   => [
+					"type" => "object",
+				],
+				"login_required"    => [
+					"type"    => "string",
+					"default" => "no"
+				],
+				"disable_countdown" => [
+					"type"    => "string",
+					"default" => "no"
+				],
+				"title"             => [
+					"type"    => "string",
+					"default" => ""
+				],
+				"passcode"          => [
+					"type"    => "string",
+					"default" => ""
+				],
+				"height"            => [
+					"type"    => "number",
+					"default" => 500
+				]
+			],
+			"category"        => "vczapi-blocks",
+			"icon"            => "archive",
+			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
+			"textdomain"      => "video-conferencing-with-zoom-api",
+			'editor_script'   => 'vczapi-blocks',
+			'editor_style'    => 'vczapi-blocks-style',
+			'render_callback' => [ $this, 'render_join_via_browser' ]
+		] );
+
+		return;
 		register_block_type( 'vczapi/list-meetings', [
 			"title"           => "List Zoom Meetings",
 			"attributes"      => [
@@ -264,56 +315,6 @@ class Blocks {
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_live_meeting' ]
-		] );
-
-		register_block_type( 'vczapi/join-via-browser', [
-			"title"           => "Zoom - Join via Browser",
-			"attributes"      => [
-				"preview"           => [
-					"type"    => "boolean",
-					"default" => false
-				],
-				"shouldShow"        => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
-					]
-				],
-				"host"              => [
-					"type" => "object",
-				],
-				"selectedMeeting"   => [
-					"type" => "object",
-				],
-				"login_required"    => [
-					"type"    => "string",
-					"default" => "no"
-				],
-				"disable_countdown" => [
-					"type"    => "string",
-					"default" => "no"
-				],
-				"title"             => [
-					"type"    => "string",
-					"default" => ""
-				],
-				"passcode"          => [
-					"type"    => "string",
-					"default" => ""
-				],
-				"height"            => [
-					"type"    => "number",
-					"default" => 500
-				]
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "archive",
-			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_join_via_browser' ]
 		] );
 
 		register_block_type( 'vczapi/recordings', [
