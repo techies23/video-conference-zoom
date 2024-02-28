@@ -170,34 +170,6 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_list_meetings' ]
 		] );
-
-		register_block_type( 'vczapi/list-host-meetings', [
-			"title"           => "List Zoom Meetings by Host",
-			"attributes"      => [
-				"host"       => [
-					"type" => "object",
-				],
-				"shouldShow" => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
-					]
-				],
-				"preview"    => [
-					"type"    => "boolean",
-					"default" => false
-				],
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "list-view",
-			"description"     => "Show Meetings/Webinars by Host",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_host_meeting_list' ]
-		] );
-
 		register_block_type( 'vczapi/show-meeting-post', [
 			"title"           => "Embed Zoom Post",
 			"attributes"      => [
@@ -234,7 +206,6 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_meeting_post' ]
 		] );
-
 		register_block_type( 'vczapi/show-live-meeting', [
 			"title"           => "Direct Meeting or Webinar",
 			"attributes"      => [
@@ -268,7 +239,6 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_live_meeting' ]
 		] );
-
 		register_block_type( 'vczapi/recordings', [
 			"title"           => "Zoom - Show Recordings",
 			"attributes"      => [
@@ -302,7 +272,6 @@ class Blocks {
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_recordings' ]
 		] );
-
 		register_block_type( 'vczapi/single-zoom-meeting', [
 			"title"           => "Zoom - Single Meeting Page",
 			"category"        => "vczapi-blocks",
