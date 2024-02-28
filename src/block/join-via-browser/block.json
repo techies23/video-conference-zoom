@@ -46,7 +46,11 @@
 			"default": 500
 		}
 	},
-	"example": {},
+	"example": {
+		"attributes": {
+			"preview": true
+		}
+	},
 	"supports": {
 		"html": false,
 		"color": {
