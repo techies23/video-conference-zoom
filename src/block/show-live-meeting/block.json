@@ -7,7 +7,11 @@
 	"category": "vczapi-blocks",
 	"icon": "sticky",
 	"description": "Show a Meeting/Webinar details - direct from Zoom",
-	"example": {},
+	"example": {
+		"attributes": {
+			"preview": true
+		}
+	},
 	"supports": {
 		"html": false,
 		"color": {

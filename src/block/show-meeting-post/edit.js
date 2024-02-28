@@ -7,6 +7,7 @@ import { Disabled, Placeholder, ToolbarGroup, Spinner, CheckboxControl, SelectCo
 import AsyncSelect from 'react-select/async'
 import { useEffect, useState, useRef } from '@wordpress/element'
 import apiFetch from '@wordpress/api-fetch'
+import previewImage from './embed_post_preview.png'
 
 export default function Edit (props) {
 	const { attributes, setAttributes } = props
@@ -67,7 +68,10 @@ export default function Edit (props) {
 
 	if (preview) {
 		return (
-			<img src={vczapi_blocks.embed_post_preview} alt="Embed Zoom post"/>
+			<img
+				src={previewImage} alt="Embed Zoom post"
+				className="vczapi-blocks__preview-image"
+			/>
 		)
 	}
 
