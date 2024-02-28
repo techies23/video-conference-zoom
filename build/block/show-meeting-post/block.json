@@ -4,17 +4,51 @@
   "name": "vczapi/show-meeting-post",
   "version": "0.1.0",
   "title": "Embed Zoom Post",
-  "category": "widgets",
-  "icon": "empbed-post",
+  "category": "vczapi-blocks",
+  "icon": "embed-post",
   "description": "Show a Meeting Post with Countdown",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true,
+      "link": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
   },
-  "textdomain": "show-meeting-post",
+  "attributes": {
+    "preview": {
+      "type": "boolean",
+      "default": false
+    },
+    "postID": {
+      "type": "number",
+      "default": 0
+    },
+    "template": {
+      "type": "string",
+      "default": "none"
+    },
+    "description": {
+      "type": "boolean",
+      "default": true
+    },
+    "countdown": {
+      "type": "boolean",
+      "default": true
+    },
+    "details": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "textdomain": "video-conferencing-with-zoom-api",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "render": "file:./render.php",
-  "viewScript": "file:./view.js"
+  "render": "file:./render.php"
 }

@@ -4,7 +4,7 @@
   "name": "vczapi/show-live-meeting",
   "version": "0.1.0",
   "title": "Direct Meeting or Webinar",
-  "category": "widgets",
+  "category": "vczapi-blocks",
   "icon": "sticky",
   "description": "Show a Meeting/Webinar details - direct from Zoom",
   "example": {},

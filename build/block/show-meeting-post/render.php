@@ -1,8 +1,22 @@
-<?php
-/**
- * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
- */
-?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Embed Zoom Post – hello from a dynamic block!', 'show-meeting-post' ); ?>
-</p>
+<div <?php echo get_block_wrapper_attributes(); ?>>
+	<?php
+	$shortcode = 'zoom_meeting_post';
+	if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
+		$shortcode .= ' post_id="' . $attributes['postID'] . '"';
+	}
+
+	if ( isset( $attributes['template'] ) && ! empty( $attributes['template'] ) ) {
+		$shortcode .= ' template="' . $attributes['template'] . '"';
+	}
+
+	$description = $attributes['description'] ? "true" : "false";
+	$shortcode   .= ' description="' . $description . '"';
+
+	$countdown = $attributes['countdown'] ? "true" : "false";
+	$shortcode .= ' countdown="' . $countdown . '"';
+
+	$details   = $attributes['details'] ? "true" : "false";
+	$shortcode .= ' details="' . $details . '"';
+	echo do_shortcode( '[' . $shortcode . ']' );
+	?>
+</div>

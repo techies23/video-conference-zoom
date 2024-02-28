@@ -5,11 +5,9 @@ namespace Codemanas\VczApi\Blocks;
 use function Composer\Autoload\includeFile;
 
 /**
- * Class Blocks
+ * The instance of the Blocks class.
  *
- * @package Codemanas\VczApi\Blocks
- * @since   3.7.5
- * @updated N/A
+ * @var Blocks|null
  */
 class Blocks {
 
@@ -33,55 +31,11 @@ class Blocks {
 			add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
 		}
 		if ( function_exists( 'register_block_type' ) ) {
-			//add_action( 'init', [ $this, 'register_scripts' ] );
 			add_action( 'init', [ $this, 'register_blocks' ] );
 		}
 
 		add_action( 'wp_ajax_vczapi_get_zoom_hosts', [ $this, 'get_hosts' ] );
 		add_action( 'wp_ajax_vczapi_get_live_meetings', [ $this, 'get_live_meetings' ] );
-	}
-
-	/**
-	 * Register necessary scripts
-	 *
-	 * @since   3.7.5
-	 * @updated N/A
-	 */
-	public function register_scripts() {
-		$script_asset_path = require_once( ZVC_PLUGIN_DIR_PATH . '/build/index.asset.php' );
-		$dependencies      = $script_asset_path['dependencies'];
-		//Plugin Scripts
-		wp_register_style( 'video-conferencing-with-zoom-api-blocks',
-			ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.css',
-			false,
-			ZVC_PLUGIN_VERSION );
-		//print(ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.css'); die;
-
-		wp_register_style(
-			'vczapi-blocks-style',
-			plugins_url( '/build/index.css', ZVC_PLUGIN_FILE ),
-			[ 'video-conferencing-with-zoom-api-blocks' ],
-			$script_asset_path['version']
-		);
-
-		wp_register_script(
-			'vczapi-blocks',
-			plugins_url( '/build/index.js', ZVC_PLUGIN_FILE ),
-			$dependencies,
-			$script_asset_path['version']
-		);
-
-		wp_localize_script( 'vczapi-blocks',
-			'vczapi_blocks',
-			[
-				'list_meetings_preview'            => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-meetings-webinars.png',
-				'direct_meeting_preview_image'     => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/direct-meeting.jpg',
-				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
-				'embed_post_preview'               => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/embed_post_preview.png',
-				'join_via_browser'                 => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/join-via-browser.png',
-				'single_zoom_meeting_page'         => ZVC_PLUGIN_IMAGES_PATH . '/skeleton.png'
-			]
-		);
 	}
 
 	/**
@@ -109,10 +63,13 @@ class Blocks {
 	}
 
 	/**
-	 * Registering blocks
+	 * Registers all available blocks for the plugin.
 	 *
-	 * @since   3.7.5
-	 * @updated N/A
+	 * This method is responsible for registering all the blocks available in the plugin.
+	 * It uses the `register_block_type` function provided by WordPress to register each block.
+	 * The path of each block's build directory is constructed using the `ZVC_PLUGIN_DIR_PATH` constant.
+	 *
+	 * @return void
 	 */
 	public function register_blocks() {
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/join-via-browser' );
@@ -120,6 +77,7 @@ class Blocks {
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-meetings' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/recordings' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/show-live-meeting' );
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/show-meeting-post' );
 	}
 
 	public function legacy(  ) {
@@ -189,10 +147,16 @@ class Blocks {
 	}
 
 	/**
-	 * Get All host helper
+	 * Gets the hosts for the video conferencing session.
 	 *
-	 * @since   3.7.5
-	 * @updated N/A
+	 * This method retrieves the hosts from the user transients stored in the database.
+	 * It filters the hosts based on the host name provided as a query parameter.
+	 * If a host name is provided, only hosts whose username includes the host name will be included.
+	 * If no host name is provided, all hosts will be included.
+	 * If no hosts are found based on the host name, it searches for a user with the specified email address and adds them as a host if found.
+	 * The hosts are returned as an array of label-value pairs, where the label is the host's username and the value is the host's ID.
+	 *
+	 * @return void
 	 */
 	public function get_hosts() {
 		$host_name = filter_input( INPUT_GET, 'host' );
@@ -232,10 +196,24 @@ class Blocks {
 	}
 
 	/**
-	 * Get all live meetings helper
+	 * Retrieves live meetings or webinars based on host ID and show type.
 	 *
-	 * @since   3.7.5
-	 * @updated N/A
+	 * This method retrieves live meetings or webinars based on the provided host ID and show type.
+	 * It uses the `filter_input` function to get the host ID, show type, and page number from the input.
+	 * It sets the `page_size` argument to 300 by default.
+	 * If a page number is provided, it adds it to the arguments.
+	 * If the host ID is empty, it sends a JSON response with `false`.
+	 * It then calls the `listWebinar` or `listMeetings` method from the `zoom_conference` object based on the show type.
+	 * If an error occurred while retrieving the meetings or webinars, it sends a JSON response with the error message.
+	 * Otherwise, it decodes the retrieved meetings or webinars.
+	 * If the show type is 'webinar', it sets the `$meetings_or_webinars` variable to the webinars array if it exists, otherwise an empty array.
+	 * If the show type is 'meeting', it sets the `$meetings_or_webinars` variable to the meetings array if it exists, otherwise an empty array.
+	 * It then creates an empty array `$data` and an empty array `$formatted_meetings`.
+	 * If there are meetings or webinars, it sets the `$data` array with the page size and total records from the decoded meetings or webinars.
+	 * It also loops through each meeting or webinar and adds an array with 'label' and 'value' keys to the `$formatted_meetings` array.
+	 * Finally, it sets the `$data` array with the `$formatted_meetings` array and sends a JSON response with the `$data` array.
+	 *
+	 * @return void
 	 */
 	public function get_live_meetings() {
 		$host_id                 = filter_input( INPUT_GET, 'host_id' );
@@ -281,40 +259,5 @@ class Blocks {
 			$data['formatted_meetings'] = $formatted_meetings;
 		}
 		wp_send_json( $data );
-	}
-
-	/**
-	 * Render just the post
-	 *
-	 * @param $attributes
-	 *
-	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
-	 */
-	public function render_meeting_post( $attributes ) {
-		$shortcode = 'zoom_meeting_post';
-		if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
-			$shortcode .= ' post_id="' . $attributes['postID'] . '"';
-		}
-
-		if ( isset( $attributes['template'] ) && ! empty( $attributes['template'] ) ) {
-			$shortcode .= ' template="' . $attributes['template'] . '"';
-		}
-
-		$description = $attributes['description'] ? "true" : "false";
-		$shortcode   .= ' description="' . $description . '"';
-
-		$countdown = $attributes['countdown'] ? "true" : "false";
-		$shortcode .= ' countdown="' . $countdown . '"';
-
-		$details   = $attributes['details'] ? "true" : "false";
-		$shortcode .= ' details="' . $details . '"';
-
-		ob_start();
-		echo do_shortcode( '[' . $shortcode . ']' );
-
-		return ob_get_clean();
 	}
 }
