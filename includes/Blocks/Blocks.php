@@ -78,72 +78,7 @@ class Blocks {
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/recordings' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/show-live-meeting' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/show-meeting-post' );
-	}
-
-	public function legacy(  ) {
-		register_block_type( 'vczapi/show-meeting-post', [
-			"title"           => "Embed Zoom Post",
-			"attributes"      => [
-				"preview"     => [
-					"type"    => "boolean",
-					"default" => false
-				],
-				"postID"      => [
-					"type"    => "number",
-					"default" => 0
-				],
-				"template"    => [
-					"type"    => "string",
-					"default" => "none"
-				],
-				"description" => [
-					"type"    => "boolean",
-					"default" => true
-				],
-				"countdown"   => [
-					"type"    => "boolean",
-					"default" => true
-				],
-				"details"     => [
-					"type"    => "boolean",
-					"default" => true
-				]
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "embed-post",
-			"description"     => "Show a Meeting Post with Countdown",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_meeting_post' ]
-		] );
-		register_block_type( 'vczapi/single-zoom-meeting', [
-			"title"           => "Zoom - Single Meeting Page",
-			"category"        => "vczapi-blocks",
-			"icon"            => "dashicons-text-page",
-			"description"     => "Single Zoom Meeting Page",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_single_meeting' ]
-		] );
-	}
-
-	/**
-	 * Render block template from here
-	 *
-	 * @return false|string|void
-	 */
-	public function render_single_meeting() {
-		global $post;
-		if ( ! empty( $post ) && $post->post_type == 'zoom-meetings' ) {
-			$template = vczapi_get_single_or_zoom_template( $post );
-
-			ob_start();
-			include $template;
-
-			return ob_get_clean();
-		}
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/single-zoom-meeting' );
 	}
 
 	/**
