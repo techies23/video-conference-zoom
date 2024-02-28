@@ -117,7 +117,10 @@ class Blocks {
 	public function register_blocks() {
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/join-via-browser' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-host-meetings' );
-		return;
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-meetings' );
+	}
+
+	public function legacy(  ) {
 		register_block_type( 'vczapi/list-meetings', [
 			"title"           => "List Zoom Meetings",
 			"attributes"      => [
@@ -163,7 +166,7 @@ class Blocks {
 				]
 			],
 			"category"        => "vczapi-blocks",
-			"icon"            => "list-view ",
+			"icon"            => "list-view",
 			"description"     => "List Upcoming or Past Meetings/Webinars",
 			"textdomain"      => "video-conferencing-with-zoom-api",
 			'editor_script'   => 'vczapi-blocks',
@@ -394,64 +397,6 @@ class Blocks {
 			$data['formatted_meetings'] = $formatted_meetings;
 		}
 		wp_send_json( $data );
-	}
-
-	/**
-	 * Render list of meetings
-	 *
-	 * @param $attributes
-	 *
-	 * @return string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
-	 */
-	public function render_list_meetings( $attributes ): string {
-		$shortcode = isset( $attributes['shortcodeType'] ) && ( $attributes['shortcodeType'] == 'webinar' ) ? 'zoom_list_webinars' : 'zoom_list_meetings';
-
-		if ( isset( $attributes['postsToShow'] ) && ! empty( $attributes['postsToShow'] ) ) {
-			$shortcode .= ' per_page="' . $attributes['postsToShow'] . '"';
-		}
-
-		if ( isset( $attributes['orderBy'] ) && ! empty( $attributes['orderBy'] ) ) {
-			$shortcode .= ' order="' . $attributes['orderBy'] . '"';
-		}
-
-		if ( isset( $attributes['showFilter'] ) && ! empty( $attributes['showFilter'] ) ) {
-			$shortcode .= ' filter="' . $attributes['showFilter'] . '"';
-		}
-
-		if ( isset( $attributes['selectedCategory'] ) && is_array( $attributes['selectedCategory'] ) && ! empty( $attributes['selectedCategory'] ) ) {
-			$categories_string = '';
-			$category_count    = count( $attributes['selectedCategory'] );
-			$separator         = ( $category_count > 1 ) ? ',' : '';
-			foreach ( $attributes['selectedCategory'] as $index => $category ) {
-				if ( $category['value'] == '' ) {
-					continue;
-				}
-				$separator         = ( $index + 1 ) ? $separator : '';
-				$categories_string .= $category['value'] . $separator;
-			}
-			unset( $separator );
-
-			if ( ! empty( $categories_string ) ) {
-				$shortcode .= ' category="' . $categories_string . '"';
-			}
-		}
-
-		if ( isset( $attributes['selectedAuthor'] ) && ! empty( $attributes['selectedAuthor'] ) ) {
-			$shortcode .= ' author="' . $attributes['selectedAuthor'] . '"';
-		}
-
-		if ( isset( $attributes['displayType'] ) && ! empty( $attributes['displayType'] ) ) {
-			$shortcode .= ' type="' . $attributes['displayType'] . '"';
-		}
-
-		if ( isset( $attributes['columns'] ) && ! empty( $attributes['columns'] ) ) {
-			$shortcode .= ' cols="' . $attributes['columns'] . '"';
-		}
-
-		return do_shortcode( '[' . $shortcode . ']' );
 	}
 
 	/**
