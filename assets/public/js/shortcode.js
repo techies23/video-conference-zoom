@@ -159,7 +159,8 @@ var __webpack_exports__ = {};
         });
       }
       if ($(this.$recordingsDatePicker).length > 0) {
-        this.$recordingsDatePicker.datepicker({
+        console.log('Codemanas', this.$recordingsDatePicker);
+        let datePicker = this.$recordingsDatePicker.datepicker({
           changeMonth: true,
           changeYear: true,
           showButtonPanel: true,
@@ -181,6 +182,7 @@ var __webpack_exports__ = {};
             thisCalendar.datepicker('setDate', new Date(year, month, 1));
           });
         });
+        console.log('DatePicker', datePicker);
       }
     },
     closeModal: function (e) {

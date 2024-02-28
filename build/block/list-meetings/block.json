@@ -7,7 +7,11 @@
   "category": "vczapi-blocks",
   "icon": "list-view",
   "description": "List Upcoming or Past Meetings/Webinars",
-  "example": {},
+  "example": {
+    "attributes": {
+      "preview": true
+    }
+  },
   "attributes": {
     "preview": {
       "type": "boolean",

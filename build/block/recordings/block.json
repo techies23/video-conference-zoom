@@ -7,7 +7,6 @@
   "category": "vczapi-blocks",
   "icon": "playlist-video",
   "description": "Show a Meeting/Webinar details - direct from Zoom",
-  "example": {},
   "supports": {
     "html": false,
     "color": {
@@ -21,6 +20,7 @@
       "margin": true
     }
   },
+  "example": {},
   "attributes": {
     "shouldShow": {
       "type": "object",
@@ -46,8 +46,16 @@
   },
   "textdomain": "video-conferencing-with-zoom-api",
   "editorScript": "file:./index.js",
+  "style": [
+    "jquery-ui-datepicker-zvc",
+    "video-conferencing-with-zoom-api-datable-responsive"
+  ],
   "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
   "render": "file:./render.php",
-  "viewScript": "file:./view.js"
+  "viewScript": [
+    "jquery-ui-datepicker",
+    "video-conferencing-with-zoom-api-datable-responsive-js",
+    "video-conferencing-with-zoom-api-datable-dt-responsive-js",
+    "video-conferencing-with-zoom-api-shortcode-js"
+  ]
 }

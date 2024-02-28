@@ -1,71 +1,75 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "vczapi/list-meetings",
-	"version": "1.0.0",
-	"title": "List Zoom Meetings",
-	"category": "vczapi-blocks",
-	"icon": "list-view",
-	"description": "List Upcoming or Past Meetings/Webinars",
-	"example": {},
-	"attributes": {
-		"preview": {
-			"type": "boolean",
-			"default": false
-		},
-		"shortcodeType": {
-			"type": "string",
-			"default": "meeting"
-		},
-		"showPastMeeting": {
-			"type": "boolean",
-			"default": false
-		},
-		"showFilter": {
-			"type": "string",
-			"default": "yes"
-		},
-		"postsToShow": {
-			"type": "number",
-			"default": 5
-		},
-		"orderBy": {
-			"type": "string",
-			"default": ""
-		},
-		"selectedCategory": {
-			"type": "array",
-			"default": []
-		},
-		"selectedAuthor": {
-			"type": "number",
-			"default": 0
-		},
-		"displayType": {
-			"type": "string",
-			"default": ""
-		},
-		"columns": {
-			"type": "number",
-			"default": 3
-		}
-	},
-	"supports": {
-		"html": false,
-		"color": {
-			"background": true,
-			"gradients": true,
-			"text": true,
-			"link": true
-		},
-		"spacing": {
-			"padding": true,
-			"margin": true
-		}
-	},
-	"textdomain": "list-meetings",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"render": "file:./render.php",
-	"viewScript": "file:./view.js"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vczapi/list-meetings",
+  "version": "1.0.0",
+  "title": "List Zoom Meetings",
+  "category": "vczapi-blocks",
+  "icon": "list-view",
+  "description": "List Upcoming or Past Meetings/Webinars",
+  "example": {
+    "attributes": {
+      "preview": true
+    }
+  },
+  "attributes": {
+    "preview": {
+      "type": "boolean",
+      "default": false
+    },
+    "shortcodeType": {
+      "type": "string",
+      "default": "meeting"
+    },
+    "showPastMeeting": {
+      "type": "boolean",
+      "default": false
+    },
+    "showFilter": {
+      "type": "string",
+      "default": "yes"
+    },
+    "postsToShow": {
+      "type": "number",
+      "default": 5
+    },
+    "orderBy": {
+      "type": "string",
+      "default": ""
+    },
+    "selectedCategory": {
+      "type": "array",
+      "default": []
+    },
+    "selectedAuthor": {
+      "type": "number",
+      "default": 0
+    },
+    "displayType": {
+      "type": "string",
+      "default": ""
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true,
+      "link": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
+  },
+  "textdomain": "list-meetings",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
 }
