@@ -9,12 +9,43 @@
 	"description": "Show a Meeting/Webinar details - direct from Zoom",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"color": {
+			"background": true,
+			"gradients": true,
+			"text": true,
+			"link": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		}
+	},
+	"attributes": {
+		"preview": {
+			"type": "boolean",
+			"default": false
+		},
+		"shouldShow": {
+			"type": "object",
+			"default": {
+				"label": "Meeting",
+				"value": "meeting"
+			}
+		},
+		"host": {
+			"type": "object"
+		},
+		"selectedMeeting": {
+			"type": "object"
+		},
+		"link_only": {
+			"type": "string",
+			"default": "no"
+		}
 	},
 	"textdomain": "show-live-meeting",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"render": "file:./render.php",
-	"viewScript": "file:./view.js"
+	"render": "file:./render.php"
 }

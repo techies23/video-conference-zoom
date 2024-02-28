@@ -119,61 +119,10 @@ class Blocks {
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-host-meetings' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-meetings' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/recordings' );
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/show-live-meeting' );
 	}
 
 	public function legacy(  ) {
-		register_block_type( 'vczapi/list-meetings', [
-			"title"           => "List Zoom Meetings",
-			"attributes"      => [
-				'preview'          => [
-					'type'    => 'boolean',
-					'default' => false
-				],
-				"shortcodeType"    => [
-					"type"    => "string",
-					"default" => "meeting"
-				],
-				"showPastMeeting"  => [
-					"type"    => "boolean",
-					"default" => false
-				],
-				"showFilter"       => [
-					"type"    => "string",
-					"default" => "yes",
-				],
-				"postsToShow"      => [
-					"type"    => "number",
-					"default" => 5
-				],
-				"orderBy"          => [
-					"type"    => "string",
-					"default" => ""
-				],
-				"selectedCategory" => [
-					"type"    => "array",
-					"default" => []
-				],
-				"selectedAuthor"   => [
-					"type"    => "number",
-					"default" => 0
-				],
-				"displayType"      => [
-					"type"    => "string",
-					"default" => ""
-				],
-				"columns"          => [
-					"type"    => "number",
-					"default" => 3
-				]
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "list-view",
-			"description"     => "List Upcoming or Past Meetings/Webinars",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_list_meetings' ]
-		] );
 		register_block_type( 'vczapi/show-meeting-post', [
 			"title"           => "Embed Zoom Post",
 			"attributes"      => [
@@ -209,39 +158,6 @@ class Blocks {
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_meeting_post' ]
-		] );
-		register_block_type( 'vczapi/show-live-meeting', [
-			"title"           => "Direct Meeting or Webinar",
-			"attributes"      => [
-				"preview"         => [
-					"type"    => "boolean",
-					"default" => false
-				],
-				"shouldShow"      => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
-					]
-				],
-				"host"            => [
-					"type" => "object",
-				],
-				"selectedMeeting" => [
-					"type" => "object",
-				],
-				"link_only"       => [
-					"type"    => "string",
-					"default" => "no"
-				]
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "sticky",
-			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_live_meeting' ]
 		] );
 		register_block_type( 'vczapi/single-zoom-meeting', [
 			"title"           => "Zoom - Single Meeting Page",
@@ -397,33 +313,6 @@ class Blocks {
 		$shortcode .= ' details="' . $details . '"';
 
 		ob_start();
-		echo do_shortcode( '[' . $shortcode . ']' );
-
-		return ob_get_clean();
-	}
-
-	/**
-	 * Render directly from API
-	 *
-	 * @param $attributes
-	 *
-	 * @return false|string
-	 */
-	public function render_live_meeting( $attributes ) {
-		ob_start();
-		$shortcode = ( $attributes['shouldShow']['value'] == 'webinar' ) ? 'zoom_api_webinar' : 'zoom_api_link';
-
-
-		if ( isset( $attributes['selectedMeeting'] ) && ! empty( 'selectedMeeting' ) ) {
-			$shortcode .= ( $attributes['shouldShow']['value'] == 'webinar' )
-				?
-				' webinar_id="' . $attributes['selectedMeeting']['value'] . '"'
-				:
-				' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
-		}
-		if ( isset( $attributes['link_only'] ) && ! empty( 'link_only' ) ) {
-			$shortcode .= ' link_only="' . $attributes['link_only'] . '"';
-		}
 		echo do_shortcode( '[' . $shortcode . ']' );
 
 		return ob_get_clean();

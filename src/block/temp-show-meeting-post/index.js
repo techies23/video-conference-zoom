@@ -6,7 +6,7 @@ import Edit from "./edit";
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'vczapi/list-meetings', {
+registerBlockType('vczapi/show-meeting-post', {
     /**
      * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
      */
@@ -18,9 +18,7 @@ registerBlockType( 'vczapi/list-meetings', {
     edit: Edit,
     example: {
         attributes: {
-            preview : true,
-            columns: 2,
-            postsToShow: 2
-        },
-    },
-} );
+            preview: true
+        }
+    }
+});

@@ -21,5 +21,5 @@
  */
  
 /* eslint-disable no-console */
-console.log("Hello World! (from vczapi-show-live-meeting block)");
+console.log("Hello World! (from vczapi-show-meeting-post block)");
 /* eslint-enable no-console */
