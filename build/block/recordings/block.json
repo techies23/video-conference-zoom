@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vczapi/recordings",
+  "version": "1.0.0",
+  "title": "Zoom - Show Recordings",
+  "category": "vczapi-blocks",
+  "icon": "playlist-video",
+  "description": "Show a Meeting/Webinar details - direct from Zoom",
+  "example": {},
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "text": true,
+      "link": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
+  },
+  "attributes": {
+    "shouldShow": {
+      "type": "object",
+      "default": {
+        "label": "Meeting",
+        "value": "meeting"
+      }
+    },
+    "showBy": {
+      "type": "string",
+      "default": "host"
+    },
+    "host": {
+      "type": "object"
+    },
+    "selectedMeeting": {
+      "type": "object"
+    },
+    "downloadable": {
+      "type": "string",
+      "default": "no"
+    }
+  },
+  "textdomain": "video-conferencing-with-zoom-api",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

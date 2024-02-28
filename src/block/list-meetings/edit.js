@@ -1,3 +1,4 @@
+import './editor.scss';
 import {__} from '@wordpress/i18n';
 import {isEqual, unionBy, intersectionWith, debounce} from 'lodash';
 import {addQueryArgs} from "@wordpress/url";

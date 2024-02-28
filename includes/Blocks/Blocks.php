@@ -118,6 +118,7 @@ class Blocks {
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/join-via-browser' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-host-meetings' );
 		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/list-meetings' );
+		register_block_type(ZVC_PLUGIN_DIR_PATH . 'build/block/recordings' );
 	}
 
 	public function legacy(  ) {
@@ -241,39 +242,6 @@ class Blocks {
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_live_meeting' ]
-		] );
-		register_block_type( 'vczapi/recordings', [
-			"title"           => "Zoom - Show Recordings",
-			"attributes"      => [
-				"shouldShow"      => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
-					]
-				],
-				"showBy"          => [
-					"type"    => "string",
-					"default" => "host"
-				],
-				"host"            => [
-					"type" => "object",
-				],
-				"selectedMeeting" => [
-					"type" => "object",
-				],
-				"downloadable"    => [
-					"type"    => "string",
-					"default" => "no"
-				]
-			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "playlist-video",
-			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
-			"textdomain"      => "video-conferencing-with-zoom-api",
-			'editor_script'   => 'vczapi-blocks',
-			'editor_style'    => 'vczapi-blocks-style',
-			'render_callback' => [ $this, 'render_recordings' ]
 		] );
 		register_block_type( 'vczapi/single-zoom-meeting', [
 			"title"           => "Zoom - Single Meeting Page",
@@ -456,75 +424,6 @@ class Blocks {
 		if ( isset( $attributes['link_only'] ) && ! empty( 'link_only' ) ) {
 			$shortcode .= ' link_only="' . $attributes['link_only'] . '"';
 		}
-		echo do_shortcode( '[' . $shortcode . ']' );
-
-		return ob_get_clean();
-	}
-
-	/**
-	 * Embed join via browser
-	 *
-	 * @param $attributes
-	 *
-	 * @return string
-	 */
-	public function render_join_via_browser( $attributes ): string {
-		$shortcode_args = '';
-		if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
-			$shortcode_args .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
-		}
-		if ( isset( $attributes['login_required'] ) && ! empty( $attributes['login_required'] ) ) {
-			$shortcode_args .= ' login_required="' . $attributes['login_required'] . '"';
-		}
-		if ( isset( $attributes['disable_countdown'] ) && ! empty( $attributes['disable_countdown'] ) ) {
-			$shortcode_args .= ' disable_countdown="' . $attributes['disable_countdown'] . '"';
-		}
-		if ( isset( $attributes['passcode'] ) && ! empty( $attributes['passcode'] ) ) {
-			$shortcode_args .= ' passcode="' . $attributes['passcode'] . '"';
-		}
-		if ( ! empty( $attributes['shouldShow'] ) && ! empty( $attributes['shouldShow']['value'] ) && $attributes['shouldShow']['value'] == "webinar" ) {
-			$shortcode_args .= ' webinar="yes"';
-		}
-
-		ob_start();
-
-		#dump($shortcode_args);
-		echo do_shortcode( '[zoom_join_via_browser iframe="no" ' . $shortcode_args . ']' );
-
-		return ob_get_clean();
-	}
-
-	/**
-	 * Render Recordings
-	 *
-	 * @param $attributes
-	 *
-	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
-	 */
-	public function render_recordings( $attributes ) {
-		ob_start();
-		$shortcode = '';
-		if ( isset( $attributes['showBy'] ) && ! empty( $attributes['showBy'] ) ) {
-			$shortcode = ( $attributes['showBy'] == 'host' ) ? 'zoom_recordings' : 'zoom_recordings_by_meeting';
-			if ( $attributes['showBy'] == 'host' ) {
-				if ( isset( $attributes['host']['value'] ) && ! empty( $attributes['host']['value'] ) ) {
-					$shortcode .= ' host_id="' . $attributes['host']['value'] . '"';
-				}
-			} else {
-				if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
-					$shortcode .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
-				}
-			}
-		}
-		if ( isset( $attributes['downloadable'] ) && ! empty( $attributes['downloadable'] ) ) {
-			$maybe     = $attributes['downloadable'] == 'true' ? 'yes' : 'no';
-			$shortcode .= ' downloadable="' . $maybe . '"';
-		}
-
-		//print_r( $shortcode );
 		echo do_shortcode( '[' . $shortcode . ']' );
 
 		return ob_get_clean();

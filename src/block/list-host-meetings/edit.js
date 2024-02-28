@@ -1,14 +1,9 @@
+import './editor.scss';
 import ServerSideRender from "@wordpress/server-side-render";
 import {BlockControls, useBlockProps} from "@wordpress/block-editor";
 import {debounce} from "lodash";
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import {__} from '@wordpress/i18n';
 import {useEffect, useState, useRef} from "@wordpress/element";
-
 import Select from "react-select";
 import AsyncSelect from 'react-select/async';
 import {Placeholder, ToolbarGroup, ToolbarButton, Button} from "@wordpress/components";
