@@ -15,8 +15,28 @@ import {
 } from '@wordpress/components'
 import joinViaBrowserImg from './join-via-browser.png'
 
+const getHosts = (input) => {
+    return fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + input)
+        .then(response => response.json())
+        .catch(() => [])
+}
+
+const getLiveMeetings = (host_id, shouldShow, additional_args = {}) => {
+    if (host_id === 'undefined' || host_id === '') return []
+
+    let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' + host_id + '&show=' + shouldShow.value
+
+    if (additional_args.hasOwnProperty('page_number') && additional_args.page_number !== 'undefined') {
+        queryUrl += '&page_number=' + additional_args.page_number
+    }
+
+    return fetch(queryUrl)
+        .then(response => response.json())
+        .catch(() => [])
+}
+
 export default function EditJoinViaBrowser(props) {
-    const { attributes, setAttributes} = props
+    const {attributes, setAttributes} = props
     const {
         host,
         selectedMeeting,
@@ -36,36 +56,19 @@ export default function EditJoinViaBrowser(props) {
     const [currentPage, setCurrentPage] = useState(1)
     const [isLoadingMeetings, setIsLoadingMeetings] = useState(false)
     const get_hosts = (input, callback) => {
-        fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + input).then(
-            response => response.json(),
-        ).then(
-            result => {
+        setIsLoadingMeetings(true)
+        getHosts(input)
+            .then(result => {
                 callback(result)
-            },
-        ).catch(
-            () => {
-                callback([])
-            },
-        )
+                setIsLoadingMeetings(false)
+            });
     }
     const get_live_meetings = (host_id, shouldShow, additional_args = {}) => {
-        if (host_id === 'undefined' || host_id === '')
-            return []
-        let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' +
-            host_id + '&show=' + shouldShow.value
-
-        if (additional_args.hasOwnProperty('page_number') &&
-            additional_args.page_number !== 'undefined') {
-            queryUrl += '&page_number=' + additional_args.page_number
-        }
         setIsLoadingMeetings(true)
-        fetch(queryUrl).then(
-            response => response.json(),
-        ).then(
-            result => {
+        getLiveMeetings(host_id, shouldShow, additional_args)
+            .then(result => {
                 if (isMounted.current) {
-                    let returnedPages = parseFloat(result.total_records) /
-                        parseFloat(result.page_size)
+                    let returnedPages = parseFloat(result.total_records) / parseFloat(result.page_size)
                     if (returnedPages > 1) {
                         let pagination_count = Math.round(returnedPages)
                         setNumberOfPages(pagination_count)
@@ -75,8 +78,7 @@ export default function EditJoinViaBrowser(props) {
                     setAvailableMeetings(result.formatted_meetings)
                     setIsLoadingMeetings(false)
                 }
-            },
-        )
+            });
     }
     const PaginateLinks = ({numberOfPages}) => {
         let pages = []
@@ -138,8 +140,6 @@ export default function EditJoinViaBrowser(props) {
                     />
                 </ToolbarGroup>
             </BlockControls>
-
-
             {(typeof selectedMeeting === 'undefined' || isEditing) &&
                 <Placeholder>
                     <div className="vczapi-label-header">
@@ -291,8 +291,6 @@ export default function EditJoinViaBrowser(props) {
                     </div>
                 </Placeholder>
             }
-
-
             {((typeof selectedMeeting !== 'undefined' &&
                     selectedMeeting.hasOwnProperty('value')) && !isEditing)
                 &&
@@ -311,7 +309,6 @@ export default function EditJoinViaBrowser(props) {
                     />
                 </Disabled>
             }
-
         </div>
     )
 }
