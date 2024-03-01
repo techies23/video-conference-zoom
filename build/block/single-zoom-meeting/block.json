@@ -24,7 +24,9 @@
   "textdomain": "single-zoom-meeting",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
+  "style": [
+    "video-conferencing-with-zoom-api"
+  ],
   "render": "file:./render.php",
   "viewScript": "file:./view.js"
 }

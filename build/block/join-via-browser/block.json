@@ -65,8 +65,13 @@
   },
   "textdomain": "video-conferencing-with-zoom-api",
   "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
+  "editorStyle": [
+    "file:./index.css",
+    "vczapi-blocks__shared-assets"
+  ],
+  "style": [
+    "video-conferencing-with-zoom-api"
+  ],
   "render": "file:./render.php",
   "viewScript": "file:./view.js"
 }

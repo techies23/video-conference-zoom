@@ -48,7 +48,8 @@
   "editorScript": "file:./index.js",
   "style": [
     "jquery-ui-datepicker-zvc",
-    "video-conferencing-with-zoom-api-datable-responsive"
+    "video-conferencing-with-zoom-api-datable-responsive",
+    "video-conferencing-with-zoom-api"
   ],
   "editorStyle": "file:./index.css",
   "render": "file:./render.php",
