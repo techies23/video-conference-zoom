@@ -32,10 +32,15 @@ class Blocks {
 		}
 		if ( function_exists( 'register_block_type' ) ) {
 			add_action( 'init', [ $this, 'register_blocks' ] );
+			add_action('admin_enqueue_scripts',[$this,'register_shared_assets']);
 		}
 
 		add_action( 'wp_ajax_vczapi_get_zoom_hosts', [ $this, 'get_hosts' ] );
 		add_action( 'wp_ajax_vczapi_get_live_meetings', [ $this, 'get_live_meetings' ] );
+	}
+
+	public function register_shared_assets(  ) {
+		wp_enqueue_style('vczapi-blocks__shared-assets', ZVC_PLUGIN_DIR_URL.'assets/shared/style.min.css');
 	}
 
 	/**

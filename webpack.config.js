@@ -66,10 +66,20 @@ const backendConfig = {
   plugins: plugins('./assets/admin/css/style.min.css'),
 }
 
-//Default WP configs
-const wp = defaultConfig
+const sharedConfig = {
+  entry: {
+    shared: './src/shared/index.js',
+  },
+  output: {
+    filename: './assets/shared/[name].min.js',
+    path: path.resolve(__dirname),
+  },
+  module: rules,
+  plugins: plugins('./assets/shared/style.min.css'),
+};
 
-let modules = [wp, publicConfig, backendConfig]
+//Default WP configs
+let modules = [defaultConfig, publicConfig, backendConfig, sharedConfig]
 if (isProduction) {
   let webSDKConfig = {
     cache: false,

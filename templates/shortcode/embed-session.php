@@ -9,8 +9,8 @@
  * @version 3.9.0
  */
 
+use Codemanas\VczApi\Helpers\Date;
 global $zoom;
-
 $meeting_id = ! empty( $zoom ) && ! empty( $zoom->id ) ? $zoom->id : false;
 if ( ! $meeting_id ) {
 	return;
@@ -89,7 +89,7 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
             <div class="vczapi-jvb-countdown-content-description">
                 <h2 class="vczapi-jvb-countdown-content-description-topic"><?php echo $zoom->topic; ?></h2>
 				<?php if ( ! empty( $zoom->start_time ) ) { ?>
-                    <div class="vczapi-jvb-countdown-content-description-time"><strong><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo vczapi_dateConverter( $zoom->start_time, $zoom->timezone, true ); ?></div>
+                    <div class="vczapi-jvb-countdown-content-description-time"><strong><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo Date::dateConverter($zoom->start_time, $zoom->timezone, 'F j, Y g:i a'); ?></div>
 				<?php } ?>
                 <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->timezone; ?></div>
                 <div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $zoom->password; ?></div>
