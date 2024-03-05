@@ -160,7 +160,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 == Changelog ==
 
 = 4.4.5 March 5th, 2024 =
-* Fixed: Escaping for https://zoomdocs.codemanas.com/shortcode/#10-show-recordings-based-on-meeting-id
+* Security Update: Escaping for https://zoomdocs.codemanas.com/shortcode/#10-show-recordings-based-on-meeting-id (Cross-Site Scripting via Shortcode)
 
 = 4.4.4 February 6th, 2024 =
 * Re-Added back download button for recordings shortcode.
