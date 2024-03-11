@@ -538,7 +538,8 @@ function video_conference_zoom_after_jbh_html() {
 	ob_start( 'vczapi_removeWhitespace' );
 
 	global $post;
-	if ( ! empty( $_GET['redirect'] ) ) {
+    //If you need to add other redirect hosts use 'apply_filters( ‘allowed_redirect_hosts’, string[] $hosts, string $host )' filter
+	if ( ! empty( $_GET['redirect'] ) && wp_validate_redirect( $_GET['redirect'] ) ) {
 		$post_link = esc_url( $_GET['redirect'] );
 	} elseif ( ! empty( $post ) && ! empty( $post->ID ) ) {
 		$post_link = get_permalink( $post->ID );
@@ -551,7 +552,8 @@ function video_conference_zoom_after_jbh_html() {
 	$enable_direct_via_browser = \Codemanas\VczApi\Data\Metastore::enabledDirectJoinViaBrowser();
 	$meeting_id                = base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( $_GET['join'] ) );
 	$meeting_pwd               = ! empty( $_GET['pak'] ) ? base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( $_GET['pak'] ) ) : '';
-	$localize                  = array(
+
+	$localize = array(
 		'ajaxurl'                        => admin_url( 'admin-ajax.php' ),
 		'zvc_security'                   => wp_create_nonce( "_nonce_zvc_security" ),
 		'redirect_page'                  => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( $post_link ) ),
