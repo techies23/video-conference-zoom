@@ -191,7 +191,7 @@ class Recordings {
 
 		ob_start();
 		$loading_text = esc_html__( "Loading recordings.. Please wait..", "video-conferencing-with-zoom-api" );
-		echo '<div class="vczapi-recordings-by-meeting-id" data-downloadable="' . $atts['downloadable'] . '" data-meeting="' . $meeting_id . '" data-passcode="' . $atts['passcode'] . '" data-loading="' . $loading_text . '"></div>';
+		echo '<div class="vczapi-recordings-by-meeting-id" data-downloadable="' . esc_attr( $atts['downloadable'] ) . '" data-meeting="' . esc_attr( $meeting_id ) . '" data-passcode="' . esc_attr( $atts['passcode'] ) . '" data-loading="' . esc_attr( $loading_text ) . '"></div>';
 
 		return ob_get_clean();
 	}
