@@ -759,8 +759,12 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			return $template;
 		}
 
+
 		if ( isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
 			$template = vczapi_get_template( 'join-web-browser.php' );
+		} elseif ( wp_is_block_theme() ) {
+			//use default WordPress for archive template otherwise the display gets broken.
+			return $template;
 		} else {
 			$template = vczapi_get_template( 'archive-meetings.php' );
 		}
@@ -805,7 +809,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 
 		//If not on the screen with ID 'edit-post' abort.
 		if ( $screen->id === 'edit-zoom-meetings' || $screen->id === $this->post_type ) {
-			if ( !vczapi_is_zoom_activated() ) {
+			if ( ! vczapi_is_zoom_activated() ) {
 				?>
                 <div id="message" class="notice notice-error is-dismissible">
                     <h3><?php esc_html_e( 'Zoom API Connection is not established yet.', 'video-conferencing-with-zoom-api' ); ?></h3>
