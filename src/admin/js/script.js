@@ -245,7 +245,7 @@ import '../sass/style.scss'
                     serverSide: true,
                     pageLength: 25,
                     ajax: {
-                        url: ajaxurl + '?action=get_assign_host_id'
+                        url: ajaxurl + '?action=get_assign_host_id&security=' + zvc_ajax.zvc_security,
                     },
                     columns: [
                         {data: 'id'},
