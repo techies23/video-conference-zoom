@@ -309,6 +309,8 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * Assign Host ID page
 	 */
 	public function assign_host_id(): void {
+		check_ajax_referer( '_nonce_zvc_security', 'security' );
+
 		$draw   = filter_input( INPUT_GET, 'draw' );
 		$length = filter_input( INPUT_GET, 'length' );
 		$start  = filter_input( INPUT_GET, 'start' );
@@ -338,7 +340,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 				//This is for backwards compatibility before version 4.0.7
 				if ( ! empty( $zoom_users ) && ! empty( $user_zoom_hostid ) && empty( $email_address ) ) {
 					foreach ( $zoom_users as $zoom_usr ) {
-						$selected_host_id = ! empty( $user_zoom_hostid ) && $user_zoom_hostid === $zoom_usr->id ? 'selected="selected"' : false;
+						$selected_host_id = $user_zoom_hostid === $zoom_usr->id ? 'selected="selected"' : false;
 						$full_name        = ! empty( $zoom_usr->first_name ) ? $zoom_usr->first_name . ' ' . $zoom_usr->last_name : $zoom_usr->email;
 						$host_id_field    .= '<option value="' . $zoom_usr->id . '" ' . $selected_host_id . '>' . $full_name . '</option>';
 					}
