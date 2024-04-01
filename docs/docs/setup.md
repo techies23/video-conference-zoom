@@ -56,7 +56,7 @@ In this next step you will need to add **Contact name, Contact email and Company
 
 Scopes are basically added in order to allow permissions to access your Zoom meetings into Video Conferencing Zoom plugin. So, this step is very crucial step and you should properly assign each of the defined scopes properly otherwise **you will get no permission issues when trying to create,delete or access Zoom Meetings from your WordPress site**.
 
-![Scopes Page](img/s2s-oauth/05-01-2024/scopes.png)
+![Scopes Page](img/s2s-oauth/01-04-2024/scopes.png)
 
 See **[Required Scopes section](setup.md/#required-scopes).** in order to add necessary permissions. Come back to this step after you've added all the necessary permissions.
 
@@ -73,39 +73,95 @@ These below are the scopes required from step 4 when setting up the scopes for y
 **Note: Not adding any of the below permissions may result in permission issue error notices when trying to create your meeting/webinars.**
 
 #### Meetings
-* View and manage sub account’s user meetings/meeting:master
-* View all user meetings/meeting:read:admin
-* View and manage all user meetings/meeting:write:admin
+* **View all user meetings**
+    - *View a meeting/meeting:read:meeting:admin*
+    - *View a user's meetings/meeting:read:list_meetings:admin*
+* **View and manage all user meetings**
+    - *Update a meeting/meeting:update:meeting:admin*
+    - *Delete a meeting/meeting:delete:meeting:admin*
+    - *Create a meeting for a user/meeting:write:meeting:admin*
+* **View and manage sub account’s user meetings/meeting:master**
+    - *Create a meeting for a user/meeting:write:meeting:master*
+    - *View a user's meetings/meeting:read:list_meetings:master*
+    - *Delete a meeting/meeting:delete:meeting:master*
+    - *Update a meeting/meeting:update:meeting:master*
+    - *View a meeting/meeting:read:meeting:master*
 
-![App Credentials](img/s2s-oauth/meetings-permissions.png)
+
+![App Credentials](img/s2s-oauth/01-04-2024/meeting-permissions.png)
 
 #### Recordings
-* View and manage sub account’s user recordings/recording:master
-* View all user recordings/recording:read:admin
-* View and manage all user recordings/recording:write:admin
+* **View all user recordings/recording:read:admin**
+    - *Returns all of a meeting's recordings/cloud_recording:read:list_recording_files:admin*
+    - *Lists all cloud recordings for a user/cloud_recording:read:list_recording_files:admin*
+    - *list account recording/cloud_recording:read:list_account_recordings:admin*
 
-![App Credentials](img/s2s-oauth/recording-permissions.png)
+* **View and manage all user recordings/recording:write:admin**
+    - *Recover meeting recordings/cloud_recording:update:recover_meeting_recordings:admin*
+    - *Recover a single recording/cloud_recording:update:recover_single_recording:admin*
+    - *Delete a specific recording file from a meeting/cloud_recording:delete:recording_file:admin*
+    - *Delete all recording files of a meeting/cloud_recording:delete:meeting_recording:admin*
+  
+* **View and manage sub account’s user recordings/recording:master**
+    - *Returns all of a meeting's recordings/cloud_recording:read:list_recording_files:master*
+    - *Lists all cloud recordings for a user/cloud_recording:read:list_user_recordings:master*
+    - *Delete all recording files of a meeting/cloud_recording:delete:meeting_recording:master*
+    - *Delete a specific recording file from a meeting/cloud_recording:delete:recording_file:master*
+  
+* **View your recordings**
+    - *Return a specific meeting instance's archived files/archiving:read:archived_files:admin*
+
+![App Credentials](img/s2s-oauth/01-04-2024/recording-permissions.png)
 
 #### Reports
-* View sub account’s report data/report:master
-* View report data/report:read:admin
-* View your chat history report/report_chat:read:admin
+* **View report data**
+    - *View webinar detail reports/report:read:webinar:admin*
+  
+* **View sub account’s report data**
+    - *View webinar detail reports/report:read:webinar:master*
 
-![App Credentials](img/s2s-oauth/report-permissions.png)
+![App Credentials](img/s2s-oauth/01-04-2024/report-permissions.png)
 
 #### Users
-* View and manage sub account’s user information/user:master
-* View all user information/user:read:admin
-* View users information and manage users/user:write:admin
+* **View all user information**
+    - *View users/user:read:list_users:admin*
+    - *View a user/user:read:user:admin*
+  
+* **View and manage sub account’s user information**
+    - *Update a user/user:update:user:master*
+    - *View a user/user:read:user:master*
+    - *Create a user/user:write:user:master*
+    - *View users/user:read:list_users:master*
+    - *Delete a user/user:delete:user:master*
+  
+* **View users information and manage users**
+    - *Create a user/user:write:user:admin*
+    - *Delete a user/user:delete:user:admin*
+    - *Update a user/ user:update:user:admin*
 
-![App Credentials](img/s2s-oauth/user-permissions.png)
+
+
+![App Credentials](img/s2s-oauth/01-04-2024/user-permissions.png)
 
 #### Webinars
-* View and manage sub account’s user webinars/webinar:master
-* View all user Webinars/webinar:read:admin
-* View and manage all user Webinars/webinar:write:admin
+* **View all user Webinars**
+    - *View a webinar's alert/webinar:read:alert:admin*
+    - *View a user's webinars/webinar:read:list_webinars:admin*
+    - *View a webinar/webinar:read:webinar:admin*
+  
+* **View and manage all user Webinars**
+    - *Delete a webinar/webinar:delete:webinar:admin*
+    - *Update a webinar's status/webinar:update:status:admin*
+    - *Update a webinar/webinar:update:webinar:admin*
+    - *Create invite links for a webinars/webinar:write:invite_links:admin*
+    - *Create a webinar for a user/webinar:write:webinar:admin*
+  
+* **View and manage sub account’s user webinars**
+    - *View a webinar/webinar:read:webinar:master*
+    - *Update a webinar/webinar:update:webinar:master*
+    - *Create a webinar for a user/webinar:write:webinar:master*
 
-![App Credentials](img/s2s-oauth/webinar-permissions.png)
+![App Credentials](img/s2s-oauth/01-04-2024/webinar-permissions.png)
 
 ### Adding Server-to-Server OAuth Credentials to the plugin
 
