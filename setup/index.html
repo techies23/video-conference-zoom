@@ -1388,7 +1388,7 @@
 <p><strong>Ignore "Feature" page</strong> - After you've added details from previous step - Goto <strong>Scopes</strong> page from the left navigation menu and Click on <strong>"Add Scopes"</strong> as highlighted in the screenshot. </p>
 <p><img alt="Scopes Page" src="../img/s2s-oauth/05-01-2024/scope-page.png" /></p>
 <p>Scopes are basically added in order to allow permissions to access your Zoom meetings into Video Conferencing Zoom plugin. So, this step is very crucial step and you should properly assign each of the defined scopes properly otherwise <strong>you will get no permission issues when trying to create,delete or access Zoom Meetings from your WordPress site</strong>.</p>
-<p><img alt="Scopes Page" src="../img/s2s-oauth/05-01-2024/scopes.png" /></p>
+<p><img alt="Scopes Page" src="../img/s2s-oauth/01-04-2024/scopes.png" /></p>
 <p>See <strong><a href="./#required-scopes">Required Scopes section</a>.</strong> in order to add necessary permissions. Come back to this step after you've added all the necessary permissions.</p>
 <h4 id="5-activation">5. Activation</h4>
 <p>Finally, click on <strong>Activate your App</strong> button and your activated.</p>
@@ -1398,39 +1398,138 @@
 <p><strong>Note: Not adding any of the below permissions may result in permission issue error notices when trying to create your meeting/webinars.</strong></p>
 <h4 id="meetings">Meetings</h4>
 <ul>
-<li>View and manage sub account’s user meetings/meeting:master</li>
-<li>View all user meetings/meeting:read:admin</li>
-<li>View and manage all user meetings/meeting:write:admin</li>
+<li><strong>View all user meetings</strong><ul>
+<li><em>View a meeting/meeting:read:meeting:admin</em></li>
+<li><em>View a user's meetings/meeting:read:list_meetings:admin</em></li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/meetings-permissions.png" /></p>
+</li>
+<li><strong>View and manage all user meetings</strong><ul>
+<li><em>Update a meeting/meeting:update:meeting:admin</em></li>
+<li><em>Delete a meeting/meeting:delete:meeting:admin</em></li>
+<li><em>Create a meeting for a user/meeting:write:meeting:admin</em></li>
+</ul>
+</li>
+<li><strong>View and manage sub account’s user meetings/meeting:master</strong><ul>
+<li><em>Create a meeting for a user/meeting:write:meeting:master</em></li>
+<li><em>View a user's meetings/meeting:read:list_meetings:master</em></li>
+<li><em>Delete a meeting/meeting:delete:meeting:master</em></li>
+<li><em>Update a meeting/meeting:update:meeting:master</em></li>
+<li><em>View a meeting/meeting:read:meeting:master</em></li>
+</ul>
+</li>
+</ul>
+<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/meeting-permissions.png" /></p>
 <h4 id="recordings">Recordings</h4>
 <ul>
-<li>View and manage sub account’s user recordings/recording:master</li>
-<li>View all user recordings/recording:read:admin</li>
-<li>View and manage all user recordings/recording:write:admin</li>
+<li>
+<p><strong>View all user recordings/recording:read:admin</strong></p>
+<ul>
+<li><em>Returns all of a meeting's recordings/cloud_recording:read:list_recording_files:admin</em></li>
+<li><em>Lists all cloud recordings for a user/cloud_recording:read:list_recording_files:admin</em></li>
+<li><em>list account recording/cloud_recording:read:list_account_recordings:admin</em></li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/recording-permissions.png" /></p>
+</li>
+<li>
+<p><strong>View and manage all user recordings/recording:write:admin</strong></p>
+<ul>
+<li><em>Recover meeting recordings/cloud_recording:update:recover_meeting_recordings:admin</em></li>
+<li><em>Recover a single recording/cloud_recording:update:recover_single_recording:admin</em></li>
+<li><em>Delete a specific recording file from a meeting/cloud_recording:delete:recording_file:admin</em></li>
+<li><em>Delete all recording files of a meeting/cloud_recording:delete:meeting_recording:admin</em></li>
+</ul>
+</li>
+<li>
+<p><strong>View and manage sub account’s user recordings/recording:master</strong></p>
+<ul>
+<li><em>Returns all of a meeting's recordings/cloud_recording:read:list_recording_files:master</em></li>
+<li><em>Lists all cloud recordings for a user/cloud_recording:read:list_user_recordings:master</em></li>
+<li><em>Delete all recording files of a meeting/cloud_recording:delete:meeting_recording:master</em></li>
+<li><em>Delete a specific recording file from a meeting/cloud_recording:delete:recording_file:master</em></li>
+</ul>
+</li>
+<li>
+<p><strong>View your recordings</strong></p>
+<ul>
+<li><em>Return a specific meeting instance's archived files/archiving:read:archived_files:admin</em></li>
+</ul>
+</li>
+</ul>
+<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/recording-permissions.png" /></p>
 <h4 id="reports">Reports</h4>
 <ul>
-<li>View sub account’s report data/report:master</li>
-<li>View report data/report:read:admin</li>
-<li>View your chat history report/report_chat:read:admin</li>
+<li>
+<p><strong>View report data</strong></p>
+<ul>
+<li><em>View webinar detail reports/report:read:webinar:admin</em></li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/report-permissions.png" /></p>
+</li>
+<li>
+<p><strong>View sub account’s report data</strong></p>
+<ul>
+<li><em>View webinar detail reports/report:read:webinar:master</em></li>
+</ul>
+</li>
+</ul>
+<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/report-permissions.png" /></p>
 <h4 id="users">Users</h4>
 <ul>
-<li>View and manage sub account’s user information/user:master</li>
-<li>View all user information/user:read:admin</li>
-<li>View users information and manage users/user:write:admin</li>
+<li>
+<p><strong>View all user information</strong></p>
+<ul>
+<li><em>View users/user:read:list_users:admin</em></li>
+<li><em>View a user/user:read:user:admin</em></li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/user-permissions.png" /></p>
+</li>
+<li>
+<p><strong>View and manage sub account’s user information</strong></p>
+<ul>
+<li><em>Update a user/user:update:user:master</em></li>
+<li><em>View a user/user:read:user:master</em></li>
+<li><em>Create a user/user:write:user:master</em></li>
+<li><em>View users/user:read:list_users:master</em></li>
+<li><em>Delete a user/user:delete:user:master</em></li>
+</ul>
+</li>
+<li>
+<p><strong>View users information and manage users</strong></p>
+<ul>
+<li><em>Create a user/user:write:user:admin</em></li>
+<li><em>Delete a user/user:delete:user:admin</em></li>
+<li><em>Update a user/ user:update:user:admin</em></li>
+</ul>
+</li>
+</ul>
+<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/user-permissions.png" /></p>
 <h4 id="webinars">Webinars</h4>
 <ul>
-<li>View and manage sub account’s user webinars/webinar:master</li>
-<li>View all user Webinars/webinar:read:admin</li>
-<li>View and manage all user Webinars/webinar:write:admin</li>
+<li>
+<p><strong>View all user Webinars</strong></p>
+<ul>
+<li><em>View a webinar's alert/webinar:read:alert:admin</em></li>
+<li><em>View a user's webinars/webinar:read:list_webinars:admin</em></li>
+<li><em>View a webinar/webinar:read:webinar:admin</em></li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/webinar-permissions.png" /></p>
+</li>
+<li>
+<p><strong>View and manage all user Webinars</strong></p>
+<ul>
+<li><em>Delete a webinar/webinar:delete:webinar:admin</em></li>
+<li><em>Update a webinar's status/webinar:update:status:admin</em></li>
+<li><em>Update a webinar/webinar:update:webinar:admin</em></li>
+<li><em>Create invite links for a webinars/webinar:write:invite_links:admin</em></li>
+<li><em>Create a webinar for a user/webinar:write:webinar:admin</em></li>
+</ul>
+</li>
+<li>
+<p><strong>View and manage sub account’s user webinars</strong></p>
+<ul>
+<li><em>View a webinar/webinar:read:webinar:master</em></li>
+<li><em>Update a webinar/webinar:update:webinar:master</em></li>
+<li><em>Create a webinar for a user/webinar:write:webinar:master</em></li>
+</ul>
+</li>
+</ul>
+<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/webinar-permissions.png" /></p>
 <h3 id="adding-server-to-server-oauth-credentials-to-the-plugin">Adding Server-to-Server OAuth Credentials to the plugin</h3>
 <p>Login to your WordPress site as an Administrator and goto WordPress admin dashboard page and goto <strong>Zoom Events &gt; Settings</strong> page.</p>
 <ol>
