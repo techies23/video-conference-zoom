@@ -179,20 +179,28 @@ Click save to verify your credentials. If credentials are invalid, there should 
 Purpose for creating a App SDK is required for Join via Browser/Web SDK to work properly.
 
 ### Generating App SDK Credentials
-1. Click on **Build Legacy App** from Zoom marketplace page simply goto this corresponding link: [https://marketplace.zoom.us/develop/createLegacy](https://marketplace.zoom.us/develop/createLegacy)
-2. Find **Meeting SDK** and click create ![Create SDK App](img/s2s-oauth/05-01-2024/meeting-sdk.png)
-3. The next screen will prompt you for an App Name & ask you if you want to publish this app on Zoom App Marketplace. **Add a name and toggle publish off** . ![Name SDK App](img/s2s-oauth/sdk-app-name.png)
-4. Once App is created - you will need to add Company name, Name and Contact email ![SDK Information](img/s2s-oauth/sdk-info.png)
-5. Once the information has been added go to the App Credentials add Redirect URL for OAuth and Add Allow List. Then, copy SDK key(Client ID) and SDK Secret(Client Secret) and see Adding SDK credentials section.![SDK App Credentials Redirection URLs](img/s2s-oauth/meetingsdk-credentials-redirectionURLs.png) ![SDK App Credentials](img/s2s-oauth/meetingsdk-credentials.png)
-6. Ensure that your SDK app is activated in order to use the Join via browser features otherwise, you might get a **signature invalid error message.**
+1. Click on **Build App** from Zoom marketplace ![Build App](img/s2s-oauth/11-04-2024/build-app.png)
+    
+ **OR**
 
-**<div style="color:red">NOTE: In case you forgot to toggle the below button(shown in screenshot) you can still use the SDK credentials however, you won't be able to complete the SDK activation step. That's completely ok.</div>**
+   Go to corresponding link: ***[https://marketplace.zoom.us/develop/create](https://marketplace.zoom.us/develop/create)*** and click on **create**. ![Build App Directly](img/s2s-oauth/11-04-2024/build-app-directly.png)
+2. The next screen will prompt you for the Basic Information. **Select Admin-managed** and click on **save.** ![Basic Information](img/s2s-oauth/11-04-2024/basic-information.png)
+   Additionally, please include the OAuth Redirect URL and OAuth Allow Lists in Basic Information. ![OAuth Information](img/s2s-oauth/11-04-2024/basic-information-oauth-info.png)
+3. Click on **"Continue"** repeatedly until the **Embed** feature prompt appears. Enable **Meeting SDK** and click on continue. ![Embed Meeting SDK](img/s2s-oauth/11-04-2024/embed-meeting-sdk.png)
+4. The next screen will prompt you to Scopes. Click on Add Scopes![Add Scopes Button](img/s2s-oauth/11-04-2024/add-scopes-button.png)
+5. Add the following scope and click on done. 
 
-![Name SDK App](img/s2s-oauth/sdk-app-name.png)
+   **User**
 
+   - ***View user's zak token***
+   
+       - View a user's Zoom Access key/user:read:zak:admin
+![Add Scopes](img/s2s-oauth/11-04-2024/add-scopes.png)
+
+         
 ### Adding SDK Credentials to the plugin
-1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/sdk-credentials-plugin-creds.png)
-2. Add SDK credentials ( SDK Key and SDK Secret ) ![SDK Plugin Setup](img/s2s-oauth/sdk-app-credentials.png)
+1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/11-04-2024/meeting-sdk-credentials.png)
+2. Add Build App/General App credentials ( Build App Client ID and Build App Client Secret ) ![Build App Plugin Setup](img/s2s-oauth/11-04-2024/general-app-credentials.png)
 3. To test out join via browser - you will need to create a meeting and test if join via browser is working properly
 
 You've not successfully connected your Zoom Account in your WordPress site. You should be able to create your Zoom meetings directly from your WordPress dashboard now.
