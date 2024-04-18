@@ -197,6 +197,9 @@ Purpose for creating a App SDK is required for Join via Browser/Web SDK to work 
        - View a user's Zoom Access key/user:read:zak:admin
 ![Add Scopes](img/s2s-oauth/11-04-2024/add-scopes.png)
 
+### Video Documentation
+
+If you are a visual learner you can check this video guide ***[https://www.youtube.com/watch?v=mo2gNK7A-sU](https://www.youtube.com/watch?v=mo2gNK7A-sU)*** 
          
 ### Adding SDK Credentials to the plugin
 1. Go to Zoom Events > Settings > Connect tab ![Plugin Settings S2S-Oauth](img/s2s-oauth/11-04-2024/meeting-sdk-credentials.png)
