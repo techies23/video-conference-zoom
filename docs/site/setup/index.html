@@ -1542,19 +1542,29 @@
 <p>Purpose for creating a App SDK is required for Join via Browser/Web SDK to work properly.</p>
 <h3 id="generating-app-sdk-credentials">Generating App SDK Credentials</h3>
 <ol>
-<li>Click on <strong>Build Legacy App</strong> from Zoom marketplace page simply goto this corresponding link: <a href="https://marketplace.zoom.us/develop/createLegacy">https://marketplace.zoom.us/develop/createLegacy</a></li>
-<li>Find <strong>Meeting SDK</strong> and click create <img alt="Create SDK App" src="../img/s2s-oauth/05-01-2024/meeting-sdk.png" /></li>
-<li>The next screen will prompt you for an App Name &amp; ask you if you want to publish this app on Zoom App Marketplace. <strong>Add a name and toggle publish off</strong> . <img alt="Name SDK App" src="../img/s2s-oauth/sdk-app-name.png" /></li>
-<li>Once App is created - you will need to add Company name, Name and Contact email <img alt="SDK Information" src="../img/s2s-oauth/sdk-info.png" /></li>
-<li>Once the information has been added go to the App Credentials add Redirect URL for OAuth and Add Allow List. Then, copy SDK key(Client ID) and SDK Secret(Client Secret) and see Adding SDK credentials section.<img alt="SDK App Credentials Redirection URLs" src="../img/s2s-oauth/meetingsdk-credentials-redirectionURLs.png" /> <img alt="SDK App Credentials" src="../img/s2s-oauth/meetingsdk-credentials.png" /></li>
-<li>Ensure that your SDK app is activated in order to use the Join via browser features otherwise, you might get a <strong>signature invalid error message.</strong></li>
+<li>Click on <strong>Build App</strong> from Zoom marketplace <img alt="Build App" src="../img/s2s-oauth/11-04-2024/build-app.png" /></li>
 </ol>
-<p><strong><div style="color:red">NOTE: In case you forgot to toggle the below button(shown in screenshot) you can still use the SDK credentials however, you won't be able to complete the SDK activation step. That's completely ok.</div></strong></p>
-<p><img alt="Name SDK App" src="../img/s2s-oauth/sdk-app-name.png" /></p>
+<p><strong>OR</strong></p>
+<p>Go to corresponding link: <strong><em><a href="https://marketplace.zoom.us/develop/create">https://marketplace.zoom.us/develop/create</a></em></strong> and click on <strong>create</strong>. <img alt="Build App Directly" src="../img/s2s-oauth/11-04-2024/build-app-directly.png" />
+2. The next screen will prompt you for the Basic Information. <strong>Select Admin-managed</strong> and click on <strong>save.</strong> <img alt="Basic Information" src="../img/s2s-oauth/11-04-2024/basic-information.png" />
+   Additionally, please include the OAuth Redirect URL and OAuth Allow Lists in Basic Information. <img alt="OAuth Information" src="../img/s2s-oauth/11-04-2024/basic-information-oauth-info.png" />
+3. Click on <strong>"Continue"</strong> repeatedly until the <strong>Embed</strong> feature prompt appears. Enable <strong>Meeting SDK</strong> and click on continue. <img alt="Embed Meeting SDK" src="../img/s2s-oauth/11-04-2024/embed-meeting-sdk.png" />
+4. The next screen will prompt you to Scopes. Click on Add Scopes<img alt="Add Scopes Button" src="../img/s2s-oauth/11-04-2024/add-scopes-button.png" />
+5. Add the following scope and click on done. </p>
+<p><strong>User</strong></p>
+<ul>
+<li>
+<p><strong><em>View user's zak token</em></strong></p>
+<ul>
+<li>View a user's Zoom Access key/user:read:zak:admin
+<img alt="Add Scopes" src="../img/s2s-oauth/11-04-2024/add-scopes.png" /></li>
+</ul>
+</li>
+</ul>
 <h3 id="adding-sdk-credentials-to-the-plugin">Adding SDK Credentials to the plugin</h3>
 <ol>
-<li>Go to Zoom Events &gt; Settings &gt; Connect tab <img alt="Plugin Settings S2S-Oauth" src="../img/s2s-oauth/sdk-credentials-plugin-creds.png" /></li>
-<li>Add SDK credentials ( SDK Key and SDK Secret ) <img alt="SDK Plugin Setup" src="../img/s2s-oauth/sdk-app-credentials.png" /></li>
+<li>Go to Zoom Events &gt; Settings &gt; Connect tab <img alt="Plugin Settings S2S-Oauth" src="../img/s2s-oauth/11-04-2024/meeting-sdk-credentials.png" /></li>
+<li>Add Build App/General App credentials ( Build App Client ID and Build App Client Secret ) <img alt="Build App Plugin Setup" src="../img/s2s-oauth/11-04-2024/general-app-credentials.png" /></li>
 <li>To test out join via browser - you will need to create a meeting and test if join via browser is working properly</li>
 </ol>
 <p>You've not successfully connected your Zoom Account in your WordPress site. You should be able to create your Zoom meetings directly from your WordPress dashboard now.</p>
