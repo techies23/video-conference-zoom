@@ -21,13 +21,15 @@ class MeetingType {
 
 	public static function is_webinar( $meeting_type ) {
 		$meeting_type = (int) $meeting_type;
-		$values = array_values( self::$WEBINAR_TYPES );
+		$values       = array_values( self::$WEBINAR_TYPES );
+
 		return in_array( $meeting_type, $values );
 	}
 
 	public static function is_meeting( $meeting_type ) {
 		$meeting_type = (int) $meeting_type;
-		$values = array_values( self::$MEETING_TYPES );
+		$values       = array_values( self::$MEETING_TYPES );
+
 		return in_array( $meeting_type, $values );
 	}
 
@@ -40,8 +42,26 @@ class MeetingType {
 		}
 	}
 
-	public static function is_recurring_meeting( int $meeting_type ) {
+	public static function is_recurring_meeting( $meeting_type ) {
+		$meeting_type = (int) $meeting_type;
+
 		return self::$MEETING_TYPES['recurring_fixed_time'] === $meeting_type || self::$MEETING_TYPES['recurring_no_fixed_time'] === $meeting_type;
+	}
+
+	public static function is_recurring_fixed_time_meeting( $meeting_type ) {
+		return self::$MEETING_TYPES['recurring_fixed_time'] === $meeting_type;
+	}
+
+	public static function is_recurring_no_fixed_time_meeting( $meeting_type ) {
+		return self::$MEETING_TYPES['recurring_no_fixed_time'] === $meeting_type;
+	}
+
+	public static function is_recurring_fixed_time_webinar( $meeting_type ) {
+		return self::$MEETING_TYPES['recurring_fixed_time'] === $meeting_type;
+	}
+
+	public static function is_recurring_no_fixed_time_webinar( $meeting_type ) {
+		return self::$MEETING_TYPES['recurring_no_fixed_time'] === $meeting_type;
 	}
 
 	public static function is_recurring_webinar( int $meeting_type ) {
