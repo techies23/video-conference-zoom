@@ -43,7 +43,7 @@ if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['details'] ) 
 		<?php if ( ! empty( $zoom['api']->start_time ) ) { ?>
             <div class="dpn-zvc-sidebar-content-list vczapi-hosted-by-start-time-wrap">
                 <span><strong><?php _e( 'Start', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                <span class="sidebar-start-time"><?php echo vczapi_dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
+                <span class="sidebar-start-time"><?php echo esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @g:i a' ) ); ?></span>
             </div>
 		<?php } ?>
 		<?php if ( ! empty( $zoom['terms'] ) ) { ?>

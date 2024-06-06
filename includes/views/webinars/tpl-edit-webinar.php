@@ -1,5 +1,8 @@
 <?php
 // If this file is called directly, abort.
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -36,16 +39,16 @@ $users = video_conferencing_zoom_api_get_user_transients();
             <tr>
                 <th scope="row"><label for="meetingAgenda"><?php _e( 'Webinar Agenda', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="text" name="agenda" value="<?php echo ! empty( $meeting_info->agenda ) ? esc_html( $meeting_info->agenda ) : false; ?>" class="regular-text">
+                    <input type="text" id="meetingAgenda" name="agenda" value="<?php echo ! empty( $meeting_info->agenda ) ? esc_html( $meeting_info->agenda ) : false; ?>" class="regular-text">
                     <p class="description" id="meetingTopic-description"><?php _e( 'Webinar Description.', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
-            <tr <?php echo $meeting_info->type === 6 || $meeting_info->type === 9 ? 'style="display:none;"' : 'style="display:table-row;"'; ?>>
+            <tr <?php echo ( MeetingType::is_recurring_webinar( $meeting_info->type ) ) ? 'style="display:none;"' : 'style="display:table-row;"'; ?>>
                 <th scope="row"><label for="start_date"><?php _e( 'Start Date/Time *', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
 					<?php
 					if ( ! empty( $meeting_info->start_time ) && ! empty( $meeting_info->timezone ) ) {
-						$date = vczapi_dateConverter( $meeting_info->start_time, $meeting_info->timezone, 'Y-m-d H:i:s', false );
+						$date = Date::dateConverter( $meeting_info->start_time, $meeting_info->timezone, 'Y-m-d H:i:s', false );
 					} else {
 						$date = false;
 					}
@@ -57,7 +60,7 @@ $users = video_conferencing_zoom_api_get_user_transients();
             <tr>
                 <th scope="row"><label for="timezone"><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-					<?php $tzlists = \Codemanas\VczApi\Helpers\Date::timezone_list(); ?>
+					<?php $tzlists = Date::timezone_list(); ?>
                     <select id="timezone" name="timezone" class="zvc-hacking-select">
 						<?php foreach ( $tzlists as $k => $tzlist ) { ?>
                             <option value="<?php echo $k; ?>" <?php echo $meeting_info->timezone == $k ? 'selected' : null; ?>><?php echo $tzlist; ?></option>

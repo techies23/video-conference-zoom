@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Shortcodes;
 
 use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
 
 class Embed {
 
@@ -106,7 +107,8 @@ class Embed {
 			$meeting->mobile_zoom_url = trailingslashit( $zoom_vanity_url . '/j' ) . $meeting_id;
 		}
 
-		if ( ! empty( $meeting->type ) && ( $meeting->type === 9 || $meeting->type === 8 ) && ! empty( $meeting->occurrences ) ) {
+
+		if ( ! empty( $meeting->type ) && MeetingType::is_recurring_fixed_time_webinar_or_meeting( $meeting->type ) && ! empty( $meeting->occurrences ) ) {
 			$occurrences  = ( isset( $meeting->occurrences ) && is_array( $meeting->occurrences ) ) ? $meeting->occurrences : '';
 			$meeting_time = is_array( $occurrences ) ? $occurrences[0]->start_time : date( 'Y-m-d h:i a', time() );
 		} else {

@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Shortcodes;
 
+use Codemanas\VczApi\Helpers\MeetingType;
 use Codemanas\VczApi\Requests\Zoom;
 
 class Recordings {
@@ -216,7 +217,7 @@ class Recordings {
 		$meeting_info = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
 		//if it's a regular meeting or webinar use the meeting id as it seems it's more reliable
 		//https://devforum.zoom.us/t/recording-api-issue/102992
-		if ( $meeting_info->type == '2' || $meeting_info->type == '5' ) {
+		if ( MeetingType::is_scheduled_meeting_or_webinar( $meeting_info->type ) ) {
 			$recordings[] = $zoomObj->recordingsByMeeting( $meeting_id );
 		} else {
 			//if it's a recurring meeting / webinar we're going to need to get pass meeting details

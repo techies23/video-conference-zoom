@@ -9,7 +9,11 @@
  * @version 3.0.0
  */
 
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
+
 global $zoom_webinars;
+
 ?>
 
 <div class="dpn-zvc-shortcode-op-wrapper">
@@ -26,7 +30,7 @@ global $zoom_webinars;
             <td><?php echo $zoom_webinars->topic; ?></td>
         </tr>
 		<?php
-		if ( ! empty( $zoom_webinars->type ) && $zoom_webinars->type === 9 ) {
+		if ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_fixed_time_webinar( $zoom_webinars->type ) ) {
 			if ( ! empty( $zoom_webinars->occurrences ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row4">
@@ -34,7 +38,7 @@ global $zoom_webinars;
                     <td><?php _e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
                 <tr class="vczapi-shortcode-meeting-table--row4">
-                    <td><?php _e( 'Ocurrences', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php _e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td><?php echo count( $zoom_webinars->occurrences ); ?></td>
                 </tr>
                 <tr class="vczapi-shortcode-meeting-table--row5">
@@ -43,7 +47,7 @@ global $zoom_webinars;
 						<?php
 						$now               = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_webinars->timezone ) );
 						$closest_occurence = false;
-						if ( ! empty( $zoom_webinars->type ) && $zoom_webinars->type === 9 && ! empty( $zoom_webinars->occurrences ) ) {
+						if ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_fixed_time_webinar( $zoom_webinars->type ) && ! empty( $zoom_webinars->occurrences ) ) {
 							foreach ( $zoom_webinars->occurrences as $occurrence ) {
 								if ( $occurrence->status === "available" ) {
 									$start_date = new DateTime( $occurrence->start_time, new DateTimeZone( $zoom_webinars->timezone ) );
@@ -59,7 +63,7 @@ global $zoom_webinars;
 						}
 
 						if ( $closest_occurence ) {
-							echo \Codemanas\VczApi\Helpers\Date::dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' );
+							echo Date::dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' );
 						} else {
 							_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 						}
@@ -75,7 +79,7 @@ global $zoom_webinars;
                 </tr>
 				<?php
 			}
-		} else if ( ! empty( $zoom_webinars->type ) && $zoom_webinars->type === 6 ) {
+		} elseif ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_no_fixed_time_webinar( $zoom_webinars->type ) ) {
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
                 <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
@@ -86,7 +90,7 @@ global $zoom_webinars;
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
                 <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ); ?></td>
+                <td><?php echo Date::dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ); ?></td>
             </tr>
 		<?php } ?>
         <tr class="vczapi-shortcode-meeting-table--row7">

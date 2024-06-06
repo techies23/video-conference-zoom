@@ -1,5 +1,8 @@
 <?php
 
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
+
 /**
  * Meeting Post Type Controller
  *
@@ -217,7 +220,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 		$meeting = get_post_meta( $post_id, '_meeting_zoom_details', true );
 		switch ( $column ) {
 			case 'type':
-				if ( ! empty( $meeting ) && ! empty( $meeting->type ) && ( $meeting->type === 5 || $meeting->type === 6 || $meeting->type === 9 ) ) {
+				if ( ! empty( $meeting ) && ! empty( $meeting->type ) && MeetingType::is_webinar( $meeting->type ) ) {
 					_e( 'Webinar', 'video-conferencing-with-zoom-api' );
 				} else {
 					_e( 'Meeting', 'video-conferencing-with-zoom-api' );
@@ -233,8 +236,8 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			case 'start_date' :
 				if ( ! empty( $meeting ) && ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
 					echo $meeting->message;
-				} elseif ( ! empty( $meeting ) && ! empty( $meeting->type ) && ( $meeting->type === 2 || $meeting->type === 5 ) && ! empty( $meeting->start_time ) ) {
-					echo vczapi_dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' );
+				} elseif ( ! empty( $meeting ) && ! empty( $meeting->type ) && MeetingType::is_scheduled_meeting_or_webinar( $meeting->type ) && ! empty( $meeting->start_time ) ) {
+					echo esc_html( Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) );
 				} elseif ( ! empty( $meeting ) && vczapi_pro_check_type( $meeting->type ) ) {
 					_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
 				} else {

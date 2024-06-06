@@ -1,6 +1,8 @@
 <?php
 
 // If this file is called directly, abort.
+use Codemanas\VczApi\Helpers\MeetingType;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -39,21 +41,21 @@ if ( ! empty( $meeting_info ) ) {
             <tr>
                 <th scope="row"><label for="meetingTopic"><?php _e( 'Meeting Topic *', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="text" name="meetingTopic" size="100" class="regular-text" required value="<?php echo ! empty( $meeting_info->topic ) ? esc_attr( $meeting_info->topic ) : null; ?>">
+                    <input type="text" id="meetingTopic" name="meetingTopic" size="100" class="regular-text" required value="<?php echo ! empty( $meeting_info->topic ) ? esc_attr( $meeting_info->topic ) : null; ?>">
                     <p class="description" id="meetingTopic-description"><?php _e( 'Meeting topic. (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="meetingAgenda"><?php _e( 'Meeting Agenda', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <input type="text" name="agenda" class="regular-text" value="<?php echo ! empty( $meeting_info->agenda ) ? esc_attr( $meeting_info->agenda ) : null; ?>">
+                    <input type="text" id="meetingAgenda" name="agenda" class="regular-text" value="<?php echo ! empty( $meeting_info->agenda ) ? esc_attr( $meeting_info->agenda ) : null; ?>">
                     <p class="description" id="meetingTopic-description"><?php _e( 'Meeting Description.', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="userId"><?php _e( 'Meeting Host *', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
-                    <select name="userId" required class="zvc-hacking-select">
+                    <select id="userId" name="userId" required class="zvc-hacking-select">
                         <option value=""><?php _e( 'Select a Host', 'video-conferencing-with-zoom-api' ); ?></option>
 						<?php foreach ( $users as $user ): ?>
                             <option value="<?php echo esc_attr( $user->id ); ?>" <?php echo $meeting_info->host_id == $user->id ? 'selected' : null; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
@@ -62,8 +64,8 @@ if ( ! empty( $meeting_info ) ) {
                     <p class="description" id="userId-description"><?php _e( 'This is host ID for the meeting (Required).', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
-            <tr <?php echo $meeting_info->type === 3 ? 'style="display:none;"' : 'style="display:table-row;"'; ?>>
-                <th scope="row"><label for="start_date"><?php _e( 'Start Date/Time *', 'video-conferencing-with-zoom-api' ); ?></label></th>
+            <tr <?php echo MeetingType::is_recurring_no_fixed_time_meeting( $meeting_info->type ) ? 'style="display:none;"' : 'style="display:table-row;"'; ?>>
+                <th scope="row"><label for="datetimepicker"><?php _e( 'Start Date/Time *', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
 					<?php
 					$start_time = ! empty( $meeting_info->start_time ) ? $meeting_info->start_time : false;
@@ -89,7 +91,7 @@ if ( ! empty( $meeting_info ) ) {
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="duration"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
+                <th scope="row"><label for="duration-description"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></label></th>
                 <td>
                     <input type="number" name="duration" class="regular-text" value="<?php echo ! empty( $meeting_info->duration ) && $meeting_info->duration ? esc_attr( $meeting_info->duration ) : 40; ?>">
                     <p class="description" id="duration-description"><?php _e( 'Meeting duration (minutes). (optional)', 'video-conferencing-with-zoom-api' ); ?></p>

@@ -11,7 +11,7 @@
 
 global $zoom;
 
-if ( ! vczapi_pro_version_active() && ( $zoom['api']->type === 8 || $zoom['api']->type === 3 ) || empty( $zoom ) || ! empty( $zoom['api']->code ) ) {
+if ( ! vczapi_pro_version_active() && \Codemanas\VczApi\Helpers\MeetingType::is_recurring_meeting_or_webinar( $zoom['api']->type ) || empty( $zoom ) || ! empty( $zoom['api']->code ) ) {
 	return;
 }
 

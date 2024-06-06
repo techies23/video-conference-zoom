@@ -1,6 +1,9 @@
 <?php
 
 // If this file is called directly, abort.
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -116,11 +119,11 @@ if ( isset( $_GET['host_id'] ) ) {
                             </td>
                             <td>
 								<?php
-								if ( $meeting->type === 2 ) {
-									echo vczapi_dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a ( e )' );
-								} else if ( $meeting->type === 3 ) {
+								if ( MeetingType::is_scheduled_meeting( $meeting->type ) ) {
+									echo esc_html( Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a ( e )' ) );
+								} elseif ( MeetingType::is_recurring_no_fixed_time_meeting( $meeting->type ) ) {
 									_e( 'This is a recurring meeting with no fixed time.', 'video-conferencing-with-zoom-api' );
-								} else if ( $meeting->type === 8 ) {
+								} elseif ( MeetingType::is_recurring_fixed_time_meeting( $meeting->type ) ) {
 									_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
 								} else {
 									echo "N/A";
