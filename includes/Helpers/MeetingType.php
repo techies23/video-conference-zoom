@@ -167,7 +167,7 @@ class MeetingType {
 	 * @return bool
 	 */
 	public static function is_scheduled_webinar( $meeting_type ): bool {
-		return self::$WEBINAR_TYPES['scheduled'] === self::toInteger( $meeting_type );
+		return self::$WEBINAR_TYPES['default'] === self::toInteger( $meeting_type );
 	}
 
 	/**
