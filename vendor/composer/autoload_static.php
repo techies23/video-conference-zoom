@@ -30,7 +30,35 @@ class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
     );
 
     public static $classMap = array (
+        'Codemanas\\VczApi\\Blocks\\BlockTemplates' => __DIR__ . '/../..' . '/includes/Blocks/BlockTemplates.php',
+        'Codemanas\\VczApi\\Blocks\\Blocks' => __DIR__ . '/../..' . '/includes/Blocks/Blocks.php',
+        'Codemanas\\VczApi\\Bootstrap' => __DIR__ . '/../..' . '/includes/Bootstrap.php',
+        'Codemanas\\VczApi\\Data\\Datastore' => __DIR__ . '/../..' . '/includes/Data/Datastore.php',
+        'Codemanas\\VczApi\\Data\\Logger' => __DIR__ . '/../..' . '/includes/Data/Logger.php',
+        'Codemanas\\VczApi\\Data\\Metastore' => __DIR__ . '/../..' . '/includes/Data/Metastore.php',
+        'Codemanas\\VczApi\\Filters' => __DIR__ . '/../..' . '/includes/Filters.php',
+        'Codemanas\\VczApi\\Helpers\\Date' => __DIR__ . '/../..' . '/includes/Helpers/Date.php',
+        'Codemanas\\VczApi\\Helpers\\Encryption' => __DIR__ . '/../..' . '/includes/Helpers/Encryption.php',
+        'Codemanas\\VczApi\\Helpers\\Links' => __DIR__ . '/../..' . '/includes/Helpers/Links.php',
+        'Codemanas\\VczApi\\Helpers\\MeetingType' => __DIR__ . '/../..' . '/includes/Helpers/MeetingType.php',
+        'Codemanas\\VczApi\\Helpers\\Templates' => __DIR__ . '/../..' . '/includes/Helpers/Templates.php',
+        'Codemanas\\VczApi\\Requests\\Zoom' => __DIR__ . '/../..' . '/includes/Requests/Zoom.php',
+        'Codemanas\\VczApi\\Shortcodes' => __DIR__ . '/../..' . '/includes/Shortcodes.php',
+        'Codemanas\\VczApi\\Shortcodes\\Embed' => __DIR__ . '/../..' . '/includes/Shortcodes/Embed.php',
+        'Codemanas\\VczApi\\Shortcodes\\Helpers' => __DIR__ . '/../..' . '/includes/Shortcodes/Helpers.php',
+        'Codemanas\\VczApi\\Shortcodes\\Meetings' => __DIR__ . '/../..' . '/includes/Shortcodes/Meetings.php',
+        'Codemanas\\VczApi\\Shortcodes\\Recordings' => __DIR__ . '/../..' . '/includes/Shortcodes/Recordings.php',
+        'Codemanas\\VczApi\\Shortcodes\\Webinars' => __DIR__ . '/../..' . '/includes/Shortcodes/Webinars.php',
+        'Codemanas\\VczApi\\Timezone' => __DIR__ . '/../..' . '/includes/Timezone.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
+        'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',
+        'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
+        'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
+        'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
+        'Firebase\\JWT\\JWTExceptionWithPayloadInterface' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWTExceptionWithPayloadInterface.php',
+        'Firebase\\JWT\\Key' => __DIR__ . '/..' . '/firebase/php-jwt/src/Key.php',
+        'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

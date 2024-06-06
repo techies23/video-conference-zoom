@@ -1,5 +1,8 @@
 <?php
 // If this file is called directly, abort.
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -37,16 +40,19 @@ $get_host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
 					'post_type' => 'zoom-meetings',
 					'page'      => 'zoom-video-conferencing-webinars',
 				) ) ); ?>"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
-				<?php foreach ( $users as $user ) { ?>
-                    <option value="<?php echo esc_url( add_query_arg( array(
-						'post_type' => 'zoom-meetings',
-						'page'      => 'zoom-video-conferencing-webinars',
-						'host_id'   => $user->id
-					) ) ); ?>"
-						<?php selected( $get_host_id, $user->id ); ?>
-                    >
-						<?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?>
-                    </option>
+				<?php
+				if ( isset( $users ) && ! empty( $users ) ) {
+					foreach ( $users as $user ) { ?>
+                        <option value="<?php echo esc_url( add_query_arg( array(
+							'post_type' => 'zoom-meetings',
+							'page'      => 'zoom-video-conferencing-webinars',
+							'host_id'   => $user->id
+						) ) ); ?>"
+							<?php selected( $get_host_id, $user->id ); ?>
+                        >
+							<?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?>
+                        </option>
+					<?php } ?>
 				<?php } ?>
             </select>
         </div>
@@ -115,11 +121,11 @@ $get_host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
                         </td>
                         <td>
 							<?php
-							if ( $webinar->type === 5 ) {
-								echo vczapi_dateConverter( $webinar->start_time, $webinar->timezone, 'F j, Y, g:i a ( e )' );
-							} else if ( $webinar->type === 6 ) {
+							if ( MeetingType::is_scheduled_webinar( $webinar->type ) ) {
+								echo Date::dateConverter( $webinar->start_time, $webinar->timezone, 'F j, Y, g:i a ( e )' );
+							} elseif ( MeetingType::is_recurring_no_fixed_time_webinar( $webinar->type ) ) {
 								_e( 'This is a recurring meeting with no fixed time.', 'video-conferencing-with-zoom-api' );
-							} else if ( $webinar->type === 9 ) {
+							} elseif ( MeetingType::is_recurring_fixed_time_webinar( $webinar->type) ) {
 								_e( 'Recurring Webinar', 'video-conferencing-with-zoom-api' );
 							} else {
 								echo "N/A";
