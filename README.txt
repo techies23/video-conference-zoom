@@ -3,8 +3,8 @@ Contributors: j__3rk, digamberpradhan
 Tags: zoom video conference, video conference, web conferencing, online meetings, webinars
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
-Tested up to: 6.4
-Stable tag: 4.4.6
+Tested up to: 6.5
+Stable tag: 4.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -158,6 +158,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.4.7 June 6, 2024 =
+* Added: Helper function for meeting types
+* Fixed bugs related to meeting types
 
 = 4.4.6 March 20, 2024 =
 * Security Update: Fixed a issue related to ajax.
