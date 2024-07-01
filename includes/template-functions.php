@@ -129,7 +129,7 @@ function video_conference_zoom_meeting_end_author() {
  */
 function video_conference_zoom_meeting_join() {
 	global $zoom;
-	if ( ! vczapi_pro_version_active() && ( MeetingType::is_recurring_meeting_or_webinar( $zoom['api']->type ) ) || empty( $zoom ) ) {
+	if ( ! vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && MeetingType::is_recurring_meeting_or_webinar( $zoom['api']->type ) ) || empty( $zoom ) ) {
 		return;
 	}
 
@@ -414,7 +414,7 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
                     <td><?php _e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
 				<?php
-			} elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_pmi($zoom_meetings->type) ) {
+			} elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_pmi( $zoom_meetings->type ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
@@ -588,7 +588,7 @@ function video_conference_zoom_after_jbh_html() {
 	$localize        = array_merge( $localize, $additional_data );
 	?>
     <script id='video-conferencing-with-zoom-api-browser-js-extra'>
-      var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
+        var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
     </script>
 
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>

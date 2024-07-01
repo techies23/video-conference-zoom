@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $zoom;
 
-if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) || ! empty( $zoom['api']->code ) ) {
+if ( ! vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && vczapi_pro_check_type( $zoom['api']->type ) ) || empty( $zoom ) || ! empty( $zoom['api']->code ) ) {
 	return;
 }
 ?>
@@ -31,7 +31,7 @@ if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type 
                     <strong><?php _e( 'Hosted By:', 'video-conferencing-with-zoom-api' ); ?></strong> <span><?php echo apply_filters( 'vczapi_host_name', $zoom['host_name'] ); ?></span>
                 </div>
 				<?php
-				if ( vczapi_pro_version_active() && vczapi_pro_check_type($zoom['api']->type ) ) {
+				if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) ) {
 					$type      = ! empty( $zoom['api']->type ) ? $zoom['api']->type : false;
 					$timezone  = ! empty( $zoom['api']->timezone ) ? $zoom['api']->timezone : false;
 					$occurence = ! empty( $zoom['api']->occurrences ) ? $zoom['api']->occurrences : false;

@@ -15,7 +15,7 @@ if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['countdown'] 
 	return;
 }
 
-if ( ! vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) ) {
+if ( ! vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && vczapi_pro_check_type( $zoom['api']->type ) ) || empty( $zoom ) ) {
 	?>
     <div class="dpn-zvc-sidebar-box">
         <p><?php _e( 'PRO version is required for this meeting to be displayed.', 'video-conferencing-with-zoom-api' ); ?></p>

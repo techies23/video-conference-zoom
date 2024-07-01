@@ -7,7 +7,7 @@ global $zoom;
 ?>
 <div class="vczapi-show-by-postid">
 	<?php
-	if ( vczapi_pro_version_active() && vczapi_pro_check_type( $zoom['api']->type ) || empty( $zoom ) ) {
+	if ( vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && vczapi_pro_check_type( $zoom['api']->type ) ) || empty( $zoom ) ) {
 		?>
         <div class="vczapi-show-by-postid-contents">
 			<?php do_action( 'vczoom_single_content_right' ); ?>
