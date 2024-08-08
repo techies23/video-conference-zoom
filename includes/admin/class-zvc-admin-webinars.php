@@ -197,7 +197,7 @@ class Zoom_Video_Conferencing_Admin_Webinars {
 				'practice_session'       => ! empty( $postData['practice_session'] ) ? true : false,
 				'hd_video'               => ! empty( $postData['hd_video'] ) ? true : false,
 				'allow_multiple_devices' => ! empty( $postData['allow_multiple_devices'] ) ? true : false,
-				'auto_recording'         => ! empty( $postData['auto_recording'] ) ? true : "none",
+				'auto_recording'         => ! empty( $postData['option_auto_recording'] ) ? $postData['option_auto_recording'] : "none",
 				'alternative_hosts'      => ! empty( $alternative_host_ids ) ? $alternative_host_ids : ''
 			)
 		);
