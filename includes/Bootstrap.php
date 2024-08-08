@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi;
 
+use Codemanas\VczApi\Admin\PostType;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
 use Codemanas\VczApi\Helpers\Encryption;
@@ -19,14 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class Bootstrap {
 
-	private static $_instance = null;
+	private static ?Bootstrap $_instance = null;
 
 	/**
 	 * Create only one instance so that it may not Repeat
 	 *
 	 * @since 2.0.0
 	 */
-	public static function instance() {
+	public static function instance(): ?Bootstrap {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -34,7 +35,7 @@ final class Bootstrap {
 		return self::$_instance;
 	}
 
-	private $plugin_version = ZVC_PLUGIN_VERSION;
+	private string $plugin_version = ZVC_PLUGIN_VERSION;
 
 	/**
 	 * Constructor method for loading the components
@@ -210,19 +211,19 @@ final class Bootstrap {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
 
 		//AJAX CALLS SCRIPTS
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-ajax.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-ajax.php';
 
 		//Admin Classes
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-users.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-meetings.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-webinars.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-recordings.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
+		PostType::get_instance();
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-users.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-meetings.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-webinars.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-reports.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-recordings.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-settings.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-addons.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-sync.php';
+		require_once ZVC_PLUGIN_INCLUDES_PATH . '/Admin/class-zvc-admin-setup-wizard.php';
 
 		//Timezone
 		Timezone::get_instance();
@@ -308,7 +309,7 @@ final class Bootstrap {
 	 */
 	public static function activate() {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-		$post_type = \Zoom_Video_Conferencing_Admin_PostType::get_instance();
+		$post_type = PostType::get_instance();
 		$post_type->register();
 
 		//Flush User Cache
@@ -336,7 +337,7 @@ final class Bootstrap {
 	 * @param $actions
 	 * @param $plugin_file
 	 *
-	 * @return array
+	 * @return array|mixed|string[]
 	 */
 	public function action_link( $actions, $plugin_file ) {
 		static $plugin;

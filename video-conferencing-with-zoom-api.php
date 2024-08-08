@@ -9,7 +9,7 @@
  * Version:           4.5.1
  * Author:            Deepen Bajracharya
  * Author URI:        https://www.imdpen.com
- * License:           GPL-2.0+
+ * License:           GPL-3.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       video-conferencing-with-zoom-api
  * Requires PHP:      7.4

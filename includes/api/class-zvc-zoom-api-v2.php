@@ -14,7 +14,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 
 	class Zoom_Video_Conferencing_Api {
 
-		public static $OAuth_revalidate_attempts = 0;
+		public static int $OAuth_revalidate_attempts = 0;
 
 		/**
 		 * Zoom API KEY
@@ -598,7 +598,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			$agenda         = strip_tags( html_entity_decode( $data['agenda'] ), null );
 			$data['agenda'] = substr( $agenda, 0, 1999 );
 
-			return $this->sendRequest( 'webinars/' . $webinar_id, $postData, "PATCH" );
+			$response =  $this->sendRequest( 'webinars/' . $webinar_id, $postData, "PATCH" );
 		}
 
 		/**

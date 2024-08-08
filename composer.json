@@ -16,7 +16,6 @@
   "autoload": {
     "psr-4": {
       "Codemanas\\VczApi\\": [
-        "legacy/",
         "includes/"
       ]
     }
