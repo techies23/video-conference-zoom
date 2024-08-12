@@ -1,5 +1,5 @@
 === Video Conferencing with Zoom ===
-Contributors: j__3rk, digamberpradhan
+Contributors: j__3rk, digamberpradhan, codemanas
 Tags: zoom video conference, video conference, web conferencing, online meetings, webinars
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
