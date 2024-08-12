@@ -1,0 +1,44 @@
+name: Deploy to WordPress.org
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  tag:
+    name: New tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@2.28.0
+        with:
+          php-version: '7.4' # Adjust depending on your PHP version
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install Composer dependencies and dump autoload
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest
+          composer dump-autoload -o
+
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '20' # Adjust depending on your Node.js version
+
+      - name: Install NPM dependencies and Build assets
+        run: |
+          npm install
+          npm run build
+
+
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: video-conferencing-with-zoom-api
