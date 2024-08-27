@@ -7,15 +7,14 @@ global $zoom;
 ?>
 <div class="vczapi-show-by-postid">
 	<?php
-	if ( vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && vczapi_pro_check_type( $zoom['api']->type ) ) || empty( $zoom ) ) {
+    //Only need for Fixed time recurring meeting to display the page correctly.
+	if ( vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && \Codemanas\VczApi\Helpers\MeetingType::is_recurring_fixed_time_meeting($zoom['api']->type) ) || empty( $zoom ) ) {
 		?>
         <div class="vczapi-show-by-postid-contents">
 			<?php do_action( 'vczoom_single_content_right' ); ?>
         </div>
 	<?php } else { ?>
-
 		<?php do_action( 'vczoom_single_content_right' ); ?>
-
         <div class="vczapi-show-by-postid-contents vczapi-show-by-postid-flex">
 			<?php if ( ! empty( get_the_post_thumbnail_url() ) ) { ?>
                 <div class="vczapi-show-by-postid-contents-image">
