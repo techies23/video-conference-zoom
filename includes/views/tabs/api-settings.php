@@ -188,42 +188,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <td>
                                 <select name="meeting-lang">
                                     <option value="all" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'all' ) : false; ?>><?php _e( 'Show All', 'video-conferencing-with-zoom-api' ); ?></option>
-                                    <option value="en-US" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'en-US' ) : false; ?>>
-                                        English
-                                    </option>
-                                    <option value="de-DE" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'de-DE' ) : false; ?>>
-                                        German Deutsch
-                                    </option>
-                                    <option value="es-ES" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'es-ES' ) : false; ?>>
-                                        Spanish Español
-                                    </option>
-                                    <option value="fr-FR" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'fr-FR' ) : false; ?>>
-                                        French Français
-                                    </option>
-                                    <option value="jp-JP" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'jp-JP' ) : false; ?>>
-                                        Japanese 日本語
-                                    </option>
-                                    <option value="pt-PT" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'pt-PT' ) : false; ?>>
-                                        Portuguese Portuguese
-                                    </option>
-                                    <option value="ru-RU" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'ru-RU' ) : false; ?>>
-                                        Russian Русский
-                                    </option>
-                                    <option value="zh-CN" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'zh-CN' ) : false; ?>>
-                                        Chinese 简体中文
-                                    </option>
-                                    <option value="zh-TW" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'zh-TW' ) : false; ?>>
-                                        Chinese 繁体中文
-                                    </option>
-                                    <option value="ko-KO" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'ko-KO' ) : false; ?>>
-                                        Korean 한국어
-                                    </option>
-                                    <option value="vi-VN" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'vi-VN' ) : false; ?>>
-                                        Vietnamese Tiếng Việt
-                                    </option>
-                                    <option value="it-IT" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'it-IT' ) : false; ?>>
-                                        Italian italiano
-                                    </option>
+									<?php
+									$langs = \Codemanas\VczApi\Helpers\I18N::getSupportedTranslationsForWeb();
+									foreach ( $langs as $k => $lang ) {
+										?>
+                                        <option value="<?php echo $k; ?>" <?php echo ! empty( $default_jvb_lang ) && $default_jvb_lang == $k ? 'selected' : ''; ?>><?php echo $lang; ?></option>
+										<?php
+									}
+									?>
                                 </select>
                                 <span class="description"><?php _e( 'Select a default language for your join meeting via browser page.', 'video-conferencing-with-zoom-api' ); ?></span>
                             </td>

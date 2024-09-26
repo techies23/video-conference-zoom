@@ -143,11 +143,11 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 	 * Prepare POST DATA for API
 	 *
 	 * @param      $postdata
-	 * @param bool $post WP_POST
+	 * @param  bool  $post  WP_POST
 	 *
 	 * @return array
 	 */
-	public static function prepare_create( $postdata, $post = false ) {
+	public static function prepare_create( $postdata, $post = false ): array {
 		$mtg_param = array(
 			'userId'                    => $postdata['userId'],
 			'meetingTopic'              => ! empty( $post ) ? esc_html( $post->post_title ) : esc_html( $postdata['topic'] ),
@@ -157,6 +157,7 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 			'password'                  => $postdata['password'],
 			'meeting_authentication'    => $postdata['meeting_authentication'],
 			'join_before_host'          => $postdata['join_before_host'],
+			'jbh_time'                  => $postdata['jbh_time'],
 			'option_host_video'         => $postdata['option_host_video'],
 			'option_participants_video' => $postdata['option_participants_video'],
 			'option_mute_participants'  => $postdata['option_mute_participants'],
@@ -173,12 +174,12 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 	 *
 	 * @param      $meeting_id
 	 * @param      $postdata
-	 * @param bool $post WP_POST
+	 * @param  bool  $post  WP_POST
 	 *
 	 * @return array
 	 */
 	public static function prepare_update( $meeting_id, $postdata, $post = false ) {
-		$mtg_param = array(
+		return array(
 			'meeting_id'                => $meeting_id,
 			'topic'                     => ! empty( $post ) ? esc_html( $post->post_title ) : esc_html( $postdata['topic'] ),
 			'agenda'                    => ! empty( $post ) ? wp_strip_all_tags( get_the_excerpt( $post ), true ) : esc_html( $postdata['agenda'] ),
@@ -188,6 +189,7 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 			'password'                  => $postdata['password'],
 			'meeting_authentication'    => $postdata['meeting_authentication'],
 			'join_before_host'          => $postdata['join_before_host'],
+			'jbh_time'                  => $postdata['jbh_time'],
 			'option_host_video'         => $postdata['option_host_video'],
 			'option_participants_video' => $postdata['option_participants_video'],
 			'option_mute_participants'  => $postdata['option_mute_participants'],
@@ -195,8 +197,6 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 			'alternative_host_ids'      => $postdata['alternative_host_ids'],
 			'disable_waiting_room'      => $postdata['disable_waiting_room']
 		);
-
-		return $mtg_param;
 	}
 
 	static function get_message() {

@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 4.5.3
+Stable tag: 4.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,8 @@ Video conferencing with Zoom plugin gives you the extensive functionality to man
 * WooCommerce Appointments Integration ( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
 * WooCommerce Bookings Integration ( See EXTENDING AND MAKING MEETINGS PURCHASABLE section )
  and more...
+
+* [Zoom Theme](https://cmblocks.com/themes/cm-zoom/ "Zoom Theme")
 
 **DOCUMENTATION LINKS:**
 
@@ -158,6 +160,14 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+
+= 4.6.0 September 26th, 2024
+* Updated: WebSDK to version 3.8.10
+* Optimized: Join via browser code.
+* Fixed: Join via browser language change.
+* Added: Join before host time.
+* Optimized: Scripts and Stylings
+* Bug Fixes related to Meeting.
 
 = 4.5.3 August 27th, 2024 =
 * Fix: No Fixed Time meeting not working with `[zoom_meeting_post post_id="1938" template="boxed"]`

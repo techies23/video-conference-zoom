@@ -78,7 +78,7 @@ if ( video_conference_zoom_check_login() ) {
                                 </div>
 							<?php }
 						}
-						if ( ! isset( $_GET['pak'] ) && !empty( $zoom['password'] ) ) { ?>
+						if ( ! isset( $_GET['pak'] ) && ! empty( $zoom['password'] ) ) { ?>
                             <div class="form-group">
                                 <label for="meeting_password"><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label>
                                 <input type="password" name="meeting_password" id="meeting_password" value="<?php echo ! empty( $zoom['password'] ) ? $zoom['password'] : ''; ?>" placeholder="<?php _e( "Meeting Password", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
@@ -91,25 +91,21 @@ if ( video_conference_zoom_check_login() ) {
 							$default_jvb_lang = get_option( 'zoom_api_default_lang_jvb' );
 							if ( ! empty( $default_jvb_lang ) && $default_jvb_lang !== "all" ) {
 								?>
-                                <input name="meeting-lang" id="meeting_lang" type="hidden" value="<?php echo esc_html( $default_jvb_lang ); ?>">
+                                <input name="meeting-lang" class="meeting-locale" type="hidden" value="<?php echo esc_html( $default_jvb_lang ); ?>">
 								<?php
 							} else {
 								?>
                                 <div class="form-group">
                                     <label for="meeting_lang"><?php _e( 'Locale', 'video-conferencing-with-zoom-api' ); ?></label>
-                                    <select id="meeting_lang" name="meeting-lang" class="form-control">
-                                        <option value="en-US">English</option>
-                                        <option value="de-DE">German Deutsch</option>
-                                        <option value="es-ES">Spanish Español</option>
-                                        <option value="fr-FR">French Français</option>
-                                        <option value="jp-JP">Japanese 日本語</option>
-                                        <option value="pt-PT">Portuguese Portuguese</option>
-                                        <option value="ru-RU">Russian Русский</option>
-                                        <option value="zh-CN">Chinese 简体中文</option>
-                                        <option value="zh-TW">Chinese 繁体中文</option>
-                                        <option value="ko-KO">Korean 한국어</option>
-                                        <option value="vi-VN">Vietnamese Tiếng Việt</option>
-                                        <option value="it-IT">Italian italiano</option>
+                                    <select name="meeting-lang" class="form-control meeting-locale">
+										<?php
+										$langs = \Codemanas\VczApi\Helpers\I18N::getSupportedTranslationsForWeb();
+										foreach ( $langs as $k => $lang ) {
+											?>
+                                            <option value="<?php echo $k; ?>"><?php echo $lang; ?></option>
+											<?php
+										}
+										?>
                                     </select>
                                 </div>
 								<?php

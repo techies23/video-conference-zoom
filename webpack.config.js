@@ -84,7 +84,7 @@ if (isProduction) {
         import: './src/public/vendor/zoom-meeting.js',
         dependOn: 'websdk',
       },
-      'websdk': '@zoomus/websdk'
+      'websdk': '@zoom/meetingsdk'
     },
     output: {
       filename: './assets/vendor/zoom/websdk/[name].bundle.js',

@@ -596,6 +596,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
 			$create_meeting_arr['allow_multiple_devices'] = filter_input( INPUT_POST, 'allow_multiple_devices' );
 		} else {
 			$create_meeting_arr['join_before_host']          = filter_input( INPUT_POST, 'join_before_host' );
+			$create_meeting_arr['jbh_time']                  = absint( filter_input( INPUT_POST, 'jbh_time' ) );
 			$create_meeting_arr['option_participants_video'] = filter_input( INPUT_POST, 'option_participants_video' );
 			$create_meeting_arr['option_mute_participants']  = filter_input( INPUT_POST, 'option_mute_participants' );
 		}

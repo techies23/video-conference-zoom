@@ -154,7 +154,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$option_tz_selected = false;
 					if ( ! empty( $meeting_fields['timezone'] ) ) {
 						$option_tz_selected = selected( $k, $meeting_fields['timezone'], false );
-					} else if ( ! empty( $wp_timezone ) && ! empty( $tzlists[ $wp_timezone ] ) && $tzlists[ $wp_timezone ] !== false ) {
+					} elseif ( ! empty( $wp_timezone ) && ! empty( $tzlists[ $wp_timezone ] ) && $tzlists[ $wp_timezone ] !== false ) {
 						$option_tz_selected = selected( $k, $wp_timezone, false );
 					}
 					?>
@@ -219,11 +219,31 @@ if ( ! defined( 'ABSPATH' ) ) {
             </p>
         </td>
     </tr>
+    <tr class="vczapi-admin-hide-on-webinar" <?php echo ! empty( $meeting_fields['meeting_type'] ) && $meeting_fields['meeting_type'] === 2 ? 'style="display: none;"' : false; ?>>
+        <th scope="row"><label for="jbh_time"><?php _e( 'Join Before Host Time', 'video-conferencing-with-zoom-api' ); ?></label></th>
+        <td>
+            <select name="jbh_time">
+                <option value="0" <?php echo ! empty( $meeting_fields['jbh_time'] ) && $meeting_fields['jbh_time'] == 0 ? 'selected' : ''; ?>>
+					<?php _e( 'Allow participant to join anytime.', 'video-conferencing-with-zoom-api' ); ?>
+                </option>
+                <option value="5" <?php echo ! empty( $meeting_fields['jbh_time'] ) && $meeting_fields['jbh_time'] == 5 ? 'selected' : ''; ?>>
+					<?php _e( ' Allow participant to join 5 minutes before meeting start time.', 'video-conferencing-with-zoom-api' ); ?>
+                </option>
+                <option value="10" <?php echo ! empty( $meeting_fields['jbh_time'] ) && $meeting_fields['jbh_time'] == 10 ? 'selected' : ''; ?>>
+					<?php _e( ' Allow participant to join 10 minutes before meeting start time.', 'video-conferencing-with-zoom-api' ); ?>
+                </option>
+                <option value="15" <?php echo ! empty( $meeting_fields['jbh_time'] ) && $meeting_fields['jbh_time'] == 15 ? 'selected' : ''; ?>>
+					<?php _e( ' Allow participant to join 15 minutes before meeting start time.', 'video-conferencing-with-zoom-api' ); ?>
+                </option>
+            </select>
+            <p class="description" id="option_auto_recording_description"><?php _e( 'If the value of join_before_host field is set to true, use this field to indicate time limits when a participant may join a meeting before a host.', 'video-conferencing-with-zoom-api' ); ?></p>
+        </td>
+    </tr>
     <tr>
-        <th scope="row"><label for="option_host_video"><?php _e( 'Start When Host Joins', 'video-conferencing-with-zoom-api' ); ?></label></th>
+        <th scope="row"><label for="option_host_video"><?php _e( 'Host Video', 'video-conferencing-with-zoom-api' ); ?></label></th>
         <td>
             <p class="description" id="option_host_video-description">
-                <input type="checkbox" name="option_host_video" value="1" <?php ! empty( $meeting_fields['option_host_video'] ) ? checked( '1', $meeting_fields['option_host_video'] ) : false; ?> class="regular-text"><?php _e( 'Start video when host join meeting.', 'video-conferencing-with-zoom-api' ); ?>
+                <input type="checkbox" name="option_host_video" value="1" <?php ! empty( $meeting_fields['option_host_video'] ) ? checked( '1', $meeting_fields['option_host_video'] ) : false; ?> class="regular-text"><?php _e( 'Start video when the host joins the meeting.', 'video-conferencing-with-zoom-api' ); ?>
             </p>
         </td>
     </tr>
