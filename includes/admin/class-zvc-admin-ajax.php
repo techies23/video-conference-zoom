@@ -150,7 +150,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 
 			//After user has been created delete this transient in order to fetch latest Data.
 			video_conferencing_zoom_api_delete_user_cache();
-			wp_send_json_success( [ 'msg' => "API Connection is good. You can refresh this and start creating your Zoom Events."] );
+			wp_send_json_success( [ 'msg' => "API Connection is good. You can refresh this and start creating your Zoom Events." ] );
 		}
 
 		wp_die();
@@ -164,19 +164,12 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 */
 	public function get_auth() {
 //		check_ajax_referer( '_nonce_zvc_security', 'noncce' );
-		$zoom_api_key    = get_option( 'zoom_api_key' );
-		$zoom_api_secret = get_option( 'zoom_api_secret' );
-
 		$meeting_id = filter_input( INPUT_POST, 'meeting_id' );
 		if ( vczapi_is_sdk_enabled() ) {
 			$sdk_key    = get_option( 'vczapi_sdk_key' );
 			$secret_key = get_option( 'vczapi_sdk_secret_key' );
 			$signature  = $this->generate_sdk_signature( $sdk_key, $secret_key, $meeting_id, 0 );
 			wp_send_json_success( [ 'sig' => $signature, 'key' => $sdk_key, 'type' => 'sdk' ] );
-
-		} elseif ( ! empty( $zoom_api_key ) && ! empty( $zoom_api_secret ) ) {
-			$signature = $this->generate_signature( $zoom_api_key, $zoom_api_secret, $meeting_id, 0 );
-			wp_send_json_success( [ 'sig' => $signature, 'key' => $zoom_api_key, 'type' => 'jwt' ] );
 		} else {
 			wp_send_json_error( 'Error occured!' );
 		}

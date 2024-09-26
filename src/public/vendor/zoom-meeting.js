@@ -1,4 +1,4 @@
-import {ZoomMtg} from '@zoomus/websdk'
+import {ZoomMtg} from "@zoom/meetingsdk"
 
 /**
  * Zoom Meeting Join via Browser App
@@ -27,7 +27,7 @@ const ZoomMtgApp = {
      * Initialize the SDK
      */
     initSDK: function () {
-        ZoomMtg.setZoomJSLib('https://source.zoom.us/' + zvc_ajx.sdk_version + '/lib', '/av')
+        // ZoomMtg.setZoomJSLib('https://source.zoom.us/' + zvc_ajx.sdk_version + '/lib', '/av')
         ZoomMtg.preLoadWasm()
         ZoomMtg.prepareWebSDK()
     },
@@ -90,7 +90,7 @@ const ZoomMtgApp = {
         }
     },
 
-    handleJoinMeeting: function (display_name, pwd, email) {
+    handleJoinMeeting: function (display_name, pwd, email, locale) {
         if (this.meetingID != null || this.meetingID !== '') {
             this.generateSignature().then(result => {
                 if (result.success) {
@@ -102,7 +102,8 @@ const ZoomMtgApp = {
                     const validatedObjects = {
                         name: display_name !== null ? display_name : '',
                         password: pwd !== null ? pwd : '',
-                        email: email !== null ? email : ''
+                        email: email !== null ? email : '',
+                        locale: locale
                     }
                     this.prepBeforeJoin(result, validatedObjects)
                 }
@@ -123,6 +124,7 @@ const ZoomMtgApp = {
         const display_name = document.getElementById('vczapi-jvb-display-name')
         const email = document.getElementById('vczapi-jvb-email')
         const pwd = document.getElementById('meeting_password')
+        const language = document.querySelector('.meeting-locale')
 
         if (display_name !== null && (display_name.value === null || display_name.value === '')) {
             this.infoContainer.innerHTML = 'Name is a Required field!'
@@ -151,7 +153,8 @@ const ZoomMtgApp = {
         const name = display_name !== null ? display_name.value : '';
         const password = pwd !== null ? pwd.value : '';
         const userEmail = email !== null ? email.value : '';
-        this.handleJoinMeeting(name, password, userEmail)
+        const locale = language.value !== null ? language.value : 'en-US';
+        this.handleJoinMeeting(name, password, userEmail, locale)
     },
 
     /**
@@ -172,17 +175,15 @@ const ZoomMtgApp = {
             mainWindow.remove()
         }
 
-        const locale = document.getElementById('meeting_lang')
-
         //Set this for the additional props to pass before the actual meeting
         const meetConfig = {
-            lang: locale !== null ? locale.value : 'en-US',
+            lang: validatedObjects.locale,
             leaveUrl: this.redirectTo,
         }
 
         //Actual meeting join props
         let meetingJoinParams = {
-            meetingNumber: parseInt(this.meetingID, 10),
+            meetingNumber: parseInt(this.meetingID),
             userName: validatedObjects.name,
             signature: SIGNATURE,
             userEmail: validatedObjects.email,
@@ -221,6 +222,7 @@ const ZoomMtgApp = {
      * @param meetingJoinParams
      */
     joinMeeting: function (config, meetingJoinParams) {
+        ZoomMtg.i18n.load(config.lang)
         ZoomMtg.init({
             leaveUrl: config.leaveUrl,
             isSupportAV: true,
@@ -234,9 +236,6 @@ const ZoomMtgApp = {
             isSupportCC: zvc_ajx.isSupportCC,
             screenShare: zvc_ajx.screenShare,
             success: function () {
-                ZoomMtg.i18n.load(config.lang)
-                ZoomMtg.i18n.reload(config.lang)
-
                 ZoomMtg.join(meetingJoinParams)
             },
             error: function (res) {

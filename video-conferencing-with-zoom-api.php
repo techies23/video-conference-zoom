@@ -6,7 +6,7 @@
  * Plugin Name:       Video Conferencing with Zoom
  * Plugin URI:        https://wordpress.org/plugins/video-conferencing-with-zoom-api/
  * Description:       Video Conferencing with Zoom Meetings and Webinars plugin provides you with great functionality of managing Zoom meetings, Webinar scheduling options, and users directly from your WordPress dashboard.
- * Version:           4.5.3
+ * Version:           4.6.0
  * Author:            Deepen Bajracharya
  * Author URI:        https://www.imdpen.com
  * License:           GPL-2.0+
@@ -24,8 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 defined( 'ZVC_PLUGIN_FILE' ) || define( 'ZVC_PLUGIN_FILE', __FILE__ );
 defined( 'ZVC_PLUGIN_SLUG' ) || define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
-defined( 'ZVC_PLUGIN_VERSION' ) || define( 'ZVC_PLUGIN_VERSION', '4.5.3' );
-defined( 'ZVC_ZOOM_WEBSDK_VERSION' ) || define( 'ZVC_ZOOM_WEBSDK_VERSION', '2.18.2' );
+defined( 'ZVC_PLUGIN_VERSION' ) || define( 'ZVC_PLUGIN_VERSION', '4.6.0' );
+defined( 'ZVC_ZOOM_WEBSDK_VERSION' ) || define( 'ZVC_ZOOM_WEBSDK_VERSION', '3.8.10' );
 defined( 'ZVC_PLUGIN_DIR_PATH' ) || define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'ZVC_PLUGIN_DIR_URL' ) || define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 defined( 'ZVC_PLUGIN_ADMIN_ASSETS_URL' ) || define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin' );

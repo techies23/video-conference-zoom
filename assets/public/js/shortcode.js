@@ -85,7 +85,6 @@ var __webpack_exports__ = {};
 
             // console.log(response.pagination);
           },
-
           error: function (MLHttpRequest, textStatus, errorThrown) {}
         });
       });
