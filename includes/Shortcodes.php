@@ -50,6 +50,7 @@ class Shortcodes {
 
 			//Embed Browser
 			'zoom_join_via_browser'      => array( $embedded, 'join_via_browser' ),
+			'zoom_embed_meeting'         => array( $embedded, 'embed_zoom_meeting' ),
 
 			//Webinars
 			'zoom_api_webinar'           => array( $webinars, 'show_webinar_by_ID' ),
@@ -96,7 +97,7 @@ class Shortcodes {
 			'video-conferencing-with-zoom-api-datable-js'
 		], ZVC_PLUGIN_VERSION, true );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'loading_recordings' => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
 		) );
 		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(

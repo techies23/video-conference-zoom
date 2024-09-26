@@ -27,6 +27,48 @@ class Embed {
 		return self::$_instance;
 	}
 
+	protected function __construct() {
+		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+	}
+
+	public function scripts() {
+		wp_register_script( 'video-conferncing-embed-zoom', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/embed-zoom-meeting.bundle.js', [], ZVC_PLUGIN_VERSION, [
+			'in_footer' => true
+		] );
+	}
+
+	/**
+	 * Embeds video into your site directly
+	 *
+	 * @added Version 4.6.0
+	 *
+	 * @param $atts
+	 * @param  null  $content
+	 *
+	 * @return string|void
+	 */
+	public function embed_zoom_meeting( $atts, $content = null ) {
+		$attributes = extract( shortcode_atts( array(
+			'meeting_id' => '',
+		), $atts ) );
+
+		if ( empty( $meeting_id ) ) {
+			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . __( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . __( 'No meeting id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
+
+			return;
+		}
+
+		wp_enqueue_script( 'video-conferncing-embed-zoom' );
+
+		ob_start();
+		?>
+        <div id="vczapi-embed-source"></div>
+		<?php
+		$content .= ob_get_clean();
+
+		return $content;
+	}
+
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
