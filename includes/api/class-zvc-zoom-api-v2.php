@@ -392,7 +392,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ),
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
 				'alternative_hosts'      => $alternative_host_ids ?? "",
-				'waiting_room'           => ! empty( $data['disable_waiting_room'] ),
+				'waiting_room'           => empty( $data['disable_waiting_room'] ),
 			);
 
 			$createAMeetingArray = apply_filters( 'vczapi_createAmeeting', $createAMeetingArray );
@@ -437,7 +437,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				'mute_upon_entry'        => ! empty( $data['option_mute_participants'] ),
 				'auto_recording'         => ! empty( $data['option_auto_recording'] ) ? $data['option_auto_recording'] : "none",
 				'alternative_hosts'      => $alternative_host_ids ?? "",
-				'waiting_room'           => ! empty( $data['disable_waiting_room'] ),
+				'waiting_room'           => empty( $data['disable_waiting_room'] ),
 			);
 
 			$updateMeetingInfoArray = apply_filters( 'vczapi_updateMeetingInfo', $updateMeetingInfoArray );
