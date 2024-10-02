@@ -1,5 +1,7 @@
 <?php
 
+use Codemanas\VczApi\Helpers\Locales;
+
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -189,7 +191,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <select name="meeting-lang">
                                     <option value="all" <?php ! empty( $default_jvb_lang ) ? selected( $default_jvb_lang, 'all' ) : false; ?>><?php _e( 'Show All', 'video-conferencing-with-zoom-api' ); ?></option>
 									<?php
-									$langs = \Codemanas\VczApi\Helpers\I18N::getSupportedTranslationsForWeb();
+									$langs = Locales::getSupportedTranslationsForWeb();
 									foreach ( $langs as $k => $lang ) {
 										?>
                                         <option value="<?php echo $k; ?>" <?php echo ! empty( $default_jvb_lang ) && $default_jvb_lang == $k ? 'selected' : ''; ?>><?php echo $lang; ?></option>

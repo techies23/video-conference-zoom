@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi\Helpers;
 
-class I18N {
+class Locales {
 
 	public static function getSupportedTranslationsForWeb(): array {
 		return [

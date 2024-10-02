@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 4.6.0
+Stable tag: 4.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -161,7 +161,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.6.0 September 26th, 2024
+= 4.6.1 October 2nd, 2024 =
+* Changed name of class from I18N => Locales.
+
+= 4.6.0 September 26th, 2024 =
 * Updated: WebSDK to version 3.8.10
 * Optimized: Join via browser code.
 * Fixed: Join via browser language change.
