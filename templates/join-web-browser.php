@@ -99,7 +99,7 @@ if ( video_conference_zoom_check_login() ) {
                                     <label for="meeting_lang"><?php _e( 'Locale', 'video-conferencing-with-zoom-api' ); ?></label>
                                     <select name="meeting-lang" class="form-control meeting-locale">
 										<?php
-										$langs = \Codemanas\VczApi\Helpers\I18N::getSupportedTranslationsForWeb();
+										$langs = \Codemanas\VczApi\Helpers\Locales::getSupportedTranslationsForWeb();
 										foreach ( $langs as $k => $lang ) {
 											?>
                                             <option value="<?php echo $k; ?>"><?php echo $lang; ?></option>
