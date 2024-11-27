@@ -60,6 +60,8 @@ final class Bootstrap {
 		add_action( 'in_plugin_update_message-' . ZVC_PLUGIN_ABS_NAME, function ( $plugin_data ) {
 			$this->version_update_warning( ZVC_PLUGIN_VERSION, $plugin_data['new_version'] );
 		} );
+
+        Marketplace::get_instance();
 	}
 
 	/**

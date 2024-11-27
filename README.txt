@@ -3,8 +3,8 @@ Contributors: j__3rk, digamberpradhan, codemanas
 Tags: zoom video conference, video conference, web conferencing, online meetings, webinars
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
-Tested up to: 6.6
-Stable tag: 4.6.2
+Tested up to: 6.7.1
+Stable tag: 4.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+= 4.6.3 - November 27th 2024 =
+* Updated tested to version for WordPress to 6.7
 
 = 4.6.1 - 4.6.2 October 3rd, 2024 =
 * Changed name of class from I18N => Locales.
