@@ -76,19 +76,28 @@ These below are the scopes required from step 4 when setting up the scopes for y
 * **View all user meetings**
     - *View a meeting/meeting:read:meeting:admin*
     - *View a user's meetings/meeting:read:list_meetings:admin*
+    - *View a meeting's registrant/meeting:read:registrant:admin*
+    - *View a meeting's registrants/meeting:read:list_registrants:admin*
 * **View and manage all user meetings**
+    - *Add a registrant to a meeting/meeting:write:registrant:admin*
+    - *Update a meeting registrant's registration status/meeting:update:registrant_status:admin*
     - *Update a meeting/meeting:update:meeting:admin*
     - *Delete a meeting/meeting:delete:meeting:admin*
     - *Create a meeting for a user/meeting:write:meeting:admin*
+    - *Remove a meeting's registrant/meeting:delete:registrant:admin*
 * **View and manage sub account’s user meetings/meeting:master**
+    - *Add a registrant to a meeting/meeting:write:registrant:master*
     - *Create a meeting for a user/meeting:write:meeting:master*
+    - *View a meeting/meeting:read:meeting:master*
+    - *View a meeting's registrants/meeting:read:list_registrants:master*
     - *View a user's meetings/meeting:read:list_meetings:master*
     - *Delete a meeting/meeting:delete:meeting:master*
+    - *Update a meeting registrant's registration status/meeting:update:registrant_status:master*
     - *Update a meeting/meeting:update:meeting:master*
-    - *View a meeting/meeting:read:meeting:master*
+    - *Remove a meeting's regstrant/meeting:delete:registrant:master*
+    - *View a meeting's registrant/meeting:read:registrant:master*
 
-
-![App Credentials](img/s2s-oauth/01-04-2024/meeting-permissions.png)
+![App Credentials](img/s2s-oauth/28-10-2024/meeting-permissions.png)
 
 #### Recordings
 * **View all user recordings/recording:read:admin**
@@ -145,23 +154,33 @@ These below are the scopes required from step 4 when setting up the scopes for y
 
 #### Webinars
 * **View all user Webinars**
-    - *View a webinar's alert/webinar:read:alert:admin*
     - *View a user's webinars/webinar:read:list_webinars:admin*
     - *View a webinar/webinar:read:webinar:admin*
+    - *View a webinar's alert/webinar:read:alert:admin*
+    - *View a webinar's registrant/webinar:read:registrant:admin*
+    - *View a webinar's registrants/webinar:read:list_registrants:admin*
   
 * **View and manage all user Webinars**
-    - *Delete a webinar/webinar:delete:webinar:admin*
+    - *Remove a webinar's registrant/webinar:delete:registrant:admin*
     - *Update a webinar's status/webinar:update:status:admin*
     - *Update a webinar/webinar:update:webinar:admin*
     - *Create invite links for a webinars/webinar:write:invite_links:admin*
+    - *Delete a webinar/webinar:delete:webinar:admin*
     - *Create a webinar for a user/webinar:write:webinar:admin*
+    - *Update a webinar registrant's registration status/webinar:update:registrant_status:admin*
+    - *Add a registrant to a webinar/webinar:write:registrant:admin*
   
 * **View and manage sub account’s user webinars**
-    - *View a webinar/webinar:read:webinar:master*
+    - *Update a webinar registrant's registration status/webinar:update:registrant_status:master*
+    - *View a webinar/webinar:delete:registrant:master*
+    - *Remove a webinar's registrant/webinar:read:webinar:master*
+    - *View a webinar's registrant/webinar:read:webinar:master*
+    - *View a webinar's registrants/webinar:read:list_registrants:master*
+    - *Add a registrant to a webinar/webinar:write:registrant:master*
     - *Update a webinar/webinar:update:webinar:master*
     - *Create a webinar for a user/webinar:write:webinar:master*
 
-![App Credentials](img/s2s-oauth/01-04-2024/webinar-permissions.png)
+![App Credentials](img/s2s-oauth/28-10-2024/webinar-permissions.png)
 
 ### Adding Server-to-Server OAuth Credentials to the plugin
 
