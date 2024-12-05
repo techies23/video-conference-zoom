@@ -1419,24 +1419,34 @@
 <li><strong>View all user meetings</strong><ul>
 <li><em>View a meeting/meeting:read:meeting:admin</em></li>
 <li><em>View a user's meetings/meeting:read:list_meetings:admin</em></li>
+<li><em>View a meeting's registrant/meeting:read:registrant:admin</em></li>
+<li><em>View a meeting's registrants/meeting:read:list_registrants:admin</em></li>
 </ul>
 </li>
 <li><strong>View and manage all user meetings</strong><ul>
+<li><em>Add a registrant to a meeting/meeting:write:registrant:admin</em></li>
+<li><em>Update a meeting registrant's registration status/meeting:update:registrant_status:admin</em></li>
 <li><em>Update a meeting/meeting:update:meeting:admin</em></li>
 <li><em>Delete a meeting/meeting:delete:meeting:admin</em></li>
 <li><em>Create a meeting for a user/meeting:write:meeting:admin</em></li>
+<li><em>Remove a meeting's registrant/meeting:delete:registrant:admin</em></li>
 </ul>
 </li>
 <li><strong>View and manage sub account’s user meetings/meeting:master</strong><ul>
+<li><em>Add a registrant to a meeting/meeting:write:registrant:master</em></li>
 <li><em>Create a meeting for a user/meeting:write:meeting:master</em></li>
+<li><em>View a meeting/meeting:read:meeting:master</em></li>
+<li><em>View a meeting's registrants/meeting:read:list_registrants:master</em></li>
 <li><em>View a user's meetings/meeting:read:list_meetings:master</em></li>
 <li><em>Delete a meeting/meeting:delete:meeting:master</em></li>
+<li><em>Update a meeting registrant's registration status/meeting:update:registrant_status:master</em></li>
 <li><em>Update a meeting/meeting:update:meeting:master</em></li>
-<li><em>View a meeting/meeting:read:meeting:master</em></li>
+<li><em>Remove a meeting's regstrant/meeting:delete:registrant:master</em></li>
+<li><em>View a meeting's registrant/meeting:read:registrant:master</em></li>
 </ul>
 </li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/meeting-permissions.png" /></p>
+<p><img alt="App Credentials" src="../img/s2s-oauth/28-10-2024/meeting-permissions.png" /></p>
 <h4 id="recordings">Recordings</h4>
 <ul>
 <li>
@@ -1523,31 +1533,41 @@
 <li>
 <p><strong>View all user Webinars</strong></p>
 <ul>
-<li><em>View a webinar's alert/webinar:read:alert:admin</em></li>
 <li><em>View a user's webinars/webinar:read:list_webinars:admin</em></li>
 <li><em>View a webinar/webinar:read:webinar:admin</em></li>
+<li><em>View a webinar's alert/webinar:read:alert:admin</em></li>
+<li><em>View a webinar's registrant/webinar:read:registrant:admin</em></li>
+<li><em>View a webinar's registrants/webinar:read:list_registrants:admin</em></li>
 </ul>
 </li>
 <li>
 <p><strong>View and manage all user Webinars</strong></p>
 <ul>
-<li><em>Delete a webinar/webinar:delete:webinar:admin</em></li>
+<li><em>Remove a webinar's registrant/webinar:delete:registrant:admin</em></li>
 <li><em>Update a webinar's status/webinar:update:status:admin</em></li>
 <li><em>Update a webinar/webinar:update:webinar:admin</em></li>
 <li><em>Create invite links for a webinars/webinar:write:invite_links:admin</em></li>
+<li><em>Delete a webinar/webinar:delete:webinar:admin</em></li>
 <li><em>Create a webinar for a user/webinar:write:webinar:admin</em></li>
+<li><em>Update a webinar registrant's registration status/webinar:update:registrant_status:admin</em></li>
+<li><em>Add a registrant to a webinar/webinar:write:registrant:admin</em></li>
 </ul>
 </li>
 <li>
 <p><strong>View and manage sub account’s user webinars</strong></p>
 <ul>
-<li><em>View a webinar/webinar:read:webinar:master</em></li>
+<li><em>Update a webinar registrant's registration status/webinar:update:registrant_status:master</em></li>
+<li><em>View a webinar/webinar:delete:registrant:master</em></li>
+<li><em>Remove a webinar's registrant/webinar:read:webinar:master</em></li>
+<li><em>View a webinar's registrant/webinar:read:webinar:master</em></li>
+<li><em>View a webinar's registrants/webinar:read:list_registrants:master</em></li>
+<li><em>Add a registrant to a webinar/webinar:write:registrant:master</em></li>
 <li><em>Update a webinar/webinar:update:webinar:master</em></li>
 <li><em>Create a webinar for a user/webinar:write:webinar:master</em></li>
 </ul>
 </li>
 </ul>
-<p><img alt="App Credentials" src="../img/s2s-oauth/01-04-2024/webinar-permissions.png" /></p>
+<p><img alt="App Credentials" src="../img/s2s-oauth/28-10-2024/webinar-permissions.png" /></p>
 <h3 id="adding-server-to-server-oauth-credentials-to-the-plugin">Adding Server-to-Server OAuth Credentials to the plugin</h3>
 <p>Login to your WordPress site as an Administrator and goto WordPress admin dashboard page and goto <strong>Zoom Events &gt; Settings</strong> page.</p>
 <ol>
