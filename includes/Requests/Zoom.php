@@ -194,6 +194,15 @@ class Zoom {
 	 * @return array|bool|WP_Error|string
 	 */
 	public function recordingsByMeeting( $meetingId ) {
+		if ( strpos( $meetingId, '/' ) === 0 ) {
+			// Double encode the UUID
+			// First encode it
+			$firstEncoded = urlencode( $meetingId );
+			// Then encode it again
+			$doubleEncoded = urlencode( $firstEncoded );
+			$meetingId     = $doubleEncoded;
+		}
+
 		return $this->sendRequest( '/meetings/' . $meetingId . '/recordings' );
 	}
 

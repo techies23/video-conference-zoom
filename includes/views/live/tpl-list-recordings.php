@@ -32,6 +32,8 @@ $host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
 			if ( ! empty( $recordings ) && ! empty( $recordings->meetings ) ) {
 				$meeting_count = 0;
 				foreach ( $recordings->meetings as $recording ) {
+					$recording_by_uuid = zoom_conference()->recordingsByMeeting( $recording->uuid );
+					$recording_by_uuid = ! is_wp_error( $recording_by_uuid ) && is_string( $recording_by_uuid ) ? json_decode( $recording_by_uuid ) : null;
 					?>
                     <tr>
                         <td><?php echo $recording->id; ?></td>
@@ -45,8 +47,6 @@ $host_id = isset( $_GET['host_id'] ) ? $_GET['host_id'] : null;
                                     Recordings</a>
                                 <div id="recording-<?php echo $meeting_count; ?>" style="display:none;">
 									<?php
-									$recording_by_uuid = zoom_conference()->recordingsByMeeting( $recording->uuid );
-									$recording_by_uuid = ! is_wp_error( $recording_by_uuid ) && is_string( $recording_by_uuid ) ? json_decode( $recording_by_uuid ) : null;
 									if ( ! is_null( $recording_by_uuid ) ) {
 										foreach ( $recording_by_uuid->recording_files as $files ) { ?>
                                             <ul class="zvc-inside-table-wrapper zvc-inside-table-wrapper-<?php echo $files->id; ?>">

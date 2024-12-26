@@ -638,6 +638,14 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 * @return bool|mixed
 		 */
 		public function recordingsByMeeting( $meetingId ) {
+			if ( strpos( $meetingId, '/' ) === 0 ) {
+				// Double encode the UUID
+				// First encode it
+				$firstEncoded = urlencode( $meetingId );
+				// Then encode it again
+				$doubleEncoded = urlencode( $firstEncoded );
+				$meetingId     = $doubleEncoded;
+			}
 			return $this->sendRequest( 'meetings/' . $meetingId . '/recordings', false, "GET" );
 		}
 
