@@ -37,12 +37,9 @@ class BlockTemplates {
 	}
 
 	public function add_meetings_block_template( $query_results, $query ) {
-
-//		var_dump($query_results);
-
 		$slugs = $query['slug__in'] ?? [];
 
-		if ( ! is_admin() && ! empty( $slugs ) && ! in_array( 'single-zoom-meetings', $slugs ) ) {
+		if ( ! empty( $slugs ) && ! in_array( 'single-zoom-meetings', $slugs ) && ! in_array( 'single-zoom-meeting', $slugs ) ) {
 			return $query_results;
 		}
 
