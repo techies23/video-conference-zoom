@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 4.6.4
+Stable tag: 4.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+= 4.6.5 - July 7th 2025 =
+* Fix: Issue with block themes - templates reverting to zoom template.
+
 = 4.6.4 - April 21st 2025 =
 * Recordings UUID needs to check for / and needs double encoding
 
