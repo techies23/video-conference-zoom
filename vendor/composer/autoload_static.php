@@ -30,6 +30,15 @@ class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
     );
 
     public static $classMap = array (
+        'CodeManas\\VczApi\\Elementor\\Elementor' => __DIR__ . '/../..' . '/includes/Elementor/Elementor.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\EmbedMeetings' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/EmbedMeetings.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingByID' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingByID.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingByPostID' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingByPostID.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingHosts' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingHosts.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingList' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingList.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\RecordingByMeetingID' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/RecordingByMeetingID.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\RecordingsByHost' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/RecordingsByHost.php',
+        'CodeManas\\VczApi\\Elementor\\Widgets\\WebinarList' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/WebinarList.php',
         'Codemanas\\VczApi\\Blocks\\BlockTemplates' => __DIR__ . '/../..' . '/includes/Blocks/BlockTemplates.php',
         'Codemanas\\VczApi\\Blocks\\Blocks' => __DIR__ . '/../..' . '/includes/Blocks/Blocks.php',
         'Codemanas\\VczApi\\Bootstrap' => __DIR__ . '/../..' . '/includes/Bootstrap.php',
@@ -40,8 +49,10 @@ class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
         'Codemanas\\VczApi\\Helpers\\Date' => __DIR__ . '/../..' . '/includes/Helpers/Date.php',
         'Codemanas\\VczApi\\Helpers\\Encryption' => __DIR__ . '/../..' . '/includes/Helpers/Encryption.php',
         'Codemanas\\VczApi\\Helpers\\Links' => __DIR__ . '/../..' . '/includes/Helpers/Links.php',
+        'Codemanas\\VczApi\\Helpers\\Locales' => __DIR__ . '/../..' . '/includes/Helpers/Locales.php',
         'Codemanas\\VczApi\\Helpers\\MeetingType' => __DIR__ . '/../..' . '/includes/Helpers/MeetingType.php',
         'Codemanas\\VczApi\\Helpers\\Templates' => __DIR__ . '/../..' . '/includes/Helpers/Templates.php',
+        'Codemanas\\VczApi\\Marketplace' => __DIR__ . '/../..' . '/includes/Marketplace.php',
         'Codemanas\\VczApi\\Requests\\Zoom' => __DIR__ . '/../..' . '/includes/Requests/Zoom.php',
         'Codemanas\\VczApi\\Shortcodes' => __DIR__ . '/../..' . '/includes/Shortcodes.php',
         'Codemanas\\VczApi\\Shortcodes\\Embed' => __DIR__ . '/../..' . '/includes/Shortcodes/Embed.php',
