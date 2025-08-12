@@ -36,7 +36,7 @@
     "@wordpress/element": "^6.8.0",
     "@wordpress/i18n": "^5.8.0",
     "@wordpress/server-side-render": "^5.8.0",
-    "@zoom/meetingsdk": "^3.8.10",
+    "@zoom/meetingsdk": "^4.0.0",
     "datatables.net": "^2.1.7",
     "datatables.net-dt": "^2.1.7",
     "datatables.net-responsive": "^3.0.3",
