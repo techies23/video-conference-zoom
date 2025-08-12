@@ -6,6 +6,15 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CodeManas\\VczApi\\Elementor\\Elementor' => $baseDir . '/includes/Elementor/Elementor.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\EmbedMeetings' => $baseDir . '/includes/Elementor/Widgets/EmbedMeetings.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingByID' => $baseDir . '/includes/Elementor/Widgets/MeetingByID.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingByPostID' => $baseDir . '/includes/Elementor/Widgets/MeetingByPostID.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingHosts' => $baseDir . '/includes/Elementor/Widgets/MeetingHosts.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingList' => $baseDir . '/includes/Elementor/Widgets/MeetingList.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\RecordingByMeetingID' => $baseDir . '/includes/Elementor/Widgets/RecordingByMeetingID.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\RecordingsByHost' => $baseDir . '/includes/Elementor/Widgets/RecordingsByHost.php',
+    'CodeManas\\VczApi\\Elementor\\Widgets\\WebinarList' => $baseDir . '/includes/Elementor/Widgets/WebinarList.php',
     'Codemanas\\VczApi\\Blocks\\BlockTemplates' => $baseDir . '/includes/Blocks/BlockTemplates.php',
     'Codemanas\\VczApi\\Blocks\\Blocks' => $baseDir . '/includes/Blocks/Blocks.php',
     'Codemanas\\VczApi\\Bootstrap' => $baseDir . '/includes/Bootstrap.php',
@@ -16,8 +25,10 @@ return array(
     'Codemanas\\VczApi\\Helpers\\Date' => $baseDir . '/includes/Helpers/Date.php',
     'Codemanas\\VczApi\\Helpers\\Encryption' => $baseDir . '/includes/Helpers/Encryption.php',
     'Codemanas\\VczApi\\Helpers\\Links' => $baseDir . '/includes/Helpers/Links.php',
+    'Codemanas\\VczApi\\Helpers\\Locales' => $baseDir . '/includes/Helpers/Locales.php',
     'Codemanas\\VczApi\\Helpers\\MeetingType' => $baseDir . '/includes/Helpers/MeetingType.php',
     'Codemanas\\VczApi\\Helpers\\Templates' => $baseDir . '/includes/Helpers/Templates.php',
+    'Codemanas\\VczApi\\Marketplace' => $baseDir . '/includes/Marketplace.php',
     'Codemanas\\VczApi\\Requests\\Zoom' => $baseDir . '/includes/Requests/Zoom.php',
     'Codemanas\\VczApi\\Shortcodes' => $baseDir . '/includes/Shortcodes.php',
     'Codemanas\\VczApi\\Shortcodes\\Embed' => $baseDir . '/includes/Shortcodes/Embed.php',
