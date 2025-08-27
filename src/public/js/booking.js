@@ -29,6 +29,8 @@ import flatpickr from 'flatpickr'
       enableTime: true,
       inline: true,
       defaultDate: new Date(),
+      minuteIncrement: 1, // Sets the minute step to 1
+      hourIncrement: 1 // Sets the hour step to 1
     }
 
     options = { ...options, ...flatpickrOptions }
@@ -58,6 +60,27 @@ import flatpickr from 'flatpickr'
 
       showLoader()
       const formData = new FormData(DOM.form)
+
+      // Log form data entries
+      for (const [key, value] of formData.entries()) {
+        console.log(`Form Data: ${key} = ${value}`)
+      }
+
+      //Validation
+      // Check honeypot
+      if (formData.get('zoom_action')) {
+        hideLoader()
+        console.error('Honeypot triggered')
+        return
+      }
+
+      // Validate required fields
+      if (!formData.get('vczapi-meeting-booker__name') || !formData.get('vczapi-meeting-booker__date-input')) {
+        hideLoader()
+        console.error('Required fields missing')
+        return
+      }
+      //End Validation
 
       formData.append('action', 'vczapi-meeting-booker-new-booking')
 

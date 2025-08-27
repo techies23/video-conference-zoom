@@ -52,7 +52,8 @@ class Frontend {
             </div>
             <form class="vczapi-meeting-booker__form" method="post" action="">
                 <?php wp_nonce_field( $this->nonce_action, $this->nonce_name ); ?>
-                <input type="hidden" name="action" value=""/>
+                <?php //this is a honey pot ?>
+                <input type="hidden" name="zoom_action" value=""/>
                 <label>
                     <input type="text" name="vczapi-meeting-booker__date-input" class="vczapi-meeting-booker__date-input"/>
                 </label>
@@ -65,7 +66,7 @@ class Frontend {
                         </select>
                     </label>
                 <?php endif; ?>
-                <label><input type="text" name="vzapi-meeting-booker__name" class="vczapi-meeting__name" placeholder="<?php
+                <label><input type="text" name="vczapi-meeting-booker__name" class="vczapi-meeting-booker__name" placeholder="<?php
                     esc_attr_e( 'Full Name', 'video-conferencing-with-zoom-api' );
                     ?>" value="<?php echo esc_attr( is_user_logged_in() ? $this->get_user_full_name() : '' ); ?>"/></label>
                 <input type="submit" class="vczapi-meeting-booker__submit-button" value="Book Meeting"/>
@@ -110,9 +111,14 @@ class Frontend {
             wp_send_json_error( [ 'message' => 'Invalid nonce' ], 403 );
         }
 
+        $honeypot = sanitize_text_field( $_POST['zoom_action'] ) ?? '';
+        if ( ! empty( $honeypot ) ) {
+            wp_send_json_error( [ 'message' => 'Something went wrong' ] );
+        }
+
         $date     = sanitize_text_field( $_POST['vczapi-meeting-booker__date-input'] ?? '' );
         $timezone = sanitize_text_field( $_POST['vczapi-meeting-booker__timezone'] ?? '' );
-        $name     = sanitize_text_field( $_POST['vzapi-meeting-booker__name'] ?? '' );
+        $name     = sanitize_text_field( $_POST['vczapi-meeting-booker__name'] ?? '' );
 
         if ( empty( $date ) || empty( $name ) ) {
             wp_send_json_error( [ 'message' => 'Required fields are missing' ], 400 );
@@ -127,6 +133,10 @@ class Frontend {
                 'message' => 'Booking created successfully',
                 'id'      => $post_id
         ] );
+    }
+
+    private function get_zoom_hosts() {
+
     }
 
 }
