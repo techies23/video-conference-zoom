@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Booking;
 
+use Codemanas\VczApi\Zoom\Request;
+
 class Main {
 	private static $_instance = null;
 
@@ -12,5 +14,11 @@ class Main {
 	private function __construct() {
 		Frontend::get_instance();
 		CPT::get_instance();
+		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	public function init() {
+		$zoomRequest = new Request();
+
 	}
 }

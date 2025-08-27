@@ -75,7 +75,7 @@ class Frontend {
         $args              = shortcode_atts( array(
                 'type'          => 'meeting',
                 'show_timezone' => true,
-                'host'          => 'codemanas17@gmail.com'
+                'host'          => ''
         ), $atts );
         $timezones         = Date::timezone_list();
         $wp_timezone       = wp_timezone_string();
