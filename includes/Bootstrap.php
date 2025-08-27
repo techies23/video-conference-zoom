@@ -245,6 +245,9 @@ final class Bootstrap {
 
 		//Helpers
 		Encryption::get_instance();
+
+        //Booking
+        Booking\Main::get_instance();
 	}
 
 	/**

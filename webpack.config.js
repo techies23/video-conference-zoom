@@ -10,12 +10,12 @@ const rules = {
     {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      loader: 'babel-loader'
+      loader: 'babel-loader',
     },
     // sass compilation
     {
       test: /\.(sass|scss)$/,
-      use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader']
+      use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader'],
     },
     // loader for images and icons (only required if css references image files)
     {
@@ -23,17 +23,25 @@ const rules = {
       type: 'asset/resource',
       generator: {
         filename: './assets/images/[name][ext]',
-      }
+      },
     },
-  ]
+  ],
 }
 
+/**
+ * Creates an array of Webpack plugins.
+ *
+ * @param {string} filePath - The file path to be used for naming the generated CSS file.
+ * @returns {Array} An array of Webpack plugin instances, including:
+ * - UnminifiedWebpackPlugin: Ensures that unminified versions of output files are generated.
+ * - MiniCssExtractPlugin: Extracts CSS into a dedicated file with the specified filename.
+ */
 const plugins = (filePath) => {
   return [
     new UnminifiedWebpackPlugin(),
     // css extraction into dedicated file
     new MiniCssExtractPlugin({
-      filename: filePath
+      filename: filePath,
     }),
   ]
 }
@@ -43,11 +51,12 @@ const publicConfig = {
   entry: {
     'join-via-browser': './src/public/js/join-via-browser.js',
     public: './src/public/js/public.js',
-    shortcode: './src/public/js/shortcode.js'
+    shortcode: './src/public/js/shortcode.js',
+    booking: './src/public/js/booking.js',
   },
   output: {
     filename: './assets/public/js/[name].min.js',
-    path: path.resolve(__dirname)
+    path: path.resolve(__dirname),
   },
   module: rules,
   plugins: plugins('./assets/public/css/style.min.css'),
@@ -60,7 +69,7 @@ const backendConfig = {
   },
   output: {
     filename: './assets/admin/js/[name].min.js',
-    path: path.resolve(__dirname)
+    path: path.resolve(__dirname),
   },
   module: rules,
   plugins: plugins('./assets/admin/css/style.min.css'),
@@ -72,7 +81,7 @@ const wp = {
   entry: {
     ...defaultConfig.entry,
     index: path.resolve(process.cwd(), 'src/block', 'index.js'),
-  }
+  },
 }
 
 let modules = [wp, publicConfig, backendConfig]
@@ -84,31 +93,31 @@ if (isProduction) {
         import: './src/public/vendor/zoom-meeting.js',
         dependOn: 'websdk',
       },
-      'websdk': '@zoom/meetingsdk'
+      'websdk': '@zoom/meetingsdk',
     },
     output: {
       filename: './assets/vendor/zoom/websdk/[name].bundle.js',
-      path: path.resolve(__dirname)
+      path: path.resolve(__dirname),
     },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         },
         {
           test: /\.css$/i,
-          use: ['style-loader', 'css-loader']
+          use: ['style-loader', 'css-loader'],
         },
         {
           test: /\.(jpg|png|svg)$/,
-          type: 'asset'
-        }
-      ]
+          type: 'asset',
+        },
+      ],
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
     },
     externals: {
       'babel-polyfill': 'babel-polyfill',
@@ -120,11 +129,11 @@ if (isProduction) {
         commonjs: 'lodash',
         amd: 'lodash',
         root: '_',
-        var: '_'
-      }
+        var: '_',
+      },
     },
     target: 'web',
-    mode: 'production'
+    mode: 'production',
   }
 
   modules.push(webSDKConfig)

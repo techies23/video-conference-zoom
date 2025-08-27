@@ -41,6 +41,7 @@
     "datatables.net-dt": "^2.1.7",
     "datatables.net-responsive": "^3.0.3",
     "datatables.net-responsive-dt": "^3.0.3",
+    "flatpickr": "^4.6.13",
     "jquery-datetimepicker": "^2.5.21",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",
