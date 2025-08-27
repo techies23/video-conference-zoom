@@ -8,19 +8,53 @@ class Frontend {
     private static ?Frontend $_instance = null;
     private string $nonce_action = 'verify-vczapi-meeting-booker-nonce';
     private string $nonce_name = 'vczapi-meeting-booker-nonce';
+    /**
+     * Uses WordPress AUTH_KEY for encryption
+     */
+    private string $encryption_key;
+
+    private function __construct() {
+        $this->encryption_key = defined( 'AUTH_KEY' ) ? AUTH_KEY : 'vczapi_secure_key_2025';
+        add_shortcode( 'vczapi_book_meeting', [ $this, 'vczapi_book_meeting' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'wp_ajax_vczapi-meeting-booker-new-booking', [ $this, 'handle_ajax_form_submission' ] );
+        add_action( 'wp_ajax_nopriv_vczapi-meeting-booker-new-booking', [ $this, 'handle_ajax_form_submission' ] );
+    }
 
     public static function get_instance(): ?Frontend {
         return ( self::$_instance == null ) ? self::$_instance = new self() : self::$_instance;
     }
 
-    private function __construct() {
-        add_shortcode( 'vczapi_book_meeting', [ $this, 'vczapi_book_meeting' ] );
-        add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
-        add_action( 'wp_ajax_vczapi-meeting-booker-new-booking', [ $this, 'handle_ajax_form_submission' ] );
-        add_action( 'wp_ajax_nopriv_vczapi-meeting-booker-new-booking', [ $this, 'handle_ajax_form_submission' ] );
+    /**
+     * @param $data
+     *
+     * @return string
+     */
+    private function encrypt( $data ): string {
+        $iv        = openssl_random_pseudo_bytes( openssl_cipher_iv_length( 'aes-256-cbc' ) );
+        $encrypted = openssl_encrypt( $data, 'aes-256-cbc', $this->encryption_key, 0, $iv );
+
+        return base64_encode( $iv . $encrypted );
     }
 
-    public function wp_enqueue_scripts() {
+    /**
+     * @param $data
+     *
+     * @return string
+     */
+    private function decrypt( $data ): string {
+        $data      = base64_decode( $data );
+        $ivSize    = openssl_cipher_iv_length( 'aes-256-cbc' );
+        $iv        = substr( $data, 0, $ivSize );
+        $encrypted = substr( $data, $ivSize );
+
+        return openssl_decrypt( $encrypted, 'aes-256-cbc', $this->encryption_key, 0, $iv );
+    }
+
+    /**
+     * @return void
+     */
+    public function enqueue_scripts(): void {
         wp_register_script( 'vczapi-meeting-booker', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/booking.js', false, ZVC_PLUGIN_VERSION, true );
         wp_localize_script( 'vczapi-meeting-booker', 'vczapiMeetingBookerParams', array(
                 'ajaxURL' => admin_url( 'admin-ajax.php' ),
@@ -38,13 +72,18 @@ class Frontend {
      * @return string The generated HTML for the meeting booking form.
      */
     public function vczapi_book_meeting( array $atts ): string {
-        $args        = shortcode_atts( array(
+        $args              = shortcode_atts( array(
                 'type'          => 'meeting',
-                'show_timezone' => true
+                'show_timezone' => true,
+                'host'          => 'codemanas17@gmail.com'
         ), $atts );
-        $timezones   = Date::timezone_list();
-        $wp_timezone = wp_timezone_string();
-        $loadingSVG  = apply_filters( 'vczapi_meeting_booker_loadingSVG', $this->get_loading_svg() );
+        $timezones         = Date::timezone_list();
+        $wp_timezone       = wp_timezone_string();
+        $loadingSVG        = apply_filters( 'vczapi_meeting_booker_loadingSVG', $this->get_loading_svg() );
+        $host_id           = $this->findHostByEmail( $args['host'] );
+        $encrypted_host_id = $this->encrypt( $host_id );
+
+
         ob_start(); ?>
         <div class="vczapi-meeting-booker">
             <div class="vczapi-meeting-booker__loader">
@@ -54,10 +93,12 @@ class Frontend {
                 <?php wp_nonce_field( $this->nonce_action, $this->nonce_name ); ?>
                 <?php //this is a honey pot ?>
                 <input type="hidden" name="zoom_action" value=""/>
+                <input type="hidden" name="vczapi-meeting-booker__host-id" value="<?php echo esc_attr( $encrypted_host_id ); ?>"/>
+
                 <label>
-                    <input type="text" name="vczapi-meeting-booker__date-input" class="vczapi-meeting-booker__date-input"/>
+                    <input type="text" required name="vczapi-meeting-booker__date-input" class="vczapi-meeting-booker__date-input"/>
                 </label>
-                <?php if ( $args['show_timezone'] ) : ?>
+                <?php if ( $args['show_timezone'] !== 'false' ) : ?>
                     <label>
                         <select name="vczapi-meeting-booker__timezone">
                             <?php foreach ( $timezones as $timezone ) { ?>
@@ -66,9 +107,16 @@ class Frontend {
                         </select>
                     </label>
                 <?php endif; ?>
-                <label><input type="text" name="vczapi-meeting-booker__name" class="vczapi-meeting-booker__name" placeholder="<?php
+                <label><input type="text" required name="vczapi-meeting-booker__name" class="vczapi-meeting-booker__name" placeholder="<?php
                     esc_attr_e( 'Full Name', 'video-conferencing-with-zoom-api' );
                     ?>" value="<?php echo esc_attr( is_user_logged_in() ? $this->get_user_full_name() : '' ); ?>"/></label>
+                <label>
+                    <input type="email" required name="vczapi-meeting-booker__email" class="vczapi-meeting-booker__email" placeholder="<?php
+                    esc_attr_e( 'Email', 'video-conferencing-with-zoom-api' ); ?>" value="<?php echo esc_attr( is_user_logged_in() ? $this->get_user_email() : '' ); ?>"/>
+                </label>
+                <label>
+                    <input type="text" name="vczapi-meeting-booker__phone" class="vczapi-meeting-booker__phone" placeholder="<?php esc_attr_e( 'Phone', 'video-conferencing-with-zoom-api' ); ?>"/>
+                </label>
                 <input type="submit" class="vczapi-meeting-booker__submit-button" value="Book Meeting"/>
             </form>
         </div>
@@ -106,6 +154,12 @@ class Frontend {
         return $user->display_name;
     }
 
+    private function get_user_email(): string {
+        $user = wp_get_current_user();
+
+        return $user->user_email;
+    }
+
     public function handle_ajax_form_submission() {
         if ( ! wp_verify_nonce( $_POST[ $this->nonce_name ] ?? '', $this->nonce_action ) ) {
             wp_send_json_error( [ 'message' => 'Invalid nonce' ], 403 );
@@ -116,14 +170,18 @@ class Frontend {
             wp_send_json_error( [ 'message' => 'Something went wrong' ] );
         }
 
-        $date     = sanitize_text_field( $_POST['vczapi-meeting-booker__date-input'] ?? '' );
-        $timezone = sanitize_text_field( $_POST['vczapi-meeting-booker__timezone'] ?? '' );
-        $name     = sanitize_text_field( $_POST['vczapi-meeting-booker__name'] ?? '' );
+        $date              = sanitize_text_field( $_POST['vczapi-meeting-booker__date-input'] ?? '' );
+        $timezone          = sanitize_text_field( $_POST['vczapi-meeting-booker__timezone'] ?? '' );
+        $name              = sanitize_text_field( $_POST['vczapi-meeting-booker__name'] ?? '' );
+        $encrypted_host_id = sanitize_text_field( $_POST['vczapi-meeting-booker__host-id'] ?? '' );
+        $email             = sanitize_email( $_POST['vczapi-meeting-booker__email'] ?? '' );
+        $phone             = sanitize_text_field( $_POST['vczapi-meeting-booker__phone'] ?? '' );
+        $host_id           = $this->decrypt( $encrypted_host_id );
 
         if ( empty( $date ) || empty( $name ) ) {
             wp_send_json_error( [ 'message' => 'Required fields are missing' ], 400 );
         }
-        $post_id = CPT::get_instance()->add_booking( $name, $date, $timezone );
+        $post_id = CPT::get_instance()->add_entry( $name, $date, $timezone, $host_id, $email, $phone );
 
         if ( is_wp_error( $post_id ) ) {
             wp_send_json_error( [ 'message' => $post_id->get_error_message() ], 500 );
@@ -135,8 +193,17 @@ class Frontend {
         ] );
     }
 
-    private function get_zoom_hosts() {
+    private function findHostByEmail( string $email ) {
+        $users  = video_conferencing_zoom_api_get_user_transients();
+        $needle = strtolower( trim( $email ) );
+        foreach ( $users as $user ) {
+            if ( isset( $user->email ) && strtolower( trim( $user->email ) ) === $needle ) {
+                return $user->id;
+            }
+        }
 
+        return null;
     }
+
 
 }
