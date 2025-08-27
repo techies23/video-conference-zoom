@@ -20,5 +20,11 @@ class Main {
 	public function init() {
 		$zoomRequest = new Request();
 
+		//public 'uuid' => string 'gY99+E7xQsiXmkz8gB7qhw==' (length=24)
+		//          public 'id' => int 88497814999
+		//          public 'host_id' => string 'L4cQ5GQkScK1egn91Vv8iw' (length=22)
+		//          public 'topic' => string 'test meeting'
+		$result      = $zoomRequest->getMeetingDetails( '88497814999'  );
+		var_dump($result); die;
 	}
 }

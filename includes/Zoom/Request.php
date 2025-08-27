@@ -106,15 +106,11 @@ class Request {
 		return $this->normalizeResponse( $result );
 	}
 
-	public function meetings(): MeetingRequest {
-		return $this->normalizeResponse( $this->meetings );
+	public function getMeetingDetails( $meetingId, array $input = [] ) {
+		$result = $this->meetings->getMeeting( $meetingId, $input );
+
+		return $this->normalizeResponse( $result );
 	}
 
-	public function webinars(): WebinarRequest {
-		return $this->normalizeResponse( $this->webinars );
-	}
 
-	public function users(): UserRequest {
-		return $this->normalizeResponse( $this->users );
-	}
 }
