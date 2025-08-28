@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi\Booking;
 
-use Codemanas\VczApi\Zoom\Request;
+use Codemanas\VczApi\Zoom\Zoom;
 
 class Main {
 	private static $_instance = null;
@@ -17,5 +17,13 @@ class Main {
 		add_action( 'init', array( $this, 'init' ) );
 	}
 
-	public function init() {}
+	public function init() {
+		$vczapiZoom = new Zoom();
+		$response = $vczapiZoom->listMeetings([
+			'user_id' => 'codemanas17@gmail.com',
+		]);
+
+		var_dump($response); die;
+
+	}
 }

@@ -56,12 +56,12 @@ class PayloadBuilder {
 		$warnings   = $validation['warnings'];
 
 		// Step 4: Delegate to resource-specific builder if one is available
-		$normalized = self::delegateResourceSpecific( $operation, $schema, $normalized, $working, $warnings );
-		if ( is_wp_error( $normalized ) ) {
-			return $normalized;
+		$delegated = self::delegateResourceSpecific( $operation, $schema, $normalized, $working, $warnings );
+		if ( is_wp_error( $delegated ) ) {
+			return $delegated;
 		}
-		$warnings = $normalized['warnings'];
-		unset( $normalized['warnings'] );
+		$warnings   = $delegated['warnings'];
+		$normalized = $delegated['payload'];
 
 		// Step 5: Partition by location for HTTP client usage
 		$partitioned = self::partitionByLocation( $normalized, $fields );
@@ -74,14 +74,6 @@ class PayloadBuilder {
 			'operation'   => isset( $schema['operation'] ) ? $schema['operation'] : $operation,
 		);
 
-		/**
-		 * Allow mutation of the final payload.
-		 *
-		 * @param array  $partitioned
-		 * @param string $operation
-		 * @param array  $schema
-		 * @param array  $input
-		 */
 		return apply_filters( 'vczapi_payload_built', $partitioned, $operation, $schema, $input );
 	}
 
