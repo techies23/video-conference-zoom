@@ -3,293 +3,206 @@
 namespace Codemanas\VczApi\Zoom\Schema;
 
 class Meeting {
-	public const MEETING_CREATE = 'meeting.create';
-	public const MEETING_UPDATE = 'meeting.update';
-	public const MEETING_LIST   = 'meeting.list';
-	public const MEETING_GET    = 'meeting.get';
-	public const MEETING_DELETE = 'meeting.delete';
-
 	/**
-	 * Returns the schema array for an operation.
-	 * An empty array indicates unknown/unsupported operation.
+	 * Schema for listing a user's/host's meetings.
+	 *
+	 * GET /users/{user_id}/meetings
+	 *
+	 * Request:
+	 * - Path param: user_id (string) — Zoom user ID, email, or "me" (for user-level apps)
+	 * - Query params:
+	 *   - type (enum) default: scheduled
+	 *   - page_size (int) default: 30, max: 300
+	 *   - next_page_token (string)
+	 *   - page_number (int) legacy-style pagination
+	 *   - from (YYYY-MM-DD)
+	 *   - to (YYYY-MM-DD)
+	 *   - timezone (string, e.g., America/Los_Angeles)
+	 *
+	 * Compat mapping notes:
+	 * - Legacy code often used "host_id" for the user path segment. Mapped to "user_id".
+	 * - CamelCase variants like "userId" (and "hostId") are mapped to "user_id".
+	 * - Some integrations may pass "page" for page number. Mapped to "page_number".
 	 */
-	public function get(string $operation): array
-	{
-		switch ($operation) {
-			case self::MEETING_CREATE:
-				return $this->meetingCreate();
-			case self::MEETING_UPDATE:
-				return $this->meetingUpdate();
-			case self::MEETING_LIST:
-				return $this->meetingList();
-			case self::MEETING_GET:
-				return $this->meetingGET();
-			case self::MEETING_DELETE:
-				return $this->meetingDelete();
-			default:
-				return [];
-		}
-	}
-
-	private function meetingCreate(): array
-	{
-		// Canonical inputs -> mapped to legacy field names expected by your API layer.
-		// Mapping is driven by 'target' and optional 'invertOnWrite' flags.
-		return [
-			'meta'   => [
-				'operation' => self::MEETING_CREATE,
-				'version'   => 1,
-			],
-			'fields' => [
-				// Used for endpoint path, not body (kept as-is).
-				'userId' => [
-					'type'     => 'string',
-					'required' => true,
-					'mapFrom'  => ['host_id', 'hostId'],
-					// target omitted: caller extracts userId to build the endpoint
-				],
-
-				// Top-level fields
-				'topic' => [
+	public static function list(): array {
+		return array(
+			'operation' => SchemaManager::MEETING_LIST,
+			'http'      => array(
+				'method'      => 'GET',
+				'path'        => '/users/{user_id}/meetings',
+				'path_params' => array(
+					'user_id' => 'user_id',
+				),
+			),
+			'fields'    => array(
+				// Path
+				'user_id'         => array(
 					'type'      => 'string',
 					'required'  => true,
-					'maxLength' => 200,
-					'sanitize'  => ['trim', 'strip_tags_soft'],
-					'mapFrom'   => ['meetingTopic', 'title'],
-					'target'    => 'meetingTopic', // legacy field name expected by API class
-				],
-				'agenda' => [
-					'type'      => 'string',
-					'required'  => false,
-					'maxLength' => 2000,
-					'sanitize'  => ['trim', 'strip_all_html'],
-					'target'    => 'agenda',
-				],
-				// We keep start_date as provided (the legacy class converts it to UTC internally)
-				'start_date' => [
-					'type'      => 'datetime-local',
-					'required'  => true,
-					'sanitize'  => ['trim'],
-					'mapFrom'   => ['start_time', 'date'],
-					'target'    => 'start_date',
-				],
-				'timezone' => [
+					'location'  => 'path',
+					'trim'      => true,
+					'nullable'  => false,
+					'doc'       => 'Zoom user ID, email, or "me" for user-level apps.',
+				),
+
+				// Query
+				'type'            => array(
 					'type'     => 'string',
-					'required' => true,
-					'validate' => ['olson_timezone'],
-					'mapFrom'  => ['tz'],
-					'target'   => 'timezone',
-				],
-				'duration' => [
+					'default'  => 'scheduled',
+					'enum'     => array( 'scheduled', 'live', 'upcoming', 'upcoming_meetings', 'previous_meetings' ),
+					'location' => 'query',
+				),
+				'page_size'       => array(
 					'type'     => 'int',
-					'required' => false,
-					'default'  => 60,
-					'min'      => 1,
-					'target'   => 'duration',
-				],
-				'password' => [
-					'type'      => 'string',
-					'required'  => false,
-					'maxLength' => 10,
-					'sanitize'  => ['trim'],
-					'target'    => 'password',
-				],
-				'type' => [
-					'type'     => 'int',
-					'required' => false,
-					'default'  => 2, // Scheduled
-					'enum'     => [1, 2, 3, 8],
-					'target'   => 'type',
-				],
-				// Legacy create method accepts array and joins internally; pass through as array
-				'alternative_host_ids' => [
-					'type'     => 'array[string]',
-					'required' => false,
-					'target'   => 'alternative_host_ids',
-				],
-
-				// Settings (canonical) mapped to legacy flat option_* field names
-				'settings.meeting_authentication' => [
-					'type'     => 'bool',
-					'required' => false,
-					'default'  => false,
-					'mapFrom'  => ['meeting_authentication'],
-					'target'   => 'meeting_authentication',
-				],
-				'settings.join_before_host' => [
-					'type'     => 'bool',
-					'required' => false,
-					'default'  => false,
-					'mapFrom'  => ['join_before_host', 'jbh'],
-					'target'   => 'join_before_host',
-				],
-				'settings.jbh_time' => [
-					'type'     => 'int',
-					'required' => false,
-					'default'  => 0,
-					'min'      => 0,
-					'target'   => 'jbh_time',
-				],
-				'settings.host_video' => [
-					'type'     => 'bool',
-					'required' => false,
-					'default'  => false,
-					'mapFrom'  => ['option_host_video'],
-					'target'   => 'option_host_video',
-				],
-				'settings.participant_video' => [
-					'type'     => 'bool',
-					'required' => false,
-					'default'  => false,
-					'mapFrom'  => ['option_participants_video', 'participant_video'],
-					'target'   => 'option_participants_video',
-				],
-				'settings.mute_upon_entry' => [
-					'type'     => 'bool',
-					'required' => false,
-					'default'  => false,
-					'mapFrom'  => ['option_mute_participants'],
-					'target'   => 'option_mute_participants',
-				],
-				'settings.auto_recording' => [
-					'type'     => 'string',
-					'required' => false,
-					'default'  => 'none',
-					'enum'     => ['none', 'local', 'cloud'],
-					'mapFrom'  => ['option_auto_recording'],
-					'target'   => 'option_auto_recording',
-				],
-				// Canonical waiting_room -> legacy disable_waiting_room (inverted)
-				'settings.waiting_room' => [
-					'type'          => 'bool',
-					'required'      => false,
-					'default'       => true,
-					'mapFrom'       => ['waiting_room'],
-					'target'        => 'disable_waiting_room',
-					'invertOnWrite' => true, // write inverted boolean to target
-				],
-			],
-		];
-	}
-
-	private function meetingUpdate(): array
-	{
-		$schema = $this->meetingCreate();
-		$schema['meta']['operation'] = self::MEETING_UPDATE;
-
-		// meeting_id is required on update (used in URL, not body)
-		$schema['fields']['meeting_id'] = [
-			'type'     => 'string',
-			'required' => true,
-			'mapFrom'  => ['id'],
-			// no target; it will be removed from body and used in endpoint
-		];
-
-		// userId not required on update; topic optional
-		$schema['fields']['userId']['required'] = false;
-		$schema['fields']['topic']['required']  = false;
-
-		return $schema;
-	}
-
-	private function meetingList(): array
-	{
-		// Host userId is required by legacy listMeetings(); the rest are optional filters/pagination.
-		return [
-			'meta'   => [
-				'operation' => self::MEETING_LIST,
-				'version'   => 1,
-			],
-			'fields' => [
-				'userId' => [
-					'type'     => 'string',
-					'required' => true,
-					'mapFrom'  => ['host_id', 'hostId'],
-				],
-				// The type of meeting list to return.
-				'type' => [
-					'type'      => 'string',
-					'required'  => false,
-					'default'   => 'scheduled',
-					'enum'      => ['scheduled', 'live', 'upcoming', 'upcoming_meetings', 'previous_meetings'],
-					'target'    => 'type',
-				],
-				// Pagination size: default 30, max 300.
-				'page_size' => [
-					'type'     => 'int',
-					'required' => false,
 					'default'  => 30,
 					'min'      => 1,
 					'max'      => 300,
-					'target'   => 'page_size',
-				],
-				// Cursor-based pagination token.
-				'next_page_token' => [
+					'location' => 'query',
+				),
+				'next_page_token' => array(
 					'type'     => 'string',
-					'required' => false,
-					'target'   => 'next_page_token',
-				],
-				// Page number (used by some endpoints/clients).
-				'page_number' => [
+					'location' => 'query',
+				),
+				'page_number'     => array(
 					'type'     => 'int',
-					'required' => false,
-					'default'  => 1,
 					'min'      => 1,
-					'target'   => 'page_number',
-				],
-				// Date range filters (YYYY-MM-DD).
-				'from' => [
-					'type'     => 'date',
-					'required' => false,
-					'target'   => 'from',
-				],
-				'to' => [
-					'type'     => 'date',
-					'required' => false,
-					'target'   => 'to',
-				],
-				// Timezone to interpret 'from' and 'to'.
-				'timezone' => [
+					'location' => 'query',
+				),
+				'from'            => array(
 					'type'     => 'string',
-					'required' => false,
-					'validate' => ['olson_timezone'],
-					'target'   => 'timezone',
-				],
-			],
-		];
+					'location' => 'query',
+				),
+				'to'              => array(
+					'type'     => 'string',
+					'location' => 'query',
+				),
+				'timezone'        => array(
+					'type'     => 'string',
+					'location' => 'query',
+				),
+			),
+			'compat'    => array(
+				'host_id' => 'user_id',
+				'userId'  => 'user_id',
+				'hostId'  => 'user_id',
+				'page'    => 'page_number',
+			),
+			'notes'     => array(
+				'pagination' => 'Prefer token-based pagination via next_page_token over page_number.',
+			),
+		);
 	}
 
-	private function meetingGET(): array
-	{
-		return [
-			'meta'   => [
-				'operation' => self::MEETING_GET,
-				'version'   => 1,
-			],
-			'fields' => [
-				'meeting_id' => [
-					'type'     => 'string',
-					'required' => true,
-					'mapFrom'  => ['id'],
-				],
-			],
-		];
-	}
+	/**
+	 * Schema for creating a meeting for a user/host.
+	 *
+	 * POST /users/{user_id}/meetings
+	 *
+	 * Required minimal fields:
+	 * - user_id (path)
+	 * - topic (string, <= 200 chars)
+	 * - type (int; default 2)
+	 * - Optional: start_time (date-time), timezone (string), duration (int), agenda (<= 2000), password (<= 10)
+	 * - Optional: settings.*
+	 */
 
-	private function meetingDelete(): array
-	{
-		return [
-			'meta'   => [
-				'operation' => self::MEETING_DELETE,
-				'version'   => 1,
-			],
-			'fields' => [
-				'meeting_id' => [
-					'type'     => 'string',
-					'required' => true,
-					'mapFrom'  => ['id'],
-				],
-			],
-		];
+	public static function create(): array {
+		return array(
+			'operation' => SchemaManager::MEETING_CREATE,
+			'http'      => array(
+				'method'      => 'POST',
+				'path'        => '/users/{user_id}/meetings',
+				'path_params' => array(
+					'user_id' => 'user_id',
+				),
+			),
+			'fields'    => array(
+				// Path
+				'user_id' => array(
+					'type'      => 'string',
+					'required'  => true,
+					'location'  => 'path',
+					'trim'      => true,
+					'nullable'  => false,
+				),
+
+				// Body (top-level)
+				'topic'        => array( 'type' => 'string', 'required' => true, 'location' => 'body', 'max_len' => 200, 'trim' => true ),
+				'agenda'       => array( 'type' => 'string', 'location' => 'body', 'max_len' => 2000 ),
+				'type'         => array( 'type' => 'int', 'default' => 2, 'enum' => array( 1, 2, 3, 8, 10 ), 'location' => 'body' ),
+				'start_time'   => array( 'type' => 'string', 'location' => 'body' ),
+				'timezone'     => array( 'type' => 'string', 'location' => 'body' ),
+				'duration'     => array( 'type' => 'int', 'default' => 60, 'min' => 1, 'max' => 1440, 'location' => 'body' ),
+				'password'     => array( 'type' => 'string', 'location' => 'body', 'max_len' => 10 ),
+				'default_password' => array( 'type' => 'bool', 'default' => true, 'location' => 'body' ),
+				'pre_schedule'     => array( 'type' => 'bool', 'default' => false, 'location' => 'body' ),
+				'schedule_for'     => array( 'type' => 'string', 'location' => 'body' ),
+
+				// Recurrence
+				'recurrence' => array(
+					'type'     => 'object',
+					'location' => 'body',
+					'schema'   => array(
+						'type'            => array( 'type' => 'int', 'enum' => array( 1, 2, 3 ) ),
+						'repeat_interval' => array( 'type' => 'int' ),
+						'end_date_time'   => array( 'type' => 'string' ),
+						'end_times'       => array( 'type' => 'int', 'max' => 60, 'default' => 1 ),
+						'weekly_days'     => array( 'type' => 'string' ),
+						'monthly_day'     => array( 'type' => 'int', 'min' => 1, 'max' => 31, 'default' => 1 ),
+						'monthly_week'    => array( 'type' => 'int', 'enum' => array( -1, 1, 2, 3, 4 ) ),
+						'monthly_week_day'=> array( 'type' => 'int', 'enum' => array( 1, 2, 3, 4, 5, 6, 7 ) ),
+					),
+				),
+
+				// Settings now centralized
+				'settings' => array(
+					'type'     => 'object',
+					'location' => 'body',
+					'schema'   => MeetingSettings::schema(),
+				),
+
+				// Tracking fields
+				'tracking_fields' => array(
+					'type'     => 'array',
+					'location' => 'body',
+					'items'    => array(
+						'type'   => 'object',
+						'schema' => array(
+							'field' => array( 'type' => 'string', 'required' => true ),
+							'value' => array( 'type' => 'string' ),
+						),
+					),
+				),
+
+				'template_id' => array( 'type' => 'string', 'location' => 'body' ),
+			),
+			// Backward-compat mappings: old_field => new_field (supports dotted paths for nested targets)
+			'compat' => array(
+				'userId'             => 'user_id',
+				'host_id'            => 'user_id',
+				'hostId'             => 'user_id',
+				'meetingTopic'       => 'topic',
+				'start_date'         => 'start_time',
+				'meeting_authentication'    => 'settings.meeting_authentication',
+				'join_before_host'          => 'settings.join_before_host',
+				'jbh_time'                  => 'settings.jbh_time',
+				'option_host_video'         => 'settings.host_video',
+				'option_participants_video' => 'settings.participant_video',
+				'option_mute_participants'  => 'settings.mute_upon_entry',
+				'option_auto_recording'     => 'settings.auto_recording',
+				'alternative_host_ids'      => 'settings.alternative_hosts',
+				'disable_waiting_room'      => 'settings.waiting_room',
+			),
+			'compat_transform' => array(
+				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
+				array( 'from' => 'disable_waiting_room', 'to' => 'settings.waiting_room', 'op' => 'bool_invert' ),
+				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
+				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
+			),
+			'notes' => array(
+				'start_time' => 'If start_time is omitted for type=2, Zoom may convert it to an instant meeting.',
+				'settings'   => 'If waiting_room=true, join_before_host is effectively disabled by Zoom.',
+			),
+		);
 	}
 }
