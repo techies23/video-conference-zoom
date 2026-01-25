@@ -163,7 +163,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * @author Deepen Bajracharya
 	 */
 	public function get_auth() {
-//		check_ajax_referer( '_nonce_zvc_security', 'noncce' );
+		check_ajax_referer( '_nonce_zvc_security', 'noncce' );
 		$meeting_id = filter_input( INPUT_POST, 'meeting_id' );
 		if ( vczapi_is_sdk_enabled() ) {
 			$sdk_key    = get_option( 'vczapi_sdk_key' );
