@@ -9,12 +9,11 @@ use WP_Error;
 /**
  * PayloadBuilder
  *
- * Generic builder that:
- * - Retrieves a schema by operation
- * - Applies compat field mappings and transforms
- * - Performs generic sanitization and validation
- * - Partitions fields by location (path/query/body)
- * - Delegates resource-specific logic to resource builders (e.g., MeetingPayloadBuilder)
+ * Now exposes a clearer two-step API:
+ *  - validateArgs($operation, $input): Only checks required fields and basic data types.
+ *  - sanitizePayload($operation, $validated): Applies compat transforms + sanitization and partitions by location.
+ *
+ * build($operation, $input) remains for convenience: validate + sanitize.
  */
 class PayloadBuilder {
 
@@ -24,49 +23,111 @@ class PayloadBuilder {
 	 * @param string $operation
 	 * @param array  $input
 	 *
-	 * @return array|WP_Error [
-	 *   'path'  => array,
-	 *   'query' => array,
-	 *   'body'  => array,
-	 *   'meta'  => array (optional: warnings, notes),
-	 * ]
+	 * @return array|WP_Error
 	 */
 	public static function build( $operation, array $input ) {
+		$validated = self::validateArgs( $operation, $input );
+		if ( is_wp_error( $validated ) ) {
+			return $validated;
+		}
+
+		return self::sanitizePayload( $operation, $validated );
+	}
+
+	/**
+	 * Validate Args
+	 *
+	 * Responsibilities:
+	 * - Load schema
+	 * - Apply compat key remapping (legacy → new keys)
+	 * - Validate ONLY: required presence and basic data types (string|int|bool|array|object)
+	 * - Recurse into nested schemas just for type-shape checks
+	 *
+	 * No enums, no min/max, no max_len here. No transforms (implode/truncate/etc).
+	 *
+	 * @param string $operation
+	 * @param array  $input
+	 * @return array|WP_Error  Normalized array or WP_Error on failure
+	 */
+	public static function validateArgs( $operation, array $input ) {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
 			return $schema;
 		}
 
-		$compat      = isset( $schema['compat'] ) ? (array) $schema['compat'] : array();
-		$transforms  = isset( $schema['compat_transform'] ) ? (array) $schema['compat_transform'] : array();
-		$fields      = isset( $schema['fields'] ) ? (array) $schema['fields'] : array();
+		$compat = isset( $schema['compat'] ) ? (array) $schema['compat'] : array();
+		$fields = isset( $schema['fields'] ) ? (array) $schema['fields'] : array();
 
-		// Step 1: Apply compat key remapping (legacy_key => new_key)
+		// 1) Compat map: legacy_key => new.key.path (no transforms)
 		$working = self::applyCompatKeyMap( $input, $compat );
 
-		// Step 2: Apply declared compat transforms (e.g., implode array, invert boolean, truncate)
-		$working = self::applyCompatTransforms( $working, $transforms );
-
-		// Step 3: Generic sanitize + validate against $fields
-		$validation = self::validateAndNormalize( $working, $fields );
-		if ( is_wp_error( $validation ) ) {
-			return $validation;
+		// 2) Basic validation (required + type only)
+		$result = self::validateTypesOnly( $working, $fields );
+		if ( is_wp_error( $result ) ) {
+			return $result;
 		}
-		$normalized = $validation['normalized'];
-		$warnings   = $validation['warnings'];
 
-		// Step 4: Delegate to resource-specific builder if one is available
-		$delegated = self::delegateResourceSpecific( $operation, $schema, $normalized, $working, $warnings );
-		if ( is_wp_error( $delegated ) ) {
-			return $delegated;
+		$normalized = $result;
+
+		// 3) Resource-specific type validations (domain-only checks)
+		$opPrefix = strpos( $operation, 'meeting.' ) === 0 ? 'meeting' : null;
+		if ( $opPrefix === 'meeting' ) {
+			$domainValidated = MeetingPayloadBuilder::validate( $schema, $normalized );
+			if ( is_wp_error( $domainValidated ) ) {
+				return $domainValidated;
+			}
+			$normalized = $domainValidated;
 		}
-		$warnings   = $delegated['warnings'];
-		$normalized = $delegated['payload'];
 
-		// Step 5: Partition by location for HTTP client usage
-		$partitioned = self::partitionByLocation( $normalized, $fields );
+		return $normalized;
+	}
 
-		// Include path param substitution metadata for the client/router
+	/**
+	 * Sanitize Payload
+	 *
+	 * Responsibilities:
+	 * - Load schema
+	 * - Apply compat transforms (implode, bool_invert, truncate)
+	 * - Generic sanitization (trim/strip tags for strings)
+	 * - Resource-specific sanitization (domain shaping and last-mile adjustments)
+	 * - Partition by location (path/query/body)
+	 * - Attach http + path_params metadata
+	 *
+	 * @param string $operation
+	 * @param array  $validated
+	 * @return array|WP_Error  ['path'=>[], 'query'=>[], 'body'=>[], 'meta'=>[]]
+	 */
+	public static function sanitizePayload( $operation, array $validated ) {
+		$schema = SchemaManager::get( $operation );
+		if ( is_wp_error( $schema ) ) {
+			return $schema;
+		}
+
+		$transforms = isset( $schema['compat_transform'] ) ? (array) $schema['compat_transform'] : array();
+		$fields     = isset( $schema['fields'] ) ? (array) $schema['fields'] : array();
+
+		// 1) Apply compat transforms (implode, invert, truncate) on a copy
+		$shaped = self::applyCompatTransforms( $validated, $transforms );
+
+		// 2) Generic sanitization pass for strings and nested structures
+		$shaped = self::sanitizeForSending( $shaped, $fields );
+
+		$warnings = array();
+
+		// 3) Resource-specific sanitize (domain shaping + non-fatal adjustments)
+		if ( strpos( $operation, 'meeting.' ) === 0 ) {
+			$domainSanitized = MeetingPayloadBuilder::sanitize( $schema, $shaped );
+			if ( is_wp_error( $domainSanitized ) ) {
+				return $domainSanitized;
+			}
+			$shaped   = $domainSanitized['payload'];
+			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
+		}
+
+		// 4) Partition by location
+		$partitioned = self::partitionByLocation( $shaped, $fields );
+
+		// 5) Meta
 		$partitioned['meta'] = array(
 			'warnings'    => $warnings,
 			'path_params' => isset( $schema['http']['path_params'] ) ? (array) $schema['http']['path_params'] : array(),
@@ -74,7 +135,7 @@ class PayloadBuilder {
 			'operation'   => isset( $schema['operation'] ) ? $schema['operation'] : $operation,
 		);
 
-		return apply_filters( 'vczapi_payload_built', $partitioned, $operation, $schema, $input );
+		return apply_filters( 'vczapi_payload_built', $partitioned, $operation, $schema, $validated );
 	}
 
 	/* =========================
@@ -82,7 +143,6 @@ class PayloadBuilder {
 	 * ========================= */
 
 	protected static function applyCompatKeyMap( array $input, array $map ) {
-		// Map simple legacy keys to new keys (supports dot-path for target)
 		foreach ( $map as $legacy => $target ) {
 			if ( array_key_exists( $legacy, $input ) ) {
 				self::setByDotPath( $input, $target, $input[ $legacy ] );
@@ -120,7 +180,6 @@ class PayloadBuilder {
 					$value = is_string( $value ) && $max > 0 ? mb_substr( $value, 0, $max ) : $value;
 					break;
 				default:
-					// No-op; unknown transform.
 					break;
 			}
 
@@ -132,199 +191,163 @@ class PayloadBuilder {
 	}
 
 	/* =========================
-	 * Generic validation
+	 * Validation (types only)
 	 * ========================= */
 
-	protected static function validateAndNormalize( array $input, array $fields ) {
-		$normalized = array();
-		$warnings   = array();
+	/**
+	 * Types-only validation (and required).
+	 * Recurses into nested object/array shapes but only verifies type integrity.
+	 *
+	 * @param array $input
+	 * @param array $fields
+	 * @return array|WP_Error
+	 */
+	protected static function validateTypesOnly( array $input, array $fields ) {
+		$out = array();
 
 		foreach ( $fields as $name => $rules ) {
-			$location   = isset( $rules['location'] ) ? $rules['location'] : 'query';
-			$required   = ! empty( $rules['required'] );
-			$hasValue   = self::hasValue( $input, $name );
-			$defaultSet = array_key_exists( 'default', $rules );
+			$required = ! empty( $rules['required'] );
+			$hasValue = array_key_exists( $name, $input );
 
-			// Required
-			if ( $required && ! $hasValue && ! $defaultSet ) {
+			if ( $required && ! $hasValue && ! array_key_exists( 'default', $rules ) ) {
 				return new WP_Error( 'vczapi_payload_required', sprintf( '%s is required', $name ), array( 'field' => $name ) );
 			}
 
-			$value = $hasValue ? self::getValue( $input, $name ) : ( $defaultSet ? $rules['default'] : null );
+			$value = $hasValue ? $input[ $name ] : ( array_key_exists( 'default', $rules ) ? $rules['default'] : null );
 
-			// Skip absent optional fields
-			if ( $value === null ) {
+			// Skip absent optional
+			if ( ! $hasValue && $value === null ) {
 				continue;
 			}
 
-			// Sanitize basic strings
-			if ( isset( $rules['type'] ) && $rules['type'] === 'string' && is_string( $value ) ) {
-				$value = self::sanitizeString( $value );
-			}
+			// Basic type check and minimal coercion
+			$type = isset( $rules['type'] ) ? $rules['type'] : null;
 
-			// Coerce type
-			$coerced = self::coerceType( $value, $rules );
-			if ( $coerced['warning'] ) {
-				$warnings[] = $coerced['warning'];
-			}
-			$value = $coerced['value'];
-
-			// Constrain: enum, min, max, max_len, etc.
-			$viol = self::checkConstraints( $name, $value, $rules );
-			if ( is_wp_error( $viol ) ) {
-				return $viol;
-			}
-			if ( $viol ) {
-				$warnings[] = $viol;
-			}
-
-			// Nested object schema
-			if ( isset( $rules['type'] ) && $rules['type'] === 'object' && is_array( $value ) && ! empty( $rules['schema'] ) ) {
-				$nested = self::validateAndNormalize( $value, $rules['schema'] );
-				if ( is_wp_error( $nested ) ) {
-					return $nested;
+			if ( $type === 'int' ) {
+				if ( is_numeric( $value ) ) {
+					$value = (int) $value;
+				} else {
+					return new WP_Error( 'vczapi_type_error', sprintf( '%s must be an integer', $name ) );
 				}
-				$value     = $nested['normalized'];
-				$warnings  = array_merge( $warnings, $nested['warnings'] );
+			} elseif ( $type === 'bool' ) {
+				if ( is_bool( $value ) ) {
+					// ok
+				} else {
+					$coerced = filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+					if ( $coerced === null ) {
+						return new WP_Error( 'vczapi_type_error', sprintf( '%s must be a boolean', $name ) );
+					}
+					$value = $coerced;
+				}
+			} elseif ( $type === 'string' ) {
+				if ( ! is_string( $value ) ) {
+					$value = (string) $value;
+				}
+			} elseif ( $type === 'array' ) {
+				if ( ! is_array( $value ) ) {
+					return new WP_Error( 'vczapi_type_error', sprintf( '%s must be an array', $name ) );
+				}
+			} elseif ( $type === 'object' ) {
+				if ( ! is_array( $value ) ) {
+					return new WP_Error( 'vczapi_type_error', sprintf( '%s must be an object', $name ) );
+				}
+				// Recurse for nested schemas (types-only)
+				if ( ! empty( $rules['schema'] ) && is_array( $rules['schema'] ) ) {
+					$nested = self::validateTypesOnly( $value, $rules['schema'] );
+					if ( is_wp_error( $nested ) ) {
+						return $nested;
+					}
+					$value = $nested;
+				}
+				// Arrays of objects/items are handled in the parent 'array' branch via 'items' rule
 			}
 
-			// Arrays with item schema
+			// Arrays with item schema (types-only)
 			if ( isset( $rules['type'] ) && $rules['type'] === 'array' && is_array( $value ) && ! empty( $rules['items'] ) ) {
-				$itemsSchema = $rules['items'];
-				$maxItems    = isset( $rules['max_items'] ) ? (int) $rules['max_items'] : 0;
-				if ( $maxItems > 0 && count( $value ) > $maxItems ) {
-					$value      = array_slice( $value, 0, $maxItems );
-					$warnings[] = sprintf( '%s truncated to %d items', $name, $maxItems );
-				}
+				$itemSchema = $rules['items'];
+				$newArr     = array();
 
-				$newArr = array();
-				foreach ( $value as $idx => $item ) {
-					if ( isset( $itemsSchema['type'] ) && $itemsSchema['type'] === 'object' && ! empty( $itemsSchema['schema'] ) && is_array( $item ) ) {
-						$nested = self::validateAndNormalize( $item, $itemsSchema['schema'] );
+				foreach ( $value as $idx => $itemVal ) {
+					if ( isset( $itemSchema['type'] ) && $itemSchema['type'] === 'object' && ! empty( $itemSchema['schema'] ) ) {
+						if ( ! is_array( $itemVal ) ) {
+							return new WP_Error( 'vczapi_type_error', sprintf( '%s[%d] must be an object', $name, $idx ) );
+						}
+						$nested = self::validateTypesOnly( $itemVal, $itemSchema['schema'] );
 						if ( is_wp_error( $nested ) ) {
 							return $nested;
 						}
-						$newArr[]  = $nested['normalized'];
-						$warnings  = array_merge( $warnings, $nested['warnings'] );
+						$newArr[] = $nested;
 					} else {
-						$newArr[] = $item;
+						// basic cast for primitives
+						$newArr[] = $itemVal;
 					}
 				}
 				$value = $newArr;
 			}
 
-			// Set
-			$normalized[ $name ] = $value;
+			$out[ $name ] = $value;
 		}
 
-		return array(
-			'normalized' => $normalized,
-			'warnings'   => $warnings,
-		);
-	}
-
-	protected static function hasValue( array $arr, $key ) {
-		return array_key_exists( $key, $arr ) && $arr[ $key ] !== null;
-	}
-
-	protected static function getValue( array $arr, $key ) {
-		return array_key_exists( $key, $arr ) ? $arr[ $key ] : null;
-	}
-
-	protected static function sanitizeString( $value ) {
-		// Remove tags, trim whitespace, preserve ASCII + UTF-8
-		$value = wp_strip_all_tags( $value, true );
-		$value = trim( $value );
-		return $value;
-	}
-
-	protected static function coerceType( $value, array $rules ) {
-		$warning = null;
-		$type    = isset( $rules['type'] ) ? $rules['type'] : null;
-
-		if ( $type === 'int' ) {
-			if ( ! is_int( $value ) ) {
-				if ( is_numeric( $value ) ) {
-					$value = (int) $value;
-				} else {
-					$warning = 'Coercion failed: expected int';
-				}
-			}
-		} elseif ( $type === 'bool' ) {
-			if ( ! is_bool( $value ) ) {
-				$value = filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
-				if ( $value === null ) {
-					$warning = 'Coercion failed: expected bool';
-					$value   = false;
-				}
-			}
-		} elseif ( $type === 'array' ) {
-			if ( ! is_array( $value ) ) {
-				$value   = (array) $value;
-				$warning = 'Coercion: cast to array';
-			}
-		} elseif ( $type === 'object' ) {
-			if ( ! is_array( $value ) ) {
-				$value   = (array) $value;
-				$warning = 'Coercion: cast to object (array)';
-			}
-		} elseif ( $type === 'string' ) {
-			if ( ! is_string( $value ) ) {
-				$value   = (string) $value;
-				$warning = 'Coercion: cast to string';
-			}
-		}
-
-		return array( 'value' => $value, 'warning' => $warning );
-	}
-
-	protected static function checkConstraints( $name, $value, array $rules ) {
-		// enum
-		if ( isset( $rules['enum'] ) && is_array( $rules['enum'] ) ) {
-			if ( ! in_array( $value, $rules['enum'], true ) ) {
-				return new WP_Error( 'vczapi_payload_enum', sprintf( '%s must be one of: %s', $name, implode( ', ', $rules['enum'] ) ) );
-			}
-		}
-		// min/max for ints
-		if ( isset( $rules['type'] ) && $rules['type'] === 'int' ) {
-			if ( isset( $rules['min'] ) && is_int( $value ) && $value < $rules['min'] ) {
-				return sprintf( '%s clamped to min %d', $name, $rules['min'] );
-			}
-			if ( isset( $rules['max'] ) && is_int( $value ) && $value > $rules['max'] ) {
-				return sprintf( '%s clamped to max %d', $name, $rules['max'] );
-			}
-		}
-		// max_len for strings
-		if ( isset( $rules['type'] ) && $rules['type'] === 'string' && isset( $rules['max_len'] ) && is_string( $value ) ) {
-			if ( mb_strlen( $value ) > (int) $rules['max_len'] ) {
-				return sprintf( '%s truncated to %d chars', $name, (int) $rules['max_len'] );
-			}
-		}
-		return null;
+		return $out;
 	}
 
 	/* =========================
-	 * Resource delegation
+	 * Generic sanitization
 	 * ========================= */
 
-	protected static function delegateResourceSpecific( $operation, array $schema, array $normalized, array $raw, array $warnings ) {
-		$resourceWarnings = array();
+	/**
+	 * Trim/strip strings across the structure per declared fields.
+	 *
+	 * @param array $data
+	 * @param array $fields
+	 * @return array
+	 */
+	protected static function sanitizeForSending( array $data, array $fields ) {
+		$out = array();
 
-		// Route by operation prefix (meeting.*, user.*, webinar.*, etc.)
-		if ( strpos( $operation, 'meeting.' ) === 0 ) {
-			$result = MeetingPayloadBuilder::build( $schema, $normalized, $raw );
-			if ( is_wp_error( $result ) ) {
-				return $result;
+		foreach ( $fields as $name => $rules ) {
+			if ( ! array_key_exists( $name, $data ) ) {
+				continue;
 			}
-			$normalized        = $result['payload'];
-			$resourceWarnings  = isset( $result['warnings'] ) ? (array) $result['warnings'] : array();
+			$value = $data[ $name ];
+			$type  = isset( $rules['type'] ) ? $rules['type'] : null;
+
+			if ( $type === 'string' && is_string( $value ) ) {
+				$out[ $name ] = self::sanitizeString( $value );
+				continue;
+			}
+
+			if ( $type === 'object' && is_array( $value ) && ! empty( $rules['schema'] ) ) {
+				$out[ $name ] = self::sanitizeForSending( $value, $rules['schema'] );
+				continue;
+			}
+
+			if ( $type === 'array' && is_array( $value ) && ! empty( $rules['items'] ) ) {
+				$itemsSchema = $rules['items'];
+				$newArr      = array();
+				foreach ( $value as $item ) {
+					if ( isset( $itemsSchema['type'] ) && $itemsSchema['type'] === 'object' && ! empty( $itemsSchema['schema'] ) && is_array( $item ) ) {
+						$newArr[] = self::sanitizeForSending( $item, $itemsSchema['schema'] );
+					} elseif ( isset( $itemsSchema['type'] ) && $itemsSchema['type'] === 'string' && is_string( $item ) ) {
+						$newArr[] = self::sanitizeString( $item );
+					} else {
+						$newArr[] = $item;
+					}
+				}
+				$out[ $name ] = $newArr;
+				continue;
+			}
+
+			$out[ $name ] = $value;
 		}
 
-		return array(
-			'warnings' => array_merge( $warnings, $resourceWarnings ),
-			// Return merged normalized payload fields (flat).
-			'payload'  => $normalized,
-		);
+		return $out;
+	}
+
+	protected static function sanitizeString( $value ) {
+		$value = wp_strip_all_tags( (string) $value, true );
+		$value = trim( $value );
+		return $value;
 	}
 
 	/* =========================
@@ -332,11 +355,7 @@ class PayloadBuilder {
 	 * ========================= */
 
 	protected static function partitionByLocation( array $normalized, array $fields ) {
-		$out = array(
-			'path'  => array(),
-			'query' => array(),
-			'body'  => array(),
-		);
+		$out = array( 'path' => array(), 'query' => array(), 'body' => array() );
 
 		foreach ( $normalized as $name => $value ) {
 			$location = isset( $fields[ $name ]['location'] ) ? $fields[ $name ]['location'] : 'query';
@@ -353,13 +372,7 @@ class PayloadBuilder {
 	}
 
 	/**
-	 * Set value into $arr by dot-path (e.g., settings.waiting_room).
-	 *
-	 * @param array  $arr
-	 * @param string $path
-	 * @param mixed  $value
-	 *
-	 * @return void
+	 * Set by dot-path (e.g., settings.waiting_room).
 	 */
 	protected static function setByDotPath( array &$arr, $path, $value ) {
 		$parts = explode( '.', $path );
