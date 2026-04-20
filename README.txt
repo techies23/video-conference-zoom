@@ -160,10 +160,10 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
-= 4.6.7 - Jan 25th, 2025 =
+= 4.6.7 - April 20th, 2026 =
 * Security Fix: Patched delete action ajax.
 
-= 4.6.6 - Jan 25th, 2025 =
+= 4.6.6 - Jan 25th, 2026 =
 * Security Fix: Patched get_auth ajax handler.
 
 = 4.6.5 - July 7th 2025 =
