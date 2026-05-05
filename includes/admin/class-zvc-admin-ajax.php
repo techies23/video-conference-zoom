@@ -1,5 +1,7 @@
 <?php
 
+use Codemanas\VczApi\Helpers\Encryption;
+
 /**
  * Class for all the administration ajax calls
  *
@@ -180,15 +182,42 @@ class Zoom_Video_Conferencing_Admin_Ajax
 	 */
 	public function get_auth()
 	{
-		check_ajax_referer('_nonce_zvc_security', 'noncce');
-		$meeting_id = filter_input(INPUT_POST, 'meeting_id');
+		// check_ajax_referer('_nonce_zvc_security', 'zvc_security');
+
+		$referer = wp_get_referer();
+		$home_url = home_url();
+
+		// Block requests with no referer or external referers
+		if (!$referer || parse_url($referer, PHP_URL_HOST) !== parse_url($home_url, PHP_URL_HOST)) {
+			wp_send_json_error('Invalid request source.');
+		}
+
+		// 2. Sanitize and validate the Meeting ID
+		$meeting_id = filter_input(INPUT_POST, 'meeting_id', FILTER_SANITIZE_NUMBER_INT);
+
+		if (empty($meeting_id)) {
+			wp_send_json_error('Invalid Meeting ID');
+		}
+
 		if (vczapi_is_sdk_enabled()) {
 			$sdk_key    = get_option('vczapi_sdk_key');
 			$secret_key = get_option('vczapi_sdk_secret_key');
+
+			if (empty($sdk_key) || empty($secret_key)) {
+				wp_send_json_error('SDK configuration error.');
+			}
+
+			// Ensure role is 0 (Participant). NEVER allow Role 1 (Host) for guests.
 			$signature  = $this->generate_sdk_signature($sdk_key, $secret_key, $meeting_id, 0);
-			wp_send_json_success(['sig' => $signature, 'key' => $sdk_key, 'type' => 'sdk']);
+
+			$secureKey = Encryption::encrypt($sdk_key);
+			wp_send_json_success([
+				'sig'  => $signature,
+				'key'  => $secureKey,
+				'type' => 'sdk'
+			]);
 		} else {
-			wp_send_json_error('Error occured!');
+			wp_send_json_error('Service Unavailable');
 		}
 
 		wp_die();

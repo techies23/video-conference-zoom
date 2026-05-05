@@ -1,4 +1,4 @@
-import {ZoomMtg} from "@zoom/meetingsdk"
+import { ZoomMtg } from '@zoom/meetingsdk';
 
 /**
  * Zoom Meeting Join via Browser App
@@ -6,243 +6,244 @@ import {ZoomMtg} from "@zoom/meetingsdk"
  * @type {{init: ZoomMtgApp.init, loader: (function(): HTMLSpanElement), handleJoinMeetingButton: ZoomMtgApp.handleJoinMeetingButton, redirectTo: *, meetingID: (String|string), joinMeeting: ZoomMtgApp.joinMeeting, initSDK: ZoomMtgApp.initSDK, validateBeforeJoining: ZoomMtgApp.validateBeforeJoining, infoContainer: Element, password: *, removeLoader: ZoomMtgApp.removeLoader, eventHandlers: ZoomMtgApp.eventHandlers, generateSignature: (function(): Promise<any>)}}
  */
 const ZoomMtgApp = {
-    meetingID: atob(zvc_ajx.meeting_id),
-    redirectTo: zvc_ajx.redirect_page,
-    password: (zvc_ajx.meeting_pwd !== false) ? atob(zvc_ajx.meeting_pwd) : false,
-    infoContainer: document.querySelector('.vczapi-zoom-browser-meeting--info__browser'),
+  meetingID: atob(zvc_ajx.meeting_id),
+  redirectTo: zvc_ajx.redirect_page,
+  password: zvc_ajx.meeting_pwd !== false ? atob(zvc_ajx.meeting_pwd) : false,
+  infoContainer: document.querySelector('.vczapi-zoom-browser-meeting--info__browser'),
 
-    /**
-     * Intialize
-     */
-    init: function () {
-        this.initSDK()
-        this.eventHandlers()
-        //direct browser join enabled
-        if (zvc_ajx.enable_direct_join_via_browser) {
-            this.handleJoinOnInit()
-        }
-    },
-
-    /**
-     * Initialize the SDK
-     */
-    initSDK: function () {
-        // ZoomMtg.setZoomJSLib('https://source.zoom.us/' + zvc_ajx.sdk_version + '/lib', '/av')
-        ZoomMtg.preLoadWasm()
-        ZoomMtg.prepareWebSDK()
-    },
-
-    /**
-     * Event Listeners
-     */
-    eventHandlers: function () {
-        let joinMtgButton = document.getElementById('vczapi-zoom-browser-meeting-join-mtg')
-        if (joinMtgButton != null) {
-            joinMtgButton.onclick = this.handleJoinMeetingButton.bind(this)
-        }
-    },
-
-    handleJoinOnInit: function () {
-        // Access the localized values from currentUser object
-        const userName = zvc_ajx.user_name;
-        const userEmail = zvc_ajx.user_mail;
-        const password = this.password;
-        this.handleJoinMeeting(userName, password, userEmail);
-    },
-
-    /**
-     * HTML loader
-     *
-     * @returns {HTMLSpanElement}
-     */
-    loader: function () {
-        const loaderWrapper = document.createElement('span')
-        loaderWrapper.id = 'zvc-cover'
-        return loaderWrapper
-    },
-
-    /**
-     * Generate the signature for the webSDK
-     *
-     * @returns {Promise<any>}
-     */
-    generateSignature: async function () {
-        const postData = new FormData()
-        postData.append('action', 'get_auth')
-        postData.append('noncce', zvc_ajx.zvc_security)
-        postData.append('meeting_id', parseInt(this.meetingID))
-
-        const response = await fetch(zvc_ajx.ajaxurl, {
-            method: 'POST',
-            body: postData
-        })
-
-        return response.json()
-    },
-
-    /**
-     * Remove the loader screen
-     */
-    removeLoader: function () {
-        const cover = document.getElementById('zvc-cover')
-        if (cover !== null) {
-            document.getElementById('zvc-cover').remove()
-        }
-    },
-
-    handleJoinMeeting: function (display_name, pwd, email, locale) {
-        if (this.meetingID != null || this.meetingID !== '') {
-            this.generateSignature().then(result => {
-                if (result.success) {
-                    document.getElementById('zmmtg-root').style.display = 'block';
-
-                    //remove the loader
-                    this.removeLoader()
-
-                    const validatedObjects = {
-                        name: display_name !== null ? display_name : '',
-                        password: pwd !== null ? pwd : '',
-                        email: email !== null ? email : '',
-                        locale: locale
-                    }
-                    this.prepBeforeJoin(result, validatedObjects)
-                }
-            })
-        }
-    },
-
-    /**
-     * Handle join meeting button click
-     *
-     * @param e
-     */
-    handleJoinMeetingButton: function (e) {
-        e.preventDefault()
-        //Show Loader
-        document.body.appendChild(this.loader())
-
-        const display_name = document.getElementById('vczapi-jvb-display-name')
-        const email = document.getElementById('vczapi-jvb-email')
-        const pwd = document.getElementById('meeting_password')
-        const language = document.querySelector('.meeting-locale')
-
-        if (display_name !== null && (display_name.value === null || display_name.value === '')) {
-            this.infoContainer.innerHTML = 'Name is a Required field!'
-            this.infoContainer.style.color = 'red'
-            this.removeLoader()
-            return false
-        }
-
-        //Email Validation
-        if (email !== null && (email.value === null || email.value === '')) {
-            this.infoContainer.innerHTML = 'Email is a Required field!'
-            this.infoContainer.style.color = 'red'
-            this.removeLoader()
-            return false
-        }
-
-        //Password Validation
-        if (pwd !== null && (pwd.value === null || pwd.value === '')) {
-            this.infoContainer.innerHTML = 'Validation: Password is Required!'
-            this.infoContainer.style.color = 'red'
-            this.removeLoader()
-            return false
-        }
-
-        //values
-        const name = display_name !== null ? display_name.value : '';
-        const password = pwd !== null ? pwd.value : '';
-        const userEmail = email !== null ? email.value : '';
-        const locale = language.value !== null ? language.value : 'en-US';
-        this.handleJoinMeeting(name, password, userEmail, locale)
-    },
-
-    /**
-     * Validate the elements before joining the meeting
-     *
-     * @param response
-     * @param validatedObjects
-     * @returns {boolean}
-     */
-    prepBeforeJoin: function (response, validatedObjects) {
-        const API_KEY = response.data.key
-        const SIGNATURE = response.data.sig
-        const REQUEST_TYPE = response.data.type
-
-        //validation complete now remove the main form page and attach zoom screen
-        const mainWindow = document.getElementById('vczapi-zoom-browser-meeting')
-        if (mainWindow !== null) {
-            mainWindow.remove()
-        }
-
-        //Set this for the additional props to pass before the actual meeting
-        const meetConfig = {
-            lang: validatedObjects.locale,
-            leaveUrl: this.redirectTo,
-        }
-
-        //Actual meeting join props
-        let meetingJoinParams = {
-            meetingNumber: parseInt(this.meetingID),
-            userName: validatedObjects.name,
-            signature: SIGNATURE,
-            userEmail: validatedObjects.email,
-            passWord: validatedObjects.password ? validatedObjects.password : this.password,
-            success: function (res) {
-                console.log('Join Meeting Success')
-            },
-            error: function (res) {
-                console.log(res)
-            }
-        }
-
-        const urlSearchParams = new URLSearchParams(window.location.search)
-        const params = Object.fromEntries(urlSearchParams.entries())
-        if (params.tk !== null) {
-            meetingJoinParams.tk = params.tk
-        }
-
-        if (window.location !== window.parent.location) {
-            meetConfig.leaveUrl = window.location.href
-        }
-
-        if (REQUEST_TYPE === 'jwt') {
-            meetingJoinParams.apiKey = API_KEY
-        } else if (REQUEST_TYPE === 'sdk') {
-            meetingJoinParams.sdkKey = API_KEY
-        }
-
-        this.joinMeeting(meetConfig, meetingJoinParams)
-    },
-
-    /**
-     * Join the meeting finally
-     *
-     * @param config
-     * @param meetingJoinParams
-     */
-    joinMeeting: function (config, meetingJoinParams) {
-        ZoomMtg.i18n.load(config.lang)
-        ZoomMtg.init({
-            leaveUrl: config.leaveUrl,
-            isSupportAV: true,
-            meetingInfo: zvc_ajx.meetingInfo,
-            disableInvite: zvc_ajx.disableInvite,
-            disableRecord: zvc_ajx.disableRecord,
-            disableJoinAudio: zvc_ajx.disableJoinAudio,
-            isSupportChat: zvc_ajx.isSupportChat,
-            isSupportQA: zvc_ajx.isSupportQA,
-            isSupportBreakout: zvc_ajx.isSupportBreakout,
-            isSupportCC: zvc_ajx.isSupportCC,
-            screenShare: zvc_ajx.screenShare,
-            success: function () {
-                ZoomMtg.join(meetingJoinParams)
-            },
-            error: function (res) {
-                console.log(res)
-            }
-        })
+  /**
+   * Intialize
+   */
+  init: function () {
+    this.initSDK();
+    this.eventHandlers();
+    //direct browser join enabled
+    if (zvc_ajx.enable_direct_join_via_browser) {
+      this.handleJoinOnInit();
     }
-}
+  },
 
-document.addEventListener('DOMContentLoaded', ZoomMtgApp.init())
+  /**
+   * Initialize the SDK
+   */
+  initSDK: function () {
+    // ZoomMtg.setZoomJSLib('https://source.zoom.us/' + zvc_ajx.sdk_version + '/lib', '/av')
+    ZoomMtg.preLoadWasm();
+    ZoomMtg.prepareWebSDK();
+  },
+
+  /**
+   * Event Listeners
+   */
+  eventHandlers: function () {
+    let joinMtgButton = document.getElementById('vczapi-zoom-browser-meeting-join-mtg');
+    if (joinMtgButton != null) {
+      joinMtgButton.onclick = this.handleJoinMeetingButton.bind(this);
+    }
+  },
+
+  handleJoinOnInit: function () {
+    // Access the localized values from currentUser object
+    const userName = zvc_ajx.user_name;
+    const userEmail = zvc_ajx.user_mail;
+    const password = this.password;
+    this.handleJoinMeeting(userName, password, userEmail);
+  },
+
+  /**
+   * HTML loader
+   *
+   * @returns {HTMLSpanElement}
+   */
+  loader: function () {
+    const loaderWrapper = document.createElement('span');
+    loaderWrapper.id = 'zvc-cover';
+    return loaderWrapper;
+  },
+
+  /**
+   * Generate the signature for the webSDK
+   *
+   * @returns {Promise<any>}
+   */
+  generateSignature: async function () {
+    const postData = new FormData();
+    postData.append('action', 'get_auth');
+    postData.append('noncce', zvc_ajx.zvc_security);
+    postData.append('meeting_id', parseInt(this.meetingID));
+
+    const response = await fetch(zvc_ajx.ajaxurl, {
+      method: 'POST',
+      body: postData,
+      credentials: 'same-origin',
+    });
+
+    return response.json();
+  },
+
+  /**
+   * Remove the loader screen
+   */
+  removeLoader: function () {
+    const cover = document.getElementById('zvc-cover');
+    if (cover !== null) {
+      document.getElementById('zvc-cover').remove();
+    }
+  },
+
+  handleJoinMeeting: function (display_name, pwd, email, locale) {
+    if (this.meetingID != null || this.meetingID !== '') {
+      this.generateSignature().then((result) => {
+        if (result.success) {
+          document.getElementById('zmmtg-root').style.display = 'block';
+
+          //remove the loader
+          this.removeLoader();
+
+          const validatedObjects = {
+            name: display_name !== null ? display_name : '',
+            password: pwd !== null ? pwd : '',
+            email: email !== null ? email : '',
+            locale: locale,
+          };
+          this.prepBeforeJoin(result, validatedObjects);
+        }
+      });
+    }
+  },
+
+  /**
+   * Handle join meeting button click
+   *
+   * @param e
+   */
+  handleJoinMeetingButton: function (e) {
+    e.preventDefault();
+    //Show Loader
+    document.body.appendChild(this.loader());
+
+    const display_name = document.getElementById('vczapi-jvb-display-name');
+    const email = document.getElementById('vczapi-jvb-email');
+    const pwd = document.getElementById('meeting_password');
+    const language = document.querySelector('.meeting-locale');
+
+    if (display_name !== null && (display_name.value === null || display_name.value === '')) {
+      this.infoContainer.innerHTML = 'Name is a Required field!';
+      this.infoContainer.style.color = 'red';
+      this.removeLoader();
+      return false;
+    }
+
+    //Email Validation
+    if (email !== null && (email.value === null || email.value === '')) {
+      this.infoContainer.innerHTML = 'Email is a Required field!';
+      this.infoContainer.style.color = 'red';
+      this.removeLoader();
+      return false;
+    }
+
+    //Password Validation
+    if (pwd !== null && (pwd.value === null || pwd.value === '')) {
+      this.infoContainer.innerHTML = 'Validation: Password is Required!';
+      this.infoContainer.style.color = 'red';
+      this.removeLoader();
+      return false;
+    }
+
+    //values
+    const name = display_name !== null ? display_name.value : '';
+    const password = pwd !== null ? pwd.value : '';
+    const userEmail = email !== null ? email.value : '';
+    const locale = language.value !== null ? language.value : 'en-US';
+    this.handleJoinMeeting(name, password, userEmail, locale);
+  },
+
+  /**
+   * Validate the elements before joining the meeting
+   *
+   * @param response
+   * @param validatedObjects
+   * @returns {boolean}
+   */
+  prepBeforeJoin: function (response, validatedObjects) {
+    const API_KEY = response.data.key;
+    const SIGNATURE = response.data.sig;
+    const REQUEST_TYPE = response.data.type;
+
+    //validation complete now remove the main form page and attach zoom screen
+    const mainWindow = document.getElementById('vczapi-zoom-browser-meeting');
+    if (mainWindow !== null) {
+      mainWindow.remove();
+    }
+
+    //Set this for the additional props to pass before the actual meeting
+    const meetConfig = {
+      lang: validatedObjects.locale,
+      leaveUrl: this.redirectTo,
+    };
+
+    //Actual meeting join props
+    let meetingJoinParams = {
+      meetingNumber: parseInt(this.meetingID),
+      userName: validatedObjects.name,
+      signature: SIGNATURE,
+      userEmail: validatedObjects.email,
+      passWord: validatedObjects.password ? validatedObjects.password : this.password,
+      success: function (res) {
+        console.log('Join Meeting Success');
+      },
+      error: function (res) {
+        console.log(res);
+      },
+    };
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    if (params.tk !== null) {
+      meetingJoinParams.tk = params.tk;
+    }
+
+    if (window.location !== window.parent.location) {
+      meetConfig.leaveUrl = window.location.href;
+    }
+
+    if (REQUEST_TYPE === 'jwt') {
+      meetingJoinParams.apiKey = API_KEY;
+    } else if (REQUEST_TYPE === 'sdk') {
+      meetingJoinParams.sdkKey = API_KEY;
+    }
+
+    this.joinMeeting(meetConfig, meetingJoinParams);
+  },
+
+  /**
+   * Join the meeting finally
+   *
+   * @param config
+   * @param meetingJoinParams
+   */
+  joinMeeting: function (config, meetingJoinParams) {
+    ZoomMtg.i18n.load(config.lang);
+    ZoomMtg.init({
+      leaveUrl: config.leaveUrl,
+      isSupportAV: true,
+      meetingInfo: zvc_ajx.meetingInfo,
+      disableInvite: zvc_ajx.disableInvite,
+      disableRecord: zvc_ajx.disableRecord,
+      disableJoinAudio: zvc_ajx.disableJoinAudio,
+      isSupportChat: zvc_ajx.isSupportChat,
+      isSupportQA: zvc_ajx.isSupportQA,
+      isSupportBreakout: zvc_ajx.isSupportBreakout,
+      isSupportCC: zvc_ajx.isSupportCC,
+      screenShare: zvc_ajx.screenShare,
+      success: function () {
+        ZoomMtg.join(meetingJoinParams);
+      },
+      error: function (res) {
+        console.log(res);
+      },
+    });
+  },
+};
+
+document.addEventListener('DOMContentLoaded', ZoomMtgApp.init());
