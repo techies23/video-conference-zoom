@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi;
 
+use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
 use Codemanas\VczApi\Helpers\Encryption;
@@ -256,6 +257,9 @@ final class Bootstrap
 
 		//Helpers
 		Encryption::get_instance();
+
+        //Add Cron Job
+        Cron::get_instance();
 	}
 
 	/**
