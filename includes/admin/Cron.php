@@ -65,6 +65,7 @@ class Cron {
 		if ( $days_until_mtg <= 75 ) {
 			if( $last_refresh_time && wp_next_scheduled( $hook_name, $args )){
 				wp_clear_scheduled_hook( $hook_name, $args );
+				delete_post_meta( $post_id, '_vczapi_last_zoom_refresh_timestamp' );
 			}
 			return;
 		}
