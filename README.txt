@@ -3,7 +3,7 @@ Contributors: j__3rk, digamberpradhan, codemanas
 Tags: zoom video conference, video conference, web conferencing, online meetings, webinars
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Stable tag: 4.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -160,7 +160,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
-= 4.6.8 - May 5th, 2026 =
+= 4.6.8 - June 4th, 2026 =
 * Security Fix: Patched get_auth ajax handler.
 
 = 4.6.7 - April 20th, 2026 =
@@ -254,114 +254,3 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Fixed: Spectra plugin blocks template compatibility issue.
 * Added: Join from browser directly without name, email field.
 
-= 4.2.0 May 25th, 2023 =
-* Added: FSE Support
-* Added: End meeting from backend using Zoom status api.
-* Updated: Elementor Modules for shortcode changes related with [zoom_meeting_post]
-* Fixed: Search in host to WP page.
-* Fixed: FSE theme join via browser page not working.
-* Updated: WebSDK to version 2.12.2
-* Fixed: Responsive fixed for shortcode table views.
-* Bug fixes
-
-= 4.1.11 May 3rd, 2023 =
-* Added: Capaibility to only show meeting counter when using [zoom_meeting_post] - See [Documentation https://zoomdocs.codemanas.com/shortcode/#2-show-a-meeting-post-with-countdown].
-* Updated: Embed Post by ID block.
-
-= 4.1.10 Arpil 10th, 2023 =
-* Fixed: Join via Browser password field fix.
-
-= 4.1.9 Arpil 6th, 2023 =
-* Updated: WebSDK to version 2.11.0
-* Updated: Websdk Compile method.
-* Updated: Join via web browser design changes.
-
-= 4.1.8 Arpil 3rd, 2023 =
-* Added capability to view recordings by roles who have edit_posts capbilities.
-* Fixed: Duration of meeting not showing correctly when in hours and minutes.
-
-= 4.1.7 March 13th, 2023 =
-* Fix: Admin CSS not working in some pages.
-
-= 4.1.6 March 9th, 2023 =
-* Updated: Translations
-* Fixed: Embed post block not working correctly in block based themes.
-* Fixed: Minutes and Hours translations not working correctly.
-* Updated: Zoom WebSDK to version 2.10.1
-
-= 4.1.5 March 3rd, 2023 =
-* Fixed: Gutenberg blocks on embed posts.
-
-= 4.1.4 February 28th, 2023 =
-* Fix: Template issue for meeting by post id shortcode.
-
-= 4.1.3 February 27th, 2023 =
-* Updated SDK key and SDK secret text on connect tab to sync with Zoom new changes.
-* Bug fix that showed PHP 7.4 above constraint warnings.
-* Bug fix that relates to JWT firebase library update.
-
-= 4.1.2 February 22nd, 2023 =
-* Updated: plugin now requires PHP version 7.4
-
-= 4.1.1 February 21st, 2023 =
-* Removed sorting by meeting ID fields
-* Fixed: JWT signature not generating because of firebase library update.
-
-= 4.1.0 February 21st, 2023 =
-* Updated: WebSDK to version 2.9.7
-* Fixed: removed wc_date_format() function from core.
-* Fixed: Undefined property: stdClass::$start_time in shortcode embed.
-* Added: Ability to join meetings with registrations enabled for PRO version.
-* Fixed: A bug where WP_Error was giving a fatal error in rare case.
-* Developer: Script bundler changed to webpack.
-* Huge bug fixes and code refactoring.
-
-= 4.0.11 December 30th, 2022 =
-* Fixed: Join via browser showing invalid parameters when email field was disabled.
-* Added: Checker if the meeting is webinar then email field will show up regardless of the setting because email field is required to join a webinar.
-
-= 4.0.10 December 19th, 2022 =
-* Fixed: Validate and Escaping on a shortcode reported by WPScan.
-
-= 4.0.9 December 16th, 2022 =
-* Added: Disable momentJS conflict script incase of countdown failure.
-* Fixed: If meeting is expired, ajax fails and shows nothing.
-* Added: If SDK keys are not added then join via browser options won't show.
-* Updated: SDK script updated to latest standards
-
-= 4.0.8 December 1st, 2022 =
-* Fixed: Host to WP User linking.
-* Updated: WebSDK to version 2.9.5
-* Added: Email Validation to join via browser window.
-* Bug Fixes.
-
-= 4.0.7 November 11th, 2022 =
-* Fixed: Import get meetings functions to fetch draft posts.
-* Fixed: Show all zoom users on Host to WP page.
-* Fixed: Elementor widget showing minus values.
-* Fixed: Elementor widget meeting by host was not working when switching between webinar and meeting view.
-* Updated: WebSDK to version 2.9.0
-
-= 4.0.6 September 13th, 2022 =
-* Updated: Minimum PHP version to 7.3
-
-= 4.0.5 August 17th, 2022 =
-* Fix - Minor - Meeting Host should not be editable even if post visibility is set to Private
-
-= 4.0.4 August 11th, 2022 =
-* Fixed: Import meetings not working for version 4.0 or greater.
-
-= 4.0.3 August 10th, 2022 =
-* Added: Redirection parameter for join via browser.
-
-= 4.0.2 August 5th, 2022 =
-* Fixed: wp_reset_postdata() was not called after looping in shortcode show_meeting_by_postTypeID
-* Fixed: Join via web browser theme router template not being called correctly for pages that uses builders or editor.
-* Updated: WebSDK to version 2.6.0
-
-= 4.0.1 July 21st, 2022 =
-* Fixed: PHP 7.4 below - class strict type declaration removed for backwards compatiblity.
-
-= 4.0.0 July 21st, 2022 =
-* Major Update: Server-to-Server OAuth App and SDK App to replace JWT App as JWT is being deprecated see [JWT App Type Deprecation FAQ](https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/), users can see new configuration steps in the [documentation](https://zoomdocs.codemanas.com/setup/)
-* Updated: WebSDK to version 2.5.0
