@@ -162,6 +162,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 == Changelog ==
 = 4.6.8 - June 4th, 2026 =
 * Security Fix: Patched get_auth ajax handler.
+* Added: Periodically Re-Sync Zoom Meeting via API to avoid ZAK timeouts
 
 = 4.6.7 - April 20th, 2026 =
 * Security Fix: Patched delete action ajax.
