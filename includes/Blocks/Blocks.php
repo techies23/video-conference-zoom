@@ -13,12 +13,12 @@ use function Composer\Autoload\includeFile;
  */
 class Blocks {
 
-	public static $_instance = null;
+	public static ?Blocks $_instance = null;
 
 	/**
 	 * @return Blocks|null
 	 */
-	public static function get_instance() {
+	public static function get_instance(): ?Blocks {
 		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
 	}
 
@@ -42,20 +42,21 @@ class Blocks {
 	}
 
 	/**
-	 * Register necessary scripts
+	 * Register the necessary scripts.
 	 *
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
-	public function register_scripts() {
+	public function register_scripts(): void {
 		$script_asset_path = require_once( ZVC_PLUGIN_DIR_PATH . '/build/index.asset.php' );
 		$dependencies      = $script_asset_path['dependencies'];
-		//Plugin Scripts
-		wp_register_style( 'video-conferencing-with-zoom-api-blocks',
+
+		wp_register_style(
+			'video-conferencing-with-zoom-api-blocks',
 			ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.css',
 			false,
-			ZVC_PLUGIN_VERSION );
-		//print(ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.css'); die;
+			ZVC_PLUGIN_VERSION
+		);
 
 		wp_register_style(
 			'vczapi-blocks-style',
@@ -71,7 +72,8 @@ class Blocks {
 			$script_asset_path['version']
 		);
 
-		wp_localize_script( 'vczapi-blocks',
+		wp_localize_script(
+			'vczapi-blocks',
 			'vczapi_blocks',
 			[
 				'list_meetings_preview'            => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-meetings-webinars.png',
@@ -85,15 +87,14 @@ class Blocks {
 	}
 
 	/**
-	 * Registering block categories
+	 * Registering block categories.
 	 *
-	 * @param $categories
-	 * @param $post
+	 * @param array $categories Block categories.
+	 * @param mixed $post       Post.
 	 *
 	 * @return array
 	 * @since   3.7.5
 	 * @updated N/A
-	 *
 	 */
 	public function register_block_categories( $categories, $post ): array {
 		return array_merge(
@@ -101,7 +102,6 @@ class Blocks {
 				[
 					'slug'  => 'vczapi-blocks',
 					'title' => __( 'Zoom', 'video-conferencing-with-zoom-api' ),
-					//'icon'  => 'wordpress',
 				],
 			],
 			$categories
@@ -109,253 +109,253 @@ class Blocks {
 	}
 
 	/**
-	 * Registering blocks
+	 * Registering blocks.
 	 *
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
-	public function register_blocks() {
+	public function register_blocks(): void {
 		register_block_type( 'vczapi/list-meetings', [
-			"title"           => "List Zoom Meetings",
-			"attributes"      => [
+			'title'           => 'List Zoom Meetings',
+			'attributes'      => [
 				'preview'          => [
 					'type'    => 'boolean',
 					'default' => false
 				],
-				"shortcodeType"    => [
-					"type"    => "string",
-					"default" => "meeting"
+				'shortcodeType'    => [
+					'type'    => 'string',
+					'default' => 'meeting'
 				],
-				"showPastMeeting"  => [
-					"type"    => "boolean",
-					"default" => false
+				'showPastMeeting'  => [
+					'type'    => 'boolean',
+					'default' => false
 				],
-				"showFilter"       => [
-					"type"    => "string",
-					"default" => "yes",
+				'showFilter'       => [
+					'type'    => 'string',
+					'default' => 'yes',
 				],
-				"postsToShow"      => [
-					"type"    => "number",
-					"default" => 5
+				'postsToShow'      => [
+					'type'    => 'number',
+					'default' => 5
 				],
-				"orderBy"          => [
-					"type"    => "string",
-					"default" => ""
+				'orderBy'          => [
+					'type'    => 'string',
+					'default' => ''
 				],
-				"selectedCategory" => [
-					"type"    => "array",
-					"default" => []
+				'selectedCategory' => [
+					'type'    => 'array',
+					'default' => []
 				],
-				"selectedAuthor"   => [
-					"type"    => "number",
-					"default" => 0
+				'selectedAuthor'   => [
+					'type'    => 'number',
+					'default' => 0
 				],
-				"displayType"      => [
-					"type"    => "string",
-					"default" => ""
+				'displayType'      => [
+					'type'    => 'string',
+					'default' => ''
 				],
-				"columns"          => [
-					"type"    => "number",
-					"default" => 3
+				'columns'          => [
+					'type'    => 'number',
+					'default' => 3
 				]
 			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "list-view ",
-			"description"     => "List Upcoming or Past Meetings/Webinars",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'list-view ',
+			'description'     => 'List Upcoming or Past Meetings/Webinars',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_list_meetings' ]
 		] );
 
 		register_block_type( 'vczapi/list-host-meetings', [
-			"title"           => "List Zoom Meetings by Host",
-			"attributes"      => [
-				"host"       => [
-					"type" => "object",
+			'title'           => 'List Zoom Meetings by Host',
+			'attributes'      => [
+				'host'       => [
+					'type' => 'object',
 				],
-				"shouldShow" => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
+				'shouldShow' => [
+					'type'    => 'object',
+					'default' => [
+						'label' => 'Meeting',
+						'value' => 'meeting'
 					]
 				],
-				"preview"    => [
-					"type"    => "boolean",
-					"default" => false
+				'preview'    => [
+					'type'    => 'boolean',
+					'default' => false
 				],
 			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "list-view",
-			"description"     => "Show Meetings/Webinars by Host",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'list-view',
+			'description'     => 'Show Meetings/Webinars by Host',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_host_meeting_list' ]
 		] );
 
 		register_block_type( 'vczapi/show-meeting-post', [
-			"title"           => "Embed Zoom Post",
-			"attributes"      => [
-				"preview"     => [
-					"type"    => "boolean",
-					"default" => false
+			'title'           => 'Embed Zoom Post',
+			'attributes'      => [
+				'preview'     => [
+					'type'    => 'boolean',
+					'default' => false
 				],
-				"postID"      => [
-					"type"    => "number",
-					"default" => 0
+				'postID'      => [
+					'type'    => 'number',
+					'default' => 0
 				],
-				"template"    => [
-					"type"    => "string",
-					"default" => "none"
+				'template'    => [
+					'type'    => 'string',
+					'default' => 'none'
 				],
-				"description" => [
-					"type"    => "boolean",
-					"default" => true
+				'description' => [
+					'type'    => 'boolean',
+					'default' => true
 				],
-				"countdown"   => [
-					"type"    => "boolean",
-					"default" => true
+				'countdown'   => [
+					'type'    => 'boolean',
+					'default' => true
 				],
-				"details"     => [
-					"type"    => "boolean",
-					"default" => true
+				'details'     => [
+					'type'    => 'boolean',
+					'default' => true
 				]
 			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "embed-post",
-			"description"     => "Show a Meeting Post with Countdown",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'embed-post',
+			'description'     => 'Show a Meeting Post with Countdown',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_meeting_post' ]
 		] );
 
 		register_block_type( 'vczapi/show-live-meeting', [
-			"title"           => "Direct Meeting or Webinar",
-			"attributes"      => [
-				"preview"         => [
-					"type"    => "boolean",
-					"default" => false
+			'title'           => 'Direct Meeting or Webinar',
+			'attributes'      => [
+				'preview'         => [
+					'type'    => 'boolean',
+					'default' => false
 				],
-				"shouldShow"      => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
+				'shouldShow'      => [
+					'type'    => 'object',
+					'default' => [
+						'label' => 'Meeting',
+						'value' => 'meeting'
 					]
 				],
-				"host"            => [
-					"type" => "object",
+				'host'            => [
+					'type' => 'object',
 				],
-				"selectedMeeting" => [
-					"type" => "object",
+				'selectedMeeting' => [
+					'type' => 'object',
 				],
-				"link_only"       => [
-					"type"    => "string",
-					"default" => "no"
+				'link_only'       => [
+					'type'    => 'string',
+					'default' => 'no'
 				]
 			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "sticky",
-			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'sticky',
+			'description'     => 'Show a Meeting/Webinar details - direct from Zoom',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_live_meeting' ]
 		] );
 
 		register_block_type( 'vczapi/join-via-browser', [
-			"title"           => "Zoom - Join via Browser",
-			"attributes"      => [
-				"preview"           => [
-					"type"    => "boolean",
-					"default" => false
+			'title'           => 'Zoom - Join via Browser',
+			'attributes'      => [
+				'preview'           => [
+					'type'    => 'boolean',
+					'default' => false
 				],
-				"shouldShow"        => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
+				'shouldShow'        => [
+					'type'    => 'object',
+					'default' => [
+						'label' => 'Meeting',
+						'value' => 'meeting'
 					]
 				],
-				"host"              => [
-					"type" => "object",
+				'host'              => [
+					'type' => 'object',
 				],
-				"selectedMeeting"   => [
-					"type" => "object",
+				'selectedMeeting'   => [
+					'type' => 'object',
 				],
-				"login_required"    => [
-					"type"    => "string",
-					"default" => "no"
+				'login_required'    => [
+					'type'    => 'string',
+					'default' => 'no'
 				],
-				"disable_countdown" => [
-					"type"    => "string",
-					"default" => "no"
+				'disable_countdown' => [
+					'type'    => 'string',
+					'default' => 'no'
 				],
-				"title"             => [
-					"type"    => "string",
-					"default" => ""
+				'title'             => [
+					'type'    => 'string',
+					'default' => ''
 				],
-				"passcode"          => [
-					"type"    => "string",
-					"default" => ""
+				'passcode'          => [
+					'type'    => 'string',
+					'default' => ''
 				],
-				"height"            => [
-					"type"    => "number",
-					"default" => 500
+				'height'            => [
+					'type'    => 'number',
+					'default' => 500
 				]
 			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "archive",
-			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'archive',
+			'description'     => 'Show a Meeting/Webinar details - direct from Zoom',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_join_via_browser' ]
 		] );
 
 		register_block_type( 'vczapi/recordings', [
-			"title"           => "Zoom - Show Recordings",
-			"attributes"      => [
-				"shouldShow"      => [
-					"type"    => "object",
-					"default" => [
-						"label" => "Meeting",
-						"value" => "meeting"
+			'title'           => 'Zoom - Show Recordings',
+			'attributes'      => [
+				'shouldShow'      => [
+					'type'    => 'object',
+					'default' => [
+						'label' => 'Meeting',
+						'value' => 'meeting'
 					]
 				],
-				"showBy"          => [
-					"type"    => "string",
-					"default" => "host"
+				'showBy'          => [
+					'type'    => 'string',
+					'default' => 'host'
 				],
-				"host"            => [
-					"type" => "object",
+				'host'            => [
+					'type' => 'object',
 				],
-				"selectedMeeting" => [
-					"type" => "object",
+				'selectedMeeting' => [
+					'type' => 'object',
 				],
-				"downloadable"    => [
-					"type"    => "string",
-					"default" => "no"
+				'downloadable'    => [
+					'type'    => 'string',
+					'default' => 'no'
 				]
 			],
-			"category"        => "vczapi-blocks",
-			"icon"            => "playlist-video",
-			"description"     => "Show a Meeting/Webinar details - direct from Zoom",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'playlist-video',
+			'description'     => 'Show a Meeting/Webinar details - direct from Zoom',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_recordings' ]
 		] );
 
 		register_block_type( 'vczapi/single-zoom-meeting', [
-			"title"           => "Zoom - Single Meeting Page",
-			"category"        => "vczapi-blocks",
-			"icon"            => "dashicons-text-page",
-			"description"     => "Single Zoom Meeting Page",
-			"textdomain"      => "video-conferencing-with-zoom-api",
+			'title'           => 'Zoom - Single Meeting Page',
+			'category'        => 'vczapi-blocks',
+			'icon'            => 'dashicons-text-page',
+			'description'     => 'Single Zoom Meeting Page',
+			'textdomain'      => 'video-conferencing-with-zoom-api',
 			'editor_script'   => 'vczapi-blocks',
 			'editor_style'    => 'vczapi-blocks-style',
 			'render_callback' => [ $this, 'render_single_meeting' ]
@@ -363,7 +363,7 @@ class Blocks {
 	}
 
 	/**
-	 * Render block template from here
+	 * Render block template from here.
 	 *
 	 * @return false|string|void
 	 */
@@ -380,13 +380,201 @@ class Blocks {
 	}
 
 	/**
-	 * Get All host helper
+	 * Get a scalar block attribute without display-oriented sanitization.
+	 *
+	 * @param mixed  $attributes Block attributes.
+	 * @param string $key        Attribute key.
+	 * @param string $default    Default value.
+	 *
+	 * @return string
+	 */
+	private function get_scalar_attribute( mixed $attributes, string $key, string $default = '' ): string {
+		if (
+			! is_array( $attributes )
+			|| ! isset( $attributes[ $key ] )
+			|| is_array( $attributes[ $key ] )
+			|| is_object( $attributes[ $key ] )
+		) {
+			return $default;
+		}
+
+		return (string) $attributes[ $key ];
+	}
+
+	/**
+	 * Get a nested scalar block attribute.
+	 *
+	 * @param mixed  $attributes Block attributes.
+	 * @param string $key        Attribute key.
+	 * @param string $nested_key Nested key.
+	 * @param string $default    Default value.
+	 *
+	 * @return string
+	 */
+	private function get_nested_scalar_attribute( mixed $attributes, string $key, string $nested_key = 'value', string $default = '' ): string {
+		if (
+			! is_array( $attributes )
+			|| ! isset( $attributes[ $key ] )
+			|| ! is_array( $attributes[ $key ] )
+			|| ! isset( $attributes[ $key ][ $nested_key ] )
+			|| is_array( $attributes[ $key ][ $nested_key ] )
+			|| is_object( $attributes[ $key ][ $nested_key ] )
+		) {
+			return $default;
+		}
+
+		return (string) $attributes[ $key ][ $nested_key ];
+	}
+
+	/**
+	 * Get a positive integer block attribute.
+	 *
+	 * @param mixed  $attributes Block attributes.
+	 * @param string $key        Attribute key.
+	 * @param int    $default    Default value.
+	 *
+	 * @return int
+	 */
+	private function get_int_attribute( mixed $attributes, string $key, int $default = 0 ): int {
+		if (
+			! is_array( $attributes )
+			|| ! isset( $attributes[ $key ] )
+			|| is_array( $attributes[ $key ] )
+			|| is_object( $attributes[ $key ] )
+		) {
+			return $default;
+		}
+
+		return absint( $attributes[ $key ] );
+	}
+
+	/**
+	 * Get an allowlisted scalar block attribute.
+	 *
+	 * @param mixed  $attributes     Block attributes.
+	 * @param string $key            Attribute key.
+	 * @param array  $allowed_values Allowed values.
+	 * @param string $default        Default value.
+	 *
+	 * @return string
+	 */
+	private function get_allowed_attribute( mixed $attributes, string $key, array $allowed_values, string $default = '' ): string {
+		$value = $this->get_scalar_attribute( $attributes, $key, $default );
+
+		return in_array( $value, $allowed_values, true ) ? $value : $default;
+	}
+
+	/**
+	 * Get an allowlisted nested block attribute.
+	 *
+	 * @param mixed  $attributes     Block attributes.
+	 * @param string $key            Attribute key.
+	 * @param array  $allowed_values Allowed values.
+	 * @param string $default        Default value.
+	 *
+	 * @return string
+	 */
+	private function get_allowed_nested_attribute( mixed $attributes, string $key, array $allowed_values, string $default = '' ): string {
+		$value = $this->get_nested_scalar_attribute( $attributes, $key, 'value', $default );
+
+		return in_array( $value, $allowed_values, true ) ? $value : $default;
+	}
+
+	/**
+	 * Get a numeric identifier from a nested block attribute.
+	 *
+	 * @param mixed  $attributes Block attributes.
+	 * @param string $key        Attribute key.
+	 * @param string $default    Default value.
+	 *
+	 * @return string
+	 */
+	private function get_nested_numeric_id_attribute( mixed $attributes, string $key, string $default = '' ): string {
+		$value = $this->get_nested_scalar_attribute( $attributes, $key, 'value', $default );
+
+		return preg_replace( '/[^0-9]/', '', $value );
+	}
+
+	/**
+	 * Get a sanitized Zoom host identifier.
+	 *
+	 * @param mixed  $attributes Block attributes.
+	 * @param string $key        Attribute key.
+	 * @param string $default    Default value.
+	 *
+	 * @return string
+	 */
+	private function get_nested_host_id_attribute( mixed $attributes, string $key, string $default = '' ): string {
+		$value = $this->get_nested_scalar_attribute( $attributes, $key, 'value', $default );
+
+		return preg_replace( '/[^A-Za-z0-9_\-@.]/', '', $value );
+	}
+
+	/**
+	 * Get a Zoom meeting passcode.
+	 *
+	 * Zoom passcodes are limited to 10 characters and may contain special
+	 * characters. Avoid display-oriented sanitizers here.
+	 *
+	 * @param mixed  $attributes Block attributes.
+	 * @param string $key        Attribute key.
+	 *
+	 * @return string
+	 */
+	private function get_passcode_attribute( mixed $attributes, string $key ): string {
+		$passcode = $this->get_scalar_attribute( $attributes, $key, '' );
+
+		$passcode = str_replace(
+			[ "\r", "\n", "\t", ']' ],
+			'',
+			$passcode
+		);
+
+		return function_exists( 'mb_substr' ) ? mb_substr( $passcode, 0, 10 ) : substr( $passcode, 0, 10 );
+	}
+
+	/**
+	 * Build a safely quoted shortcode attribute fragment.
+	 *
+	 * This is shortcode-context escaping, not HTML attribute escaping.
+	 *
+	 * @param string $name  Shortcode attribute name.
+	 * @param mixed  $value Shortcode attribute value.
+	 *
+	 * @return string
+	 */
+	private function shortcode_attribute( string $name, mixed $value ): string {
+		$name  = sanitize_key( $name );
+		$value = (string) $value;
+
+		$value = str_replace(
+			[ "\r", "\n", "\t", ']' ],
+			' ',
+			$value
+		);
+
+		if ( false === strpos( $value, '"' ) ) {
+			return ' ' . $name . '="' . $value . '"';
+		}
+
+		if ( false === strpos( $value, "'" ) ) {
+			return " " . $name . "='" . $value . "'";
+		}
+
+		$value = str_replace( '"', '', $value );
+
+		return ' ' . $name . '="' . $value . '"';
+	}
+
+	/**
+	 * Get all host helper.
 	 *
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
 	public function get_hosts() {
 		$host_name = filter_input( INPUT_GET, 'host' );
+		$host_name = is_scalar( $host_name ) ? (string) $host_name : '';
 		$users     = video_conferencing_zoom_api_get_user_transients();
 
 		$hosts = [];
@@ -397,7 +585,7 @@ class Blocks {
 				$username   = $first_name . $last_name . '(' . $user->email . ')';
 
 				if ( ! empty( $host_name ) ) {
-					preg_match( "/($host_name)/", $username, $matches );
+					preg_match( '/' . preg_quote( $host_name, '/' ) . '/', $username, $matches );
 					if ( ! empty( $matches ) ) {
 						$hosts[] = [ 'label' => $username, 'value' => $user->id ];
 					}
@@ -407,7 +595,6 @@ class Blocks {
 			}
 		}
 
-		//If not found host then search for email address
 		if ( empty( $hosts ) && ! empty( $host_name ) ) {
 			$user = json_decode( zoom_conference()->getUserInfo( $host_name ) );
 			if ( ! empty( $user ) && ! isset( $user->code ) ) {
@@ -423,7 +610,7 @@ class Blocks {
 	}
 
 	/**
-	 * Get all live meetings helper
+	 * Get all live meetings helper.
 	 *
 	 * @since   3.7.5
 	 * @updated N/A
@@ -475,91 +662,100 @@ class Blocks {
 	}
 
 	/**
-	 * Render list of meetings
+	 * Render list of meetings.
 	 *
-	 * @param $attributes
+	 * @param mixed $attributes Block attributes.
 	 *
 	 * @return string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
 	 */
 	public function render_list_meetings( $attributes ): string {
-		$shortcode = isset( $attributes['shortcodeType'] ) && ( $attributes['shortcodeType'] == 'webinar' ) ? 'zoom_list_webinars' : 'zoom_list_meetings';
+		$shortcode_type = $this->get_allowed_attribute( $attributes, 'shortcodeType', [ 'meeting', 'webinar' ], 'meeting' );
+		$shortcode      = ( 'webinar' === $shortcode_type ) ? 'zoom_list_webinars' : 'zoom_list_meetings';
 
-		if ( isset( $attributes['postsToShow'] ) && ! empty( $attributes['postsToShow'] ) ) {
-			$shortcode .= ' per_page="' . $attributes['postsToShow'] . '"';
+		$posts_to_show = $this->get_int_attribute( $attributes, 'postsToShow', 0 );
+		if ( ! empty( $posts_to_show ) ) {
+			$shortcode .= $this->shortcode_attribute( 'per_page', $posts_to_show );
 		}
 
-		if ( isset( $attributes['orderBy'] ) && ! empty( $attributes['orderBy'] ) ) {
-			$shortcode .= ' order="' . $attributes['orderBy'] . '"';
+		$order_by = $this->get_allowed_attribute( $attributes, 'orderBy', [ 'ASC', 'DESC', 'asc', 'desc' ], '' );
+		if ( ! empty( $order_by ) ) {
+			$shortcode .= $this->shortcode_attribute( 'order', strtoupper( $order_by ) );
 		}
 
-		if ( isset( $attributes['showFilter'] ) && ! empty( $attributes['showFilter'] ) ) {
-			$shortcode .= ' filter="' . $attributes['showFilter'] . '"';
+		$show_filter = $this->get_allowed_attribute( $attributes, 'showFilter', [ 'yes', 'no' ], 'yes' );
+		if ( ! empty( $show_filter ) ) {
+			$shortcode .= $this->shortcode_attribute( 'filter', $show_filter );
 		}
 
 		if ( isset( $attributes['selectedCategory'] ) && is_array( $attributes['selectedCategory'] ) && ! empty( $attributes['selectedCategory'] ) ) {
-			$categories_string = '';
-			$category_count    = count( $attributes['selectedCategory'] );
-			$separator         = ( $category_count > 1 ) ? ',' : '';
-			foreach ( $attributes['selectedCategory'] as $index => $category ) {
-				if ( $category['value'] == '' ) {
+			$categories = [];
+			foreach ( $attributes['selectedCategory'] as $category ) {
+				if (
+					! is_array( $category )
+					|| empty( $category['value'] )
+					|| is_array( $category['value'] )
+					|| is_object( $category['value'] )
+				) {
 					continue;
 				}
-				$separator         = ( $index + 1 ) ? $separator : '';
-				$categories_string .= $category['value'] . $separator;
+
+				$category_value = sanitize_text_field( (string) $category['value'] );
+				if ( '' !== $category_value ) {
+					$categories[] = $category_value;
+				}
 			}
-			unset( $separator );
 
-			if ( ! empty( $categories_string ) ) {
-				$shortcode .= ' category="' . $categories_string . '"';
+			if ( ! empty( $categories ) ) {
+				$shortcode .= $this->shortcode_attribute( 'category', implode( ',', $categories ) );
 			}
 		}
 
-		if ( isset( $attributes['selectedAuthor'] ) && ! empty( $attributes['selectedAuthor'] ) ) {
-			$shortcode .= ' author="' . $attributes['selectedAuthor'] . '"';
+		$selected_author = $this->get_int_attribute( $attributes, 'selectedAuthor', 0 );
+		if ( ! empty( $selected_author ) ) {
+			$shortcode .= $this->shortcode_attribute( 'author', $selected_author );
 		}
 
-		if ( isset( $attributes['displayType'] ) && ! empty( $attributes['displayType'] ) ) {
-			$shortcode .= ' type="' . $attributes['displayType'] . '"';
+		$display_type = $this->get_allowed_attribute( $attributes, 'displayType', [ 'upcoming', 'past' ], '' );
+		if ( ! empty( $display_type ) ) {
+			$shortcode .= $this->shortcode_attribute( 'type', $display_type );
 		}
 
-		if ( isset( $attributes['columns'] ) && ! empty( $attributes['columns'] ) ) {
-			$shortcode .= ' cols="' . $attributes['columns'] . '"';
+		$columns = $this->get_int_attribute( $attributes, 'columns', 0 );
+		if ( ! empty( $columns ) ) {
+			$shortcode .= $this->shortcode_attribute( 'cols', $columns );
 		}
 
 		return do_shortcode( '[' . $shortcode . ']' );
 	}
 
 	/**
-	 * Render just the post
+	 * Render just the post.
 	 *
-	 * @param $attributes
+	 * @param mixed $attributes Block attributes.
 	 *
 	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
 	 */
 	public function render_meeting_post( $attributes ) {
 		$shortcode = 'zoom_meeting_post';
-		if ( isset( $attributes['postID'] ) && ! empty( $attributes['postID'] ) ) {
-			$shortcode .= ' post_id="' . $attributes['postID'] . '"';
+
+		$post_id = $this->get_int_attribute( $attributes, 'postID', 0 );
+		if ( ! empty( $post_id ) ) {
+			$shortcode .= $this->shortcode_attribute( 'post_id', $post_id );
 		}
 
-		if ( isset( $attributes['template'] ) && ! empty( $attributes['template'] ) ) {
-			$shortcode .= ' template="' . $attributes['template'] . '"';
+		$template = $this->get_allowed_attribute( $attributes, 'template', [ 'boxed', 'none' ], 'none' );
+		if ( ! empty( $template ) ) {
+			$shortcode .= $this->shortcode_attribute( 'template', $template );
 		}
 
-		$description = $attributes['description'] ? "true" : "false";
-		$shortcode   .= ' description="' . $description . '"';
+		$description = ! empty( $attributes['description'] ) ? 'true' : 'false';
+		$shortcode   .= $this->shortcode_attribute( 'description', $description );
 
-		$countdown = $attributes['countdown'] ? "true" : "false";
-		$shortcode .= ' countdown="' . $countdown . '"';
+		$countdown = ! empty( $attributes['countdown'] ) ? 'true' : 'false';
+		$shortcode .= $this->shortcode_attribute( 'countdown', $countdown );
 
-		$details   = $attributes['details'] ? "true" : "false";
-		$shortcode .= ' details="' . $details . '"';
+		$details   = ! empty( $attributes['details'] ) ? 'true' : 'false';
+		$shortcode .= $this->shortcode_attribute( 'details', $details );
 
 		ob_start();
 		echo do_shortcode( '[' . $shortcode . ']' );
@@ -568,27 +764,30 @@ class Blocks {
 	}
 
 	/**
-	 * Render directly from API
+	 * Render directly from API.
 	 *
-	 * @param $attributes
+	 * @param mixed $attributes Block attributes.
 	 *
 	 * @return false|string
 	 */
 	public function render_live_meeting( $attributes ) {
 		ob_start();
-		$shortcode = ( $attributes['shouldShow']['value'] == 'webinar' ) ? 'zoom_api_webinar' : 'zoom_api_link';
 
+		$should_show = $this->get_allowed_nested_attribute( $attributes, 'shouldShow', [ 'meeting', 'webinar' ], 'meeting' );
+		$shortcode   = ( 'webinar' === $should_show ) ? 'zoom_api_webinar' : 'zoom_api_link';
 
-		if ( isset( $attributes['selectedMeeting'] ) && ! empty( 'selectedMeeting' ) ) {
-			$shortcode .= ( $attributes['shouldShow']['value'] == 'webinar' )
-				?
-				' webinar_id="' . $attributes['selectedMeeting']['value'] . '"'
-				:
-				' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
+		$selected_meeting = $this->get_nested_numeric_id_attribute( $attributes, 'selectedMeeting' );
+		if ( ! empty( $selected_meeting ) ) {
+			$shortcode .= ( 'webinar' === $should_show )
+				? $this->shortcode_attribute( 'webinar_id', $selected_meeting )
+				: $this->shortcode_attribute( 'meeting_id', $selected_meeting );
 		}
-		if ( isset( $attributes['link_only'] ) && ! empty( 'link_only' ) ) {
-			$shortcode .= ' link_only="' . $attributes['link_only'] . '"';
+
+		$link_only = $this->get_allowed_attribute( $attributes, 'link_only', [ 'yes', 'no' ], 'no' );
+		if ( ! empty( $link_only ) ) {
+			$shortcode .= $this->shortcode_attribute( 'link_only', $link_only );
 		}
+
 		echo do_shortcode( '[' . $shortcode . ']' );
 
 		return ob_get_clean();
@@ -597,86 +796,98 @@ class Blocks {
 	/**
 	 * Render host meeting list.
 	 *
-	 * @param $attributes
+	 * @param mixed $attributes Block attributes.
 	 *
 	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
 	 */
 	public function render_host_meeting_list( $attributes ) {
-		$shortcode = ( $attributes['shouldShow']['value'] == "webinar" ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
+		$should_show = $this->get_allowed_nested_attribute( $attributes, 'shouldShow', [ 'meeting', 'webinar' ], 'meeting' );
+		$host        = $this->get_nested_host_id_attribute( $attributes, 'host' );
+		$shortcode   = ( 'webinar' === $should_show ) ? 'zoom_list_host_webinars' : 'zoom_list_host_meetings';
+
 		ob_start();
-		echo do_shortcode( '[' . $shortcode . ' host="' . $attributes['host']['value'] . '"]' );
+
+		if ( ! empty( $host ) ) {
+			echo do_shortcode( '[' . $shortcode . $this->shortcode_attribute( 'host', $host ) . ']' );
+		}
 
 		return ob_get_clean();
 	}
 
 	/**
-	 * Embed join via browser
+	 * Embed join via browser.
 	 *
-	 * @param $attributes
+	 * @param mixed $attributes Block attributes.
 	 *
 	 * @return string
 	 */
 	public function render_join_via_browser( $attributes ): string {
 		$shortcode_args = '';
-		if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
-			$shortcode_args .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
+
+		$selected_meeting = $this->get_nested_numeric_id_attribute( $attributes, 'selectedMeeting' );
+		if ( ! empty( $selected_meeting ) ) {
+			$shortcode_args .= $this->shortcode_attribute( 'meeting_id', $selected_meeting );
 		}
-		if ( isset( $attributes['login_required'] ) && ! empty( $attributes['login_required'] ) ) {
-			$shortcode_args .= ' login_required="' . $attributes['login_required'] . '"';
+
+		$login_required = $this->get_allowed_attribute( $attributes, 'login_required', [ 'yes', 'no' ], 'no' );
+		if ( ! empty( $login_required ) ) {
+			$shortcode_args .= $this->shortcode_attribute( 'login_required', $login_required );
 		}
-		if ( isset( $attributes['disable_countdown'] ) && ! empty( $attributes['disable_countdown'] ) ) {
-			$shortcode_args .= ' disable_countdown="' . $attributes['disable_countdown'] . '"';
+
+		$disable_countdown = $this->get_allowed_attribute( $attributes, 'disable_countdown', [ 'yes', 'no' ], 'no' );
+		if ( ! empty( $disable_countdown ) ) {
+			$shortcode_args .= $this->shortcode_attribute( 'disable_countdown', $disable_countdown );
 		}
-		if ( isset( $attributes['passcode'] ) && ! empty( $attributes['passcode'] ) ) {
-			$shortcode_args .= ' passcode="' . $attributes['passcode'] . '"';
+
+		$passcode = $this->get_passcode_attribute( $attributes, 'passcode' );
+		if ( '' !== $passcode ) {
+			$shortcode_args .= $this->shortcode_attribute( 'passcode', $passcode );
 		}
-		if ( ! empty( $attributes['shouldShow'] ) && ! empty( $attributes['shouldShow']['value'] ) && $attributes['shouldShow']['value'] == "webinar" ) {
-			$shortcode_args .= ' webinar="yes"';
+
+		$should_show = $this->get_allowed_nested_attribute( $attributes, 'shouldShow', [ 'meeting', 'webinar' ], 'meeting' );
+		if ( 'webinar' === $should_show ) {
+			$shortcode_args .= $this->shortcode_attribute( 'webinar', 'yes' );
 		}
 
 		ob_start();
 
-		#dump($shortcode_args);
-		echo do_shortcode( '[zoom_join_via_browser iframe="no" ' . $shortcode_args . ']' );
+		echo do_shortcode( '[zoom_join_via_browser iframe="no"' . $shortcode_args . ']' );
 
 		return ob_get_clean();
 	}
 
 	/**
-	 * Render Recordings
+	 * Render Recordings.
 	 *
-	 * @param $attributes
+	 * @param mixed $attributes Block attributes.
 	 *
 	 * @return false|string
-	 * @since   3.7.5
-	 * @updated N/A
-	 *
 	 */
-	public function render_recordings( $attributes ) {
+	public function render_recordings( $attributes ): false|string {
 		ob_start();
+
 		$shortcode = '';
-		if ( isset( $attributes['showBy'] ) && ! empty( $attributes['showBy'] ) ) {
-			$shortcode = ( $attributes['showBy'] == 'host' ) ? 'zoom_recordings' : 'zoom_recordings_by_meeting';
-			if ( $attributes['showBy'] == 'host' ) {
-				if ( isset( $attributes['host']['value'] ) && ! empty( $attributes['host']['value'] ) ) {
-					$shortcode .= ' host_id="' . $attributes['host']['value'] . '"';
-				}
-			} else {
-				if ( isset( $attributes['selectedMeeting'] ) && ! empty( $attributes['selectedMeeting'] ) ) {
-					$shortcode .= ' meeting_id="' . $attributes['selectedMeeting']['value'] . '"';
-				}
+		$show_by   = $this->get_allowed_attribute( $attributes, 'showBy', [ 'host', 'meeting' ], 'host' );
+
+		if ( 'host' === $show_by ) {
+			$host = $this->get_nested_host_id_attribute( $attributes, 'host' );
+			if ( ! empty( $host ) ) {
+				$shortcode = 'zoom_recordings' . $this->shortcode_attribute( 'host_id', $host );
+			}
+		} else {
+			$selected_meeting = $this->get_nested_numeric_id_attribute( $attributes, 'selectedMeeting' );
+			if ( ! empty( $selected_meeting ) ) {
+				$shortcode = 'zoom_recordings_by_meeting' . $this->shortcode_attribute( 'meeting_id', $selected_meeting );
 			}
 		}
-		if ( isset( $attributes['downloadable'] ) && ! empty( $attributes['downloadable'] ) ) {
-			$maybe     = $attributes['downloadable'] == 'true' ? 'yes' : 'no';
-			$shortcode .= ' downloadable="' . $maybe . '"';
-		}
 
-		//print_r( $shortcode );
-		echo do_shortcode( '[' . $shortcode . ']' );
+		if ( ! empty( $shortcode ) ) {
+			$downloadable = $this->get_allowed_attribute( $attributes, 'downloadable', [ 'true', 'false', 'yes', 'no' ], 'no' );
+			$maybe        = ( 'true' === $downloadable || 'yes' === $downloadable ) ? 'yes' : 'no';
+			$shortcode    .= $this->shortcode_attribute( 'downloadable', $maybe );
+
+			echo do_shortcode( '[' . $shortcode . ']' );
+		}
 
 		return ob_get_clean();
 	}
