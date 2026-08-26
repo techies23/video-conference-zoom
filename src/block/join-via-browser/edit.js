@@ -9,14 +9,17 @@ import { debounce } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState, useRef } from '@wordpress/element'
 
-import AsyncSelect from 'react-select/async'
-import Select from 'react-select'
 import {
-  Placeholder, ToolbarButton,
-  TextControl, ToolbarGroup,
-  Button, RadioControl,
-  Disabled, Spinner,
-  RangeControl,
+  Placeholder,
+  ToolbarButton,
+  TextControl,
+  ToolbarGroup,
+  Button,
+  RadioControl,
+  Disabled,
+  Spinner,
+  SelectControl,
+  ComboboxControl
 } from '@wordpress/components'
 
 export default function EditJoinViaBrowser (props) {
@@ -30,62 +33,82 @@ export default function EditJoinViaBrowser (props) {
     shouldShow,
     passcode,
   } = attributes
-  const isMounted = useRef
+
+  const isMounted = useRef()
   const [isEditing, setIsEditing] = useState(false)
   const [availableMeetings, setAvailableMeetings] = useState([])
 
-  const [tempHost, setTempHost] = useState([host])
-  const [tempShouldShow, setTempShouldShow] = useState(shouldShow)
-  const [tempSelectedMeeting, setTempSelectedMeeting] = useState({})
+  const [tempHost, setTempHost] = useState(host || null)
+  const [tempShouldShow, setTempShouldShow] = useState(shouldShow?.value || shouldShow || 'meeting')
+  const [tempSelectedMeeting, setTempSelectedMeeting] = useState(selectedMeeting || {})
+
+  const [hostOptions, setHostOptions] = useState([])
+  const [isLoadingHosts, setIsLoadingHosts] = useState(false)
 
   const [numberOfPages, setNumberOfPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
 
   const [isLoadingMeetings, setIsLoadingMeetings] = useState(false)
 
-  const get_hosts = (input, callback) => {
-    fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + input).then(
-      response => response.json(),
-    ).then(
-      result => {
-        callback(result)
-      },
-    ).catch(
-      () => {
-        callback([])
-      },
-    )
-  }
-  const get_live_meetings = (host_id, shouldShow, additional_args = {}) => {
-    if (host_id === 'undefined' || host_id === '')
-      return []
+  // Debounced host search handler
+  const handleHostFilter = debounce((input) => {
+    setIsLoadingHosts(true)
+    const searchParam = input ? encodeURIComponent(input) : ''
+
+    fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=' + searchParam)
+    .then(response => response.json())
+    .then(result => {
+      if (isMounted.current && Array.isArray(result)) {
+        const formatted = result.map(item => ({
+          label: item.label || item.name || item.text,
+          value: String(item.value || item.id)
+        }))
+        setHostOptions(formatted)
+        setIsLoadingHosts(false)
+      }
+    })
+    .catch(() => {
+      if (isMounted.current) {
+        setIsLoadingHosts(false)
+      }
+    })
+  }, 300)
+
+  const get_live_meetings = (host_id, shouldShowValue, additional_args = {}) => {
+    if (!host_id || host_id === 'undefined') return []
+
+    const showVal = typeof shouldShowValue === 'object' ? shouldShowValue.value : shouldShowValue
     let queryUrl = ajaxurl + '?action=vczapi_get_live_meetings&host_id=' +
-      host_id + '&show=' + shouldShow.value
+      host_id + '&show=' + showVal
 
     if (additional_args.hasOwnProperty('page_number') &&
       additional_args.page_number !== 'undefined') {
       queryUrl += '&page_number=' + additional_args.page_number
     }
+
     setIsLoadingMeetings(true)
-    fetch(queryUrl).then(
-      response => response.json(),
-    ).then(
-      result => {
-        if (isMounted.current) {
-          let returnedPages = parseFloat(result.total_records) /
-            parseFloat(result.page_size)
-          if (returnedPages > 1) {
-            let pagination_count = Math.round(returnedPages)
-            setNumberOfPages(pagination_count)
-          } else {
-            setNumberOfPages(1)
-          }
-          setAvailableMeetings(result.formatted_meetings)
-          setIsLoadingMeetings(false)
+    fetch(queryUrl)
+    .then(response => response.json())
+    .then(result => {
+      if (isMounted.current) {
+        let returnedPages = parseFloat(result.total_records) / parseFloat(result.page_size)
+        if (returnedPages > 1) {
+          let pagination_count = Math.round(returnedPages)
+          setNumberOfPages(pagination_count)
+        } else {
+          setNumberOfPages(1)
         }
-      },
-    )
+        setAvailableMeetings(result.formatted_meetings || [])
+        setIsLoadingMeetings(false)
+      }
+    })
+    .catch(() => {
+      if (isMounted.current) {
+        setIsLoadingMeetings(false)
+      }
+    })
   }
+
   const PaginateLinks = ({ numberOfPages }) => {
     let pages = []
     if (numberOfPages > 1) {
@@ -96,7 +119,8 @@ export default function EditJoinViaBrowser (props) {
             key={i}
             className={className}
             onClick={() => {
-              get_live_meetings(host.value, shouldShow, {
+              const currentHostVal = tempHost?.value || tempHost
+              get_live_meetings(currentHostVal, tempShouldShow, {
                 page_number: i,
               })
               setCurrentPage(i)
@@ -110,11 +134,36 @@ export default function EditJoinViaBrowser (props) {
     }
     return ''
   }
+
   useEffect(() => {
     isMounted.current = true
-    if (typeof host == 'object' && host.hasOwnProperty('value')) {
-      get_live_meetings(host.value, shouldShow)
+
+    // 1. Fetch initial host options so the dropdown populates immediately when clicked
+    setIsLoadingHosts(true)
+    fetch(ajaxurl + '?action=vczapi_get_zoom_hosts&host=')
+    .then(response => response.json())
+    .then(result => {
+      if (isMounted.current && Array.isArray(result)) {
+        const formatted = result.map(item => ({
+          label: item.label || item.name || item.text,
+          value: String(item.value || item.id)
+        }))
+        setHostOptions(formatted)
+        setIsLoadingHosts(false)
+      }
+    })
+    .catch(() => {
+      if (isMounted.current) {
+        setIsLoadingHosts(false)
+      }
+    })
+
+    // 2. Load meetings if host is already configured
+    const initialHostVal = host?.value || host
+    if (initialHostVal) {
+      get_live_meetings(initialHostVal, tempShouldShow)
     }
+
     return () => {
       isMounted.current = false
     }
@@ -122,12 +171,15 @@ export default function EditJoinViaBrowser (props) {
 
   if (preview) {
     return (
-      <>
-        <img src={vczapi_blocks.join_via_browser}
-             alt={'Direct Meeting from Zoom'}/>
-      </>
+      <img src={vczapi_blocks.join_via_browser} alt={'Direct Meeting from Zoom'} />
     )
   }
+
+  // Map meeting list items to valid string values for SelectControl
+  const formattedMeetingOptions = availableMeetings.map(m => ({
+    label: m.label,
+    value: JSON.stringify(m)
+  }))
 
   return (
     <div {...useBlockProps()}>
@@ -144,179 +196,163 @@ export default function EditJoinViaBrowser (props) {
         </ToolbarGroup>
       </BlockControls>
 
-
       {(typeof selectedMeeting === 'undefined' || isEditing) &&
-      <Placeholder>
-        <div className="vczapi-label-header">
-          <h2>{__('Zoom - Embed Join Via A Browser',
-            'video-conferencing-with-zoom-api')}</h2>
-          <div><p>{__('Embed Join via a browser',
-            'video-conferencing-with-zoom-api')}</p></div>
-        </div>
-        <div className="vczapi-blocks-form">
-          {
-            (typeof selectedMeeting !== 'undefined' &&
-              selectedMeeting.hasOwnProperty('value'))
-            && <div className={'vczapi-blocks-form--selected-meeting'}>
-              <h4>Currently Selected
-                Meeting: <strong>{selectedMeeting.label}</strong></h4>
-            </div>
-          }
-          <div className="vczapi-blocks-form--group">
-            <TextControl
-              className={'text-input'}
-              label={__(
-                'Passcode (Set password of your meeting to automatically let users join without needing them to enter password.)',
-                'video-conferencing-with-zoom-api')}
-              value={passcode}
-              onChange={(value) => {
-                setAttributes({ passcode: value })
-              }}/>
+        <Placeholder>
+          <div className="vczapi-label-header">
+            <h2>{__('Zoom - Embed Join Via A Browser', 'video-conferencing-with-zoom-api')}</h2>
+            <div><p>{__('Embed Join via a browser', 'video-conferencing-with-zoom-api')}</p></div>
           </div>
-
-          <div className={'vczapi-blocks-form--group'}>
-            <RadioControl
-              className={'radio-inline'}
-              label="Disable Countdown"
-              selected={disable_countdown}
-              options={[
-                { label: 'Yes', value: 'yes' },
-                { label: 'No', value: 'no' },
-              ]}
-              onChange={(option) => {
-                setAttributes({ disable_countdown: option })
-              }}
-            />
-          </div>
-          <div className={'vczapi-blocks-form--group'}>
-            <RadioControl
-              className={'radio-inline'}
-              label="Login Required"
-              selected={login_required}
-              options={[
-                { label: 'Yes', value: 'yes' },
-                { label: 'No', value: 'no' },
-              ]}
-              onChange={(option) => {
-                setAttributes({ login_required: option })
-              }}
-            />
-          </div>
-          <div className="vczapi-blocks-form--group">
-            <div className={'vczapi-blocks-form--input-label'}>
-              {__('Would you like to show a Meeting or Webinar',
-                'video-conferencing-with-zoom-api')}
-            </div>
-            <Select
-              label="Show"
-              className={'vczapi-blocks-form--select'}
-              defaultValue={tempShouldShow}
-              options={[
-                { label: 'Meeting', value: 'meeting' },
-                { label: 'Webinar', value: 'webinar' },
-              ]}
-              onChange={(option) => {
-                setTempShouldShow(option)
-                if (typeof host === 'object' && host.hasOwnProperty('value')) {
-                  setAvailableMeetings([])
-                  get_live_meetings(host.value, option)
-                  setTempHost(host)
-                }
-              }}
-            />
-          </div>
-          <div className="vczapi-blocks-form--group">
-            <div className={'vczapi-blocks-form--input-label'}>
-              {__('Select A Host', 'video-conferencing-with-zoom-api')}
-            </div>
-            <AsyncSelect
-              className={'vczapi-blocks-form--select'}
-              defaultOptions
-              defaultValue={tempHost}
-              placeholder={__('Select host to see meetings',
-                'video-conferencing-with-zoom-api')}
-              noOptionsMessage={() => __('No options found',
-                'video-conferencing-with-zoom-api')}
-              loadOptions={debounce(get_hosts, 800)}
-              onChange={(input, { action }) => {
-                if (action === 'select-option') {
-                  setAttributes({ host: input })
-                  setTempHost(input)
-                  get_live_meetings(input.value, tempShouldShow)
-                }
-              }}
-            />
-          </div>
-
-          {(isLoadingMeetings && (typeof availableMeetings === 'undefined' ||
-            availableMeetings.length === 0)) &&
-          <div className="vczapi-blocks-form--group"><Spinner/></div>
-          }
-
-          {(typeof availableMeetings != 'undefined' &&
-            availableMeetings.length > 0) &&
-          <div className="vczapi-blocks-form--group">
-            <div className={'vczapi-blocks-form--input-label'}>
-                            <span>
-                                {__('Select A Meeting : ',
-                                  'video-conferencing-with-zoom-api')}
-                              {numberOfPages > 1 &&
-                              <span>use pagination to load more meeting if necessary</span>}
-                            </span>
-
-            </div>
-            <Select
-              className={'vczapi-blocks-form--select'}
-              defaultValue={selectedMeeting}
-              options={availableMeetings}
-              isLoading={isLoadingMeetings}
-              isDisabled={isLoadingMeetings}
-              onChange={(input) => {
-                setTempSelectedMeeting(input)
-              }}
-              placeholder={__('Select a meeting',
-                'video-conferencing-with-zoom-api')}
-            />
-            <PaginateLinks numberOfPages={numberOfPages}/>
-          </div>
-          }
-
-          <div className="vczapi-blocks-form--group">
-            <Button isPrimary onClick={() => {
-              if (!tempSelectedMeeting.hasOwnProperty('value')) {
-                alert('Meeting Needs to be selected')
-                return false
-              }
-              setAttributes({ selectedMeeting: tempSelectedMeeting })
-              setAttributes({ shouldShow: tempShouldShow })
-              setIsEditing(false)
-            }}>{__('Save', 'video-conferencing-with-zoom-api')}</Button>
-          </div>
-
-        </div>
-      </Placeholder>
-      }
-
-
-      {((typeof selectedMeeting !== 'undefined' &&
-        selectedMeeting.hasOwnProperty('value')) && !isEditing)
-      &&
-      <Disabled>
-        <ServerSideRender
-          block="vczapi/join-via-browser"
-          attributes={
+          <div className="vczapi-blocks-form">
             {
-              selectedMeeting: selectedMeeting,
-              login_required: login_required,
-              disable_countdown: disable_countdown,
-              passcode: passcode,
-              shouldShow: shouldShow,
+              (typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value'))
+              && <div className={'vczapi-blocks-form--selected-meeting'}>
+                <h4>Currently Selected Meeting: <strong>{selectedMeeting.label}</strong></h4>
+              </div>
             }
-          }
-        />
-      </Disabled>
+
+            <div className="vczapi-blocks-form--group">
+              <TextControl
+                className={'text-input'}
+                label={__(
+                  'Passcode (Set password of your meeting to automatically let users join without needing them to enter password.)',
+                  'video-conferencing-with-zoom-api')}
+                value={passcode}
+                onChange={(value) => {
+                  setAttributes({ passcode: value })
+                }}/>
+            </div>
+
+            <div className={'vczapi-blocks-form--group'}>
+              <RadioControl
+                className={'radio-inline'}
+                label="Disable Countdown"
+                selected={disable_countdown}
+                options={[
+                  { label: 'Yes', value: 'yes' },
+                  { label: 'No', value: 'no' },
+                ]}
+                onChange={(option) => {
+                  setAttributes({ disable_countdown: option })
+                }}
+              />
+            </div>
+
+            <div className={'vczapi-blocks-form--group'}>
+              <RadioControl
+                className={'radio-inline'}
+                label="Login Required"
+                selected={login_required}
+                options={[
+                  { label: 'Yes', value: 'yes' },
+                  { label: 'No', value: 'no' },
+                ]}
+                onChange={(option) => {
+                  setAttributes({ login_required: option })
+                }}
+              />
+            </div>
+
+            <div className="vczapi-blocks-form--group">
+              <SelectControl
+                label={__('Would you like to show a Meeting or Webinar', 'video-conferencing-with-zoom-api')}
+                value={tempShouldShow}
+                options={[
+                  { label: 'Meeting', value: 'meeting' },
+                  { label: 'Webinar', value: 'webinar' },
+                ]}
+                onChange={(optionValue) => {
+                  setTempShouldShow(optionValue)
+                  const currentHostVal = tempHost?.value || tempHost
+                  if (currentHostVal) {
+                    setAvailableMeetings([])
+                    get_live_meetings(currentHostVal, optionValue)
+                  }
+                }}
+              />
+            </div>
+
+            <div className="vczapi-blocks-form--group">
+              <ComboboxControl
+                label={__('Select A Host', 'video-conferencing-with-zoom-api')}
+                help={__('Click to view available hosts or start typing to filter', 'video-conferencing-with-zoom-api')}
+                value={tempHost?.value ? String(tempHost.value) : (typeof tempHost === 'string' ? tempHost : '')}
+                options={hostOptions}
+                onFilterValueChange={handleHostFilter}
+                isLoading={isLoadingHosts}
+                onChange={(selectedHostValue) => {
+                  if (!selectedHostValue) return
+
+                  const matchedObj = hostOptions.find(h => String(h.value) === String(selectedHostValue)) || {
+                    value: selectedHostValue,
+                    label: selectedHostValue
+                  }
+
+                  setAttributes({ host: matchedObj })
+                  setTempHost(matchedObj)
+                  get_live_meetings(selectedHostValue, tempShouldShow)
+                }}
+              />
+            </div>
+
+            {(isLoadingMeetings && (typeof availableMeetings === 'undefined' || availableMeetings.length === 0)) &&
+              <div className="vczapi-blocks-form--group"><Spinner/></div>
+            }
+
+            {(typeof availableMeetings !== 'undefined' && availableMeetings.length > 0) &&
+              <div className="vczapi-blocks-form--group">
+                <SelectControl
+                  label={
+                    __('Select A Meeting : ', 'video-conferencing-with-zoom-api') +
+                    (numberOfPages > 1 ? ' (use pagination below if necessary)' : '')
+                  }
+                  value={JSON.stringify(tempSelectedMeeting)}
+                  options={[
+                    { label: __('Select a meeting', 'video-conferencing-with-zoom-api'), value: '{}' },
+                    ...formattedMeetingOptions
+                  ]}
+                  disabled={isLoadingMeetings}
+                  onChange={(jsonString) => {
+                    if (jsonString !== '{}') {
+                      setTempSelectedMeeting(JSON.parse(jsonString))
+                    }
+                  }}
+                />
+                <PaginateLinks numberOfPages={numberOfPages}/>
+              </div>
+            }
+
+            <div className="vczapi-blocks-form--group">
+              <Button isPrimary onClick={() => {
+                if (!tempSelectedMeeting.hasOwnProperty('value')) {
+                  alert('Meeting Needs to be selected')
+                  return false
+                }
+                setAttributes({ selectedMeeting: tempSelectedMeeting })
+                setAttributes({ shouldShow: typeof tempShouldShow === 'object' ? tempShouldShow : { label: tempShouldShow, value: tempShouldShow } })
+                setIsEditing(false)
+              }}>{__('Save', 'video-conferencing-with-zoom-api')}</Button>
+            </div>
+
+          </div>
+        </Placeholder>
       }
 
+      {((typeof selectedMeeting !== 'undefined' && selectedMeeting.hasOwnProperty('value')) && !isEditing) &&
+        <Disabled>
+          <ServerSideRender
+            block="vczapi/join-via-browser"
+            attributes={
+              {
+                selectedMeeting: selectedMeeting,
+                login_required: login_required,
+                disable_countdown: disable_countdown,
+                passcode: passcode,
+                shouldShow: shouldShow,
+              }
+            }
+          />
+        </Disabled>
+      }
     </div>
   )
 }
