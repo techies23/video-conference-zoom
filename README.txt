@@ -3,8 +3,8 @@ Contributors: j__3rk, digamberpradhan, codemanas
 Tags: zoom video conference, video conference, web conferencing, online meetings, webinars
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
-Tested up to: 7.0
-Stable tag: 4.6.8
+Tested up to: 7.1.0
+Stable tag: 4.6.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,13 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+= 4.6.9 =
+* Security: Blocks - Hardened dynamic Zoom Gutenberg block rendering to prevent crafted block attributes from breaking out of generated shortcode attributes.
+* Security: Blocks - Added validation for block attributes used in Zoom shortcode generation.
+* Security: Blocks - Improved Join via Browser passcode handling and host lookup input handling.
+* Compatibility: Updated Blocks to be compatible with WordPress 7.1.0
+
+
 = 4.6.8 - June 4th, 2026 =
 * Security Fix: Patched get_auth ajax handler.
 * Added: Periodically Re-Sync Zoom Meeting via API to avoid ZAK timeouts
