@@ -615,12 +615,13 @@ class Blocks {
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
-	public function get_live_meetings() {
+	public function     get_live_meetings() {
 		$host_id                 = filter_input( INPUT_GET, 'host_id' );
 		$show_meeting_or_webinar = filter_input( INPUT_GET, 'show' );
 		$args                    = [
 			'page_size' => 300,
 		];
+
 		$page_number             = filter_input( INPUT_GET, 'page_number' );
 		if ( ! empty( $page_number ) ) {
 			$args['page_number'] = $page_number;
