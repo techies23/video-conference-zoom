@@ -109,7 +109,7 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
 			<div class="vczapi-jvb-countdown-content-description">
 				<h2 class="vczapi-jvb-countdown-content-description-topic"><?php echo esc_html( $topic ); ?></h2>
 				<?php if ( ! empty( $start_time ) ) { ?>
-					<div class="vczapi-jvb-countdown-content-description-time"><strong><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $start_time, $timezone ); ?>
+					<div class="vczapi-jvb-countdown-content-description-time"><strong><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $start_time, $timezone )); ?>
                     </div>
 				<?php } ?>
 				<div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php esc_html_e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( $timezone ); ?></div>
