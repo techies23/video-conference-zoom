@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 5.0
 Tested up to: 7.1.0
-Stable tag: 4.6.9
+Stable tag: 4.6.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,9 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 9. Shortcode Output
 
 == Changelog ==
+= 4.6.10 =
+* Security: Shortcode - Fixed a potential XSS vulnerability.
+
 = 4.6.9 =
 * Security: Blocks - Hardened dynamic Zoom Gutenberg block rendering to prevent crafted block attributes from breaking out of generated shortcode attributes.
 * Security: Blocks - Added validation for block attributes used in Zoom shortcode generation.
