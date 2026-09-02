@@ -8,6 +8,7 @@ use Codemanas\VczApi\Zoom\Schema\SchemaManager;
 use WP_Error;
 
 class Meeting extends BaseService {
+
 	/** @var Client */
 	protected Client $client;
 
@@ -28,7 +29,7 @@ class Meeting extends BaseService {
 	 */
 	public function list( array $params = array() ): WP_Error|array {
 		$built = PayloadBuilder::build( SchemaManager::MEETING_LIST, $params );
- 		if ( is_wp_error( $built ) ) {
+		if ( is_wp_error( $built ) ) {
 			return $built;
 		}
 
@@ -37,12 +38,10 @@ class Meeting extends BaseService {
 			return $prepared;
 		}
 
-		// Allow final tweaks to query params before request.
 		$prepared['query'] = apply_filters( 'vczapi_meetings_list_params', $prepared['query'], $params );
 
 		$result = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
 
-		// Surface payload warnings for observability (non-blocking).
 		if ( ! empty( $prepared['warnings'] ) ) {
 			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_LIST, $params );
 		}
@@ -67,12 +66,10 @@ class Meeting extends BaseService {
 			return $prepared;
 		}
 
-		// Allow final tweaks to body before request.
 		$prepared['body'] = apply_filters( 'vczapi_meetings_create_payload', $prepared['body'], $data );
 
 		$result = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
 
-		// Surface payload warnings for observability (non-blocking).
 		if ( ! empty( $prepared['warnings'] ) ) {
 			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_CREATE, $data );
 		}
@@ -122,5 +119,29 @@ class Meeting extends BaseService {
 		}
 
 		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
+	}
+
+	/**
+	 * Update meeting status (PUT /meetings/{meetingId}/status).
+	 *
+	 * @param string|int|array $meetingId ID string or payload array.
+	 * @param string           $action    Status action (e.g., 'end').
+	 * @return array|WP_Error
+	 */
+	public function updateStatus( $meetingId, string $action = 'end' ): WP_Error|array {
+		$params           = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+		$params['action'] = $action;
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_STATUS, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
 	}
 }

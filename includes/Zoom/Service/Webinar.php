@@ -169,4 +169,28 @@ class Webinar extends BaseService {
 
 		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
 	}
+
+	/**
+	 * Update webinar status (PUT /webinars/{webinarId}/status).
+	 *
+	 * @param string|int|array $webinarId ID string or payload array.
+	 * @param string           $action    Status action (e.g., 'end').
+	 * @return array|WP_Error
+	 */
+	public function updateStatus( $webinarId, string $action = 'end' ): WP_Error|array {
+		$params           = is_array( $webinarId ) ? $webinarId : array( 'webinar_id' => $webinarId );
+		$params['action'] = $action;
+
+		$built = PayloadBuilder::build( SchemaManager::WEBINAR_STATUS, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
+	}
 }

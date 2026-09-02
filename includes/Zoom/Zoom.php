@@ -4,57 +4,34 @@ namespace Codemanas\VczApi\Zoom;
 
 use Codemanas\VczApi\Zoom\Service\Meeting as MeetingService;
 use Codemanas\VczApi\Zoom\Service\Webinar as WebinarService;
-use WP_Error;
 
 /**
  * Zoom Facade
  *
- * Public entry point for developers. Delegates to Services.
- * Returns raw arrays on success or WP_Error on failure.
+ * Main entry point for the Zoom API wrapper.
+ * Access individual domain services via accessor methods.
  */
 class Zoom {
+
 	/** @var MeetingService */
 	protected MeetingService $meetingService;
+
+	/** @var WebinarService */
 	protected WebinarService $webinarService;
 
 	/**
-	 * Optionally, inject services for testing/customization.
+	 * Optionally inject services for testing or custom implementations.
 	 *
 	 * @param MeetingService|null $meetingService
+	 * @param WebinarService|null $webinarService
 	 */
-	public function __construct( MeetingService $meetingService = null ) {
+	public function __construct( ?MeetingService $meetingService = null, ?WebinarService $webinarService = null ) {
 		$this->meetingService = $meetingService ?: new MeetingService();
-		$this->webinarService = new WebinarService();
+		$this->webinarService = $webinarService ?: new WebinarService();
 	}
 
 	/**
-	 * List meetings for a user/host.
-	 *
-		 * @param array $params e.g. ['user_id' => 'user_email@email.com | user_id', 'page_size' => 30, ...]
-	 * @return array|WP_Error
-	 */
-	public function listMeetings( array $params = array() ): WP_Error|array {
-		return $this->meetingService->list( $params );
-	}
-
-	/**
-	 * Create a meeting for a user/host.
-	 *
-	 * @param array $data e.g. [
-	 *   'user_id' => 'me',
-	 *   'topic' => 'My Meeting',
-	 *   'start_time' => '2025-09-01T10:00:00Z',
-	 *   'duration' => 30,
-	 *   'settings' => ['waiting_room' => true],
-	 * ]
-	 * @return array|WP_Error
-	 */
-	public function createMeeting( array $data = array() ): WP_Error|array {
-		return $this->meetingService->create( $data );
-	}
-
-	/**
-	 * Expose the Meeting service for advanced use-cases.
+	 * Access Meeting service operations.
 	 *
 	 * @return MeetingService
 	 */
@@ -63,7 +40,7 @@ class Zoom {
 	}
 
 	/**
-	 * Get a Webinar service instance.
+	 * Access Webinar service operations.
 	 *
 	 * @return WebinarService
 	 */

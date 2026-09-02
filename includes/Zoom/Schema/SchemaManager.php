@@ -46,6 +46,8 @@ class SchemaManager {
 	public const MEETING_GET = 'meeting.get';
 	public const MEETING_DELETE = 'meeting.delete';
 	const MEETING_UPDATE = 'meeting.update';
+	const MEETING_STATUS = 'meeting.status';
+
 
 	// Webinars (reserved for later)
 	const WEBINAR_LIST = 'webinar.list';
@@ -53,7 +55,7 @@ class SchemaManager {
 	const WEBINAR_GET = 'webinar.get';
 	const WEBINAR_DELETE = 'webinar.delete';
 	const WEBINAR_UPDATE = 'webinar.update';
-
+	const WEBINAR_STATUS = 'webinar.status';
 	// Users (reserved for later)
 	// const USER_GET  = 'user.get';
 	// const USER_LIST = 'user.list';
