@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi;
 
+use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
 use Codemanas\VczApi\Helpers\Encryption;
@@ -26,7 +27,7 @@ final class Bootstrap {
 	 *
 	 * @since 2.0.0
 	 */
-	public static function instance() {
+	public static function instance(): ?Bootstrap {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -34,7 +35,7 @@ final class Bootstrap {
 		return self::$_instance;
 	}
 
-	private $plugin_version = ZVC_PLUGIN_VERSION;
+	private string $plugin_version = ZVC_PLUGIN_VERSION;
 
 	/**
 	 * Constructor method for loading the components
@@ -61,7 +62,7 @@ final class Bootstrap {
 			$this->version_update_warning( ZVC_PLUGIN_VERSION, $plugin_data['new_version'] );
 		} );
 
-        Marketplace::get_instance();
+		Marketplace::get_instance();
 	}
 
 	/**
@@ -70,7 +71,7 @@ final class Bootstrap {
 	 * @param $current_version
 	 * @param $new_version
 	 */
-	public function version_update_warning( $current_version, $new_version ) {
+	public function version_update_warning( $current_version, $new_version ): void {
 		$current_version_minor_part = explode( '.', $current_version )[1];
 		$new_version_minor_part     = explode( '.', $new_version )[1];
 
@@ -105,7 +106,7 @@ final class Bootstrap {
 	 *
 	 * @return mixed
 	 */
-	function set_corp_headers( $headers, $wp ) {
+	function set_corp_headers( $headers, $wp ): mixed {
 		$type = filter_input( INPUT_GET, 'type' );
 		if ( ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) || ( ! empty( get_post()->post_content ) && has_shortcode( get_post()->post_content, 'zoom_join_via_browser' ) ) ) {
 			$headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
@@ -115,7 +116,7 @@ final class Bootstrap {
 		return $headers;
 	}
 
-	public function autoloader() {
+	public function autoloader(): void {
 		require_once ZVC_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 	}
 
@@ -126,7 +127,7 @@ final class Bootstrap {
 	 * @modified 2.1.0
 	 * @author   Deepen Bajracharya
 	 */
-	protected function init_api() {
+	protected function init_api(): void {
 		//Load the Credentials
 		zoom_conference()->zoom_api_key    = get_option( 'zoom_api_key' );
 		zoom_conference()->zoom_api_secret = get_option( 'zoom_api_secret' );
@@ -135,7 +136,7 @@ final class Bootstrap {
 	/**
 	 * @return void
 	 */
-	public function register_scripts() {
+	public function register_scripts(): void {
 		$minified = SCRIPT_DEBUG ? '' : '.min';
 		wp_register_style( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style' . $minified . '.css', false, $this->plugin_version );
 
@@ -162,7 +163,7 @@ final class Bootstrap {
 	 * @since   3.0.0
 	 * @author  Deepen Bajracharya
 	 */
-	function enqueue_scripts() {
+	function enqueue_scripts(): void {
 		if ( is_singular( 'zoom-meetings' ) ) {
 			wp_enqueue_style( 'video-conferencing-with-zoom-api' );
 			wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
@@ -192,7 +193,7 @@ final class Bootstrap {
 	 *
 	 * @since  3.7.1
 	 */
-	public function include_template_functions() {
+	public function include_template_functions(): void {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/template-functions.php';
 	}
 
@@ -203,7 +204,7 @@ final class Bootstrap {
 	 * @modified 2.1.0
 	 * @author   Deepen Bajracharya
 	 */
-	protected function load_dependencies() {
+	protected function load_dependencies(): void {
 		//Include the Main Class
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-v2.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/S2SOAuth.php';
@@ -246,8 +247,8 @@ final class Bootstrap {
 		//Helpers
 		Encryption::get_instance();
 
-        //Booking
-        Booking\Main::get_instance();
+		//Add Cron Job
+		Cron::get_instance();
 	}
 
 	/**
@@ -259,7 +260,7 @@ final class Bootstrap {
 	 * @modified 2.1.0
 	 * @author   Deepen Bajracharya
 	 */
-	public function enqueue_scripts_backend( $hook ) {
+	public function enqueue_scripts_backend( $hook ): void {
 		$pg = 'zoom-meetings_page_zoom-';
 
 		$screen = get_current_screen();
@@ -301,7 +302,7 @@ final class Bootstrap {
 	 * @since  2.0.0
 	 * @author Deepen
 	 */
-	public function load_plugin_textdomain() {
+	public function load_plugin_textdomain(): void {
 		load_plugin_textdomain( 'video-conferencing-with-zoom-api', false, ZVC_PLUGIN_LANGUAGE_PATH );
 	}
 
@@ -311,7 +312,7 @@ final class Bootstrap {
 	 * @since  1.0.0
 	 * @author Deepen
 	 */
-	public static function activate() {
+	public static function activate(): void {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
 		$post_type = \Zoom_Video_Conferencing_Admin_PostType::get_instance();
 		$post_type->register();
@@ -327,7 +328,7 @@ final class Bootstrap {
 	/**
 	 * Deactivating the plugin
 	 */
-	public static function deactivate() {
+	public static function deactivate(): void {
 		//Flush User Cache
 		update_option( '_zvc_user_lists', '' );
 		update_option( '_zvc_user_lists_expiry_time', '' );
@@ -343,7 +344,7 @@ final class Bootstrap {
 	 *
 	 * @return array
 	 */
-	public function action_link( $actions, $plugin_file ) {
+	public function action_link( $actions, $plugin_file ): array {
 		static $plugin;
 
 		if ( ! isset( $plugin ) ) {

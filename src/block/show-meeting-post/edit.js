@@ -7,8 +7,7 @@ import { __ } from '@wordpress/i18n'
 import { debounce } from 'lodash'
 import ServerSideRender from '@wordpress/server-side-render'
 import { BlockControls, useBlockProps } from '@wordpress/block-editor'
-import { Disabled, Placeholder, ToolbarGroup, Spinner, CheckboxControl, SelectControl } from '@wordpress/components'
-import AsyncSelect from 'react-select/async'
+import { Disabled, Placeholder, ToolbarGroup, Spinner, CheckboxControl, SelectControl, ComboboxControl } from '@wordpress/components'
 import { useEffect, useState, useRef } from '@wordpress/element'
 import apiFetch from '@wordpress/api-fetch'
 
@@ -17,23 +16,37 @@ export default function Edit (props) {
   const { postID, preview, template, countdown, description, details } = attributes
 
   const [availableMeetings, setAvailableMeetings] = useState([])
+  const [searchResults, setSearchResults] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
   const isStillMounted = useRef()
 
-  const getMeetings = (inputValue, callback) => {
-    return apiFetch({ path: '/wp/v2/zoom_meetings?per_page=5&search=' + inputValue }).then(
-      meetings => {
-        if (isStillMounted.current === true) {
-          callback(meetings.length > 0 ? meetings.map((meeting, i) => {
-            return { label: meeting.title.rendered, value: meeting.id }
-          }) : [])
-        }
+  const handleFilter = debounce((searchValue) => {
+    if (!searchValue) {
+      setSearchResults([])
+      return
+    }
+
+    setIsLoading(true)
+    apiFetch({ path: '/wp/v2/zoom_meetings?per_page=5&search=' + searchValue })
+    .then(meetings => {
+      if (isStillMounted.current === true) {
+        const formatted = meetings.length > 0 ? meetings.map(meeting => ({
+          label: meeting.title.rendered,
+          value: meeting.id
+        })) : []
+        setSearchResults(formatted)
+        setIsLoading(false)
       }
-    ).catch(() => {
-      callback([])
     })
-  }
+    .catch(() => {
+      if (isStillMounted.current === true) {
+        setSearchResults([])
+        setIsLoading(false)
+      }
+    })
+  }, 400)
 
   const editControls = [{
     icon: (!isEditing) ? 'edit' : 'no',
@@ -55,7 +68,7 @@ export default function Edit (props) {
     }).then(
       meetings => {
         if (isStillMounted.current === true) {
-          const returnedMeetings = meetings.length > 0 ? meetings.map((meeting, i) => {
+          const returnedMeetings = meetings.length > 0 ? meetings.map((meeting) => {
             return { label: meeting.title.rendered, value: meeting.id }
           }) : []
           setAvailableMeetings(returnedMeetings)
@@ -75,6 +88,9 @@ export default function Edit (props) {
     )
   }
 
+  // Combine initial meetings with search results to avoid losing selected options
+  const comboboxOptions = searchResults.length > 0 ? searchResults : availableMeetings
+
   return (
     <div {...useBlockProps()}>
       <BlockControls>
@@ -89,19 +105,16 @@ export default function Edit (props) {
           <h2>{__('Zoom -  Show Meeting Post', 'video-conferencing-with-zoom-api')}</h2>
           <div className="vczapi-blocks-form">
             <div className="vczapi-blocks-form--group">
-              <AsyncSelect
-                cacheOptions
-                className="vczapi-blocks-form--select"
-                placeholder={__('Select Meeting to Show', 'video-conferencing-with-zoom-api')}
-                defaultOptions={availableMeetings}
-                loadOptions={debounce(getMeetings, 800)}
-                onChange={(selectedOption, { action }) => {
-                  setAttributes({ postID: selectedOption.value })
+              <ComboboxControl
+                label={__('Select Meeting to Show', 'video-conferencing-with-zoom-api')}
+                value={postID || null}
+                options={comboboxOptions}
+                onFilterValueChange={handleFilter}
+                isLoading={isLoading}
+                onChange={(selectedID) => {
+                  setAttributes({ postID: Number(selectedID) })
                   setIsEditing(false)
                 }}
-                defaultValue={availableMeetings.filter((meeting) => {
-                  return meeting.value === postID
-                })}
               />
             </div>
             <div className="vczapi-blocks-form--group">
@@ -169,5 +182,4 @@ export default function Edit (props) {
       }
     </div>
   )
-
 }
