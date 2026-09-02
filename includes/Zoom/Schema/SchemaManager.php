@@ -43,13 +43,15 @@ class SchemaManager {
 	// Meetings
 	const MEETING_LIST = 'meeting.list';
 	const MEETING_CREATE = 'meeting.create';
-	public const MEETING_GET    = 'meeting.get';
+	public const MEETING_GET = 'meeting.get';
 	public const MEETING_DELETE = 'meeting.delete';
 	const MEETING_UPDATE = 'meeting.update';
 
 	// Webinars (reserved for later)
-	// const WEBINAR_LIST   = 'webinar.list';
-	// const WEBINAR_CREATE = 'webinar.create';
+	const WEBINAR_LIST = 'webinar.list';
+	const WEBINAR_CREATE = 'webinar.create';
+	const WEBINAR_GET = 'webinar.get';
+	const WEBINAR_DELETE = 'webinar.delete';
 
 	// Users (reserved for later)
 	// const USER_GET  = 'user.get';
