@@ -207,4 +207,52 @@ class Meeting {
 			),
 		);
 	}
+
+	/**
+	 * Schema for fetching a single meeting.
+	 * GET /meetings/{meeting_id}
+	 */
+	public static function get(): array {
+		return array(
+			'operation' => SchemaManager::MEETING_GET,
+			'http'      => array(
+				'method'      => 'GET',
+				'path'        => '/meetings/{meeting_id}',
+				'path_params' => array( 'meeting_id' => 'meeting_id' ),
+			),
+			'fields'    => array(
+				'meeting_id'  => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
+				'occurrence_id' => array( 'type' => 'string', 'location' => 'query' ),
+				'show_previous_occurrences' => array( 'type' => 'bool', 'location' => 'query' ),
+			),
+			'compat'    => array(
+				'meetingId' => 'meeting_id',
+				'id'        => 'meeting_id',
+			),
+		);
+	}
+
+	/**
+	 * Schema for deleting a meeting.
+	 * DELETE /meetings/{meeting_id}
+	 */
+	public static function delete(): array {
+		return array(
+			'operation' => SchemaManager::MEETING_DELETE,
+			'http'      => array(
+				'method'      => 'DELETE',
+				'path'        => '/meetings/{meeting_id}',
+				'path_params' => array( 'meeting_id' => 'meeting_id' ),
+			),
+			'fields'    => array(
+				'meeting_id' => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
+				'schedule_for_reminder' => array( 'type' => 'bool', 'location' => 'query' ),
+				'cancel_meeting_reminder' => array( 'type' => 'string', 'location' => 'query' ),
+			),
+			'compat'    => array(
+				'meetingId' => 'meeting_id',
+				'id'        => 'meeting_id',
+			),
+		);
+	}
 }

@@ -9,10 +9,10 @@ use WP_Error;
 
 class Meeting extends BaseService {
 	/** @var Client */
-	protected $client;
+	protected Client $client;
 
 	/**
-	 * Optionally inject a client for testing or customization.
+	 * Optionally, inject a client for testing or customization.
 	 *
 	 * @param Client|null $client
 	 */
@@ -26,7 +26,7 @@ class Meeting extends BaseService {
 	 * @param array $params
 	 * @return array|WP_Error
 	 */
-	public function list( array $params = array() ) {
+	public function list( array $params = array() ): WP_Error|array {
 		$built = PayloadBuilder::build( SchemaManager::MEETING_LIST, $params );
  		if ( is_wp_error( $built ) ) {
 			return $built;
@@ -56,7 +56,7 @@ class Meeting extends BaseService {
 	 * @param array $data
 	 * @return array|WP_Error
 	 */
-	public function create( array $data = array() ) {
+	public function create( array $data = array() ): WP_Error|array {
 		$built = PayloadBuilder::build( SchemaManager::MEETING_CREATE, $data );
 		if ( is_wp_error( $built ) ) {
 			return $built;
@@ -78,5 +78,49 @@ class Meeting extends BaseService {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Get details of a single meeting.
+	 *
+	 * @param string|int|array $meetingId ID string or array with parameters.
+	 * @return array|WP_Error
+	 */
+	public function get( $meetingId ): WP_Error|array {
+		$params = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_GET, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
+	}
+
+	/**
+	 * Delete a meeting.
+	 *
+	 * @param string|int|array $meetingId ID string or array with parameters.
+	 * @return array|WP_Error
+	 */
+	public function delete( $meetingId ): WP_Error|array {
+		$params = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_DELETE, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
 	}
 }

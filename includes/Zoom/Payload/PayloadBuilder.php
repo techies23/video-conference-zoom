@@ -20,12 +20,12 @@ class PayloadBuilder {
 	/**
 	 * Build a payload for a given operation and raw input.
 	 *
-	 * @param string $operation
-	 * @param array  $input
+	 * @param   string  $operation
+	 * @param array     $input
 	 *
 	 * @return array|WP_Error
 	 */
-	public static function build( $operation, array $input ) {
+	public static function build( string $operation, array $input ): WP_Error|array {
 		$validated = self::validateArgs( $operation, $input );
 		if ( is_wp_error( $validated ) ) {
 			return $validated;
@@ -45,11 +45,12 @@ class PayloadBuilder {
 	 *
 	 * No enums, no min/max, no max_len here. No transforms (implode/truncate/etc).
 	 *
-	 * @param string $operation
-	 * @param array  $input
+	 * @param   string  $operation
+	 * @param array     $input
+	 *
 	 * @return array|WP_Error  Normalized array or WP_Error on failure
 	 */
-	public static function validateArgs( $operation, array $input ) {
+	public static function validateArgs( string $operation, array $input ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
 			return $schema;
@@ -97,7 +98,7 @@ class PayloadBuilder {
 	 * @param array  $validated
 	 * @return array|WP_Error  ['path'=>[], 'query'=>[], 'body'=>[], 'meta'=>[]]
 	 */
-	public static function sanitizePayload( $operation, array $validated ) {
+	public static function sanitizePayload( $operation, array $validated ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
 			return $schema;
@@ -142,7 +143,7 @@ class PayloadBuilder {
 	 * Compat helpers
 	 * ========================= */
 
-	protected static function applyCompatKeyMap( array $input, array $map ) {
+	protected static function applyCompatKeyMap( array $input, array $map ): array {
 		foreach ( $map as $legacy => $target ) {
 			if ( array_key_exists( $legacy, $input ) ) {
 				self::setByDotPath( $input, $target, $input[ $legacy ] );
@@ -152,7 +153,7 @@ class PayloadBuilder {
 		return $input;
 	}
 
-	protected static function applyCompatTransforms( array $input, array $transforms ) {
+	protected static function applyCompatTransforms( array $input, array $transforms ): array {
 		foreach ( $transforms as $rule ) {
 			$from = isset( $rule['from'] ) ? $rule['from'] : null;
 			$to   = isset( $rule['to'] ) ? $rule['to'] : null;
@@ -202,7 +203,7 @@ class PayloadBuilder {
 	 * @param array $fields
 	 * @return array|WP_Error
 	 */
-	protected static function validateTypesOnly( array $input, array $fields ) {
+	protected static function validateTypesOnly( array $input, array $fields ): WP_Error|array {
 		$out = array();
 
 		foreach ( $fields as $name => $rules ) {
@@ -302,7 +303,7 @@ class PayloadBuilder {
 	 * @param array $fields
 	 * @return array
 	 */
-	protected static function sanitizeForSending( array $data, array $fields ) {
+	protected static function sanitizeForSending( array $data, array $fields ): array {
 		$out = array();
 
 		foreach ( $fields as $name => $rules ) {
@@ -344,7 +345,7 @@ class PayloadBuilder {
 		return $out;
 	}
 
-	protected static function sanitizeString( $value ) {
+	protected static function sanitizeString( $value ): string {
 		$value = wp_strip_all_tags( (string) $value, true );
 		$value = trim( $value );
 		return $value;
@@ -354,7 +355,7 @@ class PayloadBuilder {
 	 * Partitioning + utilities
 	 * ========================= */
 
-	protected static function partitionByLocation( array $normalized, array $fields ) {
+	protected static function partitionByLocation( array $normalized, array $fields ): array {
 		$out = array( 'path' => array(), 'query' => array(), 'body' => array() );
 
 		foreach ( $normalized as $name => $value ) {
@@ -374,7 +375,7 @@ class PayloadBuilder {
 	/**
 	 * Set by dot-path (e.g., settings.waiting_room).
 	 */
-	protected static function setByDotPath( array &$arr, $path, $value ) {
+	protected static function setByDotPath( array &$arr, $path, $value ): void {
 		$parts = explode( '.', $path );
 		$ref   = &$arr;
 		foreach ( $parts as $i => $key ) {

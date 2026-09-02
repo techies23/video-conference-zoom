@@ -43,6 +43,8 @@ class SchemaManager {
 	// Meetings
 	const MEETING_LIST = 'meeting.list';
 	const MEETING_CREATE = 'meeting.create';
+	public const MEETING_GET    = 'meeting.get';
+	public const MEETING_DELETE = 'meeting.delete';
 	const MEETING_UPDATE = 'meeting.update';
 
 	// Webinars (reserved for later)
@@ -67,7 +69,7 @@ class SchemaManager {
 	/**
 	 * Build the operation map once.
 	 *
-	 * @return array
+	 * @return array|null
 	 */
 	protected static function map(): ?array {
 		if ( self::$map === null ) {
@@ -75,6 +77,8 @@ class SchemaManager {
 				// Meetings
 				self::MEETING_LIST   => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
 				self::MEETING_CREATE => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
+				self::MEETING_GET    => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
+				self::MEETING_DELETE => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
 
 				// Add more operations here as you implement schemas.
 				// self::WEBINAR_LIST   => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
@@ -87,13 +91,11 @@ class SchemaManager {
 	}
 
 	/**
-	 * Retrieve a schema definition for an operation.
+	 * @param   string  $operation
 	 *
-	 * @param  string  $operation  One of the defined constants.
-	 *
-	 * @return array|WP_Error  Schema array on success, WP_Error on failure.
+	 * @return array|WP_Error
 	 */
-	public static function get( string $operation ) {
+	public static function get( string $operation ): WP_Error|array {
 		if ( ! self::isValidOperation( $operation ) ) {
 			return new WP_Error(
 				'vczapi_invalid_operation',
@@ -139,11 +141,11 @@ class SchemaManager {
 	/**
 	 * Check if an operation is supported.
 	 *
-	 * @param  string  $operation
+	 * @param   string  $operation
 	 *
 	 * @return bool
 	 */
-	public static function isValidOperation( $operation ): bool {
+	public static function isValidOperation( string $operation ): bool {
 		$map = self::map();
 
 		return isset( $map[ $operation ] );
