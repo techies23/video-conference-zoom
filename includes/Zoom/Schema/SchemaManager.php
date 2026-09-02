@@ -57,8 +57,11 @@ class SchemaManager {
 	const WEBINAR_UPDATE = 'webinar.update';
 	const WEBINAR_STATUS = 'webinar.status';
 	// Users (reserved for later)
-	// const USER_GET  = 'user.get';
-	// const USER_LIST = 'user.list';
+	public const USER_LIST = 'user.list';
+	public const USER_GET = 'user.get';
+	public const USER_CREATE = 'user.create';
+	public const USER_UPDATE = 'user.update';
+	public const USER_DELETE = 'user.delete';
 
 	// Recordings (reserved for later)
 	// const RECORDING_LIST_BY_USER    = 'recording.listByUser';
@@ -79,16 +82,26 @@ class SchemaManager {
 	protected static function map(): ?array {
 		if ( self::$map === null ) {
 			self::$map = array(
-				// Meetings
-				self::MEETING_LIST   => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
-				self::MEETING_CREATE => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
-				self::MEETING_GET    => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
-				self::MEETING_DELETE => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
+				// Meetings...
+				self::MEETING_LIST          => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
+				self::MEETING_CREATE        => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
+				self::MEETING_GET           => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
+				self::MEETING_DELETE        => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
 
-				// Add more operations here as you implement schemas.
-				// self::WEBINAR_LIST   => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
-				// self::USER_GET       => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'get' ),
-				// self::RECORDING_LIST_BY_MEETING => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'listByMeeting' ),
+				// Webinars
+				self::WEBINAR_LIST          => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
+				self::WEBINAR_CREATE        => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'create' ),
+				self::WEBINAR_GET           => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'get' ),
+				self::WEBINAR_UPDATE        => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'update' ),
+				self::WEBINAR_DELETE        => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'delete' ),
+				self::WEBINAR_STATUS => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'updateStatus' ),
+
+				// Users
+				self::USER_LIST             => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'list' ),
+				self::USER_GET              => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'get' ),
+				self::USER_CREATE           => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'create' ),
+				self::USER_UPDATE           => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'update' ),
+				self::USER_DELETE           => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'delete' ),
 			);
 		}
 
