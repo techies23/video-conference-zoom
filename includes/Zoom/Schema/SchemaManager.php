@@ -52,6 +52,7 @@ class SchemaManager {
 	const WEBINAR_CREATE = 'webinar.create';
 	const WEBINAR_GET = 'webinar.get';
 	const WEBINAR_DELETE = 'webinar.delete';
+	const WEBINAR_UPDATE = 'webinar.update';
 
 	// Users (reserved for later)
 	// const USER_GET  = 'user.get';

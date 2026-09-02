@@ -89,18 +89,7 @@ class Webinar {
 				'settings'    => array(
 					'type'     => 'object',
 					'location' => 'body',
-					'schema'   => array(
-						'host_video'                  => array( 'type' => 'bool' ),
-						'panelists_video'             => array( 'type' => 'bool' ),
-						'practice_session'            => array( 'type' => 'bool', 'default' => false ),
-						'hd_video'                    => array( 'type' => 'bool' ),
-						'approval_type'               => array( 'type' => 'int', 'enum' => array( 0, 1, 2 ), 'default' => 2 ),
-						'registration_type'           => array( 'type' => 'int', 'enum' => array( 1, 2, 3 ), 'default' => 1 ),
-						'audio'                       => array( 'type' => 'string', 'enum' => array( 'both', 'telephony', 'voip', 'thirdParty' ), 'default' => 'both' ),
-						'auto_recording'              => array( 'type' => 'string', 'enum' => array( 'local', 'cloud', 'none' ), 'default' => 'none' ),
-						'allow_multiple_devices'      => array( 'type' => 'bool' ),
-						'alternative_hosts'           => array( 'type' => 'string' ),
-					),
+					'schema'   => WebinarSettings::schema(),
 				),
 			),
 			'compat'           => array(
@@ -140,6 +129,51 @@ class Webinar {
 			'compat'    => array(
 				'webinarId' => 'webinar_id',
 				'id'        => 'webinar_id',
+			),
+		);
+	}
+
+	/**
+	 * Update a webinar.
+	 * PATCH /webinars/{webinar_id}
+	 */
+	public static function update(): array {
+		return array(
+			'operation'        => SchemaManager::WEBINAR_UPDATE,
+			'docs'             => 'https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/webinarUpdate',
+			'http'             => array(
+				'method'      => 'PATCH',
+				'path'        => '/webinars/{webinar_id}',
+				'path_params' => array( 'webinar_id' => 'webinar_id' ),
+			),
+			'fields'           => array(
+				'webinar_id'  => array( 'type' => 'string', 'required' => true, 'location' => 'path', 'trim' => true ),
+				'topic'       => array( 'type' => 'string', 'location' => 'body', 'max_len' => 200, 'trim' => true ),
+				'agenda'      => array( 'type' => 'string', 'location' => 'body', 'max_len' => 2000 ),
+				'type'        => array( 'type' => 'int', 'enum' => array( 5, 6, 9 ), 'location' => 'body' ),
+				'start_time'  => array( 'type' => 'string', 'location' => 'body' ),
+				'duration'    => array( 'type' => 'int', 'min' => 1, 'max' => 1440, 'location' => 'body' ),
+				'timezone'    => array( 'type' => 'string', 'location' => 'body' ),
+				'password'    => array( 'type' => 'string', 'location' => 'body', 'max_len' => 10 ),
+				'settings'    => array(
+					'type'     => 'object',
+					'location' => 'body',
+					'schema'   => WebinarSettings::schema( true ),
+				),
+			),
+			'compat'           => array(
+				'webinarId'              => 'webinar_id',
+				'id'                     => 'webinar_id',
+				'start_date'             => 'start_time',
+				'option_host_video'      => 'settings.host_video',
+				'option_panelists_video' => 'settings.panelists_video',
+				'option_auto_recording'  => 'settings.auto_recording',
+				'alternative_host_ids'   => 'settings.alternative_hosts',
+			),
+			'compat_transform' => array(
+				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
+				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
+				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 		);
 	}
