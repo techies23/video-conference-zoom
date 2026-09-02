@@ -4,6 +4,7 @@ namespace Codemanas\VczApi\Zoom;
 
 use Codemanas\VczApi\Zoom\Service\Meeting as MeetingService;
 use Codemanas\VczApi\Zoom\Service\Webinar as WebinarService;
+use Codemanas\VczApi\Zoom\Service\User as UserService;
 
 /**
  * Zoom Facade
@@ -22,8 +23,8 @@ class Zoom {
 	/**
 	 * Optionally inject services for testing or custom implementations.
 	 *
-	 * @param MeetingService|null $meetingService
-	 * @param WebinarService|null $webinarService
+	 * @param   MeetingService|null  $meetingService
+	 * @param   WebinarService|null  $webinarService
 	 */
 	public function __construct( ?MeetingService $meetingService = null, ?WebinarService $webinarService = null ) {
 		$this->meetingService = $meetingService ?: new MeetingService();
@@ -46,5 +47,12 @@ class Zoom {
 	 */
 	public function webinars(): WebinarService {
 		return $this->webinarService;
+	}
+
+	/**
+	 * Access User Service operations
+	 */
+	public function users(): UserService {
+		return new UserService();
 	}
 }

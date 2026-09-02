@@ -8,8 +8,8 @@ use WP_Error;
  * UserPayloadBuilder
  *
  * Domain-specific logic for "user.*" operations.
- * - validate(): domain validations (email format, user type checks, valid delete actions).
- * - sanitize(): last-mile shaping and safe adjustments (truncation, email normalization, warnings).
+ * - validate(): auto-wraps flat payloads into Zoom's nested shape + validates inputs.
+ * - sanitize(): domain shaping, email normalization, and string length truncations.
  */
 class UserPayloadBuilder {
 
@@ -21,14 +21,27 @@ class UserPayloadBuilder {
 	 * @return array|WP_Error
 	 */
 	public static function validate( array $schema, array $data ): WP_Error|array {
-		// 1. Email format validation (when creating or updating email)
-		if ( isset( $data['user_info']['email'] ) ) {
-			if ( ! is_email( $data['user_info']['email'] ) ) {
-				return new WP_Error(
-					'vczapi_invalid_user_email',
-					'The provided user email address is invalid.'
+		$operation = $schema['operation'] ?? '';
+
+		// Automatically wrap flat payloads for user creation if needed
+		if ( strpos( $operation, 'user.create' ) === 0 ) {
+			if ( ! isset( $data['user_info'] ) || ! is_array( $data['user_info'] ) ) {
+				$action = $data['action'] ?? 'create';
+				unset( $data['action'] );
+
+				$data = array(
+					'action'    => $action,
+					'user_info' => $data,
 				);
 			}
+		}
+
+		// 1. Email format validation (when creating or updating email)
+		if ( isset( $data['user_info']['email'] ) && ! is_email( $data['user_info']['email'] ) ) {
+			return new WP_Error(
+				'vczapi_invalid_user_email',
+				'The provided user email address is invalid.'
+			);
 		}
 
 		// 2. User type validation (1 = Basic, 2 = Licensed, 3 = On-prem)
@@ -43,7 +56,7 @@ class UserPayloadBuilder {
 		}
 
 		// 3. Delete action validation
-		if ( isset( $data['action'] ) && isset( $schema['operation'] ) && strpos( $schema['operation'], 'user.delete' ) === 0 ) {
+		if ( isset( $data['action'] ) && strpos( $operation, 'user.delete' ) === 0 ) {
 			$allowed_actions = array( 'disassociate', 'delete' );
 			if ( ! in_array( $data['action'], $allowed_actions, true ) ) {
 				return new WP_Error(
@@ -58,9 +71,6 @@ class UserPayloadBuilder {
 
 	/**
 	 * Sanitize user payload before sending.
-	 * - Lowercase and trim user emails
-	 * - Truncate string attributes to Zoom's max lengths
-	 * - Emit warnings for modified inputs
 	 *
 	 * @param array $schema
 	 * @param array $data
