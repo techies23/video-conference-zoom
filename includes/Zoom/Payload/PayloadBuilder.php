@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Zoom\Payload;
 
+use Codemanas\VczApi\Zoom\Payload\Resource\UserPayloadBuilder;
 use Codemanas\VczApi\Zoom\Schema\SchemaManager;
 use Codemanas\VczApi\Zoom\Payload\Resource\MeetingPayloadBuilder;
 use Codemanas\VczApi\Zoom\Payload\Resource\WebinarPayloadBuilder;
@@ -84,6 +85,12 @@ class PayloadBuilder {
 				return $domainValidated;
 			}
 			$normalized = $domainValidated;
+		} elseif ( strpos( $operation, 'user.' ) === 0 ) { // <-- ADD USER ROUTE
+			$domainValidated = UserPayloadBuilder::validate( $schema, $normalized );
+			if ( is_wp_error( $domainValidated ) ) {
+				return $domainValidated;
+			}
+			$normalized = $domainValidated;
 		}
 
 		return $normalized;
@@ -132,6 +139,13 @@ class PayloadBuilder {
 			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
 		} elseif ( strpos( $operation, 'webinar.' ) === 0 ) {
 			$domainSanitized = WebinarPayloadBuilder::sanitize( $schema, $shaped );
+			if ( is_wp_error( $domainSanitized ) ) {
+				return $domainSanitized;
+			}
+			$shaped   = $domainSanitized['payload'];
+			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
+		} elseif ( strpos( $operation, 'user.' ) === 0 ) { // <-- ADD USER ROUTE
+			$domainSanitized = UserPayloadBuilder::sanitize( $schema, $shaped );
 			if ( is_wp_error( $domainSanitized ) ) {
 				return $domainSanitized;
 			}
