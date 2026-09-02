@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Zoom;
 
 use Codemanas\VczApi\Zoom\Service\Meeting as MeetingService;
+use Codemanas\VczApi\Zoom\Service\Webinar as WebinarService;
 use WP_Error;
 
 /**
@@ -14,6 +15,7 @@ use WP_Error;
 class Zoom {
 	/** @var MeetingService */
 	protected MeetingService $meetingService;
+	protected WebinarService $webinarService;
 
 	/**
 	 * Optionally, inject services for testing/customization.
@@ -22,6 +24,7 @@ class Zoom {
 	 */
 	public function __construct( MeetingService $meetingService = null ) {
 		$this->meetingService = $meetingService ?: new MeetingService();
+		$this->webinarService = new WebinarService();
 	}
 
 	/**
@@ -30,7 +33,7 @@ class Zoom {
 		 * @param array $params e.g. ['user_id' => 'user_email@email.com | user_id', 'page_size' => 30, ...]
 	 * @return array|WP_Error
 	 */
-	public function listMeetings( array $params = array() ) {
+	public function listMeetings( array $params = array() ): WP_Error|array {
 		return $this->meetingService->list( $params );
 	}
 
@@ -46,7 +49,7 @@ class Zoom {
 	 * ]
 	 * @return array|WP_Error
 	 */
-	public function createMeeting( array $data = array() ) {
+	public function createMeeting( array $data = array() ): WP_Error|array {
 		return $this->meetingService->create( $data );
 	}
 
@@ -55,7 +58,16 @@ class Zoom {
 	 *
 	 * @return MeetingService
 	 */
-	public function meetings() {
+	public function meetings(): MeetingService {
 		return $this->meetingService;
+	}
+
+	/**
+	 * Get a Webinar service instance.
+	 *
+	 * @return WebinarService
+	 */
+	public function webinars(): WebinarService {
+		return $this->webinarService;
 	}
 }

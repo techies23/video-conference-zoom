@@ -4,6 +4,7 @@ namespace Codemanas\VczApi\Zoom\Payload;
 
 use Codemanas\VczApi\Zoom\Schema\SchemaManager;
 use Codemanas\VczApi\Zoom\Payload\Resource\MeetingPayloadBuilder;
+use Codemanas\VczApi\Zoom\Payload\Resource\WebinarPayloadBuilder;
 use WP_Error;
 
 /**
@@ -71,9 +72,14 @@ class PayloadBuilder {
 		$normalized = $result;
 
 		// 3) Resource-specific type validations (domain-only checks)
-		$opPrefix = strpos( $operation, 'meeting.' ) === 0 ? 'meeting' : null;
-		if ( $opPrefix === 'meeting' ) {
+		if ( strpos( $operation, 'meeting.' ) === 0 ) {
 			$domainValidated = MeetingPayloadBuilder::validate( $schema, $normalized );
+			if ( is_wp_error( $domainValidated ) ) {
+				return $domainValidated;
+			}
+			$normalized = $domainValidated;
+		} elseif ( strpos( $operation, 'webinar.' ) === 0 ) {
+			$domainValidated = WebinarPayloadBuilder::validate( $schema, $normalized );
 			if ( is_wp_error( $domainValidated ) ) {
 				return $domainValidated;
 			}
@@ -118,6 +124,13 @@ class PayloadBuilder {
 		// 3) Resource-specific sanitize (domain shaping + non-fatal adjustments)
 		if ( strpos( $operation, 'meeting.' ) === 0 ) {
 			$domainSanitized = MeetingPayloadBuilder::sanitize( $schema, $shaped );
+			if ( is_wp_error( $domainSanitized ) ) {
+				return $domainSanitized;
+			}
+			$shaped   = $domainSanitized['payload'];
+			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
+		} elseif ( strpos( $operation, 'webinar.' ) === 0 ) {
+			$domainSanitized = WebinarPayloadBuilder::sanitize( $schema, $shaped );
 			if ( is_wp_error( $domainSanitized ) ) {
 				return $domainSanitized;
 			}

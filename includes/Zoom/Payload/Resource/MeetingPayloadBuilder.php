@@ -14,13 +14,12 @@ use WP_Error;
 class MeetingPayloadBuilder {
 
 	/**
-	 * @param array $schema     Operation schema (contains fields and nested schemas).
-	 * @param array $normalized Payload after generic normalization (flat by field names).
-	 * @param array $raw        Original raw input (post-compat, pre-normalization).
+	 * @param   array  $schema  Operation schema (contains fields and nested schemas).
+	 * @param   array  $data
 	 *
 	 * @return array|WP_Error
 	 */
-	public static function validate( array $schema, array $data ) {
+	public static function validate( array $schema, array $data ): WP_Error|array {
 		// start_time strict validation (create operation)
 		if ( isset( $data['start_time'] ) ) {
 			if ( ! is_string( $data['start_time'] ) || ! self::isZuluIso8601( $data['start_time'] ) ) {
@@ -74,7 +73,7 @@ class MeetingPayloadBuilder {
 	 * @param array $data
 	 * @return array ['payload'=>array, 'warnings'=>string[]]
 	 */
-	public static function sanitize( array $schema, array $data ) {
+	public static function sanitize( array $schema, array $data ): array {
 		$warnings = array();
 
 		// Topic/agenda length constraints
@@ -141,10 +140,11 @@ class MeetingPayloadBuilder {
 	/**
 	 * Validate UTC/Zulu ISO8601 with seconds: yyyy-MM-ddTHH:mm:ssZ
 	 *
-	 * @param string $value
+	 * @param   string  $value
+	 *
 	 * @return bool
 	 */
-	protected static function isZuluIso8601( $value ) {
+	protected static function isZuluIso8601( string $value ): bool {
 		return (bool) preg_match( '/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/', $value );
 	}
 }
