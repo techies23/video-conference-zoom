@@ -221,8 +221,8 @@ class Meeting {
 				'path_params' => array( 'meeting_id' => 'meeting_id' ),
 			),
 			'fields'    => array(
-				'meeting_id'  => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
-				'occurrence_id' => array( 'type' => 'string', 'location' => 'query' ),
+				'meeting_id'                => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
+				'occurrence_id'             => array( 'type' => 'string', 'location' => 'query' ),
 				'show_previous_occurrences' => array( 'type' => 'bool', 'location' => 'query' ),
 			),
 			'compat'    => array(
@@ -245,13 +245,75 @@ class Meeting {
 				'path_params' => array( 'meeting_id' => 'meeting_id' ),
 			),
 			'fields'    => array(
-				'meeting_id' => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
-				'schedule_for_reminder' => array( 'type' => 'bool', 'location' => 'query' ),
+				'meeting_id'              => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
+				'schedule_for_reminder'   => array( 'type' => 'bool', 'location' => 'query' ),
 				'cancel_meeting_reminder' => array( 'type' => 'string', 'location' => 'query' ),
 			),
 			'compat'    => array(
 				'meetingId' => 'meeting_id',
 				'id'        => 'meeting_id',
+			),
+		);
+	}
+
+	/**
+	 * Schema for updating a meeting.
+	 * PATCH /meetings/{meeting_id}
+	 */
+	public static function update(): array {
+		return array(
+			'operation'        => SchemaManager::MEETING_UPDATE,
+			'docs'             => 'https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meetingUpdate',
+			'http'             => array(
+				'method'      => 'PATCH',
+				'path'        => '/meetings/{meeting_id}',
+				'path_params' => array(
+					'meeting_id' => 'meeting_id',
+				),
+			),
+			'fields'           => array(
+				// Path
+				'meeting_id'    => array(
+					'type'     => 'string',
+					'required' => true,
+					'location' => 'path',
+					'trim'     => true,
+				),
+				// Query
+				'occurrence_id' => array(
+					'type'     => 'string',
+					'location' => 'query',
+				),
+				// Body
+				'topic'         => array( 'type' => 'string', 'location' => 'body', 'max_len' => 200, 'trim' => true ),
+				'type'          => array( 'type' => 'int', 'enum' => array( 1, 2, 3, 8 ), 'location' => 'body' ),
+				'start_time'    => array( 'type' => 'string', 'location' => 'body' ),
+				'duration'      => array( 'type' => 'int', 'min' => 1, 'max' => 1440, 'location' => 'body' ),
+				'timezone'      => array( 'type' => 'string', 'location' => 'body' ),
+				'password'      => array( 'type' => 'string', 'location' => 'body', 'max_len' => 10 ),
+				'agenda'        => array( 'type' => 'string', 'location' => 'body', 'max_len' => 2000 ),
+
+				'settings' => array(
+					'type'     => 'object',
+					'location' => 'body',
+					'schema'   => MeetingSettings::schema( true ),
+				),
+			),
+			'compat'           => array(
+				'meetingId'                 => 'meeting_id',
+				'id'                        => 'meeting_id',
+				'start_date'                => 'start_time',
+				'option_host_video'         => 'settings.host_video',
+				'option_participants_video' => 'settings.participant_video',
+				'option_jbh'                => 'settings.join_before_host',
+				'option_mute_participants'  => 'settings.mute_upon_entry',
+				'option_auto_recording'     => 'settings.auto_recording',
+				'alternative_host_ids'      => 'settings.alternative_hosts',
+			),
+			'compat_transform' => array(
+				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
+				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
+				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 		);
 	}
