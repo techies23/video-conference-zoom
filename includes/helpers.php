@@ -1,4 +1,5 @@
 <?php
+use Codemanas\VczApi\Zoom\Zoom;
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -997,5 +998,23 @@ if ( ! function_exists( 'vczapi_is_fse_theme' ) ) {
 		}
 
 		return false;
+	}
+}
+if ( ! function_exists( 'zoom_conference_v2' ) ) {
+	/**
+	 * Main instance of Zoom Facade.
+	 *
+	 * Returns a single shared instance of the Zoom API wrapper.
+	 *
+	 * @return Zoom
+	 */
+	function zoom_conference_v2(): Zoom {
+		static $instance = null;
+
+		if ( null === $instance ) {
+			$instance = new Zoom();
+		}
+
+		return $instance;
 	}
 }
