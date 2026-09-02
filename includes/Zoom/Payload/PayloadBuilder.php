@@ -22,7 +22,7 @@ class PayloadBuilder {
 	 * Build a payload for a given operation and raw input.
 	 *
 	 * @param   string  $operation
-	 * @param array     $input
+	 * @param   array   $input
 	 *
 	 * @return array|WP_Error
 	 */
@@ -47,7 +47,7 @@ class PayloadBuilder {
 	 * No enums, no min/max, no max_len here. No transforms (implode/truncate/etc).
 	 *
 	 * @param   string  $operation
-	 * @param array     $input
+	 * @param   array   $input
 	 *
 	 * @return array|WP_Error  Normalized array or WP_Error on failure
 	 */
@@ -100,8 +100,9 @@ class PayloadBuilder {
 	 * - Partition by location (path/query/body)
 	 * - Attach http + path_params metadata
 	 *
-	 * @param string $operation
-	 * @param array  $validated
+	 * @param   string  $operation
+	 * @param   array   $validated
+	 *
 	 * @return array|WP_Error  ['path'=>[], 'query'=>[], 'body'=>[], 'meta'=>[]]
 	 */
 	public static function sanitizePayload( $operation, array $validated ): WP_Error|array {
@@ -163,6 +164,7 @@ class PayloadBuilder {
 				unset( $input[ $legacy ] );
 			}
 		}
+
 		return $input;
 	}
 
@@ -212,8 +214,9 @@ class PayloadBuilder {
 	 * Types-only validation (and required).
 	 * Recurses into nested object/array shapes but only verifies type integrity.
 	 *
-	 * @param array $input
-	 * @param array $fields
+	 * @param   array  $input
+	 * @param   array  $fields
+	 *
 	 * @return array|WP_Error
 	 */
 	protected static function validateTypesOnly( array $input, array $fields ): WP_Error|array {
@@ -244,9 +247,7 @@ class PayloadBuilder {
 					return new WP_Error( 'vczapi_type_error', sprintf( '%s must be an integer', $name ) );
 				}
 			} elseif ( $type === 'bool' ) {
-				if ( is_bool( $value ) ) {
-					// ok
-				} else {
+				if ( ! is_bool( $value ) ) {
 					$coerced = filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
 					if ( $coerced === null ) {
 						return new WP_Error( 'vczapi_type_error', sprintf( '%s must be a boolean', $name ) );
@@ -312,8 +313,9 @@ class PayloadBuilder {
 	/**
 	 * Trim/strip strings across the structure per declared fields.
 	 *
-	 * @param array $data
-	 * @param array $fields
+	 * @param   array  $data
+	 * @param   array  $fields
+	 *
 	 * @return array
 	 */
 	protected static function sanitizeForSending( array $data, array $fields ): array {
@@ -361,6 +363,7 @@ class PayloadBuilder {
 	protected static function sanitizeString( $value ): string {
 		$value = wp_strip_all_tags( (string) $value, true );
 		$value = trim( $value );
+
 		return $value;
 	}
 
