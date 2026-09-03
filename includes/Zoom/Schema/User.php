@@ -17,29 +17,29 @@ class User {
 				'path'   => '/users',
 			),
 			'fields'    => array(
-				'status'         => array(
+				'status'          => array(
 					'type'     => 'string',
 					'default'  => 'active',
 					'enum'     => array( 'active', 'inactive', 'pending' ),
 					'location' => 'query',
 				),
-				'page_size'      => array(
+				'page_size'       => array(
 					'type'     => 'int',
 					'default'  => 30,
 					'min'      => 1,
 					'max'      => 300,
 					'location' => 'query',
 				),
-				'page_number'    => array(
+				'page_number'     => array(
 					'type'     => 'int',
 					'min'      => 1,
 					'location' => 'query',
 				),
-				'role_id'        => array(
+				'role_id'         => array(
 					'type'     => 'string',
 					'location' => 'query',
 				),
-				'include_fields' => array(
+				'include_fields'  => array(
 					'type'     => 'string',
 					'location' => 'query',
 				),
