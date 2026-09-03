@@ -64,8 +64,10 @@ class SchemaManager {
 	public const USER_DELETE = 'user.delete';
 
 	// Recordings (reserved for later)
-	// const RECORDING_LIST_BY_USER    = 'recording.listByUser';
-	// const RECORDING_LIST_BY_MEETING = 'recording.listByMeeting';
+	public const REPORT_DAILY = 'report.daily';
+	public const REPORT_USER_MEETINGS = 'report.userMeetings';
+	public const REPORT_MEETING_PARTICIPANTS = 'report.meetingParticipants';
+	public const REPORT_MEETING_DETAILS = 'report.meetingDetails';
 
 	/**
 	 * Lazy-initialized map of operation => [ 'schema' => class, 'method' => method ].
@@ -83,25 +85,30 @@ class SchemaManager {
 		if ( self::$map === null ) {
 			self::$map = array(
 				// Meetings...
-				self::MEETING_LIST          => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
-				self::MEETING_CREATE        => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
-				self::MEETING_GET           => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
-				self::MEETING_DELETE        => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
+				self::MEETING_LIST                => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
+				self::MEETING_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
+				self::MEETING_GET                 => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
+				self::MEETING_DELETE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
 
 				// Webinars
-				self::WEBINAR_LIST          => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
-				self::WEBINAR_CREATE        => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'create' ),
-				self::WEBINAR_GET           => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'get' ),
-				self::WEBINAR_UPDATE        => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'update' ),
-				self::WEBINAR_DELETE        => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'delete' ),
-				self::WEBINAR_STATUS => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'updateStatus' ),
+				self::WEBINAR_LIST                => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
+				self::WEBINAR_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'create' ),
+				self::WEBINAR_GET                 => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'get' ),
+				self::WEBINAR_UPDATE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'update' ),
+				self::WEBINAR_DELETE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'delete' ),
+				self::WEBINAR_STATUS              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'updateStatus' ),
 
 				// Users
-				self::USER_LIST             => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'list' ),
-				self::USER_GET              => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'get' ),
-				self::USER_CREATE           => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'create' ),
-				self::USER_UPDATE           => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'update' ),
-				self::USER_DELETE           => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'delete' ),
+				self::USER_LIST                   => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'list' ),
+				self::USER_GET                    => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'get' ),
+				self::USER_CREATE                 => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'create' ),
+				self::USER_UPDATE                 => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'update' ),
+				self::USER_DELETE                 => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'delete' ),
+				//Reports
+				self::REPORT_DAILY                => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'daily' ),
+				self::REPORT_USER_MEETINGS        => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'userMeetings' ),
+				self::REPORT_MEETING_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingParticipants' ),
+				self::REPORT_MEETING_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingDetails' ),
 			);
 		}
 
