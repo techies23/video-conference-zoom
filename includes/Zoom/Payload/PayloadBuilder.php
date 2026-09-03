@@ -2,31 +2,15 @@
 
 namespace Codemanas\VczApi\Zoom\Payload;
 
-use Codemanas\VczApi\Zoom\Payload\Resource\UserPayloadBuilder;
-use Codemanas\VczApi\Zoom\Schema\SchemaManager;
 use Codemanas\VczApi\Zoom\Payload\Resource\MeetingPayloadBuilder;
+use Codemanas\VczApi\Zoom\Payload\Resource\ReportPayloadBuilder;
+use Codemanas\VczApi\Zoom\Payload\Resource\UserPayloadBuilder;
 use Codemanas\VczApi\Zoom\Payload\Resource\WebinarPayloadBuilder;
+use Codemanas\VczApi\Zoom\Schema\SchemaManager;
 use WP_Error;
 
-/**
- * PayloadBuilder
- *
- * Now exposes a clearer two-step API:
- *  - validateArgs($operation, $input): Only checks required fields and basic data types.
- *  - sanitizePayload($operation, $validated): Applies compat transforms + sanitization and partitions by location.
- *
- * build($operation, $input) remains for convenience: validate + sanitize.
- */
 class PayloadBuilder {
 
-	/**
-	 * Build a payload for a given operation and raw input.
-	 *
-	 * @param   string  $operation
-	 * @param   array   $input
-	 *
-	 * @return array|WP_Error
-	 */
 	public static function build( string $operation, array $input ): WP_Error|array {
 		$validated = self::validateArgs( $operation, $input );
 		if ( is_wp_error( $validated ) ) {
@@ -36,22 +20,6 @@ class PayloadBuilder {
 		return self::sanitizePayload( $operation, $validated );
 	}
 
-	/**
-	 * Validate Args
-	 *
-	 * Responsibilities:
-	 * - Load schema
-	 * - Apply compat key remapping (legacy → new keys)
-	 * - Validate ONLY: required presence and basic data types (string|int|bool|array|object)
-	 * - Recurse into nested schemas just for type-shape checks
-	 *
-	 * No enums, no min/max, no max_len here. No transforms (implode/truncate/etc).
-	 *
-	 * @param   string  $operation
-	 * @param   array   $input
-	 *
-	 * @return array|WP_Error  Normalized array or WP_Error on failure
-	 */
 	public static function validateArgs( string $operation, array $input ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
@@ -61,10 +29,8 @@ class PayloadBuilder {
 		$compat = isset( $schema['compat'] ) ? (array) $schema['compat'] : array();
 		$fields = isset( $schema['fields'] ) ? (array) $schema['fields'] : array();
 
-		// 1) Compat map: legacy_key => new.key.path (no transforms)
 		$working = self::applyCompatKeyMap( $input, $compat );
 
-		// 2) Basic validation (required + type only)
 		$result = self::validateTypesOnly( $working, $fields );
 		if ( is_wp_error( $result ) ) {
 			return $result;
@@ -72,7 +38,6 @@ class PayloadBuilder {
 
 		$normalized = $result;
 
-		// 3) Resource-specific type validations (domain-only checks)
 		if ( strpos( $operation, 'meeting.' ) === 0 ) {
 			$domainValidated = MeetingPayloadBuilder::validate( $schema, $normalized );
 			if ( is_wp_error( $domainValidated ) ) {
@@ -85,8 +50,14 @@ class PayloadBuilder {
 				return $domainValidated;
 			}
 			$normalized = $domainValidated;
-		} elseif ( strpos( $operation, 'user.' ) === 0 ) { // <-- ADD USER ROUTE
+		} elseif ( strpos( $operation, 'user.' ) === 0 ) {
 			$domainValidated = UserPayloadBuilder::validate( $schema, $normalized );
+			if ( is_wp_error( $domainValidated ) ) {
+				return $domainValidated;
+			}
+			$normalized = $domainValidated;
+		} elseif ( strpos( $operation, 'report.' ) === 0 ) {
+			$domainValidated = ReportPayloadBuilder::validate( $schema, $normalized );
 			if ( is_wp_error( $domainValidated ) ) {
 				return $domainValidated;
 			}
@@ -96,22 +67,6 @@ class PayloadBuilder {
 		return $normalized;
 	}
 
-	/**
-	 * Sanitize Payload
-	 *
-	 * Responsibilities:
-	 * - Load schema
-	 * - Apply compat transforms (implode, bool_invert, truncate)
-	 * - Generic sanitization (trim/strip tags for strings)
-	 * - Resource-specific sanitization (domain shaping and last-mile adjustments)
-	 * - Partition by location (path/query/body)
-	 * - Attach http + path_params metadata
-	 *
-	 * @param   string  $operation
-	 * @param   array   $validated
-	 *
-	 * @return array|WP_Error  ['path'=>[], 'query'=>[], 'body'=>[], 'meta'=>[]]
-	 */
 	public static function sanitizePayload( $operation, array $validated ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
@@ -121,15 +76,11 @@ class PayloadBuilder {
 		$transforms = isset( $schema['compat_transform'] ) ? (array) $schema['compat_transform'] : array();
 		$fields     = isset( $schema['fields'] ) ? (array) $schema['fields'] : array();
 
-		// 1) Apply compat transforms (implode, invert, truncate) on a copy
 		$shaped = self::applyCompatTransforms( $validated, $transforms );
-
-		// 2) Generic sanitization pass for strings and nested structures
 		$shaped = self::sanitizeForSending( $shaped, $fields );
 
 		$warnings = array();
 
-		// 3) Resource-specific sanitize (domain shaping + non-fatal adjustments)
 		if ( strpos( $operation, 'meeting.' ) === 0 ) {
 			$domainSanitized = MeetingPayloadBuilder::sanitize( $schema, $shaped );
 			if ( is_wp_error( $domainSanitized ) ) {
@@ -144,8 +95,15 @@ class PayloadBuilder {
 			}
 			$shaped   = $domainSanitized['payload'];
 			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
-		} elseif ( strpos( $operation, 'user.' ) === 0 ) { // <-- ADD USER ROUTE
+		} elseif ( strpos( $operation, 'user.' ) === 0 ) {
 			$domainSanitized = UserPayloadBuilder::sanitize( $schema, $shaped );
+			if ( is_wp_error( $domainSanitized ) ) {
+				return $domainSanitized;
+			}
+			$shaped   = $domainSanitized['payload'];
+			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
+		} elseif ( strpos( $operation, 'report.' ) === 0 ) {
+			$domainSanitized = ReportPayloadBuilder::sanitize( $schema, $shaped );
 			if ( is_wp_error( $domainSanitized ) ) {
 				return $domainSanitized;
 			}
@@ -153,10 +111,8 @@ class PayloadBuilder {
 			$warnings = isset( $domainSanitized['warnings'] ) ? (array) $domainSanitized['warnings'] : array();
 		}
 
-		// 4) Partition by location
 		$partitioned = self::partitionByLocation( $shaped, $fields );
 
-		// 5) Meta
 		$partitioned['meta'] = array(
 			'warnings'    => $warnings,
 			'path_params' => isset( $schema['http']['path_params'] ) ? (array) $schema['http']['path_params'] : array(),
@@ -166,10 +122,6 @@ class PayloadBuilder {
 
 		return apply_filters( 'vczapi_payload_built', $partitioned, $operation, $schema, $validated );
 	}
-
-	/* =========================
-	 * Compat helpers
-	 * ========================= */
 
 	protected static function applyCompatKeyMap( array $input, array $map ): array {
 		foreach ( $map as $legacy => $target ) {
@@ -189,10 +141,7 @@ class PayloadBuilder {
 			$op   = isset( $rule['op'] ) ? $rule['op'] : null;
 			$args = isset( $rule['args'] ) ? (array) $rule['args'] : array();
 
-			if ( ! $from || ! $to || ! $op ) {
-				continue;
-			}
-			if ( ! array_key_exists( $from, $input ) ) {
+			if ( ! $from || ! $to || ! $op || ! array_key_exists( $from, $input ) ) {
 				continue;
 			}
 			$value = $input[ $from ];
@@ -203,13 +152,11 @@ class PayloadBuilder {
 					$value = is_array( $value ) ? implode( $sep, $value ) : $value;
 					break;
 				case 'bool_invert':
-					$value = ! empty( $value ) ? false : true;
+					$value = empty( $value );
 					break;
 				case 'truncate':
 					$max   = isset( $args['max'] ) ? (int) $args['max'] : 0;
 					$value = is_string( $value ) && $max > 0 ? mb_substr( $value, 0, $max ) : $value;
-					break;
-				default:
 					break;
 			}
 
@@ -220,19 +167,6 @@ class PayloadBuilder {
 		return $input;
 	}
 
-	/* =========================
-	 * Validation (types only)
-	 * ========================= */
-
-	/**
-	 * Types-only validation (and required).
-	 * Recurses into nested object/array shapes but only verifies type integrity.
-	 *
-	 * @param   array  $input
-	 * @param   array  $fields
-	 *
-	 * @return array|WP_Error
-	 */
 	protected static function validateTypesOnly( array $input, array $fields ): WP_Error|array {
 		$out = array();
 
@@ -246,12 +180,10 @@ class PayloadBuilder {
 
 			$value = $hasValue ? $input[ $name ] : ( array_key_exists( 'default', $rules ) ? $rules['default'] : null );
 
-			// Skip absent optional
 			if ( ! $hasValue && $value === null ) {
 				continue;
 			}
 
-			// Basic type check and minimal coercion
 			$type = isset( $rules['type'] ) ? $rules['type'] : null;
 
 			if ( $type === 'int' ) {
@@ -280,7 +212,6 @@ class PayloadBuilder {
 				if ( ! is_array( $value ) ) {
 					return new WP_Error( 'vczapi_type_error', sprintf( '%s must be an object', $name ) );
 				}
-				// Recurse for nested schemas (types-only)
 				if ( ! empty( $rules['schema'] ) && is_array( $rules['schema'] ) ) {
 					$nested = self::validateTypesOnly( $value, $rules['schema'] );
 					if ( is_wp_error( $nested ) ) {
@@ -288,10 +219,8 @@ class PayloadBuilder {
 					}
 					$value = $nested;
 				}
-				// Arrays of objects/items are handled in the parent 'array' branch via 'items' rule
 			}
 
-			// Arrays with item schema (types-only)
 			if ( isset( $rules['type'] ) && $rules['type'] === 'array' && is_array( $value ) && ! empty( $rules['items'] ) ) {
 				$itemSchema = $rules['items'];
 				$newArr     = array();
@@ -307,7 +236,6 @@ class PayloadBuilder {
 						}
 						$newArr[] = $nested;
 					} else {
-						// basic cast for primitives
 						$newArr[] = $itemVal;
 					}
 				}
@@ -320,18 +248,6 @@ class PayloadBuilder {
 		return $out;
 	}
 
-	/* =========================
-	 * Generic sanitization
-	 * ========================= */
-
-	/**
-	 * Trim/strip strings across the structure per declared fields.
-	 *
-	 * @param   array  $data
-	 * @param   array  $fields
-	 *
-	 * @return array
-	 */
 	protected static function sanitizeForSending( array $data, array $fields ): array {
 		$out = array();
 
@@ -375,15 +291,8 @@ class PayloadBuilder {
 	}
 
 	protected static function sanitizeString( $value ): string {
-		$value = wp_strip_all_tags( (string) $value, true );
-		$value = trim( $value );
-
-		return $value;
+		return trim( wp_strip_all_tags( (string) $value, true ) );
 	}
-
-	/* =========================
-	 * Partitioning + utilities
-	 * ========================= */
 
 	protected static function partitionByLocation( array $normalized, array $fields ): array {
 		$out = array( 'path' => array(), 'query' => array(), 'body' => array() );
@@ -402,9 +311,6 @@ class PayloadBuilder {
 		return $out;
 	}
 
-	/**
-	 * Set by dot-path (e.g., settings.waiting_room).
-	 */
 	protected static function setByDotPath( array &$arr, $path, $value ): void {
 		$parts = explode( '.', $path );
 		$ref   = &$arr;

@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Zoom;
 
 use Codemanas\VczApi\Zoom\Service\Meeting as MeetingService;
+use Codemanas\VczApi\Zoom\Service\Report;
 use Codemanas\VczApi\Zoom\Service\Webinar as WebinarService;
 use Codemanas\VczApi\Zoom\Service\User as UserService;
 
@@ -54,5 +55,14 @@ class Zoom {
 	 */
 	public function users(): UserService {
 		return new UserService();
+	}
+
+	/**
+	 * Access the Report service.
+	 *
+	 * @return Report
+	 */
+	public function report(): Report {
+		return new Report();
 	}
 }

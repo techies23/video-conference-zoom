@@ -68,6 +68,8 @@ class SchemaManager {
 	public const REPORT_USER_MEETINGS = 'report.userMeetings';
 	public const REPORT_MEETING_PARTICIPANTS = 'report.meetingParticipants';
 	public const REPORT_MEETING_DETAILS = 'report.meetingDetails';
+	public const REPORT_WEBINAR_PARTICIPANTS = 'report.webinarParticipants';
+	public const REPORT_WEBINAR_DETAILS = 'report.webinarDetails';
 
 	/**
 	 * Lazy-initialized map of operation => [ 'schema' => class, 'method' => method ].
@@ -109,6 +111,8 @@ class SchemaManager {
 				self::REPORT_USER_MEETINGS        => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'userMeetings' ),
 				self::REPORT_MEETING_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingParticipants' ),
 				self::REPORT_MEETING_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingDetails' ),
+				self::REPORT_WEBINAR_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarParticipants' ),
+				self::REPORT_WEBINAR_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarDetails' ),
 			);
 		}
 

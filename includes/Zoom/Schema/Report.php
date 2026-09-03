@@ -5,7 +5,6 @@ namespace Codemanas\VczApi\Zoom\Schema;
 class Report {
 
 	/**
-	 * Schema for getting a daily usage report.
 	 * GET /report/daily
 	 */
 	public static function daily(): array {
@@ -32,7 +31,6 @@ class Report {
 	}
 
 	/**
-	 * Schema for getting a user report (meetings/webinars held by a user in a timeframe).
 	 * GET /report/users/{user_id}/meetings
 	 */
 	public static function userMeetings(): array {
@@ -89,7 +87,6 @@ class Report {
 	}
 
 	/**
-	 * Schema for getting a meeting participant report.
 	 * GET /report/meetings/{meeting_id}/participants
 	 */
 	public static function meetingParticipants(): array {
@@ -134,7 +131,6 @@ class Report {
 	}
 
 	/**
-	 * Schema for getting a meeting detail report.
 	 * GET /report/meetings/{meeting_id}
 	 */
 	public static function meetingDetails(): array {
@@ -159,6 +155,75 @@ class Report {
 			'compat'    => array(
 				'meetingId' => 'meeting_id',
 				'id'        => 'meeting_id',
+			),
+		);
+	}
+
+	/**
+	 * GET /report/webinars/{webinar_id}/participants
+	 */
+	public static function webinarParticipants(): array {
+		return array(
+			'operation' => SchemaManager::REPORT_WEBINAR_PARTICIPANTS,
+			'docs'      => 'https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/reportWebinarParticipants',
+			'http'      => array(
+				'method'      => 'GET',
+				'path'        => '/report/webinars/{webinar_id}/participants',
+				'path_params' => array(
+					'webinar_id' => 'webinar_id',
+				),
+			),
+			'fields'    => array(
+				'webinar_id'      => array(
+					'type'     => 'string',
+					'required' => true,
+					'location' => 'path',
+					'trim'     => true,
+				),
+				'page_size'       => array(
+					'type'     => 'int',
+					'default'  => 30,
+					'min'      => 1,
+					'max'      => 300,
+					'location' => 'query',
+				),
+				'next_page_token' => array(
+					'type'     => 'string',
+					'location' => 'query',
+				),
+			),
+			'compat'    => array(
+				'webinarId' => 'webinar_id',
+				'id'        => 'webinar_id',
+			),
+		);
+	}
+
+	/**
+	 * GET /report/webinars/{webinar_id}
+	 */
+	public static function webinarDetails(): array {
+		return array(
+			'operation' => SchemaManager::REPORT_WEBINAR_DETAILS,
+			'docs'      => 'https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/reportWebinarDetails',
+			'http'      => array(
+				'method'      => 'GET',
+				'path'        => '/report/webinars/{webinar_id}',
+				'path_params' => array(
+					'webinar_id' => 'webinar_id',
+				),
+			),
+			'fields'    => array(
+				'webinar_id' => array(
+					'type'     => 'string',
+					'required' => true,
+					'location' => 'path',
+					'trim'     => true,
+				),
+			),
+			'compat'    => array(
+				'webinarId' => 'webinar_id',
+				'id'        => 'webinar_id',
 			),
 		);
 	}
