@@ -82,6 +82,10 @@ class Recording {
 	 * Schema for getting all recording files of a specific meeting.
 	 * GET /meetings/{meeting_id}/recordings
 	 */
+	/**
+	 * Schema for getting all recording files of a specific meeting.
+	 * GET /meetings/{meeting_id}/recordings
+	 */
 	public static function get(): array {
 		return array(
 			'operation' => SchemaManager::RECORDING_GET,
@@ -112,8 +116,20 @@ class Recording {
 				'ttl'                   => array(
 					'type'     => 'int',
 					'default'  => 300,
+					'min'      => 60,
+					'max'      => 86400,
 					'location' => 'query',
 					'doc'      => 'Time to live for download_access_token in seconds.',
+				),
+				'recording_start'       => array(
+					'type'     => 'string',
+					'location' => 'query',
+					'doc'      => 'Query recording files starting from a specific timestamp.',
+				),
+				'recording_end'         => array(
+					'type'     => 'string',
+					'location' => 'query',
+					'doc'      => 'Query recording files up to a specific timestamp.',
 				),
 			),
 			'compat'    => array(
