@@ -1,0 +1,6 @@
+allowBuilds:
+  '@parcel/watcher': false
+  '@zoom/meetingsdk': true
+  core-js: false
+  core-js-pure: false
+  unrs-resolver: false

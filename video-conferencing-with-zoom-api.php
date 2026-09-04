@@ -31,8 +31,8 @@ defined('ZVC_PLUGIN_DIR_PATH') || define('ZVC_PLUGIN_DIR_PATH', plugin_dir_path(
 defined('ZVC_PLUGIN_DIR_URL') || define('ZVC_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 defined('ZVC_PLUGIN_ADMIN_ASSETS_URL') || define('ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin');
 defined('ZVC_PLUGIN_PUBLIC_ASSETS_URL') || define('ZVC_PLUGIN_PUBLIC_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/public');
-defined('ZVC_PLUGIN_VENDOR_ASSETS_URL') || define('ZVC_PLUGIN_VENDOR_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/vendor');
-defined('ZVC_PLUGIN_VIEWS_PATH') || define('ZVC_PLUGIN_VIEWS_PATH', ZVC_PLUGIN_DIR_PATH . 'includes/views');
+defined('ZVC_PLUGIN_VENDOR_ASSETS_URL') || define('ZVC_PLUGIN_VENDOR_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/vendors');
+defined('ZVC_PLUGIN_ADMIN_VIEWS_PATH') || define('ZVC_PLUGIN_ADMIN_VIEWS_PATH', ZVC_PLUGIN_DIR_PATH . 'includes/Admin/Views');
 defined('ZVC_PLUGIN_INCLUDES_PATH') || define('ZVC_PLUGIN_INCLUDES_PATH', ZVC_PLUGIN_DIR_PATH . 'includes');
 defined('ZVC_PLUGIN_IMAGES_PATH') || define('ZVC_PLUGIN_IMAGES_PATH', ZVC_PLUGIN_DIR_URL . 'assets/images');
 defined('ZVC_PLUGIN_LANGUAGE_PATH') || define('ZVC_PLUGIN_LANGUAGE_PATH', trailingslashit(basename(ZVC_PLUGIN_DIR_PATH)) . 'languages/');
