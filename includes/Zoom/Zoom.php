@@ -23,7 +23,7 @@ class Zoom {
 	protected WebinarService $webinarService;
 
 	/**
-	 * Optionally inject services for testing or custom implementations.
+	 * Optionally, inject services for testing or custom implementations.
 	 *
 	 * @param   MeetingService|null  $meetingService
 	 * @param   WebinarService|null  $webinarService
