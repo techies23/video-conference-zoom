@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Zoom;
 
+use Codemanas\VczApi\Zoom\Service\Recording as RecordingService;
 use Codemanas\VczApi\Zoom\Service\Meeting as MeetingService;
 use Codemanas\VczApi\Zoom\Service\Report;
 use Codemanas\VczApi\Zoom\Service\Webinar as WebinarService;
@@ -65,4 +66,15 @@ class Zoom {
 	public function report(): Report {
 		return new Report();
 	}
+
+	/**
+	 * Access the Recording service.
+	 *
+	 * @return RecordingService
+	 */
+	public function recording(): RecordingService {
+		return new RecordingService();
+	}
+
+
 }
