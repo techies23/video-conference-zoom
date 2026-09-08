@@ -3,7 +3,7 @@
         'name' => 'techies23/video-conferencing-with-zoom-api',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'cd0b3a421692fdcd1f771d3ed645c0630473051a',
+        'reference' => '7bbc2880f7423698638abe9fd0b41d16d3de86a1',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -319,7 +319,7 @@
         'techies23/video-conferencing-with-zoom-api' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'cd0b3a421692fdcd1f771d3ed645c0630473051a',
+            'reference' => '7bbc2880f7423698638abe9fd0b41d16d3de86a1',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
