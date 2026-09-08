@@ -3,7 +3,7 @@ import Choices from 'choices.js';
 /**
  * Simple debounce utility to prevent firing rapid API calls on keyup.
  */
-const debounce = (fn, delay = 300) => {
+const debounce = (fn, delay = 1000) => {
     let timeoutId;
     return (...args) => {
         clearTimeout(timeoutId);

@@ -1,9 +1,91 @@
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.5_webpack@5.110.3/node_modules/css-loader/dist/cjs.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.26_typescript@6.0.3_webpack@5.110.3/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.1_sass@1.103.1_webpack@5.110.3/node_modules/sass-loader/dist/cjs/index.js!./src/admin/scss/app.scss ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.choices {
+  margin-bottom: 2px;
+}
 .choices__inner {
   min-height: auto;
-  width: auto;
+}
+.choices__list--dropdown {
+  z-index: 1000 !important;
+}
+.choices .is-active {
+  z-index: 1001 !important;
+}
+
+.choices.is-disabled .choices__item {
+  color: rgb(112, 112, 112) !important;
+}
+
+.vczapi-admin-accordion {
+  background: #fff;
+}
+.vczapi-admin-accordion__item {
+  border-bottom: 1px solid #c3c4c7;
+}
+.vczapi-admin-accordion__item:last-child {
+  border-bottom: none;
+}
+.vczapi-admin-accordion__toggle {
+  display: none !important;
+}
+.vczapi-admin-accordion__toggle:checked + .vczapi-admin-accordion__header .vczapi-admin-accordion__icon {
+  transform: rotate(180deg);
+}
+.vczapi-admin-accordion__toggle:checked ~ .vczapi-admin-accordion__content {
+  max-height: 2000px;
+  opacity: 1;
+  padding: 10px 15px;
+  transition: max-height 0.5s ease-in-out, opacity 0.3s ease, padding 0.3s ease;
+}
+.vczapi-admin-accordion__toggle:checked ~ .vczapi-admin-accordion__content:has(.choices.is-active), .vczapi-admin-accordion__toggle:checked ~ .vczapi-admin-accordion__content:has(.choices.is-open) {
+  overflow: visible !important;
+}
+.vczapi-admin-accordion__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f6f7f7;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #1d2327;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+.vczapi-admin-accordion__header:hover {
+  background: #f0f0f1;
+}
+.vczapi-admin-accordion__icon {
+  transition: transform 0.3s ease;
+  color: #50575e;
+}
+.vczapi-admin-accordion__content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 15px;
+  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), opacity 0.25s ease, padding 0.35s ease;
+}
+.vczapi-admin-accordion__content .form-table {
+  margin-top: 0;
+}
+
+#vczapi-admin-meeting-fields-meta .postbox-header {
+  display: none;
+}
+#vczapi-admin-meeting-fields-meta .inside {
+  margin: 0;
+  padding: 0;
+}
+#vczapi-admin-meeting-fields-meta .inside .vczapi-metabox-wrapper .vczapi-shortcode-notice {
+  padding: 20px 12px;
+  text-align: center;
+}
+#vczapi-admin-meeting-fields-meta .inside .vczapi-metabox-wrapper .vczapi-shortcode-notice p.description {
+  margin: 5px 0 0 0;
 }
 
 .zvc-row {
@@ -312,45 +394,6 @@
 
 .notice-warning .vczapi-major-update-warning__icon {
   color: #f56e28;
-}
-
-.vczapi-admin-accordion {
-  margin-bottom: 1.5em;
-  transition: 1s all;
-  will-change: auto;
-}
-.vczapi-admin-accordion--header {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-.vczapi-admin-accordion--header-title {
-  width: 80%;
-}
-.vczapi-admin-accordion--header-title h3 {
-  font-weight: 400;
-}
-.vczapi-admin-accordion--header-trigger {
-  width: 20%;
-  text-align: right;
-}
-.vczapi-admin-accordion--header-trigger a {
-  text-decoration: none;
-  color: #000;
-}
-.vczapi-admin-accordion--header-trigger .dashicons-arrow-up-alt2 {
-  transform: rotate(90deg);
-}
-.vczapi-admin-accordion--content {
-  display: none;
-}
-.vczapi-admin-accordion.expanded .vczapi-admin-accordion--content {
-  display: block;
-}
-.vczapi-admin-accordion.expanded .vczapi-admin-accordion--header-trigger .dashicons-arrow-up-alt2 {
-  transform: rotate(0deg);
 }
 
 .vczapi-migrate-to-s2sOauth {

@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi;
 
+use Codemanas\VczApi\Admin\AdminController;
 use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Admin\PostType\PostTypeController;
 use Codemanas\VczApi\Blocks\Blocks;
@@ -231,7 +232,7 @@ final class Bootstrap {
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
 
         //Admin
-        PostTypeController::get_instance();
+        AdminController::get_instance();
 
 		//Timezone
 		Timezone::get_instance();

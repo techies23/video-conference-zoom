@@ -1,0 +1,21 @@
+#vczapi-admin-meeting-fields-meta {
+  .postbox-header {
+    display: none;
+  }
+
+  .inside {
+    margin: 0;
+    padding: 0;
+
+    .vczapi-metabox-wrapper {
+      .vczapi-shortcode-notice {
+        padding: 20px 12px;
+        text-align: center;
+
+        p.description {
+          margin: 5px 0 0 0;
+        }
+      }
+    }
+  }
+}

@@ -79,4 +79,17 @@ class Templates {
 			load_template( $template, false );
 		}
 	}
+
+	/**
+	 * Include or require file and pass variables
+	 *
+	 * @param string $_template_file_path Absolute path to the template file.
+	 * @param array  $args                Associative array of variables to pass.
+	 * @param bool   $require_once        Whether to require_once or require.
+	 */
+	public static function includeFile( $_template_file_path, array $args = [], $require_once = false ): void {
+		if ( file_exists( $_template_file_path ) ) {
+			load_template( $_template_file_path, $require_once, $args );
+		}
+	}
 }

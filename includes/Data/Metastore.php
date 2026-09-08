@@ -56,4 +56,30 @@ class Metastore {
 
 		return ! empty( $settings ) ? $settings : false;
 	}
+
+	/**
+	 * Set Custom Post Data
+	 *
+	 * @param $post_id
+	 * @param $key
+	 * @param $value
+	 *
+	 * @return void
+	 */
+	public static function setPostMeta( $post_id, $key, $value ): void {
+		update_post_meta( $post_id, "vczapi_{$key}", $value );
+	}
+
+	/**
+	 * Get custom post meta
+	 *
+	 * @param $post_id
+	 * @param $key
+	 * @param bool $single
+	 *
+	 * @return mixed
+	 */
+	public static function getPostMeta( $post_id, $key, bool $single = true ): mixed {
+		return get_post_meta( $post_id, "vczapi_{$key}", $single );
+	}
 }

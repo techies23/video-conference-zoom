@@ -1,0 +1,23 @@
+.choices {
+  margin-bottom: 2px;
+
+  &__inner {
+    min-height: auto;
+  }
+
+  &__list {
+    &--dropdown {
+      z-index: 1000 !important;
+    }
+  }
+
+  .is-active {
+    z-index: 1001 !important;
+  }
+}
+
+.choices.is-disabled {
+  .choices__item {
+    color: rgba(112, 112, 112, 1) !important;
+  }
+}

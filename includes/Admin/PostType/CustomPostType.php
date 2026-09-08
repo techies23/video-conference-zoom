@@ -2,22 +2,17 @@
 
 namespace Codemanas\VczApi\Admin\PostType;
 
-class Meetings {
+use Codemanas\VczApi\Admin\AdminController;
 
-	private static ?Meetings $instance = null;
+class CustomPostType {
 
-	public static function get_instance(): ?Meetings {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
-
-	private string $post_type = 'zoom-meetings';
+	private string $postType;
 
 	public function __construct() {
+		$this->postType = AdminController::$postType;
+
 		add_action( 'admin_menu', [ $this, 'hidePostType' ] );
+		add_action( 'init', [ $this, 'registerPostType' ] );
 	}
 
 	/**
@@ -63,10 +58,10 @@ class Meetings {
 				'author',
 				'thumbnail',
 			),
-			'rewrite'            => array( 'slug' => apply_filters( 'vczapi_cpt_slug', $this->post_type ) ),
+			'rewrite'            => array( 'slug' => apply_filters( 'vczapi_cpt_slug', $this->postType ) ),
 		);
 
-		register_post_type( $this->post_type, $args );
+		register_post_type( $this->postType, $args );
 	}
 
 	/**
@@ -74,7 +69,7 @@ class Meetings {
 	 */
 	public function hidePostType(): void
 	{
-		if (isset($_GET['post_type']) && $_GET['post_type'] !== $this->post_type) {
+		if (isset($_GET['post_type']) && $_GET['post_type'] !== $this->postType) {
 			return;
 		}
 

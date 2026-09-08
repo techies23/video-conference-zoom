@@ -1,4 +1,8 @@
-@import 'choices';
+@import 'vendors/choices';
+@import "components/accordion";
+
+//Admin
+@import "metabox/admin-meeting-fields";
 
 .zvc-row {
   display: flex;
@@ -342,59 +346,6 @@
 
 .notice-warning .vczapi-major-update-warning__icon {
   color: #f56e28;
-}
-
-.vczapi-admin-accordion {
-  margin-bottom: 1.5em;
-  transition: 1s all;
-  will-change: auto;
-
-  &--header {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 10px;
-    cursor: pointer;
-
-    &-title {
-      width: 80%;
-
-      h3 {
-        font-weight: 400;
-      }
-    }
-
-    &-trigger {
-      width: 20%;
-      text-align: right;
-
-      a {
-        text-decoration: none;
-        color: #000;
-      }
-
-      .dashicons-arrow-up-alt2 {
-        transform: rotate(90deg);
-      }
-    }
-  }
-
-  &--content {
-    display: none;
-  }
-
-  //show if it has expanded class
-  &.expanded &--content {
-    display: block;
-  }
-
-  &.expanded &--header {
-    &-trigger {
-      .dashicons-arrow-up-alt2 {
-        transform: rotate(0deg);
-      }
-    }
-  }
 }
 
 .vczapi-migrate-to-s2sOauth {
