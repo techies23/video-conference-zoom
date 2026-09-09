@@ -41,9 +41,9 @@ class Zoom {
 			return;
 		}
 
-		$handler = $this->getEventHandler( (int) $meeting_type );
+		$handler      = $this->getEventHandler( (int) $meeting_type );
 		$meeting_data = array_merge(
-			$this->prepareCommonFields( $post_id, (int) $meeting_type, $user_id ),
+			$this->prepareCommonFields( $post_id, $post, (int) $meeting_type, $user_id ),
 			$handler->getTypeSpecificFields()
 		);
 
@@ -106,7 +106,7 @@ class Zoom {
 		       && ! wp_is_post_revision( $post_id );
 	}
 
-	private function prepareCommonFields( int $post_id, int $meeting_type, string $user_id ): array {
+	private function prepareCommonFields( int $post_id, \WP_Post $post, int $meeting_type, string $user_id ): array {
 		$pwd = sanitize_text_field( filter_input( INPUT_POST, 'password' ) );
 		if ( ! get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
 			$pwd = ! empty( $pwd ) ? $pwd : (string) $post_id;
@@ -114,11 +114,14 @@ class Zoom {
 
 		$duration_hour    = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_hour' ) );
 		$duration_minutes = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_minutes' ) );
+		$start_time       = gmdate( "Y-m-d\TH:i:s", strtotime( filter_input( INPUT_POST, 'start_time' ) ) );
 
 		return [
+			'topic'                        => esc_html( $post->post_title ),
 			'user_id'                      => $user_id,
+			'agenda'                       => wp_strip_all_tags( get_the_excerpt( $post ), true ),
 			'type'                         => $meeting_type,
-			'start_time'                   => sanitize_text_field( filter_input( INPUT_POST, 'start_time' ) ),
+			'start_time'                   => sanitize_text_field( $start_time ),
 			'timezone'                     => sanitize_text_field( filter_input( INPUT_POST, 'timezone' ) ),
 			'duration'                     => ( ! empty( $duration_hour ) || ! empty( $duration_minutes ) ) ? vczapi_convert_to_minutes( $duration_hour, $duration_minutes ) : 40,
 			'password'                     => $pwd,
@@ -138,7 +141,7 @@ class Zoom {
 		Metastore::setPostMeta( $post_id, 'meeting_type', $type );
 
 		try {
-			$dt = new \DateTime( $meeting_data['start_date'], new \DateTimeZone( $meeting_data['timezone'] ) );
+			$dt = new \DateTime( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
 			$dt->setTimezone( new \DateTimeZone( 'UTC' ) );
 			$start_utc = $dt->format( 'Y-m-d H:i:s' );
 		} catch ( \Exception $e ) {

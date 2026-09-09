@@ -34,12 +34,7 @@ class MeetingService implements IZoomEvent {
 		$is_update = ! empty( $zoom_id );
 		$zoomApi   = new Zoom();
 		if ( $is_update ) {
-			$params   = \Zoom_Video_Conferencing_Admin_Meetings::prepare_update( $zoom_id, $payload, $post );
-			$response = json_decode( $api->updateMeetingInfo( $params ) );
-
-			if ( empty( $response->code ) ) {
-				$response = json_decode( $api->getMeetingInfo( $zoom_id ) );
-			}
+			$response = $zoomApi->meetings()->update( $zoom_id, $payload );
 		} else {
 			$response = $zoomApi->meetings()->create( $payload );
 		}

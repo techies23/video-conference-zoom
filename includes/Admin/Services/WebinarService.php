@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Admin\Services;
 
 use Codemanas\VczApi\Admin\Interfaces\IZoomEvent;
+use Codemanas\VczApi\Zoom\Zoom;
 
 class WebinarService implements IZoomEvent {
 
@@ -27,21 +28,15 @@ class WebinarService implements IZoomEvent {
 	 * @param array $payload
 	 * @param string $zoom_id
 	 *
-	 * @return object|mixed|null
+	 * @return object|null
 	 */
 	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?object {
-		$api       = zoom_conference();
 		$is_update = ! empty( $zoom_id );
-
-		$params = \Zoom_Video_Conferencing_Admin_Webinars::prepare_webinar( $payload, $post );
+		$zoomApi = new Zoom();
 		if ( $is_update ) {
-			$response = json_decode( $api->updateWebinar( $zoom_id, $params ) );
-
-			if ( empty( $response->code ) ) {
-				$response = json_decode( $api->getWebinarInfo( $zoom_id ) );
-			}
+			$response = $zoomApi->webinars()->update( $zoom_id, $payload );
 		} else {
-			$response = json_decode( $api->createAWebinar( $payload['userId'], $params ) );
+			$response = $zoomApi->webinars()->create( $payload );
 		}
 
 		return $response;

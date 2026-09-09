@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $meeting_fields  = ! empty( $args['meeting_fields'] ) && is_array( $args['meeting_fields'] ) ? $args['meeting_fields'] : [];
 $meeting_details = ! empty( $args['meeting_details'] ) ? $args['meeting_details'] : [];
+dump($meeting_details);
 ?>
 
 <div class="zoom-metabox-wrapper">

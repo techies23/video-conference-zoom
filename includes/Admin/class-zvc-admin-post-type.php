@@ -50,7 +50,7 @@ class Zoom_Video_Conferencing_Admin_PostType
 //		add_action('init', array($this, 'register'));
 //		add_action('admin_menu', [$this, 'hide_post_type']);
 //		add_action('add_meta_boxes', array($this, 'add_metabox'));
-		add_action('save_post_' . $this->post_type, array($this, 'save_metabox'), 10, 2);
+//		add_action('save_post_' . $this->post_type, array($this, 'save_metabox'), 10, 2);
 		add_filter('single_template', array($this, 'single'), 20);
 		add_filter('archive_template', array($this, 'archive'), 20);
 		add_filter('template_include', [$this, 'template_filter'], 99);
