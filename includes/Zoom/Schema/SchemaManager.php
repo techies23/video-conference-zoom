@@ -97,8 +97,9 @@ class SchemaManager {
 				self::MEETING_LIST                => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
 				self::MEETING_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
 				self::MEETING_GET                 => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
+				self::MEETING_UPDATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'update' ),
 				self::MEETING_DELETE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
-
+				self::MEETING_STATUS              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'updateStatus' ),
 				// Webinars
 				self::WEBINAR_LIST                => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
 				self::WEBINAR_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'create' ),
@@ -121,11 +122,11 @@ class SchemaManager {
 				self::REPORT_WEBINAR_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarParticipants' ),
 				self::REPORT_WEBINAR_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarDetails' ),
 				// Recordings
-				self::RECORDING_LIST        => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'list' ),
-				self::RECORDING_GET         => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'get' ),
-				self::RECORDING_DELETE      => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'delete' ),
-				self::RECORDING_FILE_DELETE => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'deleteFile' ),
-				self::RECORDING_RECOVER     => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'recover' ),
+				self::RECORDING_LIST              => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'list' ),
+				self::RECORDING_GET               => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'get' ),
+				self::RECORDING_DELETE            => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'delete' ),
+				self::RECORDING_FILE_DELETE       => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'deleteFile' ),
+				self::RECORDING_RECOVER           => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'recover' ),
 			);
 		}
 
