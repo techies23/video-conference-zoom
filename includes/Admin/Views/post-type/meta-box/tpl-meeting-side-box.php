@@ -12,15 +12,15 @@ dump($meeting_details);
 <div class="zoom-metabox-wrapper">
 	<?php
 	if ( ! empty( $meeting_details ) ) {
-		if ( ! empty( $meeting_details->code ) && ! empty( $meeting_details->message ) ) {
+		if ( ! empty( $meeting_details['code'] ) && ! empty( $meeting_details['message'] ) ) {
 			?>
             <p>
                 <strong><?php _e( 'Meeting has not been created for this post yet. Publish your meeting or hit update to create a new one for this post !', 'video-conferencing-with-zoom-api' ) ?></strong>
             </p>
 			<?php
-			echo '<p style="color:red;font-size:18px;"><strong>Zoom Error:</strong> ' . $meeting_details->message . '</p>';
+			echo '<p style="color:red;font-size:18px;"><strong>Zoom Error:</strong> ' . $meeting_details['message'] . '</p>';
 		} else {
-			$zoom_host_url = 'https://zoom.us' . '/wc/' . $meeting_details->id . '/start';
+			$zoom_host_url = 'https://zoom.us' . '/wc/' . $meeting_details['id'] . '/start';
 			$zoom_host_url = apply_filters( 'video_conferencing_zoom_join_url_host', $zoom_host_url );
 
 			$join_url = ! empty( $meeting_details->encrypted_password ) ? vczapi_get_pwd_embedded_join_link( $meeting_details->join_url, $meeting_details->encrypted_password ) : $meeting_details->join_url;
@@ -36,7 +36,7 @@ dump($meeting_details);
                       title="Start URL"><?php _e( 'Start via Browser', 'video-conferencing-with-zoom-api' ) ?></a>
                 </p>
                 <p><strong><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ) ?>
-                        :</strong> <?php echo $meeting_details->id; ?></p>
+                        :</strong> <?php echo $meeting_details['id']; ?></p>
 				<?php do_action( 'vczapi_meeting_details_admin', $meeting_details ); ?>
             </div>
             <hr>

@@ -7,22 +7,22 @@ namespace Composer\Autoload;
 class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
 {
     public static $prefixLengthsPsr4 = array (
-        'F' => 
+        'F' =>
         array (
             'Firebase\\JWT\\' => 13,
         ),
-        'C' => 
+        'C' =>
         array (
             'Codemanas\\VczApi\\' => 17,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Firebase\\JWT\\' => 
+        'Firebase\\JWT\\' =>
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
-        'Codemanas\\VczApi\\' => 
+        'Codemanas\\VczApi\\' =>
         array (
             0 => __DIR__ . '/../..' . '/legacy',
             1 => __DIR__ . '/../..' . '/includes',
@@ -30,75 +30,7 @@ class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
     );
 
     public static $classMap = array (
-        'CodeManas\\VczApi\\Elementor\\Elementor' => __DIR__ . '/../..' . '/includes/Elementor/Elementor.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\EmbedMeetings' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/EmbedMeetings.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingByID' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingByID.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingByPostID' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingByPostID.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingHosts' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingHosts.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\MeetingList' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/MeetingList.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\RecordingByMeetingID' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/RecordingByMeetingID.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\RecordingsByHost' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/RecordingsByHost.php',
-        'CodeManas\\VczApi\\Elementor\\Widgets\\WebinarList' => __DIR__ . '/../..' . '/includes/Elementor/Widgets/WebinarList.php',
-        'Codemanas\\VczApi\\Blocks\\BlockTemplates' => __DIR__ . '/../..' . '/includes/Blocks/BlockTemplates.php',
-        'Codemanas\\VczApi\\Blocks\\Blocks' => __DIR__ . '/../..' . '/includes/Blocks/Blocks.php',
-        'Codemanas\\VczApi\\Booking\\BookingNotifications' => __DIR__ . '/../..' . '/includes/Booking/BookingNotifications.php',
-        'Codemanas\\VczApi\\Booking\\CPT' => __DIR__ . '/../..' . '/includes/Booking/CPT.php',
-        'Codemanas\\VczApi\\Booking\\Frontend' => __DIR__ . '/../..' . '/includes/Booking/Frontend.php',
-        'Codemanas\\VczApi\\Booking\\Main' => __DIR__ . '/../..' . '/includes/Booking/Main.php',
-        'Codemanas\\VczApi\\Bootstrap' => __DIR__ . '/../..' . '/includes/Bootstrap.php',
-        'Codemanas\\VczApi\\Data\\Datastore' => __DIR__ . '/../..' . '/includes/Data/Datastore.php',
-        'Codemanas\\VczApi\\Data\\Logger' => __DIR__ . '/../..' . '/includes/Data/Logger.php',
-        'Codemanas\\VczApi\\Data\\Metastore' => __DIR__ . '/../..' . '/includes/Data/Metastore.php',
-        'Codemanas\\VczApi\\Filters' => __DIR__ . '/../..' . '/includes/Filters.php',
-        'Codemanas\\VczApi\\Helpers\\Date' => __DIR__ . '/../..' . '/includes/Helpers/Date.php',
-        'Codemanas\\VczApi\\Helpers\\Encryption' => __DIR__ . '/../..' . '/includes/Helpers/Encryption.php',
-        'Codemanas\\VczApi\\Helpers\\Links' => __DIR__ . '/../..' . '/includes/Helpers/Links.php',
-        'Codemanas\\VczApi\\Helpers\\Locales' => __DIR__ . '/../..' . '/includes/Helpers/Locales.php',
-        'Codemanas\\VczApi\\Helpers\\MeetingType' => __DIR__ . '/../..' . '/includes/Helpers/MeetingType.php',
-        'Codemanas\\VczApi\\Helpers\\Templates' => __DIR__ . '/../..' . '/includes/Helpers/Templates.php',
-        'Codemanas\\VczApi\\Marketplace' => __DIR__ . '/../..' . '/includes/Marketplace.php',
-        'Codemanas\\VczApi\\Requests\\Zoom' => __DIR__ . '/../..' . '/includes/Requests/Zoom.php',
-        'Codemanas\\VczApi\\Shortcodes' => __DIR__ . '/../..' . '/includes/Shortcodes.php',
-        'Codemanas\\VczApi\\Shortcodes\\Embed' => __DIR__ . '/../..' . '/includes/Shortcodes/Embed.php',
-        'Codemanas\\VczApi\\Shortcodes\\Helpers' => __DIR__ . '/../..' . '/includes/Shortcodes/Helpers.php',
-        'Codemanas\\VczApi\\Shortcodes\\Meetings' => __DIR__ . '/../..' . '/includes/Shortcodes/Meetings.php',
-        'Codemanas\\VczApi\\Shortcodes\\Recordings' => __DIR__ . '/../..' . '/includes/Shortcodes/Recordings.php',
-        'Codemanas\\VczApi\\Shortcodes\\Webinars' => __DIR__ . '/../..' . '/includes/Shortcodes/Webinars.php',
-        'Codemanas\\VczApi\\Timezone' => __DIR__ . '/../..' . '/includes/Timezone.php',
-        'Codemanas\\VczApi\\Zoom\\Auth\\S2SOAuth' => __DIR__ . '/../..' . '/includes/Zoom/Auth/S2SOAuth.php',
-        'Codemanas\\VczApi\\Zoom\\Helpers\\MeetingHelper' => __DIR__ . '/../..' . '/includes/Zoom/Helpers/MeetingHelper.php',
-        'Codemanas\\VczApi\\Zoom\\Http\\Client' => __DIR__ . '/../..' . '/includes/Zoom/Http/Client.php',
-        'Codemanas\\VczApi\\Zoom\\Payload\\PayloadBuilder' => __DIR__ . '/../..' . '/includes/Zoom/Payload/PayloadBuilder.php',
-        'Codemanas\\VczApi\\Zoom\\Payload\\Resource\\MeetingPayloadBuilder' => __DIR__ . '/../..' . '/includes/Zoom/Payload/Resource/MeetingPayloadBuilder.php',
-        'Codemanas\\VczApi\\Zoom\\Payload\\Resource\\RecordingPayloadBuilder' => __DIR__ . '/../..' . '/includes/Zoom/Payload/Resource/RecordingPayloadBuilder.php',
-        'Codemanas\\VczApi\\Zoom\\Payload\\Resource\\ReportPayloadBuilder' => __DIR__ . '/../..' . '/includes/Zoom/Payload/Resource/ReportPayloadBuilder.php',
-        'Codemanas\\VczApi\\Zoom\\Payload\\Resource\\UserPayloadBuilder' => __DIR__ . '/../..' . '/includes/Zoom/Payload/Resource/UserPayloadBuilder.php',
-        'Codemanas\\VczApi\\Zoom\\Payload\\Resource\\WebinarPayloadBuilder' => __DIR__ . '/../..' . '/includes/Zoom/Payload/Resource/WebinarPayloadBuilder.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\Meeting' => __DIR__ . '/../..' . '/includes/Zoom/Schema/Meeting.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\MeetingSettings' => __DIR__ . '/../..' . '/includes/Zoom/Schema/MeetingSettings.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\Recording' => __DIR__ . '/../..' . '/includes/Zoom/Schema/Recording.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\Report' => __DIR__ . '/../..' . '/includes/Zoom/Schema/Report.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\SchemaManager' => __DIR__ . '/../..' . '/includes/Zoom/Schema/SchemaManager.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\User' => __DIR__ . '/../..' . '/includes/Zoom/Schema/User.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\Webinar' => __DIR__ . '/../..' . '/includes/Zoom/Schema/Webinar.php',
-        'Codemanas\\VczApi\\Zoom\\Schema\\WebinarSettings' => __DIR__ . '/../..' . '/includes/Zoom/Schema/WebinarSettings.php',
-        'Codemanas\\VczApi\\Zoom\\Service\\BaseService' => __DIR__ . '/../..' . '/includes/Zoom/Service/BaseService.php',
-        'Codemanas\\VczApi\\Zoom\\Service\\Meeting' => __DIR__ . '/../..' . '/includes/Zoom/Service/Meeting.php',
-        'Codemanas\\VczApi\\Zoom\\Service\\Recording' => __DIR__ . '/../..' . '/includes/Zoom/Service/Recording.php',
-        'Codemanas\\VczApi\\Zoom\\Service\\Report' => __DIR__ . '/../..' . '/includes/Zoom/Service/Report.php',
-        'Codemanas\\VczApi\\Zoom\\Service\\User' => __DIR__ . '/../..' . '/includes/Zoom/Service/User.php',
-        'Codemanas\\VczApi\\Zoom\\Service\\Webinar' => __DIR__ . '/../..' . '/includes/Zoom/Service/Webinar.php',
-        'Codemanas\\VczApi\\Zoom\\Zoom' => __DIR__ . '/../..' . '/includes/Zoom/Zoom.php',
-        'Codemanas\\VczApi\\admin\\Cron' => __DIR__ . '/../..' . '/includes/admin/Cron.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
-        'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',
-        'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
-        'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
-        'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
-        'Firebase\\JWT\\JWTExceptionWithPayloadInterface' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWTExceptionWithPayloadInterface.php',
-        'Firebase\\JWT\\Key' => __DIR__ . '/..' . '/firebase/php-jwt/src/Key.php',
-        'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
