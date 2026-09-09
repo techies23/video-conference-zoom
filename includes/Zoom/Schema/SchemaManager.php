@@ -63,13 +63,20 @@ class SchemaManager {
 	public const USER_UPDATE = 'user.update';
 	public const USER_DELETE = 'user.delete';
 
-	// Recordings (reserved for later)
+	// Reports
 	public const REPORT_DAILY = 'report.daily';
 	public const REPORT_USER_MEETINGS = 'report.userMeetings';
 	public const REPORT_MEETING_PARTICIPANTS = 'report.meetingParticipants';
 	public const REPORT_MEETING_DETAILS = 'report.meetingDetails';
 	public const REPORT_WEBINAR_PARTICIPANTS = 'report.webinarParticipants';
 	public const REPORT_WEBINAR_DETAILS = 'report.webinarDetails';
+
+	// Recordings
+	public const RECORDING_LIST = 'recording.list';
+	public const RECORDING_GET = 'recording.get';
+	public const RECORDING_DELETE = 'recording.delete';
+	public const RECORDING_FILE_DELETE = 'recording.fileDelete';
+	public const RECORDING_RECOVER = 'recording.recover';
 
 	/**
 	 * Lazy-initialized map of operation => [ 'schema' => class, 'method' => method ].
@@ -79,7 +86,7 @@ class SchemaManager {
 	protected static ?array $map = null;
 
 	/**
-	 * Build the operation map once.
+	 * Build the operation map at once.
 	 *
 	 * @return array|null
 	 */
@@ -113,6 +120,12 @@ class SchemaManager {
 				self::REPORT_MEETING_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingDetails' ),
 				self::REPORT_WEBINAR_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarParticipants' ),
 				self::REPORT_WEBINAR_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarDetails' ),
+				// Recordings
+				self::RECORDING_LIST        => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'list' ),
+				self::RECORDING_GET         => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'get' ),
+				self::RECORDING_DELETE      => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'delete' ),
+				self::RECORDING_FILE_DELETE => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'deleteFile' ),
+				self::RECORDING_RECOVER     => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'recover' ),
 			);
 		}
 
