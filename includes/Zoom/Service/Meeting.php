@@ -144,4 +144,40 @@ class Meeting extends BaseService {
 
 		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
 	}
+
+	/**
+	 * Update an existing meeting.
+	 *
+	 * @param   int|string  $meetingId  Meeting ID to update.
+	 * @param array         $data       Payload parameters to update.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function update( int|string $meetingId, array $data = array() ): WP_Error|array {
+		$data['meeting_id'] = $meetingId;
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_UPDATE, $data );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		$prepared['body'] = apply_filters( 'vczapi_meetings_update_payload', $prepared['body'], $data );
+
+		$endpoint = ! empty( $prepared['query'] )
+			? add_query_arg( $prepared['query'], $prepared['endpoint'] )
+			: $prepared['endpoint'];
+
+		$result = $this->client->request( $prepared['method'], $endpoint, $prepared['body'] );
+
+		if ( ! empty( $prepared['warnings'] ) ) {
+			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_UPDATE, $data );
+		}
+
+		return $result;
+	}
 }
