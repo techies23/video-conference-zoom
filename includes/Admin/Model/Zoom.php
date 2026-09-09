@@ -1,11 +1,11 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Models;
+namespace Codemanas\VczApi\Admin\Model;
 
 use Codemanas\VczApi\Admin\AdminController;
-use Codemanas\VczApi\Admin\Interfaces\IZoomEvent;
-use Codemanas\VczApi\Admin\Services\MeetingService;
-use Codemanas\VczApi\Admin\Services\WebinarService;
+use Codemanas\VczApi\Admin\Interface\IZoomEvent;
+use Codemanas\VczApi\Admin\Service\MeetingService;
+use Codemanas\VczApi\Admin\Service\WebinarService;
 use Codemanas\VczApi\Data\Metastore;
 
 class Zoom {
@@ -29,8 +29,15 @@ class Zoom {
 		add_action( 'admin_notices', [ $this, 'displayValidationNotices' ] );
 	}
 
+	/**
+	 * Trigger Save
+	 *
+	 * @param int $post_id
+	 * @param \WP_Post $post
+	 *
+	 * @return void
+	 */
 	public function save( int $post_id, \WP_Post $post ): void {
-		// Check Security & Post conditions
 		if ( ! $this->isSaveRequestValid( $post_id ) ) {
 			return;
 		}
@@ -48,11 +55,13 @@ class Zoom {
 		);
 
 		do_action( 'vczapi_admin_before_zoom_meeting_is_created', $meeting_data );
+
 		$event_label = ( $meeting_type === 2 ) ? 'webinar' : 'meeting';
 		$this->saveMetaData( $post_id, $meeting_data, $event_label );
+
 		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data );
 
-		$zoom_id  = (string) get_post_meta( $post_id, '_meeting_zoom_meeting_id', true );
+		$zoom_id  = (string) Metastore::getPostMeta($post_id, 'meeting_id');
 		$response = $handler->syncWithApi( $post, $meeting_data, $zoom_id );
 		$this->persistZoomResponse( $post_id, $response );
 
@@ -151,7 +160,7 @@ class Zoom {
 		Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
 	}
 
-	private function persistZoomResponse( int $post_id, ?object $response ): void {
+	private function persistZoomResponse( int $post_id, ?array $response ): void {
 		if ( empty( $response ) ) {
 			return;
 		}
@@ -159,9 +168,9 @@ class Zoom {
 		Metastore::setPostMeta( $post_id, 'meeting_details', $response );
 
 		if ( empty( $response->code ) ) {
-			Metastore::setPostMeta( $post_id, 'meeting_join_url', $response->join_url ?? '' );
-			Metastore::setPostMeta( $post_id, 'meeting_start_url', $response->start_url ?? '' );
-			Metastore::setPostMeta( $post_id, 'meeting_meeting_id', $response->id ?? '' );
+			Metastore::setPostMeta( $post_id, 'meeting_join_url', $response['join_url'] ?? '' );
+			Metastore::setPostMeta( $post_id, 'meeting_start_url', $response['start_url'] ?? '' );
+			Metastore::setPostMeta( $post_id, 'meeting_id', $response['id'] ?? '' );
 		}
 	}
 

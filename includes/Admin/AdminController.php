@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi\Admin;
 
-use Codemanas\VczApi\Admin\Models\Zoom;
+use Codemanas\VczApi\Admin\Model\Zoom;
 use Codemanas\VczApi\Admin\PostType\PostTypeController;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Services;
+namespace Codemanas\VczApi\Admin\Service;
 
-use Codemanas\VczApi\Admin\Interfaces\IZoomEvent;
+use Codemanas\VczApi\Admin\Interface\IZoomEvent;
 use Codemanas\VczApi\Zoom\Zoom;
 
 class MeetingService implements IZoomEvent {
@@ -29,8 +29,7 @@ class MeetingService implements IZoomEvent {
 	 *
 	 * @return object|null
 	 */
-	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?object {
-		$api       = zoom_conference();
+	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?array {
 		$is_update = ! empty( $zoom_id );
 		$zoomApi   = new Zoom();
 		if ( $is_update ) {

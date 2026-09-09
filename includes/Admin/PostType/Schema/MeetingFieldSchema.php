@@ -20,7 +20,7 @@ class MeetingFieldSchema {
 		$text_domain = 'video-conferencing-with-zoom-api';
 		$tzlists     = Date::timezone_list();
 		$wp_timezone = Date::get_timezone_offset();
-		$has_zoom_id = ! empty( $meeting_details ) && is_object( $meeting_details ) && ! empty( $meeting_details->id );
+		$has_zoom_id = ! empty( $meeting_details ) && ! empty( $meeting_details['id'] );
 
 		// Build host choices
 		$host_options = [ '' => __( 'Type to search host...', $text_domain ) ];
@@ -37,6 +37,7 @@ class MeetingFieldSchema {
 			'description' => __( 'This is host ID for the meeting (Required).', $text_domain ),
 			'required'    => true,
 			'options'     => $host_options,
+			'input_class' => [ 'vczapi-choices' ],
 //			'custom_attributes' => [
 //				'data-api-action'  => 'postTypeFetchHosts',
 //				'data-placeholder' => __( 'Search host by name or email...', $text_domain ),
@@ -46,7 +47,8 @@ class MeetingFieldSchema {
 		];
 
 		if ( $has_zoom_id ) {
-			$host_field_config['custom_attributes']['disabled'] = 'disabled';
+//			$host_field_config['type']                          = 'placeholder';
+//			$host_field_config['custom_attributes']['disabled'] = 'disabled';
 			$host_field_config['description']                   = __( 'Host cannot be changed once the event has been created.', $text_domain );
 		}
 
@@ -55,10 +57,11 @@ class MeetingFieldSchema {
 				'title'  => __( 'General Settings', $text_domain ),
 				'fields' => [
 					'user_id'    => $host_field_config,
-					'type'       =>  [
-						'label'   => __( 'Type *', $text_domain ),
-						'type'    => 'select',
-						'options' => [
+					'type'       => [
+						'label'       => __( 'Type *', $text_domain ),
+						'type'        => 'select',
+						'description' => __( 'Type of Event.', $text_domain ),
+						'options'     => [
 							1 => __( 'Meeting', $text_domain ),
 							2 => __( 'Webinar', $text_domain ),
 						],
@@ -209,7 +212,7 @@ class MeetingFieldSchema {
 		];
 
 		if ( $has_zoom_id ) {
-			unset($schema['general']['fields']['type']);
+//			$schema['general']['fields']['type']['type'] = 'placeholder';
 		}
 
 		return apply_filters( 'vczapi_admin_metabox_fields_schema', $schema, $post, $meeting_details );

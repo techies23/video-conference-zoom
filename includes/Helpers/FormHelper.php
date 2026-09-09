@@ -104,6 +104,18 @@ class FormHelper {
 
 				break;
 
+			case 'placeholder' :
+
+				$allowed_html['input'] = array(
+					'class' => array(),
+					'id'    => array(),
+					'value' => '',
+				);
+
+				$field = ' <p class="vczapi-placeholder ' . esc_attr( $input_class ) . '" id="' . esc_attr( $args['id'] ) . '"  >' . esc_html( $args['options'][$value] ) . '</p>';
+
+				break;
+
 			case 'checkbox' :
 
 				$allowed_html['input'] = array(
