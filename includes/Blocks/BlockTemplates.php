@@ -15,6 +15,7 @@ class BlockTemplates {
 	}
 
 	protected function __construct() {
+//		return;
 		// STEP A: Intercept individual template requests from REST API or FSE template loader.
 		// /wp-includes/rest-api/endpoints/class-wp-rest-templates-controller.php calls this.
 		add_filter( 'pre_get_block_file_template', [ $this, 'get_templates' ], 10, 3 );

@@ -79,7 +79,7 @@ const backendConfig = {
 const wp = {
   ...defaultConfig,
   entry: {
-    ...defaultConfig.entry,
+    ...defaultConfig.entry(),
     index: path.resolve(process.cwd(), 'src/block', 'index.js'),
   },
 }

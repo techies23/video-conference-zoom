@@ -63,7 +63,7 @@ class Zoom_Video_Conferencing_Admin_PostType
 		add_filter('pre_get_posts', [$this, 'filter_posts']);
 
 		//use classic editor instead of gutenberg
-		add_filter('use_block_editor_for_post_type', [$this, 'disable_block_editor'], 10, 2);
+		//add_filter('use_block_editor_for_post_type', [$this, 'disable_block_editor'], 10, 2);
 	}
 
 	public function disable_block_editor($enabled, $post_type)
