@@ -1,0 +1,41 @@
+// Base block container alignment styling
+.vczapi-button-block {
+  clear: both;
+
+  // Component styling for the custom button
+  .vczapi-btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    line-height: 1.5;
+
+    // Default state using CSS Custom Properties with safe fallbacks
+    background-color: var(--vczapi-btn-bg, #2271b1);
+    color: var(--vczapi-btn-color, #ffffff);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+    // Hover and Focus state transitions
+    &:hover,
+    &:focus {
+      background-color: var(--vczapi-btn-bg-hover, var(--vczapi-btn-bg, #135e96)) !important;
+      color: var(--vczapi-btn-color-hover, var(--vczapi-btn-color, #ffffff)) !important;
+      text-decoration: none;
+      outline: none;
+    }
+
+    // Visited state transitions
+    &:visited {
+      background-color: var(--vczapi-btn-bg-visited, var(--vczapi-btn-bg, #2271b1));
+      color: var(--vczapi-btn-color-visited, var(--vczapi-btn-color, #ffffff));
+    }
+
+    // Active click state
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}

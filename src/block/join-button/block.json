@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vczapi/join-button",
+  "version": "1.0.0",
+  "title": "Zoom Join Button",
+  "category": "vczapi-blocks",
+  "icon": "video-alt3",
+  "description": "Native WordPress button to join or start Zoom meetings.",
+  "supports": {
+    "html": false,
+    "align": [ "left", "center", "right" ]
+  },
+  "attributes": {
+    "actionType": {
+      "type": "string",
+      "enum": [ "app", "browser", "start" ],
+      "default": "app"
+    },
+    "sourceType": {
+      "type": "string",
+      "enum": [ "current", "post_type", "custom" ],
+      "default": "current"
+    },
+    "meetingId": {
+      "type": "string",
+      "default": ""
+    },
+    "selectedMeetingPostId": {
+      "type": "number",
+      "default": 0
+    },
+    "buttonText": {
+      "type": "string",
+      "default": ""
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": true
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "textColor": {
+      "type": "string",
+      "default": ""
+    },
+    "bgHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "textHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "bgVisitedColor": {
+      "type": "string",
+      "default": ""
+    },
+    "textVisitedColor": {
+      "type": "string",
+      "default": ""
+    },
+    "padding": {
+      "type": "object",
+      "default": { "top": "12px", "bottom": "12px", "left": "24px", "right": "24px" }
+    },
+    "margin": {
+      "type": "object",
+      "default": { "top": "0px", "bottom": "0px", "left": "0px", "right": "0px" }
+    }
+  },
+  "textdomain": "video-conferencing-with-zoom-api",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}
