@@ -51,6 +51,18 @@ switch ( $action_type ) {
 					'password'  => $meeting_details->password ?? ''
 				], $meeting_details->id );
 			}
+		} elseif ( $source_type == 'post_type' ) {
+			$meeting_post_id = ! empty( $attributes['selectedMeetingPostId'] ) ? sanitize_key( $attributes['selectedMeetingPostId'] ) : '';
+			if ( $meeting_post_id ) {
+				$meeting_details = get_post_meta( $meeting_post_id, '_meeting_zoom_details', true );
+				if ( is_object( $meeting_details ) and isset( $meeting_details->id ) ) {
+					$url = \Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks( [
+						'link_only' => true,
+						'post_id'   => $meeting_post_id,
+						'password'  => $meeting_details->password ?? ''
+					], $meeting_details->id );
+				}
+			}
 		}
 }
 
