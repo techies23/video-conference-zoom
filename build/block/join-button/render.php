@@ -13,58 +13,7 @@ $source_type = ! empty( $attributes['sourceType'] ) ? sanitize_key( $attributes[
 $open_in_new = ! empty( $attributes['openInNewTab'] );
 
 
-$url = '#';
-//Logic to get join url
-switch ( $action_type ) {
-	case 'app':
-		//join via app
-		if ( $source_type == 'current' ) {
-			$post_id         = get_the_ID();
-			$meeting_details = get_post_meta( $post_id, '_meeting_zoom_details', true );
-			if ( is_object( $meeting_details ) and isset( $meeting_details->join_url ) and isset( $meeting_details->encrypted_password ) ) {
-				$url = \Codemanas\VczApi\Helpers\Links::getPwdEmbeddedJoinLink( $meeting_details->join_url, $meeting_details->encrypted_password );
-			}
-		} elseif ( $source_type == 'post_type' ) {
-			$meeting_post_id = ! empty( $attributes['selectedMeetingPostId'] ) ? sanitize_key( $attributes['selectedMeetingPostId'] ) : '';
-			if ( $meeting_post_id ) {
-				$meeting_details = get_post_meta( $meeting_post_id, '_meeting_zoom_details', true );
-				if ( is_object( $meeting_details ) and isset( $meeting_details->join_url ) and isset( $meeting_details->encrypted_password ) ) {
-					$url = \Codemanas\VczApi\Helpers\Links::getPwdEmbeddedJoinLink( $meeting_details->join_url, $meeting_details->encrypted_password );
-				}
-			}
-		} elseif ( $source_type == 'custom' ) {
-			$meeting_id = ! empty( $attributes['meetingId'] ) ? sanitize_text_field( $attributes['meetingId'] ) : '';
-			if ( ! empty( $meeting_id ) ) {
-				$meeting = zoom_conference_v2()->meetings()->get( $meeting_id );
-				$url     = \Codemanas\VczApi\Zoom\Helpers\MeetingHelper::getJoinUrl( $meeting );
-			}
-		}
-		break;
-	case 'browser':
-		if ( $source_type == 'current' ) {
-			$post_id         = get_the_ID();
-			$meeting_details = get_post_meta( $post_id, '_meeting_zoom_details', true );
-			if ( is_object( $meeting_details ) and isset( $meeting_details->id ) ) {
-				$url = \Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks( [
-					'link_only' => true,
-					'post_id'   => $post_id,
-					'password'  => $meeting_details->password ?? ''
-				], $meeting_details->id );
-			}
-		} elseif ( $source_type == 'post_type' ) {
-			$meeting_post_id = ! empty( $attributes['selectedMeetingPostId'] ) ? sanitize_key( $attributes['selectedMeetingPostId'] ) : '';
-			if ( $meeting_post_id ) {
-				$meeting_details = get_post_meta( $meeting_post_id, '_meeting_zoom_details', true );
-				if ( is_object( $meeting_details ) and isset( $meeting_details->id ) ) {
-					$url = \Codemanas\VczApi\Helpers\Links::getJoinViaBrowserJoinLinks( [
-						'link_only' => true,
-						'post_id'   => $meeting_post_id,
-						'password'  => $meeting_details->password ?? ''
-					], $meeting_details->id );
-				}
-			}
-		}
-}
+$url = \Codemanas\VczApi\Blocks\ButtonHelper::get_url( $action_type, $source_type, $attributes );
 
 // 2. Fallback Label Logic
 $default_text_map = [
