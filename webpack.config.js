@@ -75,11 +75,14 @@ const backendConfig = {
   plugins: plugins('./assets/admin/css/style.min.css'),
 }
 
+const defaultEntry = typeof defaultConfig.entry === 'function'
+  ? defaultConfig.entry()
+  : (defaultConfig.entry || {})
 //Default WP configs
 const wp = {
   ...defaultConfig,
   entry: {
-    ...defaultConfig.entry(),
+    ...defaultEntry,
     index: path.resolve(process.cwd(), 'src/block', 'index.js'),
   },
 }

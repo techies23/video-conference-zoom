@@ -1,6 +1,5 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
 
 jQuery(function ($) {
   var video_conferencing_zoom_api_public = {

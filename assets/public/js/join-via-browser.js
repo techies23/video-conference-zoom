@@ -1,5 +1,4 @@
 /******/ (function() { // webpackBootstrap
-var __webpack_exports__ = {};
 jQuery(function ($) {
   var video_conferencing_zoom_jbv = {
     init: function () {

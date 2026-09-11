@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vczapi/meeting-details",
+  "version": "1.0.0",
+  "title": "Zoom - Meeting Details",
+  "category": "vczapi-blocks",
+  "icon": "layout",
+  "description": "Container block providing Zoom meeting details context to any nested blocks.",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "layout": {
+      "allowSwitching": true,
+      "allowInherited": true,
+      "default": {
+        "type": "flex",
+        "orientation": "vertical"
+      }
+    }
+  },
+  "attributes": {
+    "sourceType": {
+      "type": "string",
+      "enum": [
+        "current",
+        "post_type",
+        "custom"
+      ],
+      "default": "current"
+    },
+    "customMeetingId": {
+      "type": "string",
+      "default": ""
+    },
+    "selectedMeetingPostId": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "providesContext": {
+    "vczapi/sourceType": "sourceType",
+    "vczapi/meetingId": "meetingId",
+    "vczapi/selectedMeetingPostId": "selectedMeetingPostId"
+  },
+  "textdomain": "video-conferencing-with-zoom-api",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

@@ -1,10 +1,30 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/concatenation wrap */
+/******/ 	// wrap a concatenated module body as a lazy, memoized accessor; mod is
+/******/ 	// set before the body runs so re-entrant calls (require cycles) observe
+/******/ 	// the partial exports like Node.js
+/******/ 	__webpack_require__.cw = function(body) {
+/******/ 		var mod;
+/******/ 		return function() {
+/******/ 			if (body) {
+/******/ 				var fn = body;
+/******/ 				body = 0;
+/******/ 				mod = { exports: {} };
+/******/ 				fn.call(mod.exports, mod, mod.exports);
+/******/ 			}
+/******/ 			return mod.exports;
+/******/ 		};
+/******/ 	};
+/******/ 	
+/************************************************************************/
 
-/***/ 895:
-/***/ (function() {
-
+// MODULE: ./node_modules/flatpickr/dist/esm/utils/polyfills.js
+var polyfills_namespaceFn = /*#__PURE__*/__webpack_require__.cw(function(module, exports) {
 
 if (typeof Object.assign !== "function") {
     Object.assign = function (target) {
@@ -28,41 +48,9 @@ if (typeof Object.assign !== "function") {
     };
 }
 
+});
 
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-!function() {
-
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/types/options.js
+;// ./node_modules/flatpickr/dist/esm/types/options.js
 var HOOKS = [
     "onChange",
     "onClose",
@@ -147,7 +135,7 @@ var defaults = {
     wrap: false,
 };
 
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/l10n/default.js
+;// ./node_modules/flatpickr/dist/esm/l10n/default.js
 var english = {
     weekdays: {
         shorthand: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -221,7 +209,7 @@ var english = {
 };
 /* harmony default export */ var l10n_default = (english);
 
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/utils/index.js
+;// ./node_modules/flatpickr/dist/esm/utils/index.js
 var pad = function (number, length) {
     if (length === void 0) { length = 2; }
     return ("000" + number).slice(length * -1);
@@ -240,7 +228,7 @@ var arrayify = function (obj) {
     return obj instanceof Array ? obj : [obj];
 };
 
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/utils/dom.js
+;// ./node_modules/flatpickr/dist/esm/utils/dom.js
 function toggleClass(elem, className, bool) {
     if (bool === true)
         return elem.classList.add(className);
@@ -296,7 +284,7 @@ function getEventTarget(event) {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/utils/formatting.js
+;// ./node_modules/flatpickr/dist/esm/utils/formatting.js
 
 var doNothing = function () { return undefined; };
 var monthToStr = function (monthNumber, shorthand, locale) { return locale.months[shorthand ? "shorthand" : "longhand"][monthNumber]; };
@@ -432,7 +420,7 @@ var formats = {
     y: function (date) { return String(date.getFullYear()).substring(2); },
 };
 
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/utils/dates.js
+;// ./node_modules/flatpickr/dist/esm/utils/dates.js
 
 
 
@@ -577,9 +565,10 @@ function getDefaultHours(config) {
     return { hours: hours, minutes: minutes, seconds: seconds };
 }
 
-// EXTERNAL MODULE: ./node_modules/flatpickr/dist/esm/utils/polyfills.js
-var polyfills = __webpack_require__(895);
-;// CONCATENATED MODULE: ./node_modules/flatpickr/dist/esm/index.js
+;// ./node_modules/flatpickr/dist/esm/utils/polyfills.js
+polyfills_namespaceFn();
+
+;// ./node_modules/flatpickr/dist/esm/index.js
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2627,7 +2616,7 @@ if (typeof window !== "undefined") {
 }
 /* harmony default export */ var esm = (flatpickr);
 
-;// CONCATENATED MODULE: ./src/public/js/booking.js
+;// ./src/public/js/booking.js
 
 (function () {
   const vczapiBooking = (container, flatpickrOptions = {}) => {
@@ -2794,6 +2783,5 @@ if (typeof window !== "undefined") {
     console.log(instances);
   });
 })();
-}();
 /******/ })()
 ;
