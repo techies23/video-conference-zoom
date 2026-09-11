@@ -46,7 +46,7 @@
   },
   "providesContext": {
     "vczapi/sourceType": "sourceType",
-    "vczapi/meetingId": "meetingId",
+    "vczapi/meetingId": "customMeetingId",
     "vczapi/selectedMeetingPostId": "selectedMeetingPostId"
   },
   "textdomain": "video-conferencing-with-zoom-api",

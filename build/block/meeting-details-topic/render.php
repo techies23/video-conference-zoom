@@ -19,15 +19,16 @@ $post_id     = $block->context['vczapi/selectedMeetingPostId'] ?? 0;
 $custom_id   = $block->context['vczapi/customMeetingId'] ?? '';
 
 // 2. Resolve cached meeting details
-$meeting_data = DetailsHelper::get_meeting_data( [
+$meeting_details = DetailsHelper::get_meeting_details( [
 	'sourceType'            => $source_type,
 	'selectedMeetingPostId' => $post_id,
 	'customMeetingId'       => $custom_id,
 ] );
 
-$topic      = $meeting_data['topic'] ?? '';
-$show_label = $attributes['showLabel'] ?? true;
-$label      = $attributes['label'] ?? __( 'Topic:', 'video-conferencing-with-zoom-api' );
+
+$topic           = $meeting_details['topic'] ?? '';
+$show_label      = $attributes['showLabel'] ?? true;
+$label           = $attributes['label'] ?? __( 'Topic:', 'video-conferencing-with-zoom-api' );
 
 if ( empty( $topic ) ) {
 	return;
