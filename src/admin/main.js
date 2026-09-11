@@ -1,4 +1,4 @@
-import './scss/app.scss'
+import './styles/app.scss'
 
 import { initFlatpicker } from './components/flatpicker';
 import initChoices from "./components/choices";

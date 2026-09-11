@@ -2,7 +2,10 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const defaultConfig = require('@wordpress/scripts/config/webpack.config')
 
-// Common Module Rules
+const isProduction = process.env.NODE_ENV === 'production'
+const devtoolSetting = isProduction ? false : 'source-map'
+
+// Common Loader Rules
 const commonRules = [
     {
         test: /\.(js|jsx)$/,
@@ -10,37 +13,36 @@ const commonRules = [
         loader: 'babel-loader',
     },
     {
-        test: /\.(sass|scss)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        test: /\.(sass|scss|css)$/,
+        use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+            'sass-loader',
+        ],
     },
     {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset/resource',
         generator: {
-            filename: 'assets/images/[name][ext]',
+            filename: 'dist/images/[name][ext]',
         },
     },
 ]
 
-/**
- * Helper to generate plugin configuration per module.
- */
-const getPlugins = (cssOutputPath) => [
-    new MiniCssExtractPlugin({
-        filename: cssOutputPath,
-    }),
-]
-
+// WordPress Block Editor Configuration (Extends @wordpress/scripts default)
 const wpConfig = {
     ...defaultConfig,
     entry: {
-        ...defaultConfig.entry,
+        ...defaultConfig.entry(),
         index: path.resolve(process.cwd(), 'src/block', 'index.js'),
     },
 }
 
+// Public Assets Configuration
 const publicConfig = {
-    devtool: process.env.NODE_ENV ? false : 'source-map',
+    mode: isProduction ? 'production' : 'development',
+    devtool: devtoolSetting,
     entry: {
         'join-via-browser': './src/public/js/join-via-browser.js',
         public: './src/public/js/public.js',
@@ -48,32 +50,48 @@ const publicConfig = {
         booking: './src/public/js/booking.js',
     },
     output: {
-        filename: 'assets/public/js/[name].min.js',
-        path: path.resolve(__dirname),
+        filename: 'dist/public/js/[name].min.js',
+        path: path.resolve(__dirname, 'build'),
+        clean: false,
     },
     module: {rules: commonRules},
-    plugins: getPlugins('assets/public/css/style.min.css'),
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'dist/public/css/[name].min.css',
+        }),
+    ],
 }
 
+// Admin / Backend Assets Configuration
 const backendConfig = {
-    devtool: process.env.NODE_ENV ? false : 'source-map',
+    mode: isProduction ? 'production' : 'development',
+    devtool: devtoolSetting,
     entry: {
         script: './src/admin/js/script.js',
         main: './src/admin/main.js',
-        validation: './src/admin/validation.js',
+        editor: './src/admin/editor.js'
     },
     output: {
-        filename: 'assets/admin/js/[name].min.js',
-        path: path.resolve(__dirname),
+        filename: 'dist/admin/js/[name].min.js',
+        path: path.resolve(__dirname, 'build'),
+        clean: false,
     },
     module: {rules: commonRules},
-    plugins: getPlugins('assets/admin/css/style.min.css'),
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'dist/admin/css/[name].min.css',
+        }),
+    ],
 }
 
 const modules = [wpConfig, publicConfig, backendConfig]
-if (process.env.NODE_ENV === 'production') {
+
+// Zoom WebSDK Production Configuration
+if (isProduction) {
     const webSDKConfig = {
+        mode: 'production',
         cache: false,
+        devtool: false,
         entry: {
             'zoom-meeting': {
                 import: './src/public/vendor/zoom-meeting.js',
@@ -82,8 +100,8 @@ if (process.env.NODE_ENV === 'production') {
             websdk: '@zoom/meetingsdk',
         },
         output: {
-            filename: 'assets/vendor/zoom/websdk/[name].bundle.js',
-            path: path.resolve(__dirname),
+            filename: 'dist/vendor/zoom/websdk/[name].bundle.js',
+            path: path.resolve(__dirname, 'build'),
         },
         module: {
             rules: [
@@ -106,20 +124,13 @@ if (process.env.NODE_ENV === 'production') {
             extensions: ['.js', '.jsx'],
         },
         externals: {
-            'babel-polyfill': 'babel-polyfill',
             react: 'React',
             'react-dom': 'ReactDOM',
             redux: 'Redux',
             'redux-thunk': 'ReduxThunk',
-            lodash: {
-                commonjs: 'lodash',
-                amd: 'lodash',
-                root: '_',
-                var: '_',
-            },
+            lodash: '_',
         },
         target: 'web',
-        mode: 'production',
     }
 
     modules.push(webSDKConfig)

@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi;
 
-use Codemanas\VczApi\Admin\AdminController;
+use Codemanas\VczApi\Admin\Controller\AdminController;
 use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
@@ -283,7 +283,7 @@ final class Bootstrap {
 
         if ( $screen->id === "zoom-meetings" ) {
             //Validation
-            wp_register_script( 'vczapi-admin-validation', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/validation.min.js', [], $this->plugin_version, true );
+            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, true );
 
             //Choices
             wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );

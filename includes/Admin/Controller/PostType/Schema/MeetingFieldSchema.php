@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\PostType\Schema;
+namespace Codemanas\VczApi\Admin\Controller\PostType\Schema;
 
 use Codemanas\VczApi\Helpers\Date;
 use WP_Post;
@@ -57,6 +57,11 @@ class MeetingFieldSchema {
 				'title'  => __( 'General Settings', $text_domain ),
 				'fields' => [
 					'user_id'    => $host_field_config,
+					'agenda' => [
+						'label'             => __( 'Agenda', $text_domain ),
+						'type'              => 'textarea',
+						'description'       => __( 'Agenda for the Event.', $text_domain ),
+					],
 					'type'       => [
 						'label'       => __( 'Type *', $text_domain ),
 						'required'    => true,

@@ -1,8 +1,8 @@
-@import 'vendors/choices';
-@import "components/accordion";
+@use 'vendors/choices';
+@use "components/accordion";
 
 //Admin
-@import "metabox/admin-meeting-fields";
+@use "metabox/admin-meeting-fields";
 
 .zvc-row {
   display: flex;

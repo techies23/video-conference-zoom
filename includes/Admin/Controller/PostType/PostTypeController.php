@@ -1,6 +1,9 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\PostType;
+namespace Codemanas\VczApi\Admin\Controller\PostType;
+
+use Codemanas\VczApi\Admin\Controller\PostType\Zoom\CustomPostType;
+use Codemanas\VczApi\Admin\Controller\PostType\Zoom\Metabox;
 
 class PostTypeController {
 

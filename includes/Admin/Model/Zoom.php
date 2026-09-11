@@ -2,11 +2,11 @@
 
 namespace Codemanas\VczApi\Admin\Model;
 
-use Codemanas\VczApi\Admin\AdminController;
 use Codemanas\VczApi\Admin\Interface\IZoomEvent;
 use Codemanas\VczApi\Admin\Service\MeetingService;
 use Codemanas\VczApi\Admin\Service\WebinarService;
 use Codemanas\VczApi\Data\Metastore;
+use Codemanas\VczApi\Helpers\Config;
 use Codemanas\VczApi\Helpers\MeetingType;
 
 class Zoom {
@@ -24,7 +24,7 @@ class Zoom {
 	}
 
 	public function __construct() {
-		$this->postType = AdminController::$postType;
+		$this->postType = Config::get( 'post_type' );
 
 		add_action( "save_post_{$this->postType}", [ $this, 'save' ], 10, 2 );
 		add_action( 'admin_notices', [ $this, 'displayValidationNotices' ] );
@@ -62,11 +62,11 @@ class Zoom {
 
 		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data );
 
-		$zoom_id  = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
+		$zoom_id = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
 
 		//Change meeting type data to WEbinar or Meeting for API call.
 		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
-		$response = $handler->syncWithApi( $post, $meeting_data, $zoom_id );
+		$response             = $handler->syncWithApi( $post, $meeting_data, $zoom_id );
 		$this->persistZoomResponse( $post_id, $response );
 
 		do_action( 'vczapi_admin_after_zoom_meeting_is_created', $post_id, $post );
@@ -132,7 +132,7 @@ class Zoom {
 		return [
 			'topic'                        => esc_html( $post->post_title ),
 			'user_id'                      => $user_id,
-			'agenda'                       => wp_strip_all_tags( get_the_excerpt( $post ), true ),
+			'agenda'                       => sanitize_text_field( filter_input( INPUT_POST, 'agenda' ) ),
 			'type'                         => $meeting_type,
 			'start_time'                   => sanitize_text_field( $start_time ),
 			'timezone'                     => sanitize_text_field( filter_input( INPUT_POST, 'timezone' ) ),
@@ -169,7 +169,7 @@ class Zoom {
 			return;
 		}
 
-		Metastore::setPostMeta( $post_id, 'meeting_details', $response );
+		Metastore::setPostMeta( $post_id, 'meeting_zoom_details', $response );
 
 		if ( empty( $response->code ) ) {
 			Metastore::setPostMeta( $post_id, 'meeting_join_url', $response['join_url'] ?? '' );

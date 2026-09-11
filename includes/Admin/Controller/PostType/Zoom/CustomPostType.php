@@ -1,15 +1,25 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\PostType;
+namespace Codemanas\VczApi\Admin\Controller\PostType\Zoom;
 
-use Codemanas\VczApi\Admin\AdminController;
+use Codemanas\VczApi\Helpers\Config;
 
 class CustomPostType {
 
 	private string $postType;
 
+	private static ?CustomPostType $instance = null;
+
+	public static function get_instance(): self {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 	public function __construct() {
-		$this->postType = AdminController::$postType;
+		$this->postType = Config::get( 'post_type' );
 
 		add_action( 'admin_menu', [ $this, 'hidePostType' ] );
 		add_action( 'init', [ $this, 'registerPostType' ] );
@@ -67,17 +77,16 @@ class CustomPostType {
 	/**
 	 * Hide Post Type page
 	 */
-	public function hidePostType(): void
-	{
-		if (isset($_GET['post_type']) && $_GET['post_type'] !== $this->postType) {
+	public function hidePostType(): void {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] !== $this->postType ) {
 			return;
 		}
 
-		if (! vczapi_is_zoom_activated()) {
+		if ( ! vczapi_is_zoom_activated() ) {
 			global $submenu;
 			//			unset( $submenu['edit.php?post_type=zoom-meetings'][5] );
-			unset($submenu['edit.php?post_type=zoom-meetings'][10]);
-			unset($submenu['edit.php?post_type=zoom-meetings'][15]);
+			unset( $submenu['edit.php?post_type=zoom-meetings'][10] );
+			unset( $submenu['edit.php?post_type=zoom-meetings'][15] );
 		}
 	}
 
