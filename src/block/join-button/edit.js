@@ -9,14 +9,12 @@ import {
 import {
   PanelBody,
   SelectControl,
-  TextControl,
   ToggleControl,
-  ComboboxControl,
   BoxControl,
   TabPanel
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import MeetingSourceSelector from '../components/MeetingSourceSelector'
+
 
 const ACTION_DEFAULTS = {
   app: __( 'Join via Zoom App', 'video-conferencing-with-zoom-api' ),
@@ -41,32 +39,6 @@ export default function Edit( { attributes, setAttributes } ) {
     padding,
     margin
   } = attributes;
-
-  const [ searchValue, setSearchValue ] = useState( '' );
-
-  const { meetingPosts, isLoading } = useSelect(
-    ( select ) => {
-      if ( sourceType !== 'post_type' ) {
-        return { meetingPosts: [], isLoading: false };
-      }
-      const { getEntityRecords, isResolving } = select( 'core' );
-      const query = {
-        per_page: 20,
-        search: searchValue || undefined,
-        status: 'publish',
-      };
-      return {
-        meetingPosts: getEntityRecords( 'postType', 'zoom-meetings', query ) || [],
-        isLoading: isResolving( 'getEntityRecords', [ 'postType', 'zoom-meetings', query ] ),
-      };
-    },
-    [ sourceType, searchValue ]
-  );
-
-  const comboboxOptions = meetingPosts.map( ( post ) => ( {
-    value: post.id,
-    label: post.title?.rendered ? post.title.rendered : `(ID: ${ post.id })`,
-  } ) );
 
   const handleActionTypeChange = ( newAction ) => {
     const isDefaultText = ! buttonText || Object.values( ACTION_DEFAULTS ).includes( buttonText );
@@ -118,38 +90,15 @@ export default function Edit( { attributes, setAttributes } ) {
           />
         </PanelBody>
 
-        <PanelBody title={ __( 'Meeting Source', 'video-conferencing-with-zoom-api' ) }>
-          <SelectControl
-            label={ __( 'Source Type', 'video-conferencing-with-zoom-api' ) }
-            value={ sourceType }
-            options={ [
-              { label: __( 'Current Post / Page', 'video-conferencing-with-zoom-api' ), value: 'current' },
-              { label: __( 'Select Zoom Meeting Post', 'video-conferencing-with-zoom-api' ), value: 'post_type' },
-              { label: __( 'Custom Meeting ID', 'video-conferencing-with-zoom-api' ), value: 'custom' },
-            ] }
-            onChange={ ( val ) => setAttributes( { sourceType: val } ) }
-          />
-
-          { sourceType === 'custom' && (
-            <TextControl
-              label={ __( 'Zoom Meeting ID', 'video-conferencing-with-zoom-api' ) }
-              value={ meetingId }
-              onChange={ ( val ) => setAttributes( { meetingId: val } ) }
-              placeholder="1234567890"
-            />
-          ) }
-
-          { sourceType === 'post_type' && (
-            <ComboboxControl
-              label={ __( 'Search Zoom Meeting', 'video-conferencing-with-zoom-api' ) }
-              value={ selectedMeetingPostId || null }
-              onChange={ ( val ) => setAttributes( { selectedMeetingPostId: Number( val ) } ) }
-              options={ comboboxOptions }
-              onFilterValueChange={ setSearchValue }
-              isLoading={ isLoading }
-            />
-          ) }
-        </PanelBody>
+        { /* Reusable Meeting Source Selector */ }
+        <MeetingSourceSelector
+          sourceType={ sourceType }
+          meetingId={ meetingId }
+          selectedMeetingPostId={ selectedMeetingPostId }
+          onChangeSourceType={ ( val ) => setAttributes( { sourceType: val } ) }
+          onChangeMeetingId={ ( val ) => setAttributes( { meetingId: val } ) }
+          onChangeSelectedMeetingPostId={ ( val ) => setAttributes( { selectedMeetingPostId: val } ) }
+        />
       </InspectorControls>
 
       <InspectorControls group="styles">
