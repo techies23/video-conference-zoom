@@ -14,7 +14,6 @@ export default function Edit( { attributes, setAttributes, context } ) {
     className: 'vczapi-meeting-detail-item vczapi-meeting-detail-hosted-by',
   } );
 
-  // Force custom host behavior if the container source is custom
   const isCustomSource = sourceType === 'custom';
   const effectiveHostType = isCustomSource ? 'custom' : hostType;
 
@@ -31,6 +30,15 @@ export default function Edit( { attributes, setAttributes, context } ) {
             checked={ showLabel }
             onChange={ ( val ) => setAttributes( { showLabel: val } ) }
           />
+
+          { showLabel && (
+            <TextControl
+              label={ __( 'Label Text', 'video-conferencing-with-zoom-api' ) }
+              value={ label }
+              onChange={ ( val ) => setAttributes( { label: val } ) }
+              placeholder={ __( 'Hosted By:', 'video-conferencing-with-zoom-api' ) }
+            />
+          ) }
 
           { ! isCustomSource && (
             <SelectControl
@@ -63,7 +71,7 @@ export default function Edit( { attributes, setAttributes, context } ) {
             className="vczapi-meeting-detail-item__label"
             value={ label }
             onChange={ ( val ) => setAttributes( { label: val } ) }
-            placeholder={ __( 'Label...', 'video-conferencing-with-zoom-api' ) }
+            placeholder={ __( 'Hosted By:', 'video-conferencing-with-zoom-api' ) }
             allowedFormats={ [] }
           />
         ) }
