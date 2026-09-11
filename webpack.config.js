@@ -60,6 +60,7 @@ const backendConfig = {
     entry: {
         script: './src/admin/js/script.js',
         main: './src/admin/main.js',
+        validation: './src/admin/validation.js',
     },
     output: {
         filename: 'assets/admin/js/[name].min.js',

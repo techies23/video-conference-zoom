@@ -12,6 +12,7 @@ class MeetingType {
 		'recurring_fixed_time'    => 8,
 		'screen_share_only'       => 10
 	];
+
 	//https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/webinarCreate
 	private static array $WEBINAR_TYPES = [
 		'default'                 => 5,
@@ -19,11 +20,19 @@ class MeetingType {
 		'recurring_fixed_time'    => 9
 	];
 
+	public static function getCptMeetingType( string $type ): int {
+		$types = [
+			1 => self::$MEETING_TYPES['scheduled'], //Meeting
+			2 => self::$WEBINAR_TYPES['default'] //Webinar
+		];
+
+		return $types[ $type ];
+	}
 
 	/**
 	 * Determines if the given meeting type is a Personal Meeting ID (PMI).
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *                                    - 'pmi': Personal Meeting ID
 	 *                                    - 'scheduled': Scheduled Meeting
 	 *                                    - 'webinar': Webinar Meeting
@@ -38,7 +47,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a webinar.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a webinar, false otherwise.
 	 */
@@ -50,7 +59,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a meeting.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a meeting, false otherwise.
 	 */
@@ -61,7 +70,7 @@ class MeetingType {
 	/**
 	 * Checks if the given meeting type is a recurring meeting.
 	 *
-	 * @param  string|int  $meeting_type  The meeting type to be checked.
+	 * @param string|int $meeting_type The meeting type to be checked.
 	 *
 	 * @return bool Returns true if the meeting type is a recurring meeting, false otherwise.
 	 */
@@ -74,7 +83,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a recurring webinar.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a recurring webinar,
 	 *              false otherwise.
@@ -88,7 +97,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a recurring meeting or webinar.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a recurring meeting or webinar,
 	 *              false otherwise.
@@ -101,7 +110,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a recurring fixed time meeting.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a recurring fixed time meeting,
 	 *              false otherwise.
@@ -114,7 +123,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a recurring no fixed time meeting.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a recurring no fixed time meeting,
 	 *              false otherwise.
@@ -126,7 +135,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a recurring fixed time webinar.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a recurring fixed time webinar,
 	 *              false otherwise.
@@ -138,7 +147,7 @@ class MeetingType {
 	/**
 	 * Determines if the given meeting type is a recurring no fixed time webinar.
 	 *
-	 * @param  string|int  $meeting_type  The type of the meeting. Expected values include:
+	 * @param string|int $meeting_type The type of the meeting. Expected values include:
 	 *
 	 * @return bool Returns true if the meeting type is a recurring no fixed time webinar,
 	 **/
@@ -153,7 +162,7 @@ class MeetingType {
 	}
 
 	/**
-	 * @param  string|int  $meeting_type
+	 * @param string|int $meeting_type
 	 *
 	 * @return bool
 	 */
@@ -162,7 +171,7 @@ class MeetingType {
 	}
 
 	/**
-	 * @param  string|int  $meeting_type
+	 * @param string|int $meeting_type
 	 *
 	 * @return bool
 	 */
@@ -171,7 +180,7 @@ class MeetingType {
 	}
 
 	/**
-	 * @param  string|int  $meeting_type
+	 * @param string|int $meeting_type
 	 *
 	 * @return bool
 	 */
@@ -184,7 +193,7 @@ class MeetingType {
 	/**
 	 * Converts a value to an integer.
 	 *
-	 * @param  mixed  $value  The value to be converted to an integer.
+	 * @param mixed $value The value to be converted to an integer.
 	 *
 	 * @return int The integer representation of the given value.
 	 */

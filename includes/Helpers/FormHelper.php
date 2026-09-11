@@ -31,7 +31,7 @@ class FormHelper {
 		// Base allowed HTML tags for wp_kses
 		$allowed_html = array(
 			'abbr'   => array( 'class' => array(), 'title' => array() ),
-			'label'  => array( 'for' => array(), 'class' => array(), 'id' => array() ),
+			'label'  => array( 'for' => array(), 'class' => array(), 'id' => array(), 'data-required' => array() ),
 			'a'      => array( 'href' => array(), 'title' => array(), 'class' => array(), 'id' => array() ),
 			'p'      => array( 'class' => array(), 'id' => array() ),
 			'br'     => array(),
@@ -41,9 +41,11 @@ class FormHelper {
 			'i'      => array()
 		);
 
+		// Handle required state and inject data-required attribute into custom_attributes
 		if ( $args['required'] ) {
-			$args['class'][] = 'validate-required';
-			$required        = ' <abbr class="required" title="' . esc_attr__( 'required', 'video-conferencing-with-zoom-api' ) . '">*</abbr>';
+			$args['input_class'][]                            = 'vczapi-required-validation';
+			$args['custom_attributes']['data-required'] = 'true';
+			$required                                   = ' <abbr class="required" title="' . esc_attr__( 'required', 'video-conferencing-with-zoom-api' ) . '">*</abbr>';
 		} else {
 			$required = '';
 		}
@@ -86,12 +88,13 @@ class FormHelper {
 			case 'textarea' :
 
 				$allowed_html['textarea'] = array(
-					'class'       => array(),
-					'id'          => array(),
-					'name'        => array(),
-					'placeholder' => array(),
-					'cols'        => array(),
-					'rows'        => array()
+					'class'         => array(),
+					'id'            => array(),
+					'name'          => array(),
+					'placeholder'   => array(),
+					'cols'          => array(),
+					'rows'          => array(),
+					'data-required' => array()
 				);
 
 				if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) ) {
@@ -105,26 +108,20 @@ class FormHelper {
 				break;
 
 			case 'placeholder' :
-
-				$allowed_html['input'] = array(
-					'class' => array(),
-					'id'    => array(),
-					'value' => '',
-				);
-
-				$field = ' <p class="vczapi-placeholder ' . esc_attr( $input_class ) . '" id="' . esc_attr( $args['id'] ) . '"  >' . esc_html( $args['options'][$value] ) . '</p>';
-
+				$value = ! empty( $args['options'] ) && is_array( $args['options'] ) ? $args['options'][ $value ] : $args[ $value ];
+				$field = ' <p class="vczapi-placeholder ' . esc_attr( $input_class ) . '" id="' . esc_attr( $args['id'] ) . '"  >' . esc_html( $value ) . '</p>';
 				break;
 
 			case 'checkbox' :
 
 				$allowed_html['input'] = array(
-					'class'   => array(),
-					'type'    => array(),
-					'id'      => array(),
-					'name'    => array(),
-					'value'   => array(),
-					'checked' => array()
+					'class'         => array(),
+					'type'          => array(),
+					'id'            => array(),
+					'name'          => array(),
+					'value'         => array(),
+					'checked'       => array(),
+					'data-required' => array()
 				);
 
 				$field = '<label class="checkbox" ' . $custom_attr_str . '> 
@@ -140,12 +137,13 @@ class FormHelper {
 			case 'number' :
 
 				$allowed_html['input'] = array(
-					'class'       => array(),
-					'type'        => array(),
-					'id'          => array(),
-					'name'        => array(),
-					'placeholder' => array(),
-					'value'       => array()
+					'class'         => array(),
+					'type'          => array(),
+					'id'            => array(),
+					'name'          => array(),
+					'placeholder'   => array(),
+					'value'         => array(),
+					'data-required' => array()
 				);
 
 				if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) ) {
@@ -165,7 +163,8 @@ class FormHelper {
 					'id'               => array(),
 					'name'             => array(),
 					'value'            => array(),
-					'data-placeholder' => array()
+					'data-placeholder' => array(),
+					'data-required'    => array()
 				);
 
 				$allowed_html['option'] = array(
@@ -203,12 +202,13 @@ class FormHelper {
 			case 'radio' :
 
 				$allowed_html['input'] = array(
-					'class'   => array(),
-					'type'    => array(),
-					'id'      => array(),
-					'name'    => array(),
-					'value'   => array(),
-					'checked' => array()
+					'class'         => array(),
+					'type'          => array(),
+					'id'            => array(),
+					'name'          => array(),
+					'value'         => array(),
+					'checked'       => array(),
+					'data-required' => array()
 				);
 				$allowed_html['div']   = array(
 					'class' => array(),
@@ -221,7 +221,7 @@ class FormHelper {
 
 					foreach ( $args['options'] as $option_key => $option_text ) {
 						$radio_id = esc_attr( $args['id'] . '_' . $option_key );
-						$field    .= '<div style="margin:10px 0;"><input type="radio" class="input-radio ' . esc_attr( $input_class ) . '" value="' . esc_attr( $option_key ) . '" name="' . esc_attr( $key ) . '" id="' . $radio_id . '" ' . checked( $value, $option_key, false ) . '/>';
+						$field    .= '<div style="margin:10px 0;"><input type="radio" class="input-radio ' . esc_attr( $input_class ) . '" value="' . esc_attr( $option_key ) . '" name="' . esc_attr( $key ) . '" id="' . $radio_id . '" ' . checked( $value, $option_key, false ) . ' ' . $custom_attr_str . '/>';
 						$field    .= '<label for="' . $radio_id . '" class="radio">' . esc_html( $option_text ) . '</label></div>';
 					}
 				}

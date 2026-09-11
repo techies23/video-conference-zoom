@@ -13,7 +13,7 @@ $field_sections  = ! empty( $args['field_sections'] ) && is_array( $args['field_
 $post            = ! empty( $args['post'] ) ? $args['post'] : null;
 
 $is_published = ! empty( $post ) && $post->post_status === 'publish';
-$has_zoom_id  = ! empty( $meeting_details ) && is_object( $meeting_details ) && ! empty( $meeting_details->id );
+$has_zoom_id  = ! empty( $meeting_details ) && ! empty( $meeting_details['id'] );
 $text_domain  = 'video-conferencing-with-zoom-api';
 ?>
 
@@ -76,8 +76,12 @@ $text_domain  = 'video-conferencing-with-zoom-api';
                                         );
 
                                         // If host is disabled for existing meeting, submit host ID via hidden field
-                                        if ( $field_key === 'userId' && ! empty( $field_config['custom_attributes']['disabled'] ) ) {
-                                            echo '<input type="hidden" name="userId" value="' . esc_attr( $value ) . '">';
+                                        if ( $field_key === 'user_id' && ! empty( $field_config['custom_attributes']['disabled'] ) ) {
+                                            echo '<input type="hidden" name="user_id" value="' . esc_attr( $value ) . '">';
+                                        }
+
+                                        if ( $field_key === 'type' && ! empty( $field_config['placeholder'] ) ) {
+                                            echo '<input type="hidden" name="type" value="' . esc_attr( $value ) . '">';
                                         }
                                     }
                                     ?>

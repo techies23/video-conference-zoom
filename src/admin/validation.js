@@ -1,0 +1,128 @@
+(function (wp) {
+    const {registerPlugin} = wp.plugins;
+    const {useSelect, useDispatch} = wp.data;
+    const {useEffect, useRef} = wp.element;
+
+    const VCZAPIMetaboxValidator = () => {
+        const {isSaving, isPublishing, isPostLocking} = useSelect((select) => {
+            const editor = select('core/editor');
+            return {
+                isSaving: editor.isSavingPost(),
+                isPublishing: editor.isPublishingPost(),
+                isPostLocking: editor.isPostLocking ? editor.isPostLocking() : false,
+            };
+        }, []);
+
+        const {lockPostSaving, unlockPostSaving} = useDispatch('core/editor');
+        const {createNotice, removeNotice} = useDispatch('core/notices');
+        const isLockedRef = useRef(false);
+
+        /**
+         * Validates fields dynamically
+         */
+        const validateMetaboxFields = () => {
+            const errors = [];
+            const requiredInputs = document.querySelectorAll('.vczapi-required-validation, [data-required="true"]');
+
+            requiredInputs.forEach((input) => {
+                let isValid = false;
+                const inputType = input.getAttribute('type');
+
+                if (inputType === 'checkbox' || inputType === 'radio') {
+                    const name = input.getAttribute('name');
+                    isValid = name ? document.querySelector(`[name="${name}"]:checked`) !== null : input.checked;
+                } else {
+                    const val = input.value ? input.value.trim() : '';
+                    isValid = val !== '';
+                }
+
+                const fieldId = input.getAttribute('id') || input.getAttribute('name');
+                const fieldLabel = input.getAttribute('data-label') || getLabelText(input) || fieldId;
+
+                if (!isValid) {
+                    errors.push({id: fieldId, label: fieldLabel});
+                    input.classList.add('vczapi-field-error');
+                } else {
+                    input.classList.remove('vczapi-field-error');
+                    removeNotice(`vczapi-err-${fieldId}`);
+                }
+            });
+
+            return errors;
+        };
+
+        const getLabelText = (input) => {
+            const id = input.getAttribute('id');
+            if (id) {
+                const label = document.querySelector(`label[for="${id}"]`);
+                if (label) {
+                    return label.textContent.replace('*', '').trim();
+                }
+            }
+            return '';
+        };
+
+        const ensureMetaboxIsVisible = () => {
+            const metaboxContainer = document.getElementById('vczapi-admin-meeting-fields-meta');
+            if (metaboxContainer) {
+                if (metaboxContainer.classList.contains('closed')) {
+                    metaboxContainer.classList.remove('closed');
+                }
+                metaboxContainer.scrollIntoView({behavior: 'smooth', block: 'start'});
+            }
+        };
+
+        // Run validation when saving/publishing starts
+        useEffect(() => {
+            if ((isSaving || isPublishing) && !isLockedRef.current) {
+                const invalidFields = validateMetaboxFields();
+
+                if (invalidFields.length > 0) {
+                    isLockedRef.current = true;
+
+                    // Lock post saving
+                    lockPostSaving('vczapi_metabox_validation');
+
+                    // Create error notices
+                    invalidFields.forEach((field) => {
+                        createNotice(
+                            'error',
+                            `Validation Error: ${field.label} is required.`,
+                            {id: `vczapi-err-${field.id}`, isDismissible: true}
+                        );
+                    });
+
+                    ensureMetaboxIsVisible();
+                }
+            }
+        }, [isSaving, isPublishing]);
+
+        // Real-time unlock listener setup
+        useEffect(() => {
+            const handleInput = (e) => {
+                if (e.target && e.target.matches('.vczapi-required-validation, [data-required="true"]')) {
+                    const invalidFields = validateMetaboxFields();
+                    if (invalidFields.length === 0 && isLockedRef.current) {
+                        unlockPostSaving('vczapi_metabox_validation');
+                        isLockedRef.current = false;
+                    }
+                }
+            };
+
+            document.addEventListener('input', handleInput);
+            document.addEventListener('change', handleInput);
+
+            return () => {
+                document.removeEventListener('input', handleInput);
+                document.removeEventListener('change', handleInput);
+            };
+        }, []);
+
+        return null;
+    };
+
+    // Register as a Gutenberg Plugin Component
+    registerPlugin('vczapi-metabox-validator', {
+        render: VCZAPIMetaboxValidator,
+    });
+})(window.wp);

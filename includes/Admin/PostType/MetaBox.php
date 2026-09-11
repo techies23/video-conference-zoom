@@ -76,6 +76,7 @@ class Metabox {
 	public function renderMetaBox( \WP_Post $post ): void {
 		wp_nonce_field( 'vczapi_save_meeting_meta', '_vczapi_nonce' );
 
+		wp_enqueue_script( 'vczapi-admin-validation' );
 		wp_enqueue_script( 'vczapi-flatpickr' );
 		wp_enqueue_script( 'vczapi-choices' );
 

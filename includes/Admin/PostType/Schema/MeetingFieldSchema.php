@@ -47,8 +47,8 @@ class MeetingFieldSchema {
 		];
 
 		if ( $has_zoom_id ) {
-//			$host_field_config['type']                          = 'placeholder';
-//			$host_field_config['custom_attributes']['disabled'] = 'disabled';
+			$host_field_config['type']                          = 'placeholder';
+			$host_field_config['custom_attributes']['disabled'] = 'disabled';
 			$host_field_config['description']                   = __( 'Host cannot be changed once the event has been created.', $text_domain );
 		}
 
@@ -59,6 +59,7 @@ class MeetingFieldSchema {
 					'user_id'    => $host_field_config,
 					'type'       => [
 						'label'       => __( 'Type *', $text_domain ),
+						'required'    => true,
 						'type'        => 'select',
 						'description' => __( 'Type of Event.', $text_domain ),
 						'options'     => [
@@ -212,7 +213,7 @@ class MeetingFieldSchema {
 		];
 
 		if ( $has_zoom_id ) {
-//			$schema['general']['fields']['type']['type'] = 'placeholder';
+			$schema['general']['fields']['type']['type'] = 'placeholder';
 		}
 
 		return apply_filters( 'vczapi_admin_metabox_fields_schema', $schema, $post, $meeting_details );

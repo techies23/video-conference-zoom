@@ -7,6 +7,7 @@ use Codemanas\VczApi\Admin\Interface\IZoomEvent;
 use Codemanas\VczApi\Admin\Service\MeetingService;
 use Codemanas\VczApi\Admin\Service\WebinarService;
 use Codemanas\VczApi\Data\Metastore;
+use Codemanas\VczApi\Helpers\MeetingType;
 
 class Zoom {
 
@@ -61,7 +62,10 @@ class Zoom {
 
 		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data );
 
-		$zoom_id  = (string) Metastore::getPostMeta($post_id, 'meeting_id');
+		$zoom_id  = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
+
+		//Change meeting type data to WEbinar or Meeting for API call.
+		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
 		$response = $handler->syncWithApi( $post, $meeting_data, $zoom_id );
 		$this->persistZoomResponse( $post_id, $response );
 

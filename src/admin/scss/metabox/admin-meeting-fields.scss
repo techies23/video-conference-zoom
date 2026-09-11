@@ -1,13 +1,19 @@
 #vczapi-admin-meeting-fields-meta {
-  .postbox-header {
-    display: none;
-  }
+  //.postbox-header {
+  //  display: none;
+  //}
 
   .inside {
     margin: 0;
     padding: 0;
 
     .vczapi-metabox-wrapper {
+      .choices:has(select.vczapi-field-error[data-required="true"]) {
+        border: 1px solid #d63638;
+        background-color: #fcf0f1;
+        border-radius: 4px;
+      }
+
       .vczapi-shortcode-notice {
         padding: 20px 12px;
         text-align: center;

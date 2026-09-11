@@ -73,12 +73,14 @@
   margin-top: 0;
 }
 
-#vczapi-admin-meeting-fields-meta .postbox-header {
-  display: none;
-}
 #vczapi-admin-meeting-fields-meta .inside {
   margin: 0;
   padding: 0;
+}
+#vczapi-admin-meeting-fields-meta .inside .vczapi-metabox-wrapper .choices:has(select.vczapi-field-error[data-required=true]) {
+  border: 1px solid #d63638;
+  background-color: #fcf0f1;
+  border-radius: 4px;
 }
 #vczapi-admin-meeting-fields-meta .inside .vczapi-metabox-wrapper .vczapi-shortcode-notice {
   padding: 20px 12px;
