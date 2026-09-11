@@ -6,7 +6,7 @@
   "title": "Meeting Details Topic",
   "category": "vczapi-blocks",
   "description": "Show the Zoom Meeting Topic",
-  "parent": [
+  "ancestor": [
     "vczapi/meeting-details"
   ],
   "usesContext": [
