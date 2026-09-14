@@ -1,0 +1,2 @@
+!function(){function e(){var e=document.querySelectorAll('.vczapi-meeting-detail-timezone[data-vczapi-tz-mode="user"]');if(e.length){var t="";try{t=Intl.DateTimeFormat().resolvedOptions().timeZone}catch(e){t=""}t&&e.forEach(function(e){var n=e.querySelector(".vczapi-meeting-detail-item__value");n&&(n.textContent=t)})}}window.vczapiInitTimezones=e,"loading"===document.readyState?document.addEventListener("DOMContentLoaded",e):e()}();
+//# sourceMappingURL=view.js.map
