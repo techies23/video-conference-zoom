@@ -176,10 +176,58 @@ class BlockTemplates {
 	 */
 	private function single_meeting_template(): WP_Block_Template {
 		// Hardcoded block markup layout.
+		/*
 		$template_content = '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 <!-- wp:group {"layout":{"inherit":true}} -->
 <div class="wp-block-group"><!-- wp:vczapi/single-zoom-meeting /--></div>
 <!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->';
+		*/
+
+		$template_content = '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60);margin-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
+<div class="wp-block-columns alignwide"><!-- wp:column {"width":"66.66%","style":{"spacing":{"blockGap":"var:preset|spacing|40"}}} -->
+<div class="wp-block-column" style="flex-basis:66.66%"><!-- wp:post-title {"level":1} /-->
+
+<!-- wp:post-featured-image {"aspectRatio":"3/2"} /-->
+
+<!-- wp:post-content {"layout":{"type":"constrained"}} /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"width":"33.33%","style":{"spacing":{"blockGap":"var:preset|spacing|50"}}} -->
+<div class="wp-block-column" style="flex-basis:33.33%"><!-- wp:vczapi/meeting-countdown /-->
+
+<!-- wp:vczapi/meeting-details -->
+<!-- wp:group {"style":{"elements":{"link":{"color":{"text":"var:preset|color|black"}}},"spacing":{"padding":{"right":"var:preset|spacing|40","left":"var:preset|spacing|40","top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"backgroundColor":"white","textColor":"black","layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group has-black-color has-white-background-color has-text-color has-background has-link-color" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:heading {"level":3,"style":{"elements":{"link":{"color":{"text":"var:preset|color|black"}}}},"textColor":"black"} -->
+<h3 class="wp-block-heading has-black-color has-text-color has-link-color">Details</h3>
+<!-- /wp:heading -->
+
+<!-- wp:vczapi/meeting-details-topic /-->
+
+<!-- wp:vczapi/meeting-details-hosted-by /-->
+
+<!-- wp:vczapi/meeting-details-start-time /-->
+
+<!-- wp:vczapi/meeting-details-duration /-->
+
+<!-- wp:vczapi/meeting-details-timezone /--></div>
+<!-- /wp:group -->
+<!-- /wp:vczapi/meeting-details -->
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group"><!-- wp:vczapi/join-button /-->
+
+<!-- wp:vczapi/join-button {"actionType":"browser","buttonText":"Join via Web Browser"} /-->
+
+<!-- wp:vczapi/join-button {"actionType":"start","buttonText":"Start Meeting"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></main>
+<!-- /wp:group -->
+
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->';
 
 		$modified_with_theme_template_content = '';

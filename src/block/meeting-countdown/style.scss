@@ -79,19 +79,19 @@
 
   /* Preset 2: Cards */
   &--cards {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: clamp(1rem, 1rem + 2vw, 2.5rem);    font-weight: 700;
 
     .vczapi-countdown-timer {
-      gap: 10px;
+      gap: clamp(0px, 1.5vw, 10px);
+      flex-wrap: nowrap;
     }
 
     .vczapi-countdown-unit {
       background-color: var(--vczapi-unit-bg, #262626);
       color: inherit; /* Always inherits color from block wrapper */
-      padding: 16px 18px;
+      padding: 15px 12px;
       border-radius: 8px;
-      min-width: 82px;
+      flex: 1 1 25%;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
   }
