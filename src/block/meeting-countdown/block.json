@@ -20,7 +20,8 @@
       "lineHeight": true,
       "fontWeight": true,
       "letterSpacing": true,
-      "textTransform": true
+      "textTransform": true,
+      "__experimentalFontFamily": true
     },
     "spacing": {
       "margin": true,

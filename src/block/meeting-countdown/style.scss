@@ -1,6 +1,11 @@
 .vczapi-meeting-countdown {
   display: block;
 
+  /* Default text color to white ONLY IF Gutenberg has not applied a custom text color or class */
+  &:not([style*="color:"]):not([class*="has-text-color"]) {
+    color: #ffffff;
+  }
+
   .vczapi-countdown-timer {
     display: inline-flex;
     align-items: flex-start;
@@ -15,7 +20,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: inherit;
+    color: inherit; /* Inherits from wrapper default or Gutenberg selected text color */
   }
 
   .vczapi-countdown-value {
@@ -26,7 +31,6 @@
     color: inherit;
   }
 
-  /* Controlled via JS / Inspector controls variable */
   .vczapi-countdown-label {
     font-size: var(--vczapi-label-size, 0.75rem);
     font-weight: 500;
@@ -84,7 +88,7 @@
 
     .vczapi-countdown-unit {
       background-color: var(--vczapi-unit-bg, #262626);
-      color: #ffffff;
+      color: inherit; /* Always inherits color from block wrapper */
       padding: 16px 18px;
       border-radius: 8px;
       min-width: 82px;

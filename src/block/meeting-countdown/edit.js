@@ -15,10 +15,11 @@ export default function Edit( { attributes, setAttributes } ) {
     endedText,
     showDays,
     showSeconds,
-    keepStartedAllDay
+    keepStartedAllDay,
+    style // Destructure Gutenberg block inline style attribute
   } = attributes;
 
-  const styleObj = {};
+  const styleObj = { ...( style || {} ) };
   if ( unitBackgroundColor ) {
     styleObj['--vczapi-unit-bg'] = unitBackgroundColor;
   }
@@ -39,7 +40,6 @@ export default function Edit( { attributes, setAttributes } ) {
 
   return (
     <>
-      { /* Main Settings Tab */ }
       <InspectorControls>
         <MeetingSourceSelector
           sourceType={ sourceType }
@@ -94,7 +94,6 @@ export default function Edit( { attributes, setAttributes } ) {
         </PanelBody>
       </InspectorControls>
 
-      { /* Styles Tab */ }
       <InspectorControls group="styles">
         <PanelBody title={ __( 'Countdown Styles', 'video-conferencing-with-zoom-api' ) }>
           <div>

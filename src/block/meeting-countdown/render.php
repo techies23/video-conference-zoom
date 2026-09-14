@@ -36,17 +36,9 @@ if ( empty( $start_time_raw ) ) {
 
 $utc_start_time = gmdate( 'Y-m-d\TH:i:s\Z', strtotime( $start_time_raw ) );
 
-$inline_styles = [];
-if ( ! empty( $unit_bg ) ) {
-	$inline_styles[] = '--vczapi-unit-bg: ' . esc_attr( $unit_bg );
-}
-if ( ! empty( $label_size ) ) {
-	$inline_styles[] = '--vczapi-label-size: ' . esc_attr( $label_size );
-}
-
+// Fetch native Gutenberg wrapper attributes first
 $wrapper_attributes = get_block_wrapper_attributes( [
 	'class'                       => 'vczapi-meeting-countdown vczapi-meeting-countdown--' . sanitize_html_class( $layout_preset ),
-	'style'                       => implode( '; ', $inline_styles ),
 	'data-vczapi-utc-start'       => $utc_start_time,
 	'data-vczapi-duration'        => $duration,
 	'data-vczapi-started-text'    => esc_attr( $started_text ),
@@ -55,6 +47,25 @@ $wrapper_attributes = get_block_wrapper_attributes( [
 	'data-vczapi-show-seconds'    => $show_seconds ? '1' : '0',
 	'data-vczapi-all-day-started' => $all_day_started ? '1' : '0',
 ] );
+
+// Append custom CSS variables to the generated style attribute
+$custom_vars = '';
+if ( ! empty( $unit_bg ) ) {
+	$custom_vars .= '--vczapi-unit-bg: ' . esc_attr( $unit_bg ) . ';';
+}
+if ( ! empty( $label_size ) ) {
+	$custom_vars .= '--vczapi-label-size: ' . esc_attr( $label_size ) . ';';
+}
+
+if ( ! empty( $custom_vars ) ) {
+	if ( str_contains( $wrapper_attributes, 'style="' ) ) {
+		// Inject variables into existing style attribute
+		$wrapper_attributes = str_replace( 'style="', 'style="' . $custom_vars, $wrapper_attributes );
+	} else {
+		// Create style attribute if none exists
+		$wrapper_attributes .= ' style="' . $custom_vars . '"';
+	}
+}
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
