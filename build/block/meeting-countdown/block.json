@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "vczapi/meeting-countdown",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "Zoom - Meeting Countdown",
   "category": "vczapi-blocks",
   "icon": "clock",
@@ -43,6 +43,14 @@
     "layoutPreset": {
       "type": "string",
       "default": "cards"
+    },
+    "labelFontSize": {
+      "type": "string",
+      "default": "0.75rem"
+    },
+    "unitBackgroundColor": {
+      "type": "string",
+      "default": ""
     },
     "startedText": {
       "type": "string",

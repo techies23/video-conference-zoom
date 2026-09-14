@@ -1,8 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
-
-// Import the shared MeetingSourceSelector component
+import { PanelBody, SelectControl, TextControl, ToggleControl, ColorPalette, FontSizePicker } from '@wordpress/components';
 import MeetingSourceSelector from '../components/MeetingSourceSelector';
 
 export default function Edit( { attributes, setAttributes } ) {
@@ -11,6 +9,8 @@ export default function Edit( { attributes, setAttributes } ) {
     customMeetingId,
     selectedMeetingPostId,
     layoutPreset,
+    unitBackgroundColor,
+    labelFontSize,
     startedText,
     endedText,
     showDays,
@@ -18,12 +18,28 @@ export default function Edit( { attributes, setAttributes } ) {
     keepStartedAllDay
   } = attributes;
 
+  const styleObj = {};
+  if ( unitBackgroundColor ) {
+    styleObj['--vczapi-unit-bg'] = unitBackgroundColor;
+  }
+  if ( labelFontSize ) {
+    styleObj['--vczapi-label-size'] = labelFontSize;
+  }
+
   const blockProps = useBlockProps( {
     className: `vczapi-meeting-countdown vczapi-meeting-countdown--${ layoutPreset }`,
+    style: styleObj,
   } );
+
+  const fontSizePresets = [
+    { name: __( 'Small', 'video-conferencing-with-zoom-api' ), slug: 'small', size: '0.65rem' },
+    { name: __( 'Medium', 'video-conferencing-with-zoom-api' ), slug: 'medium', size: '0.75rem' },
+    { name: __( 'Large', 'video-conferencing-with-zoom-api' ), slug: 'large', size: '0.875rem' },
+  ];
 
   return (
     <>
+      { /* Main Settings Tab */ }
       <InspectorControls>
         <MeetingSourceSelector
           sourceType={ sourceType }
@@ -40,12 +56,12 @@ export default function Edit( { attributes, setAttributes } ) {
             value={ layoutPreset }
             options={ [
               { label: __( 'Cards (Dark Tiles)', 'video-conferencing-with-zoom-api' ), value: 'cards' },
-              { label: __( 'Minimal (Bordered Tiles)', 'video-conferencing-with-zoom-api' ), value: 'minimal' },
-              { label: __( 'Minimal Flat (Dividers)', 'video-conferencing-with-zoom-api' ), value: 'minimal_flat' },
+              { label: __( 'Minimal (Colon Separated)', 'video-conferencing-with-zoom-api' ), value: 'minimal' },
               { label: __( 'Pills (Rounded Badges)', 'video-conferencing-with-zoom-api' ), value: 'pills' },
             ] }
             onChange={ ( val ) => setAttributes( { layoutPreset: val } ) }
           />
+
           <ToggleControl
             label={ __( 'Show Days Unit', 'video-conferencing-with-zoom-api' ) }
             checked={ showDays }
@@ -78,27 +94,63 @@ export default function Edit( { attributes, setAttributes } ) {
         </PanelBody>
       </InspectorControls>
 
+      { /* Styles Tab */ }
+      <InspectorControls group="styles">
+        <PanelBody title={ __( 'Countdown Styles', 'video-conferencing-with-zoom-api' ) }>
+          <div>
+            <p className="components-base-control__label">
+              { __( 'Label Font Size', 'video-conferencing-with-zoom-api' ) }
+            </p>
+            <FontSizePicker
+              fontSizes={ fontSizePresets }
+              value={ labelFontSize }
+              onChange={ ( newSize ) => setAttributes( { labelFontSize: newSize || '0.75rem' } ) }
+              fallbackFontSize="0.75rem"
+            />
+          </div>
+
+          { ( layoutPreset === 'cards' || layoutPreset === 'pills' ) && (
+            <div style={ { marginTop: '16px' } }>
+              <p className="components-base-control__label">
+                { __( 'Tile / Pill Background Color', 'video-conferencing-with-zoom-api' ) }
+              </p>
+              <ColorPalette
+                value={ unitBackgroundColor }
+                onChange={ ( color ) => setAttributes( { unitBackgroundColor: color } ) }
+              />
+            </div>
+          ) }
+        </PanelBody>
+      </InspectorControls>
+
       <div { ...blockProps }>
         <div className="vczapi-countdown-timer">
           { showDays && (
-            <div className="vczapi-countdown-unit vczapi-countdown-unit--days">
-              <span className="vczapi-countdown-value">02</span>
-              <span className="vczapi-countdown-label">{ __( 'DAYS', 'video-conferencing-with-zoom-api' ) }</span>
-            </div>
+            <>
+              <div className="vczapi-countdown-unit vczapi-countdown-unit--days">
+                <span className="vczapi-countdown-value">01</span>
+                <span className="vczapi-countdown-label">{ __( 'DAYS', 'video-conferencing-with-zoom-api' ) }</span>
+              </div>
+              { layoutPreset === 'minimal' && <span className="vczapi-countdown-separator">:</span> }
+            </>
           ) }
           <div className="vczapi-countdown-unit vczapi-countdown-unit--hours">
-            <span className="vczapi-countdown-value">05</span>
+            <span className="vczapi-countdown-value">09</span>
             <span className="vczapi-countdown-label">{ __( 'HOURS', 'video-conferencing-with-zoom-api' ) }</span>
           </div>
+          { layoutPreset === 'minimal' && <span className="vczapi-countdown-separator">:</span> }
           <div className="vczapi-countdown-unit vczapi-countdown-unit--minutes">
-            <span className="vczapi-countdown-value">42</span>
+            <span className="vczapi-countdown-value">34</span>
             <span className="vczapi-countdown-label">{ __( 'MINUTES', 'video-conferencing-with-zoom-api' ) }</span>
           </div>
           { showSeconds && (
-            <div className="vczapi-countdown-unit vczapi-countdown-unit--seconds">
-              <span className="vczapi-countdown-value">18</span>
-              <span className="vczapi-countdown-label">{ __( 'SECONDS', 'video-conferencing-with-zoom-api' ) }</span>
-            </div>
+            <>
+              { layoutPreset === 'minimal' && <span className="vczapi-countdown-separator">:</span> }
+              <div className="vczapi-countdown-unit vczapi-countdown-unit--seconds">
+                <span className="vczapi-countdown-value">12</span>
+                <span className="vczapi-countdown-label">{ __( 'SECONDS', 'video-conferencing-with-zoom-api' ) }</span>
+              </div>
+            </>
           ) }
         </div>
       </div>

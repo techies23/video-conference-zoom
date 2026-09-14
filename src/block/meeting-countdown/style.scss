@@ -1,12 +1,12 @@
 .vczapi-meeting-countdown {
   display: block;
-  font-family: inherit;
 
   .vczapi-countdown-timer {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     flex-wrap: wrap;
+    color: inherit;
   }
 
   .vczapi-countdown-unit {
@@ -15,126 +15,115 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    transition: all 0.2s ease-in-out;
+    color: inherit;
   }
 
   .vczapi-countdown-value {
-    font-size: 2.25rem;
-    font-weight: 700;
+    font-size: inherit;
+    font-weight: inherit;
     line-height: 1;
     font-variant-numeric: tabular-nums;
+    color: inherit;
   }
 
+  /* Controlled via JS / Inspector controls variable */
   .vczapi-countdown-label {
-    font-size: 0.7rem;
-    font-weight: 600;
+    font-size: var(--vczapi-label-size, 0.75rem);
+    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-top: 6px;
+    margin-top: 8px;
     line-height: 1;
+    opacity: 0.75;
+    color: inherit;
+  }
+
+  .vczapi-countdown-separator {
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 0.9;
+    align-self: flex-start;
+    color: inherit;
+    opacity: 0.8;
   }
 
   .vczapi-countdown-status-message {
     font-size: 1.25rem;
     font-weight: 600;
-    padding: 8px 0;
   }
 
-  /* Preset 1: Cards */
+  /* Preset 1: Minimal */
+  &--minimal {
+    font-size: 3.5rem;
+    font-weight: 400;
+
+    .vczapi-countdown-timer {
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .vczapi-countdown-unit {
+      min-width: unset;
+      padding: 0;
+    }
+
+    .vczapi-countdown-separator {
+      margin: 0 4px;
+      font-weight: 300;
+    }
+  }
+
+  /* Preset 2: Cards */
   &--cards {
+    font-size: 2.5rem;
+    font-weight: 700;
+
     .vczapi-countdown-timer {
       gap: 10px;
     }
+
     .vczapi-countdown-unit {
-      background-color: #262626;
+      background-color: var(--vczapi-unit-bg, #262626);
       color: #ffffff;
       padding: 16px 18px;
       border-radius: 8px;
       min-width: 82px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    }
-    .vczapi-countdown-value {
-      font-size: 2.5rem;
-    }
-    .vczapi-countdown-label {
-      color: #a3a3a3;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
   }
 
-  /* Preset 2: Minimal (Bordered) */
-  &--minimal {
-    .vczapi-countdown-timer {
-      gap: 16px;
-    }
-    .vczapi-countdown-unit {
-      background-color: #ffffff;
-      color: #0f172a;
-      border: 1.5px solid #e2e8f0;
-      padding: 14px 16px;
-      border-radius: 10px;
-      min-width: 76px;
-    }
-    .vczapi-countdown-label {
-      color: #64748b;
-    }
-  }
-
-  /* Preset 3: Minimal Flat (Clean Dividers) */
-  &--minimal_flat {
-    .vczapi-countdown-timer {
-      gap: 0;
-    }
-    .vczapi-countdown-unit {
-      padding: 0 20px;
-      position: relative;
-
-      &:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 15%;
-        height: 70%;
-        width: 1px;
-        background-color: #cbd5e1;
-      }
-    }
-    .vczapi-countdown-value {
-      font-size: 2.75rem;
-      font-weight: 800;
-    }
-    .vczapi-countdown-label {
-      color: #64748b;
-      margin-top: 8px;
-    }
-  }
-
-  /* Preset 4: Pills */
+  /* Preset 3: Pills */
   &--pills {
+    font-size: 2.25rem;
+    font-weight: 700;
+
     .vczapi-countdown-timer {
       gap: 12px;
     }
+
     .vczapi-countdown-unit {
-      background-color: #f1f5f9;
-      color: #1e293b;
-      padding: 16px 22px;
+      background-color: var(--vczapi-unit-bg, #f1f5f9);
+      color: inherit;
+      padding: 16px 24px;
       border-radius: 9999px;
       min-width: 90px;
-    }
-    .vczapi-countdown-label {
-      color: #475569;
     }
   }
 
   @media (max-width: 480px) {
-    .vczapi-countdown-timer {
-      gap: 8px;
+    &--minimal {
+      font-size: 2.25rem;
+      .vczapi-countdown-timer {
+        gap: 8px;
+      }
     }
-    .vczapi-countdown-unit {
-      padding: 10px 12px;
-      min-width: 60px;
-    }
-    .vczapi-countdown-value {
+
+    &--cards, &--pills {
       font-size: 1.75rem;
+      .vczapi-countdown-unit {
+        padding: 10px 14px;
+        min-width: 60px;
+      }
     }
   }
 }
