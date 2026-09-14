@@ -30,7 +30,7 @@
   "attributes": {
     "label": {
       "type": "string",
-      "default": "Topic:"
+      "default": "Topic : "
     },
     "showLabel": {
       "type": "boolean",

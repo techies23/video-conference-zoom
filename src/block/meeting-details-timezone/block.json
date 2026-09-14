@@ -31,7 +31,7 @@
   "attributes": {
     "label": {
       "type": "string",
-      "default": "Timezone:"
+      "default": "Timezone : "
     },
     "showLabel": {
       "type": "boolean",

@@ -1,31 +1,40 @@
-import { __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n';
 import {
   useBlockProps,
   useInnerBlocksProps,
   InspectorControls,
-} from '@wordpress/block-editor'
+} from '@wordpress/block-editor';
 
-// Import our shared meeting selector component
-import MeetingSourceSelector from '../components/MeetingSourceSelector'
+// Import shared meeting selector component
+import MeetingSourceSelector from '../components/MeetingSourceSelector';
 
-// Default template starter (optional baseline structure)
+// Nested template starter with child blocks pre-populated inside core/group
 const DEFAULT_TEMPLATE = [
   ['core/heading', { level: 3, content: __('Details', 'video-conferencing-with-zoom-api') }],
-  ['core/group', { layout: { type: 'flex', orientation: 'vertical' } }],
-]
+  [
+    'core/group',
+    { layout: { type: 'flex', orientation: 'vertical' } },
+    [
+      ['vczapi/meeting-details-topic', {}],
+      ['vczapi/meeting-details-hosted-by', {}],
+      ['vczapi/meeting-details-start-time', {}],
+      ['vczapi/meeting-details-duration', {}],
+      ['vczapi/meeting-details-timezone', {}],
+    ],
+  ],
+];
 
-export default function Edit ({ attributes, setAttributes }) {
-  const { sourceType, customMeetingId, selectedMeetingPostId } = attributes
+export default function Edit({ attributes, setAttributes }) {
+  const { sourceType, customMeetingId, selectedMeetingPostId } = attributes;
 
   const blockProps = useBlockProps({
     className: 'vczapi-meeting-details-container',
-  })
+  });
 
-  // Notice NO allowedBlocks restriction here
   const innerBlocksProps = useInnerBlocksProps(blockProps, {
     template: DEFAULT_TEMPLATE,
     templateInsertUpdatesSelection: false,
-  })
+  });
 
   return (
     <>
@@ -42,5 +51,5 @@ export default function Edit ({ attributes, setAttributes }) {
 
       <div {...innerBlocksProps} />
     </>
-  )
+  );
 }

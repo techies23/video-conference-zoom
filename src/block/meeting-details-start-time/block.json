@@ -22,7 +22,7 @@
   "attributes": {
     "label": {
       "type": "string",
-      "default": "Start Time:"
+      "default": "Start Time : "
     },
     "showLabel": {
       "type": "boolean",

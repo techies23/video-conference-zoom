@@ -33,7 +33,7 @@
   "attributes": {
     "label": {
       "type": "string",
-      "default": "Duration:"
+      "default": "Duration : "
     },
     "showLabel": {
       "type": "boolean",

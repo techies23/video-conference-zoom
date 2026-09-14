@@ -32,7 +32,7 @@
   "attributes": {
     "label": {
       "type": "string",
-      "default": "Hosted By:"
+      "default": "Hosted By : "
     },
     "showLabel": {
       "type": "boolean",
