@@ -5,6 +5,20 @@ import {
   RichText
 } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, SelectControl, TextControl } from '@wordpress/components';
+import { dateI18n } from '@wordpress/date';
+
+/**
+ * Maps JS Intl style presets to WordPress dateI18n PHP-style format strings
+ * strictly for editor preview accuracy.
+ */
+const EDITOR_FORMAT_MAP = {
+  full: 'l, F j, Y g:i A',
+  long: 'F j, Y g:i A',
+  medium: 'M j, Y, g:i A',
+  short: 'n/j/Y, g:i A',
+  date_only: 'l, F j, Y',
+  time_only: 'g:i A',
+};
 
 export default function Edit( { attributes, setAttributes } ) {
   const { label, showLabel, timezoneDisplay, dateStyle } = attributes;
@@ -12,6 +26,13 @@ export default function Edit( { attributes, setAttributes } ) {
   const blockProps = useBlockProps( {
     className: 'vczapi-meeting-detail-item vczapi-meeting-detail-start-time',
   } );
+
+  // Mock date for live canvas preview (or use current date)
+  const previewDate = new Date();
+  const formatString = EDITOR_FORMAT_MAP[ dateStyle ] || EDITOR_FORMAT_MAP.full;
+
+  // Formats date dynamically in editor based on WP site settings / selected format
+  const formattedPreview = dateI18n( formatString, previewDate );
 
   return (
     <>
@@ -67,7 +88,7 @@ export default function Edit( { attributes, setAttributes } ) {
           />
         ) }
         <span className="vczapi-meeting-detail-item__value">
-          Friday, September 11, 2026 1:48 PM
+          { formattedPreview }
         </span>
       </div>
     </>
