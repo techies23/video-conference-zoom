@@ -30,11 +30,11 @@ export default function Edit( { attributes, setAttributes, context } ) {
 
       <div { ...blockProps }>
         { showLabel && (
-          <span class="vczapi-meeting-detail-item__label">
+          <span className="vczapi-meeting-detail-item__label">
 						{ label }
 					</span>
         ) }
-        <span class="vczapi-meeting-detail-item__value">
+        <span className="vczapi-meeting-detail-item__value">
 					{ __( 'Meeting Topic Placeholder', 'video-conferencing-with-zoom-api' ) }
 				</span>
       </div>

@@ -2,11 +2,14 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
 
+// Import the shared MeetingSourceSelector component
+import MeetingSourceSelector from '../components/MeetingSourceSelector';
+
 export default function Edit( { attributes, setAttributes } ) {
   const {
     sourceType,
-    selectedMeetingPostId,
     customMeetingId,
+    selectedMeetingPostId,
     layoutPreset,
     startedText,
     endedText,
@@ -22,26 +25,14 @@ export default function Edit( { attributes, setAttributes } ) {
   return (
     <>
       <InspectorControls>
-        <PanelBody title={ __( 'Meeting Source', 'video-conferencing-with-zoom-api' ) }>
-          <SelectControl
-            label={ __( 'Source', 'video-conferencing-with-zoom-api' ) }
-            value={ sourceType }
-            options={ [
-              { label: __( 'Current Post / Page', 'video-conferencing-with-zoom-api' ), value: 'current' },
-              { label: __( 'Select Meeting Post', 'video-conferencing-with-zoom-api' ), value: 'post_type' },
-              { label: __( 'Custom Meeting ID', 'video-conferencing-with-zoom-api' ), value: 'custom' },
-            ] }
-            onChange={ ( val ) => setAttributes( { sourceType: val } ) }
-          />
-          { sourceType === 'custom' && (
-            <TextControl
-              label={ __( 'Zoom Meeting ID', 'video-conferencing-with-zoom-api' ) }
-              value={ customMeetingId }
-              onChange={ ( val ) => setAttributes( { customMeetingId: val } ) }
-              placeholder="e.g. 123456789"
-            />
-          ) }
-        </PanelBody>
+        <MeetingSourceSelector
+          sourceType={ sourceType }
+          meetingId={ customMeetingId }
+          selectedMeetingPostId={ selectedMeetingPostId }
+          onChangeSourceType={ ( val ) => setAttributes( { sourceType: val } ) }
+          onChangeMeetingId={ ( val ) => setAttributes( { customMeetingId: val } ) }
+          onChangeSelectedMeetingPostId={ ( val ) => setAttributes( { selectedMeetingPostId: val } ) }
+        />
 
         <PanelBody title={ __( 'Countdown Settings', 'video-conferencing-with-zoom-api' ) }>
           <SelectControl
@@ -90,21 +81,21 @@ export default function Edit( { attributes, setAttributes } ) {
       <div { ...blockProps }>
         <div className="vczapi-countdown-timer">
           { showDays && (
-            <div className="vczapi-countdown-unit">
+            <div className="vczapi-countdown-unit vczapi-countdown-unit--days">
               <span className="vczapi-countdown-value">02</span>
               <span className="vczapi-countdown-label">{ __( 'DAYS', 'video-conferencing-with-zoom-api' ) }</span>
             </div>
           ) }
-          <div className="vczapi-countdown-unit">
+          <div className="vczapi-countdown-unit vczapi-countdown-unit--hours">
             <span className="vczapi-countdown-value">05</span>
             <span className="vczapi-countdown-label">{ __( 'HOURS', 'video-conferencing-with-zoom-api' ) }</span>
           </div>
-          <div className="vczapi-countdown-unit">
+          <div className="vczapi-countdown-unit vczapi-countdown-unit--minutes">
             <span className="vczapi-countdown-value">42</span>
             <span className="vczapi-countdown-label">{ __( 'MINUTES', 'video-conferencing-with-zoom-api' ) }</span>
           </div>
           { showSeconds && (
-            <div className="vczapi-countdown-unit">
+            <div className="vczapi-countdown-unit vczapi-countdown-unit--seconds">
               <span className="vczapi-countdown-value">18</span>
               <span className="vczapi-countdown-label">{ __( 'SECONDS', 'video-conferencing-with-zoom-api' ) }</span>
             </div>
