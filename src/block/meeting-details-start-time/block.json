@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vczapi/meeting-details-start-time",
+  "version": "1.1.0",
+  "title": "Zoom - Meeting Details - Start Time",
+  "category": "vczapi-blocks",
+  "icon": "calendar-alt",
+  "description": "Displays the start time of a Zoom meeting in local or meeting timezone.",
+  "ancestor": [ "vczapi/meeting-details" ],
+  "usesContext": [
+    "vczapi/sourceType",
+    "vczapi/customMeetingId",
+    "vczapi/selectedMeetingPostId"
+  ],
+  "supports": {
+    "html": false,
+    "color": { "text": true, "background": true },
+    "typography": { "fontSize": true, "lineHeight": true },
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "Start Time:"
+    },
+    "showLabel": {
+      "type": "boolean",
+      "default": true
+    },
+    "timezoneDisplay": {
+      "type": "string",
+      "enum": [ "user", "meeting" ],
+      "default": "user"
+    },
+    "dateStyle": {
+      "type": "string",
+      "default": "full"
+    }
+  },
+  "textdomain": "video-conferencing-with-zoom-api",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}
