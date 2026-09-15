@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $context_attributes = [
-	'sourceType'            => $block->context['vczapi/sourceType'] ?? 'current',
-	'selectedMeetingPostId' => $block->context['vczapi/selectedMeetingPostId'] ?? 0,
-	'customMeetingId'       => $block->context['vczapi/customMeetingId'] ?? '',
+	'sourceType'            => sanitize_text_field( $block->context['vczapi/sourceType'] ?? 'current' ),
+	'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ?? 0 ),
+	'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ?? '' ),
 ];
 
 $meeting_details  = DetailsHelper::get_meeting_details( $context_attributes );
