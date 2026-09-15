@@ -15,13 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Extract block context inherited from ancestor container
 $context_attributes = [
-	'sourceType'            => $block->context['vczapi/sourceType'] ?? 'current',
-	'selectedMeetingPostId' => $block->context['vczapi/selectedMeetingPostId'] ?? 0,
-	'customMeetingId'       => $block->context['vczapi/customMeetingId'] ?? '',
+	'sourceType'            => sanitize_text_field( $block->context['vczapi/sourceType'] ) ?? 'current',
+	'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ) ?? 0,
+	'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ) ?? '',
 ];
 
 $meeting_details = DetailsHelper::get_meeting_details( $context_attributes );
-$duration        = $meeting_details['duration'] ?? 0;
+$duration        = absint( $meeting_details['duration'] ) ?? 0;
 $show_label      = $attributes['showLabel'] ?? true;
 $label           = $attributes['label'] ?? __( 'Duration:', 'video-conferencing-with-zoom-api' );
 
