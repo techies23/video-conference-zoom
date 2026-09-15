@@ -18,7 +18,7 @@ class Datastore {
 	/**
 	 * @var string
 	 */
-	private static $post_type = 'zoom-meetings';
+	private static string $post_type = 'zoom-meetings';
 
 	/**
 	 * @var int

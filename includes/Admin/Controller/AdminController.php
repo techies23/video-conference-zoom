@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
+use Codemanas\VczApi\Admin\Controller\Setting\SettingController;
 use Codemanas\VczApi\Admin\Model\Zoom;
 use Codemanas\VczApi\Admin\Controller\PostType\PostTypeController;
 
@@ -29,5 +30,6 @@ class AdminController {
 	public function init(): void {
 		PostTypeController::get_instance();
 		Zoom::get_instance();
+		SettingController::get_instance();
 	}
 }

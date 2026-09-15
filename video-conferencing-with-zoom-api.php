@@ -30,6 +30,7 @@ defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_WE
 defined( 'VCZAPI_PLUGIN_DIR_URL' ) || define( 'VCZAPI_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_DIR_PATH' ) || define( 'VCZAPI_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'assets/admin' );
+defined( 'VCZAPI_PLUGIN_BUILD_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_BUILD_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'build/dist/admin' );
 defined( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI' ) || define( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI', VCZAPI_PLUGIN_DIR_URL . 'assets/vendors' );
 defined( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH' ) || define( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH', VCZAPI_PLUGIN_DIR_PATH . 'includes/Admin/Views' );
 

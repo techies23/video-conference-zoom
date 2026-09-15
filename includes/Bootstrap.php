@@ -225,7 +225,7 @@ final class Bootstrap {
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-webinars.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-recordings.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
+//        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
@@ -281,6 +281,11 @@ final class Bootstrap {
         wp_register_script( 'video-conferencing-with-zoom-api-select2-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/select2/js/select2.min.js', array( 'jquery' ), $this->plugin_version, true );
         wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', array( 'jquery' ), $this->plugin_version, true );
 
+        if ( $screen->id === "zoom-meetings" || $screen->id === "zoom-meetings_page_zoom-video-conferencing-settings" ) {
+            //Admin CSS
+            wp_enqueue_style( 'video-conferencing-with-zoom-api-admin', VCZAPI_PLUGIN_BUILD_ASSET_URI . '/css/main.min.css', false, $this->plugin_version );
+        }
+
         if ( $screen->id === "zoom-meetings" ) {
             //Validation
             wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, true );
@@ -293,7 +298,6 @@ final class Bootstrap {
             wp_enqueue_style( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr' . $this->minified . '.css', false, $this->plugin_version );
             wp_register_script( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr' . $this->minified . '.js', [], $this->plugin_version, true );
 
-            wp_enqueue_style( 'video-conferencing-with-zoom-api-admin', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/css/style.min.css', false, $this->plugin_version );
             wp_enqueue_script( 'video-conferencing-with-zoom-api-js', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/js/main.min.js', [], $this->plugin_version );
 
             wp_localize_script( 'video-conferencing-with-zoom-api-js', 'zvc_ajax', array(
