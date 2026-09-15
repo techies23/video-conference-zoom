@@ -11,8 +11,8 @@ import {
   SelectControl,
   ToggleControl,
   BoxControl,
-  TabPanel
-} from '@wordpress/components';
+  TabPanel, Notice,
+} from '@wordpress/components'
 import MeetingSourceSelector from '../components/MeetingSourceSelector'
 
 
@@ -88,6 +88,11 @@ export default function Edit( { attributes, setAttributes } ) {
             checked={ openInNewTab }
             onChange={ ( val ) => setAttributes( { openInNewTab: val } ) }
           />
+          { actionType === 'start' && (
+            <Notice status="info" isDismissible={ false }>
+              { __( 'The Start Meeting button will only be visible on the front end to the meeting host or site administrators.', 'video-conferencing-with-zoom-api' ) }
+            </Notice>
+          ) }
         </PanelBody>
 
         { /* Reusable Meeting Source Selector */ }

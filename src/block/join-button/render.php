@@ -105,6 +105,11 @@ $inline_style = ! empty( $styles ) ? implode( '; ', $styles ) : '';
 $wrapper_attributes = get_block_wrapper_attributes( [
 	'class' => 'vczapi-button-block',
 ] );
+
+if ( 'start' === $action_type && '#' === $url ) {
+	// Return empty string so non-hosts see no "Start Meeting" button at all
+	return '';
+}
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
