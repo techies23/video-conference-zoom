@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$meeting_details  = DetailsHelper::get_meeting_details( $context_attributes );
+$meeting_details  = DetailsHelper::get_meeting_details( $attributes );
 $meeting_tz       = $meeting_details['timezone'] ?? 'UTC';
 $show_label       = $attributes['showLabel'] ?? true;
 $label            = $attributes['label'] ?? __( 'Timezone:', 'video-conferencing-with-zoom-api' );
