@@ -35,10 +35,53 @@ class Blocks {
 		if ( function_exists( 'register_block_type' ) ) {
 			add_action( 'init', [ $this, 'register_scripts' ] );
 			add_action( 'init', [ $this, 'register_blocks' ] );
+			add_action( 'init', [ $this, 'register_new_blocks' ] ); // <--- Add this hook
 		}
 
 		add_action( 'wp_ajax_vczapi_get_zoom_hosts', [ $this, 'get_hosts' ] );
 		add_action( 'wp_ajax_vczapi_get_live_meetings', [ $this, 'get_live_meetings' ] );
+	}
+
+	/**
+	 * Dynamically register new blocks generated in build/block directory.
+	 *
+	 * @since 3.8.0
+	 */
+	public function register_new_blocks(): void {
+		$blocks_dir = ZVC_PLUGIN_DIR_PATH . 'build/block';
+
+		if ( ! is_dir( $blocks_dir ) ) {
+			return;
+		}
+
+		// List folder names of legacy blocks to ignore so they aren't registered twice
+		$legacy_blocks = [
+			'list-meetings',
+			'list-host-meetings',
+			'show-meeting-post',
+			'show-live-meeting',
+			'join-via-browser',
+			'recordings',
+			'single-zoom-meeting',
+		];
+
+		$block_folders = glob( $blocks_dir . '/*', GLOB_ONLYDIR );
+
+		foreach ( $block_folders as $folder ) {
+			$folder_name = basename( $folder );
+
+			// Skip legacy blocks handled by register_blocks()
+			if ( in_array( $folder_name, $legacy_blocks, true ) ) {
+				continue;
+			}
+
+			$block_json_path = $folder . '/block.json';
+
+			// Register block if block.json exists
+			if ( file_exists( $block_json_path ) ) {
+				$registered = register_block_type( $folder );
+			}
+		}
 	}
 
 	/**

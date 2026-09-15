@@ -25,7 +25,7 @@ const commonRules = [
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset/resource',
         generator: {
-            filename: 'dist/images/[name][ext]',
+            filename: 'images/[name][ext]',
         },
     },
 ]
@@ -50,14 +50,14 @@ const publicConfig = {
         booking: './src/public/js/booking.js',
     },
     output: {
-        filename: 'dist/public/js/[name].min.js',
-        path: path.resolve(__dirname, 'build'),
+        filename: 'public/js/[name].min.js',
+        path: path.resolve(__dirname, 'dist'),
         clean: false,
     },
     module: {rules: commonRules},
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'dist/public/css/[name].min.css',
+            filename: 'public/css/[name].min.css',
         }),
     ],
 }
@@ -72,14 +72,14 @@ const backendConfig = {
         editor: './src/admin/editor.js'
     },
     output: {
-        filename: 'dist/admin/js/[name].min.js',
-        path: path.resolve(__dirname, 'build'),
+        filename: 'admin/js/[name].min.js',
+        path: path.resolve(__dirname, 'dist'),
         clean: false,
     },
     module: {rules: commonRules},
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'dist/admin/css/[name].min.css',
+            filename: 'admin/css/[name].min.css',
         }),
     ],
 }
@@ -100,8 +100,8 @@ if (isProduction) {
             websdk: '@zoom/meetingsdk',
         },
         output: {
-            filename: 'dist/vendor/zoom/websdk/[name].bundle.js',
-            path: path.resolve(__dirname, 'build'),
+            filename: 'vendor/zoom/websdk/[name].bundle.js',
+            path: path.resolve(__dirname, 'dist'),
         },
         module: {
             rules: [

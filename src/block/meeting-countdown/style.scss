@@ -1,0 +1,133 @@
+.vczapi-meeting-countdown {
+  display: block;
+
+  /* Default text color to white ONLY IF Gutenberg has not applied a custom text color or class */
+  &:not([style*="color:"]):not([class*="has-text-color"]) {
+    color: #ffffff;
+  }
+
+  .vczapi-countdown-timer {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: inherit;
+  }
+
+  .vczapi-countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: inherit; /* Inherits from wrapper default or Gutenberg selected text color */
+  }
+
+  .vczapi-countdown-value {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+  }
+
+  .vczapi-countdown-label {
+    font-size: var(--vczapi-label-size, 0.75rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    line-height: 1;
+    opacity: 0.75;
+    color: inherit;
+  }
+
+  .vczapi-countdown-separator {
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 0.9;
+    align-self: flex-start;
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  .vczapi-countdown-status-message {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  /* Preset 1: Minimal */
+  &--minimal {
+    font-size: 3.5rem;
+    font-weight: 400;
+
+    .vczapi-countdown-timer {
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .vczapi-countdown-unit {
+      min-width: unset;
+      padding: 0;
+    }
+
+    .vczapi-countdown-separator {
+      margin: 0 4px;
+      font-weight: 300;
+    }
+  }
+
+  /* Preset 2: Cards */
+  &--cards {
+    font-size: clamp(1rem, 1rem + 2vw, 2.5rem);    font-weight: 700;
+
+    .vczapi-countdown-timer {
+      gap: clamp(0px, 1.5vw, 10px);
+      flex-wrap: nowrap;
+    }
+
+    .vczapi-countdown-unit {
+      background-color: var(--vczapi-unit-bg, #262626);
+      color: inherit; /* Always inherits color from block wrapper */
+      padding: 15px 12px;
+      border-radius: 8px;
+      flex: 1 1 25%;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* Preset 3: Pills */
+  &--pills {
+    font-size: 2.25rem;
+    font-weight: 700;
+
+    .vczapi-countdown-timer {
+      gap: 12px;
+    }
+
+    .vczapi-countdown-unit {
+      background-color: var(--vczapi-unit-bg, #f1f5f9);
+      color: inherit;
+      padding: 16px 24px;
+      border-radius: 9999px;
+      min-width: 90px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &--minimal {
+      font-size: 2.25rem;
+      .vczapi-countdown-timer {
+        gap: 8px;
+      }
+    }
+
+    &--cards, &--pills {
+      font-size: 1.75rem;
+      .vczapi-countdown-unit {
+        padding: 10px 14px;
+        min-width: 60px;
+      }
+    }
+  }
+}
