@@ -83,6 +83,11 @@ class DetailsHelper {
 			}
 		}
 
+		//don't show on private posts
+		if ( ! is_post_publicly_viewable( $post_id ) && ! current_user_can( 'read_post', $post_id ) ) {
+			return false;
+		}
+
 		$api_data = get_post_meta( $post_id, '_meeting_zoom_details', true );
 		if ( ! empty( $api_data ) && is_array( $api_data ) ) {
 			return self::format_meeting_data( $api_data, $post_id );
