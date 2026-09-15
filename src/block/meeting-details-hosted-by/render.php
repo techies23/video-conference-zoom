@@ -27,12 +27,13 @@ if ( 'custom' === $source_type || 'custom' === $host_type ) {
 } else {
 	$context_attributes = [
 		'sourceType'            => sanitize_text_field( $source_type ),
-		'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ) ?? 0,
-		'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ) ?? '',
+		'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ?? 0 ),
+		'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ?? '' ),
 	];
 
+
 	$meeting_details = DetailsHelper::get_meeting_details( $context_attributes );
-	$post_id         = $meeting_details['post_id'] ?? get_the_ID();
+	$post_id         = absint( $meeting_details['post_id'] ?? get_the_ID() );
 
 	if ( $post_id ) {
 		$author_id  = get_post_field( 'post_author', $post_id );

@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Extract block context inherited from ancestor container
 $context_attributes = [
-	'sourceType'            => sanitize_text_field( $block->context['vczapi/sourceType'] ) ?? 'current',
-	'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ) ?? 0,
-	'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ) ?? '',
+	'sourceType'            => sanitize_text_field( $block->context['vczapi/sourceType'] ?? 'current' ),
+	'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ?? 0 ),
+	'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ?? '' ),
 ];
 
 $meeting_details = DetailsHelper::get_meeting_details( $context_attributes );
