@@ -26,9 +26,9 @@ if ( 'custom' === $source_type || 'custom' === $host_type ) {
 	$host_name = $custom_host_name;
 } else {
 	$context_attributes = [
-		'sourceType'            => $source_type,
-		'selectedMeetingPostId' => $block->context['vczapi/selectedMeetingPostId'] ?? 0,
-		'customMeetingId'       => $block->context['vczapi/customMeetingId'] ?? '',
+		'sourceType'            => sanitize_text_field( $source_type ),
+		'selectedMeetingPostId' => absint( $block->context['vczapi/selectedMeetingPostId'] ) ?? 0,
+		'customMeetingId'       => sanitize_text_field( $block->context['vczapi/customMeetingId'] ) ?? '',
 	];
 
 	$meeting_details = DetailsHelper::get_meeting_details( $context_attributes );
