@@ -1,8 +1,12 @@
+//Components
 @use 'vendors/choices';
 @use "components/accordion";
 
 //Admin
 @use "metabox/admin-meeting-fields";
+
+//Settings
+@use "settings/connect";
 
 .zvc-row {
   display: flex;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Controller\PostType\Schema;
+namespace Codemanas\VczApi\Admin\Schema;
 
 use Codemanas\VczApi\Helpers\Date;
 use WP_Post;
