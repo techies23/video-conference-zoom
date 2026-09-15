@@ -12,6 +12,133 @@ if ( ! defined( 'ABSPATH' ) ) {
 class ButtonHelper {
 
 	/**
+	 * Allowed button action types.
+	 *
+	 * @return string[]
+	 */
+	private static function get_allowed_action_types(): array {
+		return [ 'app', 'browser', 'start' ];
+	}
+
+	/**
+	 * Allowed button source types.
+	 *
+	 * @return string[]
+	 */
+	private static function get_allowed_source_types(): array {
+		return [ 'current', 'post_type', 'custom' ];
+	}
+
+	/**
+	 * Sanitize button action type.
+	 *
+	 * @param mixed $action_type Raw action type.
+	 *
+	 * @return string
+	 */
+	public static function sanitize_action_type( $action_type ): string {
+		$action_type = sanitize_key( (string) $action_type );
+
+		if ( ! in_array( $action_type, self::get_allowed_action_types(), true ) ) {
+			return 'app';
+		}
+
+		return $action_type;
+	}
+
+	/**
+	 * Sanitize button source type.
+	 *
+	 * @param mixed $source_type Raw source type.
+	 *
+	 * @return string
+	 */
+	public static function sanitize_source_type( $source_type ): string {
+		$source_type = sanitize_key( (string) $source_type );
+
+		if ( ! in_array( $source_type, self::get_allowed_source_types(), true ) ) {
+			return 'current';
+		}
+
+		return $source_type;
+	}
+
+	/**
+	 * Sanitize a CSS color value used in block inline styles.
+	 *
+	 * Allows hex colors, rgb()/rgba(), hsl()/hsla(), transparent/currentColor,
+	 * and safe CSS custom properties such as var(--wp--preset--color--primary).
+	 *
+	 * @param mixed $value Raw CSS color value.
+	 *
+	 * @return string
+	 */
+	public static function sanitize_css_color( $value ): string {
+		$value = trim( (string) $value );
+
+		if ( '' === $value ) {
+			return '';
+		}
+
+		if ( sanitize_hex_color( $value ) ) {
+			return $value;
+		}
+
+		if ( in_array( strtolower( $value ), [ 'transparent', 'currentcolor' ], true ) ) {
+			return $value;
+		}
+
+		if ( preg_match( '/^var\(--[a-zA-Z0-9_-]+\)$/', $value ) ) {
+			return $value;
+		}
+
+		if ( preg_match( '/^rgba?\(\s*(?:\d{1,3}%?\s*,\s*){2}\d{1,3}%?(?:\s*,\s*(?:0|1|0?\.\d+|[0-9]{1,3}%))?\s*\)$/', $value ) ) {
+			return $value;
+		}
+
+		if ( preg_match( '/^hsla?\(\s*\d{1,3}(?:deg)?\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%(?:\s*,\s*(?:0|1|0?\.\d+|[0-9]{1,3}%))?\s*\)$/', $value ) ) {
+			return $value;
+		}
+
+		return '';
+	}
+
+	/**
+	 * Sanitize a CSS size/spacing value used in block inline styles.
+	 *
+	 * Allows 0, numeric CSS lengths, percentages, calc(), clamp(), and safe CSS variables.
+	 *
+	 * @param mixed $value Raw CSS size value.
+	 *
+	 * @return string
+	 */
+	public static function sanitize_css_size( $value ): string {
+		$value = trim( (string) $value );
+
+		if ( '' === $value ) {
+			return '';
+		}
+
+		if ( '0' === $value ) {
+			return '0';
+		}
+
+		if ( preg_match( '/^-?\d+(?:\.\d+)?(?:px|em|rem|%|vh|vw|vmin|vmax|ch|ex)$/', $value ) ) {
+			return $value;
+		}
+
+		if ( preg_match( '/^var\(--[a-zA-Z0-9_-]+\)$/', $value ) ) {
+			return $value;
+		}
+
+		if ( preg_match( '/^(?:calc|clamp)\([a-zA-Z0-9\s.%+\-*\/(),_-]+\)$/', $value ) ) {
+			return $value;
+		}
+
+		return '';
+	}
+
+	/**
 	 * Generates the target URL based on action type, source type, and block attributes.
 	 *
 	 * @param   string  $action_type  'app' | 'browser' | 'start'
@@ -47,7 +174,7 @@ class ButtonHelper {
 		}
 
 		if ( 'post_type' === $source_type && ! empty( $attributes['selectedMeetingPostId'] ) ) {
-			return (int) sanitize_key( $attributes['selectedMeetingPostId'] );
+			return absint( $attributes['selectedMeetingPostId'] );
 		}
 
 		return 0;
@@ -60,22 +187,22 @@ class ButtonHelper {
 		switch ( $action_type ) {
 			case 'app':
 				if ( isset( $meeting_details->join_url, $meeting_details->encrypted_password ) ) {
-					return Links::getPwdEmbeddedJoinLink( $meeting_details->join_url, $meeting_details->encrypted_password );
+					return esc_url_raw( Links::getPwdEmbeddedJoinLink( $meeting_details->join_url, $meeting_details->encrypted_password ) );
 				}
 				break;
 
 			case 'browser':
 				if ( isset( $meeting_details->id ) ) {
-					return Links::getJoinViaBrowserJoinLinks( [
+					return esc_url_raw( Links::getJoinViaBrowserJoinLinks( [
 						'link_only' => true,
 						'post_id'   => $post_id,
 						'password'  => $meeting_details->password ?? '',
-					], $meeting_details->id );
+					], $meeting_details->id ) );
 				}
 				break;
 
 			case 'start':
-				return $meeting_details->start_url;
+				return ! empty( $meeting_details->start_url ) ? esc_url_raw( $meeting_details->start_url ) : '#';
 		}
 
 		return '#';

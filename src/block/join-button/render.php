@@ -7,11 +7,14 @@
  * @var WP_Block $block      Block instance.
  */
 
-// 1. Sanitize Inputs
-$action_type = ! empty( $attributes['actionType'] ) ? sanitize_key( $attributes['actionType'] ) : 'app';
-$source_type = ! empty( $attributes['sourceType'] ) ? sanitize_key( $attributes['sourceType'] ) : 'current';
-$open_in_new = ! empty( $attributes['openInNewTab'] );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+// 1. Sanitize Inputs
+$action_type = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_action_type( $attributes['actionType'] ?? 'app' );
+$source_type = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_source_type( $attributes['sourceType'] ?? 'current' );
+$open_in_new = ! empty( $attributes['openInNewTab'] );
 
 $url = \Codemanas\VczApi\Blocks\ButtonHelper::get_url( $action_type, $source_type, $attributes );
 
@@ -23,7 +26,7 @@ $default_text_map = [
 ];
 
 if ( ! empty( $attributes['buttonText'] ) ) {
-	$display_text = $attributes['buttonText'];
+	$display_text = sanitize_text_field( $attributes['buttonText'] );
 } elseif ( isset( $default_text_map[ $action_type ] ) ) {
 	$display_text = $default_text_map[ $action_type ];
 } else {
@@ -34,22 +37,51 @@ if ( ! empty( $attributes['buttonText'] ) ) {
 $styles = [];
 
 if ( ! empty( $attributes['backgroundColor'] ) ) {
-	$styles[] = sprintf( '--vczapi-btn-bg: %s', sanitize_text_field( $attributes['backgroundColor'] ) );
+	$value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['backgroundColor'] );
+
+	if ( '' !== $value ) {
+		$styles[] = sprintf( '--vczapi-btn-bg: %s', $value );
+	}
 }
+
 if ( ! empty( $attributes['textColor'] ) ) {
-	$styles[] = sprintf( '--vczapi-btn-color: %s', sanitize_text_field( $attributes['textColor'] ) );
+	$value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['textColor'] );
+
+	if ( '' !== $value ) {
+		$styles[] = sprintf( '--vczapi-btn-color: %s', $value );
+	}
 }
+
 if ( ! empty( $attributes['bgHoverColor'] ) ) {
-	$styles[] = sprintf( '--vczapi-btn-bg-hover: %s', sanitize_text_field( $attributes['bgHoverColor'] ) );
+	$value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['bgHoverColor'] );
+
+	if ( '' !== $value ) {
+		$styles[] = sprintf( '--vczapi-btn-bg-hover: %s', $value );
+	}
 }
+
 if ( ! empty( $attributes['textHoverColor'] ) ) {
-	$styles[] = sprintf( '--vczapi-btn-color-hover: %s', sanitize_text_field( $attributes['textHoverColor'] ) );
+	$value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['textHoverColor'] );
+
+	if ( '' !== $value ) {
+		$styles[] = sprintf( '--vczapi-btn-color-hover: %s', $value );
+	}
 }
+
 if ( ! empty( $attributes['bgVisitedColor'] ) ) {
-	$styles[] = sprintf( '--vczapi-btn-bg-visited: %s', sanitize_text_field( $attributes['bgVisitedColor'] ) );
+	$value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['bgVisitedColor'] );
+
+	if ( '' !== $value ) {
+		$styles[] = sprintf( '--vczapi-btn-bg-visited: %s', $value );
+	}
 }
+
 if ( ! empty( $attributes['textVisitedColor'] ) ) {
-	$styles[] = sprintf( '--vczapi-btn-color-visited: %s', sanitize_text_field( $attributes['textVisitedColor'] ) );
+	$value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['textVisitedColor'] );
+
+	if ( '' !== $value ) {
+		$styles[] = sprintf( '--vczapi-btn-color-visited: %s', $value );
+	}
 }
 
 // Map Spacing (Padding & Margin)
@@ -57,8 +89,11 @@ foreach ( [ 'padding', 'margin' ] as $type ) {
 	if ( ! empty( $attributes[ $type ] ) && is_array( $attributes[ $type ] ) ) {
 		foreach ( [ 'top', 'right', 'bottom', 'left' ] as $side ) {
 			if ( isset( $attributes[ $type ][ $side ] ) && '' !== $attributes[ $type ][ $side ] ) {
-				$val      = sanitize_text_field( $attributes[ $type ][ $side ] );
-				$styles[] = sprintf( '%s-%s: %s', $type, $side, $val );
+				$val = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_size( $attributes[ $type ][ $side ] );
+
+				if ( '' !== $val ) {
+					$styles[] = sprintf( '%s-%s: %s', $type, $side, $val );
+				}
 			}
 		}
 	}
@@ -84,6 +119,6 @@ $wrapper_attributes = get_block_wrapper_attributes( [
             rel="noopener noreferrer"
 		<?php endif; ?>
     >
-		<?php echo wp_kses_post( $display_text ); ?>
+		<?php echo esc_html( $display_text ); ?>
     </a>
 </div>
