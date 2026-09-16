@@ -585,7 +585,7 @@ function video_conference_zoom_after_jbh_html() {
 	$localize        = array_merge( $localize, $additional_data );
 	?>
     <script id='video-conferencing-with-zoom-api-browser-js-extra'>
-        var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
+      var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
     </script>
 
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
@@ -675,8 +675,8 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 
 	$show_zoom_author_name = get_option( 'zoom_show_author' );
 
-    $GLOBALS['zoom']  = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
-    $meeting_details = Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' );
+	$GLOBALS['zoom'] = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
+	$meeting_details = Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' );
 
 	if ( ! empty( $show_zoom_author_name ) ) {
 		$meeting_author = vczapi_get_meeting_author( $post->ID, $meeting_details );
@@ -685,6 +685,9 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 		$meeting_author = ! empty( $meeting_author ) && ! empty( $meeting_author->first_name ) ? $meeting_author->first_name . ' ' . $meeting_author->last_name : $meeting_author->display_name;
 	}
 
+	if ( empty( $GLOBALS['zoom'] ) ) {
+		$GLOBALS['zoom'] = array();
+	}
 	$GLOBALS['zoom']['host_name'] = ! empty( $meeting_author ) ? $meeting_author : false;
 	if ( ! empty( $meeting_details ) ) {
 		$GLOBALS['zoom']['api'] = $meeting_details;
