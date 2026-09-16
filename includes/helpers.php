@@ -251,6 +251,7 @@ function vczapi_get_cache( $key ) {
  *
  * @since  2.1.0
  * @author Deepen
+ * @deprecated Replace this with Datastore::getCachedZoomUsers()
  */
 function video_conferencing_zoom_api_get_user_transients() {
 	require_once VCZAPI_PLUGIN_DIR_PATH . 'includes/Data/ZoomUsersTable.php';

@@ -15,7 +15,7 @@ class Datastore {
 
 	public static function getCachedZoomUsers() {
 		require_once VCZAPI_PLUGIN_DIR_PATH . 'includes/Data/ZoomUsersTable.php';
-		$users = \Codemanas\VczApi\Data\ZoomUsersTable::get_all_as_objects();
+		$users = ZoomUsersTable::get_all_as_objects();
 
 		return apply_filters( 'vczapi_users_list', $users );
 	}
