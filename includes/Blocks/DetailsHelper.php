@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Blocks;
 
+use Codemanas\VczApi\Data\Metastore;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -68,7 +70,7 @@ class DetailsHelper {
 	}
 
 	/**
-	 * Fetch meeting details stored in a post's custom meta fields.
+	 * Fetch meeting details stored in a post's custom meta fields via Metastore.
 	 *
 	 * @param   int  $post_id
 	 *
@@ -77,27 +79,26 @@ class DetailsHelper {
 	public static function get_details_by_post_id( int $post_id ): false|array {
 		if ( get_post_type( $post_id ) !== 'zoom-meetings' ) {
 			// Fallback check if meta exists directly on other post types
-			$meeting_id = get_post_meta( $post_id, '_meeting_zoom_meeting_id', true );
+			$meeting_id = Metastore::getPostMeta( $post_id, 'meeting_zoom_meeting_id' );
 			if ( empty( $meeting_id ) ) {
 				return false;
 			}
 		}
 
-		//don't show on private posts
+		// Don't show on private posts
 		if ( ! is_post_publicly_viewable( $post_id ) && ! current_user_can( 'read_post', $post_id ) ) {
 			return false;
 		}
 
-		$api_data = get_post_meta( $post_id, '_meeting_zoom_details', true );
+		$api_data = Metastore::getPostMeta( $post_id, 'meeting_zoom_details' );
 		if ( ! empty( $api_data ) && is_array( $api_data ) ) {
 			return self::format_meeting_data( $api_data, $post_id );
-		}else if( !empty($api_data) && is_object($api_data))
-		{
-			return self::format_meeting_data( (array)$api_data, $post_id );
+		} elseif ( ! empty( $api_data ) && is_object( $api_data ) ) {
+			return self::format_meeting_data( (array) $api_data, $post_id );
 		}
 
-		// If post meta isn't cached, attempt API fetch using meeting ID meta
-		$meeting_id = get_post_meta( $post_id, '_meeting_zoom_meeting_id', true );
+		// If cached details are missing, attempt API fetch using meeting ID
+		$meeting_id = Metastore::getPostMeta( $post_id, 'meeting_zoom_meeting_id' );
 		if ( $meeting_id ) {
 			return self::get_details_by_meeting_id( $meeting_id, $post_id );
 		}
@@ -134,7 +135,7 @@ class DetailsHelper {
 	 * @return array
 	 */
 	private static function format_meeting_data( array $data, int $post_id = 0 ): array {
-		$data =  [
+		return [
 			'post_id'    => $post_id,
 			'id'         => $data['id'] ?? '',
 			'topic'      => $data['topic'] ?? ( $post_id ? get_the_title( $post_id ) : '' ),
@@ -144,6 +145,5 @@ class DetailsHelper {
 			'agenda'     => $data['agenda'] ?? '',
 			'raw'        => $data,
 		];
-		return $data;
 	}
 }

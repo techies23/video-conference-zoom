@@ -109,8 +109,9 @@ class Metastore {
 
 			if ( 'meeting_fields' === $key && is_array( $data ) ) {
 				$data = self::meetingFieldCompat( $data, (int) $post_id );
-				update_post_meta( $post_id, "vczapi_{$key}", $data );
 			}
+
+			return $data;
 		}
 
 		return get_post_meta( $post_id, "vczapi_{$key}", $single );
