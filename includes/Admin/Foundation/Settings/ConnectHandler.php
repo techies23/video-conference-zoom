@@ -1,7 +1,7 @@
 <?php
 namespace Codemanas\VczApi\Admin\Foundation\Settings;
 
-use Codemanas\VczApi\Admin\Controller\NoticeController;
+use Codemanas\VczApi\Admin\Foundation\Notification;
 
 class ConnectHandler {
 
@@ -33,7 +33,7 @@ class ConnectHandler {
 		);
 
 		if ( is_wp_error( $access_token ) ) {
-			NoticeController::setNotice(
+			Notification::setNotice(
 				sprintf( esc_html__( 'Zoom OAuth Error Code: "%s" - %s', 'video-conferencing-with-zoom-api' ), esc_html( $access_token->get_error_code() ), esc_html( $access_token->get_error_message() ) ),
 				'error'
 			);
@@ -56,7 +56,7 @@ class ConnectHandler {
 			vczapi_set_cache( '_zvc_user_lists', $decoded_users->users ?? false, 108000 );
 		}
 
-		NoticeController::setNotice( __( 'Zoom: Credentials successfully verified and saved.', 'video-conferencing-with-zoom-api' ), 'success' );
+		Notification::setNotice( __( 'Zoom: Credentials successfully verified and saved.', 'video-conferencing-with-zoom-api' ), 'success' );
 		video_conferencing_zoom_api_get_user_transients();
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi\Admin\Foundation\Users;
 
-use Codemanas\VczApi\Admin\Controller\NoticeController;
+use Codemanas\VczApi\Admin\Foundation\Notification;
 use Codemanas\VczApi\Admin\Service\UsersService;
 
 class AddUserHander {
@@ -37,9 +37,9 @@ class AddUserHander {
 
 		$result = $this->usersService->create( $postData );
 		if ( is_wp_error( $result ) ) {
-			NoticeController::setNotice( $result->get_error_message() );
+			Notification::setNotice( $result->get_error_message() );
 		} else {
-			NoticeController::setNotice( __( "Created a User. Please check email for confirmation. Added user will only appear in the list after approval.", "video-conferencing-with-zoom-api" ), "success" );
+			Notification::setNotice( __( "Created a User. Please check email for confirmation. Added user will only appear in the list after approval.", "video-conferencing-with-zoom-api" ), "success" );
 
 //				if ( ! empty( $result['id'] ) ) {
 //					update_user_meta( $postData['user_id'], 'user_zoom_hostid', $result['id'] );

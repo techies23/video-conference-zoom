@@ -1,10 +1,10 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Controller;
+namespace Codemanas\VczApi\Admin\Foundation;
 
-class NoticeController {
+class Notification {
 
-	private static ?NoticeController $instance = null;
+	private static ?Notification $instance = null;
 
 	public static function get_instance(): self {
 		if ( is_null( self::$instance ) ) {

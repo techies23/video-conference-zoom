@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
+use Codemanas\VczApi\Admin\Foundation\Notification;
 use Codemanas\VczApi\Admin\Foundation\Settings\ConnectHandler;
 use Codemanas\VczApi\Admin\Foundation\Settings\GeneralSettingsHandler;
 use Codemanas\VczApi\Admin\Foundation\Settings\LogHandler;
@@ -43,7 +44,7 @@ class SettingController {
 		add_action( 'admin_init', [ $connectHandler, 'handle' ] );
 		add_action( 'admin_init', [ $settingsHandler, 'handle' ] );
 		add_action( 'admin_init', [ $logHandler, 'handle' ] );
-		add_action( 'admin_notices', [ NoticeController::get_instance(), 'displayNotices' ] );
+		add_action( 'admin_notices', [ Notification::get_instance(), 'displayNotices' ] );
 	}
 
 	/**

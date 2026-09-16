@@ -2,7 +2,6 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
-use Codemanas\VczApi\Admin\Foundation\Users\AddUserHander;
 use Codemanas\VczApi\Admin\Service\UsersService;
 use Codemanas\VczApi\Helpers\Templates;
 
@@ -25,10 +24,9 @@ class UserController {
 
 	public function __construct() {
 		$this->usersService = new UsersService();
-		$addUserHandler     = new AddUserHander($this->usersService);
 
-		add_action( 'admin_init', [ $addUserHandler, 'handle' ] );
-		add_action( 'admin_notices', [ NoticeController::get_instance(), 'displayNotices' ] );
+//		add_action( 'admin_init', [ $addUserHandler, 'handle' ] );
+//		add_action( 'admin_notices', [ Notification::get_instance(), 'displayNotices' ] );
 	}
 
 	/**
@@ -55,6 +53,8 @@ class UserController {
 
 	/**
 	 * Add Zoom users view
+	 *
+	 * @note Not displayed.
 	 */
 	public function add(): void {
 		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/add.php' );

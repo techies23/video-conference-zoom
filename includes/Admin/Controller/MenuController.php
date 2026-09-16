@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
+use Codemanas\VczApi\Helpers\Templates;
+
 /**
  * Handles registration of WordPress admin menus and submenus.
  */
@@ -61,7 +63,7 @@ class MenuController {
 				'menu_title' => __( 'Extensions', 'video-conferencing-with-zoom-api' ),
 				'capability' => 'manage_options',
 				'menu_slug'  => 'zoom-video-conferencing-addons',
-				'callback'   => [ 'Zoom_Video_Conferencing_Admin_Addons', 'render' ],
+				'callback'   => [ $this, 'renderExtensionTemplate' ],
 			];
 
 //			$submenus[] = [
@@ -91,6 +93,10 @@ class MenuController {
 			'zoom-video-conferencing-settings',
 			$this->settingsCallback
 		);
+	}
+
+	public function renderExtensionTemplate(): void {
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/extensions/index.php' );
 	}
 
 	/**

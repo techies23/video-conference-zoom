@@ -2,7 +2,7 @@
 
 namespace Codemanas\VczApi\Admin\Foundation\Settings;
 
-use Codemanas\VczApi\Admin\Controller\NoticeController;
+use Codemanas\VczApi\Admin\Foundation\Notification;
 use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 
 class GeneralSettingsHandler {
@@ -54,6 +54,6 @@ class GeneralSettingsHandler {
 		$this->repository->updateSettings( $posted_data );
 		video_conferencing_zoom_api_delete_user_cache();
 
-		NoticeController::setNotice( __( 'Settings successfully updated.', 'video-conferencing-with-zoom-api' ), 'success' );
+		Notification::setNotice( __( 'Settings successfully updated.', 'video-conferencing-with-zoom-api' ), 'success' );
 	}
 }

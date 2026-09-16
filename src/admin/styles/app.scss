@@ -12,6 +12,9 @@
 //users
 @use "users/list";
 
+//Exentsions
+@use "extensions/addon";
+
 .zvc-row {
   display: flex;
   margin-top: 10px;

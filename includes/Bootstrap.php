@@ -220,14 +220,9 @@ final class Bootstrap {
 
         //Admin Classes
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-meetings.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-webinars.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-recordings.php';
-//        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
 
         //Admin
         AdminController::get_instance();
@@ -271,7 +266,7 @@ final class Bootstrap {
         $screen = get_current_screen();
 
         //CSS
-        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings"|| $screen->id === "$pg-video-conferencing-list-users"  ) {
+        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" ) {
             //Choices
             wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
 
