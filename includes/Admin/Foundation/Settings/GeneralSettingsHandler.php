@@ -18,15 +18,14 @@ class GeneralSettingsHandler {
 			return;
 		}
 
-		check_admin_referer( '_zoom_settings_update_nonce_action', '_zoom_settings_nonce' );
+		check_admin_referer( 'vczapi_settings_update_action', 'vczapi_settings_nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
 		$field_mappings = [
-			'vanity_url'                         => 'esc_url_raw',
-			'delete_zoom_meeting'                => 'donot_delete_zom_meeting_also',
+			'delete_zoom_meeting'                => 'delete_zom_meeting_also',
 			'join_links'                         => 'meeting_end_join_link',
 			'zoom_author_show'                   => 'meeting_show_zoom_author_original',
 			'disable_countdown_timer'            => 'disable_countdown_timer',
@@ -49,11 +48,7 @@ class GeneralSettingsHandler {
 
 		$posted_data = [];
 		foreach ( $field_mappings as $key => $post_field ) {
-			if ( 'esc_url_raw' === $post_field ) {
-				$posted_data[ $key ] = esc_url_raw( $_POST['vanity_url'] ?? '' );
-			} else {
-				$posted_data[ $key ] = sanitize_text_field( $_POST[ $post_field ] ?? '' );
-			}
+			$posted_data[ $key ] = sanitize_text_field( $_POST[ $post_field ] ?? '' );
 		}
 
 		$this->repository->updateSettings( $posted_data );

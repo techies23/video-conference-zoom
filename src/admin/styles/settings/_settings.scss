@@ -1,13 +1,12 @@
 @use '../abstracts' as *;
 
-.vczapi-connect {
+.vczapi-settings {
   display: flex;
   gap: 2em;
 
-  // Stack columns on mobile
   @include respond-to('mobile') {
     flex-direction: column;
-    gap: 0; // Optional: adjust gap for stacked view
+    gap: 0;
   }
 
   &__main,
@@ -19,9 +18,10 @@
   &__main {
     flex: 0 0 calc(70% - 1.5em);
     min-width: 0;
+    background: #fff;
 
     @include respond-to('mobile') {
-      flex: 1 1 100%; // Reset width to 100% on mobile
+      flex: 1 1 100%;
     }
   }
 
@@ -29,10 +29,11 @@
     background: $vczapi-bg-white;
     padding: 1em 2em;
     min-width: 0;
+    height: 100%;
 
     @include respond-to('mobile') {
-      flex: 1 1 100%; // Reset width to 100% on mobile
-      margin-top: 1em; // Tighten spacing between stacked cards
+      flex: 1 1 100%;
+      margin-top: 1em;
     }
   }
 

@@ -22,7 +22,8 @@ class FormHelper {
 			'validate'          => array(),
 			'default'           => '',
 			'autofocus'         => false,
-			'after_html'        => ''
+			'after_html'        => '',
+			'checkbox_value'    => 1
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -124,8 +125,10 @@ class FormHelper {
 					'data-required' => array()
 				);
 
+				$checkbox_value = $args['checkbox_value'];
+
 				$field = '<label class="checkbox" ' . $custom_attr_str . '> 
-                    <input type="' . esc_attr( $args['type'] ) . '" class="input-checkbox ' . esc_attr( $input_class ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="1" ' . checked( $value, 1, false ) . ' /> '
+                    <input type="' . esc_attr( $args['type'] ) . '" class="input-checkbox ' . esc_attr( $input_class ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . esc_attr( $checkbox_value ) . '" ' . checked( $value, $checkbox_value, false ) . ' /> '
 				         . esc_html( $args['label'] ) . $required . '</label>';
 
 				break;

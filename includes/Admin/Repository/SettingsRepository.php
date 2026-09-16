@@ -34,7 +34,6 @@ class SettingsRepository {
 
 	private function migrateLegacySettings(): array {
 		$legacy_mapping = [
-			'vanity_url'                         => 'zoom_vanity_url',
 			'delete_zoom_meeting'                => 'zoom_api_donot_delete_on_zoom',
 			'join_links'                         => 'zoom_past_join_links',
 			'zoom_author_show'                   => 'zoom_show_author',

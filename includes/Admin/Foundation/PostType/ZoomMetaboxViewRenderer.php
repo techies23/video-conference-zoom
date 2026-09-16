@@ -18,7 +18,7 @@ class ZoomMetaboxViewRenderer {
 		$meeting_details = Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' );
 		$users           = video_conferencing_zoom_api_get_user_transients();
 
-		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/tpl-meeting-fields.php', [
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/meeting-fields.php', [
 			'post'            => $post,
 			'meeting_details' => $meeting_details,
 			'meeting_fields'  => is_array( $meeting_fields ) ? $meeting_fields : [],
@@ -27,14 +27,14 @@ class ZoomMetaboxViewRenderer {
 	}
 
 	public function renderSideBox( \WP_Post $post ): void {
-		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/tpl-meeting-side-box.php', [
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/meeting-side-box.php', [
 			'meeting_details' => Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' ),
 			'meeting_fields'  => Metastore::getPostMeta( $post->ID, 'meeting_fields' ),
 		] );
 	}
 
 	public function renderDebugBox( \WP_Post $post ): void {
-		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/tpl-meeting-debug.php', [
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/meeting-debug.php', [
 			'meeting_details' => Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' ),
 			'meeting_fields'  => Metastore::getPostMeta( $post->ID, 'meeting_fields' ),
 		] );
