@@ -1,0 +1,183 @@
+<?php
+
+namespace Codemanas\VczApi\Zoom\Service;
+
+use Codemanas\VczApi\Zoom\Http\Client;
+use Codemanas\VczApi\Zoom\Payload\PayloadBuilder;
+use Codemanas\VczApi\Zoom\Schema\SchemaManager;
+use WP_Error;
+
+class Meeting extends BaseService {
+
+	/** @var Client */
+	protected Client $client;
+
+	/**
+	 * Optionally, inject a client for testing or customization.
+	 *
+	 * @param Client|null $client
+	 */
+	public function __construct( Client $client = null ) {
+		$this->client = $client ?: new Client();
+	}
+
+	/**
+	 * List meetings for a user/host.
+	 *
+	 * @param array $params
+	 * @return array|WP_Error
+	 */
+	public function list( array $params = array() ): WP_Error|array {
+		$built = PayloadBuilder::build( SchemaManager::MEETING_LIST, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		$prepared['query'] = apply_filters( 'vczapi_meetings_list_params', $prepared['query'], $params );
+
+		$result = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
+
+		if ( ! empty( $prepared['warnings'] ) ) {
+			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_LIST, $params );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Create a meeting for a user/host.
+	 *
+	 * @param array $data
+	 * @return array|WP_Error
+	 */
+	public function create( array $data = array() ): WP_Error|array {
+		$built = PayloadBuilder::build( SchemaManager::MEETING_CREATE, $data );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		$prepared['body'] = apply_filters( 'vczapi_meetings_create_payload', $prepared['body'], $data );
+
+		$result = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
+
+		if ( ! empty( $prepared['warnings'] ) ) {
+			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_CREATE, $data );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get details of a single meeting.
+	 *
+	 * @param string|int|array $meetingId ID string or array with parameters.
+	 * @return array|WP_Error
+	 */
+	public function get( $meetingId ): WP_Error|array {
+		$params = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_GET, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
+	}
+
+	/**
+	 * Delete a meeting.
+	 *
+	 * @param string|int|array $meetingId ID string or array with parameters.
+	 * @return array|WP_Error
+	 */
+	public function delete( $meetingId ): WP_Error|array {
+		$params = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_DELETE, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
+	}
+
+	/**
+	 * Update meeting status (PUT /meetings/{meetingId}/status).
+	 *
+	 * @param string|int|array $meetingId ID string or payload array.
+	 * @param string           $action    Status action (e.g., 'end').
+	 * @return array|WP_Error
+	 */
+	public function updateStatus( $meetingId, string $action = 'end' ): WP_Error|array {
+		$params           = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+		$params['action'] = $action;
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_STATUS, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		return $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
+	}
+
+	/**
+	 * Update an existing meeting.
+	 *
+	 * @param   int|string  $meetingId  Meeting ID to update.
+	 * @param array         $data       Payload parameters to update.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function update( int|string $meetingId, array $data = array() ): WP_Error|array {
+		$data['meeting_id'] = $meetingId;
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_UPDATE, $data );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		$prepared['body'] = apply_filters( 'vczapi_meetings_update_payload', $prepared['body'], $data );
+
+		$endpoint = ! empty( $prepared['query'] )
+			? add_query_arg( $prepared['query'], $prepared['endpoint'] )
+			: $prepared['endpoint'];
+
+		$result = $this->client->request( $prepared['method'], $endpoint, $prepared['body'] );
+
+		if ( ! empty( $prepared['warnings'] ) ) {
+			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_UPDATE, $data );
+		}
+
+		return $result;
+	}
+}

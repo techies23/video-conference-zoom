@@ -1,0 +1,196 @@
+<?php
+
+namespace Codemanas\VczApi\Zoom\Schema;
+
+use WP_Error;
+
+/**
+ * SchemaManager
+ *
+ * Registry/entry point for all Zoom API schemas.
+ * - Defines operation constants to avoid magic strings.
+ * - Maps operations to resource schema handlers (e.g., Meeting).
+ * - Exposes get(), allOperations(), isValidOperation().
+ *
+ * Expected schema shape returned by handlers (array example):
+ * [
+ *   'operation' => SchemaManager::MEETING_LIST,
+ *   'http'      => [
+ *     'method'      => 'GET',
+ *     'path'        => '/users/{user_id}/meetings',
+ *     'path_params' => [ 'user_id' => 'user_id' ], // input->placeholder mapping
+ *   ],
+ *   'fields'    => [
+ *     // Field rules by name:
+ *     // - type: string|int|bool|array
+ *     // - required: bool
+ *     // - default: mixed
+ *     // - enum: string[]
+ *     // - min|max: number (for int), length constraints for strings if needed
+ *     // - location: 'path'|'query'|'body' (where PayloadBuilder should place it)
+ *     'user_id'         => [ 'type' => 'string', 'required' => true, 'location' => 'path' ],
+ *     'page_size'       => [ 'type' => 'int', 'default' => 30, 'min' => 1, 'max' => 300, 'location' => 'query' ],
+ *     'next_page_token' => [ 'type' => 'string', 'location' => 'query' ],
+ *     'type'            => [ 'type' => 'string', 'enum' => [ 'scheduled', 'live', 'upcoming' ], 'location' => 'query' ],
+ *   ],
+ *   'compat'    => [
+ *     // Back-compat mappings: old_field => new_field
+ *     // e.g., 'meetingTopic' => 'topic'
+ *   ],
+ * ]
+ */
+class SchemaManager {
+	// Meetings
+	const MEETING_LIST = 'meeting.list';
+	const MEETING_CREATE = 'meeting.create';
+	public const MEETING_GET = 'meeting.get';
+	public const MEETING_DELETE = 'meeting.delete';
+	const MEETING_UPDATE = 'meeting.update';
+	const MEETING_STATUS = 'meeting.status';
+
+
+	// Webinars (reserved for later)
+	const WEBINAR_LIST = 'webinar.list';
+	const WEBINAR_CREATE = 'webinar.create';
+	const WEBINAR_GET = 'webinar.get';
+	const WEBINAR_DELETE = 'webinar.delete';
+	const WEBINAR_UPDATE = 'webinar.update';
+	const WEBINAR_STATUS = 'webinar.status';
+	// Users (reserved for later)
+	public const USER_LIST = 'user.list';
+	public const USER_GET = 'user.get';
+	public const USER_CREATE = 'user.create';
+	public const USER_UPDATE = 'user.update';
+	public const USER_DELETE = 'user.delete';
+
+	// Reports
+	public const REPORT_DAILY = 'report.daily';
+	public const REPORT_USER_MEETINGS = 'report.userMeetings';
+	public const REPORT_MEETING_PARTICIPANTS = 'report.meetingParticipants';
+	public const REPORT_MEETING_DETAILS = 'report.meetingDetails';
+	public const REPORT_WEBINAR_PARTICIPANTS = 'report.webinarParticipants';
+	public const REPORT_WEBINAR_DETAILS = 'report.webinarDetails';
+
+	// Recordings
+	public const RECORDING_LIST = 'recording.list';
+	public const RECORDING_GET = 'recording.get';
+	public const RECORDING_DELETE = 'recording.delete';
+	public const RECORDING_FILE_DELETE = 'recording.fileDelete';
+	public const RECORDING_RECOVER = 'recording.recover';
+
+	/**
+	 * Lazy-initialized map of operation => [ 'schema' => class, 'method' => method ].
+	 *
+	 * @var array|null
+	 */
+	protected static ?array $map = null;
+
+	/**
+	 * Build the operation map at once.
+	 *
+	 * @return array|null
+	 */
+	protected static function map(): ?array {
+		if ( self::$map === null ) {
+			self::$map = array(
+				// Meetings...
+				self::MEETING_LIST                => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
+				self::MEETING_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
+				self::MEETING_GET                 => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
+				self::MEETING_UPDATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'update' ),
+				self::MEETING_DELETE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
+				self::MEETING_STATUS              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'updateStatus' ),
+				// Webinars
+				self::WEBINAR_LIST                => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'list' ),
+				self::WEBINAR_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'create' ),
+				self::WEBINAR_GET                 => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'get' ),
+				self::WEBINAR_UPDATE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'update' ),
+				self::WEBINAR_DELETE              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'delete' ),
+				self::WEBINAR_STATUS              => array( 'schema' => __NAMESPACE__ . '\\Webinar', 'method' => 'updateStatus' ),
+
+				// Users
+				self::USER_LIST                   => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'list' ),
+				self::USER_GET                    => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'get' ),
+				self::USER_CREATE                 => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'create' ),
+				self::USER_UPDATE                 => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'update' ),
+				self::USER_DELETE                 => array( 'schema' => __NAMESPACE__ . '\\User', 'method' => 'delete' ),
+				//Reports
+				self::REPORT_DAILY                => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'daily' ),
+				self::REPORT_USER_MEETINGS        => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'userMeetings' ),
+				self::REPORT_MEETING_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingParticipants' ),
+				self::REPORT_MEETING_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'meetingDetails' ),
+				self::REPORT_WEBINAR_PARTICIPANTS => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarParticipants' ),
+				self::REPORT_WEBINAR_DETAILS      => array( 'schema' => __NAMESPACE__ . '\\Report', 'method' => 'webinarDetails' ),
+				// Recordings
+				self::RECORDING_LIST              => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'list' ),
+				self::RECORDING_GET               => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'get' ),
+				self::RECORDING_DELETE            => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'delete' ),
+				self::RECORDING_FILE_DELETE       => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'deleteFile' ),
+				self::RECORDING_RECOVER           => array( 'schema' => __NAMESPACE__ . '\\Recording', 'method' => 'recover' ),
+			);
+		}
+
+		return self::$map;
+	}
+
+	/**
+	 * @param   string  $operation
+	 *
+	 * @return array|WP_Error
+	 */
+	public static function get( string $operation ): WP_Error|array {
+		if ( ! self::isValidOperation( $operation ) ) {
+			return new WP_Error(
+				'vczapi_invalid_operation',
+				sprintf( 'Unknown schema operation: %s', $operation )
+			);
+		}
+
+		$entry  = self::map()[ $operation ];
+		$class  = $entry['schema'];
+		$method = $entry['method'];
+
+		if ( ! class_exists( $class ) || ! method_exists( $class, $method ) ) {
+			return new WP_Error(
+				'vczapi_schema_not_found',
+				sprintf( 'Schema handler missing for %s (%s::%s)', $operation, $class, $method )
+			);
+		}
+
+		// Expect schema's static method to return an associative array definition.
+		$schema = call_user_func( array( $class, $method ) );
+
+		// Basic validation safety net: must be an array with http + fields.
+		if ( ! is_array( $schema ) || empty( $schema['http'] ) || empty( $schema['fields'] ) ) {
+			return new WP_Error(
+				'vczapi_schema_invalid',
+				sprintf( 'Schema returned by %s is invalid or incomplete.', $operation ),
+				array( 'schema' => $schema )
+			);
+		}
+
+		return $schema;
+	}
+
+	/**
+	 * List all supported operation strings.
+	 *
+	 * @return string[]
+	 */
+	public static function allOperations(): array {
+		return array_keys( self::map() );
+	}
+
+	/**
+	 * Check if an operation is supported.
+	 *
+	 * @param   string  $operation
+	 *
+	 * @return bool
+	 */
+	public static function isValidOperation( string $operation ): bool {
+		$map = self::map();
+
+		return isset( $map[ $operation ] );
+	}
+}

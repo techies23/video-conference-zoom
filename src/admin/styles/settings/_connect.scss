@@ -1,0 +1,44 @@
+@use '../abstracts' as *;
+
+.vczapi-connect {
+  display: flex;
+  gap: 2em;
+
+  // Stack columns on mobile
+  @include respond-to('mobile') {
+    flex-direction: column;
+    gap: 0; // Optional: adjust gap for stacked view
+  }
+
+  &__main,
+  &__sidebar {
+    margin-top: 2em;
+    border: 1px solid $vczapi-border-color;
+  }
+
+  &__main {
+    flex: 0 0 calc(70% - 1.5em);
+    min-width: 0;
+
+    @include respond-to('mobile') {
+      flex: 1 1 100%; // Reset width to 100% on mobile
+    }
+  }
+
+  &__sidebar {
+    background: $vczapi-bg-white;
+    padding: 1em 2em;
+    min-width: 0;
+
+    @include respond-to('mobile') {
+      flex: 1 1 100%; // Reset width to 100% on mobile
+      margin-top: 1em; // Tighten spacing between stacked cards
+    }
+  }
+
+  &__actions {
+    padding: 1em;
+    border-top: 1px solid $vczapi-border-color;
+    text-align: right;
+  }
+}

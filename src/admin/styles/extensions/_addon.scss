@@ -1,0 +1,96 @@
+@use '../abstracts' as *;
+
+/* Container */
+.vczapi-addons {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  box-sizing: border-box;
+
+  /* Page Title */
+  &__title {
+    font-size: 2.5em;
+    font-weight: 900;
+    margin-bottom: 1.5em;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  /* 2-Column Grid Layout */
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+
+    @include respond-to('mobile') {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Addon Box Card */
+  &__box {
+    background-color: $vczapi-bg-white;
+    border: 1px solid $vczapi-border-color;
+    border-radius: $vczapi-radius;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: transform $vczapi-transition-speed ease, box-shadow $vczapi-transition-speed ease;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  /* Inner Content Area */
+  &__content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Box Card Heading */
+  &__heading {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: $vczapi-text-color;
+    margin: 0 0 12px 0;
+  }
+
+  /* Body Text */
+  &__text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: $vczapi-icon-color;
+    margin: 0 0 12px 0;
+  }
+
+  /* Highlight Text */
+  &__highlight {
+    color: $vczapi-text-color;
+  }
+
+  /* Button CTA */
+  &__button {
+    margin-top: auto; /* Pushes button to bottom of equal-height cards */
+    display: inline-block;
+    align-self: flex-start;
+    padding: 10px 18px;
+    background-color: $vczapi-bg-header;
+    color: $vczapi-text-color;
+    border: 1px solid $vczapi-border-color;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: $vczapi-radius;
+    transition: background-color $vczapi-transition-speed ease, border-color $vczapi-transition-speed ease;
+
+    &:hover {
+      background-color: $vczapi-bg-light;
+      color: $vczapi-text-color;
+    }
+  }
+}

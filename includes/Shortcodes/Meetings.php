@@ -37,6 +37,182 @@ class Meetings {
 	}
 
 	/**
+	 * Get a scalar value.
+	 *
+	 * @param mixed  $value   Value to normalize.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	private function get_scalar_value( $value, string $default = '' ): string {
+		if ( is_array( $value ) || is_object( $value ) ) {
+			return $default;
+		}
+
+		return (string) $value;
+	}
+
+	/**
+	 * Normalize a yes/no value.
+	 *
+	 * @param mixed  $value   Value to normalize.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	private function sanitize_yes_no_attribute( $value, string $default = 'no' ): string {
+		$value = strtolower( $this->get_scalar_value( $value, $default ) );
+
+		return in_array( $value, [ 'yes', 'no' ], true ) ? $value : $default;
+	}
+
+	/**
+	 * Normalize a true/false value.
+	 *
+	 * @param mixed  $value   Value to normalize.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	private function sanitize_true_false_attribute( $value, string $default = 'true' ): string {
+		if ( is_bool( $value ) ) {
+			return $value ? 'true' : 'false';
+		}
+
+		$value = strtolower( $this->get_scalar_value( $value, $default ) );
+
+		if ( in_array( $value, [ '1', 'yes', 'true' ], true ) ) {
+			return 'true';
+		}
+
+		if ( in_array( $value, [ '0', 'no', 'false' ], true ) ) {
+			return 'false';
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Sanitize a Zoom numeric meeting ID.
+	 *
+	 * @param mixed $value Value to sanitize.
+	 *
+	 * @return string
+	 */
+	private function sanitize_zoom_numeric_id( $value ): string {
+		return preg_replace( '/[^0-9]/', '', $this->get_scalar_value( $value ) );
+	}
+
+	/**
+	 * Normalize shortcode order value.
+	 *
+	 * @param mixed  $value   Value to normalize.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	private function sanitize_order_attribute( $value, string $default = 'DESC' ): string {
+		$value = strtoupper( $this->get_scalar_value( $value, $default ) );
+
+		return in_array( $value, [ 'ASC', 'DESC' ], true ) ? $value : $default;
+	}
+
+	/**
+	 * Normalize meeting list type.
+	 *
+	 * @param mixed  $value   Value to normalize.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	private function sanitize_list_type_attribute( $value, string $default = '' ): string {
+		$value = strtolower( $this->get_scalar_value( $value, $default ) );
+
+		return in_array( $value, [ 'upcoming', 'past' ], true ) ? $value : $default;
+	}
+
+	/**
+	 * Normalize meeting post template.
+	 *
+	 * @param mixed  $value   Value to normalize.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	private function sanitize_template_attribute( $value, string $default = '' ): string {
+		$value = strtolower( $this->get_scalar_value( $value, $default ) );
+
+		return in_array( $value, [ 'boxed', 'none', '' ], true ) ? $value : $default;
+	}
+
+	/**
+	 * Sanitize a comma-separated category slug list.
+	 *
+	 * @param mixed $value Value to sanitize.
+	 *
+	 * @return array
+	 */
+	private function sanitize_category_slugs( $value ): array {
+		$value = $this->get_scalar_value( $value );
+
+		if ( '' === $value ) {
+			return [];
+		}
+
+		$categories = array_map( 'trim', explode( ',', $value ) );
+		$categories = array_map( 'sanitize_title', $categories );
+		$categories = array_filter( $categories );
+
+		return array_values( array_unique( $categories ) );
+	}
+
+	/**
+	 * Sanitize category slugs from an array input.
+	 *
+	 * @param mixed $value Value to sanitize.
+	 *
+	 * @return array
+	 */
+	private function sanitize_category_slug_array( $value ): array {
+		if ( ! is_array( $value ) ) {
+			return [];
+		}
+
+		$categories = array_map( 'sanitize_title', array_map( 'trim', $value ) );
+		$categories = array_filter( $categories );
+
+		return array_values( array_unique( $categories ) );
+	}
+
+	/**
+	 * Normalize attributes for meeting list shortcodes.
+	 *
+	 * @param array $atts Shortcode attributes.
+	 *
+	 * @return array
+	 */
+	private function sanitize_list_shortcode_atts( array $atts ): array {
+		$atts['author']       = ! empty( $atts['author'] ) ? absint( $atts['author'] ) : '';
+		$atts['per_page']     = ! empty( $atts['per_page'] ) ? absint( $atts['per_page'] ) : 5;
+		$atts['category']     = implode( ',', $this->sanitize_category_slugs( $atts['category'] ?? '' ) );
+		$atts['order']        = $this->sanitize_order_attribute( $atts['order'] ?? 'DESC', 'DESC' );
+		$atts['type']         = $this->sanitize_list_type_attribute( $atts['type'] ?? '', '' );
+		$atts['filter']       = $this->sanitize_yes_no_attribute( $atts['filter'] ?? 'yes', 'yes' );
+		$atts['show_on_past'] = $this->sanitize_yes_no_attribute( $atts['show_on_past'] ?? 'yes', 'yes' );
+		$atts['cols']         = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
+
+		if ( empty( $atts['per_page'] ) ) {
+			$atts['per_page'] = 5;
+		}
+
+		if ( empty( $atts['cols'] ) ) {
+			$atts['cols'] = 3;
+		}
+
+		return $atts;
+	}
+
+	/**
 	 * Show Meeting based on ID
 	 *
 	 * @param $atts
@@ -52,10 +228,17 @@ class Meetings {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 
-		extract( shortcode_atts( array(
-			'meeting_id' => '',
-			'link_only'  => 'no',
-		), $atts ) );
+		$atts = shortcode_atts(
+			[
+				'meeting_id' => '',
+				'link_only'  => 'no',
+			],
+			$atts,
+			'zoom_api_link'
+		);
+
+		$meeting_id = $this->sanitize_zoom_numeric_id( $atts['meeting_id'] );
+		$link_only  = $this->sanitize_yes_no_attribute( $atts['link_only'], 'no' );
 
 		unset( $GLOBALS['vanity_uri'] );
 		unset( $GLOBALS['zoom_meetings'] );
@@ -63,7 +246,7 @@ class Meetings {
 		ob_start();
 
 		if ( empty( $meeting_id ) ) {
-			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . __( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . __( 'No meeting id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
+			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . esc_html__( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . esc_html__( 'No meeting id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
 
 			return false;
 		}
@@ -81,7 +264,7 @@ class Meetings {
 		$GLOBALS['zoom_meetings'] = $meeting;
 		if ( ! empty( $meeting ) && ! empty( $meeting->code ) ) {
 			?>
-            <p class="dpn-error dpn-mtg-not-found"><?php echo $meeting->message; ?></p>
+            <p class="dpn-error dpn-mtg-not-found"><?php echo esc_html( $meeting->message ); ?></p>
 			<?php
 		} else {
 			if ( ! empty( $link_only ) && $link_only === "yes" ) {
@@ -91,7 +274,7 @@ class Meetings {
 					//Get Template
 					vczapi_get_template( 'shortcode/zoom-shortcode.php', true, false );
 				} else {
-					printf( __( 'Please try again ! Some error occured while trying to fetch meeting with id:  %d', 'video-conferencing-with-zoom-api' ), $meeting_id );
+					printf( esc_html__( 'Please try again ! Some error occured while trying to fetch meeting with id:  %d', 'video-conferencing-with-zoom-api' ), absint( $meeting_id ) );
 				}
 			}
 		}
@@ -110,18 +293,28 @@ class Meetings {
 	 * @since  3.6.4
 	 */
 	public function show_meeting_by_postTypeID( $atts ) {
-		extract( shortcode_atts( array(
-			'post_id'     => '',
-			'template'    => '',
-			'countdown'   => true,
-			'description' => true,
-			'details'     => true,
-		), $atts ) );
+		$atts = shortcode_atts(
+			[
+				'post_id'     => '',
+				'template'    => '',
+				'countdown'   => true,
+				'description' => true,
+				'details'     => true,
+			],
+			$atts,
+			'zoom_meeting_post'
+		);
+
+		$post_id     = absint( $atts['post_id'] );
+		$template    = $this->sanitize_template_attribute( $atts['template'], '' );
+		$countdown   = $this->sanitize_true_false_attribute( $atts['countdown'], 'true' );
+		$description = $this->sanitize_true_false_attribute( $atts['description'], 'true' );
+		$details     = $this->sanitize_true_false_attribute( $atts['details'], 'true' );
 
 		ob_start();
 
 		if ( empty( $post_id ) ) {
-			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . __( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . __( 'No post id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
+			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . esc_html__( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . esc_html__( 'No post id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
 
 			return false;
 		}
@@ -199,7 +392,7 @@ class Meetings {
 			endwhile;
 			wp_reset_postdata();
 		} else {
-			echo "<p>" . __( 'This post does not exist.', 'video-conferencing-with-zoom-api' ) . "</p>";
+			echo "<p>" . esc_html__( 'This post does not exist.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
 
 		return ob_get_clean();
@@ -228,6 +421,8 @@ class Meetings {
 			),
 			$atts, 'zoom_list_meetings'
 		);
+
+		$atts = $this->sanitize_list_shortcode_atts( $atts );
 
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 
@@ -287,7 +482,7 @@ class Meetings {
 		}
 
 		if ( ! empty( $atts['category'] ) ) {
-			$category                = array_map( 'trim', explode( ',', $atts['category'] ) );
+			$category                = $this->sanitize_category_slugs( $atts['category'] );
 			$query_args['tax_query'] = [
 				[
 					'taxonomy' => 'zoom-meeting',
@@ -325,6 +520,9 @@ class Meetings {
 		//will only be provided on filter form submit
 		$form_data = filter_input( INPUT_POST, 'form_data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
+		$data      = is_array( $data ) ? $data : [];
+		$form_data = is_array( $form_data ) ? $form_data : [];
+
 		$atts  = shortcode_atts(
 			array(
 				'author'       => '',
@@ -342,7 +540,13 @@ class Meetings {
 			$data,
 			'zoom_list_meetings'
 		);
-		$paged = isset( $data['page_num'] ) ? $data['page_num'] : 1;
+
+		$atts                 = $this->sanitize_list_shortcode_atts( $atts );
+		$atts['page_num']    = ! empty( $data['page_num'] ) ? absint( $data['page_num'] ) : 1;
+		$atts['base_url']    = ! empty( $data['base_url'] ) ? esc_url_raw( $this->get_scalar_value( $data['base_url'] ) ) : '';
+		$atts['meeting_type'] = ! empty( $data['meeting_type'] ) && in_array( $data['meeting_type'], [ 'meetings', 'webinars' ], true ) ? $data['meeting_type'] : 'meetings';
+
+		$paged = $atts['page_num'];
 
 		$query_args = array(
 			'post_type'      => $this->post_type,
@@ -409,17 +613,16 @@ class Meetings {
 		}
 
 		if ( ! empty( $form_data['taxonomy'] ) && $form_data['taxonomy'] != 'category_order' ) {
-
 			$query_args['tax_query'] = [
 				[
 					'taxonomy' => 'zoom-meeting',
 					'field'    => 'slug',
-					'terms'    => $form_data['taxonomy'],
+					'terms'    => is_array( $form_data['taxonomy'] ) ? $this->sanitize_category_slug_array( $form_data['taxonomy'] ) : $this->sanitize_category_slugs( $form_data['taxonomy'] ),
 					'operator' => 'IN',
 				],
 			];
 		} elseif ( ! empty( $atts['category'] ) ) {
-			$category                = array_map( 'trim', explode( ',', $atts['category'] ) );
+			$category                = $this->sanitize_category_slugs( $atts['category'] );
 			$query_args['tax_query'] = [
 				[
 					'taxonomy' => 'zoom-meeting',
@@ -430,15 +633,17 @@ class Meetings {
 			];
 		}
 
-		if ( isset( $form_data['orderby'] ) && ! empty( isset( $form_data['orderby'] ) )
-		     && $form_data['orderby'] != 'show_all'
+		if (
+			isset( $form_data['orderby'] )
+			&& ! empty( $form_data['orderby'] )
+			&& $form_data['orderby'] != 'show_all'
 		) {
 			$orderby             = ( $form_data['orderby'] === "past" ) ? 'ASC' : 'DESC';
 			$query_args['order'] = $orderby;
 		}
 
 		if ( ! empty( $form_data['search'] ) ) {
-			$query_args['s'] = esc_attr( $form_data['search'] );
+			$query_args['s'] = sanitize_text_field( $this->get_scalar_value( $form_data['search'] ) );
 		}
 
 		$query         = apply_filters( 'vczapi_meeting_list_ajax_query_args', $query_args, $form_data );
@@ -457,7 +662,7 @@ class Meetings {
 			}
 			wp_reset_postdata();
 		} else {
-			echo "<p class='vczapi-no-meeting-found'>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
+			echo "<p class='vczapi-no-meeting-found'>" . esc_html__( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
 
 		$content .= ob_get_clean();
@@ -491,8 +696,10 @@ class Meetings {
 			$atts
 		);
 
-		if ( empty( $atts['host'] ) ) {
-			return __( 'Host ID should be given when defining this shortcode.', 'video-conferencing-with-zoom-api' );
+		$host = preg_replace( '/[^A-Za-z0-9_\-@.]/', '', $this->get_scalar_value( $atts['host'] ) );
+
+		if ( empty( $host ) ) {
+			return esc_html__( 'Host ID should be given when defining this shortcode.', 'video-conferencing-with-zoom-api' );
 		}
 
 		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
@@ -500,17 +707,17 @@ class Meetings {
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 
-		$meetings         = get_option( 'vczapi_user_meetings_for_' . $atts['host'] );
-		$cache_expiration = get_option( 'vczapi_user_meetings_for_' . $atts['host'] . '_expiration' );
+		$meetings         = get_option( 'vczapi_user_meetings_for_' . $host );
+		$cache_expiration = get_option( 'vczapi_user_meetings_for_' . $host . '_expiration' );
 		if ( empty( $meetings ) || $cache_expiration < time() ) {
-			$encoded_meetings = zoom_conference()->listMeetings( $atts['host'] );
+			$encoded_meetings = zoom_conference()->listMeetings( $host );
 			$decoded_meetings = json_decode( $encoded_meetings );
 			if ( isset( $decoded_meetings->meetings ) ) {
 				$meetings = $decoded_meetings->meetings;
-				update_option( 'vczapi_user_meetings_for_' . $atts['host'], $meetings );
-				update_option( 'vczapi_user_meetings_for_' . $atts['host'] . '_expiration', time() + 60 * 5 );
+				update_option( 'vczapi_user_meetings_for_' . $host, $meetings );
+				update_option( 'vczapi_user_meetings_for_' . $host . '_expiration', time() + 60 * 5 );
 			} else {
-				return __( 'Could not retrieve meetings, check Host ID', 'video-conferencing-with-zoom-api' );
+				return esc_html__( 'Could not retrieve meetings, check Host ID', 'video-conferencing-with-zoom-api' );
 			}
 		}
 

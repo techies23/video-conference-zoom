@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vczapi/meeting-countdown",
+  "version": "1.2.0",
+  "title": "Zoom - Meeting Countdown",
+  "category": "vczapi-blocks",
+  "icon": "clock",
+  "description": "Standalone interactive countdown timer for upcoming Zoom meetings with customizable design presets and typography.",
+  "supports": {
+    "html": false,
+    "color": {
+      "text": true,
+      "background": true,
+      "gradients": true
+    },
+    "typography": {
+      "fontSize": true,
+      "fontFamily": true,
+      "lineHeight": true,
+      "fontWeight": true,
+      "letterSpacing": true,
+      "textTransform": true,
+      "__experimentalFontFamily": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "sourceType": {
+      "type": "string",
+      "default": "current"
+    },
+    "selectedMeetingPostId": {
+      "type": "number",
+      "default": 0
+    },
+    "customMeetingId": {
+      "type": "string",
+      "default": ""
+    },
+    "layoutPreset": {
+      "type": "string",
+      "default": "cards"
+    },
+    "labelFontSize": {
+      "type": "string",
+      "default": "0.75rem"
+    },
+    "unitBackgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "startedText": {
+      "type": "string",
+      "default": "Meeting has started"
+    },
+    "endedText": {
+      "type": "string",
+      "default": "Meeting has ended"
+    },
+    "showDays": {
+      "type": "boolean",
+      "default": true
+    },
+    "showSeconds": {
+      "type": "boolean",
+      "default": true
+    },
+    "keepStartedAllDay": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "textdomain": "video-conferencing-with-zoom-api",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

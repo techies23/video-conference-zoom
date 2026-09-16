@@ -1,4 +1,7 @@
 .DS_Store
 .idea/
 node_modules/
+dist/
+build/
+.agents/
 languages/*.pot~

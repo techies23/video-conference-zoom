@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Helpers;
 
+use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -19,7 +20,7 @@ class Date {
 	 *
 	 * @return false|mixed|string|null
 	 */
-	public static function get_timezone_offset() {
+	public static function get_timezone_offset(): mixed {
 		$tz = get_option( 'timezone_string' );
 		if ( ! empty( $tz ) ) {
 			return $tz;
@@ -52,7 +53,7 @@ class Date {
 	 *
 	 * @return mixed|null
 	 */
-	public static function timezone_list() {
+	public static function timezone_list(): mixed {
 		$zones_array = array(
 			"Pacific/Midway"                 => "(GMT-11:00) Midway Island, Samoa ",
 			"Pacific/Pago_Pago"              => "(GMT-11:00) Pago Pago ",
@@ -206,7 +207,7 @@ class Date {
 	 * @updated 3.6.7
 	 * @author  Deepen
 	 */
-	public static function dateConverter( $start_time, $tz, $format = 'F j, Y, g:i a ( T )', $defaults = true ) {
+	public static function dateConverter( $start_time, $tz, string $format = 'F j, Y, g:i a ( T )', bool $defaults = true ): DateTime|string {
 		try {
 			$timezone = ! empty( $tz ) ? $tz : "America/Los_Angeles";
 			$tz       = new DateTimeZone( $timezone );
@@ -222,10 +223,10 @@ class Date {
 			}
 
 			$locale                = get_locale();
-			$date_format           = get_option( 'zoom_api_date_time_format' );
-			$twentyfourhour_format = get_option( 'zoom_api_twenty_fourhour_format' );
-			$full_month_format     = get_option( 'zoom_api_full_month_format' );
-			if ( $defaults && ! empty( $locale ) && ! empty( $date_format ) ) {
+			$date_format           = SettingsRepository::getSetting( 'locale_format' );
+			$twentyfourhour_format = SettingsRepository::getSetting( 'twentyfour_format' );
+			$full_month_format     = SettingsRepository::getSetting( 'full_month_format' );
+			if ( ! empty( $locale ) && ! empty( $date_format ) ) {
 				setlocale( LC_TIME, $locale );
 				$start_timestamp      = $date->getTimestamp() + $date->getOffset();
 				$time_indicator       = ! empty( $twentyfourhour_format ) ? 'H:i' : 'h:i A';
@@ -246,7 +247,7 @@ class Date {
 						return date_i18n( 'l, ' . $full_month_indicator . ' j, Y ' . $time_indicator, $start_timestamp );
 						break;
 					case 'custom':
-						$date_format = get_option( 'zoom_api_custom_date_time_format' );
+						$date_format = SettingsRepository::getSetting( 'custom_date_time_format' );
 
 						return date_i18n( $date_format, $start_timestamp );
 					default:
