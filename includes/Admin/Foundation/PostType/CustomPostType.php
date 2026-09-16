@@ -20,13 +20,13 @@ class CustomPostType {
 			return;
 		}
 
-		$taxnomy  = 'zoom-meeting';
-		$taxonomy = get_taxonomy( $taxnomy );
-		$selected = isset( $_REQUEST[ $taxnomy ] ) ? $_REQUEST[ $taxnomy ] : '';
+		$slug     = 'zoom-meeting';
+		$taxonomy = get_taxonomy( $slug );
+		$selected = $_REQUEST[ $slug ] ?? '';
 		wp_dropdown_categories( array(
 			'show_option_all' => $taxonomy->labels->all_items,
-			'taxonomy'        => $taxnomy,
-			'name'            => $taxnomy,
+			'taxonomy'        => $slug,
+			'name'            => $slug,
 			'orderby'         => 'name',
 			'value_field'     => 'slug',
 			'selected'        => $selected,
