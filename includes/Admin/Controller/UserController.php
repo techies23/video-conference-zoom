@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Admin\Controller;
 
 use Codemanas\VczApi\Admin\Service\UsersService;
+use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Templates;
 
 /**
@@ -24,15 +25,14 @@ class UserController {
 
 	public function __construct() {
 		$this->usersService = new UsersService();
-
-//		add_action( 'admin_init', [ $addUserHandler, 'handle' ] );
-//		add_action( 'admin_notices', [ Notification::get_instance(), 'displayNotices' ] );
 	}
 
 	/**
 	 * List users page.
 	 */
 	public function list(): void {
+		wp_enqueue_script( 'vczapi-script' );
+
 		$status       = ( isset( $_GET['status'] ) && $_GET['status'] === 'pending' ) ? 'pending' : 'active';
 		$current_page = isset( $_GET['pg'] ) ? absint( $_GET['pg'] ) : 1;
 
@@ -42,6 +42,8 @@ class UserController {
 			'error'        => $data['error'],
 			'current_page' => $data['page_number'],
 			'page_count'   => $data['page_count'],
+			'last_synced'  => ZoomUsersTable::get_last_sync_time(),
+			'user_count'   => ZoomUsersTable::count_users(),
 		);
 
 		if ( $status === 'pending' ) {
@@ -49,15 +51,6 @@ class UserController {
 		} else {
 			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/list.php', $args );
 		}
-	}
-
-	/**
-	 * Add Zoom users view
-	 *
-	 * @note Not displayed.
-	 */
-	public function add(): void {
-		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/add.php' );
 	}
 
 	/**

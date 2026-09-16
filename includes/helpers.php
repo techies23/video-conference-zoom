@@ -244,37 +244,17 @@ function vczapi_get_cache( $key ) {
 }
 
 /**
- * Get Users using transients
+ * Get Users from the custom cache table.
+ *
+ * Now reads from the {prefix}vczapi_zoom_users table (populated by the
+ * manual/cron sync) instead of the legacy option-based cache.
  *
  * @since  2.1.0
  * @author Deepen
  */
 function video_conferencing_zoom_api_get_user_transients() {
-	if ( isset( $_GET['page'] ) && $_GET['page'] === "zoom-video-conferencing-list-users" && isset( $_GET['pg'] ) ) {
-		$page          = $_GET['pg'];
-		$decoded_users = json_decode( zoom_conference()->listUsers( $page ) );
-		if ( ! empty( $decoded_users->code ) ) {
-			$users = false;
-		} else {
-			$users = $decoded_users->users;
-		}
-	} else {
-		$check_existing = vczapi_get_cache( '_zvc_user_lists' );
-		if ( ! empty( $check_existing ) ) {
-			$users = $check_existing;
-		} else {
-			$decoded_users = json_decode( zoom_conference()->listUsers() );
-			if ( ! empty( $decoded_users->code ) ) {
-				if ( is_admin() ) {
-					add_action( 'admin_notices', 'vczapi_check_connection_error' );
-				}
-				$users = false;
-			} else {
-				$users = ! empty( $decoded_users->users ) ? $decoded_users->users : false;
-				vczapi_set_cache( '_zvc_user_lists', $users, 108000 );
-			}
-		}
-	}
+	require_once VCZAPI_PLUGIN_DIR_PATH . 'includes/Data/ZoomUsersTable.php';
+	$users = \Codemanas\VczApi\Data\ZoomUsersTable::get_all_as_objects();
 
 	return apply_filters( 'vczapi_users_list', $users );
 }
@@ -292,7 +272,11 @@ function vczapi_check_connection_error() {
 }
 
 /**
- * Flushing the cache
+ * Flushing the legacy user cache.
+ *
+ * @deprecated 4.8.0 User data is now cached in the vczapi_zoom_users table.
+ *              This remains only for backwards compatibility with third-party
+ *              callers; the custom table is not affected.
  */
 function video_conferencing_zoom_api_delete_user_cache() {
 	update_option( '_zvc_user_lists', '' );
@@ -959,9 +943,9 @@ function vczapi_convertMinutesToHM( $minutes, $format = '%02d:%02d' ) {
 function vczapi_is_zoom_activated(): bool {
 	if ( vczapi_is_oauth_active() ) {
 		return true;
-	} else {
-		return get_option( 'zoom_api_key' ) && get_option( 'zoom_api_secret' ) && video_conferencing_zoom_api_get_user_transients();
 	}
+
+	return vczapi_is_jwt_active();
 }
 
 /**

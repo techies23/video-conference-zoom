@@ -2,17 +2,10 @@
 .vczapi-users {
   margin-top: 20px;
 
-  &__actions {
-    margin: 12px 0;
-  }
-
-  &__action-link {
-    text-decoration: none;
-    color: #2271b1;
-
-    &:hover {
-      color: #135e96;
-    }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__action-separator {

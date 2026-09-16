@@ -1,4 +1,4 @@
-@use "../abstracts" as *;
+@use '../abstracts' as *;
 
 /* Container */
 .vczapi-addons {
@@ -90,7 +90,6 @@
 
     &:hover {
       background-color: $vczapi-bg-light;
-      border-color: darken($vczapi-border-color, 10%);
       color: $vczapi-text-color;
     }
   }

@@ -69,7 +69,7 @@ const backendConfig = {
     entry: {
         vendors: './src/admin/vendors.js',
         editor: './src/admin/editor.js',
-        settings: './src/admin/settings.js'
+        scripts: './src/admin/scripts.js',
     },
     output: {
         filename: 'admin/js/[name].min.js',

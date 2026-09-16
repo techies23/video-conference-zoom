@@ -49,14 +49,14 @@ class ConnectHandler {
 			delete_option( 'zoom_api_secret' );
 		}
 
-		$decoded_users = json_decode( zoom_conference()->listUsers() );
-		if ( ! empty( $decoded_users->code ) && is_admin() ) {
+		$decoded_users = zoom_conference_v2()->users()->list( array(
+			'status'    => 'active',
+			'page_size' => 1,
+		) );
+		if ( is_wp_error( $decoded_users ) && is_admin() ) {
 			add_action( 'admin_notices', 'vczapi_check_connection_error' );
-		} else {
-			vczapi_set_cache( '_zvc_user_lists', $decoded_users->users ?? false, 108000 );
 		}
 
 		Notification::setNotice( __( 'Zoom: Credentials successfully verified and saved.', 'video-conferencing-with-zoom-api' ), 'success' );
-		video_conferencing_zoom_api_get_user_transients();
 	}
 }

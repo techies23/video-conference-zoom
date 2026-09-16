@@ -2,6 +2,8 @@
 
 namespace Codemanas\VczApi\admin;
 
+use Codemanas\VczApi\Admin\Service\UserSyncService;
+
 class Cron {
 
 	private static ?Cron $_instance = null;
@@ -12,10 +14,27 @@ class Cron {
 
 	protected function __construct() {
 		// Hook into meeting save/creation
-		add_action( 'save_post_zoom-meetings', [ $this, 'schedule_long_term_refresh' ], 20, 2 );
+		#add_action( 'save_post_zoom-meetings', [ $this, 'schedule_long_term_refresh' ], 20, 2 );
 
 		// Register the actual cron execution action
-		add_action( 'vczapi_refresh_long_term_meeting_cron', [ $this, 'execute_meeting_refresh' ], 10, 2 );
+		#add_action( 'vczapi_refresh_long_term_meeting_cron', [ $this, 'execute_meeting_refresh' ], 10, 2 );
+
+		// Daily zoom user cache sync
+		add_action( 'vczapi_cron_zoom_user_sync', [ $this, 'execute_user_sync' ] );
+	}
+
+	/**
+	 * Cron callback that keeps the custom zoom users cache table in sync.
+	 *
+	 * @since  4.8.0
+	 */
+	public function execute_user_sync(): void {
+		if ( ! class_exists( '\Codemanas\VczApi\Admin\Service\UserSyncService' ) ) {
+			require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
+			require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/Service/UserSyncService.php';
+		}
+
+		UserSyncService::run_full_sync();
 	}
 
 	/**

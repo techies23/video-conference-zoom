@@ -3,4 +3,5 @@
 node_modules/
 dist/
 build/
+.agents/
 languages/*.pot~

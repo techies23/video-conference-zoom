@@ -431,24 +431,14 @@ class Zoom_Video_Conferencing_Admin_Ajax
 				'text' => 'Not a Host',
 			],
 		);
-		if (!empty($search_string)) {
-			$user = json_decode(zoom_conference()->getUserInfo($search_string));
-			if (empty($user->code) && !empty($user)) {
-				$results[] = array(
-					'id' => $user->id,
-					'text' => $user->email,
-				);
-			}
-		} else {
-			$users = json_decode(zoom_conference()->listUsers());
-			if (empty($users->code) && !empty($users->users)) {
-				foreach ($users->users as $user) {
-					$results[] = array(
-						'id' => $user->id,
-						'text' => $user->email,
-					);
-				}
-			}
+
+		if (!class_exists('\Codemanas\VczApi\Data\ZoomUsersTable')) {
+			require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
+		}
+
+		$zoom_users = \Codemanas\VczApi\Data\ZoomUsersTable::search_for_picker((string) $search_string);
+		if (!empty($zoom_users)) {
+			$results = array_merge($results, $zoom_users);
 		}
 
 		wp_send_json(array('results' => $results));

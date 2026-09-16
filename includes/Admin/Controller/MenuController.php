@@ -37,13 +37,6 @@ class MenuController {
 				'menu_slug'  => 'zoom-video-conferencing-list-users',
 				'callback'   => [ UserController::get_instance(), 'list' ],
 			];
-//			$submenus[] = [
-//				'page_title' => __( 'Add Users', 'video-conferencing-with-zoom-api' ),
-//				'menu_title' => __( 'Add Users', 'video-conferencing-with-zoom-api' ),
-//				'capability' => 'manage_options',
-//				'menu_slug'  => 'zoom-video-conferencing-add-users',
-//				'callback'   => [ UserController::get_instance(), 'add' ],
-//			];
 			$submenus[] = [
 				'page_title' => __( 'Reports', 'video-conferencing-with-zoom-api' ),
 				'menu_title' => __( 'Reports', 'video-conferencing-with-zoom-api' ),
@@ -56,7 +49,7 @@ class MenuController {
 				'menu_title' => __( 'Recordings', 'video-conferencing-with-zoom-api' ),
 				'capability' => apply_filters( 'vczapi_admin_settings_capabilities', 'edit_published_posts' ),
 				'menu_slug'  => 'zoom-video-conferencing-recordings',
-				'callback'   => [ 'Zoom_Video_Conferencing_Recordings', 'zoom_recordings' ],
+				'callback'   => [ RecordingController::get_instance(), 'list' ],
 			];
 			$submenus[] = [
 				'page_title' => __( 'Extensions', 'video-conferencing-with-zoom-api' ),

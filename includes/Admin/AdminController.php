@@ -1,6 +1,11 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Controller;
+namespace Codemanas\VczApi\Admin;
+
+use Codemanas\VczApi\Admin\Controller\AjaxController;
+use Codemanas\VczApi\Admin\Controller\PostTypeController;
+use Codemanas\VczApi\Admin\Controller\SettingController;
+use Codemanas\VczApi\Admin\Controller\UserController;
 
 /**
  * Admin Controller Class
@@ -27,5 +32,6 @@ class AdminController {
 		PostTypeController::get_instance();
 		SettingController::get_instance();
 		UserController::get_instance();
+		AjaxController::get_instance();
 	}
 }
