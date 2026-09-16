@@ -1,1 +1,124 @@
-.vczapi-meeting-countdown{display:block}.vczapi-meeting-countdown:not([style*="color:"]):not([class*=has-text-color]){color:#fff}.vczapi-meeting-countdown .vczapi-countdown-timer{display:inline-flex;align-items:flex-start;gap:12px;flex-wrap:wrap;color:inherit}.vczapi-meeting-countdown .vczapi-countdown-unit{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:inherit}.vczapi-meeting-countdown .vczapi-countdown-value{font-size:inherit;font-weight:inherit;line-height:1;font-variant-numeric:tabular-nums;color:inherit}.vczapi-meeting-countdown .vczapi-countdown-label{font-size:var(--vczapi-label-size, 0.75rem);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:8px;line-height:1;opacity:.75;color:inherit}.vczapi-meeting-countdown .vczapi-countdown-separator{font-size:inherit;font-weight:400;line-height:.9;align-self:flex-start;color:inherit;opacity:.8}.vczapi-meeting-countdown .vczapi-countdown-status-message{font-size:1.25rem;font-weight:600}.vczapi-meeting-countdown--minimal{font-size:3.5rem;font-weight:400}.vczapi-meeting-countdown--minimal .vczapi-countdown-timer{gap:16px;align-items:baseline}.vczapi-meeting-countdown--minimal .vczapi-countdown-unit{min-width:unset;padding:0}.vczapi-meeting-countdown--minimal .vczapi-countdown-separator{margin:0 4px;font-weight:300}.vczapi-meeting-countdown--cards{font-size:clamp(1rem,1rem + 2vw,2.5rem);font-weight:700}.vczapi-meeting-countdown--cards .vczapi-countdown-timer{gap:clamp(0px,1.5vw,10px);flex-wrap:nowrap}.vczapi-meeting-countdown--cards .vczapi-countdown-unit{background-color:var(--vczapi-unit-bg, #262626);color:inherit;padding:15px 12px;border-radius:8px;flex:1 1 25%;box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}.vczapi-meeting-countdown--pills{font-size:2.25rem;font-weight:700}.vczapi-meeting-countdown--pills .vczapi-countdown-timer{gap:12px}.vczapi-meeting-countdown--pills .vczapi-countdown-unit{background-color:var(--vczapi-unit-bg, #f1f5f9);color:inherit;padding:16px 24px;border-radius:9999px;min-width:90px}@media(max-width: 480px){.vczapi-meeting-countdown--minimal{font-size:2.25rem}.vczapi-meeting-countdown--minimal .vczapi-countdown-timer{gap:8px}.vczapi-meeting-countdown--cards,.vczapi-meeting-countdown--pills{font-size:1.75rem}.vczapi-meeting-countdown--cards .vczapi-countdown-unit,.vczapi-meeting-countdown--pills .vczapi-countdown-unit{padding:10px 14px;min-width:60px}}
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@6.11.0_webpack@5.110.3/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/.pnpm/postcss-loader@6.2.1_postcss@8.5.26_webpack@5.110.3/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/.pnpm/sass-loader@16.0.8_sass@1.103.1_webpack@5.110.3/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/block/meeting-countdown/style.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.vczapi-meeting-countdown {
+  display: block;
+  /* Default text color to white ONLY IF Gutenberg has not applied a custom text color or class */
+}
+.vczapi-meeting-countdown:not([style*="color:"]):not([class*=has-text-color]) {
+  color: #ffffff;
+}
+.vczapi-meeting-countdown .vczapi-countdown-timer {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: inherit;
+}
+.vczapi-meeting-countdown .vczapi-countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: inherit; /* Inherits from wrapper default or Gutenberg selected text color */
+}
+.vczapi-meeting-countdown .vczapi-countdown-value {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: inherit;
+}
+.vczapi-meeting-countdown .vczapi-countdown-label {
+  font-size: var(--vczapi-label-size, 0.75rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 8px;
+  line-height: 1;
+  opacity: 0.75;
+  color: inherit;
+}
+.vczapi-meeting-countdown .vczapi-countdown-separator {
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 0.9;
+  align-self: flex-start;
+  color: inherit;
+  opacity: 0.8;
+}
+.vczapi-meeting-countdown .vczapi-countdown-status-message {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.vczapi-meeting-countdown {
+  /* Preset 1: Minimal */
+}
+.vczapi-meeting-countdown--minimal {
+  font-size: 3.5rem;
+  font-weight: 400;
+}
+.vczapi-meeting-countdown--minimal .vczapi-countdown-timer {
+  gap: 16px;
+  align-items: baseline;
+}
+.vczapi-meeting-countdown--minimal .vczapi-countdown-unit {
+  min-width: unset;
+  padding: 0;
+}
+.vczapi-meeting-countdown--minimal .vczapi-countdown-separator {
+  margin: 0 4px;
+  font-weight: 300;
+}
+.vczapi-meeting-countdown {
+  /* Preset 2: Cards */
+}
+.vczapi-meeting-countdown--cards {
+  font-size: clamp(1rem, 1rem + 2vw, 2.5rem);
+  font-weight: 700;
+}
+.vczapi-meeting-countdown--cards .vczapi-countdown-timer {
+  gap: clamp(0px, 1.5vw, 10px);
+  flex-wrap: nowrap;
+}
+.vczapi-meeting-countdown--cards .vczapi-countdown-unit {
+  background-color: var(--vczapi-unit-bg, #262626);
+  color: inherit; /* Always inherits color from block wrapper */
+  padding: 15px 12px;
+  border-radius: 8px;
+  flex: 1 1 25%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.vczapi-meeting-countdown {
+  /* Preset 3: Pills */
+}
+.vczapi-meeting-countdown--pills {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+.vczapi-meeting-countdown--pills .vczapi-countdown-timer {
+  gap: 12px;
+}
+.vczapi-meeting-countdown--pills .vczapi-countdown-unit {
+  background-color: var(--vczapi-unit-bg, #f1f5f9);
+  color: inherit;
+  padding: 16px 24px;
+  border-radius: 9999px;
+  min-width: 90px;
+}
+@media (max-width: 480px) {
+  .vczapi-meeting-countdown--minimal {
+    font-size: 2.25rem;
+  }
+  .vczapi-meeting-countdown--minimal .vczapi-countdown-timer {
+    gap: 8px;
+  }
+  .vczapi-meeting-countdown--cards, .vczapi-meeting-countdown--pills {
+    font-size: 1.75rem;
+  }
+  .vczapi-meeting-countdown--cards .vczapi-countdown-unit, .vczapi-meeting-countdown--pills .vczapi-countdown-unit {
+    padding: 10px 14px;
+    min-width: 60px;
+  }
+}
