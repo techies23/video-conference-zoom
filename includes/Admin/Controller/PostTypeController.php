@@ -7,6 +7,7 @@ use Codemanas\VczApi\Admin\Foundation\PostType\CustomPostType;
 use Codemanas\VczApi\Admin\Foundation\PostType\PostTypeTemplates;
 use Codemanas\VczApi\Admin\Foundation\PostType\Taxonomy;
 use Codemanas\VczApi\Admin\Foundation\PostType\ZoomMetabox;
+use Codemanas\VczApi\Admin\Foundation\PostType\ZoomModel;
 use Codemanas\VczApi\Helpers\Config;
 
 /**
@@ -28,10 +29,9 @@ class PostTypeController {
 
 	public function __construct() {
 		$this->postType = Config::get( 'post_type' );
-
 		$this->registerHooks();
+		ZoomModel::get_instance();
 	}
-
 
 	private function registerHooks(): void {
 		$customPostType = new CustomPostType( $this->postType );

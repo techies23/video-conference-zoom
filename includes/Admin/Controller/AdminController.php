@@ -2,8 +2,6 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
-use Codemanas\VczApi\Admin\Model\Zoom;
-
 /**
  * Admin Controller Class
  *
@@ -27,7 +25,6 @@ class AdminController {
 
 	public function init(): void {
 		PostTypeController::get_instance();
-		Zoom::get_instance();
 		SettingController::get_instance();
 	}
 }

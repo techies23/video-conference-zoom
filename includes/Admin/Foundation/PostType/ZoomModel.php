@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Model;
+namespace Codemanas\VczApi\Admin\Foundation\PostType;
 
 use Codemanas\VczApi\Admin\Interface\IZoomEvent;
 use Codemanas\VczApi\Admin\Repository\SettingsRepository;
@@ -10,13 +10,13 @@ use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Config;
 use Codemanas\VczApi\Helpers\MeetingType;
 
-class Zoom {
+class ZoomModel {
 
 	protected string $postType;
 
-	private static ?Zoom $instance = null;
+	private static ?ZoomModel $instance = null;
 
-	public static function get_instance(): ?Zoom {
+	public static function get_instance(): ?ZoomModel {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 		}
