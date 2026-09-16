@@ -100,15 +100,8 @@ class Metastore {
 	 */
 	public static function backCompatMeta( $post_id, $key, bool $single = true ): mixed {
 		if ( metadata_exists( 'post', $post_id, "vczapi_{$key}" ) ) {
-			$data = get_post_meta( $post_id, "vczapi_{$key}", $single );
-			if ( 'meeting_fields' === $key && is_array( $data ) ) {
-				return self::meetingFieldCompat( $data, (int) $post_id );
-			}
-
-			return $data;
-		}
-
-		if ( metadata_exists( 'post', $post_id, "_{$key}" ) ) {
+			return get_post_meta( $post_id, "vczapi_{$key}", $single );
+		} elseif ( metadata_exists( 'post', $post_id, "_{$key}" ) ) {
 			$data = get_post_meta( $post_id, "_{$key}", $single );
 			if ( is_object( $data ) ) {
 				$data = (array) $data;
@@ -152,8 +145,8 @@ class Metastore {
 	 * | site_option_enable_debug_log / option_enable_debug_logs | site_option_enable_debug_log         | 'yes' / 'on' / '1' / 1 -> '1', else null          |
 	 * ---------------------------------------------------------------------------------------------------------------------
 	 *
-	 * @param array $data    Legacy or new meeting fields data.
-	 * @param int   $post_id Optional post ID for fallback values (such as post title).
+	 * @param   array  $data     Legacy or new meeting fields data.
+	 * @param   int    $post_id  Optional post ID for fallback values (such as post title).
 	 *
 	 * @return array
 	 */
