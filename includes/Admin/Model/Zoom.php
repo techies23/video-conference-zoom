@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Admin\Model;
 
 use Codemanas\VczApi\Admin\Interface\IZoomEvent;
+use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Admin\Service\MeetingService;
 use Codemanas\VczApi\Admin\Service\WebinarService;
 use Codemanas\VczApi\Data\Metastore;
@@ -28,6 +29,7 @@ class Zoom {
 
 		add_action( "save_post_{$this->postType}", [ $this, 'save' ], 10, 2 );
 		add_action( 'admin_notices', [ $this, 'displayValidationNotices' ] );
+		add_action( 'before_delete_post', [ $this, 'delete' ] );
 	}
 
 	/**
@@ -200,5 +202,35 @@ class Zoom {
 			$type,
 			$message
 		);
+	}
+
+	/**
+	 * Delete Post Type
+	 *
+	 * @param $post_id
+	 *
+	 * @return void
+	 */
+	public function delete( $post_id ): void {
+		$deleteOnZoom = SettingsRepository::getSetting( 'delete_zoom_meeting' );
+		if ( ! empty( $deleteOnZoom ) ) {
+			return;
+		}
+
+		if ( get_post_type( $post_id ) === $this->postType ) {
+			$meeting_id      = Metastore::getPostMeta( $post_id, 'meeting_id' );
+			$meeting_details = Metastore::getPostMeta( $post_id, 'meeting_zoom_details' );
+			if ( ! empty( $meeting_id ) ) {
+				do_action( 'vczapi_before_delete_meeting', $meeting_id );
+
+				if ( ! empty( $meeting_details ) && $meeting_details['meeting_type'] === 2 ) {
+					zoom_conference_v2()->webinars()->delete( $meeting_id );
+				} else {
+					zoom_conference_v2()->meetings()->delete( $meeting_id );
+				}
+
+				do_action( 'vczapi_after_delete_meeting' );
+			}
+		}
 	}
 }

@@ -6,6 +6,12 @@ class SettingsRepository {
 
 	public const SETTINGS_OPTION_KEY = '_vczapi_zoom_settings';
 
+	public static function getSetting( $key ): string {
+		$settings = get_option( self::SETTINGS_OPTION_KEY, null );
+
+		return ! empty( $settings[ $key ] ) ? $settings[ $key ] : '';
+	}
+
 	/**
 	 * Retrieve options under unified key with legacy auto-migration fallback.
 	 */

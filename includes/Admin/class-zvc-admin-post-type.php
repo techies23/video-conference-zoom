@@ -51,16 +51,16 @@ class Zoom_Video_Conferencing_Admin_PostType
 //		add_action('admin_menu', [$this, 'hide_post_type']);
 //		add_action('add_meta_boxes', array($this, 'add_metabox'));
 //		add_action('save_post_' . $this->post_type, array($this, 'save_metabox'), 10, 2);
-		add_filter('single_template', array($this, 'single'), 20);
-		add_filter('archive_template', array($this, 'archive'), 20);
-		add_filter('template_include', [$this, 'template_filter'], 99);
-		add_action('before_delete_post', array($this, 'delete'));
+//		add_filter('single_template', array($this, 'single'), 20);
+//		add_filter('archive_template', array($this, 'archive'), 20);
+//		add_filter('template_include', [$this, 'template_filter'], 99);
+		#add_action('before_delete_post', array($this, 'delete'));
 		add_action('admin_notices', array($this, 'admin_notices'));
-		add_filter('manage_' . $this->post_type . '_posts_columns', array($this, 'add_columns'), 20);
-		add_action('manage_' . $this->post_type . '_posts_custom_column', array($this, 'column_data'), 20, 2);
-		add_action('manage_edit-' . $this->post_type . '_sortable_columns', array($this, 'sortable_data'), 30);
-		add_filter('views_edit-' . $this->post_type, [$this, 'addFiltersOnSubSubSub']);
-		add_filter('pre_get_posts', [$this, 'filter_posts']);
+//		add_filter('manage_' . $this->post_type . '_posts_columns', array($this, 'add_columns'), 20);
+//		add_action('manage_' . $this->post_type . '_posts_custom_column', array($this, 'column_data'), 20, 2);
+//		add_action('manage_edit-' . $this->post_type . '_sortable_columns', array($this, 'sortable_data'), 30);
+//		add_filter('views_edit-' . $this->post_type, [$this, 'addFiltersOnSubSubSub']);
+//		add_filter('pre_get_posts', [$this, 'filter_posts']);
 
 		//use classic editor instead of gutenberg
 //		add_filter('use_block_editor_for_post_type', [$this, 'disable_block_editor'], 10, 2);

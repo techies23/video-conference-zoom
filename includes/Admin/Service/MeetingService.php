@@ -31,11 +31,10 @@ class MeetingService implements IZoomEvent {
 	 */
 	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?array {
 		$is_update = ! empty( $zoom_id );
-		$zoomApi   = new Zoom();
 		if ( $is_update ) {
-			$response = $zoomApi->meetings()->update( $zoom_id, $payload );
+			$response = zoom_conference_v2()->meetings()->update( $zoom_id, $payload );
 		} else {
-			$response = $zoomApi->meetings()->create( $payload );
+			$response = zoom_conference_v2()->meetings()->create( $payload );
 		}
 
 		return $response;

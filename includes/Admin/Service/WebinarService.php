@@ -32,11 +32,10 @@ class WebinarService implements IZoomEvent {
 	 */
 	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?array {
 		$is_update = ! empty( $zoom_id );
-		$zoomApi = new Zoom();
 		if ( $is_update ) {
-			$response = $zoomApi->webinars()->update( $zoom_id, $payload );
+			$response = zoom_conference_v2()->webinars()->update( $zoom_id, $payload );
 		} else {
-			$response = $zoomApi->webinars()->create( $payload );
+			$response = zoom_conference_v2()->webinars()->create( $payload );
 		}
 
 		return $response;
