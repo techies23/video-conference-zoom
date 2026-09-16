@@ -29,19 +29,19 @@ class MenuController {
 			$submenus = [];
 
 			$submenus[] = [
-				'page_title' => __( 'Zoom Users', 'video-conferencing-with-zoom-api' ),
-				'menu_title' => __( 'Zoom Users', 'video-conferencing-with-zoom-api' ),
+				'page_title' => __( 'Users', 'video-conferencing-with-zoom-api' ),
+				'menu_title' => __( 'Users', 'video-conferencing-with-zoom-api' ),
 				'capability' => 'manage_options',
 				'menu_slug'  => 'zoom-video-conferencing-list-users',
-				'callback'   => [ 'Zoom_Video_Conferencing_Admin_Users', 'list_users' ],
+				'callback'   => [ UserController::get_instance(), 'list' ],
 			];
-			$submenus[] = [
-				'page_title' => __( 'Add Users', 'video-conferencing-with-zoom-api' ),
-				'menu_title' => __( 'Add Users', 'video-conferencing-with-zoom-api' ),
-				'capability' => 'manage_options',
-				'menu_slug'  => 'zoom-video-conferencing-add-users',
-				'callback'   => [ 'Zoom_Video_Conferencing_Admin_Users', 'add_zoom_users' ],
-			];
+//			$submenus[] = [
+//				'page_title' => __( 'Add Users', 'video-conferencing-with-zoom-api' ),
+//				'menu_title' => __( 'Add Users', 'video-conferencing-with-zoom-api' ),
+//				'capability' => 'manage_options',
+//				'menu_slug'  => 'zoom-video-conferencing-add-users',
+//				'callback'   => [ UserController::get_instance(), 'add' ],
+//			];
 			$submenus[] = [
 				'page_title' => __( 'Reports', 'video-conferencing-with-zoom-api' ),
 				'menu_title' => __( 'Reports', 'video-conferencing-with-zoom-api' ),
@@ -69,7 +69,7 @@ class MenuController {
 //				'menu_title' => __( 'Host to WP Users', 'video-conferencing-with-zoom-api' ),
 //				'capability' => 'manage_options',
 //				'menu_slug'  => 'zoom-video-conferencing-host-id-assign',
-//				'callback'   => [ 'Zoom_Video_Conferencing_Admin_Users', 'assign_host_id' ],
+//				'callback'   => [ UserController::get_instance(), 'assignHostId' ],
 //			];
 
 			$submenus[] = [

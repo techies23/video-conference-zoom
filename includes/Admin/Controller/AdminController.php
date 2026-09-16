@@ -26,5 +26,6 @@ class AdminController {
 	public function init(): void {
 		PostTypeController::get_instance();
 		SettingController::get_instance();
+		UserController::get_instance();
 	}
 }

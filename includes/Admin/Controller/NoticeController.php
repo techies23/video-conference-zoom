@@ -4,6 +4,16 @@ namespace Codemanas\VczApi\Admin\Controller;
 
 class NoticeController {
 
+	private static ?NoticeController $instance = null;
+
+	public static function get_instance(): self {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 	private static string $message = '';
 	private static string $messageType = 'error';
 	private static bool $isDismissible = true;

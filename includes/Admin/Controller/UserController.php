@@ -2,12 +2,18 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
+use Codemanas\VczApi\Admin\Foundation\Users\AddUserHander;
+use Codemanas\VczApi\Admin\Service\UsersService;
+use Codemanas\VczApi\Helpers\Templates;
+
 /**
  * Register user page.
  */
 class UserController {
 
 	private static ?UserController $instance = null;
+
+	private UsersService $usersService;
 
 	public static function get_instance(): self {
 		if ( is_null( self::$instance ) ) {
@@ -18,44 +24,79 @@ class UserController {
 	}
 
 	public function __construct() {
+		$this->usersService = new UsersService();
+		$addUserHandler     = new AddUserHander($this->usersService);
+
+		add_action( 'admin_init', [ $addUserHandler, 'handle' ] );
+		add_action( 'admin_notices', [ NoticeController::get_instance(), 'displayNotices' ] );
 	}
 
-	public static function list() {
-		if ( isset( $_GET['status'] ) && $_GET['status'] === "pending" ) {
-			//Get Template
-			require_once ZVC_PLUGIN_VIEWS_PATH . '/live/tpl-list-pending-users.php';
+	/**
+	 * List users page.
+	 */
+	public function list(): void {
+		$status       = ( isset( $_GET['status'] ) && $_GET['status'] === 'pending' ) ? 'pending' : 'active';
+		$current_page = isset( $_GET['pg'] ) ? absint( $_GET['pg'] ) : 1;
+
+		$data = $this->usersService->list( $current_page, $status );
+		$args = array(
+			'data'         => $data['data'],
+			'error'        => $data['error'],
+			'current_page' => $data['page_number'],
+			'page_count'   => $data['page_count'],
+		);
+
+		if ( $status === 'pending' ) {
+			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/pending.php', $args );
 		} else {
-			//Get Template
-			require_once ZVC_PLUGIN_VIEWS_PATH . '/live/tpl-list-users.php';
+			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/list.php', $args );
 		}
 	}
 
-	public function add() {
-		if ( isset( $_POST['add_zoom_user'] ) ) {
-			check_admin_referer( '_zoom_add_user_nonce_action', '_zoom_add_user_nonce' );
-			$postData = array(
-				'action'     => filter_input( INPUT_POST, 'action' ),
-				'email'      => sanitize_email( filter_input( INPUT_POST, 'email' ) ),
-				'first_name' => sanitize_text_field( filter_input( INPUT_POST, 'first_name' ) ),
-				'last_name'  => sanitize_text_field( filter_input( INPUT_POST, 'last_name' ) ),
-				'type'       => filter_input( INPUT_POST, 'type' ),
-				'user_id'    => filter_input( INPUT_POST, 'user_id' )
-			);
+	/**
+	 * Add Zoom users view
+	 */
+	public function add(): void {
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/add.php' );
+	}
 
-			$created_user = zoom_conference()->createAUser( $postData );
-			$result       = json_decode( $created_user );
-			if ( ! empty( $result->code ) ) {
-				self::set_message( 'error', $result->message );
-			} else {
-				self::set_message( 'updated', __( "Created a User. Please check email for confirmation. Added user will only appear in the list after approval.", "video-conferencing-with-zoom-api" ) );
+	/**
+	 * Assign Host ID
+	 */
+	public function assignHostId(): void {
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-js' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
 
-				update_user_meta( $postData['user_id'], 'user_zoom_hostid', $result->id );
+		if ( isset( $_POST['saving_host_id'] ) ) {
+			check_admin_referer( '_zoom_assign_hostid_nonce_action', '_zoom_assign_hostid_nonce' );
 
-				//After user has been created delete this transient in order to fetch latest Data.
-				video_conferencing_zoom_api_delete_user_cache();
+			$host_ids  = filter_input( INPUT_POST, 'zoom_host_id', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			$email_ids = filter_input( INPUT_POST, 'zoom_host_email', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			if ( ! empty( $host_ids ) ) {
+				foreach ( $host_ids as $k => $host_id ) {
+					if ( $host_id == "0" ) {
+						update_user_meta( $k, 'user_zoom_hostid', '' );
+					} else {
+						update_user_meta( $k, 'user_zoom_hostid', $host_id );
+					}
+				}
 			}
+
+			if ( ! empty( $email_ids ) ) {
+				foreach ( $email_ids as $k => $email_id ) {
+					if ( $email_id == "Not a Host" ) {
+						update_user_meta( $k, 'vczapi_user_zoom_email_address', '' );
+					} else {
+						update_user_meta( $k, 'vczapi_user_zoom_email_address', $email_id );
+					}
+				}
+			}
+
+			self::set_message( 'updated', __( "Saved !", "video-conferencing-with-zoom-api" ) );
 		}
 
-		require_once ZVC_PLUGIN_VIEWS_PATH . '/live/tpl-add-user.php';
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/assign-host.php', array(
+			'message' => self::get_message(),
+		) );
 	}
 }
