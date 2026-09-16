@@ -271,36 +271,28 @@ final class Bootstrap {
 
         $screen = get_current_screen();
 
-        //Vendors
-        if ( $hook === $pg . "video-conferencing-addons" || $hook === $pg . "video-conferencing-reports" || $hook === $pg . "video-conferencing-recordings" || $hook === $pg . "video-conferencing-list-users" || $hook === $pg . "video-conferencing" || $hook === $pg . "video-conferencing-add-meeting" || $hook === $pg . "video-conferencing-webinars" || $hook === $pg . "video-conferencing-webinars-add" || $screen->id === "zoom-meetings" || $hook === $pg . "video-conferencing-host-id-assign" || $hook === $pg . "video-conferencing-sync" || $hook === $pg . "video-conferencing-add-users" ) {
-            wp_enqueue_style( 'video-conferencing-with-zoom-api-select2', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/select2/css/select2.min.css', false, $this->plugin_version );
-            wp_enqueue_style( 'video-conferencing-with-zoom-api-datable', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.css', false, $this->plugin_version );
-        }
+        //CSS
+        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" ) {
+            //Choices
+            wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
 
-        //Select 2
-        wp_register_script( 'video-conferencing-with-zoom-api-select2-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/select2/js/select2.min.js', array( 'jquery' ), $this->plugin_version, true );
-        wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', array( 'jquery' ), $this->plugin_version, true );
+            //Flatpicker
+            wp_enqueue_style( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr' . $this->minified . '.css', false, $this->plugin_version );
 
-        if ( $screen->id === "zoom-meetings" || $screen->id === "zoom-meetings_page_zoom-video-conferencing-settings" ) {
-            //Admin CSS
-            wp_enqueue_style( 'video-conferencing-with-zoom-api-admin', VCZAPI_PLUGIN_BUILD_ASSET_URI . '/css/main.min.css', false, $this->plugin_version );
+            wp_enqueue_style( 'vczapi-admin', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/css/style.min.css', false, $this->plugin_version );
         }
 
         if ( $screen->id === "zoom-meetings" ) {
             //Validation
-            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, true );
+            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+                    'in_footer' => true,
+            ] );
 
-            //Choices
-            wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
-            wp_register_script( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/scripts/choices' . $this->minified . '.js', [], $this->plugin_version, true );
+            wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
+                    'in_footer' => true,
+            ] );
 
-            //Flatpicker
-            wp_enqueue_style( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr' . $this->minified . '.css', false, $this->plugin_version );
-            wp_register_script( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr' . $this->minified . '.js', [], $this->plugin_version, true );
-
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-js', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/js/main.min.js', [], $this->plugin_version );
-
-            wp_localize_script( 'video-conferencing-with-zoom-api-js', 'zvc_ajax', array(
+            wp_localize_script( 'vczapi-js', 'zvc_ajax', array(
                     'ajaxurl'      => admin_url( 'admin-ajax.php' ),
                     'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
                     'lang'         => array(

@@ -30,7 +30,6 @@ defined( 'ABSPATH' ) || exit;
                             $sdk_app_link    = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion">' . esc_html__( 'SDK App Credentials', 'video-conferencing-with-zoom-api' ) . '</a>';
 
                             printf(
-                            /* translators: 1: Documentation link, 2: SDK credentials accordion link */
                                     esc_html__( 'Please see %1$s on how to generate credentials. Additionally, for "Join via Browser" functionality to work, please also configure %2$s.', 'video-conferencing-with-zoom-api' ),
                                     $oauth_docs_link,
                                     $sdk_app_link
@@ -52,7 +51,7 @@ defined( 'ABSPATH' ) || exit;
                                 </th>
                                 <td>
                                     <input type="password" class="regular-text vczapi-connect__input" name="vczapi_oauth_account_id" id="vczapi_oauth_account_id" value="<?php echo ! empty( $vczapi_oauth_account_id ) ? esc_attr( $vczapi_oauth_account_id ) : ''; ?>">
-                                    <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_account_id"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
+                                    <a href="javascript:void(0);" class="vczapi-credentials-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_account_id"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
                                 </td>
                             </tr>
                             <tr>
@@ -61,7 +60,7 @@ defined( 'ABSPATH' ) || exit;
                                 </th>
                                 <td>
                                     <input type="password" class="regular-text vczapi-connect__input" name="vczapi_oauth_client_id" id="vczapi_oauth_client_id" value="<?php echo ! empty( $vczapi_oauth_client_id ) ? esc_attr( $vczapi_oauth_client_id ) : ''; ?>">
-                                    <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_id"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
+                                    <a href="javascript:void(0);" class="vczapi-credentials-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_id"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
                                 </td>
                             </tr>
                             <tr>
@@ -70,7 +69,7 @@ defined( 'ABSPATH' ) || exit;
                                 </th>
                                 <td>
                                     <input type="password" class="regular-text vczapi-connect__input" name="vczapi_oauth_client_secret" id="vczapi_oauth_client_secret" value="<?php echo ! empty( $vczapi_oauth_client_secret ) ? esc_attr( $vczapi_oauth_client_secret ) : ''; ?>">
-                                    <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_secret"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
+                                    <a href="javascript:void(0);" class="vczapi-credentials-toggle-trigger" data-visible="0" data-element="#vczapi_oauth_client_secret"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -105,7 +104,7 @@ defined( 'ABSPATH' ) || exit;
                                 </th>
                                 <td>
                                     <input type="password" class="regular-text vczapi-connect__input" name="vczapi_sdk_key" id="vczapi_sdk_key" value="<?php echo ! empty( $vczapi_sdk_key ) ? esc_attr( $vczapi_sdk_key ) : ''; ?>">
-                                    <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_key"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
+                                    <a href="javascript:void(0);" class="vczapi-credentials-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_key"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
                                 </td>
                             </tr>
                             <tr>
@@ -114,7 +113,7 @@ defined( 'ABSPATH' ) || exit;
                                 </th>
                                 <td>
                                     <input type="password" class="regular-text vczapi-connect__input" name="vczapi_sdk_secret_key" id="vczapi_sdk_secret_key" value="<?php echo ! empty( $vczapi_sdk_secret_key ) ? esc_attr( $vczapi_sdk_secret_key ) : ''; ?>">
-                                    <a href="javascript:void(0);" class="vczapi-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_secret_key"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
+                                    <a href="javascript:void(0);" class="vczapi-credentials-toggle-trigger" data-visible="0" data-element="#vczapi_sdk_secret_key"><?php esc_html_e( 'Show', 'video-conferencing-with-zoom-api' ); ?></a>
                                 </td>
                             </tr>
                             </tbody>

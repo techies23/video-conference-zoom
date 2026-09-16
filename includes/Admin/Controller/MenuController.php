@@ -64,15 +64,13 @@ class MenuController {
 				'callback'   => [ 'Zoom_Video_Conferencing_Admin_Addons', 'render' ],
 			];
 
-			if ( defined( 'VIDEO_CONFERENCING_HOST_ASSIGN_PAGE' ) ) {
-				$submenus[] = [
-					'page_title' => __( 'Host to WP Users', 'video-conferencing-with-zoom-api' ),
-					'menu_title' => __( 'Host to WP Users', 'video-conferencing-with-zoom-api' ),
-					'capability' => 'manage_options',
-					'menu_slug'  => 'zoom-video-conferencing-host-id-assign',
-					'callback'   => [ 'Zoom_Video_Conferencing_Admin_Users', 'assign_host_id' ],
-				];
-			}
+//			$submenus[] = [
+//				'page_title' => __( 'Host to WP Users', 'video-conferencing-with-zoom-api' ),
+//				'menu_title' => __( 'Host to WP Users', 'video-conferencing-with-zoom-api' ),
+//				'capability' => 'manage_options',
+//				'menu_slug'  => 'zoom-video-conferencing-host-id-assign',
+//				'callback'   => [ 'Zoom_Video_Conferencing_Admin_Users', 'assign_host_id' ],
+//			];
 
 			$submenus[] = [
 				'page_title' => __( 'Import', 'video-conferencing-with-zoom-api' ),

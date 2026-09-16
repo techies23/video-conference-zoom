@@ -12,8 +12,7 @@ class ZoomMetaboxViewRenderer {
 		wp_nonce_field( 'vczapi_save_meeting_meta', '_vczapi_nonce' );
 
 		wp_enqueue_script( 'vczapi-admin-editor' );
-		wp_enqueue_script( 'vczapi-flatpickr' );
-		wp_enqueue_script( 'vczapi-choices' );
+		wp_enqueue_script( 'vczapi-vendors-js' );
 
 		$meeting_fields  = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
 		$meeting_details = Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' );

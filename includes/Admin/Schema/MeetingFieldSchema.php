@@ -33,11 +33,11 @@ class MeetingFieldSchema {
 		// Lock host selection if meeting is already published or has a Zoom ID
 		$host_field_config = [
 			'label'       => __( 'Meeting Host *', $text_domain ),
-			'type'        => 'select',
+			'type'        => $has_zoom_id ? 'select' : 'placeholder',
 			'description' => __( 'This is host ID for the meeting (Required).', $text_domain ),
 			'required'    => true,
 			'options'     => $host_options,
-			'input_class' => [ 'vczapi-choices' ],
+			'input_class' => $has_zoom_id ? [ 'vczapi-choices' ] : [],
 //			'custom_attributes' => [
 //				'data-api-action'  => 'postTypeFetchHosts',
 //				'data-placeholder' => __( 'Search host by name or email...', $text_domain ),
@@ -47,7 +47,6 @@ class MeetingFieldSchema {
 		];
 
 		if ( $has_zoom_id ) {
-			$host_field_config['type']                          = 'placeholder';
 			$host_field_config['custom_attributes']['disabled'] = 'disabled';
 			$host_field_config['description']                   = __( 'Host cannot be changed once the event has been created.', $text_domain );
 		}
@@ -57,10 +56,10 @@ class MeetingFieldSchema {
 				'title'  => __( 'General Settings', $text_domain ),
 				'fields' => [
 					'user_id'    => $host_field_config,
-					'agenda' => [
-						'label'             => __( 'Agenda', $text_domain ),
-						'type'              => 'textarea',
-						'description'       => __( 'Agenda for the Event.', $text_domain ),
+					'agenda'     => [
+						'label'       => __( 'Agenda', $text_domain ),
+						'type'        => 'textarea',
+						'description' => __( 'Agenda for the Event.', $text_domain ),
 					],
 					'type'       => [
 						'label'       => __( 'Type *', $text_domain ),
@@ -84,6 +83,7 @@ class MeetingFieldSchema {
 						'label'       => __( 'Timezone', $text_domain ),
 						'type'        => 'select',
 						'options'     => $tzlists,
+						'required'    => true,
 						'default'     => ! empty( $tzlists[ $wp_timezone ] ) ? $wp_timezone : '',
 						'input_class' => [ 'vczapi-choices' ],
 					],

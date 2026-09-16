@@ -7,15 +7,15 @@
  * Plugin Name:       Video Conferencing with Zoom
  * Plugin URI:        https://wordpress.org/plugins/video-conferencing-with-zoom-api/
  * Description:       Video Conferencing with Zoom Meetings and Webinars plugin provides you with great functionality of managing Zoom meetings, Webinar scheduling options, and users directly from your WordPress dashboard.
- * Version:           4.6.10
+ * Version:           4.7.0
  * Author:            Deepen Bajracharya
  * Author URI:        https://www.imdpen.com
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       video-conferencing-with-zoom-api
- * Requires PHP:      7.4
+ * Requires PHP:      8.1
  * Domain Path:       /languages
- * Requires at least: 5.5.0
+ * Requires at least: 6.8
  */
 
 // If this file is called directly, abort.
@@ -25,13 +25,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 defined( 'VCZAPI_PLUGIN_FILE' ) || define( 'VCZAPI_PLUGIN_FILE', __FILE__ );
 defined( 'VCZAPI_PLUGIN_SLUG' ) || define( 'VCZAPI_PLUGIN_SLUG', 'video-conferencing-zoom' );
-defined( 'VCZAPI_PLUGIN_VERSION' ) || define( 'VCZAPI_PLUGIN_VERSION', '4.6.10' );
+defined( 'VCZAPI_PLUGIN_VERSION' ) || define( 'VCZAPI_PLUGIN_VERSION', '4.7.0' );
 defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION', '4.0.0' );
 defined( 'VCZAPI_PLUGIN_DIR_URL' ) || define( 'VCZAPI_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_DIR_PATH' ) || define( 'VCZAPI_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/admin' );
-defined( 'VCZAPI_PLUGIN_BUILD_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_BUILD_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/admin' );
-defined( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI' ) || define( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/vendors' );
+defined( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI' ) || define( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/vendor' );
 defined( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH' ) || define( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH', VCZAPI_PLUGIN_DIR_PATH . 'includes/Admin/Views' );
 
 /**

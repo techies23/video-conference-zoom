@@ -1,3 +1,5 @@
+import flatpickr from "flatpickr";
+
 /**
  * Initializes Flatpickr on meeting form date/time fields.
  *

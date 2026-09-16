@@ -80,7 +80,7 @@ $text_domain  = 'video-conferencing-with-zoom-api';
                                             echo '<input type="hidden" name="user_id" value="' . esc_attr( $value ) . '">';
                                         }
 
-                                        if ( $field_key === 'type' && ! empty( $field_config['placeholder'] ) ) {
+                                        if ( $field_key === 'type' && ! empty( $field_config['type'] ) && $field_config['type'] == "placeholder" ) {
                                             echo '<input type="hidden" name="type" value="' . esc_attr( $value ) . '">';
                                         }
                                     }

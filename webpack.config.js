@@ -57,7 +57,7 @@ const publicConfig = {
     module: {rules: commonRules},
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'public/css/[name].min.css',
+            filename: 'public/css/style.min.css',
         }),
     ],
 }
@@ -67,9 +67,9 @@ const backendConfig = {
     mode: isProduction ? 'production' : 'development',
     devtool: devtoolSetting,
     entry: {
-        script: './src/admin/js/script.js',
-        main: './src/admin/main.js',
-        editor: './src/admin/editor.js'
+        vendors: './src/admin/vendors.js',
+        editor: './src/admin/editor.js',
+        settings: './src/admin/settings.js'
     },
     output: {
         filename: 'admin/js/[name].min.js',
@@ -79,7 +79,7 @@ const backendConfig = {
     module: {rules: commonRules},
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'admin/css/[name].min.css',
+            filename: 'admin/css/style.min.css',
         }),
     ],
 }
