@@ -46,7 +46,7 @@ class Zoom_Video_Conferencing_Admin_PostType
 	 */
 	public function __construct()
 	{
-		add_action('restrict_manage_posts', [$this, 'filtering'], 10);
+//		add_action('restrict_manage_posts', [$this, 'filtering'], 10);
 //		add_action('init', array($this, 'register'));
 //		add_action('admin_menu', [$this, 'hide_post_type']);
 //		add_action('add_meta_boxes', array($this, 'add_metabox'));

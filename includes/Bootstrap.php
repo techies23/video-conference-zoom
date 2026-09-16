@@ -267,7 +267,7 @@ final class Bootstrap {
      * @author   Deepen Bajracharya
      */
     public function enqueue_scripts_backend( $hook ): void {
-        $pg = 'zoom-meetings_page_zoom-';
+        $pg = 'zoom-meetings_page_zoom';
 
         $screen = get_current_screen();
 
