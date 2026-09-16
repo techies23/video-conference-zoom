@@ -10,7 +10,7 @@ registerBlockType('vczapi/list-host-meetings', {
     /**
      * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
      */
-    apiVersion: 2,
+    apiVersion: 3,
 
     /**
      * @see ./edit.js

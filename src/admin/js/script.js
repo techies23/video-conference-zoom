@@ -1,5 +1,3 @@
-import '../sass/style.scss'
-
 /**
  * Jquery Scripts
  *
