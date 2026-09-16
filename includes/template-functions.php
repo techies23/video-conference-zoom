@@ -675,8 +675,8 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 
 	$show_zoom_author_name = get_option( 'zoom_show_author' );
 
-	$GLOBALS['zoom'] = get_post_meta( $post->ID, '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
-	$meeting_details = get_post_meta( $post->ID, '_meeting_zoom_details', true );
+    $GLOBALS['zoom']  = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
+    $meeting_details = Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' );
 
 	if ( ! empty( $show_zoom_author_name ) ) {
 		$meeting_author = vczapi_get_meeting_author( $post->ID, $meeting_details );
@@ -687,7 +687,7 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
 
 	$GLOBALS['zoom']['host_name'] = ! empty( $meeting_author ) ? $meeting_author : false;
 	if ( ! empty( $meeting_details ) ) {
-		$GLOBALS['zoom']['api'] = get_post_meta( $post->ID, '_meeting_zoom_details', true );
+		$GLOBALS['zoom']['api'] = $meeting_details;
 	}
 
 	$terms = get_the_terms( $post->ID, 'zoom-meeting' );
