@@ -12,12 +12,12 @@ class WebinarService implements IZoomEvent {
 	 *
 	 * @return array
 	 */
-	public function getTypeSpecificFields(): array {
+	public function getTypeSpecificFields( array $fields ): array {
 		return [
-			'panelists_video'        => filter_input( INPUT_POST, 'panelists_video' ),
-			'practice_session'       => filter_input( INPUT_POST, 'practice_session' ),
-			'hd_video'               => filter_input( INPUT_POST, 'hd_video' ),
-			'allow_multiple_devices' => filter_input( INPUT_POST, 'allow_multiple_devices' ),
+			'panelists_video'        => $fields['panelists_video'] ?? '',
+			'practice_session'       => $fields['practice_session'] ?? '',
+			'hd_video'               => $fields['hd_video'] ?? '',
+			'allow_multiple_devices' => $fields['allow_multiple_devices'] ?? '',
 		];
 	}
 

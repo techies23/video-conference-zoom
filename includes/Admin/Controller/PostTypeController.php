@@ -6,6 +6,8 @@ namespace Codemanas\VczApi\Admin\Controller;
 use Codemanas\VczApi\Admin\Foundation\PostType\CustomPostType;
 use Codemanas\VczApi\Admin\Foundation\PostType\PostTypeTemplates;
 use Codemanas\VczApi\Admin\Foundation\PostType\Taxonomy;
+use Codemanas\VczApi\Admin\Foundation\PostType\ZoomMetaBackfill;
+use Codemanas\VczApi\Admin\Foundation\PostType\ZoomMetaRegistration;
 use Codemanas\VczApi\Admin\Foundation\PostType\ZoomMetabox;
 use Codemanas\VczApi\Admin\Foundation\PostType\ZoomModel;
 use Codemanas\VczApi\Helpers\Config;
@@ -38,9 +40,11 @@ class PostTypeController {
 		$zoomMetabox    = new ZoomMetabox( $this->postType );
 		$taxonomy       = new Taxonomy( $this->postType );
 		$templates      = new PostTypeTemplates( $this->postType );
+		$metaBackfill   = new ZoomMetaBackfill( $this->postType );
 
 		//Custom Post Type
 		add_action( 'init', [ $customPostType, 'register' ] );
+		add_action( 'init', [ new ZoomMetaRegistration( $this->postType ), 'register' ], 20 );
 		add_action( 'restrict_manage_posts', [ $customPostType, 'showFilterOptions' ] );
 		add_filter( 'manage_' . $this->postType . '_posts_columns', [ $customPostType, 'addColumns' ], 20 );
 		add_action( 'manage_' . $this->postType . '_posts_custom_column', [ $customPostType, 'columnData' ], 20, 2 );
@@ -54,6 +58,9 @@ class PostTypeController {
 
 		//Metabox
 		add_action( 'add_meta_boxes', [ $zoomMetabox, 'register' ] );
+
+		//Legacy meta backfill
+		add_action( 'admin_init', [ $metaBackfill, 'maybeBackfill' ] );
 
 		//Templates
 		add_filter( 'single_template', [ $templates, 'single' ], 20 );

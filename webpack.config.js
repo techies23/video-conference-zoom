@@ -1,6 +1,7 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const defaultConfig = require('@wordpress/scripts/config/webpack.config')
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin')
 
 const isProduction = process.env.NODE_ENV === 'production'
 const devtoolSetting = isProduction ? false : 'source-map'
@@ -11,6 +12,10 @@ const commonRules = [
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        options: {
+            presets: [require.resolve('@wordpress/babel-preset-default')],
+            cacheDirectory: !!process.env.BABEL_CACHE_DIRECTORY,
+        },
     },
     {
         test: /\.(sass|scss|css)$/,
@@ -77,9 +82,16 @@ const backendConfig = {
         clean: false,
     },
     module: {rules: commonRules},
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'admin/css/style.min.css',
+        }),
+        new DependencyExtractionWebpackPlugin({
+            outputFormat: 'php',
+            outputFilename: 'admin/js/[name].min.asset.php',
         }),
     ],
 }

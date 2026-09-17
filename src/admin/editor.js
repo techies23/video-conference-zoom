@@ -1,1 +1,1 @@
-import './editor/validation'
+import './editor/meeting-panel';

@@ -6,7 +6,11 @@ use Codemanas\VczApi\Admin\AdminController;
 use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
+use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Data\ZoomUsersTable;
+use Codemanas\VczApi\Helpers\Common;
+use Codemanas\VczApi\Helpers\Config;
+use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\Encryption;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,6 +56,7 @@ final class Bootstrap {
         $this->init_api();
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_backend' ) );
+        add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
         //Ensure custom tables exist for installs that activated before this feature shipped.
@@ -276,7 +281,7 @@ final class Bootstrap {
         }
 
         //Validation for Editor
-        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', $this->get_admin_script_deps( 'editor.min' ), $this->plugin_version, [
                 'in_footer' => true,
         ] );
 
@@ -291,6 +296,75 @@ final class Bootstrap {
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
                 'nonce'   => wp_create_nonce( '_nonce_vczapi_security' )
         ) );
+    }
+
+    /**
+     * Load script dependencies emitted by the webpack dependency-extraction
+     * plugin (dist/admin/js/*.min.asset.php), falling back to sensible defaults.
+     *
+     * @param string $handle File basename without extension (e.g. "editor.min").
+     *
+     * @return array
+     */
+    private function get_admin_script_deps( string $handle ): array {
+        $asset_file = VCZAPI_PLUGIN_DIR_PATH . 'dist/admin/js/' . $handle . '.asset.php';
+        if ( file_exists( $asset_file ) ) {
+            $asset = require $asset_file;
+
+            return isset( $asset['dependencies'] ) && is_array( $asset['dependencies'] )
+                ? $asset['dependencies']
+                : [];
+        }
+
+        $defaults = [
+            'editor.min' => [
+                'wp-plugins',
+                'wp-edit-post',
+                'wp-data',
+                'wp-core-data',
+                'wp-components',
+                'wp-element',
+                'wp-i18n',
+                'wp-notices',
+            ],
+        ];
+
+        return $defaults[ $handle ] ?? [];
+    }
+
+    /**
+     * Enqueue the native Gutenberg meeting fields panel on the zoom-meetings
+     * block editor screen.
+     *
+     * @return void
+     */
+    public function enqueue_block_editor_assets(): void {
+        $screen = get_current_screen();
+        if ( empty( $screen ) || ( $screen->post_type ?? '' ) !== Config::get( 'post_type' ) ) {
+            return;
+        }
+
+        wp_enqueue_script( 'vczapi-admin-editor' );
+        wp_localize_script( 'vczapi-admin-editor', 'vczapi_editor', $this->get_block_editor_localization() );
+    }
+
+    /**
+     * Localized data consumed by the React meeting fields panel.
+     *
+     * @return array
+     */
+    private function get_block_editor_localization(): array {
+        $post_id = absint( $_GET['post'] ?? 0 );
+
+        return [
+            'postId'          => $post_id,
+            'hosts'           => Common::getDefaultHostList(),
+            'timezones'       => Date::timezone_list(),
+            'defaultTimezone' => Date::get_timezone_offset(),
+            'meetingId'       => $post_id ? (string) Metastore::getPostMeta( $post_id, 'meeting_id' ) : '',
+            'meta'            => $post_id ? ( Metastore::getPostMeta( $post_id, 'meeting_fields' ) ?: [] ) : [],
+            'zoomDetails'     => $post_id ? ( Metastore::getPostMeta( $post_id, 'meeting_zoom_details' ) ?: [] ) : [],
+        ];
     }
 
     /**
