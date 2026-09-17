@@ -1,19 +1,38 @@
 <?php
+
 namespace Codemanas\VczApi\Admin\Foundation\Settings;
 
-use Codemanas\VczApi\Admin\Foundation\Notification;
+use Codemanas\VczApi\Zoom\Auth\S2SOAuth;
 
 class ConnectHandler {
 
-	public function handle(): void {
-		if ( ! isset( $_POST['vczapi_zoom_connect_nonce'] ) ) {
-			return;
+	/**
+	 * AJAX handler for saving and verifying connect credentials.
+	 *
+	 * @return void
+	 */
+	public function ajaxHandler(): void {
+		if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'verify_vczapi_zoom_connect', 'vczapi_zoom_connect_nonce', false ) ) {
+			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'video-conferencing-with-zoom-api' ) ), 403 );
 		}
 
-		if ( ! current_user_can( 'manage_options' ) || ! wp_verify_nonce( sanitize_key( $_POST['vczapi_zoom_connect_nonce'] ), 'verify_vczapi_zoom_connect' ) ) {
-			return;
+		$result = $this->saveAndVerifyCredentials();
+
+		if ( is_wp_error( $result ) ) {
+			delete_option( S2SOAuth::OPTION_OAUTH_DATA );
+			wp_send_json_error( array( 'message' => $result->get_error_message() ), 500 );
 		}
 
+		wp_send_json_success( array( 'connected' => true ) );
+	}
+
+	/**
+	 * Sanitize and persist the credentials, then attempt to mint a fresh
+	 * access token to prove they are valid.
+	 *
+	 * @return string|\WP_Error Access token on success, WP_Error on failure.
+	 */
+	private function saveAndVerifyCredentials(): string|\WP_Error {
 		$credentials = [
 			'vczapi_oauth_account_id'    => sanitize_text_field( $_POST['vczapi_oauth_account_id'] ?? '' ),
 			'vczapi_oauth_client_id'     => sanitize_text_field( $_POST['vczapi_oauth_client_id'] ?? '' ),
@@ -26,37 +45,9 @@ class ConnectHandler {
 			update_option( $option_name, $value );
 		}
 
-		$access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken(
-			$credentials['vczapi_oauth_account_id'],
-			$credentials['vczapi_oauth_client_id'],
-			$credentials['vczapi_oauth_client_secret']
-		);
+		$auth = S2SOAuth::get_instance();
+		$auth->regenerateAccessTokenAndSave();
 
-		if ( is_wp_error( $access_token ) ) {
-			Notification::setNotice(
-				sprintf( esc_html__( 'Zoom OAuth Error Code: "%s" - %s', 'video-conferencing-with-zoom-api' ), esc_html( $access_token->get_error_code() ), esc_html( $access_token->get_error_message() ) ),
-				'error'
-			);
-
-			video_conferencing_zoom_api_delete_user_cache();
-			delete_option( 'vczapi_global_oauth_data' );
-
-			return;
-		}
-
-		if ( 'on' === sanitize_text_field( $_POST['vczapi-delete-jwt-keys'] ?? '' ) ) {
-			delete_option( 'zoom_api_key' );
-			delete_option( 'zoom_api_secret' );
-		}
-
-		$decoded_users = zoom_conference_v2()->users()->list( array(
-			'status'    => 'active',
-			'page_size' => 1,
-		) );
-		if ( is_wp_error( $decoded_users ) && is_admin() ) {
-			add_action( 'admin_notices', 'vczapi_check_connection_error' );
-		}
-
-		Notification::setNotice( __( 'Zoom: Credentials successfully verified and saved.', 'video-conferencing-with-zoom-api' ), 'success' );
+		return $auth->getAccessToken();
 	}
 }

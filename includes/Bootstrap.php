@@ -220,9 +220,7 @@ final class Bootstrap {
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
 
         //Admin Classes
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-recordings.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
 
         //Admin
@@ -267,7 +265,7 @@ final class Bootstrap {
         $screen = get_current_screen();
 
         //CSS
-        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" ) {
+        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" ) {
             //Choices
             wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
 
@@ -277,29 +275,21 @@ final class Bootstrap {
             wp_enqueue_style( 'vczapi-admin', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/css/style.min.css', false, $this->plugin_version );
         }
 
-        if ( $screen->id === "zoom-meetings" ) {
-            //Validation
-            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
-                    'in_footer' => true,
-            ] );
+        //Validation for Editor
+        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
 
-            wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
-                    'in_footer' => true,
-            ] );
-        }
+        wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
 
         wp_register_script( 'vczapi-script', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/scripts.min.js', [], $this->plugin_version, [
                 'in_footer' => true,
         ] );
         wp_localize_script( 'vczapi-script', 'vczapi_ajax', array(
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
-                'nonce'   => wp_create_nonce( '_nonce_vczapi_security' ),
-                'i18n'    => array(
-                        'syncing' => __( 'Syncing... this may take a while.', 'video-conferencing-with-zoom-api' ),
-                        'done'    => __( 'Synced {users} users across {pages} pages.', 'video-conferencing-with-zoom-api' ),
-                        'syncNow' => __( 'Sync Users from Zoom', 'video-conferencing-with-zoom-api' ),
-                        'error'   => __( 'Sync failed. Please try again.', 'video-conferencing-with-zoom-api' ),
-                ),
+                'nonce'   => wp_create_nonce( '_nonce_vczapi_security' )
         ) );
     }
 
@@ -333,7 +323,6 @@ final class Bootstrap {
      * @since  4.8.0
      */
     public static function create_custom_tables(): void {
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
         ZoomUsersTable::create_table();
 
         if ( ! wp_next_scheduled( 'vczapi_cron_zoom_user_sync' ) ) {
@@ -348,10 +337,6 @@ final class Bootstrap {
      * @author Deepen
      */
     public static function activate(): void {
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-        $post_type = \Zoom_Video_Conferencing_Admin_PostType::get_instance();
-        $post_type->register();
-
         //Create the custom zoom users table + schedule the user sync cron
         self::create_custom_tables();
 

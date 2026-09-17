@@ -1,6 +1,7 @@
 //Components
 @use 'vendors/choices';
 @use "components/accordion";
+@use "components/table";
 
 //Admin
 @use "metabox/admin-meeting-fields";
@@ -10,7 +11,10 @@
 @use "settings/settings";
 
 //users
-@use "users/list";
+@use "users/user-list";
 
 //Exentsions
 @use "extensions/addon";
+
+//Recording
+@use "recordings/recording-list";

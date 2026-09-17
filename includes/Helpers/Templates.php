@@ -6,6 +6,7 @@ namespace Codemanas\VczApi\Helpers;
  * Generate Template URLs and related data
  *
  * @since 4.2.2
+ * @updated 4.7.0
  * @author Deepen Bajracharya
  */
 class Templates {
@@ -85,9 +86,9 @@ class Templates {
 	 *
 	 * @param string $_template_file_path Absolute path to the template file.
 	 * @param array  $args                Associative array of variables to pass.
-	 * @param bool   $require_once        Whether to require_once or require.
+	 * @param bool $require_once        Whether to require_once or require.
 	 */
-	public static function includeFile( $_template_file_path, array $args = [], $require_once = false ): void {
+	public static function includeFile( string $_template_file_path, array $args = [], bool $require_once = false ): void {
 		if ( file_exists( $_template_file_path ) ) {
 			load_template( $_template_file_path, $require_once, $args );
 		}

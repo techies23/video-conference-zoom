@@ -4,7 +4,8 @@ export const initUserSync = () => {
 
     if (!syncBtn || !statusEl) return;
 
-    const {ajaxurl, nonce, i18n} = window.vczapi_ajax || {};
+    const {ajaxurl, nonce} = window.vczapi_ajax || {};
+    const {i18n} = window.vczapi_user_sync || {};
 
     const setSyncingState = () => {
         syncBtn.classList.add('disabled');
@@ -28,7 +29,7 @@ export const initUserSync = () => {
         try {
             // WordPress admin-ajax expects URL-encoded form data
             const body = new URLSearchParams({
-                action: 'vczapiSyncZoomUsers',
+                action: 'vczapi_sync_zoom_users',
                 security: nonce,
             });
 
@@ -40,10 +41,6 @@ export const initUserSync = () => {
                 body: body.toString(),
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
             const data = await response.json();
 
             if (data?.success) {
@@ -52,7 +49,7 @@ export const initUserSync = () => {
                     .replace('{pages}', data.data.pages);
                 setResetState();
 
-                setTimeout(() => window.location.reload(), 2000);
+                // setTimeout(() => window.location.reload(), 2000);
             } else {
                 const message = data?.data?.message || i18n.error;
                 statusEl.classList.add('error');

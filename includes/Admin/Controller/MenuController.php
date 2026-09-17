@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
+use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Templates;
 
 /**
@@ -27,7 +28,8 @@ class MenuController {
 	public function registerAdminMenus(): void {
 		$parent_slug = 'edit.php?post_type=zoom-meetings';
 
-		if ( vczapi_is_zoom_activated() ) {
+		$validated = Common::validateZoomCredentials();
+		if ( $validated ) {
 			$submenus = [];
 
 			$submenus[] = [
