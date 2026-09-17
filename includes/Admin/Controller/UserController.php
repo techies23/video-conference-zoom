@@ -33,6 +33,14 @@ class UserController {
 	 */
 	public function list(): void {
 		wp_enqueue_script( 'vczapi-script' );
+		wp_localize_script( 'vczapi-script', 'vczapi_user_sync', array(
+			'i18n' => array(
+				'syncing' => __( 'Syncing... this may take a while.', 'video-conferencing-with-zoom-api' ),
+				'done'    => __( 'Synced {users} users across {pages} pages.', 'video-conferencing-with-zoom-api' ),
+				'syncNow' => __( 'Sync Users from Zoom', 'video-conferencing-with-zoom-api' ),
+				'error'   => __( 'Sync failed. Please try again.', 'video-conferencing-with-zoom-api' ),
+			),
+		) );
 
 		$status       = ( isset( $_GET['status'] ) && $_GET['status'] === 'pending' ) ? 'pending' : 'active';
 		$current_page = isset( $_GET['pg'] ) ? absint( $_GET['pg'] ) : 1;

@@ -1,0 +1,14 @@
+@use '../abstracts' as *;
+
+.vczapi-users {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      padding: 0;
+      font-weight: bold;
+    }
+  }
+}

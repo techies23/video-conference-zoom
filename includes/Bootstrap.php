@@ -291,13 +291,7 @@ final class Bootstrap {
         ] );
         wp_localize_script( 'vczapi-script', 'vczapi_ajax', array(
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
-                'nonce'   => wp_create_nonce( '_nonce_vczapi_security' ),
-                'i18n'    => array(
-                        'syncing' => __( 'Syncing... this may take a while.', 'video-conferencing-with-zoom-api' ),
-                        'done'    => __( 'Synced {users} users across {pages} pages.', 'video-conferencing-with-zoom-api' ),
-                        'syncNow' => __( 'Sync Users from Zoom', 'video-conferencing-with-zoom-api' ),
-                        'error'   => __( 'Sync failed. Please try again.', 'video-conferencing-with-zoom-api' ),
-                ),
+                'nonce'   => wp_create_nonce( '_nonce_vczapi_security' )
         ) );
     }
 

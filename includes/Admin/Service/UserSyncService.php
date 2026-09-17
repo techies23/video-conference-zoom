@@ -47,8 +47,8 @@ class UserSyncService {
 	 * next_page_token pagination until all users have been fetched.
 	 *
 	 * @return array|\WP_Error {
-	 *     @type int    $synced Number of user rows written.
-	 *     @type int    $pages  Number of API pages fetched.
+	 * @type int $synced Number of user rows written.
+	 * @type int $pages Number of API pages fetched.
 	 * }
 	 */
 	public static function run_full_sync(): \WP_Error|array {
@@ -80,7 +80,6 @@ class UserSyncService {
 
 					return $response;
 				}
-
 				$pages ++;
 
 				if ( ! empty( $response['users'] ) && is_array( $response['users'] ) ) {
