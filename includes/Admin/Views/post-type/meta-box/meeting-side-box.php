@@ -46,18 +46,4 @@ $meeting_details = ! empty( $args['meeting_details'] ) ? $args['meeting_details'
             <strong><?php _e( 'Meeting has not been created for this post yet. Publish your meeting or hit update to create a new one for this post !', 'video-conferencing-with-zoom-api' ); ?></strong>
         </p>
     <?php } ?>
-    <div class="zoom-metabox-content">
-        <p><?php _e( 'Requires Login?', 'video-conferencing-with-zoom-api' ); ?>
-            <input type="checkbox" name="option_logged_in"
-                   value="1" <?php ! empty( $meeting_fields['site_option_logged_in'] ) ? checked( '1', $meeting_fields['site_option_logged_in'] ) : false; ?>
-                   class="regular-text">
-        </p>
-        <p class="description"><?php _e( 'Only logged in users of this site will be able to join this meeting.', 'video-conferencing-with-zoom-api' ); ?></p>
-        <p><?php _e( 'Hide Join via browser link ?', 'video-conferencing-with-zoom-api' ); ?>
-            <input type="checkbox" name="option_browser_join"
-                   value="1" <?php ! empty( $meeting_fields['site_option_browser_join'] ) ? checked( '1', $meeting_fields['site_option_browser_join'] ) : false; ?>
-                   class="regular-text">
-        </p>
-        <p class="description"><?php _e( 'This will disable join via browser link in frontend page.', 'video-conferencing-with-zoom-api' ); ?></p>
-    </div>
 </div>
