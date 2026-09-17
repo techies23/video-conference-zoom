@@ -4,6 +4,16 @@ $vczapi-border-color: #c3c4c7;
 $vczapi-bg-light: #f0f0f1;
 $vczapi-bg-header: #f6f7f7;
 $vczapi-text-color: #1d2327;
+$vczapi-error-text-color: #f00;
 $vczapi-icon-color: #50575e;
 $vczapi-radius: 4px;
 $vczapi-transition-speed: 0.3s;
+
+// Table Variables
+$vczapi-table-border-color: #dcdcde !default;
+$vczapi-table-header-bg: #f6f7f7 !default;
+$vczapi-table-stripe-bg: #f6f7f7 !default;
+$vczapi-table-hover-bg: #f0f0f1 !default;
+$vczapi-table-text-color: #2c3338 !default;
+$vczapi-table-muted-color: #646970 !default;
+$vczapi-table-error-color: #f00 !default;

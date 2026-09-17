@@ -42,7 +42,6 @@ class ZoomUsersTable {
 		$charset_coll = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			zoom_user_id VARCHAR(64) NOT NULL,
 			email VARCHAR(255) NOT NULL DEFAULT '',
 			first_name VARCHAR(128) NOT NULL DEFAULT '',
@@ -52,8 +51,7 @@ class ZoomUsersTable {
 			last_login_time DATETIME NULL DEFAULT NULL,
 			last_client_version VARCHAR(128) NOT NULL DEFAULT '',
 			synced_at DATETIME NOT NULL,
-			PRIMARY KEY  (id),
-			UNIQUE KEY zoom_user_id (zoom_user_id),
+			PRIMARY KEY  (zoom_user_id),
 			KEY email (email)
 		) {$charset_coll};";
 
@@ -86,16 +84,23 @@ class ZoomUsersTable {
 	 * Uses a single multi-row INSERT ... ON DUPLICATE KEY UPDATE so that
 	 * thousands of users can be written in one query.
 	 *
-	 * @param array $users Array of user arrays (or objects) from the Zoom API.
+	 * @param array  $users     Array of user arrays (or objects) from the Zoom API.
+	 * @param string $synced_at Optional. Timestamp to stamp on synced_at for
+	 *                          every row. Defaults to current_time( 'mysql' ).
+	 *                          Passing a single shared value for the whole
+	 *                          sync run keeps delete_stale() from pruning rows
+	 *                          written later in the same run.
 	 *
-	 * @return int Number of affected rows.
+	 * @return int Number of unique users upserted.
 	 */
-	public static function upsert_users( array $users ): int {
+	public static function upsert_users( array $users, string $synced_at = '' ): int {
 		global $wpdb;
 
 		if ( empty( $users ) ) {
 			return 0;
 		}
+
+		$synced_at = $synced_at ? $synced_at : current_time( 'mysql' );
 
 		$table_name = self::get_table_name();
 		$rows       = array();
@@ -116,7 +121,7 @@ class ZoomUsersTable {
 			$vals[] = $created_at !== null ? $wpdb->prepare( '%s', $created_at ) : 'NULL';
 			$vals[] = $last_login !== null ? $wpdb->prepare( '%s', $last_login ) : 'NULL';
 			$vals[] = $wpdb->prepare( '%s', ! empty( $user['last_client_version'] ) ? sanitize_text_field( $user['last_client_version'] ) : '' );
-			$vals[] = $wpdb->prepare( '%s', current_time( 'mysql' ) );
+			$vals[] = $wpdb->prepare( '%s', $synced_at );
 
 			$rows[] = '(' . implode( ', ', $vals ) . ')';
 		}
@@ -135,7 +140,9 @@ class ZoomUsersTable {
 				synced_at = VALUES( synced_at )";
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		return (int) $wpdb->query( $sql );
+		$result = $wpdb->query( $sql );
+
+		return ( false === $result ) ? 0 : count( $rows );
 	}
 
 	/**
@@ -208,7 +215,7 @@ class ZoomUsersTable {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT id AS row_id, zoom_user_id AS id, email, first_name, last_name, status, created_at, last_login_time, last_client_version, synced_at FROM {$table_name} WHERE {$where_sql} ORDER BY {$order_by} {$order} LIMIT %d OFFSET %d",
+				"SELECT zoom_user_id AS id, email, first_name, last_name, status, created_at, last_login_time, last_client_version, synced_at FROM {$table_name} WHERE {$where_sql} ORDER BY {$order_by} {$order} LIMIT %d OFFSET %d",
 				array_merge( $values, array( $page_size, $offset ) )
 			)
 		);
@@ -273,33 +280,48 @@ class ZoomUsersTable {
 	 * Mirrors the shape the legacy option cache returned (array of stdClass
 	 * with ->id, ->email, ->first_name, ->last_name, ->created_at, ... ).
 	 *
+	 * @param int $limit
+	 *
 	 * @return array
 	 */
-	public static function get_all_as_objects(): array {
+	public static function get_all_as_objects( int $limit = 0 ): array {
 		global $wpdb;
 
 		$table_name = self::get_table_name();
-		$status     = array( 'active', 'pending', 'inactive' );
+		$statuses   = array( 'active', 'pending', 'inactive' );
 
-		$results = array();
-		foreach ( $status as $s ) {
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-			$rows = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT * FROM {$table_name} WHERE status = %s ORDER BY email ASC",
-					$s
-				)
-			);
+		// Build placeholder string (%s, %s, %s) safely for IN clause
+		$placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%s' ) );
 
-			foreach ( $rows as $row ) {
-				// Map DB columns back to API field names so legacy consumers keep working.
-				$row->id = $row->zoom_user_id;
-			}
+		// Base query using IN () to replace 3 separate database calls with 1
+		$query = "SELECT zoom_user_id, email, first_name, last_name, status 
+              FROM {$table_name} 
+              WHERE status IN ({$placeholders}) 
+              ORDER BY email ASC";
 
-			$results = array_merge( $results, $rows );
+		$params = $statuses;
+
+		// Conditionally append LIMIT clause if $limit is greater than 0
+		if ( $limit > 0 ) {
+			$query    .= " LIMIT %d";
+			$params[] = $limit;
 		}
 
-		return $results;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			$wpdb->prepare( $query, ...$params )
+		);
+
+		if ( empty( $rows ) ) {
+			return array();
+		}
+
+		// Map DB columns to match API field names
+		foreach ( $rows as $row ) {
+			$row->id = $row->zoom_user_id;
+		}
+
+		return $rows;
 	}
 
 	/**

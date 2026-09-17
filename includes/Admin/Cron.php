@@ -29,11 +29,6 @@ class Cron {
 	 * @since  4.8.0
 	 */
 	public function execute_user_sync(): void {
-		if ( ! class_exists( '\Codemanas\VczApi\Admin\Service\UserSyncService' ) ) {
-			require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
-			require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/Service/UserSyncService.php';
-		}
-
 		UserSyncService::run_full_sync();
 	}
 

@@ -16,7 +16,7 @@ use Codemanas\VczApi\Data\ZoomUsersTable;
  */
 class UserSyncService {
 
-	const STATUSES = array( 'active', 'pending', 'inactive' );
+	const STATUSES = array( 'active' );
 
 	const MAX_PAGES_PER_STATUS = 500;
 
@@ -47,8 +47,8 @@ class UserSyncService {
 	 * next_page_token pagination until all users have been fetched.
 	 *
 	 * @return array|\WP_Error {
-	 *     @type int    $synced Number of user rows written.
-	 *     @type int    $pages  Number of API pages fetched.
+	 * @type int $synced Number of user rows written.
+	 * @type int $pages Number of API pages fetched.
 	 * }
 	 */
 	public static function run_full_sync(): \WP_Error|array {
@@ -57,8 +57,8 @@ class UserSyncService {
 		}
 
 		$synced_at = current_time( 'mysql' );
-		$total     = 0;
 		$pages     = 0;
+		$synced    = array();
 
 		foreach ( self::STATUSES as $status ) {
 			$next_page_token = null;
@@ -80,11 +80,17 @@ class UserSyncService {
 
 					return $response;
 				}
-
 				$pages ++;
 
 				if ( ! empty( $response['users'] ) && is_array( $response['users'] ) ) {
-					$total += ZoomUsersTable::upsert_users( $response['users'] );
+					ZoomUsersTable::upsert_users( $response['users'], $synced_at );
+
+					foreach ( $response['users'] as $user ) {
+						$user = (array) $user;
+						if ( ! empty( $user['id'] ) ) {
+							$synced[ sanitize_text_field( $user['id'] ) ] = true;
+						}
+					}
 				}
 
 				$next_page_token = ! empty( $response['next_page_token'] ) ? $response['next_page_token'] : null;
@@ -104,7 +110,7 @@ class UserSyncService {
 		self::release_lock();
 
 		return array(
-			'synced'      => $total,
+			'synced'      => count( $synced ),
 			'pages'       => $pages,
 			'synced_at'   => $synced_at,
 			'total_users' => ZoomUsersTable::count_users(),
@@ -123,10 +129,6 @@ class UserSyncService {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'video-conferencing-with-zoom-api' ) ), 403 );
-		}
-
-		if ( ! class_exists( ZoomUsersTable::class ) ) {
-			require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
 		}
 
 		$result = self::run_full_sync();

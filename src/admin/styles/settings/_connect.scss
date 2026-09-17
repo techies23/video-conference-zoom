@@ -12,6 +12,7 @@
 
   &__main,
   &__sidebar {
+    height: 100%;
     margin-top: 2em;
     border: 1px solid $vczapi-border-color;
   }
@@ -40,5 +41,81 @@
     padding: 1em;
     border-top: 1px solid $vczapi-border-color;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__progress {
+    display: none;
+    margin-right: 1em;
+    padding: 0.6em 1em;
+    border-radius: $vczapi-radius;
+    background: $vczapi-bg-light;
+    color: $vczapi-icon-color;
+    text-align: left;
+
+    &.vczapi-error {
+      color: $vczapi-error-text-color;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+
+  &__badge--connected {
+    display: none;
+    margin-left: 0.5em;
+    padding: 0.6em 0.6em;
+    border-radius: $vczapi-radius;
+    background: #76ff96;
+    color: #005414;
+    font-size: 11px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  &__stored-status {
+    display: none;
+    align-items: center;
+    gap: 0.75em;
+    margin-bottom: 1em;
+    padding: 0.75em 1em;
+    border: 1px solid $vczapi-border-color;
+    border-radius: $vczapi-radius;
+    background: $vczapi-bg-light;
+
+    .vczapi-connect__badge--connected {
+      display: inline-block;
+      margin-left: 0;
+    }
+
+    .vczapi-connect__edit-link {
+      margin-left: auto;
+    }
+  }
+
+  &__stored-status-text {
+    color: $vczapi-icon-color;
+  }
+
+  // OAuth fields start visible; once connected (and not editing) they are hidden.
+  .vczapi-connect__form[data-connected='1']:not(.is-editing) {
+    .vczapi-connect__oauth-fields {
+      display: none;
+    }
+
+    .vczapi-connect__stored-status {
+      display: flex;
+    }
+
+    .vczapi-connect__badge--connected {
+      display: inline-block;
+    }
+  }
+
+  // Show progress once the user interacts with the form.
+  .vczapi-connect__form.is-connecting .vczapi-connect__progress {
+    display: inline-block;
   }
 }

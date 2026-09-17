@@ -28,7 +28,7 @@ $pagination_links = paginate_links( array(
         </div>
 
         <div class="vczapi-users__header-actions">
-            <button id="vczapi-sync-users" class="button button-primary">
+            <button id="vczapi-sync-users" class="button button-primary vczapi-users__sync-btn">
                 <?php esc_html_e( 'Sync Users from Zoom', 'video-conferencing-with-zoom-api' ); ?>
             </button>
         </div>
@@ -36,7 +36,7 @@ $pagination_links = paginate_links( array(
 
     <div class="vczapi-users__sync-status">
         <?php if ( ! empty( $last_synced ) ) : ?>
-            <p>
+            <p class="vczapi-users__sync-text">
                 <?php
                 printf(
                         esc_html__( 'Last synced: %1$s (%2$d users cached)', 'video-conferencing-with-zoom-api' ),
@@ -46,48 +46,49 @@ $pagination_links = paginate_links( array(
                 ?>
             </p>
         <?php else : ?>
-            <p>
+            <p class="vczapi-users__sync-text">
                 <?php esc_html_e( 'No cached users yet. Click "Sync Users from Zoom" to pull your Zoom users into the local cache table.', 'video-conferencing-with-zoom-api' ); ?>
             </p>
         <?php endif; ?>
         <span id="vczapi-sync-status" class="vczapi-users__sync-status-message"></span>
     </div>
 
-    <div class="vczapi-users__table-container">
-        <table class="widefat striped vczapi-users__table">
-            <thead class="vczapi-users__table-head">
-            <tr class="vczapi-users__row vczapi-users__row--header">
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'SN', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'User ID', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'Email', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'Name', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'Created On', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'Last Login', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-users__cell vczapi-users__cell--header vczapi-users__cell--align-left"><?php esc_html_e( 'Last Client', 'video-conferencing-with-zoom-api' ); ?></th>
+    <!-- Reusable Table Component Wrapper -->
+    <div class="vczapi-table-wrapper vczapi-users__table-wrapper">
+        <table class="vczapi-table vczapi-users__table">
+            <thead class="vczapi-table__head vczapi-users__table-head">
+            <tr class="vczapi-table__row vczapi-table__row--head vczapi-users__table-row vczapi-users__table-row--header">
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'SN', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'User ID', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'Email', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'Name', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'Created On', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'Last Login', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left vczapi-users__table-cell"><?php esc_html_e( 'Last Client', 'video-conferencing-with-zoom-api' ); ?></th>
             </tr>
             </thead>
-            <tbody class="vczapi-users__table-body">
+            <tbody class="vczapi-table__body vczapi-users__table-body">
             <?php
             $count = 1;
             if ( ! empty( $users ) ) :
                 foreach ( $users as $user ) :
                     $name = trim( ( $user->first_name ?? '' ) . ' ' . ( $user->last_name ?? '' ) );
                     ?>
-                    <tr class="vczapi-users__row">
-                        <td class="vczapi-users__cell"><?php echo esc_html( $count ++ ); ?></td>
-                        <td class="vczapi-users__cell"><?php echo esc_html( $user->id ); ?></td>
-                        <td class="vczapi-users__cell"><?php echo esc_html( $user->email ); ?></td>
-                        <td class="vczapi-users__cell"><?php echo esc_html( $name ); ?></td>
-                        <td class="vczapi-users__cell"><?php echo ! empty( $user->created_at ) ? esc_html( date( 'F j, Y, g:i a', strtotime( $user->created_at ) ) ) : 'N/A'; ?></td>
-                        <td class="vczapi-users__cell"><?php echo ! empty( $user->last_login_time ) ? esc_html( date( 'F j, Y, g:i a', strtotime( $user->last_login_time ) ) ) : 'N/A'; ?></td>
-                        <td class="vczapi-users__cell"><?php echo ! empty( $user->last_client_version ) ? esc_html( $user->last_client_version ) : 'N/A'; ?></td>
+                    <tr class="vczapi-table__row vczapi-users__table-row">
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo esc_html( $count ++ ); ?></td>
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo esc_html( $user->id ); ?></td>
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo esc_html( $user->email ); ?></td>
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo esc_html( $name ); ?></td>
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo ! empty( $user->created_at ) ? esc_html( date( 'F j, Y, g:i a', strtotime( $user->created_at ) ) ) : 'N/A'; ?></td>
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo ! empty( $user->last_login_time ) ? esc_html( date( 'F j, Y, g:i a', strtotime( $user->last_login_time ) ) ) : 'N/A'; ?></td>
+                        <td class="vczapi-table__cell vczapi-users__table-cell"><?php echo ! empty( $user->last_client_version ) ? esc_html( $user->last_client_version ) : 'N/A'; ?></td>
                     </tr>
                 <?php
                 endforeach;
             else :
                 ?>
-                <tr class="vczapi-users__row vczapi-users__row--empty">
-                    <td class="vczapi-users__cell vczapi-users__cell--empty" colspan="7"><?php esc_html_e( 'No users found.', 'video-conferencing-with-zoom-api' ); ?></td>
+                <tr class="vczapi-table__row vczapi-table__row--empty vczapi-users__table-row vczapi-users__table-row--empty">
+                    <td class="vczapi-table__cell vczapi-table__cell--empty vczapi-users__table-cell vczapi-users__table-cell--empty" colspan="7"><?php esc_html_e( 'No users found.', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
             <?php endif; ?>
             </tbody>
