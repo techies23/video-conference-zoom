@@ -12,15 +12,19 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="vczapi-connect">
     <div class="vczapi-connect__main">
-        <form action="" method="post" class="vczapi-connect__form">
+        <form action="" method="post" id="vczapi-connect-form" class="vczapi-connect__form" data-connected="<?php echo ! empty( $is_connected ) ? '1' : '0'; ?>">
             <?php wp_nonce_field( 'verify_vczapi_zoom_connect', 'vczapi_zoom_connect_nonce' ); ?>
 
             <div class="vczapi-admin-accordion">
-                <!-- OAuth Credentials -->
                 <div id="vczapi-s2sOauth-credentials" class="vczapi-admin-accordion__item">
                     <input type="checkbox" id="vczapi-accordion-oauth" class="vczapi-admin-accordion__toggle" checked>
                     <label for="vczapi-accordion-oauth" class="vczapi-admin-accordion__header">
-                        <span class="vczapi-admin-accordion__title"><?php esc_html_e( 'Server to Server OAuth Credentials', 'video-conferencing-with-zoom-api' ); ?></span>
+                        <span class="vczapi-admin-accordion__title">
+                            <?php esc_html_e( 'Server to Server OAuth Credentials', 'video-conferencing-with-zoom-api' ); ?>
+                            <span class="vczapi-connect__badge vczapi-connect__badge--connected">
+                                <?php esc_html_e( 'Connected', 'video-conferencing-with-zoom-api' ); ?>
+                            </span>
+                        </span>
                         <span class="dashicons dashicons-arrow-down-alt2 vczapi-admin-accordion__icon"></span>
                     </label>
                     <div class="vczapi-admin-accordion__content">
@@ -36,8 +40,19 @@ defined( 'ABSPATH' ) || exit;
                             );
                             ?>
                         </p>
+                        <div class="vczapi-connect__stored-status">
+                            <span class="vczapi-connect__badge vczapi-connect__badge--connected">
+                                <?php esc_html_e( 'Connected', 'video-conferencing-with-zoom-api' ); ?>
+                            </span>
+                            <span class="vczapi-connect__stored-status-text">
+                                <?php esc_html_e( 'Your Zoom account is connected.', 'video-conferencing-with-zoom-api' ); ?>
+                            </span>
+                            <button type="button" id="vczapi-connect-edit" class="button vczapi-connect__edit-link">
+                                <?php esc_html_e( 'Edit Credentials', 'video-conferencing-with-zoom-api' ); ?>
+                            </button>
+                        </div>
                         <table class="form-table vczapi-connect__form-table">
-                            <tbody>
+                            <tbody class="vczapi-connect__oauth-fields">
                             <?php if ( ! empty( $oauth_error_message ) ) : ?>
                                 <tr>
                                     <td colspan="2" class="vczapi-connect__error-notice">
@@ -118,15 +133,12 @@ defined( 'ABSPATH' ) || exit;
                         </p>
                     </div>
                 </div>
-                <!-- End App SDK Credentials -->
-
             </div>
 
-            <!-- Save Actions -->
             <div class="vczapi-connect__actions">
-                <?php submit_button( __( 'Save Changes', 'video-conferencing-with-zoom-api' ), 'primary', 'submit', false ); ?>
+                <div id="vczapi-connect-progress" class="vczapi-connect__progress" role="status" aria-live="polite"></div>
+                <?php submit_button( __( 'Save & Connect', 'video-conferencing-with-zoom-api' ), 'primary', 'submit', false, [ 'id' => 'vczapi-connect-submit' ] ); ?>
             </div>
-            <!-- End Save Actions -->
         </form>
     </div>
 

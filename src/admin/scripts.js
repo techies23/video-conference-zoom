@@ -1,11 +1,11 @@
-import './styles/app.scss'
+import './styles/app.scss';
 
-import {initUserSync} from './modules/userSync';
-import {initSettingsForm} from './modules/settings';
-import {initRecordingsTable} from "./modules/recordings";
+import { initUserSync } from './modules/userSync';
+import { initRecordingsTable } from './modules/recordings';
+import { initConnect } from './modules/connect';
 
-document.addEventListener('DOMContentLoaded', () => {
-    initUserSync();
-    initSettingsForm();
-    initRecordingsTable();
-});
+document.addEventListener( 'DOMContentLoaded', () => {
+	initUserSync();
+	initRecordingsTable();
+	initConnect();
+} );

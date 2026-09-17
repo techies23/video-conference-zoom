@@ -26,6 +26,8 @@ class RecordingController {
 
 	public function __construct() {
 		$this->recordingService = new RecordingService();
+
+		add_action( 'wp_ajax_vczapi_list_recordings', [ $this, 'getRecordings' ] );
 	}
 
 	/**

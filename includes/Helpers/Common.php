@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Helpers;
 
 use Codemanas\VczApi\Data\Datastore;
+use Codemanas\VczApi\Zoom\Auth\S2SOAuth;
 
 /**
  * Common Helpers that would be useful everywhere.
@@ -27,11 +28,12 @@ class Common {
 		return $options;
 	}
 
+	/**
+	 * Check if Access token exists and plugin is ready to serve zoom contents.
+	 *
+	 * @return bool
+	 */
 	public static function validateZoomCredentials(): bool {
-		if ( vczapi_is_oauth_active() ) {
-			return true;
-		}
-
-		return vczapi_is_jwt_active();
+		return S2SOAuth::get_instance()->isAccessTokenStored();
 	}
 }

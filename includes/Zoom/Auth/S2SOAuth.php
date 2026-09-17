@@ -15,10 +15,10 @@ class S2SOAuth {
 	/**
 	 * Option names.
 	 */
-	const OPTION_OAUTH_DATA      = 'vczapi_global_oauth_data';
-	const OPTION_ACCOUNT_ID      = 'vczapi_oauth_account_id';
-	const OPTION_CLIENT_ID       = 'vczapi_oauth_client_id';
-	const OPTION_CLIENT_SECRET   = 'vczapi_oauth_client_secret';
+	const OPTION_OAUTH_DATA = 'vczapi_global_oauth_data';
+	const OPTION_ACCOUNT_ID = 'vczapi_oauth_account_id';
+	const OPTION_CLIENT_ID = 'vczapi_oauth_client_id';
+	const OPTION_CLIENT_SECRET = 'vczapi_oauth_client_secret';
 	const TRANSIENT_REFRESH_LOCK = 'vczapi_oauth_refresh_lock';
 
 	/**
@@ -37,6 +37,16 @@ class S2SOAuth {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Check if access token is valid and actively stored.
+	 *
+	 * @return bool
+	 */
+	public function isAccessTokenStored() {
+		$oauthData = get_option( self::OPTION_OAUTH_DATA );
+		return ! empty( $oauthData ) && ! empty( $oauthData->access_token );
 	}
 
 	/**
@@ -79,7 +89,7 @@ class S2SOAuth {
 	/**
 	 * True if token expires within EARLY_REFRESH_SECONDS.
 	 *
-	 * @param  object  $oauthData
+	 * @param object $oauthData
 	 *
 	 * @return bool
 	 */
@@ -124,6 +134,7 @@ class S2SOAuth {
 		$result = $this->generateAccessToken( $account_id, $client_id, $client_secret );
 		if ( is_wp_error( $result ) ) {
 			update_option( self::OPTION_OAUTH_DATA, '' );
+
 			return $result;
 		}
 
@@ -160,9 +171,9 @@ class S2SOAuth {
 	/**
 	 * Generate token from Zoom OAuth server.
 	 *
-	 * @param  string  $account_id
-	 * @param  string  $client_id
-	 * @param  string  $client_secret
+	 * @param string $account_id
+	 * @param string $client_id
+	 * @param string $client_secret
 	 *
 	 * @return object|WP_Error
 	 */

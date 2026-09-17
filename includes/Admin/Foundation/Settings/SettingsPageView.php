@@ -5,6 +5,7 @@ namespace Codemanas\VczApi\Admin\Foundation\Settings;
 use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Admin\Schema\SettingsFieldSchema;
 use Codemanas\VczApi\Data\Logger;
+use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Templates;
 
 class SettingsPageView {
@@ -18,8 +19,6 @@ class SettingsPageView {
     public function render(): void {
         wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
         wp_enqueue_style( 'video-conferencing-with-zoom-api' );
-
-        video_conferencing_zoom_api_show_like_popup();
 
         $active_tab = sanitize_key( $_GET['tab'] ?? 'connect' );
         $tabs       = [
@@ -51,11 +50,30 @@ class SettingsPageView {
     private function renderTabContent( string $active_tab ): void {
         switch ( $active_tab ) {
             case 'connect':
+                wp_enqueue_script( 'vczapi-script' );
+                wp_localize_script( 'vczapi-script', 'vczapi_connect', array(
+                        'i18n' => array(
+                                'saving'          => __( 'Verifying credentials and connecting to Zoom…', 'video-conferencing-with-zoom-api' ),
+                                'syncing'         => __( 'Credentials verified! Syncing Zoom users…', 'video-conferencing-with-zoom-api' ),
+                                'connected'       => __( 'Connected to Zoom. Synced {users} users across {pages} pages.', 'video-conferencing-with-zoom-api' ),
+                                'connectedOnly'   => __( 'Connected to Zoom.', 'video-conferencing-with-zoom-api' ),
+                                'syncFailed'      => __( 'Connected, but user sync failed: {message}', 'video-conferencing-with-zoom-api' ),
+                                'error'           => __( 'Unable to connect. Please check your credentials and try again.', 'video-conferencing-with-zoom-api' ),
+                                'errorCode'       => __( 'Error: {message}', 'video-conferencing-with-zoom-api' ),
+                                'networkError'    => __( 'Connection lost. Please try again.', 'video-conferencing-with-zoom-api' ),
+                                'connect'         => __( 'Save & Connect', 'video-conferencing-with-zoom-api' ),
+                                'connecting'      => __( 'Connecting…', 'video-conferencing-with-zoom-api' ),
+                                'editCredentials' => __( 'Edit Credentials', 'video-conferencing-with-zoom-api' ),
+                                'cancelEdit'      => __( 'Cancel', 'video-conferencing-with-zoom-api' ),
+                        ),
+                ) );
+
                 $vczapi_oauth_account_id    = get_option( 'vczapi_oauth_account_id' );
                 $vczapi_oauth_client_id     = get_option( 'vczapi_oauth_client_id' );
                 $vczapi_oauth_client_secret = get_option( 'vczapi_oauth_client_secret' );
                 $vczapi_sdk_key             = get_option( 'vczapi_sdk_key' );
                 $vczapi_sdk_secret_key      = get_option( 'vczapi_sdk_secret_key' );
+                $is_connected               = Common::validateZoomCredentials();
 
                 require_once VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/settings/connect.php';
                 break;

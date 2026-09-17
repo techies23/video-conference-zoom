@@ -47,6 +47,7 @@ class PostTypeController {
 		add_action( 'manage_edit-' . $this->postType . '_sortable_columns', [ $customPostType, 'sortableData' ], 30 );
 		add_filter( 'views_edit-' . $this->postType, [ $customPostType, 'addFiltersOnSubSubSub' ] );
 		add_filter( 'pre_get_posts', [ $customPostType, 'filterPosts' ] );
+		add_action( 'admin_menu', [ $customPostType, 'hidePostType' ] );
 
 		//Taxonomy
 		add_action( 'init', [ $taxonomy, 'register' ] );

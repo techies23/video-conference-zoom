@@ -35,16 +35,19 @@ class SettingController {
 	}
 
 	private function registerHooks(): void {
-		$connectHandler   = new ConnectHandler();
-		$settingsHandler  = new GeneralSettingsHandler( $this->settingsRepo );
-		$logHandler       = new LogHandler();
-		$adminMenu        = new MenuController( [ $this->view, 'render' ] );
+		$connectHandler  = new ConnectHandler();
+		$settingsHandler = new GeneralSettingsHandler( $this->settingsRepo );
+		$logHandler      = new LogHandler();
+		$adminMenu       = new MenuController( [ $this->view, 'render' ] );
 
 		add_action( 'admin_menu', [ $adminMenu, 'registerAdminMenus' ] );
-		add_action( 'admin_init', [ $connectHandler, 'handle' ] );
+//		add_action( 'admin_init', [ $connectHandler, 'handle' ] );
 		add_action( 'admin_init', [ $settingsHandler, 'handle' ] );
 		add_action( 'admin_init', [ $logHandler, 'handle' ] );
 		add_action( 'admin_notices', [ Notification::get_instance(), 'displayNotices' ] );
+
+		//Ajax Call
+		add_action( 'wp_ajax_vczapi_connect_credentials', [ $connectHandler, 'ajaxHandler' ] );
 	}
 
 	/**

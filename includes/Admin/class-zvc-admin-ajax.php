@@ -11,8 +11,6 @@ use Codemanas\VczApi\Helpers\Encryption;
 class Zoom_Video_Conferencing_Admin_Ajax {
 
 	public function __construct() {
-		//Delete Meeting
-		add_action( 'wp_ajax_zoom_dimiss_notice', array( $this, 'dismiss_notice' ) );
 		add_action( 'wp_ajax_check_connection', array( $this, 'check_connection' ) );
 
 		//Join via browser Auth Call
@@ -40,15 +38,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			update_option( 'vczapi_dismiss_sdk_not_active_notice', true );
 		}
 		wp_send_json_success();
-	}
-
-	/**
-	 * Dismiss admin notice
-	 */
-	public function dismiss_notice() {
-		update_option( 'zoom_api_notice', 1 );
-		wp_send_json( 1 );
-		wp_die();
 	}
 
 	/**

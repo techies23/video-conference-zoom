@@ -4,6 +4,7 @@ namespace Codemanas\VczApi\Admin\Foundation\PostType;
 
 use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Data\Metastore;
+use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\MeetingType;
 use Codemanas\ZoomPro\Backend\Settings\Settings;
@@ -19,6 +20,24 @@ class CustomPostType {
 	public function register(): void {
 		$definition = new ZoomPostTypeDefinition( $this->postType );
 		register_post_type( $this->postType, $definition->getArgs() );
+	}
+
+	/**
+	 * Hide Menu if plugin is not configured properly.
+	 * @return void
+	 */
+	public function hidePostType(): void {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] !== $this->postType ) {
+			return;
+		}
+
+		$valid = Common::validateZoomCredentials();
+		if ( ! $valid ) {
+			global $submenu;
+			unset( $submenu['edit.php?post_type=zoom-meetings'][5] );
+			unset( $submenu['edit.php?post_type=zoom-meetings'][10] );
+			unset( $submenu['edit.php?post_type=zoom-meetings'][15] );
+		}
 	}
 
 	public function showFilterOptions( $postType ): void {
@@ -95,7 +114,7 @@ class CustomPostType {
 				break;
 			case 'start_date':
 				if ( ! empty( $meeting ) && ! empty( $meeting['type'] ) && MeetingType::is_scheduled_meeting_or_webinar( $meeting['type'] ) && ! empty( $meeting['start_time'] ) ) {
-					echo esc_html( Date::dateConverter( $meeting['start_time'], $meeting['timezone']) );
+					echo esc_html( Date::dateConverter( $meeting['start_time'], $meeting['timezone'] ) );
 				} elseif ( ! empty( $meeting ) && vczapi_pro_check_type( $meeting['type'] ) ) {
 					_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
 				} else {

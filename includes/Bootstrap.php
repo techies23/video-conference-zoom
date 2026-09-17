@@ -220,9 +220,7 @@ final class Bootstrap {
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
 
         //Admin Classes
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-recordings.php';
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
 
         //Admin
@@ -339,10 +337,6 @@ final class Bootstrap {
      * @author Deepen
      */
     public static function activate(): void {
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-        $post_type = \Zoom_Video_Conferencing_Admin_PostType::get_instance();
-        $post_type->register();
-
         //Create the custom zoom users table + schedule the user sync cron
         self::create_custom_tables();
 
