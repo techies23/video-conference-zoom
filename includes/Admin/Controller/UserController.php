@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Admin\Controller;
 
 use Codemanas\VczApi\Admin\Service\UsersService;
+use Codemanas\VczApi\Data\Datastore;
 use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Templates;
 
@@ -51,6 +52,27 @@ class UserController {
 		} else {
 			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/list.php', $args );
 		}
+	}
+
+	/**
+	 * Get List of users in array for choices.js processing.
+	 *
+	 * @called from AjaxController.php
+	 */
+	public function getUsersByQuery(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$search_string = filter_input( INPUT_GET, 'q' );
+		$results       = [];
+
+		$zoom_users = ZoomUsersTable::search_for_picker( (string) $search_string );
+		if ( ! empty( $zoom_users ) ) {
+			$results = array_merge( $results, $zoom_users );
+		}
+
+		wp_send_json( array( 'results' => $results ) );
 	}
 
 	/**

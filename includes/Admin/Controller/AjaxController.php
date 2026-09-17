@@ -17,6 +17,7 @@ class AjaxController {
 	}
 
 	public function __construct() {
-		add_action( 'wp_ajax_vczapiSyncZoomUsers', [ UserSyncService::class, 'syncUsers' ] );
+		add_action( 'wp_ajax_vczapi_sync_zoom_users', [ UserSyncService::class, 'syncUsers' ] );
+		add_action( 'wp_ajax_vczapi_get_user_by_query', [ UserController::get_instance(), 'getUsersByQuery' ] );
 	}
 }

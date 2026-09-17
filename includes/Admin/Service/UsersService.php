@@ -23,10 +23,6 @@ class UsersService {
 	 * @return array
 	 */
 	public function list( int $page = 1, string $status = 'active', int $page_size = 20 ): array {
-		if ( ! class_exists( ZoomUsersTable::class ) ) {
-			require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
-		}
-
 		if ( ! ZoomUsersTable::table_exists() ) {
 			ZoomUsersTable::create_table();
 		}

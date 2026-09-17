@@ -125,10 +125,6 @@ class UserSyncService {
 			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'video-conferencing-with-zoom-api' ) ), 403 );
 		}
 
-		if ( ! class_exists( ZoomUsersTable::class ) ) {
-			require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
-		}
-
 		$result = self::run_full_sync();
 
 		if ( is_wp_error( $result ) ) {

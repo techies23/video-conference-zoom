@@ -267,7 +267,7 @@ final class Bootstrap {
         $screen = get_current_screen();
 
         //CSS
-        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" ) {
+        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" ) {
             //Choices
             wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
 
@@ -277,16 +277,14 @@ final class Bootstrap {
             wp_enqueue_style( 'vczapi-admin', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/css/style.min.css', false, $this->plugin_version );
         }
 
-        if ( $screen->id === "zoom-meetings" ) {
-            //Validation
-            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
-                    'in_footer' => true,
-            ] );
+        //Validation for Editor
+        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
 
-            wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
-                    'in_footer' => true,
-            ] );
-        }
+        wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
 
         wp_register_script( 'vczapi-script', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/scripts.min.js', [], $this->plugin_version, [
                 'in_footer' => true,
@@ -333,7 +331,6 @@ final class Bootstrap {
      * @since  4.8.0
      */
     public static function create_custom_tables(): void {
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/Data/ZoomUsersTable.php';
         ZoomUsersTable::create_table();
 
         if ( ! wp_next_scheduled( 'vczapi_cron_zoom_user_sync' ) ) {

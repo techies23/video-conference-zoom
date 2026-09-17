@@ -58,6 +58,39 @@ class Metastore {
 	}
 
 	/**
+	 * Set User Meta Data
+	 *
+	 * @param $user_id
+	 * @param $key
+	 * @param $value
+	 *
+	 * @return void
+	 */
+	public static function setUserMeta( $user_id, $key, $value ): void {
+		update_user_meta( $user_id, "vczapi_{$key}", $value );
+	}
+
+	/**
+	 * Get user meta
+	 *
+	 * @param $user_id
+	 * @param         $key
+	 * @param bool $single
+	 *
+	 * @return mixed
+	 */
+	public static function getUserMeta( $user_id, $key, bool $single = true ): mixed {
+		$userMeta = get_user_meta( $user_id, "vczapi_{$key}", $single );
+
+		//Back Compat
+		if ( empty( $userMeta ) && ( 'zoom_host_id' === $key ) ) {
+			$userMeta = get_post_meta( $user_id, "user_zoom_hostid", $single );
+		}
+
+		return $userMeta;
+	}
+
+	/**
 	 * Set Custom Post Data
 	 *
 	 * @param $post_id
@@ -75,7 +108,7 @@ class Metastore {
 	 *
 	 * @param         $post_id
 	 * @param         $key
-	 * @param   bool  $single
+	 * @param bool $single
 	 *
 	 * @return mixed
 	 */
@@ -94,7 +127,7 @@ class Metastore {
 	 *
 	 * @param         $post_id
 	 * @param         $key
-	 * @param   bool  $single
+	 * @param bool $single
 	 *
 	 * @return mixed
 	 */
@@ -146,8 +179,8 @@ class Metastore {
 	 * | site_option_enable_debug_log / option_enable_debug_logs | site_option_enable_debug_log         | 'yes' / 'on' / '1' / 1 -> '1', else null          |
 	 * ---------------------------------------------------------------------------------------------------------------------
 	 *
-	 * @param   array  $data     Legacy or new meeting fields data.
-	 * @param   int    $post_id  Optional post ID for fallback values (such as post title).
+	 * @param array $data Legacy or new meeting fields data.
+	 * @param int $post_id Optional post ID for fallback values (such as post title).
 	 *
 	 * @return array
 	 */

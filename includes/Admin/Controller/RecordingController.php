@@ -3,6 +3,10 @@
 namespace Codemanas\VczApi\Admin\Controller;
 
 use Codemanas\VczApi\Admin\Service\RecordingService;
+use Codemanas\VczApi\Data\Datastore;
+use Codemanas\VczApi\Data\Metastore;
+use Codemanas\VczApi\Data\ZoomUsersTable;
+use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Templates;
 
 /**
@@ -27,9 +31,14 @@ class RecordingController {
 	}
 
 	public function list(): void {
+		wp_enqueue_script( 'vczapi-vendors-js' );
+		wp_enqueue_script( 'vczapi-script' );
+
 		$current_page = isset( $_GET['pg'] ) ? absint( $_GET['pg'] ) : 1;
 
-		$zoom_user_host_id = get_user_meta( get_current_user_id(), 'user_zoom_hostid', true );
+		$currentUserId     = get_current_user_id();
+		$zoom_user_host_id = Metastore::getUserMeta( $currentUserId, 'user_host_id' );
+		$users             = Common::getDefaultHostList();
 		if ( isset( $_GET['host_id'] ) ) {
 			$host_id = $_GET['host_id'];
 		} else if ( ! empty( $zoom_user_host_id ) ) {
@@ -37,10 +46,11 @@ class RecordingController {
 		}
 
 		$args = [
-			'data'         => [],
-			'error'        => [],
-			'current_page' => [],
-			'page_count'   => [],
+			'data'          => [],
+			'error'         => [],
+			'current_page'  => [],
+			'page_count'    => [],
+			'default_users' => $users
 		];
 
 		if ( ! empty( $host_id ) ) {

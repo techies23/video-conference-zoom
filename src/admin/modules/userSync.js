@@ -28,7 +28,7 @@ export const initUserSync = () => {
         try {
             // WordPress admin-ajax expects URL-encoded form data
             const body = new URLSearchParams({
-                action: 'vczapiSyncZoomUsers',
+                action: 'vczapi_sync_zoom_users',
                 security: nonce,
             });
 

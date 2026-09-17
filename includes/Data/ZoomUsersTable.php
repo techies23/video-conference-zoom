@@ -273,33 +273,48 @@ class ZoomUsersTable {
 	 * Mirrors the shape the legacy option cache returned (array of stdClass
 	 * with ->id, ->email, ->first_name, ->last_name, ->created_at, ... ).
 	 *
+	 * @param int $limit
+	 *
 	 * @return array
 	 */
-	public static function get_all_as_objects(): array {
+	public static function get_all_as_objects( int $limit = 0 ): array {
 		global $wpdb;
 
 		$table_name = self::get_table_name();
-		$status     = array( 'active', 'pending', 'inactive' );
+		$statuses   = array( 'active', 'pending', 'inactive' );
 
-		$results = array();
-		foreach ( $status as $s ) {
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-			$rows = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT * FROM {$table_name} WHERE status = %s ORDER BY email ASC",
-					$s
-				)
-			);
+		// Build placeholder string (%s, %s, %s) safely for IN clause
+		$placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%s' ) );
 
-			foreach ( $rows as $row ) {
-				// Map DB columns back to API field names so legacy consumers keep working.
-				$row->id = $row->zoom_user_id;
-			}
+		// Base query using IN () to replace 3 separate database calls with 1
+		$query = "SELECT zoom_user_id, email, first_name, last_name, status 
+              FROM {$table_name} 
+              WHERE status IN ({$placeholders}) 
+              ORDER BY email ASC";
 
-			$results = array_merge( $results, $rows );
+		$params = $statuses;
+
+		// Conditionally append LIMIT clause if $limit is greater than 0
+		if ( $limit > 0 ) {
+			$query    .= " LIMIT %d";
+			$params[] = $limit;
 		}
 
-		return $results;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			$wpdb->prepare( $query, ...$params )
+		);
+
+		if ( empty( $rows ) ) {
+			return array();
+		}
+
+		// Map DB columns to match API field names
+		foreach ( $rows as $row ) {
+			$row->id = $row->zoom_user_id;
+		}
+
+		return $rows;
 	}
 
 	/**

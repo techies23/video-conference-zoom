@@ -32,18 +32,19 @@ class MeetingFieldSchema {
 
 		// Lock host selection if meeting is already published or has a Zoom ID
 		$host_field_config = [
-			'label'       => __( 'Meeting Host *', $text_domain ),
-			'type'        => !$has_zoom_id ? 'select' : 'placeholder',
-			'description' => __( 'This is host ID for the meeting (Required).', $text_domain ),
-			'required'    => true,
-			'options'     => $host_options,
-			'input_class' => !$has_zoom_id ? [ 'vczapi-choices' ] : [],
-//			'custom_attributes' => [
-//				'data-api-action'  => 'postTypeFetchHosts',
-//				'data-placeholder' => __( 'Search host by name or email...', $text_domain ),
-//				'data-min-search'  => '3',
-//				'data-searchable'  => 'true',
-//			],
+			'label'             => __( 'Meeting Host *', $text_domain ),
+			'type'              => ! $has_zoom_id ? 'select' : 'placeholder',
+			'description'       => __( 'This is host ID for the meeting (Required).', $text_domain ),
+			'required'          => true,
+			'options'           => $host_options,
+			'input_class'       => ! $has_zoom_id ? [ 'vczapi-choices' ] : [],
+			'custom_attributes' => [
+				'data-api-action'  => 'postTypeFetchHosts',
+				'data-placeholder' => __( 'Search host by name or email...', $text_domain ),
+				'data-min-search'  => '3',
+				'data-searchable'  => 'true',
+				'data-remove-item' => 'true',
+			],
 		];
 
 		if ( $has_zoom_id ) {
@@ -80,12 +81,13 @@ class MeetingFieldSchema {
 						'custom_attributes' => [ 'data-enable-time' => 'true' ],
 					],
 					'timezone'   => [
-						'label'       => __( 'Timezone', $text_domain ),
-						'type'        => 'select',
-						'options'     => $tzlists,
-						'required'    => true,
-						'default'     => ! empty( $tzlists[ $wp_timezone ] ) ? $wp_timezone : '',
-						'input_class' => [ 'vczapi-choices' ],
+						'label'             => __( 'Timezone', $text_domain ),
+						'type'              => 'select',
+						'options'           => $tzlists,
+						'required'          => true,
+						'default'           => ! empty( $tzlists[ $wp_timezone ] ) ? $wp_timezone : '',
+						'input_class'       => [ 'vczapi-choices' ],
+						'custom_attributes' => [ 'data-remove-item' => 'true' ],
 					],
 					'duration'   => [
 						'label'  => __( 'Duration', $text_domain ),
