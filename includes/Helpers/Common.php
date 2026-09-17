@@ -26,4 +26,12 @@ class Common {
 
 		return $options;
 	}
+
+	public static function validateZoomCredentials(): bool {
+		if ( vczapi_is_oauth_active() ) {
+			return true;
+		}
+
+		return vczapi_is_jwt_active();
+	}
 }

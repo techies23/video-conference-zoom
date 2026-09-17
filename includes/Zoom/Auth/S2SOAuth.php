@@ -123,6 +123,7 @@ class S2SOAuth {
 
 		$result = $this->generateAccessToken( $account_id, $client_id, $client_secret );
 		if ( is_wp_error( $result ) ) {
+			update_option( self::OPTION_OAUTH_DATA, '' );
 			return $result;
 		}
 

@@ -12,8 +12,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 
 	public function __construct() {
 		//Delete Meeting
-		add_action( 'wp_ajax_zvc_delete_meeting', array( $this, 'delete_meeting' ) );
-		add_action( 'wp_ajax_zvc_bulk_meetings_delete', array( $this, 'delete_bulk_meeting' ) );
 		add_action( 'wp_ajax_zoom_dimiss_notice', array( $this, 'dismiss_notice' ) );
 		add_action( 'wp_ajax_check_connection', array( $this, 'check_connection' ) );
 
@@ -21,19 +19,11 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		add_action( 'wp_ajax_nopriv_get_auth', array( $this, 'get_auth' ) );
 		add_action( 'wp_ajax_get_auth', array( $this, 'get_auth' ) );
 
-		//Call meeting state
-		add_action( 'wp_ajax_nopriv_state_change', array( $this, 'state_change' ) );
-		add_action( 'wp_ajax_state_change', array( $this, 'state_change' ) );
-
 		//AJAX call for fetching users
 		add_action( 'wp_ajax_get_assign_host_id', [ $this, 'assign_host_id' ] );
-		add_action( 'wp_ajax_vczapi_get_wp_users', [ $this, 'get_wp_usersByRole' ] );
 
 		//Ajax called for dismissing notice
 		add_action( 'wp_ajax_vczapi_dismiss_admin_notice', [ $this, 'admin_notice' ] );
-
-		//End Meeting
-		add_action( 'wp_ajax_vczapi_end_meeting', [ $this, 'end_meeting' ] );
 	}
 
 	public function admin_notice() {
@@ -50,86 +40,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			update_option( 'vczapi_dismiss_sdk_not_active_notice', true );
 		}
 		wp_send_json_success();
-	}
-
-	/**
-	 * Delete a Meeting
-	 *
-	 * @author   Deepen
-	 * @since    2.0.0
-	 * @modified 2.1.0
-	 */
-	public function delete_meeting() {
-		check_ajax_referer( '_nonce_zvc_security', 'security' );
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$meeting_id   = filter_input( INPUT_POST, 'meeting_id' );
-		$meeting_type = filter_input( INPUT_POST, 'type' );
-		if ( $meeting_id ) {
-			if ( ! empty( $meeting_type ) && $meeting_type === "webinar" ) {
-				zoom_conference()->deleteAWebinar( $meeting_id );
-			} else {
-				zoom_conference()->deleteAMeeting( $meeting_id );
-			}
-
-			wp_send_json( array(
-				'error' => 0,
-				'msg'   => __( "Deleted Meeting with ID", "video-conferencing-with-zoom-api" ) . ': ' . $meeting_id,
-			) );
-		} else {
-			wp_send_json( array(
-				'error' => 1,
-				'msg'   => __( "An error occured. Host ID and Meeting ID not defined properly.", "video-conferencing-with-zoom-api" ),
-			) );
-		}
-
-		wp_die();
-	}
-
-	/**
-	 * Delete Meeting in Bulk
-	 *
-	 * @since    1.0.0
-	 * @modified 2.1.0
-	 */
-	public function delete_bulk_meeting() {
-		check_ajax_referer( '_nonce_zvc_security', 'security' );
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$deleted      = false;
-		$meeting_ids  = filter_input( INPUT_POST, 'meetings_id', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		$meeting_type = filter_input( INPUT_POST, 'type' );
-		if ( ! empty( $meeting_ids ) ) {
-			$meeting_count = count( $meeting_ids );
-			foreach ( $meeting_ids as $meeting_id ) {
-				if ( ! empty( $meeting_type ) && $meeting_type === "webinar" ) {
-					zoom_conference()->deleteAWebinar( $meeting_id );
-				} else {
-					zoom_conference()->deleteAMeeting( $meeting_id );
-				}
-				$deleted = true;
-			}
-
-			if ( $deleted ) {
-				wp_send_json( array(
-					'error' => 0,
-					'msg'   => sprintf( __( "Deleted %d Meeting(s).", "video-conferencing-with-zoom-api" ), $meeting_count ),
-				) );
-			}
-		} else {
-			wp_send_json( array(
-				'error' => 1,
-				'msg'   => __( "You need to select a data in order to initiate this action." ),
-			) );
-		}
-
-		wp_die();
 	}
 
 	/**
@@ -255,87 +165,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	}
 
 	/**
-	 * Change State of the Meeting from here !
-	 */
-	public function state_change() {
-		check_ajax_referer( '_nonce_zvc_security', 'accss' );
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$type       = sanitize_text_field( filter_input( INPUT_POST, 'type' ) );
-		$state      = sanitize_text_field( filter_input( INPUT_POST, 'state' ) );
-		$meeting_id = sanitize_text_field( filter_input( INPUT_POST, 'id' ) );
-		$post_id    = sanitize_text_field( filter_input( INPUT_POST, 'post_id' ) );
-
-		$success = false;
-		switch ( $state ) {
-			case 'end':
-				if ( $type === "shortcode" ) {
-					$meeting_options = get_option( 'zoom_api_meeting_options' );
-					if ( ! empty( $meeting_options ) ) {
-						$meeting_options[ $meeting_id ]['state'] = 'ended';
-						update_option( 'zoom_api_meeting_options', $meeting_options );
-					} else {
-						$new[ $meeting_id ]['state'] = 'ended';
-						update_option( 'zoom_api_meeting_options', $new );
-					}
-
-					$success = true;
-				}
-
-				if ( $type === "post_type" ) {
-					$meeting = get_post_meta( $post_id, '_meeting_zoom_details', true );
-					if ( ! empty( $meeting ) ) {
-						$meeting->state = 'ended';
-						update_post_meta( $post_id, '_meeting_zoom_details', $meeting );
-					}
-
-					$success = true;
-				}
-
-				break;
-			case 'resume':
-				if ( $type === "shortcode" ) {
-					$meeting_options = get_option( 'zoom_api_meeting_options' );
-					unset( $meeting_options[ $meeting_id ] );
-					update_option( 'zoom_api_meeting_options', $meeting_options );
-					$success = true;
-				}
-
-				if ( $type === "post_type" ) {
-					$meeting = get_post_meta( $post_id, '_meeting_zoom_details', true );
-					if ( ! empty( $meeting ) ) {
-						$meeting->state = '';
-						update_post_meta( $post_id, '_meeting_zoom_details', $meeting );
-					}
-
-					$success = true;
-				}
-				break;
-		}
-
-		if ( $success ) {
-			wp_send_json_success( $success );
-		} else {
-			wp_send_json_error( $success );
-		}
-
-		wp_die();
-	}
-
-	public function end_meeting(): void {
-		check_ajax_referer( '_nonce_zvc_security', 'access' );
-		//only people who can create meeting can end them.
-		if ( ! current_user_can( 'edit_posts' ) ) {
-			return;
-		}
-		$meeting_id = sanitize_text_field( filter_input( INPUT_POST, 'meeting_id' ) );
-		zoom_conference()->end_meeting( $meeting_id );
-	}
-
-	/**
 	 * Assign Host ID page
 	 */
 	public function assign_host_id(): void {
@@ -403,32 +232,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		}
 	}
 
-	/**
-	 * Get WP Users query by user role.
-	 */
-	public function get_wp_usersByRole() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
 
-		$search_string = filter_input( INPUT_GET, 'term' );
-		$users         = vczapi_getWpUsers_basedon_UserRoles( [
-			'search' => $search_string,
-		] );
-		$results       = array();
-		if ( ! empty( $users->get_results() ) ) {
-			foreach ( $users->get_results() as $user ) {
-				$results[] = array(
-					'id'   => $user->ID,
-					'text' => $user->user_email,
-				);
-			}
-		}
-
-		wp_send_json( array( 'results' => $results ) );
-
-		wp_die();
-	}
 }
 
 new Zoom_Video_Conferencing_Admin_Ajax();

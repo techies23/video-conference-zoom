@@ -25,7 +25,6 @@ class SettingsPageView {
         $tabs       = [
                 'connect'      => __( 'Connect', 'video-conferencing-with-zoom-api' ),
                 'api-settings' => __( 'Settings', 'video-conferencing-with-zoom-api' ),
-                'support'      => __( 'Support', 'video-conferencing-with-zoom-api' ),
                 'debug'        => __( 'Logs', 'video-conferencing-with-zoom-api' ),
         ];
         ?>

@@ -1,7 +1,9 @@
 <?php
+
 namespace Codemanas\VczApi\Admin\Foundation\Settings;
 
 use Codemanas\VczApi\Admin\Foundation\Notification;
+use Codemanas\VczApi\Zoom\Auth\S2SOAuth;
 
 class ConnectHandler {
 
@@ -26,19 +28,15 @@ class ConnectHandler {
 			update_option( $option_name, $value );
 		}
 
-		$access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken(
-			$credentials['vczapi_oauth_account_id'],
-			$credentials['vczapi_oauth_client_id'],
-			$credentials['vczapi_oauth_client_secret']
-		);
-
+		$auth = S2SOAuth::get_instance();
+		$auth->regenerateAccessTokenAndSave();
+		$access_token = $auth->getAccessToken();
 		if ( is_wp_error( $access_token ) ) {
 			Notification::setNotice(
 				sprintf( esc_html__( 'Zoom OAuth Error Code: "%s" - %s', 'video-conferencing-with-zoom-api' ), esc_html( $access_token->get_error_code() ), esc_html( $access_token->get_error_message() ) ),
 				'error'
 			);
 
-			video_conferencing_zoom_api_delete_user_cache();
 			delete_option( 'vczapi_global_oauth_data' );
 
 			return;
