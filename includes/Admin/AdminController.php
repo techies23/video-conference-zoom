@@ -29,6 +29,7 @@ class AdminController {
 		$this->init();
 
 		add_action( 'admin_notices', [ $this, 'showAdminNotices' ] );
+		add_action( 'current_screen', [ $this, 'redirect' ] );
 	}
 
 	public function init(): void {
@@ -37,16 +38,40 @@ class AdminController {
 		UserController::get_instance();
 	}
 
+	public function redirect(): void {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		if ( $this->isAdminPages( true ) && ! Common::validateZoomCredentials() ) {
+			$settings_page_slug = 'zoom-video-conferencing-settings';
+			$redirect_url       = admin_url( 'admin.php?page=' . $settings_page_slug );
+			wp_safe_redirect( $redirect_url );
+			exit;
+		}
+	}
+
 	public function showAdminNotices(): void {
+		if ( $this->isAdminPages() && ! Common::validateZoomCredentials() ) {
+			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/notices/incorrect-api-configuration.php' );
+		}
+	}
+
+	/**
+	 * Check is zoom pages.
+	 *
+	 * @param bool $settings
+	 *
+	 * @return bool
+	 */
+	private function isAdminPages( bool $settings = false ): bool {
 		$pg     = 'zoom-meetings_page_zoom';
 		$screen = get_current_screen();
 
-		if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" ) {
-			if ( Common::validateZoomCredentials() ) {
-				return;
-			}
-
-			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/notices/incorrect-api-configuration.php' );
+		if ( $settings ) {
+			return $screen->post_type == "zoom-meetings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings";
+		} else {
+			return $screen->post_type == "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings";
 		}
 	}
 }

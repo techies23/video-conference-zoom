@@ -16,7 +16,7 @@ use Codemanas\VczApi\Data\ZoomUsersTable;
  */
 class UserSyncService {
 
-	const STATUSES = array( 'active', 'pending', 'inactive' );
+	const STATUSES = array( 'active' );
 
 	const MAX_PAGES_PER_STATUS = 500;
 
@@ -57,8 +57,8 @@ class UserSyncService {
 		}
 
 		$synced_at = current_time( 'mysql' );
-		$total     = 0;
 		$pages     = 0;
+		$synced    = array();
 
 		foreach ( self::STATUSES as $status ) {
 			$next_page_token = null;
@@ -83,7 +83,14 @@ class UserSyncService {
 				$pages ++;
 
 				if ( ! empty( $response['users'] ) && is_array( $response['users'] ) ) {
-					$total += ZoomUsersTable::upsert_users( $response['users'] );
+					ZoomUsersTable::upsert_users( $response['users'], $synced_at );
+
+					foreach ( $response['users'] as $user ) {
+						$user = (array) $user;
+						if ( ! empty( $user['id'] ) ) {
+							$synced[ sanitize_text_field( $user['id'] ) ] = true;
+						}
+					}
 				}
 
 				$next_page_token = ! empty( $response['next_page_token'] ) ? $response['next_page_token'] : null;
@@ -103,7 +110,7 @@ class UserSyncService {
 		self::release_lock();
 
 		return array(
-			'synced'      => $total,
+			'synced'      => count( $synced ),
 			'pages'       => $pages,
 			'synced_at'   => $synced_at,
 			'total_users' => ZoomUsersTable::count_users(),

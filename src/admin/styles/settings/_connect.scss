@@ -58,7 +58,6 @@
     &.vczapi-error {
       color: $vczapi-error-text-color;
       padding: 10px 20px;
-      font-style: italic;
       font-size: 1.2em;
       font-weight: bold;
     }
@@ -67,10 +66,10 @@
   &__badge--connected {
     display: none;
     margin-left: 0.5em;
-    padding: 0.15em 0.6em;
+    padding: 0.6em 0.6em;
     border-radius: $vczapi-radius;
-    background: #e6f7ef;
-    color: #008a20;
+    background: #76ff96;
+    color: #005414;
     font-size: 11px;
     font-weight: 600;
     vertical-align: middle;

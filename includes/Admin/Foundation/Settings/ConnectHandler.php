@@ -2,40 +2,9 @@
 
 namespace Codemanas\VczApi\Admin\Foundation\Settings;
 
-use Codemanas\VczApi\Admin\Foundation\Notification;
 use Codemanas\VczApi\Zoom\Auth\S2SOAuth;
 
 class ConnectHandler {
-
-	/**
-	 * Handle the classic (non-AJAX) form submission on admin_init.
-	 *
-	 * @return void
-	 */
-	public function handle(): void {
-		if ( ! isset( $_POST['vczapi_zoom_connect_nonce'] ) ) {
-			return;
-		}
-
-		if ( ! current_user_can( 'manage_options' ) || ! wp_verify_nonce( sanitize_key( $_POST['vczapi_zoom_connect_nonce'] ), 'verify_vczapi_zoom_connect' ) ) {
-			return;
-		}
-
-		$result = $this->saveAndVerifyCredentials();
-
-		if ( is_wp_error( $result ) ) {
-			Notification::setNotice(
-				sprintf( esc_html__( 'Zoom Auth Error: "%s" - %s', 'video-conferencing-with-zoom-api' ), esc_html( $result->get_error_code() ), esc_html( $result->get_error_message() ) ),
-				'error'
-			);
-
-			delete_option( S2SOAuth::OPTION_OAUTH_DATA );
-
-			return;
-		}
-
-		Notification::setNotice( __( 'Zoom: Credentials successfully verified and saved.', 'video-conferencing-with-zoom-api' ), 'success' );
-	}
 
 	/**
 	 * AJAX handler for saving and verifying connect credentials.
