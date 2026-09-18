@@ -71,8 +71,13 @@ class PayloadBuilder {
 			$normalized = $domainValidated;
 		}
 
-		return $normalized;
-	}
+		// Filters allow pro/extensions to intercept validation for specific operations
+		$filteredValidation = apply_filters( 'vczapi_payload_validate', $normalized, $operation, $schema );
+		if ( is_wp_error( $filteredValidation ) ) {
+			return $filteredValidation;
+		}
+
+		return $filteredValidation;	}
 
 	public static function sanitizePayload( $operation, array $validated ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
