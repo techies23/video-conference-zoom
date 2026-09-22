@@ -10,8 +10,6 @@ use Codemanas\VczApi\Helpers\Templates;
 class ZoomMetaboxViewRenderer {
 
 	public function renderMetaBox( \WP_Post $post ): void {
-		wp_nonce_field( 'vczapi_save_meeting_meta', '_vczapi_nonce' );
-
 		wp_enqueue_script( 'vczapi-admin-editor' );
 		wp_enqueue_script( 'vczapi-vendors-js' );
 
