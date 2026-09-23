@@ -48,22 +48,7 @@ $hostId       = ! empty( $args['host_id'] ) ? $args['host_id'] : '';
 
     <!-- Reusable Table Component Wrapper -->
     <div class="vczapi-table-wrapper">
-        <table id="vczapi_recordings_table" class="vczapi-table">
-            <thead class="vczapi-table__head">
-            <tr class="vczapi-table__row vczapi-table__row--head">
-                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left"><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left"><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left"><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left"><?php _e( 'Recorded', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left"><?php _e( 'Size', 'video-conferencing-with-zoom-api' ); ?></th>
-                <th class="vczapi-table__cell vczapi-table__cell--head vczapi-table__cell--align-left"><?php _e( 'Action', 'video-conferencing-with-zoom-api' ); ?></th>
-            </tr>
-            </thead>
-            <tbody class="vczapi-table__body" id="vczapi_recordings_table_body">
-            <tr class="vczapi-table__row vczapi-table__row--empty">
-                <td class="vczapi-table__cell vczapi-table__cell--empty" colspan="6"><?php _e( 'Loading recordings...', 'video-conferencing-with-zoom-api' ); ?></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="vczapi-recordings-table">
+        </div>
     </div>
 </div>

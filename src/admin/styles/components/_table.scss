@@ -1,89 +1,227 @@
 @use '../abstracts' as *;
 
-// Table Wrapper
-.vczapi-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  background: #ffffff;
-  border: 1px solid $vczapi-table-border-color;
-  border-radius: 4px;
+.vczapi-datatable-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: $dt-text-main;
+  background: #fff;
+  border: 1px solid $dt-border-color;
+  border-radius: $dt-radius;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-}
+  margin: 1rem 0;
 
-// Main Block Component
-.vczapi-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: $vczapi-table-text-color;
-  font-size: 14px;
-  line-height: 1.4;
+  // ------------------------------------------------------------------------
+  // Toolbar Section (Search)
+  // ------------------------------------------------------------------------
+  .vczapi-dt-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid $dt-border-color;
+    background-color: #fff;
 
-  // Elements
-  &__head {
-    background-color: $vczapi-table-header-bg;
-  }
+    .vczapi-dt-search {
+      .vczapi-dt-search-input {
+        padding: 6px 12px;
+        font-size: 13px;
+        border: 1px solid #8c8f94;
+        border-radius: $dt-radius;
+        outline: none;
+        min-width: 220px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
-  &__body {
-    .vczapi-table__row:nth-child(even) {
-      background-color: $vczapi-table-stripe-bg;
-    }
-
-    .vczapi-table__row:hover {
-      background-color: $vczapi-table-hover-bg;
-    }
-  }
-
-  &__row {
-    border-bottom: 1px solid $vczapi-table-border-color;
-
-    // Row Modifiers
-    &--head {
-      border-bottom: 2px solid $vczapi-table-border-color;
-    }
-
-    &--empty {
-      background-color: transparent !important;
-    }
-
-    &--error {
-      background-color: rgba($vczapi-table-error-color, 0.05) !important;
-
-      td {
-        color: $vczapi-table-error-color;
-        font-weight: bold;
+        &:focus {
+          border-color: $dt-primary-color;
+          box-shadow: 0 0 0 1px $dt-primary-color;
+        }
       }
     }
   }
 
-  &__cell {
-    padding: 10px 12px;
-    vertical-align: middle;
+  // ------------------------------------------------------------------------
+  // Table Core & Wrapper
+  // ------------------------------------------------------------------------
+  .vczapi-dt-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
 
-    // Cell Modifiers
-    &--head {
-      font-weight: 600;
-      color: $vczapi-table-text-color;
-    }
-
-    &--empty {
-      text-align: center;
-      padding: 20px 12px;
-      color: $vczapi-table-muted-color;
-    }
-
-    &--align-left {
+    .vczapi-dt-table {
+      width: 100%;
+      border-collapse: collapse;
       text-align: left;
+      font-size: 13px;
+
+      thead {
+        background-color: $dt-bg-header;
+        border-bottom: 1px solid $dt-border-color;
+
+        th {
+          padding: 10px 12px;
+          font-weight: 600;
+          color: $dt-text-main;
+          user-select: none;
+          white-space: nowrap;
+
+          &.sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 24px;
+
+            &::after {
+              content: '↕';
+              position: absolute;
+              right: 8px;
+              opacity: 0.3;
+              font-size: 11px;
+            }
+
+            &:hover {
+              background-color: darken($dt-bg-header, 3%);
+            }
+
+            &.sort-asc::after {
+              content: '▲';
+              opacity: 1;
+              color: $dt-primary-color;
+            }
+
+            &.sort-desc::after {
+              content: '▼';
+              opacity: 1;
+              color: $dt-primary-color;
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid $dt-border-color;
+          transition: background-color 0.15s ease;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          &:hover {
+            background-color: $dt-bg-hover;
+          }
+
+          td {
+            padding: 10px 12px;
+            vertical-align: middle;
+
+            // State Rows (Loading, Empty, Error)
+            &.vczapi-dt-loading,
+            &.vczapi-dt-empty,
+            &.vczapi-dt-error {
+              text-align: center;
+              padding: 24px 12px;
+              color: $dt-text-muted;
+            }
+
+            &.vczapi-dt-error {
+              color: #d63638;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Footer & Pagination Section
+  // ------------------------------------------------------------------------
+  .vczapi-dt-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1px solid $dt-border-color;
+    background-color: #fff;
+    font-size: 13px;
+
+    .vczapi-dt-info {
+      color: $dt-text-muted;
     }
 
-    &--align-center {
-      text-align: center;
+    .vczapi-dt-pagination {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      button {
+        background: #fff;
+        border: 1px solid #8c8f94;
+        border-radius: $dt-radius;
+        color: $dt-primary-color;
+        padding: 4px 10px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+
+        &:hover:not(:disabled) {
+          background-color: $dt-bg-hover;
+          border-color: $dt-primary-color;
+        }
+
+        &.active {
+          background-color: $dt-primary-color;
+          border-color: $dt-primary-color;
+          color: #fff;
+          font-weight: 600;
+        }
+
+        &:disabled {
+          color: #a7aaad;
+          border-color: $dt-border-color;
+          cursor: not-allowed;
+          background-color: #f6f7f7;
+        }
+      }
+
+      .vczapi-dt-dots {
+        padding: 0 4px;
+        color: $dt-text-muted;
+      }
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Badges (Used in Status Columns)
+  // ------------------------------------------------------------------------
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-transform: capitalize;
+
+    &.active {
+      background-color: #e7f4e8;
+      color: #1e7e34;
     }
 
-    &--align-right {
-      text-align: right;
+    &.pending {
+      background-color: #fef3d6;
+      color: #b25900;
+    }
+
+    &.inactive {
+      background-color: #fcf0f0;
+      color: #d63638;
+    }
+  }
+}
+
+// Mobile Responsive Tweaks
+@media (max-width: 600px) {
+  .vczapi-datatable-container {
+    .vczapi-dt-footer {
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
     }
   }
 }
