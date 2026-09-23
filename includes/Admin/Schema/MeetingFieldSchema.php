@@ -65,7 +65,7 @@ class MeetingFieldSchema {
 						'type'              => 'text',
 						'description'       => __( 'Starting Date and Time of the Meeting (Required).', $text_domain ),
 						'required'          => true,
-						'input_class'       => [ 'vczapi-datetimepicker' ],
+						'input_class'       => [ 'vczapi-datetimepicker', 'vczapi-start-time-picker' ],
 						'custom_attributes' => [ 'data-enable-time' => 'true' ],
 					],
 					'timezone'   => [
