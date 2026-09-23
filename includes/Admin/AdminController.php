@@ -5,6 +5,7 @@ namespace Codemanas\VczApi\Admin;
 use Codemanas\VczApi\Admin\Controller\PostTypeController;
 use Codemanas\VczApi\Admin\Controller\RecordingController;
 use Codemanas\VczApi\Admin\Controller\SettingController;
+use Codemanas\VczApi\Admin\Controller\SyncController;
 use Codemanas\VczApi\Admin\Controller\UserController;
 use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Templates;
@@ -38,6 +39,7 @@ class AdminController {
 		SettingController::get_instance();
 		UserController::get_instance();
 		RecordingController::get_instance();
+		SyncController::get_instance();
 	}
 
 	public function redirect(): void {

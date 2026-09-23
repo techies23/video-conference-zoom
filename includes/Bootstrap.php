@@ -173,10 +173,6 @@ final class Bootstrap {
         //Loading Includes
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
 
-        //Admin Classes
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
-
         //Admin
         AdminController::get_instance();
 

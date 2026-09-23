@@ -4,6 +4,7 @@ import { initUserSync } from './modules/users/userSync';
 import { initRecordingsTable } from './modules/recordings';
 import { initConnect } from './modules/connect';
 import {initUserList} from "./modules/users/users";
+import { initMeetingSync } from './modules/sync';
 
 document.addEventListener( 'DOMContentLoaded', () => {
 	//Users
@@ -12,6 +13,9 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 	//Recordings
 	initRecordingsTable();
+
+	//Import
+	initMeetingSync();
 
 	//Settings
 	initConnect();
