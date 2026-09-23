@@ -253,7 +253,8 @@ class FormHelper {
 			$field = $field_html;
 		}
 
-		$field = apply_filters( 'vcw_formField_' . $args['type'], $field, $key, $args, $value );
+		$field = apply_filters( 'vczapi_formField_' . $args['type'], $field, $key, $args, $value );
+		$allowed_html = apply_filters('vczapi_formField_allowed_html_' . $args['type'], $allowed_html);
 
 		echo wp_kses( $field, $allowed_html );
 	}
