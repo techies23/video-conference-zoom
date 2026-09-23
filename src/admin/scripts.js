@@ -1,11 +1,18 @@
 import './styles/app.scss';
 
-import { initUserSync } from './modules/userSync';
+import { initUserSync } from './modules/users/userSync';
 import { initRecordingsTable } from './modules/recordings';
 import { initConnect } from './modules/connect';
+import {initUserList} from "./modules/users/users";
 
 document.addEventListener( 'DOMContentLoaded', () => {
+	//Users
 	initUserSync();
+	initUserList();
+
+	//Recordings
 	initRecordingsTable();
+
+	//Settings
 	initConnect();
 } );

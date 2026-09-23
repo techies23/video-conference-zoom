@@ -13,7 +13,6 @@ use Codemanas\VczApi\Helpers\Templates;
 class RecordingController {
 
 	private static ?RecordingController $instance = null;
-
 	private RecordingService $recordingService;
 
 	public static function get_instance(): self {
@@ -26,17 +25,9 @@ class RecordingController {
 
 	public function __construct() {
 		$this->recordingService = new RecordingService();
-
 		add_action( 'wp_ajax_vczapi_list_recordings', [ $this, 'getRecordings' ] );
 	}
 
-	/**
-	 * Render the recordings page.
-	 *
-	 * The page shell (datepicker, host picker and table) is rendered here while
-	 * the actual recordings are fetched via AJAX (vczapi_list_recordings) so the
-	 * data always comes through zoom_conference_v2()->recording()->list().
-	 */
 	public function list(): void {
 		wp_enqueue_script( 'vczapi-vendors-js' );
 		wp_enqueue_script( 'vczapi-script' );
@@ -50,12 +41,14 @@ class RecordingController {
 			$host_id = sanitize_text_field( wp_unslash( $_GET['host_id'] ) );
 		} else if ( ! empty( $zoom_user_host_id ) ) {
 			$host_id = $zoom_user_host_id;
+		} else {
+			$host_id = '';
 		}
 
 		$users = Common::getDefaultHostList();
 
 		wp_localize_script( 'vczapi-script', 'vczapi_recordings', array(
-			'host_id' => $host_id ?? '',
+			'host_id' => $host_id,
 			'i18n'    => array(
 				'loading'         => __( 'Loading recordings...', 'video-conferencing-with-zoom-api' ),
 				'noRecordings'    => __( 'No recordings found.', 'video-conferencing-with-zoom-api' ),
@@ -75,7 +68,7 @@ class RecordingController {
 		) );
 
 		$args = array(
-			'host_id'       => $host_id ?? '',
+			'host_id'       => $host_id,
 			'default_users' => $users,
 		);
 
@@ -83,19 +76,31 @@ class RecordingController {
 	}
 
 	/**
-	 * AJAX handler that fetches recordings via the new schema-driven API.
-	 *
-	 * @called_from wp_ajax_vczapi_list_recordings
+	 * AJAX handler compatible with VanillaDataTable component.
 	 */
 	public function getRecordings(): void {
-		check_ajax_referer( '_nonce_vczapi_security', 'security' );
-
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'video-conferencing-with-zoom-api' ) ), 403 );
 		}
 
+		$nonce = sanitize_text_field( filter_input( INPUT_GET, 'nonce' ) );
+		if ( $nonce && ! wp_verify_nonce( $nonce, 'vczapi-nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid security token.', 'video-conferencing-with-zoom-api' ) ), 403 );
+		}
+
 		$host_id = sanitize_text_field( filter_input( INPUT_GET, 'host_id' ) );
 		$date    = sanitize_text_field( filter_input( INPUT_GET, 'date' ) );
+
+		// If host_id is missing, return empty dataset with 200 OK status instead of 400 error
+		if ( empty( $host_id ) ) {
+			wp_send_json_success( array(
+				'items'       => [],
+				'meetings'    => [],
+				'total'       => 0,
+				'total_count' => 0,
+				'message'     => __( 'Please select a host to load recordings.', 'video-conferencing-with-zoom-api' ),
+			) );
+		}
 
 		if ( ! empty( $date ) ) {
 			$from = date( 'Y-m-01', strtotime( $date ) );
@@ -105,17 +110,29 @@ class RecordingController {
 			$to   = date( 'Y-m-d' );
 		}
 
-		$result = $this->recordingService->list( $host_id, $from, $to );
+		$per_page        = isset( $_GET['per_page'] ) ? absint( $_GET['per_page'] ) : 300;
+		$next_page_token = isset( $_GET['next_page_token'] ) ? sanitize_text_field( $_GET['next_page_token'] ) : '';
+		$search          = isset( $_GET['search'] ) ? sanitize_text_field( $_GET['search'] ) : '';
+		$sort_by         = isset( $_GET['sort_by'] ) ? sanitize_text_field( $_GET['sort_by'] ) : 'start_time';
+		$sort_order      = isset( $_GET['sort_order'] ) ? sanitize_text_field( $_GET['sort_order'] ) : 'desc';
+
+		$result = $this->recordingService->list( $host_id, $from, $to, $per_page, $next_page_token, $search, $sort_by, $sort_order );
 
 		if ( ! empty( $result['error'] ) ) {
 			wp_send_json_error( array( 'message' => $result['error'] ), 500 );
 		}
 
+		$meetings      = $result['data'] ?? [];
+		$total_records = $result['total_records'] ?? count( $meetings );
+
 		wp_send_json_success( array(
-			'meetings'      => $result['data'],
-			'total_records' => $result['total_records'],
-			'from'          => $from,
-			'to'            => $to,
+			'items'           => $meetings,
+			'meetings'        => $meetings,
+			'total'           => $total_records,
+			'total_count'     => $total_records,
+			'next_page_token' => $result['next_page_token'] ?? null,
+			'from'            => $from,
+			'to'              => $to,
 		) );
 	}
 }

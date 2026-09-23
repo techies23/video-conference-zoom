@@ -31,12 +31,9 @@ defined( 'ABSPATH' ) || exit;
                         <p class="description">
                             <?php
                             $oauth_docs_link = '<a href="https://zoomdocs.codemanas.com/setup/#generating-api-credentials" target="_blank" rel="noreferrer noopener">' . esc_html__( 'setup guide', 'video-conferencing-with-zoom-api' ) . '</a>';
-                            $sdk_app_link    = '<a href="#vczapi-s2sOauth-app-sdk-credentials" class="vczapi-go-to-open-accordion">' . esc_html__( 'SDK App Credentials', 'video-conferencing-with-zoom-api' ) . '</a>';
-
                             printf(
-                                    esc_html__( 'Please see %1$s on how to generate credentials. Additionally, for "Join via Browser" functionality to work, please also configure %2$s.', 'video-conferencing-with-zoom-api' ),
+                                    esc_html__( 'Please see %1$s on how to generate credentials.', 'video-conferencing-with-zoom-api' ),
                                     $oauth_docs_link,
-                                    $sdk_app_link
                             );
                             ?>
                         </p>

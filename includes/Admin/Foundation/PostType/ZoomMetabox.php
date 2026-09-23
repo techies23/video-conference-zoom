@@ -23,17 +23,10 @@ class ZoomMetabox {
 			],
 			'vczapi-admin-meeting-details' => [
 				'id'       => 'vczapi-admin-meeting-details-meta',
-				'title'    => __( 'Meeting Details', 'video-conferencing-with-zoom-api' ),
+				'title'    => __( 'Details', 'video-conferencing-with-zoom-api' ),
 				'callback' => [ $this->renderer, 'renderSideBox' ],
 				'context'  => 'side',
 				'priority' => 'high',
-			],
-			'vczapi-admin-meeting-debug'   => [
-				'id'       => 'vczapi-admin-meeting-debug-meta',
-				'title'    => __( 'Debug Log', 'video-conferencing-with-zoom-api' ),
-				'callback' => [ $this->renderer, 'renderDebugBox' ],
-				'context'  => 'normal',
-				'priority' => 'default',
 			],
 		];
 

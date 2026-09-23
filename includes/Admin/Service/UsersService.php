@@ -17,12 +17,22 @@ class UsersService {
 	 * List users from the custom zoom users cache table.
 	 *
 	 * @param int $page Page number.
-	 * @param string $status User status. active|pending|inactive.
 	 * @param int $page_size Number of records per page. Max 300.
+	 * @param string $search
+	 * @param string $status User status. active|pending|inactive.
+	 * @param string $sortBy
+	 * @param string $sortOrder
 	 *
 	 * @return array
 	 */
-	public function list( int $page = 1, string $status = 'active', int $page_size = 20 ): array {
+	public function list(
+		int $page = 1,
+		int $page_size = 20,
+		string $search = '',
+		string $status = 'active',
+		string $sortBy = 'email',
+		string $sortOrder = 'ASC'
+	): array {
 		if ( ! ZoomUsersTable::table_exists() ) {
 			ZoomUsersTable::create_table();
 		}
@@ -35,8 +45,9 @@ class UsersService {
 			'page'      => $page,
 			'page_size' => $page_size,
 			'status'    => $status,
-			'order_by'  => 'email',
-			'order'     => 'ASC',
+			'search'    => $search,
+			'order_by'  => $sortBy,
+			'order'     => $sortOrder,
 		) );
 	}
 }

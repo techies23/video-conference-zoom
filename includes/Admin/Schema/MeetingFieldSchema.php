@@ -26,8 +26,8 @@ class MeetingFieldSchema {
 		$host_field_config = [
 			'label'             => __( 'Meeting Host *', $text_domain ),
 			'type'              => ! $has_zoom_id ? 'select' : 'placeholder',
-			'description'       => __( 'This is host ID for the meeting (Required).', $text_domain ),
-			'required'          => true,
+			'description'       => $has_zoom_id ? __( 'Host cannot be changed once the event has been created.', $text_domain ) : __( 'This is host ID for the meeting (Required).', $text_domain ),
+			'required'          => ! $has_zoom_id,
 			'options'           => $users,
 			'input_class'       => ! $has_zoom_id ? [ 'vczapi-choices' ] : [],
 			'custom_attributes' => [
@@ -36,13 +36,9 @@ class MeetingFieldSchema {
 				'data-min-search'  => '3',
 				'data-searchable'  => 'true',
 				'data-remove-item' => 'true',
+				'disabled'         => $has_zoom_id,
 			],
 		];
-
-		if ( $has_zoom_id ) {
-			$host_field_config['custom_attributes']['disabled'] = 'disabled';
-			$host_field_config['description']                   = __( 'Host cannot be changed once the event has been created.', $text_domain );
-		}
 
 		$schema = [
 			'general' => [
@@ -56,8 +52,8 @@ class MeetingFieldSchema {
 					],
 					'type'       => [
 						'label'       => __( 'Type *', $text_domain ),
-						'required'    => true,
-						'type'        => 'select',
+						'required'    => ! $has_zoom_id,
+						'type'        => $has_zoom_id ? 'placeholder' : 'select',
 						'description' => __( 'Type of Event.', $text_domain ),
 						'options'     => [
 							1 => __( 'Meeting', $text_domain ),
@@ -211,10 +207,6 @@ class MeetingFieldSchema {
 			],
 		];
 
-		if ( $has_zoom_id ) {
-			$schema['general']['fields']['type']['type'] = 'placeholder';
-		}
-
-		return apply_filters( 'vczapi_admin_metabox_fields_schema', $schema, $post, $meeting_details );
+		return apply_filters( 'vczapi_admin_metabox_fields_schema', $schema, $post, $meeting_details, $has_zoom_id );
 	}
 }

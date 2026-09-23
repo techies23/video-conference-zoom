@@ -3,7 +3,6 @@
 namespace Codemanas\VczApi\Admin\Foundation\PostType;
 
 use Codemanas\VczApi\Admin\Schema\MeetingFieldSchema;
-use Codemanas\VczApi\Data\Datastore;
 use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Templates;
@@ -11,8 +10,6 @@ use Codemanas\VczApi\Helpers\Templates;
 class ZoomMetaboxViewRenderer {
 
 	public function renderMetaBox( \WP_Post $post ): void {
-		wp_nonce_field( 'vczapi_save_meeting_meta', '_vczapi_nonce' );
-
 		wp_enqueue_script( 'vczapi-admin-editor' );
 		wp_enqueue_script( 'vczapi-vendors-js' );
 
@@ -30,13 +27,6 @@ class ZoomMetaboxViewRenderer {
 
 	public function renderSideBox( \WP_Post $post ): void {
 		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/meeting-side-box.php', [
-			'meeting_details' => Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' ),
-			'meeting_fields'  => Metastore::getPostMeta( $post->ID, 'meeting_fields' ),
-		] );
-	}
-
-	public function renderDebugBox( \WP_Post $post ): void {
-		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/meeting-debug.php', [
 			'meeting_details' => Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' ),
 			'meeting_fields'  => Metastore::getPostMeta( $post->ID, 'meeting_fields' ),
 		] );

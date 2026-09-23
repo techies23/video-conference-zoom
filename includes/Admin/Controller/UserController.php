@@ -30,6 +30,37 @@ class UserController {
 
 		add_action( 'wp_ajax_vczapi_sync_zoom_users', [ UserSyncService::class, 'syncUsers' ] );
 		add_action( 'wp_ajax_vczapi_get_user_by_query', [ $this, 'getUsersByQuery' ] );
+		add_action( 'wp_ajax_vczapi_get_user_list', [ $this, 'getUserList' ] );
+	}
+
+	public function getUserList(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'video-conferencing-with-zoom-api' ) ), 403 );
+		}
+
+		$page       = isset( $_GET['page'] ) ? absint( $_GET['page'] ) : 1;
+		$per_page   = isset( $_GET['per_page'] ) ? absint( $_GET['per_page'] ) : 10;
+		$search     = isset( $_GET['search'] ) ? sanitize_text_field( $_GET['search'] ) : '';
+		$status     = ( isset( $_GET['status'] ) && $_GET['status'] === 'pending' ) ? 'pending' : 'active';
+		$sort_by    = isset( $_GET['sort_by'] ) ? sanitize_sql_orderby( $_GET['sort_by'] ) : 'id';
+		$sort_order = ( isset( $_GET['sort_order'] ) && strtolower( $_GET['sort_order'] ) === 'desc' ) ? 'DESC' : 'ASC';
+		$result = $this->usersService->list( $page, $per_page, $search, $status, $sort_by, $sort_order );
+
+		if ( ! empty( $result['error'] ) ) {
+			wp_send_json_error( array(
+				'message' => $result['error']
+			), 400 );
+		}
+
+		// 4. Send JSON Response
+		wp_send_json_success( array(
+			'users'       => $result['data'] ?? [],
+			'total_count' => $result['total_records'] ?? 0,
+			'page_number' => $result['page_number'] ?? $page,
+			'page_count'  => $result['page_count'] ?? 1,
+			'last_synced' => ZoomUsersTable::get_last_sync_time(),
+			'user_count'  => ZoomUsersTable::count_users(),
+		) );
 	}
 
 	/**
@@ -46,24 +77,11 @@ class UserController {
 			),
 		) );
 
-		$status       = ( isset( $_GET['status'] ) && $_GET['status'] === 'pending' ) ? 'pending' : 'active';
-		$current_page = isset( $_GET['pg'] ) ? absint( $_GET['pg'] ) : 1;
-
-		$data = $this->usersService->list( $current_page, $status );
 		$args = array(
-			'data'         => $data['data'],
-			'error'        => $data['error'],
-			'current_page' => $data['page_number'],
-			'page_count'   => $data['page_count'],
 			'last_synced'  => ZoomUsersTable::get_last_sync_time(),
 			'user_count'   => ZoomUsersTable::count_users(),
 		);
-
-		if ( $status === 'pending' ) {
-			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/pending.php', $args );
-		} else {
-			Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/list.php', $args );
-		}
+		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/list.php', $args );
 	}
 
 	/**

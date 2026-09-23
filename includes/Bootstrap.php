@@ -9,10 +9,6 @@ use Codemanas\VczApi\Blocks\BlockTemplates;
 use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Encryption;
 
-if ( ! defined( 'ABSPATH' ) ) {
-    die( "Not Allowed Here !" ); // If this file is called directly, abort.
-}
-
 /**
  * Ready Main Class
  *
@@ -37,7 +33,7 @@ final class Bootstrap {
         return self::$instance;
     }
 
-    private string $plugin_version = ZVC_PLUGIN_VERSION;
+    private string $plugin_version = VCZAPI_PLUGIN_VERSION;
     private string $minified;
 
     /**
@@ -49,23 +45,22 @@ final class Bootstrap {
     public function __construct() {
         $this->autoloader();
         $this->load_dependencies();
-        $this->init_api();
 
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_backend' ) );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts_backend' ] );
+        add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
         //Ensure custom tables exist for installs that activated before this feature shipped.
         add_action( 'admin_init', array( $this, 'ensure_custom_tables' ) );
 
         //Block Themes Compat: register scripts on init - required as block themes fire the content before page render
-        add_action( 'init', [ $this, 'register_scripts' ] );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
         add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
         add_filter( 'wp_headers', [ $this, 'set_corp_headers' ], 10, 2 );
 
-        add_action( 'in_plugin_update_message-' . ZVC_PLUGIN_ABS_NAME, function ( $plugin_data ) {
-            $this->version_update_warning( ZVC_PLUGIN_VERSION, $plugin_data['new_version'] );
+        add_action( 'in_plugin_update_message-' . VCZAPI_PLUGIN_ABS_NAME, function ( $plugin_data ) {
+            $this->version_update_warning( VCZAPI_PLUGIN_VERSION, $plugin_data['new_version'] );
         } );
 
         Marketplace::get_instance();
@@ -128,43 +123,6 @@ final class Bootstrap {
     }
 
     /**
-     * INitialize the hooks
-     *
-     * @since    2.0.0
-     * @modified 2.1.0
-     * @author   Deepen Bajracharya
-     */
-    protected function init_api(): void {
-        //Load the Credentials
-        zoom_conference()->zoom_api_key    = get_option( 'zoom_api_key' );
-        zoom_conference()->zoom_api_secret = get_option( 'zoom_api_secret' );
-    }
-
-    /**
-     * @return void
-     */
-    public function register_scripts(): void {
-        $minified = SCRIPT_DEBUG ? '' : '.min';
-        wp_register_style( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style' . $minified . '.css', false, $this->plugin_version );
-
-        $disable_moment_js = get_option( 'zoom_api_disable_moment_js' );
-        if ( empty( $disable_moment_js ) ) {
-            //Enqueue MomentJS
-            wp_register_script( 'video-conferencing-with-zoom-api-moment', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment/moment.min.js', array( 'jquery' ), $this->plugin_version, true );
-            wp_register_script( 'video-conferencing-with-zoom-api-moment-locales', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment/moment-with-locales.min.js', array(
-                    'jquery',
-                    'video-conferencing-with-zoom-api-moment',
-            ), $this->plugin_version, true );
-            //Enqueue MomentJS Timezone
-            wp_register_script( 'video-conferencing-with-zoom-api-moment-timezone', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment-timezone/moment-timezone-with-data-10-year-range.min.js', array( 'jquery' ), $this->plugin_version, true );
-            wp_register_script( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/public' . $minified . '.js', array(
-                    'jquery',
-                    'video-conferencing-with-zoom-api-moment',
-            ), $this->plugin_version, true );
-        }
-    }
-
-    /**
      * Load Frontend Scriptsssssss
      *
      * @since   3.0.0
@@ -212,10 +170,6 @@ final class Bootstrap {
      * @author   Deepen Bajracharya
      */
     protected function load_dependencies(): void {
-        //Include the Main Class
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-v2.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/S2SOAuth.php';
-
         //Loading Includes
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
 
@@ -251,6 +205,17 @@ final class Bootstrap {
     }
 
     /**
+     * Block Editor Scripts
+     *
+     * @return void
+     */
+    public function enqueue_block_editor_assets(): void {
+        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
+    }
+
+    /**
      * Enqueuing Scripts and Styles for Admin
      *
      * @param  $hook
@@ -276,10 +241,6 @@ final class Bootstrap {
         }
 
         //Validation for Editor
-        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
-                'in_footer' => true,
-        ] );
-
         wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
                 'in_footer' => true,
         ] );
@@ -366,7 +327,7 @@ final class Bootstrap {
         static $plugin;
 
         if ( ! isset( $plugin ) ) {
-            $plugin = ZVC_PLUGIN_ABS_NAME;
+            $plugin = VCZAPI_PLUGIN_ABS_NAME;
         }
 
         if ( $plugin == $plugin_file ) {

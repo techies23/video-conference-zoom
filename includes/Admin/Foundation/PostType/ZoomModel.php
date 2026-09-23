@@ -9,19 +9,20 @@ use Codemanas\VczApi\Admin\Service\WebinarService;
 use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Config;
 use Codemanas\VczApi\Helpers\MeetingType;
+use WP_Error;
+use WP_Post;
+use WP_REST_Request;
 
 class ZoomModel {
 
-	protected string $postType;
+	private const WEBINAR_TYPE = 2;
+	private const DEFAULT_DURATION_MINUTES = 40;
 
+	protected string $postType;
 	private static ?ZoomModel $instance = null;
 
-	public static function get_instance(): ?ZoomModel {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
+	public static function get_instance(): self {
+		return self::$instance ??= new self();
 	}
 
 	public function __construct() {
@@ -30,86 +31,146 @@ class ZoomModel {
 		add_action( "save_post_{$this->postType}", [ $this, 'save' ], 10, 2 );
 		add_action( 'admin_notices', [ $this, 'displayValidationNotices' ] );
 		add_action( 'before_delete_post', [ $this, 'delete' ] );
+		add_filter( "rest_pre_insert_{$this->postType}", [ $this, 'preInsert' ], 10, 2 );
+		add_action( "rest_after_insert_{$this->postType}", [ $this, 'restAfterInsert' ], 10, 3 );
 	}
 
 	/**
-	 * Trigger Save
-	 *
-	 * @param int $post_id
-	 * @param \WP_Post $post
-	 *
-	 * @return void
+	 * Trigger Save (classic metabox flow).
 	 */
-	public function save( int $post_id, \WP_Post $post ): void {
+	public function save( int $post_id, WP_Post $post ): void {
 		if ( ! $this->isSaveRequestValid( $post_id ) ) {
 			return;
 		}
 
-		$user_id      = sanitize_text_field( filter_input( INPUT_POST, 'user_id' ) );
-		$meeting_type = filter_input( INPUT_POST, 'type', FILTER_VALIDATE_INT );
-		if ( ! $this->validateRequiredFields( $user_id, $meeting_type, $post_id ) ) {
+		$fields = MeetingValidator::normalize( $this->gatherPostFields() );
+
+		if ( ! $this->validateAndNotice( $fields ) ) {
 			return;
 		}
 
-		$handler      = $this->getEventHandler( (int) $meeting_type );
-		$meeting_data = array_merge(
-			$this->prepareCommonFields( $post_id, $post, (int) $meeting_type, $user_id ),
-			$handler->getTypeSpecificFields()
-		);
+		$meeting_type = (int) $fields['type'];
+
+		$this->syncWithApiAndPersist( $post_id, $post, $fields, $meeting_type );
+	}
+
+	/**
+	 * Validate meeting fields before a REST (Gutenberg) save reaches the DB.
+	 *
+	 * Returning a WP_Error here aborts the save entirely, so the post stays in
+	 * its previous status until the meeting details are fixed.
+	 *
+	 * @param $prepared_post
+	 * @param WP_REST_Request $request
+	 *
+	 * @return mixed|WP_Error
+	 */
+	public function preInsert( $prepared_post, WP_REST_Request $request ): mixed {
+		// Block-editor autosaves hit the /autosaves endpoint; never reject them
+		// while the user is mid-edit (they are also sync-free).
+		if ( str_contains( $request->get_route(), '/autosaves' ) ) {
+			return $prepared_post;
+		}
+
+		$meta           = (array) $request->get_param( 'meta' );
+		$meeting_fields = $meta['vczapi_meeting_fields'] ?? null;
+
+		if ( ! is_array( $meeting_fields ) || empty( $meeting_fields ) ) {
+			return $prepared_post;
+		}
+
+		$errors = MeetingValidator::validate( MeetingValidator::normalize( $meeting_fields ) );
+		if ( ! empty( $errors ) ) {
+			return new WP_Error(
+				'vczapi_meeting_validation',
+				__( 'Zoom meeting details could not be saved. Please fix the highlighted fields and try again.', 'video-conferencing-with-zoom-api' ),
+				[ 'errors' => $errors ]
+			);
+		}
+
+		return $prepared_post;
+	}
+
+	/**
+	 * After a REST (Gutenberg) save, sync the meeting with the Zoom API and
+	 * persist the response. Meta (vczapi_meeting_fields) is already written by
+	 * the REST controller before this fires.
+	 *
+	 * @param WP_Post $post
+	 * @param WP_REST_Request $request
+	 * @param bool $creating
+	 */
+	public function restAfterInsert( WP_Post $post, WP_REST_Request $request, bool $creating ): void {
+		if ( $post->post_type !== $this->postType ) {
+			return;
+		}
+
+		$fields = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
+		if ( ! is_array( $fields ) || empty( $fields ) || empty( $fields['user_id'] ) ) {
+			return;
+		}
+
+		$meeting_type = (int) ( $fields['type'] ?? 1 );
+		if ( ! in_array( $meeting_type, [ 1, self::WEBINAR_TYPE ], true ) ) {
+			return;
+		}
+
+		$this->syncWithApiAndPersist( $post->ID, $post, $fields, $meeting_type );
+	}
+
+	/**
+	 * Shared build -> save meta -> sync Zoom API -> persist response pipeline.
+	 *
+	 * @param int $post_id
+	 * @param WP_Post $post
+	 * @param array $fields
+	 * @param int $meeting_type
+	 */
+	private function syncWithApiAndPersist( int $post_id, WP_Post $post, array $fields, int $meeting_type ): void {
+		$eventHandler = $this->getEventHandler( $meeting_type );
+		$meeting_data = $this->buildMeetingData( $post, $fields, $meeting_type );
 
 		do_action( 'vczapi_admin_before_zoom_meeting_is_created', $meeting_data );
 
-		$event_label = ( $meeting_type === 2 ) ? 'webinar' : 'meeting';
+		$event_label = ( $meeting_type === self::WEBINAR_TYPE ) ? 'webinar' : 'meeting';
 		$this->saveMetaData( $post_id, $meeting_data, $event_label );
 
 		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data );
 
 		$zoom_id = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
 
-		//Change meeting type data to WEbinar or Meeting for API call.
+		// Update meeting type format for API payload
 		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
-		$response             = $handler->syncWithApi( $post, $meeting_data, $zoom_id );
+		$response             = $eventHandler->syncWithApi( $post, $meeting_data, $zoom_id );
+
 		$this->persistZoomResponse( $post_id, $response );
+
+		if ( $this->isErrorResponse( $response ) ) {
+			$this->addAdminNotice( $this->getErrorMessage( $response ) );
+		}
 
 		do_action( 'vczapi_admin_after_zoom_meeting_is_created', $post_id, $post );
 	}
 
 	/**
-	 * Validates presence of essential input values.
+	 * Validate fields and surface errors via transient admin notices (classic path).
+	 *
+	 * @param array $fields
+	 *
+	 * @return bool
 	 */
-	private function validateRequiredFields( ?string $user_id, $meeting_type, int $post_id ): bool {
-		// Validate User ID presence
-		if ( empty( $user_id ) ) {
-			$this->addAdminNotice( __( 'Zoom Error: Meeting Host is required to create a meeting.', 'video-conferencing-with-zoom-api' ) );
+	private function validateAndNotice( array $fields ): bool {
+		$errors = MeetingValidator::validate( $fields );
 
-			return false;
+		if ( empty( $errors ) ) {
+			return true;
 		}
 
-		// Validate Meeting Type presence and valid integer range
-		if ( false === $meeting_type || null === $meeting_type ) {
-			$this->addAdminNotice( __( 'Zoom Error: Please select a valid Meeting Type.', 'video-conferencing-with-zoom-api' ) );
-
-			return false;
+		foreach ( $errors as $error ) {
+			$this->addAdminNotice( $error );
 		}
 
-		return true;
-	}
-
-	/**
-	 * Utility method to send WordPress admin notices on save failure.
-	 */
-	private function addAdminNotice( string $message ): void {
-		set_transient( 'vczapi_admin_notice_' . get_current_user_id(), [
-			'message' => $message,
-			'type'    => 'error',
-		], 45 );
-	}
-
-	/**
-	 * Factory pattern to return the right strategy instance.
-	 */
-	private function getEventHandler( int $meeting_type ): IZoomEvent {
-		return ( $meeting_type === 2 ) ? new WebinarService() : new MeetingService();
+		return false;
 	}
 
 	private function isSaveRequestValid( int $post_id ): bool {
@@ -121,68 +182,169 @@ class ZoomModel {
 		       && ! wp_is_post_revision( $post_id );
 	}
 
-	private function prepareCommonFields( int $post_id, \WP_Post $post, int $meeting_type, string $user_id ): array {
-		$pwd = sanitize_text_field( filter_input( INPUT_POST, 'password' ) );
-		if ( ! get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
-			$pwd = ! empty( $pwd ) ? $pwd : (string) $post_id;
+	/**
+	 * Collect all meeting fields from the classic metabox $_POST request.
+	 *
+	 * @return array
+	 */
+	private function gatherPostFields(): array {
+		$fields = [];
+
+		foreach (
+			[
+				'user_id',
+				'agenda',
+				'start_time',
+				'timezone',
+				'password',
+				'disable_waiting_room',
+				'waiting_room',
+				'meeting_authentication',
+				'host_video',
+				'auto_recording',
+				'join_before_host',
+				'participant_video',
+				'mute_upon_entry',
+				'panelists_video',
+				'practice_session',
+				'hd_video',
+				'allow_multiple_devices',
+			] as $key
+		) {
+			$value          = filter_input( INPUT_POST, $key );
+			$fields[ $key ] = ( $value === null ) ? '' : sanitize_text_field( $value );
 		}
 
-		$duration_hour    = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_hour' ) );
-		$duration_minutes = sanitize_text_field( filter_input( INPUT_POST, 'option_duration_minutes' ) );
-		$start_time       = gmdate( "Y-m-d\TH:i:s", strtotime( filter_input( INPUT_POST, 'start_time' ) ) );
+		$fields['type']                    = filter_input( INPUT_POST, 'type', FILTER_VALIDATE_INT );
+		$fields['jbh_time']                = absint( filter_input( INPUT_POST, 'jbh_time' ) );
+		$fields['alternative_hosts']       = filter_input( INPUT_POST, 'alternative_hosts', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ) ?? [];
+		$fields['option_duration_hour']    = $this->getPostInput( 'option_duration_hour' );
+		$fields['option_duration_minutes'] = $this->getPostInput( 'option_duration_minutes' );
 
-		return [
-			'topic'                        => esc_html( $post->post_title ),
-			'user_id'                      => $user_id,
-			'agenda'                       => sanitize_text_field( filter_input( INPUT_POST, 'agenda' ) ),
-			'type'                         => $meeting_type,
-			'start_time'                   => sanitize_text_field( $start_time ),
-			'timezone'                     => sanitize_text_field( filter_input( INPUT_POST, 'timezone' ) ),
-			'duration'                     => ( ! empty( $duration_hour ) || ! empty( $duration_minutes ) ) ? vczapi_convert_to_minutes( $duration_hour, $duration_minutes ) : 40,
-			'password'                     => $pwd,
-			'disable_waiting_room'         => filter_input( INPUT_POST, 'disable_waiting_room' ),
-			'meeting_authentication'       => filter_input( INPUT_POST, 'meeting_authentication' ),
-			'host_video'                   => filter_input( INPUT_POST, 'host_video' ),
-			'auto_recording'               => filter_input( INPUT_POST, 'auto_recording' ),
-			'alternative_hosts'            => filter_input( INPUT_POST, 'alternative_hosts', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ),
-			'site_option_logged_in'        => filter_input( INPUT_POST, 'option_logged_in' ),
-			'site_option_browser_join'     => filter_input( INPUT_POST, 'option_browser_join' ),
-			'site_option_enable_debug_log' => filter_input( INPUT_POST, 'option_enable_debug_logs' ),
+		return $fields;
+	}
+
+	/**
+	 * Build the Zoom API payload from a normalized fields array.
+	 *
+	 * Works for both the classic ($_POST) and REST (meta) sources.
+	 *
+	 * @param WP_Post $post
+	 * @param array $fields
+	 * @param int $meeting_type
+	 *
+	 * @return array
+	 */
+	private function buildMeetingData( WP_Post $post, array $fields, int $meeting_type ): array {
+		$raw_start_time = $fields['start_time'] ?? '';
+		$start_time     = $raw_start_time ? gmdate( "Y-m-d\TH:i:s", strtotime( $raw_start_time ) ) : '';
+
+		$common = [
+			'topic'                  => esc_html( $post->post_title ),
+			'user_id'                => (string) ( $fields['user_id'] ?? '' ),
+			'agenda'                 => $fields['agenda'] ?? '',
+			'type'                   => $meeting_type,
+			'start_time'             => $start_time,
+			'timezone'               => $fields['timezone'] ?? '',
+			'duration'               => $this->calculateDuration( $fields ),
+			'password'               => $this->resolveMeetingPassword( $post->ID, $fields['password'] ?? '' ),
+			'disable_waiting_room'   => $fields['disable_waiting_room'] ?? '',
+			'meeting_authentication' => $fields['meeting_authentication'] ?? '',
+			'host_video'             => $fields['host_video'] ?? '',
+			'auto_recording'         => $fields['auto_recording'] ?? '',
+			'alternative_hosts'      => $fields['alternative_hosts'] ?? [],
 		];
+
+		$eventHandler = $this->getEventHandler( $meeting_type );
+
+		return array_merge( $common, $eventHandler->getTypeSpecificFields( $fields ) );
+	}
+
+	private function calculateDuration( array $fields ): int {
+		if ( isset( $fields['duration'] ) && is_numeric( $fields['duration'] ) ) {
+			return max( 1, (int) $fields['duration'] );
+		}
+
+		$hours   = $fields['option_duration_hour'] ?? '';
+		$minutes = $fields['option_duration_minutes'] ?? '';
+
+		if ( ! empty( $hours ) || ! empty( $minutes ) ) {
+			return vczapi_convert_to_minutes( $hours, $minutes );
+		}
+
+		return self::DEFAULT_DURATION_MINUTES;
+	}
+
+	private function resolveMeetingPassword( int $post_id, string $password ): string {
+		if ( ! get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
+			return ! empty( $password ) ? $password : (string) $post_id;
+		}
+
+		return $password;
 	}
 
 	private function saveMetaData( int $post_id, array $meeting_data, string $type ): void {
 		Metastore::setPostMeta( $post_id, 'meeting_fields', $meeting_data );
 		Metastore::setPostMeta( $post_id, 'meeting_type', $type );
 
-		try {
-			$dt = new \DateTime( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
-			$dt->setTimezone( new \DateTimeZone( 'UTC' ) );
-			$start_utc = $dt->format( 'Y-m-d H:i:s' );
-		} catch ( \Exception $e ) {
-			$start_utc = $e->getMessage();
+		$start_utc = '';
+		if ( ! empty( $meeting_data['start_time'] ) && ! empty( $meeting_data['timezone'] ) ) {
+			try {
+				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
+				$start_utc = $dt->setTimezone( new \DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
+			} catch ( \Exception $e ) {
+				$start_utc = $e->getMessage();
+			}
 		}
 
 		Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
 	}
 
-	private function persistZoomResponse( int $post_id, ?array $response ): void {
+	private function persistZoomResponse( int $post_id, $response ): void {
 		if ( empty( $response ) ) {
 			return;
 		}
 
-		Metastore::setPostMeta( $post_id, 'meeting_zoom_details', $response );
+		// Standardize output handling whether response is object or array
+		$response_array = (array) $response;
+		Metastore::setPostMeta( $post_id, 'meeting_zoom_details', $response_array );
 
-		if ( empty( $response->code ) ) {
-			Metastore::setPostMeta( $post_id, 'meeting_join_url', $response['join_url'] ?? '' );
-			Metastore::setPostMeta( $post_id, 'meeting_start_url', $response['start_url'] ?? '' );
-			Metastore::setPostMeta( $post_id, 'meeting_id', $response['id'] ?? '' );
+		if ( $this->isErrorResponse( $response ) ) {
+			return;
 		}
+
+		Metastore::setPostMeta( $post_id, 'meeting_join_url', $response_array['join_url'] ?? '' );
+		Metastore::setPostMeta( $post_id, 'meeting_start_url', $response_array['start_url'] ?? '' );
+		Metastore::setPostMeta( $post_id, 'meeting_id', $response_array['id'] ?? '' );
 	}
 
 	/**
-	 * Displays validation error messages stored during post save.
+	 * Determine whether a Zoom API response represents an error.
+	 *
+	 * @param mixed $response
+	 *
+	 * @return bool
 	 */
+	private function isErrorResponse( $response ): bool {
+		if ( empty( $response ) || ! is_object( $response ) && ! is_array( $response ) ) {
+			return false;
+		}
+
+		return is_object( $response ) ? ! empty( $response->code ) : ! empty( $response['code'] );
+	}
+
+	/**
+	 * Extract a human readable Zoom API error message.
+	 *
+	 * @param mixed $response
+	 *
+	 * @return string
+	 */
+	private function getErrorMessage( mixed $response ): string {
+		$message = is_object( $response ) ? ( $response->message ?? '' ) : ( $response['message'] ?? '' );
+		return sprintf( esc_html__( 'Zoom Error: %s', 'video-conferencing-with-zoom-api' ), esc_html( $message ) );
+	}
+
 	public function displayValidationNotices(): void {
 		$transient_key = 'vczapi_admin_notice_' . get_current_user_id();
 		$notice        = get_transient( $transient_key );
@@ -191,46 +353,71 @@ class ZoomModel {
 			return;
 		}
 
-		// Delete the transient so it only displays once
+		$messages = is_array( $notice['messages'] ?? null ) ? $notice['messages'] : [ $notice['message'] ?? '' ];
+
 		delete_transient( $transient_key );
 
-		$type    = esc_attr( $notice['type'] ?? 'error' );
-		$message = esc_html( $notice['message'] ?? '' );
+		$type = esc_attr( $notice['type'] ?? 'error' );
 
-		printf(
-			'<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
-			$type,
-			$message
-		);
+		foreach ( $messages as $message ) {
+			printf(
+				'<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+				$type,
+				esc_html( $message )
+			);
+		}
 	}
 
-	/**
-	 * Delete Post Type
-	 *
-	 * @param $post_id
-	 *
-	 * @return void
-	 */
-	public function delete( $post_id ): void {
-		$deleteOnZoom = SettingsRepository::getSetting( 'delete_zoom_meeting' );
-		if ( ! empty( $deleteOnZoom ) ) {
+	public function delete( int $post_id ): void {
+		if ( get_post_type( $post_id ) !== $this->postType ) {
 			return;
 		}
 
-		if ( get_post_type( $post_id ) === $this->postType ) {
-			$meeting_id      = Metastore::getPostMeta( $post_id, 'meeting_id' );
-			$meeting_details = Metastore::getPostMeta( $post_id, 'meeting_zoom_details' );
-			if ( ! empty( $meeting_id ) ) {
-				do_action( 'vczapi_before_delete_meeting', $meeting_id );
-
-				if ( ! empty( $meeting_details ) && $meeting_details['meeting_type'] === 2 ) {
-					zoom_conference_v2()->webinars()->delete( $meeting_id );
-				} else {
-					zoom_conference_v2()->meetings()->delete( $meeting_id );
-				}
-
-				do_action( 'vczapi_after_delete_meeting' );
-			}
+		if ( ! empty( SettingsRepository::getSetting( 'delete_zoom_meeting' ) ) ) {
+			return;
 		}
+
+		$meeting_id      = Metastore::getPostMeta( $post_id, 'meeting_id' );
+		$meeting_details = Metastore::getPostMeta( $post_id, 'meeting_zoom_details' );
+
+		if ( empty( $meeting_id ) ) {
+			return;
+		}
+
+		do_action( 'vczapi_before_delete_meeting', $meeting_id );
+
+		$is_webinar = is_array( $meeting_details ) && isset( $meeting_details['meeting_type'] ) && $meeting_details['meeting_type'] === self::WEBINAR_TYPE;
+
+		if ( $is_webinar ) {
+			zoom_conference_v2()->webinars()->delete( $meeting_id );
+		} else {
+			zoom_conference_v2()->meetings()->delete( $meeting_id );
+		}
+
+		do_action( 'vczapi_after_delete_meeting' );
+	}
+
+	private function getEventHandler( int $meeting_type ): IZoomEvent {
+		return ( $meeting_type === self::WEBINAR_TYPE ) ? new WebinarService() : new MeetingService();
+	}
+
+	private function addAdminNotice( string $message ): void {
+		$transient_key = 'vczapi_admin_notice_' . get_current_user_id();
+		$existing      = get_transient( $transient_key );
+		$messages      = ! empty( $existing['messages'] ) && is_array( $existing['messages'] ) ? $existing['messages'] : [];
+
+		if ( ! empty( $existing['message'] ) && ! in_array( $existing['message'], $messages, true ) ) {
+			$messages[] = $existing['message'];
+		}
+		$messages[] = $message;
+
+		set_transient( $transient_key, [
+			'messages' => array_values( array_unique( $messages ) ),
+			'type'     => 'error',
+		], 45 );
+	}
+
+	private function getPostInput( string $key ): string {
+		return sanitize_text_field( filter_input( INPUT_POST, $key ) ?? '' );
 	}
 }

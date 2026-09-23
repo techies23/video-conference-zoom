@@ -10,10 +10,11 @@ $vczapi-radius: 4px;
 $vczapi-transition-speed: 0.3s;
 
 // Table Variables
-$vczapi-table-border-color: #dcdcde !default;
-$vczapi-table-header-bg: #f6f7f7 !default;
-$vczapi-table-stripe-bg: #f6f7f7 !default;
-$vczapi-table-hover-bg: #f0f0f1 !default;
-$vczapi-table-text-color: #2c3338 !default;
-$vczapi-table-muted-color: #646970 !default;
-$vczapi-table-error-color: #f00 !default;
+$dt-primary-color: #2271b1 !default;
+$dt-primary-hover: #135e96 !default;
+$dt-border-color: #dcdcde !default;
+$dt-bg-header: #f6f7f7 !default;
+$dt-bg-hover: #f0f6fc !default;
+$dt-text-main: #2c3338 !default;
+$dt-text-muted: #646970 !default;
+$dt-radius: 4px !default;

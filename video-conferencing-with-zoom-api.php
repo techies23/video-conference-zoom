@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 defined( 'VCZAPI_PLUGIN_FILE' ) || define( 'VCZAPI_PLUGIN_FILE', __FILE__ );
+defined( 'VCZAPI_PLUGIN_ABS_NAME' ) || define( 'VCZAPI_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_SLUG' ) || define( 'VCZAPI_PLUGIN_SLUG', 'video-conferencing-zoom' );
 defined( 'VCZAPI_PLUGIN_VERSION' ) || define( 'VCZAPI_PLUGIN_VERSION', '4.7.0' );
 defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION', '4.0.0' );

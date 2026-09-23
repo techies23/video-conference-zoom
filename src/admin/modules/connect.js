@@ -1,13 +1,13 @@
 export const initConnect = () => {
+    const form = document.getElementById('vczapi-connect-form');
+    if (!form) {
+        return;
+    }
+
     const {ajaxurl, nonce} = window.vczapi_ajax || {};
     const {i18n} = window.vczapi_connect || {};
 
     if (!ajaxurl || !i18n) {
-        return;
-    }
-
-    const form = document.getElementById('vczapi-connect-form');
-    if (!form) {
         return;
     }
 
