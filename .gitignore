@@ -5,3 +5,4 @@ dist/
 build/
 .agents/
 languages/*.pot~
+/.junie
