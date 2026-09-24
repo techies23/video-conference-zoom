@@ -57,4 +57,6 @@ $pagination_links = paginate_links( array(
     <div class="vczapi-table-wrapper vczapi-users__table-wrapper">
         <div class="vczapi-users-table"></div>
     </div>
+
+    <?php require_once VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/users/link-user-modal.php'; ?>
 </div>

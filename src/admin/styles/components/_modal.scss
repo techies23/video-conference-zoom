@@ -1,0 +1,193 @@
+@use "../abstracts" as *;
+
+// ==========================================================================
+// VCZAPI Modal System
+// ==========================================================================
+
+// Modal Window
+.vczapi-modal {
+	background: $vczapi-bg-white;
+	width: 100%;
+	max-width: 480px;
+	border-radius: $vczapi-radius;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	transform: translateY(-20px);
+	transition: transform $vczapi-transition-speed ease-in-out;
+	overflow: hidden;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 16px 20px;
+		border-bottom: 1px solid $dt-border-color;
+		background: $vczapi-bg-header;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		color: $vczapi-text-color;
+	}
+
+	&__close {
+		background: transparent;
+		border: none;
+		font-size: 22px;
+		line-height: 1;
+		color: $dt-text-muted;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+
+		&:hover {
+			color: #d63638;
+		}
+	}
+
+	&__body {
+		padding: 20px;
+	}
+
+	&__field {
+		margin-bottom: 15px;
+
+		label {
+			display: block;
+			font-weight: 600;
+			margin-bottom: 6px;
+			color: $vczapi-text-color;
+		}
+
+		select {
+			max-width: 100%;
+		}
+
+		.description {
+			margin-top: 6px;
+			color: $dt-text-muted;
+		}
+	}
+
+	&__feedback {
+		padding: 10px 12px;
+		border-radius: $vczapi-radius;
+		font-size: 13px;
+		margin-top: 15px;
+
+		&.is-error {
+			background-color: #fcf0f1;
+			border-left: 4px solid #d63638;
+			color: #b32d2e;
+		}
+
+		&.is-success {
+			background-color: #f0f8f1;
+			border-left: 4px solid #00a32a;
+			color: #007017;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 20px;
+		border-top: 1px solid $dt-border-color;
+		background: $vczapi-bg-header;
+	}
+
+	&__submit-btn {
+		display: inline-flex;
+		align-items: center;
+
+		&.is-loading {
+
+			.vczapi-modal__spinner {
+				visibility: visible;
+			}
+		}
+	}
+
+	&__spinner.spinner {
+		float: none;
+		margin: 0 0 0 5px;
+	}
+}
+
+// Overlay Container
+.vczapi-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100000;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity $vczapi-transition-speed ease-in-out, visibility $vczapi-transition-speed ease-in-out;
+
+	&.is-active {
+		opacity: 1;
+		visibility: visible;
+
+		.vczapi-modal {
+			transform: translateY(0);
+		}
+	}
+}
+
+// Lightweight AJAX combobox used to pick a WordPress user inside the modal.
+.vczapi-combobox {
+
+	&__selection {
+		margin-top: 8px;
+		padding: 4px 8px;
+		background: $vczapi-bg-header;
+		border: 1px solid $dt-border-color;
+		border-radius: $vczapi-radius;
+		font-size: 13px;
+	}
+
+	&__clear {
+		color: $dt-text-muted;
+	}
+
+	&__results {
+		margin: 6px 0 0;
+		padding: 0;
+		list-style: none;
+		max-height: 220px;
+		overflow-y: auto;
+		border: 1px solid $dt-border-color;
+		border-radius: $vczapi-radius;
+		background: $vczapi-bg-white;
+
+		li {
+			margin: 0;
+			padding: 8px 10px;
+			border-bottom: 1px solid $dt-border-color;
+			cursor: pointer;
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			&:hover,
+			&.is-selected {
+				background: $vczapi-bg-header;
+			}
+
+			&.is-empty {
+				cursor: default;
+				color: $dt-text-muted;
+			}
+		}
+	}
+}

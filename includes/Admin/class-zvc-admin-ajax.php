@@ -16,28 +16,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		//Join via browser Auth Call
 		add_action( 'wp_ajax_nopriv_get_auth', array( $this, 'get_auth' ) );
 		add_action( 'wp_ajax_get_auth', array( $this, 'get_auth' ) );
-
-		//AJAX call for fetching users
-		add_action( 'wp_ajax_get_assign_host_id', [ $this, 'assign_host_id' ] );
-
-		//Ajax called for dismissing notice
-		add_action( 'wp_ajax_vczapi_dismiss_admin_notice', [ $this, 'admin_notice' ] );
-	}
-
-	public function admin_notice() {
-		$option = filter_input( INPUT_POST, 'option' );
-		$nonce  = filter_input( INPUT_POST, 'security' );
-		if ( ! wp_verify_nonce( $nonce, 'vczapi-dismiss-nonce' ) ) {
-			wp_send_json_error( [ 'message' => 'Error' ] );
-		} elseif ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( [ 'message' => 'Error' ] );
-		}
-
-
-		if ( $option == 'vczapi_dismiss_sdk_not_active_notice' ) {
-			update_option( 'vczapi_dismiss_sdk_not_active_notice', true );
-		}
-		wp_send_json_success();
 	}
 
 	/**
@@ -153,73 +131,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		return rtrim( strtr( base64_encode( $_sig ), '+/', '-_' ), '=' );
 	}
 
-	/**
-	 * Assign Host ID page
-	 */
-	public function assign_host_id(): void {
-		check_ajax_referer( '_nonce_zvc_security', 'security' );
-
-		$draw   = filter_input( INPUT_GET, 'draw' );
-		$length = filter_input( INPUT_GET, 'length' );
-		$start  = filter_input( INPUT_GET, 'start' );
-		$search = filter_input( INPUT_GET, 'search', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		$args   = [
-			'number' => ! empty( $length ) ? absint( $length ) : 10,
-			'paged'  => $start == 0 ? 1 : $start / $length + 1,
-		];
-
-		if ( ! empty( $search['value'] ) ) {
-			$args['search'] = '*' . $search['value'] . '*';
-		}
-
-		$users      = vczapi_getWpUsers_basedon_UserRoles( $args );
-		$tableData  = array();
-		$zoom_users = video_conferencing_zoom_api_get_user_transients();
-		if ( ! empty( $users ) ) {
-			foreach ( $users->get_results() as $user ) {
-				$user_zoom_hostid = get_user_meta( $user->ID, 'user_zoom_hostid', true );
-				$email_address    = get_user_meta( $user->ID, 'vczapi_user_zoom_email_address', true );
-				$host_id_field    = '';
-				$host_id_field    .= '<select data-userid="' . $user->ID . '" name="zoom_host_id[' . $user->ID . ']" class="vczapi-get-zoom-hosts" style="width:100%">';
-				if ( ! empty( $user_zoom_hostid ) && ! empty( $email_address ) ) {
-					$host_id_field .= '<option value="' . $user_zoom_hostid . '" selected>' . $email_address . '</option>';
-				}
-
-				//This is for backwards compatibility before version 4.0.7
-				if ( ! empty( $zoom_users ) && ! empty( $user_zoom_hostid ) && empty( $email_address ) ) {
-					foreach ( $zoom_users as $zoom_usr ) {
-						$selected_host_id = $user_zoom_hostid === $zoom_usr->id ? 'selected="selected"' : false;
-						$full_name        = ! empty( $zoom_usr->first_name ) ? $zoom_usr->first_name . ' ' . $zoom_usr->last_name : $zoom_usr->email;
-						$host_id_field    .= '<option value="' . $zoom_usr->id . '" ' . $selected_host_id . '>' . $full_name . '</option>';
-					}
-				}
-
-				$host_id_field .= '</select>';
-
-				if ( ! empty( $email_address ) ) {
-					$host_id_field .= '<input type="hidden" class="vczapi-host-email-field-' . $user->ID . '" name="zoom_host_email[' . $user->ID . ']" value="' . $email_address . '" />';
-				}
-
-				$tableData[] = [
-					'id'      => $user->ID,
-					'email'   => $user->user_email,
-					'name'    => empty( $user->first_name ) ? $user->display_name : $user->first_name . ' ' . $user->last_name,
-					'host_id' => $host_id_field,
-				];
-			}
-
-			$results = [
-				'draw'            => absint( $draw ),
-				'recordsTotal'    => $users->get_total(),
-				'recordsFiltered' => $users->get_total(),
-				'data'            => $tableData,
-			];
-
-			wp_send_json( $results );
-
-			wp_die();
-		}
-	}
 
 
 }

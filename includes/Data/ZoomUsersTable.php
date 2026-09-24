@@ -42,18 +42,19 @@ class ZoomUsersTable {
 		$charset_coll = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE {$table_name} (
-			zoom_user_id VARCHAR(64) NOT NULL,
-			email VARCHAR(255) NOT NULL DEFAULT '',
-			first_name VARCHAR(128) NOT NULL DEFAULT '',
-			last_name VARCHAR(128) NOT NULL DEFAULT '',
-			status VARCHAR(20) NOT NULL DEFAULT 'active',
-			created_at DATETIME NULL DEFAULT NULL,
-			last_login_time DATETIME NULL DEFAULT NULL,
-			last_client_version VARCHAR(128) NOT NULL DEFAULT '',
-			synced_at DATETIME NOT NULL,
-			PRIMARY KEY  (zoom_user_id),
-			KEY email (email)
-		) {$charset_coll};";
+			    zoom_user_id VARCHAR(64) NOT NULL,
+			    wp_user_id BIGINT(20) UNSIGNED NULL DEFAULT NULL,
+			    email VARCHAR(255) NOT NULL DEFAULT '',
+			    first_name VARCHAR(128) NOT NULL DEFAULT '',
+			    last_name VARCHAR(128) NOT NULL DEFAULT '',
+			    status VARCHAR(20) NOT NULL DEFAULT 'active',
+			    created_at DATETIME NULL DEFAULT NULL,
+			    last_login_time DATETIME NULL DEFAULT NULL,
+			    last_client_version VARCHAR(128) NOT NULL DEFAULT '',
+			    synced_at DATETIME NOT NULL,
+			    PRIMARY KEY  (zoom_user_id),
+			    KEY email (email(191))
+			) {$charset_coll};";
 
 		dbDelta( $sql );
 
@@ -84,7 +85,7 @@ class ZoomUsersTable {
 	 * Uses a single multi-row INSERT ... ON DUPLICATE KEY UPDATE so that
 	 * thousands of users can be written in one query.
 	 *
-	 * @param array  $users     Array of user arrays (or objects) from the Zoom API.
+	 * @param array $users Array of user arrays (or objects) from the Zoom API.
 	 * @param string $synced_at Optional. Timestamp to stamp on synced_at for
 	 *                          every row. Defaults to current_time( 'mysql' ).
 	 *                          Passing a single shared value for the whole
@@ -215,7 +216,7 @@ class ZoomUsersTable {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT zoom_user_id AS id, email, first_name, last_name, status, created_at, last_login_time, last_client_version, synced_at FROM {$table_name} WHERE {$where_sql} ORDER BY {$order_by} {$order} LIMIT %d OFFSET %d",
+				"SELECT zoom_user_id AS id, wp_user_id, email, first_name, last_name, status, created_at, last_login_time, last_client_version, synced_at FROM {$table_name} WHERE {$where_sql} ORDER BY {$order_by} {$order} LIMIT %d OFFSET %d",
 				array_merge( $values, array( $page_size, $offset ) )
 			)
 		);
@@ -228,6 +229,51 @@ class ZoomUsersTable {
 			'page_number'   => $page,
 			'page_size'     => $page_size,
 		);
+	}
+
+	/**
+	 * Link (or unlink) a cached Zoom user to a WordPress user.
+	 *
+	 * When linking, the Zoom host id is also stored as usermeta on the
+	 * WordPress user (key vczapi_user_host_id) so that
+	 * Metastore::getUserMeta( $userId, 'user_host_id' ) resolves to it.
+	 *
+	 * @param string   $zoom_user_id Zoom user (host) id from the cache table.
+	 * @param int|null $wp_user_id   WordPress user id. Null, 0 or negative to unlink.
+	 *
+	 * @return bool True on success (or no-op), false if the Zoom user does not exist.
+	 */
+	public static function link_user( string $zoom_user_id, ?int $wp_user_id ): bool {
+		global $wpdb;
+
+		$table_name  = self::get_table_name();
+		$zoom_user_id = sanitize_text_field( $zoom_user_id );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$existing = $wpdb->get_var(
+			$wpdb->prepare( "SELECT zoom_user_id FROM {$table_name} WHERE zoom_user_id = %s LIMIT 1", $zoom_user_id )
+		);
+
+		if ( empty( $existing ) ) {
+			return false;
+		}
+
+		$data      = array( 'wp_user_id' => ( ! empty( $wp_user_id ) ) ? absint( $wp_user_id ) : null );
+		$where     = array( 'zoom_user_id' => $zoom_user_id );
+		$format    = array( '%d' );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.OnlyPrepareSqlPlaceholders
+		$updated = $wpdb->update( $table_name, $data, $where, $format, array( '%s' ) );
+
+		if ( false === $updated ) {
+			return false;
+		}
+
+		if ( ! empty( $wp_user_id ) ) {
+			Metastore::setUserMeta( absint( $wp_user_id ), 'user_host_id', $zoom_user_id );
+		}
+
+		return true;
 	}
 
 	/**
