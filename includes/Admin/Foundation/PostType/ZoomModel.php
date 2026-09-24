@@ -136,15 +136,13 @@ class ZoomModel {
 		$event_label = ( $meeting_type === self::WEBINAR_TYPE ) ? 'webinar' : 'meeting';
 		$this->saveMetaData( $post_id, $meeting_data, $event_label );
 
+		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
 		//need fields as the raw fields being passed to the filter
 		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data, $fields );
-
 		$zoom_id = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
 
 		// Update meeting type format for API payload
-		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
 		$response             = $eventHandler->syncWithApi( $post, $meeting_data, $zoom_id );
-
 		$this->persistZoomResponse( $post_id, $response );
 
 		if ( $this->isErrorResponse( $response ) ) {

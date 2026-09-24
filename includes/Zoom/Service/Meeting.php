@@ -70,7 +70,6 @@ class Meeting extends BaseService {
 
 		$prepared['body'] = apply_filters( 'vczapi_meetings_create_payload', $prepared['body'], $data );
 		$result           = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
-
 		if ( ! empty( $prepared['warnings'] ) ) {
 			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_CREATE, $data );
 		}
@@ -172,9 +171,7 @@ class Meeting extends BaseService {
 
 		$prepared['body'] = apply_filters( 'vczapi_meetings_update_payload', $prepared['body'], $data );
 
-		$endpoint = ! empty( $prepared['query'] )
-			? add_query_arg( $prepared['query'], $prepared['endpoint'] )
-			: $prepared['endpoint'];
+		$endpoint = ! empty( $prepared['query'] ) ? add_query_arg( $prepared['query'], $prepared['endpoint'] ) : $prepared['endpoint'];
 
 		$result = $this->client->request( $prepared['method'], $endpoint, $prepared['body'] );
 
