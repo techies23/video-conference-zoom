@@ -76,7 +76,7 @@
             }
 
             &:hover {
-              background-color: darken($dt-bg-header, 3%);
+              background-color: $dt-bg-header;
             }
 
             &.sort-asc::after {

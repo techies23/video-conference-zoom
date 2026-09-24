@@ -1,0 +1,19 @@
+.vczapi-sync {
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__status {
+    padding: 15px 0;
+    font-weight: bold;
+  }
+
+  &__toolbar {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+}

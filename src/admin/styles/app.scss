@@ -12,6 +12,7 @@
 
 //users
 @use "users/user-list";
+@use "import/sync";
 
 //Exentsions
 @use "extensions/addon";

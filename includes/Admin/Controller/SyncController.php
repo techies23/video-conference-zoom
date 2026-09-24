@@ -3,7 +3,6 @@
 namespace Codemanas\VczApi\Admin\Controller;
 
 use Codemanas\VczApi\Admin\Service\MeetingImportService;
-use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Templates;
 
@@ -52,6 +51,7 @@ class SyncController {
 			return;
 		}
 
+		wp_enqueue_script( 'vczapi-vendors-js' );
 		wp_enqueue_script( 'vczapi-script' );
 		wp_localize_script( 'vczapi-script', 'vczapi_sync', array(
 			'i18n' => array(
@@ -73,11 +73,23 @@ class SyncController {
 				'topic'              => __( 'Topic', 'video-conferencing-with-zoom-api' ),
 				'startTime'          => __( 'Start Time', 'video-conferencing-with-zoom-api' ),
 				'error'              => __( 'Unable to import meetings. Please try again.', 'video-conferencing-with-zoom-api' ),
+				'filterPlaceholder'  => __( 'Filter by meeting ID or topic...', 'video-conferencing-with-zoom-api' ),
+				'findByIdPlaceholder'=> __( 'Search by meeting ID...', 'video-conferencing-with-zoom-api' ),
+				'findBtn'            => __( 'Find Meeting', 'video-conferencing-with-zoom-api' ),
+				'syncSelected'       => __( 'Sync Selected', 'video-conferencing-with-zoom-api' ),
+				'selectAll'          => __( 'Select All', 'video-conferencing-with-zoom-api' ),
+				'importingProgress'  => __( 'Importing %1$d of %2$d...', 'video-conferencing-with-zoom-api' ),
+				'bulkCompleted'      => __( 'Import complete: %1$d imported, %2$d failed.', 'video-conferencing-with-zoom-api' ),
+				'noMeetingFoundForId'=> __( 'No meeting found for that ID.', 'video-conferencing-with-zoom-api' ),
+				'nSelected'          => __( '%d selected', 'video-conferencing-with-zoom-api' ),
+				'searchNoResults'    => __( 'No meetings match your filter.', 'video-conferencing-with-zoom-api' ),
+				'alreadyImported'    => __( 'Already imported', 'video-conferencing-with-zoom-api' ),
+				'noSelection'        => __( 'Select at least one meeting to sync.', 'video-conferencing-with-zoom-api' ),
 			),
 		) );
 
 		$args = array(
-			'users' => ZoomUsersTable::get_all_as_objects()
+			'users' => Common::getDefaultHostList()
 		);
 
 		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/sync/index.php', $args );
@@ -105,6 +117,12 @@ class SyncController {
 			return;
 		}
 
+		if ( $type === 'find' ) {
+			$this->handleFind();
+
+			return;
+		}
+
 		if ( $type === 'sync' ) {
 			$this->handleSync();
 		}
@@ -125,27 +143,44 @@ class SyncController {
 	}
 
 	/**
+	 * Look up a single meeting by id so it can be located even when it is not
+	 * part of the user's fetched list.
+	 */
+	private function handleFind(): void {
+		$meeting_id = sanitize_text_field( filter_input( INPUT_POST, 'meeting_id' ) );
+		if ( empty( $meeting_id ) ) {
+			wp_send_json_error( array(
+				'msg'        => __( 'Please provide a valid Zoom meeting ID.', 'video-conferencing-with-zoom-api' ),
+				'meeting_id' => $meeting_id,
+			) );
+		}
+
+		$meeting = $this->meetingImportService->getMeeting( $meeting_id );
+		if ( is_wp_error( $meeting ) ) {
+			wp_send_json_error( array(
+				'msg'        => $meeting->get_error_message(),
+				'meeting_id' => $meeting_id,
+			) );
+		}
+
+		wp_send_json_success( array(
+			'meeting'          => $meeting,
+			'meeting_id'       => $meeting_id,
+			'already_imported' => $this->meetingImportService->isMeetingImported( $meeting_id ),
+		) );
+	}
+
+	/**
 	 * Import a single selected meeting.
 	 */
 	private function handleSync(): void {
 		$meeting_id = sanitize_text_field( filter_input( INPUT_POST, 'meeting_id' ) );
-		$existing   = $this->meetingImportService->getExistingMeetingIds();
 
-		if ( empty( $meeting_id ) || in_array( $meeting_id, $existing, true ) ) {
+		if ( empty( $meeting_id ) ) {
 			$this->sendSyncError( $meeting_id );
 		}
 
-		$cached_meetings = $this->meetingImportService->getCachedMeetings();
-
-		$found = false;
-		foreach ( $cached_meetings as $meeting ) {
-			if ( (string) ( $meeting['id'] ?? '' ) === $meeting_id ) {
-				$found = true;
-				break;
-			}
-		}
-
-		if ( ! $found ) {
+		if ( $this->meetingImportService->isMeetingImported( $meeting_id ) ) {
 			$this->sendSyncError( $meeting_id );
 		}
 

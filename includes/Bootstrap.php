@@ -226,7 +226,7 @@ final class Bootstrap {
         $screen = get_current_screen();
 
         //CSS
-        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" ) {
+        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" || $screen->id === "$pg-video-conferencing-sync" ) {
             //Choices
             wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
 

@@ -258,4 +258,15 @@ class MeetingImportService {
 
 		return is_array( $cached ) && ! empty( $cached['meetings'] ) ? $cached['meetings'] : array();
 	}
+
+	/**
+	 * Check whether a Zoom meeting id has already been imported.
+	 *
+	 * @param string $meeting_id
+	 *
+	 * @return bool
+	 */
+	public function isMeetingImported( string $meeting_id ): bool {
+		return in_array( $meeting_id, $this->getExistingMeetingIds(), true );
+	}
 }
