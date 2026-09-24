@@ -32,8 +32,8 @@ class MeetingPayloadBuilder {
 
 		// Recurrence mutual exclusivity
 		if ( isset( $data['recurrence'] ) && is_array( $data['recurrence'] ) ) {
-			$hasEndDate  = ! empty( $data['recurrence']['end_date_time'] );
-			$hasEndTimes = isset( $data['recurrence']['end_times'] ) && $data['recurrence']['end_times'] !== null;
+			$hasEndDate  = isset( $data['recurrence']['end_date_time'] );
+			$hasEndTimes = isset( $data['recurrence']['end_times'] );
 
 			if ( $hasEndDate && $hasEndTimes ) {
 				return new WP_Error(
@@ -69,8 +69,9 @@ class MeetingPayloadBuilder {
 	 * - If encryption_type=e2ee and auto_recording=cloud, set to none (warning)
 	 * - Warn if timezone is redundant with Zulu time
 	 *
-	 * @param array $schema
-	 * @param array $data
+	 * @param   array  $schema
+	 * @param   array  $data
+	 *
 	 * @return array ['payload'=>array, 'warnings'=>string[]]
 	 */
 	public static function sanitize( array $schema, array $data ): array {
@@ -94,7 +95,7 @@ class MeetingPayloadBuilder {
 			if ( array_key_exists( 'waiting_room', $settings ) && ! empty( $settings['waiting_room'] ) ) {
 				if ( ! empty( $settings['join_before_host'] ) ) {
 					$settings['join_before_host'] = false;
-					$warnings[] = 'join_before_host disabled because waiting_room is enabled';
+					$warnings[]                   = 'join_before_host disabled because waiting_room is enabled';
 				}
 			}
 
@@ -109,7 +110,7 @@ class MeetingPayloadBuilder {
 				$val     = is_numeric( $settings['jbh_time'] ) ? (int) $settings['jbh_time'] : $settings['jbh_time'];
 				if ( ! in_array( $val, $allowed, true ) ) {
 					$settings['jbh_time'] = 0;
-					$warnings[]            = 'jbh_time reset to 0 (allowed: 0, 5, 10, 15)';
+					$warnings[]           = 'jbh_time reset to 0 (allowed: 0, 5, 10, 15)';
 				}
 			}
 
@@ -117,7 +118,7 @@ class MeetingPayloadBuilder {
 			if ( isset( $settings['encryption_type'] ) && $settings['encryption_type'] === 'e2ee' ) {
 				if ( isset( $settings['auto_recording'] ) && $settings['auto_recording'] === 'cloud' ) {
 					$settings['auto_recording'] = 'none';
-					$warnings[]                  = 'auto_recording set to none because encryption_type is e2ee';
+					$warnings[]                 = 'auto_recording set to none because encryption_type is e2ee';
 				}
 			}
 
@@ -126,7 +127,7 @@ class MeetingPayloadBuilder {
 
 		// Redundant timezone notice (if Z-format used)
 		if ( isset( $data['start_time'] ) && is_string( $data['start_time'] ) ) {
-			if ( substr( $data['start_time'], -1 ) === 'Z' && ! empty( $data['timezone'] ) ) {
+			if ( substr( $data['start_time'], - 1 ) === 'Z' && ! empty( $data['timezone'] ) ) {
 				$warnings[] = 'timezone is ignored when start_time is in UTC (Zulu) format';
 			}
 		}

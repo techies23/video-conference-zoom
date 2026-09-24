@@ -31,27 +31,29 @@ class ZoomModel {
 		add_action( "save_post_{$this->postType}", [ $this, 'save' ], 10, 2 );
 		add_action( 'admin_notices', [ $this, 'displayValidationNotices' ] );
 		add_action( 'before_delete_post', [ $this, 'delete' ] );
-		add_filter( "rest_pre_insert_{$this->postType}", [ $this, 'preInsert' ], 10, 2 );
-		add_action( "rest_after_insert_{$this->postType}", [ $this, 'restAfterInsert' ], 10, 3 );
+		//add_filter( "rest_pre_insert_{$this->postType}", [ $this, 'preInsert' ], 10, 2 );
+		//add_action( "rest_after_insert_{$this->postType}", [ $this, 'restAfterInsert' ], 10, 3 );
 	}
 
 	/**
 	 * Trigger Save (classic metabox flow).
 	 */
 	public function save( int $post_id, WP_Post $post ): void {
-		if ( ! $this->isSaveRequestValid( $post_id ) ) {
-			return;
+//		if ( ! $this->isSaveRequestValid( $post_id ) ) {
+//			//return;
+//		}
+//
+//		$fields = MeetingValidator::normalize( $this->gatherPostFields() );
+//
+//		if ( ! $this->validateAndNotice( $fields ) ) {
+//			//return;
+//		}
+
+		$meeting_type = filter_input( INPUT_POST, 'type' );
+		$fields       = MeetingValidator::normalize( $this->gatherPostFields() );
+		if ( $meeting_type !== null ) {
+			$this->syncWithApiAndPersist( $post_id, $post, $fields, $meeting_type );
 		}
-
-		$fields = MeetingValidator::normalize( $this->gatherPostFields() );
-
-		if ( ! $this->validateAndNotice( $fields ) ) {
-			return;
-		}
-
-		$meeting_type = (int) $fields['type'];
-
-		$this->syncWithApiAndPersist( $post_id, $post, $fields, $meeting_type );
 	}
 
 	/**
@@ -60,8 +62,8 @@ class ZoomModel {
 	 * Returning a WP_Error here aborts the save entirely, so the post stays in
 	 * its previous status until the meeting details are fixed.
 	 *
-	 * @param $prepared_post
-	 * @param WP_REST_Request $request
+	 * @param                    $prepared_post
+	 * @param   WP_REST_Request  $request
 	 *
 	 * @return mixed|WP_Error
 	 */
@@ -96,9 +98,9 @@ class ZoomModel {
 	 * persist the response. Meta (vczapi_meeting_fields) is already written by
 	 * the REST controller before this fires.
 	 *
-	 * @param WP_Post $post
-	 * @param WP_REST_Request $request
-	 * @param bool $creating
+	 * @param   WP_Post          $post
+	 * @param   WP_REST_Request  $request
+	 * @param   bool             $creating
 	 */
 	public function restAfterInsert( WP_Post $post, WP_REST_Request $request, bool $creating ): void {
 		if ( $post->post_type !== $this->postType ) {
@@ -121,21 +123,21 @@ class ZoomModel {
 	/**
 	 * Shared build -> save meta -> sync Zoom API -> persist response pipeline.
 	 *
-	 * @param int $post_id
-	 * @param WP_Post $post
-	 * @param array $fields
-	 * @param int $meeting_type
+	 * @param   int      $post_id
+	 * @param   WP_Post  $post
+	 * @param   array    $fields
+	 * @param   int      $meeting_type
 	 */
 	private function syncWithApiAndPersist( int $post_id, WP_Post $post, array $fields, int $meeting_type ): void {
 		$eventHandler = $this->getEventHandler( $meeting_type );
 		$meeting_data = $this->buildMeetingData( $post, $fields, $meeting_type );
-
 		do_action( 'vczapi_admin_before_zoom_meeting_is_created', $meeting_data );
 
 		$event_label = ( $meeting_type === self::WEBINAR_TYPE ) ? 'webinar' : 'meeting';
 		$this->saveMetaData( $post_id, $meeting_data, $event_label );
 
-		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data );
+		//need fields as the raw fields being passed to the filter
+		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data, $fields );
 
 		$zoom_id = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
 
@@ -155,7 +157,7 @@ class ZoomModel {
 	/**
 	 * Validate fields and surface errors via transient admin notices (classic path).
 	 *
-	 * @param array $fields
+	 * @param   array  $fields
 	 *
 	 * @return bool
 	 */
@@ -221,7 +223,7 @@ class ZoomModel {
 		$fields['option_duration_hour']    = $this->getPostInput( 'option_duration_hour' );
 		$fields['option_duration_minutes'] = $this->getPostInput( 'option_duration_minutes' );
 
-		return $fields;
+		return apply_filters( 'vczapi_post_fields', $fields );
 	}
 
 	/**
@@ -229,9 +231,9 @@ class ZoomModel {
 	 *
 	 * Works for both the classic ($_POST) and REST (meta) sources.
 	 *
-	 * @param WP_Post $post
-	 * @param array $fields
-	 * @param int $meeting_type
+	 * @param   WP_Post  $post
+	 * @param   array    $fields
+	 * @param   int      $meeting_type
 	 *
 	 * @return array
 	 */
@@ -292,7 +294,8 @@ class ZoomModel {
 			try {
 				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
 				$start_utc = $dt->setTimezone( new \DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
-			} catch ( \Exception $e ) {
+			}
+			catch ( \Exception $e ) {
 				$start_utc = $e->getMessage();
 			}
 		}
@@ -321,7 +324,7 @@ class ZoomModel {
 	/**
 	 * Determine whether a Zoom API response represents an error.
 	 *
-	 * @param mixed $response
+	 * @param   mixed  $response
 	 *
 	 * @return bool
 	 */
@@ -336,12 +339,13 @@ class ZoomModel {
 	/**
 	 * Extract a human readable Zoom API error message.
 	 *
-	 * @param mixed $response
+	 * @param   mixed  $response
 	 *
 	 * @return string
 	 */
 	private function getErrorMessage( mixed $response ): string {
 		$message = is_object( $response ) ? ( $response->message ?? '' ) : ( $response['message'] ?? '' );
+
 		return sprintf( esc_html__( 'Zoom Error: %s', 'video-conferencing-with-zoom-api' ), esc_html( $message ) );
 	}
 

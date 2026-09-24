@@ -148,7 +148,7 @@ class Meeting {
 						'type'             => array( 'type' => 'int', 'enum' => array( 1, 2, 3 ) ),
 						'repeat_interval'  => array( 'type' => 'int' ),
 						'end_date_time'    => array( 'type' => 'string' ),
-						'end_times'        => array( 'type' => 'int', 'max' => 60, 'default' => 1 ),
+						'end_times'        => array( 'type' => 'int', 'max' => 60 ),
 						'weekly_days'      => array( 'type' => 'string' ),
 						'monthly_day'      => array( 'type' => 'int', 'min' => 1, 'max' => 31, 'default' => 1 ),
 						'monthly_week'     => array( 'type' => 'int', 'enum' => array( - 1, 1, 2, 3, 4 ) ),

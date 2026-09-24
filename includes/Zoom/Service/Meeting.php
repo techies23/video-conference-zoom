@@ -15,7 +15,7 @@ class Meeting extends BaseService {
 	/**
 	 * Optionally, inject a client for testing or customization.
 	 *
-	 * @param Client|null $client
+	 * @param   Client|null  $client
 	 */
 	public function __construct( Client $client = null ) {
 		$this->client = $client ?: new Client();
@@ -24,7 +24,8 @@ class Meeting extends BaseService {
 	/**
 	 * List meetings for a user/host.
 	 *
-	 * @param array $params
+	 * @param   array  $params
+	 *
 	 * @return array|WP_Error
 	 */
 	public function list( array $params = array() ): WP_Error|array {
@@ -52,7 +53,8 @@ class Meeting extends BaseService {
 	/**
 	 * Create a meeting for a user/host.
 	 *
-	 * @param array $data
+	 * @param   array  $data
+	 *
 	 * @return array|WP_Error
 	 */
 	public function create( array $data = array() ): WP_Error|array {
@@ -67,8 +69,7 @@ class Meeting extends BaseService {
 		}
 
 		$prepared['body'] = apply_filters( 'vczapi_meetings_create_payload', $prepared['body'], $data );
-
-		$result = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
+		$result           = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['body'] );
 
 		if ( ! empty( $prepared['warnings'] ) ) {
 			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_CREATE, $data );
@@ -80,7 +81,8 @@ class Meeting extends BaseService {
 	/**
 	 * Get details of a single meeting.
 	 *
-	 * @param string|int|array $meetingId ID string or array with parameters.
+	 * @param   string|int|array  $meetingId  ID string or array with parameters.
+	 *
 	 * @return array|WP_Error
 	 */
 	public function get( $meetingId ): WP_Error|array {
@@ -102,7 +104,8 @@ class Meeting extends BaseService {
 	/**
 	 * Delete a meeting.
 	 *
-	 * @param string|int|array $meetingId ID string or array with parameters.
+	 * @param   string|int|array  $meetingId  ID string or array with parameters.
+	 *
 	 * @return array|WP_Error
 	 */
 	public function delete( $meetingId ): WP_Error|array {
@@ -124,8 +127,9 @@ class Meeting extends BaseService {
 	/**
 	 * Update meeting status (PUT /meetings/{meetingId}/status).
 	 *
-	 * @param string|int|array $meetingId ID string or payload array.
-	 * @param string           $action    Status action (e.g., 'end').
+	 * @param   string|int|array  $meetingId  ID string or payload array.
+	 * @param   string            $action     Status action (e.g., 'end').
+	 *
 	 * @return array|WP_Error
 	 */
 	public function updateStatus( $meetingId, string $action = 'end' ): WP_Error|array {
@@ -149,7 +153,7 @@ class Meeting extends BaseService {
 	 * Update an existing meeting.
 	 *
 	 * @param   int|string  $meetingId  Meeting ID to update.
-	 * @param array         $data       Payload parameters to update.
+	 * @param   array       $data       Payload parameters to update.
 	 *
 	 * @return array|WP_Error
 	 */
