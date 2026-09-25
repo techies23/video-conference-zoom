@@ -170,10 +170,7 @@ class Meeting extends BaseService {
 		}
 
 		$prepared['body'] = apply_filters( 'vczapi_meetings_update_payload', $prepared['body'], $data );
-		file_put_contents( VCZAPI_PLUGIN_DIR_PATH . '/update-data.txt', print_r( $data, true ) );
-		file_put_contents( VCZAPI_PLUGIN_DIR_PATH . '/update-payload.txt', json_encode( $prepared['body'], JSON_PRETTY_PRINT ) );
 		$endpoint = ! empty( $prepared['query'] ) ? add_query_arg( $prepared['query'], $prepared['endpoint'] ) : $prepared['endpoint'];
-		return [];
 		$result = $this->client->request( $prepared['method'], $endpoint, $prepared['body'] );
 
 		if ( ! empty( $prepared['warnings'] ) ) {
