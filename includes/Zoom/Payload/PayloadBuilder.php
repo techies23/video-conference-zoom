@@ -10,8 +10,26 @@ use Codemanas\VczApi\Zoom\Payload\Resource\WebinarPayloadBuilder;
 use Codemanas\VczApi\Zoom\Schema\SchemaManager;
 use WP_Error;
 
+/**
+ * The `PayloadBuilder` class is responsible for building, validating,
+ * and sanitizing payloads for various operations based on predefined schemas.
+ * It ensures that input data is validated and transformed according to specific
+ * operation types and provides methods for handling compatibility and sanitization.
+ */
 class PayloadBuilder {
 
+	/**
+	 * Builds and validates a payload for a specified operation by validating input arguments
+	 * and sanitizing the data accordingly.
+	 *
+	 * @param   string  $operation  The name of the operation being performed. This determines
+	 *                              the validation and sanitization rules that will be applied.
+	 * @param   array   $input      The input data to validate and sanitize. The structure and
+	 *                              required fields depend on the specific operation.
+	 *
+	 * @return WP_Error|array Returns an array of validated and sanitized input values if
+	 *                        processing is successful. Returns a WP_Error object if validation fails.
+	 */
 	public static function build( string $operation, array $input ): WP_Error|array {
 		$validated = self::validateArgs( $operation, $input );
 		if ( is_wp_error( $validated ) ) {
@@ -21,6 +39,14 @@ class PayloadBuilder {
 		return self::sanitizePayload( $operation, $validated );
 	}
 
+	/**
+	 * Validates the provided input arguments against the schema defined for the specified operation.
+	 *
+	 * @param   string  $operation  The operation type being performed. This determines the schema and validation process.
+	 * @param   array   $input      The input arguments to be validated.
+	 *
+	 * @return WP_Error|array Returns a WP_Error object if validation fails; otherwise, returns the validated and normalized input array.
+	 */
 	public static function validateArgs( string $operation, array $input ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
@@ -79,6 +105,14 @@ class PayloadBuilder {
 
 		return $filteredValidation;	}
 
+	/**
+	 * Sanitizes the validated input payload based on the schema defined for the specified operation.
+	 *
+	 * @param   string  $operation  The operation type being performed. Determines the schema and sanitization process.
+	 * @param   array   $validated  The input payload that has been validated prior to sanitization.
+	 *
+	 * @return WP_Error|array Returns a WP_Error object if sanitization fails; otherwise, returns the sanitized and partitioned payload structure with additional metadata.
+	 */
 	public static function sanitizePayload( $operation, array $validated ): WP_Error|array {
 		$schema = SchemaManager::get( $operation );
 		if ( is_wp_error( $schema ) ) {
@@ -142,6 +176,17 @@ class PayloadBuilder {
 		return apply_filters( 'vczapi_payload_built', $partitioned, $operation, $schema, $validated );
 	}
 
+	/**
+	 * Transforms the keys of the provided array based on a mapping of legacy keys to target keys.
+	 * If a legacy key exists in the input array, its value is reassigned to the target key,
+	 * and the legacy key is removed from the input array.
+	 *
+	 * @param   array  $input  The array to process, containing the legacy keys to be mapped.
+	 * @param   array  $map    An associative array mapping legacy keys to their corresponding target keys.
+	 *                         The keys represent the legacy keys, and the values represent the new keys.
+	 *
+	 * @return array The resulting array with legacy keys replaced by their target keys.
+	 */
 	protected static function applyCompatKeyMap( array $input, array $map ): array {
 		foreach ( $map as $legacy => $target ) {
 			if ( array_key_exists( $legacy, $input ) ) {
@@ -153,6 +198,26 @@ class PayloadBuilder {
 		return $input;
 	}
 
+	/**
+	 * Applies a set of transformation rules to the provided array. Each rule defines a source field ('from'),
+	 * a target field ('to'), a transformation operation ('op'), and optional arguments ('args'). If the source
+	 * field exists in the input array, the specified transformation is applied, and the result is assigned to
+	 * the target field. The source field is removed from the array after processing.
+	 *
+	 * Supported operations:
+	 * - 'implode': Joins an array into a string using a specified separator.
+	 * - 'bool_invert': Inverts the boolean value of the field (empty becomes true, non-empty becomes false).
+	 * - 'truncate': Truncates a string to a maximum length.
+	 *
+	 * @param   array  $input       The array to be transformed. It contains the initial data and the fields to be processed.
+	 * @param   array  $transforms  A list of transformation rules. Each rule is an associative array with the following keys:
+	 *                              - 'from' (string): The key of the source field in the input array.
+	 *                              - 'to' (string): The key of the target field to assign the transformed value.
+	 *                              - 'op' (string): The transformation to apply ('implode', 'bool_invert', 'truncate').
+	 *                              - 'args' (array): Optional arguments specific to the transformation operation.
+	 *
+	 * @return array The transformed array with the specified changes applied to the data.
+	 */
 	protected static function applyCompatTransforms( array $input, array $transforms ): array {
 		foreach ( $transforms as $rule ) {
 			$from = isset( $rule['from'] ) ? $rule['from'] : null;
@@ -186,20 +251,45 @@ class PayloadBuilder {
 		return $input;
 	}
 
+	/**
+	 * Validates an input array against a set of defined rules for each field, ensuring type conformity
+	 * and applying default values where necessary.
+	 *
+	 * @param   array  $input   The input array containing field-value pairs to validate.
+	 * @param   array  $fields  An array defining validation rules for each field. Each field's rules may include:
+	 *                          - 'required' (bool): Whether the field is required.
+	 *                          - 'default' (mixed): The default value if the field is not present.
+	 *                          - 'type' (string): Expected data type ('int', 'bool', 'string', 'array', 'object').
+	 *                          - 'schema' (array): Recursive rules for validating nested arrays or objects (for 'object' type).
+	 *                          - 'items' (array): Rules for array items (for 'array' type).
+	 *
+	 * @return WP_Error|array Returns an array of validated and formatted input values if validation succeeds.
+	 *                        Returns a WP_Error object if validation fails.
+	 */
 	protected static function validateTypesOnly( array $input, array $fields ): WP_Error|array {
 		$out = array();
 
 		foreach ( $fields as $name => $rules ) {
-			$required = ! empty( $rules['required'] );
-			$hasValue = array_key_exists( $name, $input );
+			$isRequired = ! empty( $rules['required'] );
+			$hasDefault  = array_key_exists( 'default', $rules );
+			$hasValue    = array_key_exists( $name, $input );
 
-			if ( $required && ! $hasValue && ! array_key_exists( 'default', $rules ) ) {
-				return new WP_Error( 'vczapi_payload_required', sprintf( '%s is required', $name ), array( 'field' => $name ) );
+			// 1. Check required fields that lack both input and a default
+			if ( $isRequired && ! $hasValue && ! $hasDefault ) {
+				return new WP_Error(
+					'vczapi_payload_required',
+					sprintf( '%s is required', $name ),
+					array( 'field' => $name )
+				);
 			}
 
-			$value = $hasValue ? $input[ $name ] : ( array_key_exists( 'default', $rules ) ? $rules['default'] : null );
-
-			if ( ! $hasValue && $value === null ) {
+			// 2. Assign value from input, OR fallback ONLY if both required AND default are set
+			if ( $hasValue ) {
+				$value = $input[ $name ];
+			} elseif ( $isRequired && $hasDefault ) {
+				$value = $rules['default'];
+			} else {
+				// Field is omitted and not strictly forced by required + default
 				continue;
 			}
 
@@ -231,6 +321,7 @@ class PayloadBuilder {
 				if ( ! is_array( $value ) ) {
 					return new WP_Error( 'vczapi_type_error', sprintf( '%s must be an object', $name ) );
 				}
+				// Loop through schema recursively for nested structures like recurrence or settings
 				if ( ! empty( $rules['schema'] ) && is_array( $rules['schema'] ) ) {
 					$nested = self::validateTypesOnly( $value, $rules['schema'] );
 					if ( is_wp_error( $nested ) ) {
@@ -240,7 +331,8 @@ class PayloadBuilder {
 				}
 			}
 
-			if ( isset( $rules['type'] ) && $rules['type'] === 'array' && is_array( $value ) && ! empty( $rules['items'] ) ) {
+			// Handle array of objects (e.g. tracking_fields)
+			if ( $type === 'array' && is_array( $value ) && ! empty( $rules['items'] ) ) {
 				$itemSchema = $rules['items'];
 				$newArr     = array();
 
@@ -267,6 +359,20 @@ class PayloadBuilder {
 		return $out;
 	}
 
+	/**
+	 * Sanitizes an input array for sending by applying specific rules to its fields.
+	 * Each field is processed according to the provided schema, ensuring that values
+	 * match their expected types and formats. Nested objects and arrays are recursively
+	 * sanitized based on their respective schemas.
+	 *
+	 * @param   array  $data    The input array containing the data to be sanitized.
+	 *                          Keys represent field names, and values are their corresponding data.
+	 * @param   array  $fields  An associative array defining the schema for the input data.
+	 *                          The schema specifies the expected type and rules for each field.
+	 *
+	 * @return array The sanitized array with only the fields and values that conform
+	 *               to the specified schema.
+	 */
 	protected static function sanitizeForSending( array $data, array $fields ): array {
 		$out = array();
 
@@ -309,10 +415,33 @@ class PayloadBuilder {
 		return $out;
 	}
 
+	/**
+	 * Cleanses a string by removing all HTML and PHP tags and trimming whitespace
+	 * from the beginning and end of the string.
+	 *
+	 * @param   mixed  $value  The input value to sanitize. It will be cast to a string
+	 *                         before processing.
+	 *
+	 * @return string The sanitized string with tags removed and whitespace trimmed.
+	 */
 	protected static function sanitizeString( $value ): string {
 		return trim( wp_strip_all_tags( (string) $value, true ) );
 	}
 
+	/**
+	 * Partitions the normalized input array into separate arrays based on their designated location.
+	 * Each input field is categorized into one of three location groups: 'path', 'query', or 'body'.
+	 *
+	 * @param   array  $normalized  An associative array where keys represent field names and values
+	 *                              are the corresponding values to be partitioned.
+	 * @param   array  $fields      An associative array specifying metadata for each field. Each key
+	 *                              corresponds to a field name, and its value is an array containing
+	 *                              the 'location' key, which determines where the field should reside
+	 *                              ('path', 'query', or 'body').
+	 *
+	 * @return array An associative array with three keys: 'path', 'query', and 'body', each containing
+	 *               the fields that belong to their respective location group.
+	 */
 	protected static function partitionByLocation( array $normalized, array $fields ): array {
 		$out = array( 'path' => array(), 'query' => array(), 'body' => array() );
 
@@ -330,6 +459,16 @@ class PayloadBuilder {
 		return $out;
 	}
 
+	/**
+	 * Sets a value in a multidimensional array using a dot-delimited path to specify the nested keys.
+	 * Intermediate arrays are created as needed if they do not exist.
+	 *
+	 * @param   array   $arr    The reference to the array in which the value will be set.
+	 * @param   string  $path   A dot-delimited string representing the path to the target key.
+	 * @param   mixed   $value  The value to set at the specified path within the array.
+	 *
+	 * @return  void
+	 */
 	protected static function setByDotPath( array &$arr, $path, $value ): void {
 		$parts = explode( '.', $path );
 		$ref   = &$arr;
