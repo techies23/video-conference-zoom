@@ -256,4 +256,27 @@ class Date {
 
 		return wp_date( $target_format, $date->getTimestamp(), $date->getTimezone() );
 	}
+
+	/**
+	 * Format to specified minute format.
+	 *
+	 * @param $minutes
+	 * @param string $format
+	 *
+	 * @return array|false|string
+	 */
+	public static function convertMinutesToFormat( $minutes, string $format = '%02d:%02d' ): bool|array|string {
+		if ( $minutes < 1 ) {
+			return false;
+		}
+
+		$hours   = floor( $minutes / 60 );
+		$minutes = ( $minutes % 60 );
+
+		if ( $format ) {
+			return sprintf( $format, $hours, $minutes );
+		}
+
+		return array( 'hr' => $hours, 'min' => $minutes );
+	}
 }

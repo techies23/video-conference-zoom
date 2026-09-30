@@ -52,7 +52,6 @@ class GeneralSettingsHandler {
 		}
 
 		$this->repository->updateSettings( $posted_data );
-		video_conferencing_zoom_api_delete_user_cache();
 
 		Notification::setNotice( __( 'Settings successfully updated.', 'video-conferencing-with-zoom-api' ), 'success' );
 	}

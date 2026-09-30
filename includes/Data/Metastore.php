@@ -13,6 +13,8 @@ namespace Codemanas\VczApi\Data;
  */
 class Metastore {
 
+	private const SETTINGS_OPTION_KEY = '_vczapi_zoom_settings';
+
 	/**
 	 * Check if direct join via browser is enabled
 	 *
@@ -49,7 +51,7 @@ class Metastore {
 	 * @return false|mixed
 	 */
 	public static function get_plugin_settings( $type = '' ) {
-		$settings = get_option( '_vczapi_zoom_settings' );
+		$settings = get_option( self::SETTINGS_OPTION_KEY );
 		if ( ! empty( $settings ) && ! empty( $type ) ) {
 			return ! empty( $settings[ $type ] ) ? $settings[ $type ] : false;
 		}

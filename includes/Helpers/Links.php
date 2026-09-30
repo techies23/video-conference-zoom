@@ -21,11 +21,11 @@ class Links {
 	 * @return string
 	 */
 	public static function getJoinViaBrowserJoinLinks( $args, $meeting_id ): string {
-		if ( ! vczapi_is_sdk_enabled() ) {
+		if ( ! Common::validateSDKCredentials() ) {
 			return false;
 		}
 
-		if ( \Codemanas\VczApi\Data\Metastore::checkDisableJoinViaBrowser() ) {
+		if ( Metastore::checkDisableJoinViaBrowser() ) {
 			return false;
 		}
 
@@ -49,9 +49,9 @@ class Links {
 		$embed_password_join_link = Metastore::get_plugin_settings( 'embed_pwd_in_join_link' );
 		$seperator                = ! empty( $args['seperator'] ) ? '<span class="vczapi-seperator">' . $args['seperator'] . '</span>' : '';
 		$query                    = [
-			'join'        => $encrypted_meeting_id,
-			'type'        => 'meeting',
-			'redirect'    => ! empty( $args['redirect'] ) ? esc_url( $args['redirect'] ) : '',
+			'join'     => $encrypted_meeting_id,
+			'type'     => 'meeting',
+			'redirect' => ! empty( $args['redirect'] ) ? esc_url( $args['redirect'] ) : '',
 		];
 
 		if ( ! empty( $args['direct_join'] ) ) {

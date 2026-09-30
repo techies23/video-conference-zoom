@@ -518,7 +518,7 @@ function video_conference_zoom_before_jbh_html( $zoom ) {
         <meta name="robots" content="noindex, nofollow">
         <title><?php echo ! empty( $zoom['api']->topic ) ? $zoom['api']->topic : 'Join Meeting'; ?></title>
         <link rel='stylesheet' type="text/css"
-              href="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/bootstrap.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
+              href="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/bootstrap.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
               media='all'>
         <link rel='stylesheet' type="text/css"
               href="<?php echo ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.min.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
@@ -589,12 +589,12 @@ function video_conference_zoom_after_jbh_html() {
     </script>
 
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux-thunk.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/websdk.bundle.js?ver=' . ZVC_PLUGIN_VERSION; ?>" async></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/react.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/redux.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/redux-thunk.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/websdk/websdk.bundle.js?ver=' . ZVC_PLUGIN_VERSION; ?>" async></script>
 <?php } else { ?>
     <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/react.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
     <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
@@ -603,7 +603,7 @@ function video_conference_zoom_after_jbh_html() {
     <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
     <script src="<?php echo 'https://source.zoom.us/zoom-meeting-' . ZVC_ZOOM_WEBSDK_VERSION . '.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
 <?php } ?>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/zoom-meeting.bundle.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/websdk/zoom-meeting.bundle.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
 <?php do_action( 'vczapi_join_via_browser_after_script_load' ); ?>
     </body>
     </html>

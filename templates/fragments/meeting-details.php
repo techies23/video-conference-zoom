@@ -53,7 +53,7 @@ if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['details'] ) 
             </div>
 		<?php } ?>
 		<?php if ( ! empty( $zoom['api']->duration ) ) {
-			$duration = vczapi_convertMinutesToHM( $zoom['api']->duration, false );
+			$duration = \Codemanas\VczApi\Helpers\Date::convertMinutesToFormat( $zoom['api']->duration, false );
 			?>
             <div class="dpn-zvc-sidebar-content-list vczapi-duration-wrap">
                 <span><strong><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>

@@ -11,35 +11,9 @@ use Codemanas\VczApi\Helpers\Encryption;
 class Zoom_Video_Conferencing_Admin_Ajax {
 
 	public function __construct() {
-		add_action( 'wp_ajax_check_connection', array( $this, 'check_connection' ) );
-
 		//Join via browser Auth Call
 		add_action( 'wp_ajax_nopriv_get_auth', array( $this, 'get_auth' ) );
 		add_action( 'wp_ajax_get_auth', array( $this, 'get_auth' ) );
-	}
-
-	/**
-	 * Check API connection
-	 *
-	 * @since  3.0.0
-	 * @author Deepen Bajracharya
-	 */
-	public function check_connection() {
-		check_ajax_referer( '_nonce_zvc_security', 'security' );
-
-		$type = filter_input( INPUT_POST, 'type' );
-		if ( $type === "oAuth" ) {
-			$test = \Codemanas\VczApi\Requests\Zoom::instance()->me();
-			if ( ! empty( $test->code ) ) {
-				wp_send_json_error( $test->message );
-			}
-
-			//After user has been created delete this transient in order to fetch latest Data.
-			video_conferencing_zoom_api_delete_user_cache();
-			wp_send_json_success( [ 'msg' => "API Connection is good. You can refresh this and start creating your Zoom Events." ] );
-		}
-
-		wp_die();
 	}
 
 	/**
