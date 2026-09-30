@@ -1,0 +1,168 @@
+@use "../abstracts" as *;
+
+// ==========================================================================
+// Block: vczapi-jvb
+// ==========================================================================
+.vczapi-jvb {
+  box-sizing: border-box;
+  background-color: $vczapi-bg-color;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  // Elements
+  &__container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  &__card {
+    background-color: $vczapi-card-bg;
+    border-radius: $vczapi-border-radius;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid $vczapi-border-color;
+    padding: 2.5rem 2rem;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  &__title {
+    color: $vczapi-text-color;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.25;
+  }
+
+  &__subtitle {
+    color: $vczapi-text-muted;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  &__notice {
+    padding: 1rem;
+    border-radius: $vczapi-border-radius;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+
+    &--warning {
+      background-color: $vczapi-warning-bg;
+      border: 1px solid rgba($vczapi-danger-color, 0.3);
+      color: darken($vczapi-danger-color, 10%);
+    }
+  }
+
+  &__notice-title {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  &__notice-message {
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  &__label {
+    color: $vczapi-text-color;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  &__input,
+  &__select {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    color: $vczapi-text-color;
+    background-color: #FFFFFF;
+    border: 1px solid $vczapi-border-color;
+    border-radius: $vczapi-border-radius;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $vczapi-primary-color;
+      box-shadow: 0 0 0 3px $vczapi-focus-ring;
+    }
+
+    &::placeholder {
+      color: lighten($vczapi-text-muted, 15%);
+    }
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%20%23718096'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+
+  &__submit {
+    background-color: $vczapi-primary-color;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: $vczapi-border-radius;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background-color: $vczapi-primary-hover;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px $vczapi-focus-ring;
+    }
+  }
+
+  &__ended-notice,
+  &__unauthorized-notice {
+    text-align: center;
+    color: $vczapi-danger-color;
+    padding: 2rem;
+  }
+}

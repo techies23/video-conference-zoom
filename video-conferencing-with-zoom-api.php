@@ -27,15 +27,22 @@ defined( 'VCZAPI_PLUGIN_FILE' ) || define( 'VCZAPI_PLUGIN_FILE', __FILE__ );
 defined( 'VCZAPI_PLUGIN_ABS_NAME' ) || define( 'VCZAPI_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_SLUG' ) || define( 'VCZAPI_PLUGIN_SLUG', 'video-conferencing-zoom' );
 defined( 'VCZAPI_PLUGIN_VERSION' ) || define( 'VCZAPI_PLUGIN_VERSION', '4.7.0' );
-defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION', '4.0.0' );
+defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION', '6.2.0' );
 defined( 'VCZAPI_PLUGIN_DIR_URL' ) || define( 'VCZAPI_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_DIR_PATH' ) || define( 'VCZAPI_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/admin' );
 defined( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI' ) || define( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/vendor' );
+defined( 'VCZAPI_PLUGIN_SDK_URI' ) || define( 'VCZAPI_PLUGIN_SDK_URI', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/websdk' );
 defined( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH' ) || define( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH', VCZAPI_PLUGIN_DIR_PATH . 'includes/Admin/Views' );
 
 /**
- * @Deprecated on 4.7.0
+ * Legacy aliases kept for backwards compatibility with third party addons.
+ *
+ * The asset URLs previously pointed at an `assets/` directory that the build
+ * never produced, which made every handle registered against them 404 at
+ * runtime. They are now derived from the canonical constants above.
+ *
+ * @deprecated 4.7.0 Use the VCZAPI_PLUGIN_* constants instead.
  */
 defined( 'ZVC_PLUGIN_FILE' ) || define( 'ZVC_PLUGIN_FILE', __FILE__ );
 defined( 'ZVC_PLUGIN_SLUG' ) || define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );

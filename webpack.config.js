@@ -48,6 +48,7 @@ const publicConfig = {
         public: './src/public/js/public.js',
         shortcode: './src/public/js/shortcode.js',
         booking: './src/public/js/booking.js',
+        scripts: './src/public/script.js',
     },
     output: {
         filename: 'public/js/[name].min.js',
@@ -84,56 +85,58 @@ const backendConfig = {
     ],
 }
 
-const modules = [wpConfig, publicConfig, backendConfig]
-
-// Zoom WebSDK Production Configuration
-if (isProduction) {
-    const webSDKConfig = {
-        mode: 'production',
-        cache: false,
-        devtool: false,
-        entry: {
-            'zoom-meeting': {
-                import: './src/public/vendor/zoom-meeting.js',
-                dependOn: 'websdk',
+// Zoom Meeting SDK Configuration
+//
+// @zoom/meetingsdk ships a UMD build that externalises react, redux and
+// redux-thunk. Declaring them as webpack `externals` therefore required those
+// globals to be loaded first, but the emitted files were never written to
+// dist/vendor/zoom, so the bundle died with "React is not defined". Bundling
+// them keeps this a single self-contained script with no load-order contract.
+//
+// The entry is split in two so the ~5.5MB SDK payload is only fetched when the
+// visitor actually commits to joining:
+//   jvb-bootstrap  - small, no SDK import, drives the join form
+//   zoom-meeting   - imports the SDK, exposes window.VczapiMeeting
+const webSDKConfig = {
+    mode: 'production',
+    cache: false,
+    devtool: false,
+    entry: {
+        'websdk-router': './src/websdk/bootstrap.js',
+        'websdk-client': './src/websdk/client.js',
+    },
+    output: {
+        filename: 'vendor/zoom/websdk/[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        clean: false,
+        globalObject: 'self',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
             },
-            websdk: '@zoom/meetingsdk',
-        },
-        output: {
-            filename: 'vendor/zoom/websdk/[name].bundle.js',
-            path: path.resolve(__dirname, 'dist'),
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.jsx?$/,
-                    exclude: /node_modules/,
-                    loader: 'babel-loader',
-                },
-                {
-                    test: /\.css$/i,
-                    use: ['style-loader', 'css-loader'],
-                },
-                {
-                    test: /\.(jpg|png|svg)$/,
-                    type: 'asset',
-                },
-            ],
-        },
-        resolve: {
-            extensions: ['.js', '.jsx'],
-        },
-        externals: {
-            react: 'React',
-            'react-dom': 'ReactDOM',
-            redux: 'Redux',
-            'redux-thunk': 'ReduxThunk',
-            lodash: '_',
-        },
-        target: 'web',
-    }
-
-    modules.push(webSDKConfig)
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            }
+        ],
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    optimization: {
+        splitChunks: false,
+        runtimeChunk: false,
+    },
+    performance: {
+        hints: false,
+    },
+    target: ['web', 'es2017'],
 }
+
+const modules = [wpConfig, publicConfig, backendConfig, webSDKConfig]
 
 module.exports = modules
