@@ -61,6 +61,7 @@ class ComposerStaticInit29e970424d857ac5707b04aab1a5ae60
         'Codemanas\\VczApi\\Shortcodes\\Recordings' => __DIR__ . '/../..' . '/includes/Shortcodes/Recordings.php',
         'Codemanas\\VczApi\\Shortcodes\\Webinars' => __DIR__ . '/../..' . '/includes/Shortcodes/Webinars.php',
         'Codemanas\\VczApi\\Timezone' => __DIR__ . '/../..' . '/includes/Timezone.php',
+        'Codemanas\\VczApi\\admin\\Cron' => __DIR__ . '/../..' . '/includes/admin/Cron.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
         'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',

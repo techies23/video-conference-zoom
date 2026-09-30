@@ -37,6 +37,7 @@ return array(
     'Codemanas\\VczApi\\Shortcodes\\Recordings' => $baseDir . '/includes/Shortcodes/Recordings.php',
     'Codemanas\\VczApi\\Shortcodes\\Webinars' => $baseDir . '/includes/Shortcodes/Webinars.php',
     'Codemanas\\VczApi\\Timezone' => $baseDir . '/includes/Timezone.php',
+    'Codemanas\\VczApi\\admin\\Cron' => $baseDir . '/includes/admin/Cron.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Firebase\\JWT\\BeforeValidException' => $vendorDir . '/firebase/php-jwt/src/BeforeValidException.php',
     'Firebase\\JWT\\CachedKeySet' => $vendorDir . '/firebase/php-jwt/src/CachedKeySet.php',

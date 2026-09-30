@@ -1,127 +1,166 @@
-import ServerSideRender from "@wordpress/server-side-render";
-import {BlockControls, useBlockProps} from "@wordpress/block-editor";
-import {debounce} from "lodash";
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import {__} from '@wordpress/i18n';
-import {useEffect, useState, useRef} from "@wordpress/element";
+import { __ } from '@wordpress/i18n';
+import { useEffect, useState, useMemo } from '@wordpress/element';
+import { useBlockProps, BlockControls } from '@wordpress/block-editor';
+import ServerSideRender from '@wordpress/server-side-render';
+import {
+  Placeholder,
+  ToolbarGroup,
+  ToolbarButton,
+  Button,
+  SelectControl,
+  ComboboxControl,
+  Spinner,
+} from '@wordpress/components';
+import { debounce } from 'lodash';
 
-import Select from "react-select";
-import AsyncSelect from 'react-select/async';
-import {Placeholder, ToolbarGroup, ToolbarButton, Button} from "@wordpress/components";
+export default function EditListHostMeeting( { attributes, setAttributes } ) {
+  const { host, shouldShow, preview } = attributes;
+  const [ isEditing, setIsEditing ] = useState( false );
+  const [ hostOptions, setHostOptions ] = useState( [] );
+  const [ isLoading, setIsLoading ] = useState( false );
 
-export default function EditListHostMeeting(props) {
-    const {className, attributes, setAttributes} = props;
-    const {host, shouldShow, preview} = attributes;
-    const isMounted = useRef;
-    const [isEditing, setIsEditing] = useState(false);
-
-    const get_hosts = (input, callback) => {
-        fetch('admin-ajax.php?action=vczapi_get_zoom_hosts&host=' + input).then(
-            response => response.json()
-        ).then(
-            result => {
-                callback(result);
-            }
-        ).catch(
-            () => {
-                callback([]);
-            }
-        )
-    }
-
-    useEffect(() => {
-        isMounted.current = true;
-        return () => {
-            isMounted.current = false;
-        }
-    }, []);
-
-    if (preview) {
-        return (
-            <img src={vczapi_blocks.list_host_meetings_preview_image} alt={"List Host meetings"}/>
-        )
-    }
-
-    return (
-        <div {...useBlockProps()}>
-            <BlockControls>
-                <ToolbarGroup>
-                    <ToolbarButton
-                        icon={(!isEditing) ? 'edit' : 'no'}
-                        title={(!isEditing) ? "Edit" : "Close"}
-                        subscript={"Edit"}
-                        onClick={() => {
-                            setIsEditing(prevIsEditing => !prevIsEditing);
-                        }}
-                    />
-                </ToolbarGroup>
-            </BlockControls>
-
-            {(typeof host === "undefined" || isEditing) &&
-            <Placeholder>
-                <h2>{__('Zoom -  List Meetings/Webinars based on HOST', 'video-conferencing-with-zoom')}</h2>
-                <div className="vczapi-blocks-form">
-                    <div className="vczapi-blocks-form--group">
-                        <Select
-                            className={'vczapi-blocks-form--select'}
-                            defaultValue={shouldShow}
-                            options={[
-                                {label: "Meeting", value: "meeting"},
-                                {label: "Webinar", value: "webinar"},
-                            ]}
-                            onChange={(input, {action}) => {
-                                if (action === 'select-option') {
-                                    setAttributes({shouldShow: input})
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="vczapi-blocks-form--group">
-                        <AsyncSelect
-                            className={'vczapi-blocks-form--select'}
-                            defaultOptions
-                            noResultsText={__("No options found", "video-conferencing-with-zoom-api")}
-                            loadOptions={debounce(get_hosts, 800)}
-                            defaultValue={host}
-                            onChange={(input, {action}) => {
-                                if (action === 'select-option') {
-                                    setAttributes({host: input})
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="vczapi-blocks-form--group">
-                        <Button
-                            isPrimary
-                            onClick={() => {
-                                setIsEditing(false);
-                            }}
-                        >
-                            {__("Save", "video-conferencing-with-zoom-api")}
-                        </Button>
-                    </div>
-                </div>
-            </Placeholder>
-            }
-
-
-            {((typeof host !== 'undefined' && host.hasOwnProperty('value')) && !isEditing)
-            &&
-            <ServerSideRender
-                block="vczapi/list-host-meetings"
-                attributes={
-                    {
-                        host: host,
-                        shouldShow: shouldShow
-                    }
-                }
-            />
-            }
-
-        </div>
+  // Fetch host options via WordPress AJAX endpoint
+  const fetchHosts = ( searchInput = '' ) => {
+    setIsLoading( true );
+    fetch(
+      `admin-ajax.php?action=vczapi_get_zoom_hosts&host=${ encodeURIComponent(
+        searchInput
+      ) }`
     )
+    .then( ( response ) => response.json() )
+    .then( ( result ) => {
+      // Format response to match ComboboxOption structure: { label, value }
+      const formattedOptions = ( result || [] ).map( ( item ) => ( {
+        label: item.label || item.name || item.value,
+        value: String( item.value || item.id ),
+      } ) );
+
+      setHostOptions( formattedOptions );
+    } )
+    .catch( () => {
+      setHostOptions( [] );
+    } )
+    .finally( () => {
+      setIsLoading( false );
+    } );
+  };
+
+  // Debounce remote search queries to limit redundant network calls
+  const debouncedFetchHosts = useMemo(
+    () => debounce( fetchHosts, 300 ),
+    []
+  );
+
+  // Load initial host options on load & clean up pending debounced calls on unmount
+  useEffect( () => {
+    fetchHosts();
+    return () => {
+      debouncedFetchHosts.cancel();
+    };
+  }, [] );
+
+  if ( preview ) {
+    return (
+      <img
+        src={ vczapi_blocks?.list_host_meetings_preview_image }
+        alt={ __( 'List Host meetings', 'video-conferencing-with-zoom-api' ) }
+      />
+    );
+  }
+
+  const blockProps = useBlockProps();
+
+  return (
+    <div { ...blockProps }>
+      <BlockControls>
+        <ToolbarGroup>
+          <ToolbarButton
+            icon={ ! isEditing ? 'edit' : 'no' }
+            title={
+              ! isEditing
+                ? __( 'Edit', 'video-conferencing-with-zoom-api' )
+                : __( 'Close', 'video-conferencing-with-zoom-api' )
+            }
+            onClick={ () => setIsEditing( ( prev ) => ! prev ) }
+          />
+        </ToolbarGroup>
+      </BlockControls>
+
+      { ( ! host || isEditing ) && (
+        <Placeholder
+          label={ __(
+            'Zoom - List Meetings/Webinars based on HOST',
+            'video-conferencing-with-zoom-api'
+          ) }
+        >
+          <div className="vczapi-blocks-form">
+            <div className="vczapi-blocks-form--group">
+              <SelectControl
+                label={ __( 'Type', 'video-conferencing-with-zoom-api' ) }
+                value={ shouldShow?.value || shouldShow || 'meeting' }
+                options={ [
+                  {
+                    label: __( 'Meeting', 'video-conferencing-with-zoom-api' ),
+                    value: 'meeting',
+                  },
+                  {
+                    label: __( 'Webinar', 'video-conferencing-with-zoom-api' ),
+                    value: 'webinar',
+                  },
+                ] }
+                onChange={ ( newValue ) =>
+                  setAttributes( {
+                    shouldShow: {
+                      label:
+                        newValue === 'meeting' ? 'Meeting' : 'Webinar',
+                      value: newValue,
+                    },
+                  } )
+                }
+              />
+            </div>
+
+            <div className="vczapi-blocks-form--group">
+              <ComboboxControl
+                label={ __( 'Select Host', 'video-conferencing-with-zoom-api' ) }
+                value={ host?.value || host || '' }
+                options={ hostOptions }
+                onFilterValueChange={ ( searchValue ) =>
+                  debouncedFetchHosts( searchValue )
+                }
+                onChange={ ( selectedValue ) => {
+                  const selectedOption = hostOptions.find(
+                    ( opt ) => opt.value === selectedValue
+                  );
+                  setAttributes( {
+                    host: selectedOption || selectedValue,
+                  } );
+                } }
+              />
+              { isLoading && <Spinner /> }
+            </div>
+
+            <div className="vczapi-blocks-form--group">
+              <Button
+                variant="primary"
+                onClick={ () => setIsEditing( false ) }
+              >
+                { __( 'Save', 'video-conferencing-with-zoom-api' ) }
+              </Button>
+            </div>
+          </div>
+        </Placeholder>
+      ) }
+
+      { host?.value && ! isEditing && (
+        <ServerSideRender
+          block="vczapi/list-host-meetings"
+          attributes={ {
+            host,
+            shouldShow,
+          } }
+        />
+      ) }
+    </div>
+  );
 }

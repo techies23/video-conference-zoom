@@ -1,71 +1,96 @@
 jQuery(function ($) {
 
-    var video_conferencing_zoom_jbv = {
+  var video_conferencing_zoom_jbv = {
 
-        init: function () {
-            this.cacheVariables();
-            this.countDown();
-        },
+    init: function () {
+      this.cacheVariables()
+      this.countDown()
+    },
 
-        cacheVariables: function () {
-            this.$timer = $('#dpn-zvc-timer');
-        },
+    cacheVariables: function () {
+      this.$timer = $('#dpn-zvc-timer')
+    },
 
-        countDown: function () {
-            var clock = this.$timer;
-            if (clock.length > 0) {
-                var valueDate = clock.data('date');
-                var mtgTimezone = clock.data('tz');
+    countDown: function () {
+      var clock = this.$timer
 
-                // var dateFormat = moment(valueDate).format('MMM D, YYYY HH:mm:ss');
+      if (!clock.length) {
+        return
+      }
 
-                var user_timezone = moment.tz.guess();
-                if (user_timezone === 'Asia/Katmandu') {
-                    user_timezone = 'Asia/Kathmandu';
-                }
+      var valueDate = clock.data('date')
+      var mtgTimezone = clock.data('tz')
 
-                //Converting Timezones to locals
-                var source_timezone = moment.tz(valueDate, mtgTimezone).format();
-                var converted_timezone = moment.tz(source_timezone, user_timezone).format('MMM D, YYYY HH:mm:ss');
-                var convertedTimezonewithoutFormat = moment.tz(source_timezone, user_timezone).format();
+      var userTimezone = moment.tz.guess()
 
-                //Check Time Difference for Validations
-                var currentTime = moment().unix();
-                var eventTime = moment(convertedTimezonewithoutFormat).unix();
-                var diffTime = eventTime - currentTime;
+      if (userTimezone === 'Asia/Katmandu') {
+        userTimezone = 'Asia/Kathmandu'
+      }
 
-                var lang = document.documentElement.lang;
-                $('.sidebar-start-time').html(moment.parseZone(convertedTimezonewithoutFormat).locale(lang).format('LLLL'));
+      // Meeting time in the meeting timezone
+      var meetingTime = moment.tz(valueDate, mtgTimezone)
 
-                var second = 1000,
-                    minute = second * 60,
-                    hour = minute * 60,
-                    day = hour * 24;
+      // Meeting time converted to the user's timezone
+      var userMeetingTime = meetingTime.clone().tz(userTimezone)
 
-                // if time to countdown
-                if (diffTime > 0) {
-                    var countDown = new Date(converted_timezone).getTime();
-                    var x = setInterval(function () {
-                        var now = new Date().getTime();
-                        var distance = countDown - now;
+      // Check time difference
+      var diffTime = userMeetingTime.diff(moment())
 
-                        document.getElementById('dpn-zvc-timer-days').innerText = Math.floor(distance / (day));
-                        document.getElementById('dpn-zvc-timer-hours').innerText = Math.floor((distance % (day)) / (hour));
-                        document.getElementById('dpn-zvc-timer-minutes').innerText = Math.floor((distance % (hour)) / (minute));
-                        document.getElementById('dpn-zvc-timer-seconds').innerText = Math.floor((distance % (minute)) / second);
+      var lang = document.documentElement.lang
 
-                        if (distance < 0) {
-                            clearInterval(x);
-                            location.reload();
-                        }
-                    }, second);
-                } else {
-                    // location.reload();
-                    $(clock).remove();
-                }
-            }
-        },
-    };
+      $('.sidebar-start-time').html(
+        userMeetingTime.clone().locale(lang).format('LLLL'),
+      )
 
-    video_conferencing_zoom_jbv.init();
-});
+      var second = 1000
+      var minute = second * 60
+      var hour = minute * 60
+      var day = hour * 24
+
+      // Meeting has already started
+      if (diffTime <= 0) {
+        $(clock).remove()
+        return
+      }
+
+      var countDown = userMeetingTime.valueOf()
+
+      var x = setInterval(function () {
+        var distance = countDown - Date.now()
+
+        var days = Math.floor(distance / day)
+        var hours = Math.floor((distance % day) / hour)
+        var minutes = Math.floor((distance % hour) / minute)
+        var seconds = Math.floor((distance % minute) / second)
+
+        var daysEl = document.getElementById('dpn-zvc-timer-days')
+        var hoursEl = document.getElementById('dpn-zvc-timer-hours')
+        var minutesEl = document.getElementById('dpn-zvc-timer-minutes')
+        var secondsEl = document.getElementById('dpn-zvc-timer-seconds')
+
+        if (daysEl) {
+          daysEl.innerText = Math.max(0, days)
+        }
+
+        if (hoursEl) {
+          hoursEl.innerText = Math.max(0, hours)
+        }
+
+        if (minutesEl) {
+          minutesEl.innerText = Math.max(0, minutes)
+        }
+
+        if (secondsEl) {
+          secondsEl.innerText = Math.max(0, seconds)
+        }
+
+        if (distance <= 0) {
+          clearInterval(x)
+          location.reload()
+        }
+      }, second)
+    },
+  }
+
+  video_conferencing_zoom_jbv.init()
+})
