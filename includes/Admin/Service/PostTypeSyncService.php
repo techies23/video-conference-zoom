@@ -20,10 +20,9 @@ class PostTypeSyncService {
 		$event_label = ( $meeting_type === self::WEBINAR_TYPE ) ? 'webinar' : 'meeting';
 		$this->saveMetaData( $post_id, $meeting_data, $event_label );
 
-		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data );
-		$zoom_id      = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
-
 		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
+		$meeting_data         = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data, $fields );
+		$zoom_id              = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
 		$response             = $eventHandler->syncWithApi( $post, $meeting_data, $zoom_id );
 
 		$this->persistZoomResponse( $post_id, $response );
@@ -73,7 +72,8 @@ class PostTypeSyncService {
 			try {
 				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
 				$start_utc = $dt->setTimezone( new \DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
-			} catch ( \Exception $e ) {
+			}
+			catch ( \Exception $e ) {
 				$start_utc = $e->getMessage();
 			}
 		}
