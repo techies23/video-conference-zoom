@@ -1,159 +1,102 @@
-import {ZoomMtg} from '@zoom/meetingsdk';
+import { ZoomMtg } from '@zoom/meetingsdk';
 import defaultConfig from './config';
-import {fetchSignature} from './signature';
+import { CLIENT_GLOBAL } from './contract';
 
 /**
- * Factory that creates a stateful, object-driven Zoom SDK client using closures.
- *
- * @param {Object} [customConfig=defaultConfig] Configuration overrides.
- * @return {Object} Client instance API.
+ * @typedef {Object} JoinParameters
+ * @property {string} signature       Meeting SDK signature.
+ * @property {string} sdkKey          Public SDK key the signature was made with.
+ * @property {string} meetingNumber   Zoom meeting number.
+ * @property {string} passWord        Meeting passcode, when one is required.
+ * @property {string} registrantToken Zoom registrant token, when joining a registered meeting.
+ * @property {string} userName        Display name.
+ * @property {string} userEmail       Email, when the visitor supplied one.
+ * @property {string} lang            BCP-47 locale for the SDK interface.
  */
-export function createZoomClient(customConfig = defaultConfig) {
-    const config = {...customConfig};
 
-    const fields = {
-        userName: '',
-        userEmail: '',
-        passWord: '',
-        lang: config.lang,
-    };
+/**
+ * Build the ZoomMtg.init() options.
+ *
+ * @param {Object} config Resolved configuration.
+ * @return {Object} Options for ZoomMtg.init().
+ */
+const buildInitOptions = ( config ) => ( {
+	leaveUrl: config.leaveUrl || window.location.origin,
+	patchJsMedia: true,
+	isSupportAV: true,
+	enableHD: false,
+	// The helper page must be same-origin: the document is served with COEP
+	// require-corp so that SharedArrayBuffer, and therefore the SDK, is
+	// available at all.
+	helper: config.helperUrl || undefined,
+	...( config.initOptions || {} ),
+} );
 
-    /**
-     * Remove loading overlay.
-     */
-    const removeLoader = () => {
-        document.getElementById('zvc-cover')?.remove();
-    };
+/**
+ * Create the SDK client.
+ *
+ * @param {Object} [customConfig] Configuration overrides.
+ * @return {Object} Frozen client API.
+ */
+export function createZoomClient( customConfig = defaultConfig ) {
+	const config = { ...customConfig };
+	let initialised = false;
 
-    /**
-     * Ensure the target `#zmmtg-root` element exists.
-     *
-     * @return {HTMLElement}
-     */
-    const ensureRoot = () => {
-        let root = document.getElementById('zmmtg-root');
+	/**
+	 * Join the meeting.
+	 *
+	 * @param {JoinParameters} parameters Resolved by the signature service.
+	 * @return {Promise<void>} Resolves once the SDK has joined.
+	 */
+	const join = async ( parameters ) => {
+		if ( initialised ) {
+			return;
+		}
 
-        if (!root) {
-            root = document.createElement('div');
-            root.id = 'zmmtg-root';
-            document.body.appendChild(root);
-        }
+		// `sdkKey` is required by ZoomMtg.join() as a separate argument even
+		// though the signature already carries it. It is served by the signature
+		// endpoint so it never has to be hardcoded into the bundle.
+		if ( ! parameters.sdkKey ) {
+			throw new Error(
+				'The server did not return an SDK key, so this meeting cannot be joined.'
+			);
+		}
 
-        return root;
-    };
+		// i18n.load resolves asynchronously. It used to be called without
+		// awaiting, so a non-default locale raced the init sequence and the SDK
+		// could fall back to English, or throw inside the SDK's own init.
+		await ZoomMtg.i18n.load( parameters.lang || config.lang || 'en-US' );
 
-    /**
-     * Show fatal error notice.
-     *
-     * @param {Error|unknown} error
-     */
-    const showFatal = (error) => {
-        const message =
-            error instanceof Error ? error.message : 'Something went wrong while joining this meeting.';
+		ZoomMtg.preLoadWasm();
+		ZoomMtg.prepareWebSDK();
+		ZoomMtg.init(buildInitOptions(config));
 
-        if (document.getElementById('zmmtg-root')?.children.length) {
-            console.error('[Video Conferencing with Zoom API]', error);
-            return;
-        }
+		initialised = true;
 
-        removeLoader();
+		ZoomMtg.join({
+			meetingNumber: parameters.meetingNumber,
+			userName: parameters.userName || '',
+			userEmail: parameters.userEmail || '',
+			signature: parameters.signature,
+			sdkKey: parameters.sdkKey,
+			passWord: parameters.passWord || '',
+			registrantToken: parameters.registrantToken || '',
+			zak: '',
+		});
+	};
 
-        const notice = document.createElement('div');
-        notice.className = 'vczapi-join-error';
-        notice.setAttribute('role', 'alert');
-        notice.textContent = message;
-
-        document.body.prepend(notice);
-        console.error('[Video Conferencing with Zoom API]', error);
-    };
-
-    /**
-     * Determine post-leave redirect URL.
-     *
-     * @return {string}
-     */
-    const resolveLeaveUrl = () => {
-        if (config.leaveUrl) {
-            return config.leaveUrl;
-        }
-
-        try {
-            if (window.location !== window.parent.location) {
-                return window.location.href;
-            }
-        } catch {
-            // Cross-origin access threw exception
-        }
-
-        return window.location.origin;
-    };
-
-    /**
-     * Construct parameters for ZoomMtg.init().
-     *
-     * @return {Object}
-     */
-    const buildInitOptions = () => {
-        const leaveUrl = resolveLeaveUrl();
-
-        return {
-            leaveUrl,
-            patchJsMedia: true,
-            enableHD: true,
-            isSupportAV: true,
-            helper: config.helperUrl || undefined,
-            ...(config.initOptions || {}),
-        };
-    };
-
-    /**
-     * Initialize dependencies and launch meeting.
-     *
-     * @return {Promise<void>}
-     */
-    const join = async () => {
-        const container = ensureRoot();
-        container.style.display = 'block';
-
-        removeLoader();
-
-        try {
-            const {signature} = await fetchSignature();
-
-            ZoomMtg.i18n.load(fields.lang || config.lang);
-
-            await ZoomMtg.preLoadWasm();
-            await ZoomMtg.prepareWebSDK();
-
-            await ZoomMtg.init(buildInitOptions());
-
-            await ZoomMtg.join({
-                signature,
-                meetingNumber: config.meetingNumber,
-                passWord: config.passWord,
-                userName: fields.userName,
-                userEmail: fields.userEmail,
-                registrantToken: config.registrantToken || '',
-            });
-        } catch (error) {
-            showFatal(error);
-            throw error;
-        }
-    };
-
-    // Return frozen object interface (no `this` needed)
-    return Object.freeze({
-        fields,
-        join,
-        buildInitOptions,
-        resolveLeaveUrl,
-    });
+	return Object.freeze( { join } );
 }
 
-// Global binding for backward compatibility
-const clientInstance = createZoomClient();
+const client = createZoomClient();
 
-window.VczapiWebSDK = clientInstance;
-window.dispatchEvent(new window.CustomEvent('vczapi:meeting-sdk-ready'));
+/**
+ * Publish the client.
+ *
+ * Evaluated synchronously at module scope. `bootstrap.js` injects this bundle
+ * and waits for the script's `load` event, which fires only after this file has
+ * fully evaluated, so the global is guaranteed to exist by the time it is read.
+ */
+window[ CLIENT_GLOBAL ] = client;
 
-export default clientInstance;
+export default client;

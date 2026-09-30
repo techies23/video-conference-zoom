@@ -52,11 +52,12 @@ class PostTypeSyncService {
 
 		$eventHandler = $this->getEventHandler( $meeting_type );
 
-		return array_merge( $common, $eventHandler->getTypeSpecificFields( $fields ) );
+		return array_merge( $common, $eventHandler->getTypeSpecificFields() );
 	}
 
 	private function resolveMeetingPassword( int $post_id, string $password ): string {
-		if ( ! get_option( 'zoom_api_disable_auto_meeting_pwd' ) ) {
+		$autoPwd = Metastore::get_plugin_settings( "disable_auto_pwd_generation" );
+		if ( ! $autoPwd ) {
 			return ! empty( $password ) ? $password : (string) $post_id;
 		}
 
@@ -72,8 +73,7 @@ class PostTypeSyncService {
 			try {
 				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
 				$start_utc = $dt->setTimezone( new \DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
-			}
-			catch ( \Exception $e ) {
+			} catch ( \Exception $e ) {
 				$start_utc = $e->getMessage();
 			}
 		}

@@ -497,133 +497,43 @@ function video_conference_zoom_get_current_theme_slug() {
  * @param $buffer
  *
  * @return string|string[]|null
+ *
+ * @deprecated 4.9.0 Moved to \Codemanas\VczApi\Browser\JoinViaBrowser.
  */
 function vczapi_removeWhitespace( $buffer ) {
-    return preg_replace( '/\s+/', ' ', $buffer );
+	return preg_replace( '/\s+/', ' ', $buffer );
 }
 
 /**
- * Before join before host
+ * Open the Join-via-Browser document.
  *
- * @param $zoom
+ * @deprecated 4.9.0 The join page is now rendered by
+ *             \Codemanas\VczApi\Browser\JoinViaBrowser, which owns the whole
+ *             document on its own endpoint. This is kept as a delegate because
+ *             it is a public function that themes hook via
+ *             `vczoom_jbh_before_content`. It no longer prints anything: the
+ *             front controller emits the document itself.
+ *
+ * @param array|null $zoom Unused.
  */
-function video_conference_zoom_before_jbh_html( $zoom ) {
-    ob_start( 'vczapi_removeWhitespace' );
-    ?>
-    <!DOCTYPE html><html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="robots" content="noindex, nofollow">
-        <title><?php echo ! empty( $zoom['api']->topic ) ? $zoom['api']->topic : 'Join Meeting'; ?></title>
-        <link rel='stylesheet' type="text/css"
-              href="<?php echo VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/bootstrap.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
-              media='all'>
-        <link rel='stylesheet' type="text/css"
-              href="<?php echo ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.min.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
-              media='all'>
-        <link rel='stylesheet' type="text/css" href="<?php echo get_stylesheet_uri(); ?>" media='all'>
-    </head><body class="join-via-browser-body">
-    <?php
-    ob_end_flush();
+function video_conference_zoom_before_jbh_html( $zoom = null ) {
+	// Intentionally empty. The document is emitted by JoinViaBrowser::render_document().
 }
 
 /**
- * AFter join before host
+ * Close the Join-via-Browser document and print its scripts.
+ *
+ * @deprecated 4.9.0 Superseded by \Codemanas\VczApi\Browser\JoinViaBrowser,
+ *             which prints the footer scripts and fires
+ *             `vczapi_join_via_browser_footer` and
+ *             `vczapi_join_via_browser_after_script_load` itself. This delegate
+ *             remains so that calling it directly does not fatal, but it is no
+ *             longer wired to `vczoom_jbh_after_content`.
  */
 function video_conference_zoom_after_jbh_html() {
-    do_action( 'vczapi_join_via_browser_footer' );
-
-    ob_start( 'vczapi_removeWhitespace' );
-
-    global $post;
-    //If you need to add other redirect hosts use 'apply_filters( ‘allowed_redirect_hosts’, string[] $hosts, string $host )' filter
-    if ( ! empty( $_GET['redirect'] ) && wp_validate_redirect( $_GET['redirect'] ) ) {
-        $post_link = esc_url( $_GET['redirect'] );
-    } elseif ( ! empty( $post ) && ! empty( $post->ID ) ) {
-        $post_link = get_permalink( $post->ID );
-    } else {
-        $post_link = home_url( '/' );
-    }
-
-    global $current_user;
-    $full_name                 = ! empty( $current_user->display_name ) ? $current_user->display_name : 'Guest';
-    $enable_direct_via_browser = Metastore::enabledDirectJoinViaBrowser();
-    $meeting_id                = base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( $_GET['join'] ) );
-    $meeting_pwd               = ! empty( $_GET['pak'] ) ? base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( $_GET['pak'] ) ) : '';
-
-    $localize = array(
-            'ajaxurl'                        => admin_url( 'admin-ajax.php' ),
-            'zvc_security'                   => wp_create_nonce( "_nonce_zvc_security" ),
-            'redirect_page'                  => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( $post_link ) ),
-            'meeting_id'                     => $meeting_id,
-            'meeting_pwd'                    => $meeting_pwd,
-            'disableInvite'                  => ( get_option( 'vczapi_disable_invite' ) == 'yes' ),
-            'user_mail'                      => ! empty( $current_user->user_email ) ? $current_user->user_email : '',
-            'user_name'                      => $full_name,
-            'enable_direct_join_via_browser' => ! empty( $_GET['direct_join'] ) ? (bool) $_GET['direct_join'] : $enable_direct_via_browser,
-    );
-
-    /**
-     * Additional Data
-     */
-    $additional_data         = apply_filters( 'vczapi_api_join_via_browser_params', array(
-            'meetingInfo'       => [
-                    'topic',
-                    'host',
-            ],
-            'disableRecord'     => false,
-            'disableJoinAudio'  => false,
-            'isSupportChat'     => true,
-            'isSupportQA'       => true,
-            'isSupportBreakout' => true,
-            'isSupportCC'       => true,
-            'screenShare'       => true
-    ) );
-    $localize                = array_merge( $localize, $additional_data );
-    $localize['sdk_version'] = VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION;
-    $default_jvb_lang        = get_option( 'zoom_api_default_lang_jvb' );
-
-    /**
-     * Configuration consumed by the lazy Join-via-Browser client.
-     */
-    $jvb_config = array(
-            'meetingNumber'   => $meeting_id,
-            'passWord'        => $meeting_pwd,
-            'userName'        => $full_name,
-            'userEmail'       => ! empty( $current_user->user_email ) ? $current_user->user_email : '',
-            'leaveUrl'        => $localize['redirect_page'],
-            'lang'            => ! empty( $default_jvb_lang ) && 'all' !== $default_jvb_lang ? $default_jvb_lang : 'en-US',
-            'directJoin'      => (bool) $localize['enable_direct_join_via_browser'],
-            'restUrl'         => esc_url_raw( rest_url( \Codemanas\VczApi\Rest\WebSDK::NAMESPACE . '/signature' ) ),
-            'restNonce'       => wp_create_nonce( 'wp_rest' ),
-            'ajaxUrl'         => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
-            'bundleUrl'       => VCZAPI_PLUGIN_SDK_URI . '/zoom-meeting.bundle.js?ver=' . ZVC_PLUGIN_VERSION,
-            'helperUrl'       => VCZAPI_PLUGIN_SDK_URI . '/helper.html?ver=' . ZVC_PLUGIN_VERSION,
-            'registrantToken' => ! empty( $_GET['tk'] ) ? sanitize_text_field( wp_unslash( $_GET['tk'] ) ) : '',
-            'initOptions'     => array(
-                    'screenShare'         => ! empty( $localize['screenShare'] ),
-                    'supportVideo'        => true,
-                    'supportAudio'        => empty( $localize['disableJoinAudio'] ),
-                    'supportChat'         => ! empty( $localize['isSupportChat'] ),
-                    'supportQA'           => ! empty( $localize['isSupportQA'] ),
-                    'supportCC'           => ! empty( $localize['isSupportCC'] ),
-                    'supportBreakoutRoom' => ! empty( $localize['isSupportBreakout'] ),
-            ),
-    );
-    ?>
-    <script id='video-conferencing-with-zoom-api-browser-js-extra'>
-        var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
-        var vczapiJvb = <?php echo wp_json_encode( $jvb_config ); ?>;
-    </script>
-
-    <script src="<?php echo esc_url( VCZAPI_PLUGIN_SDK_URI . '/jvb-bootstrap.bundle.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
-<?php do_action( 'vczapi_join_via_browser_after_script_load' ); ?>
-    </body>
-    </html>
-    <?php
-    ob_end_flush();
+	if ( class_exists( '\Codemanas\VczApi\Browser\JoinViaBrowser' ) ) {
+		\Codemanas\VczApi\Browser\Assets::print_scripts();
+	}
 }
 
 /**
@@ -717,16 +627,12 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
         $GLOBALS['zoom']['terms'] = $set_terms;
     }
 
-    if ( isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
-        $enable_direct_via_browser = Metastore::enabledDirectJoinViaBrowser();
-        $whichTemplate             = $enable_direct_via_browser ? 'join-web-browser-directly.php' : 'join-web-browser.php';
-        $template                  = vczapi_get_template( $whichTemplate );
-    } elseif ( ! empty( $template ) && vczapi_is_fse_theme() ) {
+    if ( ! empty( $template ) && vczapi_is_fse_theme() ) {
         return $template;
-    } else {
-        //Render View
-        $template = vczapi_get_template( 'single-meeting.php' );
     }
+
+    //Render View
+    $template = vczapi_get_template( 'single-meeting.php' );
 
     return $template;
 }

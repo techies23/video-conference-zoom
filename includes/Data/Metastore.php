@@ -46,11 +46,11 @@ class Metastore {
 	/**
 	 * Get Zoom Settings
 	 *
-	 * @param $type
+	 * @param string $type
 	 *
 	 * @return false|mixed
 	 */
-	public static function get_plugin_settings( $type = '' ) {
+	public static function get_plugin_settings( string $type = '' ): mixed {
 		$settings = get_option( self::SETTINGS_OPTION_KEY );
 		if ( ! empty( $settings ) && ! empty( $type ) ) {
 			return ! empty( $settings[ $type ] ) ? $settings[ $type ] : false;

@@ -1,208 +1,345 @@
-import defaultConfig from './config';
+import defaultConfig, { missingConfig } from './config';
+import { requestJoin, assertConfigured } from './signature';
+import { CLIENT_GLOBAL } from './contract';
 
-const DEFAULT_SELECTORS = Object.freeze({
-    form: '#vczapi-zoom-browser-meeting-join-form',
-    joinButton: '#vczapi-zoom-browser-meeting-join-mtg',
-    name: '#vczapi-jvb-display-name',
-    email: '#vczapi-jvb-email',
-    password: '#meeting_password',
-    locale: '.meeting-locale',
-    messages: '.vczapi-zoom-browser-meeting--info__browser',
-    meetingRoot: '#vczapi-zoom-browser-meeting',
-    zoomRoot: '#zmmtg-root',
-});
+/**
+ * Drives the Join-via-Browser form and hands off to the SDK client.
+ *
+ * This bundle is deliberately small and imports nothing from the Meeting SDK, so
+ * a visitor who never clicks Join never downloads the ~5.7MB SDK payload. The
+ * client bundle is fetched on demand by `loadClient()` below.
+ *
+ * Global name of the SDK client bundle, imported as a constant rather than
+ * hard-coded so the two bundles cannot drift apart again.
+ */
+const SELECTORS = Object.freeze( {
+	form: '#vczapi-zoom-browser-meeting-join-form',
+	joinButton: '#vczapi-zoom-browser-meeting-join-mtg',
+	name: '#vczapi-jvb-display-name',
+	email: '#vczapi-jvb-email',
+	password: '#meeting_password',
+	locale: '.meeting-locale',
+	status: '#vczapi-zoom-browser-meeting--status',
+	fatal: '#vczapi-zoom-browser-meeting--fatal',
+	zoomRoot: '#zmmtg-root',
+} );
 
+/**
+ * Create the bootstrap.
+ *
+ * @param {Object} [customConfig]    Configuration overrides.
+ * @param {Object} [customSelectors] Selector overrides.
+ * @return {Object} Frozen bootstrap API.
+ */
 export function createZoomBootstrap(
-    customConfig = defaultConfig,
-    customSelectors = DEFAULT_SELECTORS
+	customConfig = defaultConfig,
+	customSelectors = SELECTORS
 ) {
+	const config = { ...customConfig };
+	const selectors = { ...SELECTORS, ...customSelectors };
+	let clientPromise = null;
+	let joining = false;
 
-    const config = {...customConfig};
-    const selectors = {...DEFAULT_SELECTORS, ...customSelectors};
-    let sdkRequested = false;
+	/**
+	 * Show a message in the status area.
+	 *
+	 * @param {string}  message   Text to display.
+	 * @param {boolean} [isError] Whether to render as an error.
+	 */
+	const show = ( message, isError = false ) => {
+		const node = document.querySelector( selectors.status );
 
-    const showLoader = () => {
-        if (document.getElementById('zvc-cover')) return;
+		if ( ! node ) {
+			return;
+		}
 
-        const cover = document.createElement('div');
-        cover.id = 'zvc-cover';
-        cover.setAttribute('role', 'status');
-        cover.setAttribute('aria-live', 'polite');
-        cover.setAttribute('aria-label', 'Loading the Zoom Meeting');
+		node.textContent = message;
+		node.classList.toggle( 'vczapi-jvb__notice--error', isError );
+		node.classList.toggle( 'vczapi-jvb__notice--info', ! isError );
+		node.hidden = false;
+	};
 
-        document.body.appendChild(cover);
-    };
+	/**
+	 * Hide the status area.
+	 */
+	const clear = () => {
+		const node = document.querySelector( selectors.status );
 
-    const removeLoader = () => {
-        document.getElementById('zvc-cover')?.remove();
-    };
+		if ( node ) {
+			node.textContent = '';
+			node.hidden = true;
+		}
+	};
 
-    const showError = (message) => {
-        const container = document.querySelector(selectors.messages);
-        if (!container) return;
+	/**
+	 * Show an unrecoverable error.
+	 *
+	 * Errors used to be written into an element that the template only rendered
+	 * when the site was *not* over HTTPS, so on any working HTTPS site every
+	 * failure was silent.
+	 *
+	 * @param {Error|unknown} error The failure.
+	 */
+	const showFatal = ( error ) => {
+		const message =
+			error instanceof Error ? error.message : String( error );
+		const node = document.querySelector( selectors.fatal );
 
-        container.textContent = message;
-        container.classList.add('vczapi-jvb-error');
-        container.classList.remove('vczapi-jvb-error--fatal');
-    };
+		if ( node ) {
+			node.textContent = message;
+			node.hidden = false;
+		}
 
-    const showFatal = (error) => {
-        removeLoader();
+		// eslint-disable-next-line no-console
+		console.error( '[Video Conferencing with Zoom API]', error );
 
-        const message = error instanceof Error ? error.message : String(error);
-        const root = document.querySelector(selectors.zoomRoot);
+		setBusy( false );
+	};
 
-        if (root) {
-            root.style.display = 'block';
-            root.textContent = '';
-        }
+	/**
+	 * Toggle the busy state of the submit button.
+	 *
+	 * @param {boolean} busy Whether a join is in flight.
+	 */
+	const setBusy = ( busy ) => {
+		const button = document.querySelector( selectors.joinButton );
 
-        const notice = document.createElement('div');
-        notice.className = 'vczapi-jvb-fatal';
-        notice.setAttribute('role', 'alert');
-        notice.textContent = message;
+		if ( button ) {
+			button.disabled = busy;
+			button.classList.toggle( 'is-busy', busy );
+		}
+	};
 
-        document.body.appendChild(notice);
-    };
+	/**
+	 * Ensure the SDK's mount point exists and is visible.
+	 *
+	 * @return {HTMLElement} The visible SDK mount point.
+	 */
+	const ensureRoot = () => {
+		let root = document.querySelector( selectors.zoomRoot );
 
-    const loadSdk = () => {
-        if (window.VczapiMeeting) {
-            return Promise.resolve();
-        }
+		if ( ! root ) {
+			root = document.createElement( 'div' );
+			root.id = 'zmmtg-root';
+			document.body.appendChild( root );
+		}
 
-        if (sdkRequested) {
-            return new Promise((resolve, reject) => {
-                window.addEventListener('vczapi:meeting-sdk-ready', resolve, {once: true});
-                window.addEventListener(
-                    'vczapi:meeting-sdk-error',
-                    (event) => reject(event.detail || new Error('The Zoom Meeting SDK failed to load.')),
-                    {once: true}
-                );
-            });
-        }
+		// The SDK renders into its own root, so make sure exactly one exists and
+		// is visible before init() is called.
+		root.style.display = 'block';
 
-        sdkRequested = true;
+		return root;
+	};
 
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = config.bundleUrl;
-            script.async = true;
+	/**
+	 * Load the SDK client bundle, at most once.
+	 *
+	 * @return {Promise<Object>} Resolves with the SDK client.
+	 */
+	const loadClient = () => {
+		if ( window[ CLIENT_GLOBAL ] ) {
+			return Promise.resolve( window[ CLIENT_GLOBAL ] );
+		}
 
-            script.addEventListener('load', () => {
-                if (window.VczapiMeeting) {
-                    resolve();
-                    return;
-                }
-                reject(new Error('The Zoom Meeting SDK loaded but did not initialise.'));
-            });
+		if ( clientPromise ) {
+			return clientPromise;
+		}
 
-            script.addEventListener('error', () => {
-                window.dispatchEvent(
-                    new window.CustomEvent('vczapi:meeting-sdk-error', {
-                        detail: new Error('Could not download the Zoom Meeting SDK. Please check your connection and try again.'),
-                    })
-                );
-                reject(new Error('Could not download the Zoom Meeting SDK.'));
-            });
+		clientPromise = new Promise( ( resolve, reject ) => {
+			const script = document.createElement( 'script' );
+			script.src = config.clientUrl;
+			script.async = true;
 
-            window.addEventListener('vczapi:meeting-sdk-ready', resolve, {once: true});
+			// `load` fires only after the bundle has fully evaluated, which is
+			// when it publishes window[CLIENT_GLOBAL]. Checking here rather than
+			// trusting the event is what makes the contract safe.
+			script.addEventListener( 'load', () => {
+				if ( window[ CLIENT_GLOBAL ] ) {
+					resolve( window[ CLIENT_GLOBAL ] );
+					return;
+				}
 
-            document.head.appendChild(script);
-        });
-    };
+				reject(
+					new Error(
+						'The Zoom Meeting SDK loaded but did not initialise. Please try again.'
+					)
+				);
+			} );
 
-    const startJoin = async (userName, userEmail, passWord, lang) => {
-        showLoader();
+			script.addEventListener( 'error', () => {
+				reject(
+					new Error(
+						'Could not download the Zoom Meeting SDK. Please check your connection and try again.'
+					)
+				);
+			} );
 
-        const meetingRoot = document.querySelector(selectors.meetingRoot);
-        if (meetingRoot) {
-            meetingRoot.remove();
-        }
+			document.head.appendChild( script );
+		} );
 
-        try {
-            await loadSdk();
+		// A failed load must not poison every later attempt.
+		clientPromise = clientPromise.catch( ( error ) => {
+			clientPromise = null;
+			throw error;
+		} );
 
-            const client = window.VczapiMeeting;
-            if (!client) {
-                throw new Error('The Zoom Meeting SDK failed to initialise.');
-            }
+		return clientPromise;
+	};
 
-            client.fields = {userName, userEmail, passWord, lang};
-            await client.join({userName, userEmail, passWord});
-        } catch (error) {
-            showFatal(error);
-        }
-    };
+	/**
+	 * Read the visitor's input.
+	 *
+	 * @return {{userName: string, userEmail: string, passWord: string, lang: string}} Values.
+	 */
+	const readForm = () => {
+		const value = ( selector ) => {
+			const node = document.querySelector( selector );
 
-    const handleJoinClick = () => {
-        const name = document.querySelector(selectors.name);
-        const email = document.querySelector(selectors.email);
-        const password = document.querySelector(selectors.password);
-        const locale = document.querySelector(selectors.locale);
+			return node ? String( node.value || '' ).trim() : '';
+		};
 
-        if (name && name.value.trim() === '') {
-            showError('Please enter your name to join.');
-            return;
-        }
+		return {
+			userName: value( selectors.name ),
+			userEmail: value( selectors.email ),
+			passWord: value( selectors.password ),
+			lang: value( selectors.locale ) || config.lang,
+		};
+	};
 
-        if (email && email.value.trim() === '') {
-            showError('Please enter your email to join.');
-            return;
-        }
+	/**
+	 * Validate the form before doing any network work.
+	 *
+	 * @param {{userName: string, passWord: string}} values Form values.
+	 * @return {string} Error message, or an empty string when valid.
+	 */
+	const validate = ( values ) => {
+		if ( ! values.userName ) {
+			return 'Please enter your name to join.';
+		}
 
-        if (password && password.value.trim() === '') {
-            showError('Please enter the meeting password to join.');
-            return;
-        }
+		// Only required when the visitor has to type it. The endpoint still
+		// supplies the token's passcode, so this is not a hard gate.
+		if ( config.hasPassword && ! values.passWord ) {
+			return 'Please enter the meeting password to join.';
+		}
 
-        startJoin(
-            name ? name.value.trim() : '',
-            email ? email.value.trim() : '',
-            password ? password.value : config.passWord,
-            locale ? locale.value : config.lang
-        );
-    };
+		return '';
+	};
 
-    const init = () => {
-        const button = document.querySelector(selectors.joinButton);
+	/**
+	 * Run the join.
+	 *
+	 * @param {Object} [overrides] Values to use instead of reading the form.
+	 * @return {Promise<void>} Resolves when the join has been attempted.
+	 */
+	const join = async ( overrides ) => {
+		if ( joining ) {
+			return;
+		}
 
-        if (!button) {
-            return;
-        }
+		joining = true;
+		setBusy( true );
+		clear();
+		show( 'Loading the Zoom Meeting SDK…' );
 
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            handleJoinClick();
-        });
+		try {
+			const client = await loadClient();
 
-        const form = document.querySelector(selectors.form);
-        if (form) {
-            form.addEventListener('submit', (event) => event.preventDefault());
-        }
+			ensureRoot();
+			show( 'Connecting to the meeting…' );
 
-        if (config.directJoin) {
-            startJoin(config.userName, config.userEmail, config.passWord, config.lang);
-        }
-    };
+			const parameters = await requestJoin( overrides || readForm() );
 
-    // Return object instance wrapping all functions
-    return Object.freeze({
-        init,
-        onJoinClick: handleJoinClick,
-        startJoin,
-        loadSdk,
-        showError,
-        showFatal,
-    });
+			show( 'Joining the meeting…' );
+			await client.join( parameters );
+		} catch ( error ) {
+			showFatal( error );
+		} finally {
+			joining = false;
+		}
+	};
+
+	/**
+	 * Handle form submission.
+	 *
+	 * Bound to `submit` rather than to the button's `click`, so pressing Enter
+	 * in a text field also submits.
+	 *
+	 * @param {Event} event Submit event.
+	 */
+	const onSubmit = ( event ) => {
+		event.preventDefault();
+
+		const values = readForm();
+		const problem = validate( values );
+
+		if ( problem ) {
+			show( problem, true );
+			return;
+		}
+
+		join( values );
+	};
+
+	/**
+	 * Wire up the form and start a direct join if configured.
+	 */
+	const init = () => {
+		try {
+			assertConfigured();
+		} catch ( error ) {
+			showFatal( error );
+			return;
+		}
+
+		const absent = missingConfig( config );
+
+		if ( absent.length ) {
+			showFatal(
+				new Error(
+					`The join page is not configured correctly (missing: ${ absent.join(
+						', '
+					) }).`
+				)
+			);
+			return;
+		}
+
+		const form = document.querySelector( selectors.form );
+
+		if ( form ) {
+			form.addEventListener( 'submit', onSubmit );
+		}
+
+		if ( config.directJoin ) {
+			// Direct join has no form to read, so the server-side token is the
+			// only source of the passcode and display name.
+			join( {
+				userName: config.userName || '',
+				userEmail: config.userEmail || '',
+				passWord: '',
+				lang: config.lang,
+			} );
+		}
+	};
+
+	return Object.freeze( {
+		init,
+		join,
+		loadClient,
+		onSubmit,
+		show,
+		showFatal,
+		clear,
+	} );
 }
 
-// Auto-run bootstrap instance
 const bootstrap = createZoomBootstrap();
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => bootstrap.init());
+if ( document.readyState === 'loading' ) {
+	document.addEventListener( 'DOMContentLoaded', () => bootstrap.init() );
 } else {
-    bootstrap.init();
+	bootstrap.init();
 }
 
 export default bootstrap;

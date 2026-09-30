@@ -44,10 +44,7 @@ const publicConfig = {
     mode: isProduction ? 'production' : 'development',
     devtool: devtoolSetting,
     entry: {
-        'join-via-browser': './src/public/js/join-via-browser.js',
-        public: './src/public/js/public.js',
         shortcode: './src/public/js/shortcode.js',
-        booking: './src/public/js/booking.js',
         scripts: './src/public/script.js',
     },
     output: {
@@ -97,13 +94,17 @@ const backendConfig = {
 // visitor actually commits to joining:
 //   jvb-bootstrap  - small, no SDK import, drives the join form
 //   zoom-meeting   - imports the SDK, exposes window.VczapiMeeting
+// The entry names below MUST match the filenames requested by
+// \Codemanas\VczApi\Browser\Assets. They previously disagreed
+// (websdk-router/websdk-client here, jvb-bootstrap/zoom-meeting in PHP), so
+// both requests 404'd and the join page never initialised.
 const webSDKConfig = {
     mode: 'production',
     cache: false,
     devtool: false,
     entry: {
-        'websdk-router': './src/websdk/bootstrap.js',
-        'websdk-client': './src/websdk/client.js',
+        'jvb-bootstrap': './src/websdk/bootstrap.js',
+        'jvb-client': './src/websdk/client.js',
     },
     output: {
         filename: 'vendor/zoom/websdk/[name].bundle.js',

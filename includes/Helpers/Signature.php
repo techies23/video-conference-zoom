@@ -78,6 +78,19 @@ final class Signature {
 	}
 
 	/**
+	 * The configured SDK key.
+	 *
+	 * The SDK key is a public client identifier, not a credential: Zoom's own
+	 * documentation expects it to be embedded in browser bundles. It is returned
+	 * alongside the signature because `ZoomMtg.join()` requires it as a separate
+	 * argument even though the signature itself already carries it. Only the
+	 * secret key ever signs, and that never leaves the server.
+	 */
+	public static function sdk_key(): string {
+		return (string) get_option( 'vczapi_sdk_key' );
+	}
+
+	/**
 	 * Validate a meeting number as typed by a visitor.
 	 *
 	 * Zoom meeting IDs are 9 or 10 digits; personal meeting IDs and some

@@ -6,6 +6,7 @@ use Codemanas\VczApi\Admin\AdminController;
 use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
+use Codemanas\VczApi\Browser\JoinViaBrowser;
 use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Encryption;
 
@@ -57,11 +58,13 @@ final class Bootstrap {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
         add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
-        add_filter( 'wp_headers', [ $this, 'set_corp_headers' ], 10, 2 );
 
         add_action( 'in_plugin_update_message-' . VCZAPI_PLUGIN_ABS_NAME, function ( $plugin_data ) {
             $this->version_update_warning( VCZAPI_PLUGIN_VERSION, $plugin_data['new_version'] );
         } );
+
+        //Join via Browser: rewrite rule, dedicated endpoint, REST signature route.
+        JoinViaBrowser::instance()->boot();
 
         Marketplace::get_instance();
         $this->minified = SCRIPT_DEBUG ? '' : '.min';
@@ -98,24 +101,6 @@ final class Bootstrap {
             </div>
         </div>
         <?php
-    }
-
-    /**
-     * Add CORP headers for Zoom Meetings join via browser page
-     *
-     * @param $headers
-     * @param $wp
-     *
-     * @return mixed
-     */
-    function set_corp_headers( $headers, $wp ): mixed {
-        $type = filter_input( INPUT_GET, 'type' );
-        if ( ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) || ( ! empty( get_post()->post_content ) && has_shortcode( get_post()->post_content, 'zoom_join_via_browser' ) ) ) {
-            $headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
-            $headers['Cross-Origin-Opener-Policy']   = 'same-origin';
-        }
-
-        return $headers;
     }
 
     public function autoloader(): void {
@@ -307,6 +292,9 @@ final class Bootstrap {
     public static function deactivate(): void {
         //Clear the user sync cron
         wp_clear_scheduled_hook( 'vczapi_cron_zoom_user_sync' );
+
+        //Force the join endpoint rules to be rebuilt on the next activation.
+        JoinViaBrowser::forget_rewrite_version();
 
         flush_rewrite_rules();
     }

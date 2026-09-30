@@ -1,44 +1,38 @@
 <?php
 /**
- * The Template for joining meeting via browser
+ * The Template for joining a meeting directly via the browser, skipping the form.
  *
- * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/join-web-browser.php.
+ * This template can be overridden by copying it to
+ * yourtheme/video-conferencing-zoom/join-web-browser-directly.php.
  *
  * @package    Video Conferencing with Zoom API/Templates
  * @since      3.0.0
- * @version   3.3.1
+ * @version    3.3.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-global $zoom;
-global $current_user;
+/**
+ * @var \Codemanas\VczApi\Browser\JoinRequest|null $join_request
+ */
+?>
+<div id="vczapi-zoom-browser-meeting" class="vczapi-jvb vczapi-jvb--direct">
+    <div class="vczapi-jvb__container">
+        <div class="vczapi-jvb__card">
+            <div id="vczapi-zoom-browser-meeting--container">
+                <div class="vczapi-jvb__notice vczapi-jvb__notice--status vczapi-zoom-browser-meeting--info__browser"
+                     id="vczapi-zoom-browser-meeting--status"
+                     role="status"
+                     aria-live="polite"><?php esc_html_e( 'Please wait... loading meeting', 'video-conferencing-with-zoom-api' ); ?></div>
 
-if ( video_conference_zoom_check_login() ) {
-
-	/**
-	 * Trigger before the content
-	 */
-	do_action( 'vczoom_jbh_before_content', $zoom );
-	?>
-
-    <div id="vczapi-zoom-browser-meeting" class="vczapi-zoom-browser-meeting-wrapper">
-        <div class="container">
-            <div class="row">
-                <div id="vczapi-zoom-browser-meeting--container">
-                    <h4>Please wait....loading meeting</h4>
-                </div>
+                <?php // Always rendered so join failures have somewhere to go. ?>
+                <div class="vczapi-jvb__notice vczapi-jvb__notice--error"
+                     id="vczapi-zoom-browser-meeting--fatal"
+                     role="alert"
+                     hidden></div>
             </div>
         </div>
     </div>
-	<?php
-	/**
-	 * Trigger before the content
-	 */
-	do_action( 'vczoom_jbh_after_content' );
-} else {
-	echo "<h3>" . __( 'You do not have enough priviledge to access this page. Please login to continue or contact administrator.', 'video-conferencing-with-zoom-api' ) . "</h3>";
-	die;
-}
+</div>
