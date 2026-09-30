@@ -3,12 +3,13 @@
 namespace Codemanas\VczApi\Admin\Service;
 
 use Codemanas\VczApi\Admin\Interface\IZoomEvent;
-use Codemanas\VczApi\Zoom\Zoom;
+use WP_Error;
+use WP_Post;
 
 class MeetingService implements IZoomEvent {
 
 	/**
-	 * Define meeting specific fields
+	 * Define meeting-specific fields
 	 * @return array
 	 */
 	public function getTypeSpecificFields(): array {
@@ -23,13 +24,13 @@ class MeetingService implements IZoomEvent {
 	/**
 	 * Sync data with APi
 	 *
-	 * @param \WP_Post $post
-	 * @param array $payload
-	 * @param string $zoom_id
+	 * @param   WP_Post  $post
+	 * @param   array    $payload
+	 * @param   string   $zoom_id
 	 *
-	 * @return object|null
+	 * @return array|WP_Error
 	 */
-	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?array {
+	public function syncWithApi( WP_Post $post, array $payload, string $zoom_id ): WP_Error|array {
 		$is_update = ! empty( $zoom_id );
 		if ( $is_update ) {
 			zoom_conference_v2()->meetings()->update( $zoom_id, $payload ); // No Response from API
