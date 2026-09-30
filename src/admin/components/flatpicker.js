@@ -26,5 +26,3 @@ export const initFlatpicker = (selector = '.vczapi-datetimepicker') => {
         });
     });
 };
-
-export default initFlatpicker;
