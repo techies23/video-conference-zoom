@@ -27,6 +27,10 @@ $text_domain = 'video-conferencing-with-zoom-api';
             <p class="description">
                 <?php esc_html_e( 'Complete the meeting details below. A new Zoom meeting is created immediately and a draft post is saved to your editor.', $text_domain ); ?>
             </p>
+            <button type="submit" class="button button-primary vczapi-create-meeting__submit">
+                <?php esc_html_e( 'Create Event', $text_domain ); ?>
+            </button>
+            <span class="spinner vczapi-spinner"></span>
         </header>
         <div class="vczapi-create-meeting__body">
             <div class="vczapi-create-meeting__body--meeting-title">
@@ -62,9 +66,9 @@ $text_domain = 'video-conferencing-with-zoom-api';
 
         <footer class="vczapi-create-meeting__footer">
             <button type="submit" class="button button-primary vczapi-create-meeting__submit">
-                <?php esc_html_e( 'Create Meeting', $text_domain ); ?>
-                <span class="spinner vczapi-modal__spinner"></span>
+                <?php esc_html_e( 'Create Event', $text_domain ); ?>
             </button>
+            <span class="spinner vczapi-spinner"></span>
         </footer>
     </form>
 </div>

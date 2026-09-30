@@ -36,6 +36,9 @@
   }
 
   &__header {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
     padding: 16px 20px;
     border-bottom: 1px solid $vczapi-border-color;
     background: $vczapi-bg-header;
@@ -114,15 +117,5 @@
   &__submit {
     display: inline-flex;
     align-items: center;
-
-    .vczapi-modal__spinner {
-      float: none;
-      margin: 0 0 0 8px;
-      visibility: hidden;
-    }
-
-    &.is-loading .vczapi-modal__spinner {
-      visibility: visible;
-    }
   }
 }
