@@ -46,6 +46,6 @@ class MeetingFormHandler {
 
 		$fields['duration'] = max( MeetingValidator::MIN_DURATION_MINUTES, $duration );
 
-		return MeetingValidator::normalize( $fields );
+		return apply_filters( 'vczapi_post_fields', MeetingValidator::normalize( $fields ) );
 	}
 }
