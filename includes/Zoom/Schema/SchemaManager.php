@@ -56,6 +56,7 @@ class SchemaManager {
 	const WEBINAR_DELETE = 'webinar.delete';
 	const WEBINAR_UPDATE = 'webinar.update';
 	const WEBINAR_STATUS = 'webinar.status';
+	const WEBINAR_SURVEY_UPDATE = 'webinar.surveyUpdate';
 	// Users (reserved for later)
 	public const USER_LIST = 'user.list';
 	public const USER_GET = 'user.get';

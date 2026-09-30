@@ -44,7 +44,7 @@ class FormHelper {
 
 		// Handle required state and inject data-required attribute into custom_attributes
 		if ( $args['required'] ) {
-			$args['input_class'][]                            = 'vczapi-required-validation';
+			$args['input_class'][]                      = 'vczapi-required-validation';
 			$args['custom_attributes']['data-required'] = 'true';
 			$required                                   = ' <abbr class="required" title="' . esc_attr__( 'required', 'video-conferencing-with-zoom-api' ) . '">*</abbr>';
 		} else {
@@ -192,7 +192,8 @@ class FormHelper {
 							$custom_attributes_array[]                  = 'data-allow_clear="true"';
 							$allowed_html['select']['data-allow_clear'] = array();
 						}
-						$options .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $value, $option_key, false ) . '>' . esc_html( $option_text ) . '</option>';
+						$is_selected = is_array( $value ) ? in_array( $option_key, $value ) : ( $value == $option_key );
+						$options     .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $is_selected, true, false ) . '>' . esc_html( $option_text ) . '</option>';
 					}
 
 					$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( $input_class ) . '" ' . implode( ' ', $custom_attributes_array ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '"> 
@@ -253,8 +254,8 @@ class FormHelper {
 			$field = $field_html;
 		}
 
-		$field = apply_filters( 'vczapi_formField_' . $args['type'], $field, $key, $args, $value );
-		$allowed_html = apply_filters('vczapi_formField_allowed_html_' . $args['type'], $allowed_html);
+		$field        = apply_filters( 'vczapi_formField_' . $args['type'], $field, $key, $args, $value );
+		$allowed_html = apply_filters( 'vczapi_formField_allowed_html_' . $args['type'], $allowed_html );
 
 		echo wp_kses( $field, $allowed_html );
 	}

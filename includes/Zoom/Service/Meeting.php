@@ -170,9 +170,7 @@ class Meeting extends BaseService {
 		}
 
 		$prepared['body'] = apply_filters( 'vczapi_meetings_update_payload', $prepared['body'], $data );
-
 		$endpoint = ! empty( $prepared['query'] ) ? add_query_arg( $prepared['query'], $prepared['endpoint'] ) : $prepared['endpoint'];
-
 		$result = $this->client->request( $prepared['method'], $endpoint, $prepared['body'] );
 
 		if ( ! empty( $prepared['warnings'] ) ) {
