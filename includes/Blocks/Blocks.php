@@ -2,8 +2,6 @@
 
 namespace Codemanas\VczApi\Blocks;
 
-use function Composer\Autoload\includeFile;
-
 /**
  * Class Blocks
  *
@@ -73,6 +71,7 @@ class Blocks {
 			'vczapi-blocks',
 			'vczapi_blocks',
 			[
+				'nonce'                            => wp_create_nonce( 'vczapi_blocks' ),
 				'list_meetings_preview'            => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-meetings-webinars.png',
 				'direct_meeting_preview_image'     => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/direct-meeting.jpg',
 				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
@@ -570,6 +569,7 @@ class Blocks {
 	 * @updated N/A
 	 */
 	public function get_hosts(): void {
+		check_ajax_referer( 'vczapi_blocks', 'nonce' );
 		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( [ 'message' => __( 'You do not have permission to access this resource.', 'video-conferencing-with-zoom-api' ) ], 403 );
 		}
@@ -617,6 +617,7 @@ class Blocks {
 	 * @updated N/A
 	 */
 	public function get_live_meetings() {
+		check_ajax_referer( 'vczapi_blocks', 'nonce' );
 		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( [ 'message' => __( 'You do not have permission to access this resource.', 'video-conferencing-with-zoom-api' ) ], 403 );
 		}
