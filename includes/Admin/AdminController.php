@@ -73,9 +73,9 @@ class AdminController {
 		$screen = get_current_screen();
 
 		if ( $settings ) {
-			return $screen->post_type == "zoom-meetings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings";
+			return $screen->post_type == "zoom-meetings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" || $screen->id === "$pg-video-conferencing-add-meeting";
 		} else {
-			return $screen->post_type == "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings";
+			return $screen->post_type == "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" || $screen->id === "$pg-video-conferencing-add-meeting";
 		}
 	}
 }

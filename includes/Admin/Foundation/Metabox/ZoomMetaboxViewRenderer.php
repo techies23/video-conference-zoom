@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Foundation\PostType;
+namespace Codemanas\VczApi\Admin\Foundation\Metabox;
 
 use Codemanas\VczApi\Admin\Schema\MeetingFieldSchema;
 use Codemanas\VczApi\Data\Metastore;

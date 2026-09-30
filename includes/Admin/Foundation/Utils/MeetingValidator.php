@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Admin\Foundation\PostType;
+namespace Codemanas\VczApi\Admin\Foundation\Utils;
 
 use DateTimeImmutable;
 use DateTimeZone;
