@@ -8,6 +8,7 @@ use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
 use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Encryption;
+use Codemanas\VczApi\RestApi\MeetingRest;
 
 /**
  * Ready Main Class
@@ -48,6 +49,7 @@ final class Bootstrap {
 
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts_backend' ] );
         add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
+        add_action( 'init', [ $this, 'register_scripts' ] );
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
         //Ensure custom tables exist for installs that activated before this feature shipped.
@@ -58,6 +60,7 @@ final class Bootstrap {
         add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
         add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
         add_filter( 'wp_headers', [ $this, 'set_corp_headers' ], 10, 2 );
+        add_action( 'rest_api_init', array( MeetingRest::class, 'register_routes' ) );
 
         add_action( 'in_plugin_update_message-' . VCZAPI_PLUGIN_ABS_NAME, function ( $plugin_data ) {
             $this->version_update_warning( VCZAPI_PLUGIN_VERSION, $plugin_data['new_version'] );
@@ -131,15 +134,16 @@ final class Bootstrap {
     function enqueue_scripts(): void {
         if ( is_singular( 'zoom-meetings' ) ) {
             wp_enqueue_style( 'video-conferencing-with-zoom-api' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
             wp_enqueue_script( 'video-conferencing-with-zoom-api' );
             // Localize the script with new data
             $date_format = get_option( 'zoom_api_date_time_format' );
             if ( $date_format == 'custom' ) {
                 $date_format = get_option( 'zoom_api_custom_date_time_format' );
-                $date_format = vczapi_convertPHPToMomentFormat( $date_format );
+                $date_format = vczapi_convert_php_to_date_fns_format( $date_format );
+            } else {
+                // The radio presets are Moment tokens, so they need the
+                // Moment -> date-fns mapping instead.
+                $date_format = vczapi_convert_moment_to_date_fns_format( $date_format );
             }
 
             $zoom_going_to_start = get_option( 'zoom_going_tostart_meeting_text' );
@@ -198,6 +202,40 @@ final class Bootstrap {
 
         //Add Cron Job
         Cron::get_instance();
+    }
+
+    /**
+     * Register the public frontend assets.
+     *
+     * Restored in 4.7.0. Commit 6f851b7 removed register_scripts() along with the
+     * Moment registrations, which left every public handle enqueued elsewhere
+     * unregistered. WordPress silently ignores wp_enqueue_script() for a handle
+     * that was never registered, so the plugin shipped with no frontend
+     * stylesheet and without public.js.
+     *
+     * Moment is gone rather than restored: date-fns and date-fns-tz are bundled
+     * into public.js by webpack, so there is no separate library script to load.
+     * The zoom_api_disable_moment_js option is therefore a no-op.
+     *
+     * @return void
+     */
+    public function register_scripts(): void {
+        $minified = SCRIPT_DEBUG ? '' : '.min';
+
+        wp_register_style(
+            'video-conferencing-with-zoom-api',
+            VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/css/style' . $minified . '.css',
+            [],
+            $this->plugin_version
+        );
+
+        wp_register_script(
+            'video-conferencing-with-zoom-api',
+            VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/js/public' . $minified . '.js',
+            [ 'jquery' ],
+            $this->plugin_version,
+            true
+        );
     }
 
     /**

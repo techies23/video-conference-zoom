@@ -89,9 +89,16 @@ class SchemaManager {
 	/**
 	 * Build the operation map at once.
 	 *
+	 * The result is memoized in self::$map so the
+	 * `vczapi_schema_operations_map` filter only runs once per request.
+	 *
 	 * @return array|null
 	 */
 	protected static function map(): ?array {
+		if ( null !== self::$map ) {
+			return self::$map;
+		}
+
 		$coreMap = array(
 			// Meetings...
 			self::MEETING_LIST                => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),

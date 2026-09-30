@@ -1,0 +1,5 @@
+// Third party styles that the public facing shortcodes depend on.
+// These were previously registered against a removed `assets/vendor` directory.
+
+@import "datatables.net-dt/css/dataTables.dataTables.min";
+@import "datatables.net-responsive-dt/css/responsive.dataTables.min";

@@ -45,5 +45,50 @@
       top: 50%;
       position: absolute;
     }
+
+    .vczapi-spinner {
+      border: 4px solid rgb(255 255 255 / 25%);
+      border-top-color: #fff;
+      border-radius: 50%;
+      height: 44px;
+      margin: -22px 0 0 -22px;
+      width: 44px;
+      animation: zvc-spin .8s linear infinite;
+    }
+  }
+}
+
+@keyframes zvc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading .vczapi-loader .vczapi-spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+//Meeting status dots. These replaced 1.png/2.png/3.png, which were referenced
+//by the template but never committed to the repository.
+.vczapi-meeting-status {
+  border-radius: 50%;
+  display: inline-block;
+  height: 12px;
+  vertical-align: middle;
+  width: 12px;
+
+  &--live {
+    background: #d63638;
+    box-shadow: 0 0 0 2px rgb(214 54 56 / 25%);
+  }
+
+  &--scheduled {
+    background: #dba617;
+  }
+
+  &--ended {
+    background: #8c8f94;
   }
 }

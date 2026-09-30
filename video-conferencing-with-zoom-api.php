@@ -23,35 +23,82 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Resolve the installed @zoom/meetingsdk version.
+ *
+ * Falls back to the version range declared in package.json so the constant is
+ * still defined when node_modules is absent, for example on a deployment that
+ * ships only the built assets.
+ *
+ * @return string Semantic version, or an empty string when it cannot be read.
+ */
+function vczapi_zoom_sdk_version() {
+	$package = VCZAPI_PLUGIN_DIR_PATH . 'node_modules/@zoom/meetingsdk/package.json';
+
+	if ( is_readable( $package ) ) {
+		$decoded = json_decode( file_get_contents( $package ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		if ( ! empty( $decoded['version'] ) ) {
+			return (string) $decoded['version'];
+		}
+	}
+
+	if ( is_readable( VCZAPI_PLUGIN_DIR_PATH . 'package.json' ) ) {
+		$decoded = json_decode( file_get_contents( VCZAPI_PLUGIN_DIR_PATH . 'package.json' ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		if ( ! empty( $decoded['dependencies']['@zoom/meetingsdk'] ) ) {
+			return trim( (string) $decoded['dependencies']['@zoom/meetingsdk'], '^~ ' );
+		}
+	}
+
+	return '';
+}
+
 defined( 'VCZAPI_PLUGIN_FILE' ) || define( 'VCZAPI_PLUGIN_FILE', __FILE__ );
 defined( 'VCZAPI_PLUGIN_ABS_NAME' ) || define( 'VCZAPI_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_SLUG' ) || define( 'VCZAPI_PLUGIN_SLUG', 'video-conferencing-zoom' );
 defined( 'VCZAPI_PLUGIN_VERSION' ) || define( 'VCZAPI_PLUGIN_VERSION', '4.7.0' );
-defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION', '4.0.0' );
 defined( 'VCZAPI_PLUGIN_DIR_URL' ) || define( 'VCZAPI_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_DIR_PATH' ) || define( 'VCZAPI_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_ADMIN_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/admin' );
+defined( 'VCZAPI_PLUGIN_PUBLIC_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_PUBLIC_ASSET_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/public' );
 defined( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI' ) || define( 'VCZAPI_PLUGIN_VENDOR_ASSETS_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/vendor' );
+defined( 'VCZAPI_PLUGIN_VENDOR_ASSET_URI' ) || define( 'VCZAPI_PLUGIN_VENDOR_ASSET_URI', VCZAPI_PLUGIN_VENDOR_ASSETS_URI );
+defined( 'VCZAPI_PLUGIN_IMAGES_URI' ) || define( 'VCZAPI_PLUGIN_IMAGES_URI', VCZAPI_PLUGIN_DIR_URL . 'dist/images' );
+defined( 'VCZAPI_PLUGIN_SDK_URI' ) || define( 'VCZAPI_PLUGIN_SDK_URI', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/zoom/websdk' );
 defined( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH' ) || define( 'VCZAPI_PLUGIN_ADMIN_VIEWS_PATH', VCZAPI_PLUGIN_DIR_PATH . 'includes/Admin/Views' );
 
 /**
- * @Deprecated on 4.7.0
+ * Version of the bundled @zoom/meetingsdk package.
+ *
+ * Read from the installed package so the constant cannot drift away from what
+ * webpack actually compiled into dist/vendor/zoom/websdk/zoom-meeting.bundle.js.
+ */
+defined( 'VCZAPI_PLUGIN_ZOOM_SDK_VERSION' ) || define( 'VCZAPI_PLUGIN_ZOOM_SDK_VERSION', vczapi_zoom_sdk_version() );
+
+/**
+ * Legacy aliases kept for backwards compatibility with third party addons.
+ *
+ * The asset URLs previously pointed at an `assets/` directory that the build
+ * never produced, which made every handle registered against them 404 at
+ * runtime. They are now derived from the canonical constants above.
+ *
+ * @deprecated 4.7.0 Use the VCZAPI_PLUGIN_* constants instead.
  */
 defined( 'ZVC_PLUGIN_FILE' ) || define( 'ZVC_PLUGIN_FILE', __FILE__ );
-defined( 'ZVC_PLUGIN_SLUG' ) || define( 'ZVC_PLUGIN_SLUG', 'video-conferencing-zoom' );
-defined( 'ZVC_PLUGIN_VERSION' ) || define( 'ZVC_PLUGIN_VERSION', '4.6.10' );
-defined( 'ZVC_ZOOM_WEBSDK_VERSION' ) || define( 'ZVC_ZOOM_WEBSDK_VERSION', '4.0.0' );
-defined( 'ZVC_PLUGIN_DIR_PATH' ) || define( 'ZVC_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
-defined( 'ZVC_PLUGIN_DIR_URL' ) || define( 'ZVC_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
-defined( 'ZVC_PLUGIN_ADMIN_ASSETS_URL' ) || define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/admin' );
-defined( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL' ) || define( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/public' );
-defined( 'ZVC_PLUGIN_VENDOR_ASSETS_URL' ) || define( 'ZVC_PLUGIN_VENDOR_ASSETS_URL', ZVC_PLUGIN_DIR_URL . 'assets/vendor' );
+defined( 'ZVC_PLUGIN_SLUG' ) || define( 'ZVC_PLUGIN_SLUG', VCZAPI_PLUGIN_SLUG );
+defined( 'ZVC_PLUGIN_VERSION' ) || define( 'ZVC_PLUGIN_VERSION', VCZAPI_PLUGIN_VERSION );
+defined( 'ZVC_PLUGIN_DIR_PATH' ) || define( 'ZVC_PLUGIN_DIR_PATH', VCZAPI_PLUGIN_DIR_PATH );
+defined( 'ZVC_PLUGIN_DIR_URL' ) || define( 'ZVC_PLUGIN_DIR_URL', VCZAPI_PLUGIN_DIR_URL );
+defined( 'ZVC_PLUGIN_ADMIN_ASSETS_URL' ) || define( 'ZVC_PLUGIN_ADMIN_ASSETS_URL', VCZAPI_PLUGIN_ADMIN_ASSET_URI );
+defined( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL' ) || define( 'ZVC_PLUGIN_PUBLIC_ASSETS_URL', VCZAPI_PLUGIN_PUBLIC_ASSET_URI );
+defined( 'ZVC_PLUGIN_VENDOR_ASSETS_URL' ) || define( 'ZVC_PLUGIN_VENDOR_ASSETS_URL', VCZAPI_PLUGIN_VENDOR_ASSETS_URI );
+defined( 'ZVC_PLUGIN_IMAGES_PATH' ) || define( 'ZVC_PLUGIN_IMAGES_PATH', VCZAPI_PLUGIN_IMAGES_URI );
+defined( 'ZVC_PLUGIN_ABS_NAME' ) || define( 'ZVC_PLUGIN_ABS_NAME', VCZAPI_PLUGIN_ABS_NAME );
+defined( 'ZVC_PLUGIN_LANGUAGE_PATH' ) || define( 'ZVC_PLUGIN_LANGUAGE_PATH', trailingslashit( basename( ZVC_PLUGIN_DIR_PATH ) ) . 'languages/' );
+
 defined( 'ZVC_PLUGIN_VIEWS_PATH' ) || define( 'ZVC_PLUGIN_VIEWS_PATH', ZVC_PLUGIN_DIR_PATH . 'includes/views' );
 defined( 'ZVC_PLUGIN_INCLUDES_PATH' ) || define( 'ZVC_PLUGIN_INCLUDES_PATH', ZVC_PLUGIN_DIR_PATH . 'includes' );
-defined( 'ZVC_PLUGIN_IMAGES_PATH' ) || define( 'ZVC_PLUGIN_IMAGES_PATH', ZVC_PLUGIN_DIR_URL . 'assets/images' );
-defined( 'ZVC_PLUGIN_LANGUAGE_PATH' ) || define( 'ZVC_PLUGIN_LANGUAGE_PATH', trailingslashit( basename( ZVC_PLUGIN_DIR_PATH ) ) . 'languages/' );
-defined( 'ZVC_PLUGIN_ABS_NAME' ) || define( 'ZVC_PLUGIN_ABS_NAME', plugin_basename( __FILE__ ) );
-
 
 $upload_dir = wp_upload_dir( null, false );
 define( 'ZVC_LOG_DIR', $upload_dir['basedir'] . '/vczapi-logs/' );

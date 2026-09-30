@@ -84,7 +84,7 @@ export default function Edit (props) {
 
   if (preview) {
     return (
-      <img src={vczapi_blocks.embed_post_preview} alt="Embed Zoom post"/>
+      <BlockPreviewPlaceholder label={__('Embed Zoom post', 'video-conferencing-with-zoom-api')} />
     )
   }
 
@@ -183,3 +183,4 @@ export default function Edit (props) {
     </div>
   )
 }
+import BlockPreviewPlaceholder from '../components/BlockPreviewPlaceholder';

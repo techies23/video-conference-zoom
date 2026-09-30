@@ -21,6 +21,7 @@ import {
   SelectControl,
   ComboboxControl
 } from "@wordpress/components";
+import BlockPreviewPlaceholder from '../components/BlockPreviewPlaceholder';
 
 export default function EditLiveMeeting(props) {
   const { className, attributes, setAttributes } = props;
@@ -161,7 +162,7 @@ export default function EditLiveMeeting(props) {
 
   if (preview) {
     return (
-      <img src={vczapi_blocks.direct_meeting_preview_image} alt={"Direct Meeting from Zoom"} />
+      <BlockPreviewPlaceholder label={__('Direct Meeting from Zoom', 'video-conferencing-with-zoom-api')} />
     );
   }
 

@@ -26,10 +26,7 @@ class Embed {
 	}
 
 	public function enqueue_scripts(): void {
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
-		wp_enqueue_script( 'video-conferncing-with-zoom-browser-js' );
+		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 	}
 
 	/**

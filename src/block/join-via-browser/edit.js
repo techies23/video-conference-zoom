@@ -171,7 +171,7 @@ export default function EditJoinViaBrowser (props) {
 
   if (preview) {
     return (
-      <img src={vczapi_blocks.join_via_browser} alt={'Direct Meeting from Zoom'} />
+      <BlockPreviewPlaceholder label={__('Join via Browser', 'video-conferencing-with-zoom-api')} />
     )
   }
 
@@ -356,3 +356,4 @@ export default function EditJoinViaBrowser (props) {
     </div>
   )
 }
+import BlockPreviewPlaceholder from '../components/BlockPreviewPlaceholder';

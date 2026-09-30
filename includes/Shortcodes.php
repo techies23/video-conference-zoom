@@ -78,28 +78,55 @@ class Shortcodes {
 	 */
 	public function enqueue_scripts() {
 		$minified = SCRIPT_DEBUG ? '' : '.min';
+		$datatables_uri = VCZAPI_PLUGIN_VENDOR_ASSET_URI . '/datatables';
+
 		wp_enqueue_style( 'video-conferencing-with-zoom-api' );
-		wp_register_style( 'video-conferencing-with-zoom-api-datable', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.css', false, ZVC_PLUGIN_VERSION );
-		wp_register_style( 'video-conferencing-with-zoom-api-datable-responsive', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.css', [ 'video-conferencing-with-zoom-api-datable' ], ZVC_PLUGIN_VERSION );
-		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', [ 'jquery' ], ZVC_PLUGIN_VERSION, true );
-		wp_register_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/dataTables.responsive.min.js', [
+
+		/*
+		 * DataTables 3.x ships the core, the DataTables 2 styling and the
+		 * Responsive extension as separate packages, copied into
+		 * dist/vendor/datatables by the build. The previous handles pointed at
+		 * DataTables 1.x filenames under dist/vendor/datable/ which the build
+		 * never produced, so the core script 404ed and the stylesheet was
+		 * registered but never enqueued.
+		 */
+		wp_enqueue_style(
+			'video-conferencing-with-zoom-api-datatables',
+			$datatables_uri . '/dataTables.dataTables.min.css',
+			[],
+			ZVC_PLUGIN_VERSION
+		);
+		wp_enqueue_style(
+			'video-conferencing-with-zoom-api-datatables-responsive',
+			$datatables_uri . '/responsive.dataTables.min.css',
+			[ 'video-conferencing-with-zoom-api-datatables' ],
+			ZVC_PLUGIN_VERSION
+		);
+		wp_enqueue_script(
+			'video-conferencing-with-zoom-api-datatables',
+			$datatables_uri . '/dataTables.min.js',
+			[],
+			ZVC_PLUGIN_VERSION,
+			true
+		);
+		wp_enqueue_script(
+			'video-conferencing-with-zoom-api-datatables-responsive',
+			$datatables_uri . '/dataTables.responsive.min.js',
+			[ 'video-conferencing-with-zoom-api-datatables' ],
+			ZVC_PLUGIN_VERSION,
+			true
+		);
+
+		wp_register_script( 'video-conferencing-with-zoom-api-shortcode-js', VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/js/shortcode' . $minified . '.js', [
 			'jquery',
-			'video-conferencing-with-zoom-api-datable-js'
-		], ZVC_PLUGIN_VERSION, true );
-		wp_register_script( 'video-conferencing-with-zoom-api-datable-responsive-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.js', [
-			'jquery',
-			'video-conferencing-with-zoom-api-datable-js'
-		], ZVC_PLUGIN_VERSION, true );
-		wp_register_script( 'video-conferncing-with-zoom-browser-js', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/join-via-browser' . $minified . '.js', array( 'jquery' ), ZVC_PLUGIN_VERSION, true );
-		wp_register_script( 'video-conferencing-with-zoom-api-shortcode-js', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/shortcode' . $minified . '.js', [
-			'jquery',
-			'video-conferencing-with-zoom-api-datable-js'
+			'video-conferencing-with-zoom-api-datatables',
+			'video-conferencing-with-zoom-api-datatables-responsive'
 		], ZVC_PLUGIN_VERSION, true );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'loading_recordings' => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
 		) );
-		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(
+		wp_localize_script( 'video-conferencing-with-zoom-api-datatables', 'vczapi_dt_i18n', array(
 			'emptyTable'     => __( 'No data available in table', 'video-conferencing-with-zoom-api' ),
 			'info'           => sprintf( __( 'Showing %s to %s of %s entries', 'video-conferencing-with-zoom-api' ), '_START_', '_END_', '_TOTAL_' ),
 			'infoEmpty'      => __( '', 'video-conferencing-with-zoom-api' ),

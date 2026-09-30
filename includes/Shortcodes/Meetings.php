@@ -223,9 +223,6 @@ class Meetings {
 	 * @since  3.0.4
 	 */
 	public function show_meeting_by_ID( $atts ) {
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 
 		$atts = shortcode_atts(
@@ -322,15 +319,12 @@ class Meetings {
 		unset( $GLOBALS['zoom'] );
 
 		wp_enqueue_style( 'video-conferencing-with-zoom-api' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 
 		$date_format = get_option( 'zoom_api_date_time_format' );
 		if ( $date_format == 'custom' ) {
 			$date_format = get_option( 'zoom_api_custom_date_time_format' );
-			$date_format = vczapi_convertPHPToMomentFormat( $date_format );
+			$date_format = vczapi_convert_php_to_date_fns_format( $date_format );
 		}
 
 		$zoom_going_to_start = get_option( 'zoom_going_tostart_meeting_text' );

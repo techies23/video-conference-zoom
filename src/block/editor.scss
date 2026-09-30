@@ -103,3 +103,24 @@
     max-width: 100%;
   }
 }
+//Editor placeholder shown by blocks that have nothing to render yet.
+//Replaces screenshots that were never committed to the repository.
+.vczapi-block-preview-placeholder {
+  align-items: center;
+  background: #f6f7f7;
+  border: 1px dashed #c3c4c7;
+  border-radius: 2px;
+  color: #1e1e1e;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1em;
+  min-height: 8em;
+  padding: 1.5em;
+  text-align: center;
+}
+
+.vczapi-block-preview-placeholder__label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}

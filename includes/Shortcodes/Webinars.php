@@ -169,9 +169,6 @@ class Webinars {
 	 * @since  3.0.4
 	 */
 	public function show_webinar_by_ID( $atts ) {
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
 		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
 
 		$atts = shortcode_atts(

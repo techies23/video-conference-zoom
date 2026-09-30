@@ -48,8 +48,8 @@ $atts = shortcode_atts(
      data-base_url="<?php echo esc_url( get_pagenum_link( 999999999999999 ) ); ?>"
      data-meeting_type="<?php echo esc_attr( $atts['meeting_type'] ); ?>"
 >
-    <div class="vczapi-loader">
-        <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/ajax-loader.gif'; ?>" alt="loading..."/>
+    <div class="vczapi-loader" role="status" aria-label="<?php esc_attr_e( 'Loading meetings', 'video-conferencing-with-zoom-api' ); ?>">
+        <span class="vczapi-spinner" aria-hidden="true"></span>
     </div>
 	<?php
 	/**

@@ -1,4 +1,5 @@
 import '../sass/style.scss'
+import { formatForUser, guessTimeZone, normalizeTimeZone, resolveMeetingInstant, secondsUntil } from './utils/meeting-time'
 
 jQuery(function ($) {
 
@@ -6,7 +7,7 @@ jQuery(function ($) {
 
     init: function () {
       this.cacheVariables()
-      this.countDownTimerMoment()
+      this.countDownTimer()
       this.evntLoaders()
     },
 
@@ -21,79 +22,78 @@ jQuery(function ($) {
       $(this.changeMeetingState).on('click', this.meetingStateChange.bind(this))
     },
 
-    countDownTimerMoment: function () {
+    countDownTimer: function () {
       var clock = this.$timer
-      if (clock.length > 0) {
-        var valueDate = clock.data('date')
-        var mtgTimezone = clock.data('tz')
-        var mtgState = clock.data('state')
+      if (clock.length === 0) {
+        return
+      }
 
-        // var dateFormat = moment(valueDate).format('MMM D, YYYY HH:mm:ss');
-        var user_timezone = moment.tz.guess()
-        if (user_timezone === 'Asia/Katmandu') {
-          user_timezone = 'Asia/Kathmandu'
-        }
+      var instant = resolveMeetingInstant(clock.data('date'), clock.data('tz'))
 
-        //Converting Timezones to locals
-        var source_timezone = moment.tz(valueDate, mtgTimezone).format()
-        var converted_timezone = moment.tz(source_timezone, user_timezone).format('MMM D, YYYY HH:mm:ss')
-        var convertedTimezonewithoutFormat = moment.tz(source_timezone, user_timezone).format()
-        let meetingUTCTime = moment.utc(source_timezone).valueOf()
-        let usersDate = new Date(meetingUTCTime)
+      if (!instant) {
+        return
+      }
 
-        //Check Time Difference for Validations
-        var currentTime = moment().unix()
-        var eventTime = moment(convertedTimezonewithoutFormat).unix()
-        var diffTime = eventTime - currentTime
+      // Single-meeting pages localise `zvc_strings`; the embed shortcode does not.
+      // Both render the same countdown markup, so pick the mode from the globals
+      // that are actually present rather than shipping two bundles of date-fns.
+      var isSingleMeeting = typeof zvc_strings !== 'undefined'
+      var lang = document.documentElement.lang
 
-        var lang = document.documentElement.lang
-        var dateFormat = zvc_strings.date_format !== '' ? zvc_strings.date_format : 'LLLL'
-        $('.sidebar-start-time').html(moment.parseZone(usersDate).locale(lang).format(dateFormat))
-        $('.vczapi-single-meeting-timezone').html(user_timezone)
+      if (isSingleMeeting) {
+        var userTimezone = normalizeTimeZone(guessTimeZone())
+        var dateFormat = zvc_strings.date_format !== '' ? zvc_strings.date_format : 'PPPPpp'
 
-        var second = 1000,
-          minute = second * 60,
-          hour = minute * 60,
-          day = hour * 24
+        $('.sidebar-start-time').text(formatForUser(instant, dateFormat, lang))
+        $('.vczapi-single-meeting-timezone').text(userTimezone)
+      } else {
+        $('.sidebar-start-time').text(formatForUser(instant, 'PPPPpp', lang))
+      }
 
-        if (mtgState === 'ended') {
-          $(clock).html('<div class=\'dpn-zvc-meeting-ended\'><h3>' + zvc_strings.meeting_ended + '</h3></div>')
-        } else {
-          // if time to countdown
-          if (diffTime > 0) {
-            var countDown = new Date(converted_timezone).getTime()
-            var x = setInterval(function () {
-              var now = new Date().getTime()
-              var distance = countDown - now
+      var second = 1000
+      var minute = second * 60
+      var hour = minute * 60
+      var day = hour * 24
 
-              document.getElementById('dpn-zvc-timer-days').innerText = Math.floor(distance / (day))
-              document.getElementById('dpn-zvc-timer-hours').innerText = Math.floor((distance % (day)) / (hour))
-              document.getElementById('dpn-zvc-timer-minutes').innerText = Math.floor((distance % (hour)) / (minute))
-              document.getElementById('dpn-zvc-timer-seconds').innerText = Math.floor((distance % (minute)) / second)
+      if (isSingleMeeting && clock.data('state') === 'ended') {
+        $(clock).html('<div class=\'dpn-zvc-meeting-ended\'><h3>' + zvc_strings.meeting_ended + '</h3></div>')
+        return
+      }
 
-              if (distance < 0) {
-                clearInterval(x)
-                $(clock).html('<div class=\'dpn-zvc-meeting-ended\'><h3>' + zvc_strings.meeting_starting + '</h3></div>')
-              }
-            }, second)
+      if (secondsUntil(instant) <= 0) {
+        $(clock).remove()
+        return
+      }
+
+      var countDown = instant.getTime()
+      var x = setInterval(function () {
+        var distance = countDown - Date.now()
+
+        document.getElementById('dpn-zvc-timer-days').innerText = Math.floor(distance / day)
+        document.getElementById('dpn-zvc-timer-hours').innerText = Math.floor((distance % day) / hour)
+        document.getElementById('dpn-zvc-timer-minutes').innerText = Math.floor((distance % hour) / minute)
+        document.getElementById('dpn-zvc-timer-seconds').innerText = Math.floor((distance % minute) / second)
+
+        if (distance < 0) {
+          clearInterval(x)
+
+          if (isSingleMeeting) {
+            $(clock).html('<div class=\'dpn-zvc-meeting-ended\'><h3>' + zvc_strings.meeting_starting + '</h3></div>')
           } else {
-            $(clock).remove()
+            location.reload()
           }
         }
-      }
+      }, second)
     },
 
     /**
      * Set timezone and get links accordingly
      */
     setTimezone: function () {
-      var timezone = moment.tz.guess()
-      if (timezone === 'Asia/Katmandu') {
-        timezone = 'Asia/Kathmandu'
-      }
+      var timezone = normalizeTimeZone(guessTimeZone())
 
       try {
-        if (typeof mtg_data !== undefined && mtg_data.page === 'single-meeting') {
+        if (typeof mtg_data !== 'undefined' && mtg_data.page === 'single-meeting') {
           $('.dpn-zvc-sidebar-content').after('<div class="dpn-zvc-sidebar-box remove-sidebar-loder-text"><p>Loading..Please wait..</p></div>')
           var pageData = {
             action: 'set_timezone',
@@ -120,7 +120,7 @@ jQuery(function ($) {
          * For shortcode
          * @deprecated 3.3.1
          */
-        if (typeof mtg_data !== undefined && mtg_data.type === 'shortcode') {
+        if (typeof mtg_data !== 'undefined' && mtg_data.type === 'shortcode') {
           var shortcodeData = {
             action: 'set_timezone',
             user_timezone: timezone,

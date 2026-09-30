@@ -853,6 +853,10 @@ function vczapi_check_disable_joinViaBrowser() {
  * @param $format datetime format string https://www.php.net/manual/en/datetime.format.php
  *
  * @return string
+ *
+ * @deprecated 4.7.0 The frontend moved to date-fns. Kept for addons that still
+ *             build Moment patterns; new code should use
+ *             vczapi_convert_php_to_date_fns_format().
  */
 function vczapi_convertPHPToMomentFormat( $format ) {
 	$replacements = [
@@ -897,6 +901,177 @@ function vczapi_convertPHPToMomentFormat( $format ) {
 	$momentFormat = strtr( $format, $replacements );
 
 	return $momentFormat;
+}
+
+/**
+ * Translate a PHP date format into a date-fns pattern.
+ *
+ * The frontend moved from Moment.js to date-fns, whose tokens differ in two
+ * important ways: `y` is the calendar year (date-fns has no week-year `Y`), and
+ * the single-letter tokens are uncommon in practice. The stored option is a PHP
+ * format, so existing installs are converted at render time and need no
+ * migration.
+ *
+ * @param string $format PHP date format, see https://www.php.net/manual/en/datetime.format.php
+ *
+ * @return string date-fns pattern.
+ */
+function vczapi_convert_php_to_date_fns_format( $format ) {
+	$format = (string) $format;
+
+	if ( '' === $format ) {
+		return '';
+	}
+
+	// Tokens that expand to more than one character cannot go through strtr's
+	// single-character map, so substitute the longest ones first.
+	$replacements = [
+		'Y' => 'yyyy',
+		'y' => 'yy',
+		'm' => 'MM',
+		'n' => 'M',
+		'M' => 'MMM',
+		'F' => 'MMMM',
+		'd' => 'dd',
+		'j' => 'd',
+		'D' => 'EEE',
+		'l' => 'EEEE',
+		'w' => 'i',
+		'N' => 'i',
+		'z' => 'D',
+		'W' => 'w',
+		'a' => 'a',
+		// date-fns uses a single token for both meridiem spellings.
+		'A' => 'a',
+		'g' => 'h',
+		'h' => 'hh',
+		'G' => 'H',
+		'H' => 'HH',
+		'i' => 'mm',
+		's' => 'ss',
+		'u' => 'SSS',
+		'v' => 'SSS',
+		'e' => 'VV',
+		'O' => 'xxx',
+		'P' => 'xxx',
+		'T' => 'zzz',
+		'Z' => 'x',
+		'c' => "yyyy-MM-dd'T'HH:mm:ssxxx",
+		'r' => 'EEE, dd MMM yyyy HH:mm:ss xx',
+		'U' => 't',
+		'o' => 'yyyy',
+	];
+
+	// PHP tokens with no date-fns equivalent.
+	$unsupported = [ 'S', 't', 'L', 'B', 'I' ];
+
+	// Walk the format so multi-character tokens are replaced atomically.
+	$pattern = '';
+	$length  = strlen( $format );
+
+	for ( $i = 0; $i < $length; $i++ ) {
+		$char = $format[ $i ];
+
+		if ( "'" === $char ) {
+			// PHP escapes literals with apostrophes; copy them verbatim.
+			$pattern .= $char;
+			$i++;
+
+			while ( $i < $length && $format[ $i ] !== "'" ) {
+				$pattern .= $format[ $i ];
+				$i++;
+			}
+
+			$pattern .= isset( $format[ $i ] ) ? "'" : '';
+
+			continue;
+		}
+
+		if ( '\\' === $char && isset( $format[ $i + 1 ] ) ) {
+			// Backslash escapes the next character literally.
+			$pattern .= "'" . $format[ ++$i ] . "'";
+			continue;
+		}
+
+		if ( in_array( $char, $unsupported, true ) ) {
+			continue;
+		}
+
+		if ( isset( $replacements[ $char ] ) ) {
+			$pattern .= $replacements[ $char ];
+			continue;
+		}
+
+		$pattern .= $char;
+	}
+
+	return $pattern;
+}
+
+/**
+ * Translate a Moment.js date format into a date-fns pattern.
+ *
+ * The DateTime Format setting is a radio group whose stored values are Moment
+ * tokens (see includes/Admin/Schema/SettingsFieldSchema.php), so existing rows
+ * and the presets on new installs both arrive as Moment. Those cannot be handed
+ * to date-fns directly: `L` means "standalone month" there, so the default
+ * `LLLL` preset would render as "Wednesday, May 2020 at 05:00 PM" instead of
+ * Moment's "Wednesday, May 6, 2020 05:00 PM".
+ *
+ * Only the "custom" option stores a PHP format, and that is converted by
+ * vczapi_convert_php_to_date_fns_format() instead.
+ *
+ * @param string $format Moment.js format, see https://momentjs.com/docs/#/displaying/format/
+ *
+ * @return string date-fns pattern.
+ */
+function vczapi_convert_moment_to_date_fns_format( $format ) {
+	$format = (string) $format;
+
+	if ( '' === $format ) {
+		return '';
+	}
+
+	// strtr() with an array prefers the longest key, so multi-character tokens
+	// are matched before the single-character ones they contain.
+	$replacements = [
+		// Localised date/time. date-fns has an exact counterpart for each.
+		'LLLL'  => 'PPPPpppp',
+		'LLL'   => 'PPppp',
+		'LL'    => 'PPpp',
+		'L'     => 'P',
+		// date-fns has no standalone "medium month-day-year" token, so spell the
+		// weekday out to keep `llll` visually distinct from `lll`.
+		'llll'  => 'EEE, MMM d, yyyy hh:mm a',
+		'lll'   => 'MMM d, yyyy hh:mm a',
+		'll'    => 'MMM d, yyyy h:mm a',
+		'l'     => 'M/d/yyyy',
+		// Time.
+		'LTS'   => 'h:mm:ss a',
+		'LT'    => 'h:mm a',
+		// Weekday.
+		'dddd'  => 'EEEE',
+		'ddd'   => 'EEE',
+		'dd'    => 'EE',
+		// Month.
+		'MMMM'  => 'MMMM',
+		'MMM'   => 'MMM',
+		// Day of month: date-fns needs dd for a zero-padded day.
+		'DD'    => 'dd',
+		'D'     => 'd',
+		// Year.
+		'YYYY'  => 'yyyy',
+		'YY'    => 'yy',
+		// Meridiem. date-fns uses a single token for both spellings.
+		'A'     => 'a',
+		'a'     => 'a',
+		'h'     => 'hh',
+		'H'     => 'HH',
+		'm'     => 'mm',
+		's'     => 'ss',
+	];
+
+	return strtr( $format, $replacements );
 }
 
 /**

@@ -22,6 +22,7 @@ import {
   SelectControl,
   ComboboxControl
 } from "@wordpress/components";
+import BlockPreviewPlaceholder from '../components/BlockPreviewPlaceholder';
 
 export default function EditZoomRecording(props) {
   const { className, attributes, setAttributes } = props;
@@ -170,7 +171,7 @@ export default function EditZoomRecording(props) {
 
   if (preview) {
     return (
-      <img src={vczapi_blocks.recordings_preview} alt={"Zoom Recordings"} />
+      <BlockPreviewPlaceholder label={__('Zoom Recordings', 'video-conferencing-with-zoom-api')} />
     );
   }
 

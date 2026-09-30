@@ -29,13 +29,13 @@
 			if ( ! empty( $meeting->status ) ) {
 				switch ( $meeting->status ) {
 					case 0;
-						$meeting_status = '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/2.png" style="width:14px;" title="Not Started" alt="Not Started">';
+						$meeting_status = '<span class="vczapi-meeting-status vczapi-meeting-status--scheduled" title="' . esc_attr__( 'Not Started', 'video-conferencing-with-zoom-api' ) . '"><span class="screen-reader-text">' . esc_html__( 'Not Started', 'video-conferencing-with-zoom-api' ) . '</span></span>';
 						break;
 					case 1;
-						$meeting_status = '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/3.png" style="width:14px;" title="Completed" alt="Completed">';
+						$meeting_status = '<span class="vczapi-meeting-status vczapi-meeting-status--ended" title="' . esc_attr__( 'Completed', 'video-conferencing-with-zoom-api' ) . '"><span class="screen-reader-text">' . esc_html__( 'Completed', 'video-conferencing-with-zoom-api' ) . '</span></span>';
 						break;
 					case 2;
-						$meeting_status = '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/1.png" style="width:14px;" title="Currently Live" alt="Live">';
+						$meeting_status = '<span class="vczapi-meeting-status vczapi-meeting-status--live" title="' . esc_attr__( 'Currently Live', 'video-conferencing-with-zoom-api' ) . '"><span class="screen-reader-text">' . esc_html__( 'Currently Live', 'video-conferencing-with-zoom-api' ) . '</span></span>';
 						break;
 					default;
 						break;

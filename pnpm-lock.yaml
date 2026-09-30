@@ -35,9 +35,27 @@ importers:
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
+      lodash:
+        specifier: 4.18.1
+        version: 4.18.1
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-redux:
+        specifier: 8.1.2
+        version: 8.1.2(@types/react@19.2.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(redux@4.2.1)
       react-select:
         specifier: ^5.10.2
         version: 5.10.2(@types/react@19.2.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      redux:
+        specifier: 4.2.1
+        version: 4.2.1
+      redux-thunk:
+        specifier: 2.4.2
+        version: 2.4.2(redux@4.2.1)
     devDependencies:
       '@babel/core':
         specifier: ^8.0.1
@@ -78,6 +96,12 @@ importers:
       css-loader:
         specifier: ^7.1.5
         version: 7.1.5(webpack@5.110.3)
+      fake-indexeddb:
+        specifier: 6.0.0
+        version: 6.0.0
+      jsdom:
+        specifier: 26.1.0
+        version: 26.1.0
       mini-css-extract-plugin:
         specifier: ^2.10.2
         version: 2.10.2(webpack@5.110.3)
@@ -3508,12 +3532,14 @@ packages:
   '@wordpress/jest-console@9.2.0':
     resolution: {integrity: sha512-IzcyKAUrD33xRs+jq0wWsiyB76pL/ddORxOPj21CXdq1/NirMwOLcrPsIymlJvi6G8ZcxqeCWMBmAPtskSMz/Q==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       jest: '>=30'
 
   '@wordpress/jest-preset-default@14.1.0':
     resolution: {integrity: sha512-TE2cSni2tEsmOcpWWCVCI9xKvLGxeTQRJEiHJWZ84qJKndk5eXCO3ANZFXO6whW7Sr/8AG/lXH2vUG/odk9uBg==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@babel/core': '>=7'
       jest: '>=30'
@@ -5113,6 +5139,10 @@ packages:
     resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
     engines: {node: '>= 10.17.0'}
     hasBin: true
+
+  fake-indexeddb@6.0.0:
+    resolution: {integrity: sha512-YEboHE5VfopUclOck7LncgIqskAqnv4q0EWbYCaxKKjAvO93c+TJIaBuGy8CBFdbg9nKdpN3AuPRwVBJ4k7NrQ==}
+    engines: {node: '>=18'}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -14923,6 +14953,8 @@ snapshots:
       '@types/yauzl': 2.10.3
     transitivePeerDependencies:
       - supports-color
+
+  fake-indexeddb@6.0.0: {}
 
   fast-deep-equal@3.1.3: {}
 

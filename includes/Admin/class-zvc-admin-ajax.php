@@ -1,6 +1,7 @@
 <?php
 
 use Codemanas\VczApi\Helpers\Encryption;
+use Codemanas\VczApi\Helpers\Signature;
 
 /**
  * Class for all the administration ajax calls
@@ -19,12 +20,14 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	/**
 	 * Get authenticated io
 	 *
+	 * @deprecated 4.7.0 Superseded by the vczapi/v1/signature REST route. Kept
+	 *             so cached pages and hosts that block the REST namespace keep
+	 *             working; both paths share Helpers\Signature.
+	 *
 	 * @since  3.2.0
 	 * @author Deepen Bajracharya
 	 */
 	public function get_auth() {
-		// check_ajax_referer('_nonce_zvc_security', 'zvc_security');
-
 		$referer  = wp_get_referer();
 		$home_url = home_url();
 
@@ -33,53 +36,41 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			wp_send_json_error( 'Invalid request source.' );
 		}
 
-		// 2. Sanitize and validate the Meeting ID
-		$meeting_id = filter_input( INPUT_POST, 'meeting_id', FILTER_SANITIZE_NUMBER_INT );
+		if ( ! Signature::is_configured() ) {
+			wp_send_json_error( 'SDK configuration error.' );
+		}
 
-		if ( empty( $meeting_id ) ) {
+		$meeting_id = Signature::sanitize_meeting_number( filter_input( INPUT_POST, 'meeting_id', FILTER_SANITIZE_NUMBER_INT ) );
+
+		if ( '' === $meeting_id ) {
 			wp_send_json_error( 'Invalid Meeting ID' );
 		}
 
-		if ( vczapi_is_sdk_enabled() ) {
-			$sdk_key    = get_option( 'vczapi_sdk_key' );
-			$secret_key = get_option( 'vczapi_sdk_secret_key' );
+		// Ensure role is 0 (Participant). NEVER allow Role 1 (Host) for guests.
+		$signature = Signature::for_meeting( $meeting_id, Signature::ROLE_PARTICIPANT );
 
-			if ( empty( $sdk_key ) || empty( $secret_key ) ) {
-				wp_send_json_error( 'SDK configuration error.' );
-			}
-
-			// Ensure role is 0 (Participant). NEVER allow Role 1 (Host) for guests.
-			$signature = $this->generate_sdk_signature( $sdk_key, $secret_key, $meeting_id, 0 );
-
-			wp_send_json_success( [
-				'sig'  => $signature,
-				'type' => 'sdk'
-			] );
-		} else {
-			wp_send_json_error( 'Service Unavailable' );
+		if ( false === $signature ) {
+			wp_send_json_error( 'Could not authorise this meeting.' );
 		}
 
-		wp_die();
+		wp_send_json_success( [
+			'sig'  => $signature,
+			'type' => 'sdk'
+		] );
 	}
 
-	private function generate_sdk_signature( $sdk_key, $secret_key, $meeting_number, $role ) {
-		$iat     = round( ( time() * 1000 - 30000 ) / 1000 );
-		$exp     = $iat + 86400;
-		$payload = [
-			'sdkKey'   => $sdk_key,
-			'mn'       => $meeting_number,
-			'role'     => $role,
-			'iat'      => $iat,
-			'exp'      => $exp,
-			'appKey'   => $sdk_key,
-			'tokenExp' => $exp,
-		];
-
-		if ( empty( $secret_key ) ) {
-			return false;
-		}
-
-		return \Firebase\JWT\JWT::encode( $payload, $secret_key, 'HS256' );
+	/**
+	 * @deprecated 4.7.0 Replaced by Helpers\Signature::for_meeting().
+	 *
+	 * @param string   $api_key       Zoom SDK key.
+	 * @param string   $secret_key    Zoom SDK secret.
+	 * @param string   $meeting_number Meeting number.
+	 * @param int      $role          Zoom role.
+	 *
+	 * @return string|false
+	 */
+	private function generate_sdk_signature( $api_key, $secret_key, $meeting_number, $role ) {
+		return Signature::for_meeting( (string) $meeting_number, (int) $role );
 	}
 
 	/**

@@ -12,6 +12,7 @@ import {useEffect, useState, useRef} from "@wordpress/element";
 import Select from "react-select";
 import AsyncSelect from 'react-select/async';
 import {Placeholder, ToolbarGroup, ToolbarButton, Button} from "@wordpress/components";
+import BlockPreviewPlaceholder from '../components/BlockPreviewPlaceholder';
 
 export default function EditListHostMeeting(props) {
     const {className, attributes, setAttributes} = props;
@@ -42,7 +43,7 @@ export default function EditListHostMeeting(props) {
 
     if (preview) {
         return (
-            <img src={vczapi_blocks.list_host_meetings_preview_image} alt={"List Host meetings"}/>
+            <BlockPreviewPlaceholder label={__('List Host meetings', 'video-conferencing-with-zoom-api')} />
         )
     }
 
