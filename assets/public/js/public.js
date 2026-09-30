@@ -156,7 +156,7 @@ jQuery(function ($) {
         state: state,
         type: $(e.currentTarget).data('type'),
         post_id: post_id ? post_id : false,
-        action: 'state_change',
+        action: 'vczapi_meeting_state_change',
         nonce: vczapi_state.nonce
       };
       if (state === 'resume') {

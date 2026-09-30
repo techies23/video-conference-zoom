@@ -18,12 +18,12 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		add_action( 'wp_ajax_check_connection', array( $this, 'check_connection' ) );
 
 		//Join via browser Auth Call
-		add_action( 'wp_ajax_nopriv_get_auth', array( $this, 'get_auth' ) );
-		add_action( 'wp_ajax_get_auth', array( $this, 'get_auth' ) );
+		add_action( 'wp_ajax_nopriv_vczapi_jvb_get_auth', array( $this, 'get_auth' ) );
+		add_action( 'wp_ajax_vczapi_jvb_get_auth', array( $this, 'get_auth' ) );
 
 		//Call meeting state
-		add_action( 'wp_ajax_nopriv_state_change', array( $this, 'state_change' ) );
-		add_action( 'wp_ajax_state_change', array( $this, 'state_change' ) );
+		add_action( 'wp_ajax_nopriv_vczapi_meeting_state_change', array( $this, 'state_change' ) );
+		add_action( 'wp_ajax_vczapi_meeting_state_change', array( $this, 'state_change' ) );
 
 		//AJAX call for fetching users
 		add_action( 'wp_ajax_get_assign_host_id', [ $this, 'assign_host_id' ] );

@@ -68,7 +68,7 @@ const ZoomMtgApp = {
    */
   generateSignature: async function () {
     const postData = new FormData()
-    postData.append('action', 'get_auth')
+    postData.append('action', 'vczapi_jvb_get_auth')
     postData.append('meeting_id', parseInt(this.meetingID))
     postData.append('nonce', zvc_ajx.nonce)
     const response = await fetch(zvc_ajx.ajaxurl, {
