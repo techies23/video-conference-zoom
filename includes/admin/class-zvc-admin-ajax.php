@@ -173,7 +173,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * @author Deepen Bajracharya
 	 */
 	public function get_auth() {
-		// check_ajax_referer('_nonce_zvc_security', 'zvc_security');
+		check_ajax_referer( 'vczapi_jvb', 'nonce' );
 
 		$referer  = wp_get_referer();
 		$home_url = home_url();
@@ -259,6 +259,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * Change State of the Meeting from here !
 	 */
 	public function state_change(): void {
+		check_ajax_referer( 'vczapi_meeting_state', 'nonce' );
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}

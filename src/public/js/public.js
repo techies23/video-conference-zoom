@@ -201,7 +201,7 @@ jQuery(function ($) {
         type: $(e.currentTarget).data('type'),
         post_id: post_id ? post_id : false,
         action: 'state_change',
-        accss: vczapi_state.zvc_security
+        nonce: vczapi_state.nonce
       }
 
       if (state === 'resume') {
