@@ -1,8 +1,13 @@
+//Vendors
+@use "vendors/choices";
+
 //Components
-@use 'vendors/choices';
 @use "components/accordion";
 @use "components/table";
 @use "components/modal";
+
+//Post Type
+@use "post-type/create-meeting";
 
 //Admin
 @use "metabox/admin-meeting-fields";
