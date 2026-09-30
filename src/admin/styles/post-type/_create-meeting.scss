@@ -1,0 +1,128 @@
+@use "../abstracts" as *;
+
+// ==========================================================================
+// Add New Zoom Meeting (modal create page)
+// ==========================================================================
+
+.vczapi-create-meeting {
+  max-width: 860px;
+  margin: 24px auto 48px;
+
+  h1 {
+    text-align: center;
+    margin: 45px 0;
+  }
+
+  &__modal {
+    background: $vczapi-bg-white;
+    border: 1px solid $vczapi-border-color;
+    border-radius: $vczapi-radius;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+
+    // The form-table + accordion content inside the modal
+    .form-table {
+      margin: 0;
+
+      input[type="text"],
+      select.regular-text {
+        max-width: 100%;
+      }
+    }
+
+    .vczapi-admin-accordion__content {
+      overflow: visible;
+    }
+  }
+
+  &__header {
+    padding: 16px 20px;
+    border-bottom: 1px solid $vczapi-border-color;
+    background: $vczapi-bg-header;
+
+    h2 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 600;
+      color: $vczapi-text-color;
+    }
+
+    .description {
+      margin: 0;
+      color: $dt-text-muted;
+    }
+  }
+
+  &__body {
+    &--meeting-title {
+      padding: 10px 20px;
+    }
+
+    > .form-table {
+      margin-top: 8px;
+      border-bottom: 1px solid $vczapi-border-color;
+    }
+
+    // Reuse the metabox wrapper so field-error states render as in the editor.
+    #vczapi-admin-meeting-fields-meta {
+
+      .vczapi-field-error {
+        border: 1px solid #d63638;
+      }
+
+      .choices:has(select.vczapi-field-error[data-required="true"]) {
+        border: 1px solid #d63638;
+        background-color: #fcf0f1;
+        border-radius: $vczapi-radius;
+      }
+
+      .vczapi-admin-accordion__content {
+        padding: 10px 20px;
+      }
+    }
+  }
+
+  &__feedback {
+    margin: 12px 20px;
+    padding: 10px 12px;
+    border-radius: $vczapi-radius;
+    font-size: 13px;
+
+    &.is-error {
+      background-color: #fcf0f1;
+      border-left: 4px solid #d63638;
+      color: #b32d2e;
+    }
+
+    &.is-success {
+      background-color: #f0f8f1;
+      border-left: 4px solid #00a32a;
+      color: #007017;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 1px solid $vczapi-border-color;
+    background: $vczapi-bg-header;
+  }
+
+  &__submit {
+    display: inline-flex;
+    align-items: center;
+
+    .vczapi-modal__spinner {
+      float: none;
+      margin: 0 0 0 8px;
+      visibility: hidden;
+    }
+
+    &.is-loading .vczapi-modal__spinner {
+      visibility: visible;
+    }
+  }
+}

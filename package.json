@@ -6,7 +6,7 @@
   "author": "Deepen Bajracharya",
   "license": "GPL-2.0+",
   "scripts": {
-    "copy:vendors": "cpx \"node_modules/{datatables.net/js/*.js,datatables.net-dt/css/*.css,choices.js/public/assets/styles/**/*,flatpickr/dist/flatpickr.min.css}\" dist/vendor",
+    "copy:vendors": "cpx \"node_modules/{choices.js/public/assets/styles/**/*,flatpickr/dist/flatpickr.min.css}\" dist/vendor",
     "build": "pnpm run copy:vendors && wp-scripts build",
     "start": "pnpm run copy:vendors && wp-scripts start --mode development",
     "format:js": "wp-scripts format-js",

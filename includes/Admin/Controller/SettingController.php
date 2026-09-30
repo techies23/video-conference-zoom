@@ -38,9 +38,8 @@ class SettingController {
 		$connectHandler  = new ConnectHandler();
 		$settingsHandler = new GeneralSettingsHandler( $this->settingsRepo );
 		$logHandler      = new LogHandler();
-		$adminMenu       = new MenuController( [ $this->view, 'render' ] );
+		MenuController::get_instance( [ $this->view, 'render' ] );
 
-		add_action( 'admin_menu', [ $adminMenu, 'registerAdminMenus' ] );
 		add_action( 'admin_init', [ $settingsHandler, 'handle' ] );
 		add_action( 'admin_init', [ $logHandler, 'handle' ] );
 		add_action( 'admin_notices', [ Notification::get_instance(), 'displayNotices' ] );
