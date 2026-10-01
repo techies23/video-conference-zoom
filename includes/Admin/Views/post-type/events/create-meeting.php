@@ -20,7 +20,7 @@ $field_sections  = ! empty( $args['field_sections'] ) && is_array( $args['field_
 $text_domain = 'video-conferencing-with-zoom-api';
 ?>
 <div class="vczapi-create-meeting">
-    <h1><?php esc_html_e( 'Create Zoom Meeting', $text_domain ); ?></h1>
+    <h1><?php esc_html_e( 'Create Zoom Event', $text_domain ); ?></h1>
 
     <form id="vczapi-create-meeting-form" class="vczapi-create-meeting__modal" aria-labelledby="vczapi-create-meeting-title">
         <header class="vczapi-create-meeting__header">
@@ -63,6 +63,7 @@ $text_domain = 'video-conferencing-with-zoom-api';
         <footer class="vczapi-create-meeting__footer">
             <button type="submit" class="button button-primary vczapi-create-meeting__submit">
                 <?php esc_html_e( 'Create Meeting', $text_domain ); ?>
+                <span class="spinner vczapi-modal__spinner"></span>
             </button>
         </footer>
     </form>
