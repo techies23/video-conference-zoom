@@ -3,21 +3,32 @@
 namespace Codemanas\VczApi\Helpers;
 
 class MeetingType {
-	//https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meetingCreate
+	// Meeting type constants: https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meetingCreate
+	public const TYPE_INSTANT                 = 1;
+	public const TYPE_SCHEDULED               = 2;
+	public const TYPE_RECURRING_NO_FIXED_TIME = 3;
+	public const TYPE_PMI                     = 4;
+	public const TYPE_RECURRING_FIXED_TIME    = 8;
+	public const TYPE_SCREEN_SHARE_ONLY       = 10;
+
+	// Webinar type constants: https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/webinarCreate
+	public const TYPE_WEBINAR_DEFAULT                 = 5;
+	public const TYPE_WEBINAR_RECURRING_NO_FIXED_TIME = 6;
+	public const TYPE_WEBINAR_RECURRING_FIXED_TIME    = 9;
+
 	private static array $MEETING_TYPES = [
-		'instant'                 => 1,
-		'scheduled'               => 2,
-		'recurring_no_fixed_time' => 3,
-		'pmi'                     => 4,
-		'recurring_fixed_time'    => 8,
-		'screen_share_only'       => 10
+		'instant'                 => self::TYPE_INSTANT,
+		'scheduled'               => self::TYPE_SCHEDULED,
+		'recurring_no_fixed_time' => self::TYPE_RECURRING_NO_FIXED_TIME,
+		'pmi'                     => self::TYPE_PMI,
+		'recurring_fixed_time'    => self::TYPE_RECURRING_FIXED_TIME,
+		'screen_share_only'       => self::TYPE_SCREEN_SHARE_ONLY,
 	];
 
-	//https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/webinarCreate
 	private static array $WEBINAR_TYPES = [
-		'default'                 => 5,
-		'recurring_no_fixed_time' => 6,
-		'recurring_fixed_time'    => 9
+		'default'                 => self::TYPE_WEBINAR_DEFAULT,
+		'recurring_no_fixed_time' => self::TYPE_WEBINAR_RECURRING_NO_FIXED_TIME,
+		'recurring_fixed_time'    => self::TYPE_WEBINAR_RECURRING_FIXED_TIME,
 	];
 
 	public static function getCptMeetingType( string $type ): int {
@@ -199,6 +210,94 @@ class MeetingType {
 	 */
 	private static function toInteger( $value ): int {
 		return (int) $value;
+	}
+
+	/**
+	 * Returns all available meeting types map.
+	 *
+	 * @return array<string, int>
+	 */
+	public static function get_meeting_types(): array {
+		return self::$MEETING_TYPES;
+	}
+
+	/**
+	 * Returns all available webinar types map.
+	 *
+	 * @return array<string, int>
+	 */
+	public static function get_webinar_types(): array {
+		return self::$WEBINAR_TYPES;
+	}
+
+	/**
+	 * Retrieves the integer meeting type for a given meeting type key or integer ID.
+	 *
+	 * @param string|int $meeting_type The meeting type key (e.g. 'scheduled', 'pmi') or integer ID.
+	 * @param int|null   $default      Default fallback value if key/type is not found.
+	 *
+	 * @return int|null Returns the meeting type integer, or default/null if not found.
+	 */
+	public static function get_meeting_type( string|int $meeting_type, ?int $default = null ): ?int {
+		if ( is_string( $meeting_type ) && isset( self::$MEETING_TYPES[ $meeting_type ] ) ) {
+			return self::$MEETING_TYPES[ $meeting_type ];
+		}
+
+		$int_type = self::toInteger( $meeting_type );
+		if ( in_array( $int_type, self::$MEETING_TYPES, true ) ) {
+			return $int_type;
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Retrieves the integer webinar type for a given webinar type key or integer ID.
+	 *
+	 * @param string|int $webinar_type The webinar type key (e.g. 'default', 'recurring_fixed_time') or integer ID.
+	 * @param int|null   $default      Default fallback value if key/type is not found.
+	 *
+	 * @return int|null Returns the webinar type integer, or default/null if not found.
+	 */
+	public static function get_webinar_type( string|int $webinar_type, ?int $default = null ): ?int {
+		if ( is_string( $webinar_type ) && isset( self::$WEBINAR_TYPES[ $webinar_type ] ) ) {
+			return self::$WEBINAR_TYPES[ $webinar_type ];
+		}
+
+		$int_type = self::toInteger( $webinar_type );
+		if ( in_array( $int_type, self::$WEBINAR_TYPES, true ) ) {
+			return $int_type;
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Retrieves the string key/name for a given meeting type integer ID.
+	 *
+	 * @param string|int $meeting_type Meeting type integer ID or numeric string.
+	 *
+	 * @return string|null Returns the type name (e.g. 'scheduled'), or null if not found.
+	 */
+	public static function get_meeting_type_name( string|int $meeting_type ): ?string {
+		$type = self::toInteger( $meeting_type );
+		$key  = array_search( $type, self::$MEETING_TYPES, true );
+
+		return false !== $key ? $key : null;
+	}
+
+	/**
+	 * Retrieves the string key/name for a given webinar type integer ID.
+	 *
+	 * @param string|int $webinar_type Webinar type integer ID or numeric string.
+	 *
+	 * @return string|null Returns the type name (e.g. 'default'), or null if not found.
+	 */
+	public static function get_webinar_type_name( string|int $webinar_type ): ?string {
+		$type = self::toInteger( $webinar_type );
+		$key  = array_search( $type, self::$WEBINAR_TYPES, true );
+
+		return false !== $key ? $key : null;
 	}
 
 }
