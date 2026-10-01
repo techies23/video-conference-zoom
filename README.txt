@@ -161,8 +161,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 = 4.6.11 =
-* Security Fix: Added authorization capability checks to AJAX handlers to prevent unauthorized disclosure of user and host account details.
-* Security Fix: Removed administrative nonce exposure from public join-via-browser templates.
+* Security Fix: Added authorization capability checks to AJAX handlers.
+* Security Fix: Removed administrative nonce exposure from public templates.
 * Counter: Fixed counter-timezone miscalculation for Mountain Time Zone.
 = 4.6.10 =
 * Security: Shortcode - Fixed a potential XSS vulnerability.
