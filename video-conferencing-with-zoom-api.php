@@ -13,9 +13,9 @@
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       video-conferencing-with-zoom-api
- * Requires PHP:      8.0
+ * Requires PHP:      8.1
  * Domain Path:       /languages
- * Requires at least: 5.5.0
+ * Requires at least: 6.0.0
  */
 
 // If this file is called directly, abort.
