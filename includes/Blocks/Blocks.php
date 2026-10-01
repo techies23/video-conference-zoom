@@ -24,8 +24,7 @@ class Blocks {
 	 * Blocks constructor.
 	 */
 	public function __construct() {
-		global $wp_version;
-		add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
+		add_filter( 'block_categories_all', [ $this, 'register_block_categories' ], 10, 2 );
 
 		if ( function_exists( 'register_block_type' ) ) {
 			add_action( 'init', [ $this, 'register_scripts' ] );
