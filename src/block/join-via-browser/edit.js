@@ -54,7 +54,8 @@ export default function EditJoinViaBrowser ({ attributes, setAttributes }) {
     const searchParam = searchInput ? encodeURIComponent(searchInput) : ''
     const ajaxUrl = window.ajaxurl || 'admin-ajax.php'
     const nonce = window?.vczapi_blocks?.nonce || ''
-    fetch(`${ajaxUrl}?action=vczapi_get_zoom_hosts&host=${searchParam}&nonce=${nonce}`).then((response) => response.json()).then((result) => {
+    const $queryUrl = `${ajaxUrl}?action=vczapi_get_zoom_hosts&host=${searchParam}&nonce=${nonce}`
+    fetch($queryUrl).then((response) => response.json()).then((result) => {
       if (Array.isArray(result)) {
         const formatted = result.map((item) => ({
           label: item.label || item.name || item.text || item.value,

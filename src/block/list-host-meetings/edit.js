@@ -25,7 +25,7 @@ export default function EditListHostMeeting ({ attributes, setAttributes }) {
     const ajaxUrl = window.ajaxurl || 'admin-ajax.php'
     const nonce = window?.vczapi_blocks?.nonce || ''
 
-    let queryUrl = `${ajaxUrl}?action=vczapi_get_zoom_hosts&host=${encodeURIComponent(searchInput)}&nonce=${nonce}`
+    const queryUrl = `${ajaxUrl}?action=vczapi_get_zoom_hosts&host=${encodeURIComponent(searchInput)}&nonce=${nonce}`
 
     fetch(queryUrl).then((response) => response.json()).then((result) => {
       // Format response to match ComboboxOption structure: { label, value }
