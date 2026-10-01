@@ -94,9 +94,9 @@ function video_conference_zoom_meeting_end_author() {
 	}
 
 	$data = array(
-		'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-		'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
-		'lang'         => array(
+		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		'nonce'   => wp_create_nonce( 'vczapi_meeting_state' ),
+		'lang'    => array(
 			'confirm_end' => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" )
 		)
 	);
@@ -555,7 +555,6 @@ function video_conference_zoom_after_jbh_html() {
 
 	$localize = array(
 		'ajaxurl'                        => admin_url( 'admin-ajax.php' ),
-		'zvc_security'                   => wp_create_nonce( "_nonce_zvc_security" ),
 		'redirect_page'                  => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( $post_link ) ),
 		'meeting_id'                     => $meeting_id,
 		'meeting_pwd'                    => $meeting_pwd,
@@ -564,6 +563,7 @@ function video_conference_zoom_after_jbh_html() {
 		'user_mail'                      => ! empty( $current_user->user_email ) ? $current_user->user_email : '',
 		'user_name'                      => $full_name,
 		'enable_direct_join_via_browser' => ! empty( $_GET['direct_join'] ) ? (bool) $_GET['direct_join'] : $enable_direct_via_browser,
+		'nonce'                          => wp_create_nonce( 'vczapi_jvb' ),
 	);
 
 	/**
@@ -582,10 +582,10 @@ function video_conference_zoom_after_jbh_html() {
 		'isSupportCC'       => true,
 		'screenShare'       => true
 	) );
-	$localize        = array_merge( $localize, $additional_data );
+        $localize        = array_merge( $localize, $additional_data );
 	?>
     <script id='video-conferencing-with-zoom-api-browser-js-extra'>
-        var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
+      var zvc_ajx = <?php echo wp_json_encode( $localize ); ?>;
     </script>
 
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>

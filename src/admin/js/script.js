@@ -425,7 +425,7 @@ import '../sass/style.scss'
                 state: state,
                 type: $(e.currentTarget).data('type'),
                 post_id: post_id ? post_id : false,
-                action: 'state_change',
+                action: 'vczapi_meeting_state_change',
                 accss: zvc_ajax.zvc_security
             }
 

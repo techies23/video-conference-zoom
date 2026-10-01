@@ -2,8 +2,6 @@
 
 namespace Codemanas\VczApi\Blocks;
 
-use function Composer\Autoload\includeFile;
-
 /**
  * Class Blocks
  *
@@ -26,12 +24,8 @@ class Blocks {
 	 * Blocks constructor.
 	 */
 	public function __construct() {
-		global $wp_version;
-		if ( version_compare( $wp_version, '5.8', '>=' ) ) {
-			add_filter( 'block_categories_all', [ $this, 'register_block_categories' ], 10, 2 );
-		} else {
-			add_filter( 'block_categories', [ $this, 'register_block_categories' ], 10, 2 );
-		}
+		add_filter( 'block_categories_all', [ $this, 'register_block_categories' ], 10, 2 );
+
 		if ( function_exists( 'register_block_type' ) ) {
 			add_action( 'init', [ $this, 'register_scripts' ] );
 			add_action( 'init', [ $this, 'register_blocks' ] );
@@ -76,6 +70,7 @@ class Blocks {
 			'vczapi-blocks',
 			'vczapi_blocks',
 			[
+				'nonce'                            => wp_create_nonce( 'vczapi_blocks' ),
 				'list_meetings_preview'            => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-meetings-webinars.png',
 				'direct_meeting_preview_image'     => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/direct-meeting.jpg',
 				'list_host_meetings_preview_image' => ZVC_PLUGIN_IMAGES_PATH . '/block-previews/list-host-meetings.png',
@@ -89,8 +84,8 @@ class Blocks {
 	/**
 	 * Registering block categories.
 	 *
-	 * @param array $categories Block categories.
-	 * @param mixed $post       Post.
+	 * @param   array  $categories  Block categories.
+	 * @param   mixed  $post        Post.
 	 *
 	 * @return array
 	 * @since   3.7.5
@@ -382,9 +377,9 @@ class Blocks {
 	/**
 	 * Get a scalar block attribute without display-oriented sanitization.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $default    Default value.
+	 * @param   mixed   $attributes  Block attributes.
+	 * @param   string  $key         Attribute key.
+	 * @param   string  $default     Default value.
 	 *
 	 * @return string
 	 */
@@ -404,10 +399,10 @@ class Blocks {
 	/**
 	 * Get a nested scalar block attribute.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $nested_key Nested key.
-	 * @param string $default    Default value.
+	 * @param   mixed   $attributes  Block attributes.
+	 * @param   string  $key         Attribute key.
+	 * @param   string  $nested_key  Nested key.
+	 * @param   string  $default     Default value.
 	 *
 	 * @return string
 	 */
@@ -429,9 +424,9 @@ class Blocks {
 	/**
 	 * Get a positive integer block attribute.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param int    $default    Default value.
+	 * @param   mixed   $attributes  Block attributes.
+	 * @param   string  $key         Attribute key.
+	 * @param   int     $default     Default value.
 	 *
 	 * @return int
 	 */
@@ -451,10 +446,10 @@ class Blocks {
 	/**
 	 * Get an allowlisted scalar block attribute.
 	 *
-	 * @param mixed  $attributes     Block attributes.
-	 * @param string $key            Attribute key.
-	 * @param array  $allowed_values Allowed values.
-	 * @param string $default        Default value.
+	 * @param   mixed   $attributes      Block attributes.
+	 * @param   string  $key             Attribute key.
+	 * @param   array   $allowed_values  Allowed values.
+	 * @param   string  $default         Default value.
 	 *
 	 * @return string
 	 */
@@ -467,10 +462,10 @@ class Blocks {
 	/**
 	 * Get an allowlisted nested block attribute.
 	 *
-	 * @param mixed  $attributes     Block attributes.
-	 * @param string $key            Attribute key.
-	 * @param array  $allowed_values Allowed values.
-	 * @param string $default        Default value.
+	 * @param   mixed   $attributes      Block attributes.
+	 * @param   string  $key             Attribute key.
+	 * @param   array   $allowed_values  Allowed values.
+	 * @param   string  $default         Default value.
 	 *
 	 * @return string
 	 */
@@ -483,9 +478,9 @@ class Blocks {
 	/**
 	 * Get a numeric identifier from a nested block attribute.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $default    Default value.
+	 * @param   mixed   $attributes  Block attributes.
+	 * @param   string  $key         Attribute key.
+	 * @param   string  $default     Default value.
 	 *
 	 * @return string
 	 */
@@ -498,9 +493,9 @@ class Blocks {
 	/**
 	 * Get a sanitized Zoom host identifier.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $default    Default value.
+	 * @param   mixed   $attributes  Block attributes.
+	 * @param   string  $key         Attribute key.
+	 * @param   string  $default     Default value.
 	 *
 	 * @return string
 	 */
@@ -516,8 +511,8 @@ class Blocks {
 	 * Zoom passcodes are limited to 10 characters and may contain special
 	 * characters. Avoid display-oriented sanitizers here.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
+	 * @param   mixed   $attributes  Block attributes.
+	 * @param   string  $key         Attribute key.
 	 *
 	 * @return string
 	 */
@@ -538,8 +533,8 @@ class Blocks {
 	 *
 	 * This is shortcode-context escaping, not HTML attribute escaping.
 	 *
-	 * @param string $name  Shortcode attribute name.
-	 * @param mixed  $value Shortcode attribute value.
+	 * @param   string  $name   Shortcode attribute name.
+	 * @param   mixed   $value  Shortcode attribute value.
 	 *
 	 * @return string
 	 */
@@ -572,7 +567,12 @@ class Blocks {
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
-	public function get_hosts() {
+	public function get_hosts(): void {
+		check_ajax_referer( 'vczapi_blocks', 'nonce' );
+		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( [ 'message' => __( 'You do not have permission to access this resource.', 'video-conferencing-with-zoom-api' ) ], 403 );
+		}
+
 		$host_name = filter_input( INPUT_GET, 'host' );
 		$host_name = is_scalar( $host_name ) ? (string) $host_name : '';
 		$users     = video_conferencing_zoom_api_get_user_transients();
@@ -615,14 +615,19 @@ class Blocks {
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
-	public function     get_live_meetings() {
+	public function get_live_meetings() {
+		check_ajax_referer( 'vczapi_blocks', 'nonce' );
+		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( [ 'message' => __( 'You do not have permission to access this resource.', 'video-conferencing-with-zoom-api' ) ], 403 );
+		}
+
 		$host_id                 = filter_input( INPUT_GET, 'host_id' );
 		$show_meeting_or_webinar = filter_input( INPUT_GET, 'show' );
 		$args                    = [
 			'page_size' => 300,
 		];
 
-		$page_number             = filter_input( INPUT_GET, 'page_number' );
+		$page_number = filter_input( INPUT_GET, 'page_number' );
 		if ( ! empty( $page_number ) ) {
 			$args['page_number'] = $page_number;
 		}
@@ -665,7 +670,7 @@ class Blocks {
 	/**
 	 * Render list of meetings.
 	 *
-	 * @param mixed $attributes Block attributes.
+	 * @param   mixed  $attributes  Block attributes.
 	 *
 	 * @return string
 	 */
@@ -732,7 +737,7 @@ class Blocks {
 	/**
 	 * Render just the post.
 	 *
-	 * @param mixed $attributes Block attributes.
+	 * @param   mixed  $attributes  Block attributes.
 	 *
 	 * @return false|string
 	 */
@@ -767,7 +772,7 @@ class Blocks {
 	/**
 	 * Render directly from API.
 	 *
-	 * @param mixed $attributes Block attributes.
+	 * @param   mixed  $attributes  Block attributes.
 	 *
 	 * @return false|string
 	 */
@@ -797,7 +802,7 @@ class Blocks {
 	/**
 	 * Render host meeting list.
 	 *
-	 * @param mixed $attributes Block attributes.
+	 * @param   mixed  $attributes  Block attributes.
 	 *
 	 * @return false|string
 	 */
@@ -818,7 +823,7 @@ class Blocks {
 	/**
 	 * Embed join via browser.
 	 *
-	 * @param mixed $attributes Block attributes.
+	 * @param   mixed  $attributes  Block attributes.
 	 *
 	 * @return string
 	 */
@@ -860,7 +865,7 @@ class Blocks {
 	/**
 	 * Render Recordings.
 	 *
-	 * @param mixed $attributes Block attributes.
+	 * @param   mixed  $attributes  Block attributes.
 	 *
 	 * @return false|string
 	 */

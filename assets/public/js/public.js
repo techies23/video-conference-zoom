@@ -20,59 +20,70 @@ jQuery(function ($) {
     },
     countDownTimerMoment: function () {
       var clock = this.$timer;
-      if (clock.length > 0) {
-        var valueDate = clock.data('date');
-        var mtgTimezone = clock.data('tz');
-        var mtgState = clock.data('state');
-
-        // var dateFormat = moment(valueDate).format('MMM D, YYYY HH:mm:ss');
-        var user_timezone = moment.tz.guess();
-        if (user_timezone === 'Asia/Katmandu') {
-          user_timezone = 'Asia/Kathmandu';
-        }
-
-        //Converting Timezones to locals
-        var source_timezone = moment.tz(valueDate, mtgTimezone).format();
-        var converted_timezone = moment.tz(source_timezone, user_timezone).format('MMM D, YYYY HH:mm:ss');
-        var convertedTimezonewithoutFormat = moment.tz(source_timezone, user_timezone).format();
-        let meetingUTCTime = moment.utc(source_timezone).valueOf();
-        let usersDate = new Date(meetingUTCTime);
-
-        //Check Time Difference for Validations
-        var currentTime = moment().unix();
-        var eventTime = moment(convertedTimezonewithoutFormat).unix();
-        var diffTime = eventTime - currentTime;
-        var lang = document.documentElement.lang;
-        var dateFormat = zvc_strings.date_format !== '' ? zvc_strings.date_format : 'LLLL';
-        $('.sidebar-start-time').html(moment.parseZone(usersDate).locale(lang).format(dateFormat));
-        $('.vczapi-single-meeting-timezone').html(user_timezone);
-        var second = 1000,
-          minute = second * 60,
-          hour = minute * 60,
-          day = hour * 24;
-        if (mtgState === 'ended') {
-          $(clock).html('<div class=\'dpn-zvc-meeting-ended\'><h3>' + zvc_strings.meeting_ended + '</h3></div>');
-        } else {
-          // if time to countdown
-          if (diffTime > 0) {
-            var countDown = new Date(converted_timezone).getTime();
-            var x = setInterval(function () {
-              var now = new Date().getTime();
-              var distance = countDown - now;
-              document.getElementById('dpn-zvc-timer-days').innerText = Math.floor(distance / day);
-              document.getElementById('dpn-zvc-timer-hours').innerText = Math.floor(distance % day / hour);
-              document.getElementById('dpn-zvc-timer-minutes').innerText = Math.floor(distance % hour / minute);
-              document.getElementById('dpn-zvc-timer-seconds').innerText = Math.floor(distance % minute / second);
-              if (distance < 0) {
-                clearInterval(x);
-                $(clock).html('<div class=\'dpn-zvc-meeting-ended\'><h3>' + zvc_strings.meeting_starting + '</h3></div>');
-              }
-            }, second);
-          } else {
-            $(clock).remove();
-          }
-        }
+      if (!clock.length) {
+        return;
       }
+      var valueDate = clock.data('date');
+      var mtgTimezone = clock.data('tz');
+      var mtgState = clock.data('state');
+      var userTimezone = moment.tz.guess();
+      if (userTimezone === 'Asia/Katmandu') {
+        userTimezone = 'Asia/Kathmandu';
+      }
+
+      // Meeting time in the meeting timezone
+      var meetingTime = moment.tz(valueDate, mtgTimezone);
+
+      // Meeting time converted to user's timezone
+      var userMeetingTime = meetingTime.clone().tz(userTimezone);
+
+      // Check time difference
+      var diffTime = userMeetingTime.diff(moment());
+      var lang = document.documentElement.lang;
+      var dateFormat = zvc_strings.date_format !== '' ? zvc_strings.date_format : 'LLLL';
+      $('.sidebar-start-time').html(userMeetingTime.clone().locale(lang).format(dateFormat));
+      $('.vczapi-single-meeting-timezone').html(userTimezone);
+      var second = 1000;
+      var minute = second * 60;
+      var hour = minute * 60;
+      var day = hour * 24;
+      if (mtgState === 'ended') {
+        $(clock).html('<div class="dpn-zvc-meeting-ended">' + '<h3>' + zvc_strings.meeting_ended + '</h3>' + '</div>');
+        return;
+      }
+      if (diffTime <= 0) {
+        $(clock).remove();
+        return;
+      }
+      var countDown = userMeetingTime.valueOf();
+      var x = setInterval(function () {
+        var distance = countDown - Date.now();
+        if (distance <= 0) {
+          clearInterval(x);
+          $(clock).html('<div class="dpn-zvc-meeting-ended">' + '<h3>' + zvc_strings.meeting_starting + '</h3>' + '</div>');
+          return;
+        }
+        var days = Math.floor(distance / day);
+        var hours = Math.floor(distance % day / hour);
+        var minutes = Math.floor(distance % hour / minute);
+        var seconds = Math.floor(distance % minute / second);
+        var daysEl = document.getElementById('dpn-zvc-timer-days');
+        var hoursEl = document.getElementById('dpn-zvc-timer-hours');
+        var minutesEl = document.getElementById('dpn-zvc-timer-minutes');
+        var secondsEl = document.getElementById('dpn-zvc-timer-seconds');
+        if (daysEl) {
+          daysEl.innerText = days;
+        }
+        if (hoursEl) {
+          hoursEl.innerText = hours;
+        }
+        if (minutesEl) {
+          minutesEl.innerText = minutes;
+        }
+        if (secondsEl) {
+          secondsEl.innerText = seconds;
+        }
+      }, second);
     },
     /**
      * Set timezone and get links accordingly
@@ -145,8 +156,8 @@ jQuery(function ($) {
         state: state,
         type: $(e.currentTarget).data('type'),
         post_id: post_id ? post_id : false,
-        action: 'state_change',
-        accss: vczapi_state.zvc_security
+        action: 'vczapi_meeting_state_change',
+        nonce: vczapi_state.nonce
       };
       if (state === 'resume') {
         this.changeState(postData);
