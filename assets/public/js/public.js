@@ -2,7 +2,103 @@
 /******/ 	"use strict";
 var __webpack_exports__ = {};
 
-jQuery(function ($) {
+;// CONCATENATED MODULE: ./src/public/js/moment-parser.js
+/**
+ * Helper to map Moment tokens and native built-in preset constants to Intl options
+ */
+function parseMomentFormatToIntl(formatStr) {
+  // Normalize layout input context
+  if (!formatStr) {
+    formatStr = 'LLLL';
+  }
+
+  // 1. Resolve Moment's Core Built-in Localized Format Constants
+  switch (formatStr) {
+    case 'LLLL':
+      // Example: Wednesday, May 6, 2020 05:00 PM
+      return {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+    case 'llll':
+      // Example: Wed, May 6, 2020 05:00 AM
+      return {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+    case 'lll':
+      // Example: May 6, 2020 05:00 AM
+      return {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+    case 'L LT':
+      // Example: 05/06/2020 03:00 PM
+      return {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: 'numeric',
+        minute: '2-digit'
+      };
+    case 'l LT':
+      // Example: 5/6/2020 03:00 PM
+      return {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+      };
+  }
+
+  // 2. Fallback: Parse Custom Layout String Tokens (When 'custom' radio option is chosen)
+  const options = {};
+
+  // Explicit Hour Cycle Precision Check (12-hour vs 24-hour markers)
+  if (formatStr.includes('H')) {
+    options.hour12 = false;
+  } else if (formatStr.includes('h') || formatStr.includes('a') || formatStr.includes('A')) {
+    options.hour12 = true;
+  }
+
+  // Day of Week
+  if (formatStr.includes('dddd')) options.weekday = 'long';else if (formatStr.includes('ddd')) options.weekday = 'short';
+
+  // Year
+  if (formatStr.includes('YYYY')) options.year = 'numeric';else if (formatStr.includes('YY')) options.year = '2-digit';
+
+  // Month
+  if (formatStr.includes('MMMM')) options.month = 'long';else if (formatStr.includes('MMM')) options.month = 'short';else if (formatStr.includes('MM')) options.month = '2-digit';else if (formatStr.includes('M')) options.month = 'numeric';
+
+  // Day of Month
+  if (formatStr.includes('DD')) options.day = '2-digit';else if (formatStr.includes('D')) options.day = 'numeric';
+
+  // Hours
+  if (formatStr.includes('HH') || formatStr.includes('hh')) options.hour = '2-digit';else if (formatStr.includes('H') || formatStr.includes('h')) options.hour = 'numeric';
+
+  // Minutes
+  if (formatStr.includes('mm')) options.minute = '2-digit';else if (formatStr.includes('m')) options.minute = 'numeric';
+
+  // Seconds
+  if (formatStr.includes('ss')) options.second = '2-digit';else if (formatStr.includes('s')) options.second = 'numeric';
+  return options;
+}
+;// CONCATENATED MODULE: ./src/public/js/public.js
+
+
+(function ($) {
   var video_conferencing_zoom_api_public = {
     init: function () {
       this.cacheVariables();
@@ -15,7 +111,6 @@ jQuery(function ($) {
     },
     evntLoaders: function () {
       $(document).ready(this.setTimezone.bind(this));
-      //End and Resume Meetings
       $(this.changeMeetingState).on('click', this.meetingStateChange.bind(this));
     },
     countDownTimerNative: function () {
@@ -23,30 +118,25 @@ jQuery(function ($) {
       if (!clock.length) {
         return;
       }
-      const rawDate = clock.data('date'); // Preferably a UTC ISO string or epoch
+      const rawDate = clock.data('date');
       const mtgState = clock.data('state');
       let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
       if (userTimezone === 'Asia/Katmandu') {
         userTimezone = 'Asia/Kathmandu';
       }
-
-      // Parse meeting date to UTC timestamp
       const targetDate = new Date(rawDate);
       const targetEpochMs = targetDate.getTime();
       const diffTime = targetEpochMs - Date.now();
       const lang = document.documentElement.lang || navigator.language || 'en-US';
 
-      // Format localized meeting start time
+      // Parse the custom backend layout tokens into a Native Object config
+      const customMomentFormat = typeof zvc_strings !== 'undefined' && zvc_strings.date_format ? zvc_strings.date_format : 'LLLL';
+      const intlOptions = parseMomentFormatToIntl(customMomentFormat);
+      intlOptions.timeZone = userTimezone; // Dynamically inject user's local timezone context
+
+      // Format localized meeting start time safely
       try {
-        const formatter = new Intl.DateTimeFormat(lang, {
-          timeZone: userTimezone,
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric'
-        });
+        const formatter = new Intl.DateTimeFormat(lang, intlOptions);
         $('.sidebar-start-time').html(formatter.format(targetDate));
       } catch (e) {
         $('.sidebar-start-time').html(targetDate.toLocaleString(lang));
@@ -89,12 +179,12 @@ jQuery(function ($) {
      * Set timezone and get links accordingly
      */
     setTimezone: function () {
-      var timezone = moment.tz.guess();
+      let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
       if (timezone === 'Asia/Katmandu') {
         timezone = 'Asia/Kathmandu';
       }
       try {
-        if (typeof mtg_data !== undefined && mtg_data.page === 'single-meeting') {
+        if (typeof mtg_data !== 'undefined' && mtg_data.page === 'single-meeting') {
           $('.dpn-zvc-sidebar-content').after('<div class="dpn-zvc-sidebar-box remove-sidebar-loder-text"><p>Loading..Please wait..</p></div>');
           var pageData = {
             action: 'set_timezone',
@@ -119,7 +209,7 @@ jQuery(function ($) {
          * For shortcode
          * @deprecated 3.3.1
          */
-        if (typeof mtg_data !== undefined && mtg_data.type === 'shortcode') {
+        if (typeof mtg_data !== 'undefined' && mtg_data.type === 'shortcode') {
           var shortcodeData = {
             action: 'set_timezone',
             user_timezone: timezone,
@@ -145,7 +235,6 @@ jQuery(function ($) {
     },
     /**
      * Change Meeting State
-     * @param e
      */
     meetingStateChange: function (e) {
       e.preventDefault();
@@ -172,7 +261,6 @@ jQuery(function ($) {
     },
     /**
      * Change the state triggere now
-     * @param postData
      */
     changeState: function (postData) {
       $.post(vczapi_state.ajaxurl, postData).done(function (response) {
@@ -181,6 +269,6 @@ jQuery(function ($) {
     }
   };
   video_conferencing_zoom_api_public.init();
-});
+})(jQuery);
 /******/ })()
 ;
