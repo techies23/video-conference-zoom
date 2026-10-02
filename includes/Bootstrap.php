@@ -168,9 +168,11 @@ final class Bootstrap {
      * @return void
      */
     public function enqueue_block_editor_assets(): void {
-        wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
-                'in_footer' => true,
-        ] );
+        if ( get_post_type() === "zoom-meetings" ) {
+            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+                    'in_footer' => true,
+            ] );
+        }
     }
 
     /**
