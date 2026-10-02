@@ -1,33 +1,14 @@
 <?php
-/**
- * @package     Video Conferencing with Zoom API
- * @subpackage  Browser
- * @author      Deepen Bajracharya
- * @since       4.9.0
- */
 
 namespace Codemanas\VczApi\WebSDK;
 
 /**
  * Registers and prints the Join-via-Browser assets.
  *
- * The previous implementation hand-wrote `<link>` and `<script>` tags inside
- * `video_conference_zoom_after_jbh_html()` and passed the client bundle URL down
- * to JavaScript as `bundleUrl` for the bootstrap bundle to inject.
- *
- * Two things were wrong with that. The filenames it requested
- * (`jvb-bootstrap.bundle.js`, `zoom-meeting.bundle.js`) did not match what
- * webpack actually emitted (`websdk-router.bundle.js`, `websdk-client.bundle.js`),
- * so both requests 404'd and the page never initialised. And passing a script URL
- * through a config global for the page to inject defeats script registration:
- * no version-aware dependency handling, no caching headers, and the 5.7MB SDK
- * payload was requested at a URL the browser could not long-cache.
- *
- * Both bundles are registered properly here. The small bootstrap bundle is
- * printed inline in the document head region; the large SDK bundle is only
- * fetched once the visitor actually commits to joining.
- *
- * @since 4.9.0
+ * @package     Video Conferencing with Zoom API
+ * @subpackage  WebSDK
+ * @author      Deepen Bajracharya
+ * @since 4.7.0
  */
 final class Assets {
 
@@ -85,7 +66,7 @@ final class Assets {
 		// visitor who never joins never downloads 5.7MB of JavaScript.
 		wp_register_script(
 			self::HANDLE_CLIENT,
-			self::client_url( 'websdk-client.bundle.js' ),
+			self::client_url(),
 			array(),
 			self::asset_version( self::local_client_path( 'websdk-client.bundle.js' ) ),
 			true

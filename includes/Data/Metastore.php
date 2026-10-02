@@ -15,17 +15,6 @@ class Metastore {
 
 	private const SETTINGS_OPTION_KEY = '_vczapi_zoom_settings';
 
-	/**
-	 * Check if direct join via browser is enabled
-	 *
-	 * @return bool
-	 */
-	public static function enabledDirectJoinViaBrowser(): bool {
-		$enabled = self::get_plugin_settings( 'enable_direct_join_via_browser' );
-
-		return ! empty( $enabled );
-	}
-
 	public static function dettachPasswordToLink(): bool {
 		$enabled = self::get_plugin_settings( 'embed_pwd_in_join_link' );
 

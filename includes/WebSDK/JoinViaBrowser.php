@@ -378,13 +378,9 @@ final class JoinViaBrowser {
             return;
         }
 
-
         $template = $request->token()->direct_join()
                 ? 'join-web-browser-directly.php'
                 : 'join-web-browser.php';
-
-        dump($request->token()->direct_join());
-
 
         /**
          * Filter the template used for the join page.
@@ -517,9 +513,9 @@ final class JoinViaBrowser {
                 'clientUrl'    => Assets::client_url(),
                 'helperUrl'    => Assets::helper_url(),
                 'leaveUrl'     => $this->leave_url( $request ),
-                'lang'         => self::default_language(),
+                'lang'         => $request->default_lang(),
                 'directJoin'   => $token->direct_join(),
-                'userName'     => $this->suggested_name(),
+                'userName'     => $request->get_user_name(),
                 'userEmail'    => $this->suggested_email(),
                 'hasPassword'  => '' !== $token->password(),
                 'sdkVersion'   => defined( 'VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION' ) ? VCZAPI_PLUGIN_ZOOM_WEBSDK_VERSION : '',
@@ -569,33 +565,6 @@ final class JoinViaBrowser {
         $url = wp_validate_redirect( $url, $default );
 
         return $url ?: $default;
-    }
-
-    /**
-     * SDK UI language.
-     */
-    private static function default_language(): string {
-        $lang = SettingsRepository::getSetting( "join_via_browser_default_lang" );
-        return ! empty( $lang ) ? $lang : 'en-US';
-    }
-
-    /**
-     * Pre-fill the display name from the current user.
-     */
-    private function suggested_name(): string {
-        if ( ! is_user_logged_in() ) {
-            return '';
-        }
-
-        $user = wp_get_current_user();
-
-        if ( ! $user instanceof \WP_User ) {
-            return '';
-        }
-
-        $name = trim( $user->first_name . ' ' . $user->last_name );
-
-        return '' !== $name ? $name : $user->display_name;
     }
 
     /**

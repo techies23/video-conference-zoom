@@ -1,18 +1,10 @@
 <?php
-/**
- * @package     Video Conferencing with Zoom API
- * @subpackage  Browser
- * @author      Deepen Bajracharya
- * @since       4.7.0
- */
 
 namespace Codemanas\VczApi\WebSDK;
 
-use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Encryption;
-use Codemanas\VczApi\Helpers\MeetingType;
 use Codemanas\VczApi\Helpers\Signature;
 use WP_Post;
 
