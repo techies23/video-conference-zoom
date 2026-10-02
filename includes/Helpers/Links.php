@@ -5,6 +5,7 @@ namespace Codemanas\VczApi\Helpers;
 use Codemanas\VczApi\WebSDK\JoinToken;
 use Codemanas\VczApi\WebSDK\JoinViaBrowser;
 use Codemanas\VczApi\Data\Metastore;
+use Codemanas\VczApi\WebSDK\Signature;
 
 /**
  * Generate Links and Something else?..

@@ -1,16 +1,9 @@
 <?php
-/**
- * @package     Video Conferencing with Zoom API
- * @subpackage  Browser/Rest
- * @author      Deepen Bajracharya
- * @since       4.7.0
- */
-
 namespace Codemanas\VczApi\WebSDK\Rest;
 
 use Codemanas\VczApi\WebSDK\JoinRequest;
 use Codemanas\VczApi\WebSDK\JoinToken;
-use Codemanas\VczApi\Helpers\Signature;
+use Codemanas\VczApi\WebSDK\Signature;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -21,25 +14,12 @@ use WP_REST_Server;
  *
  * This replaces two open signing oracles.
  *
- * The REST route at `includes/Rest/WebSDK.php` was declared public
- * (`'permission_callback' => '__return_true'`) and accepted any 9-13 digit
- * meeting number. It was never even registered, because nothing hooked
- * `rest_api_init`, so every request 404'd.
- *
- * The client therefore fell back to the `admin-ajax` `get_auth` action, which
- * *was* live — and which had its `check_ajax_referer()` call commented out
- * (see `Zoom_Video_Conferencing_Admin_Ajax::get_auth`). Its only protection was
- * a `Referer` header check, which any HTTP client can set to anything. Combined
- * with the site's SDK secret, that turned the site into an oracle that would mint
- * a valid Meeting SDK JWT for any meeting number on the Zoom account, on
- * demand, to anyone.
- *
  * The signature is now issued only against a join token that has passed
  * `JoinRequest`, which means: HMAC-verified, unexpired, bound to a real meeting
  * post whose meeting number still matches, and only while the feature is
  * enabled. There is no bare-meeting-number path and no ajax fallback.
  *
- * @since 4.9.0
+ * @since 4.7.0
  */
 final class SignatureEndpoint {
 

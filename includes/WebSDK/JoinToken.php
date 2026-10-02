@@ -3,7 +3,6 @@
 namespace Codemanas\VczApi\WebSDK;
 
 use Codemanas\VczApi\Helpers\Encryption;
-use Codemanas\VczApi\Helpers\Signature;
 
 /**
  * A signed, expiring capability token that authorizes exactly one meeting join.

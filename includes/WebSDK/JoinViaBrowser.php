@@ -3,7 +3,6 @@
 namespace Codemanas\VczApi\WebSDK;
 
 use Codemanas\VczApi\Admin\Foundation\PostType\PostTypeTemplates;
-use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Helpers\Templates;
 
 /**

@@ -6,7 +6,7 @@
  * @since       4.7.0
  */
 
-namespace Codemanas\VczApi\Helpers;
+namespace Codemanas\VczApi\WebSDK;
 
 use Firebase\JWT\JWT;
 

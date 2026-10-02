@@ -5,7 +5,6 @@ namespace Codemanas\VczApi\WebSDK;
 use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Encryption;
-use Codemanas\VczApi\Helpers\Signature;
 use WP_Post;
 
 /**
