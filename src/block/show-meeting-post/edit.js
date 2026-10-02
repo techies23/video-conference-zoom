@@ -82,12 +82,6 @@ export default function Edit (props) {
 
   }, [])
 
-  if (preview) {
-    return (
-      <img src={vczapi_blocks.embed_post_preview} alt="Embed Zoom post"/>
-    )
-  }
-
   // Combine initial meetings with search results to avoid losing selected options
   const comboboxOptions = searchResults.length > 0 ? searchResults : availableMeetings
 

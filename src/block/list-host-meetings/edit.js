@@ -40,12 +40,6 @@ export default function EditListHostMeeting(props) {
         }
     }, []);
 
-    if (preview) {
-        return (
-            <img src={vczapi_blocks.list_host_meetings_preview_image} alt={"List Host meetings"}/>
-        )
-    }
-
     return (
         <div {...useBlockProps()}>
             <BlockControls>

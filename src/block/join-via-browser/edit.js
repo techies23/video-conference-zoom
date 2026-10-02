@@ -169,12 +169,6 @@ export default function EditJoinViaBrowser (props) {
     }
   }, [])
 
-  if (preview) {
-    return (
-      <img src={vczapi_blocks.join_via_browser} alt={'Direct Meeting from Zoom'} />
-    )
-  }
-
   // Map meeting list items to valid string values for SelectControl
   const formattedMeetingOptions = availableMeetings.map(m => ({
     label: m.label,
