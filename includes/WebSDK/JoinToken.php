@@ -70,7 +70,6 @@ final class JoinToken {
 			return '';
 		}
 
-		dump( $password );
 		$issued_at = time();
 		$claims    = array(
 			'v'   => self::VERSION,

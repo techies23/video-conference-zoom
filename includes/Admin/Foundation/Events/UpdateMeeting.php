@@ -5,7 +5,6 @@ namespace Codemanas\VczApi\Admin\Foundation\Events;
 use Codemanas\VczApi\Admin\Foundation\Utils\MeetingFormHandler;
 use Codemanas\VczApi\Admin\Foundation\Utils\MeetingValidator;
 use Codemanas\VczApi\Admin\Service\PostTypeSyncService;
-use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Config;
 use WP_Error;
 use WP_Post;
@@ -13,7 +12,6 @@ use WP_REST_Request;
 
 class UpdateMeeting {
 
-	private const WEBINAR_TYPE = 2;
 	protected string $postType;
 	private static ?self $instance = null;
 
@@ -26,9 +24,16 @@ class UpdateMeeting {
 
 		add_action( "save_post_{$this->postType}", [ $this, 'save' ], 10, 2 );
 		add_filter( "rest_pre_insert_{$this->postType}", [ $this, 'preInsert' ], 10, 2 );
-		add_action( "rest_after_insert_{$this->postType}", [ $this, 'restAfterInsert' ], 10, 3 );
 	}
 
+	/**
+	 * Save Request when post type is saved. Gather values and sync with meta fields and API.
+	 *
+	 * @param int $post_id
+	 * @param WP_Post $post
+	 *
+	 * @return void
+	 */
 	public function save( int $post_id, WP_Post $post ): void {
 		if ( ! $this->isSaveRequestValid( $post_id ) ) {
 			return;
@@ -38,6 +43,14 @@ class UpdateMeeting {
 		( new PostTypeSyncService() )->sync( $post_id, $post, $fields, (int) $fields['type'] );
 	}
 
+	/**
+	 * Validate data before insert.
+	 *
+	 * @param $prepared_post
+	 * @param WP_REST_Request $request
+	 *
+	 * @return mixed
+	 */
 	public function preInsert( $prepared_post, WP_REST_Request $request ): mixed {
 		if ( str_contains( $request->get_route(), '/autosaves' ) ) {
 			return $prepared_post;
@@ -62,24 +75,13 @@ class UpdateMeeting {
 		return $prepared_post;
 	}
 
-	public function restAfterInsert( WP_Post $post, WP_REST_Request $request, bool $creating ): void {
-		if ( $post->post_type !== $this->postType ) {
-			return;
-		}
-
-		$fields = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
-		if ( ! is_array( $fields ) || empty( $fields ) || empty( $fields['user_id'] ) ) {
-			return;
-		}
-
-		$meeting_type = (int) ( $fields['type'] ?? 1 );
-		if ( ! in_array( $meeting_type, [ 1, self::WEBINAR_TYPE ], true ) ) {
-			return;
-		}
-
-		( new PostTypeSyncService() )->sync( $post->ID, $post, $fields, $meeting_type );
-	}
-
+	/**
+	 * Check capability.
+	 *
+	 * @param int $post_id
+	 *
+	 * @return bool
+	 */
 	private function isSaveRequestValid( int $post_id ): bool {
 		return current_user_can( 'edit_post', $post_id ) && ! wp_is_post_autosave( $post_id ) && ! wp_is_post_revision( $post_id );
 	}

@@ -104,7 +104,7 @@ final class Bootstrap {
     }
 
     public function autoloader(): void {
-        require_once ZVC_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+        require_once VCZAPI_PLUGIN_DIR_PATH . 'vendor/autoload.php';
     }
 
     /**
@@ -242,7 +242,7 @@ final class Bootstrap {
      * @author Deepen
      */
     public function load_plugin_textdomain(): void {
-        load_plugin_textdomain( 'video-conferencing-with-zoom-api', false, ZVC_PLUGIN_LANGUAGE_PATH );
+        load_plugin_textdomain( 'video-conferencing-with-zoom-api', false, VCZAPI_PLUGIN_LANGUAGE_PATH );
     }
 
     /**

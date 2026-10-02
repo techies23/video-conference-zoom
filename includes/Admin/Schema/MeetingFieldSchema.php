@@ -81,6 +81,7 @@ class MeetingFieldSchema {
 								'type'       => 'select',
 								'options'    => [ 0 => 0, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 40 => 40, 45 => 45 ],
 								'after_html' => '&nbsp;' . __( 'minutes', $text_domain ),
+								'default'    => 40
 							],
 						],
 					],

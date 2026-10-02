@@ -27,12 +27,12 @@ class Templates {
 		}
 
 		$located = false;
-		if ( file_exists( get_stylesheet_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
-			$located = get_stylesheet_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
-		} elseif ( file_exists( get_template_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
-			$located = get_template_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
-		} elseif ( file_exists( ZVC_PLUGIN_DIR_PATH . 'templates/' . $template_name ) ) {
-			$located = ZVC_PLUGIN_DIR_PATH . 'templates/' . $template_name;
+		if ( file_exists( get_stylesheet_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name ) ) {
+			$located = get_stylesheet_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name;
+		} elseif ( file_exists( get_template_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name ) ) {
+			$located = get_template_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name;
+		} elseif ( file_exists( VCZAPI_PLUGIN_DIR_PATH . 'templates/' . $template_name ) ) {
+			$located = VCZAPI_PLUGIN_DIR_PATH . 'templates/' . $template_name;
 		}
 
 		// Allow 3rd party plugin filter template file from their plugin.
@@ -57,11 +57,11 @@ class Templates {
 		if ( $name ) {
 			$template = locate_template( array(
 				"{$slug}-{$name}.php",
-				ZVC_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
+				VCZAPI_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
 			) );
 
 			if ( ! $template ) {
-				$fallback = ZVC_PLUGIN_DIR_PATH . "templates/{$slug}-{$name}.php";
+				$fallback = VCZAPI_PLUGIN_DIR_PATH . "templates/{$slug}-{$name}.php";
 				$template = file_exists( $fallback ) ? $fallback : '';
 			}
 		}
@@ -69,7 +69,7 @@ class Templates {
 		if ( ! $template ) {
 			$template = locate_template( array(
 				"{$slug}-{$name}.php",
-				ZVC_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
+				VCZAPI_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
 			) );
 		}
 

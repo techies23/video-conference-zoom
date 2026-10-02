@@ -48,7 +48,7 @@ class Blocks {
 	 * @since 3.8.0
 	 */
 	public function register_new_blocks(): void {
-		$blocks_dir = ZVC_PLUGIN_DIR_PATH . 'build/block';
+		$blocks_dir = VCZAPI_PLUGIN_DIR_PATH . 'build/block';
 
 		if ( ! is_dir( $blocks_dir ) ) {
 			return;
@@ -91,26 +91,26 @@ class Blocks {
 	 * @updated N/A
 	 */
 	public function register_scripts(): void {
-		$script_asset_path = require_once( ZVC_PLUGIN_DIR_PATH . '/build/index.asset.php' );
+		$script_asset_path = require_once( VCZAPI_PLUGIN_DIR_PATH . '/build/index.asset.php' );
 		$dependencies      = $script_asset_path['dependencies'];
 
 		wp_register_style(
 			'video-conferencing-with-zoom-api-blocks',
-			ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.css',
+			VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/css/style.css',
 			false,
-			ZVC_PLUGIN_VERSION
+			VCZAPI_PLUGIN_VERSION
 		);
 
 		wp_register_style(
 			'vczapi-blocks-style',
-			plugins_url( '/build/index.css', ZVC_PLUGIN_FILE ),
+			plugins_url( '/build/index.css', VCZAPI_PLUGIN_FILE ),
 			[ 'video-conferencing-with-zoom-api-blocks' ],
 			$script_asset_path['version']
 		);
 
 		wp_register_script(
 			'vczapi-blocks',
-			plugins_url( '/build/index.js', ZVC_PLUGIN_FILE ),
+			plugins_url( '/build/index.js', VCZAPI_PLUGIN_FILE ),
 			$dependencies,
 			$script_asset_path['version']
 		);
@@ -133,7 +133,7 @@ class Blocks {
 	 * Registering block categories.
 	 *
 	 * @param array $categories Block categories.
-	 * @param mixed $post       Post.
+	 * @param mixed $post Post.
 	 *
 	 * @return array
 	 * @since   3.7.5
@@ -425,9 +425,9 @@ class Blocks {
 	/**
 	 * Get a scalar block attribute without display-oriented sanitization.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $default    Default value.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
+	 * @param string $default Default value.
 	 *
 	 * @return string
 	 */
@@ -447,10 +447,10 @@ class Blocks {
 	/**
 	 * Get a nested scalar block attribute.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
 	 * @param string $nested_key Nested key.
-	 * @param string $default    Default value.
+	 * @param string $default Default value.
 	 *
 	 * @return string
 	 */
@@ -472,9 +472,9 @@ class Blocks {
 	/**
 	 * Get a positive integer block attribute.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param int    $default    Default value.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
+	 * @param int $default Default value.
 	 *
 	 * @return int
 	 */
@@ -494,10 +494,10 @@ class Blocks {
 	/**
 	 * Get an allowlisted scalar block attribute.
 	 *
-	 * @param mixed  $attributes     Block attributes.
-	 * @param string $key            Attribute key.
-	 * @param array  $allowed_values Allowed values.
-	 * @param string $default        Default value.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
+	 * @param array $allowed_values Allowed values.
+	 * @param string $default Default value.
 	 *
 	 * @return string
 	 */
@@ -510,10 +510,10 @@ class Blocks {
 	/**
 	 * Get an allowlisted nested block attribute.
 	 *
-	 * @param mixed  $attributes     Block attributes.
-	 * @param string $key            Attribute key.
-	 * @param array  $allowed_values Allowed values.
-	 * @param string $default        Default value.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
+	 * @param array $allowed_values Allowed values.
+	 * @param string $default Default value.
 	 *
 	 * @return string
 	 */
@@ -526,9 +526,9 @@ class Blocks {
 	/**
 	 * Get a numeric identifier from a nested block attribute.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $default    Default value.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
+	 * @param string $default Default value.
 	 *
 	 * @return string
 	 */
@@ -541,9 +541,9 @@ class Blocks {
 	/**
 	 * Get a sanitized Zoom host identifier.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
-	 * @param string $default    Default value.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
+	 * @param string $default Default value.
 	 *
 	 * @return string
 	 */
@@ -559,8 +559,8 @@ class Blocks {
 	 * Zoom passcodes are limited to 10 characters and may contain special
 	 * characters. Avoid display-oriented sanitizers here.
 	 *
-	 * @param mixed  $attributes Block attributes.
-	 * @param string $key        Attribute key.
+	 * @param mixed $attributes Block attributes.
+	 * @param string $key Attribute key.
 	 *
 	 * @return string
 	 */
@@ -581,8 +581,8 @@ class Blocks {
 	 *
 	 * This is shortcode-context escaping, not HTML attribute escaping.
 	 *
-	 * @param string $name  Shortcode attribute name.
-	 * @param mixed  $value Shortcode attribute value.
+	 * @param string $name Shortcode attribute name.
+	 * @param mixed $value Shortcode attribute value.
 	 *
 	 * @return string
 	 */
@@ -658,14 +658,14 @@ class Blocks {
 	 * @since   3.7.5
 	 * @updated N/A
 	 */
-	public function     get_live_meetings() {
+	public function get_live_meetings() {
 		$host_id                 = filter_input( INPUT_GET, 'host_id' );
 		$show_meeting_or_webinar = filter_input( INPUT_GET, 'show' );
 		$args                    = [
 			'page_size' => 300,
 		];
 
-		$page_number             = filter_input( INPUT_GET, 'page_number' );
+		$page_number = filter_input( INPUT_GET, 'page_number' );
 		if ( ! empty( $page_number ) ) {
 			$args['page_number'] = $page_number;
 		}
