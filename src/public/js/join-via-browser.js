@@ -1,3 +1,5 @@
+import { parseMomentFormatToIntl } from './moment-parser'
+
 jQuery(function ($) {
 
   var video_conferencing_zoom_jbv = {
@@ -31,17 +33,12 @@ jQuery(function ($) {
       const diffTime = targetEpochMs - Date.now()
 
       const lang = document.documentElement.lang || navigator.language || 'en-US'
+      const customMomentFormat = (typeof zvc_strings !== 'undefined' && zvc_strings.date_format) ? zvc_strings.date_format : 'LLLL'
+      const intlOptions = parseMomentFormatToIntl(customMomentFormat)
 
       // Format localized meeting start time
       try {
-        const formatter = new Intl.DateTimeFormat(lang, {
-          timeZone: userTimezone,
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-        })
+        const formatter = new Intl.DateTimeFormat(lang, intlOptions)
         $('.sidebar-start-time').html(formatter.format(targetDate))
       } catch (e) {
         $('.sidebar-start-time').html(targetDate.toLocaleString(lang))
