@@ -36,4 +36,13 @@ class Common {
 	public static function validateZoomCredentials(): bool {
 		return S2SOAuth::get_instance()->isAccessTokenStored();
 	}
+
+	/**
+	 * Validate SDK Credentials Set
+	 *
+	 * @return bool
+	 */
+	public static function validateSDKCredentials(): bool {
+		return ! empty( get_option( 'vczapi_sdk_key' ) ) && ! empty( get_option( 'vczapi_sdk_secret_key' ) );
+	}
 }

@@ -44,10 +44,8 @@ const publicConfig = {
     mode: isProduction ? 'production' : 'development',
     devtool: devtoolSetting,
     entry: {
-        'join-via-browser': './src/public/js/join-via-browser.js',
-        public: './src/public/js/public.js',
         shortcode: './src/public/js/shortcode.js',
-        booking: './src/public/js/booking.js',
+        scripts: './src/public/script.js',
     },
     output: {
         filename: 'public/js/[name].min.js',
@@ -84,56 +82,47 @@ const backendConfig = {
     ],
 }
 
-const modules = [wpConfig, publicConfig, backendConfig]
-
-// Zoom WebSDK Production Configuration
-if (isProduction) {
-    const webSDKConfig = {
-        mode: 'production',
-        cache: false,
-        devtool: false,
-        entry: {
-            'zoom-meeting': {
-                import: './src/public/vendor/zoom-meeting.js',
-                dependOn: 'websdk',
+// Zoom Meeting SDK Configuration
+const webSDKConfig = {
+    mode: 'production',
+    cache: false,
+    devtool: false,
+    entry: {
+        'websdk-bootstrap': './src/websdk/bootstrap.js',
+        'websdk-client': './src/websdk/client.js',
+    },
+    output: {
+        filename: 'vendor/zoom/websdk/[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        clean: false,
+        globalObject: 'self',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
             },
-            websdk: '@zoom/meetingsdk',
-        },
-        output: {
-            filename: 'vendor/zoom/websdk/[name].bundle.js',
-            path: path.resolve(__dirname, 'dist'),
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.jsx?$/,
-                    exclude: /node_modules/,
-                    loader: 'babel-loader',
-                },
-                {
-                    test: /\.css$/i,
-                    use: ['style-loader', 'css-loader'],
-                },
-                {
-                    test: /\.(jpg|png|svg)$/,
-                    type: 'asset',
-                },
-            ],
-        },
-        resolve: {
-            extensions: ['.js', '.jsx'],
-        },
-        externals: {
-            react: 'React',
-            'react-dom': 'ReactDOM',
-            redux: 'Redux',
-            'redux-thunk': 'ReduxThunk',
-            lodash: '_',
-        },
-        target: 'web',
-    }
-
-    modules.push(webSDKConfig)
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            }
+        ],
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    optimization: {
+        splitChunks: false,
+        runtimeChunk: false,
+    },
+    performance: {
+        hints: false,
+    },
+    target: ['web', 'es2017'],
 }
+
+const modules = [wpConfig, publicConfig, backendConfig, webSDKConfig]
 
 module.exports = modules

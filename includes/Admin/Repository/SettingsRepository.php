@@ -46,7 +46,7 @@ class SettingsRepository {
 			'embed_pwd_in_join_link'             => 'zoom_api_embed_pwd_join_link',
 			'hide_join_links_non_loggedin_users' => 'zoom_api_hide_shortcode_join_links',
 			'hide_email_jvb'                     => 'zoom_api_hide_in_jvb',
-			'vczapi_disable_invite'              => 'vczapi_disable_invite',
+			'disable_invite'                     => 'disable_invite',
 			'disable_join_via_browser'           => 'zoom_api_disable_jvb',
 			'join_via_browser_default_lang'      => 'zoom_api_default_lang_jvb',
 			'disable_auto_pwd_generation'        => 'zoom_api_disable_auto_meeting_pwd',

@@ -34,12 +34,12 @@ class SettingsFieldSchema {
 						'input_class'    => [ 'form-control' ],
 						'description'    => __( 'This setting will disable countdown timer on single Zoom Events page. Check this option if you want to disable the countdown.', $text_domain ),
 					],
-					'disable_auto_pwd_generation'        => [
-						'label'          => __( 'Disable Auto Password Generation ?', $text_domain ),
-						'type'           => 'checkbox',
-						'checkbox_value' => 'on',
-						'description'    => __( 'Checking this option will disable auto password generation for new meetings which are created from Zoom meeting > Add new section.', $text_domain ),
-					],
+//					'disable_auto_pwd_generation'        => [
+//						'label'          => __( 'Disable Auto Password Generation ?', $text_domain ),
+//						'type'           => 'checkbox',
+//						'checkbox_value' => 'on',
+//						'description'    => __( 'Checking this option will disable auto password generation for new meetings which are created from Zoom meeting > Add new section.', $text_domain ),
+//					],
 					'hide_join_links_non_loggedin_users' => [
 						'label'          => __( 'Hide Join Links for Non-Loggedin ?', $text_domain ),
 						'type'           => 'checkbox',
@@ -113,13 +113,13 @@ class SettingsFieldSchema {
 						'storage_key'    => 'hide_email_jvb',
 						'description'    => __( 'Checking this show will hide email field in Join via Browser window. Email field is shown if the event is a webinar because email field is required in order to join a webinar.', $text_domain ),
 					],
-					'vczapi_disable_invite'            => [
+					'disable_invite'            => [
 						'label'          => __( 'Disable Invite field when join via browser ?', $text_domain ),
 						'type'           => 'checkbox',
 						'checkbox_value' => 'yes',
 						'description'    => __( 'Checking this will disable invite button when user joins meeting via Join via Browser window.', $text_domain ),
 					],
-					'vczapi_enable_direct_join'        => [
+					'enable_direct_join'        => [
 						'label'          => __( 'Enable direct join via web browser?', $text_domain ),
 						'type'           => 'checkbox',
 						'checkbox_value' => 'yes',

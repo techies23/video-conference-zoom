@@ -56,7 +56,7 @@ $text_domain  = 'video-conferencing-with-zoom-api';
                                 </th>
                                 <td>
                                     <?php if ( isset( $field_config['type'] ) && $field_config['type'] === 'composite' ) {
-                                        $duration = vczapi_convertMinutesToHM( $meeting_fields['duration'] ?? 40, false );
+                                        $duration = \Codemanas\VczApi\Helpers\Date::convertMinutesToFormat( $meeting_fields['duration'] ?? 40, false );
 
                                         foreach ( $field_config['fields'] as $sub_key => $sub_config ) {
                                             $sub_val = ( $sub_key === 'hour' ) ? ( $duration['hr'] ?? 0 ) : ( $duration['min'] ?? 40 );

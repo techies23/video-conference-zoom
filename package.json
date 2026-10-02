@@ -7,8 +7,9 @@
   "license": "GPL-2.0+",
   "scripts": {
     "copy:vendors": "cpx \"node_modules/{choices.js/public/assets/styles/**/*,flatpickr/dist/flatpickr.min.css}\" dist/vendor",
-    "build": "pnpm run copy:vendors && wp-scripts build",
-    "start": "pnpm run copy:vendors && wp-scripts start --mode development",
+    "copy:sdk": "cpx \"node_modules/@zoom/meetingsdk/{helper.html,externalLinkPage.html}\" \"dist/vendor/zoom/websdk\"",
+    "build": "pnpm run copy:vendors && pnpm run copy:sdk && wp-scripts build",
+    "start": "pnpm run copy:vendors && pnpm run copy:sdk && wp-scripts start --mode development",
     "format:js": "wp-scripts format-js",
     "lint:css": "wp-scripts lint-style",
     "lint:js": "wp-scripts lint-js",

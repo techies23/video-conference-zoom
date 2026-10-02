@@ -102,6 +102,7 @@ class MeetingFieldSchema {
 					'password'               => [
 						'label'       => __( 'Password', $text_domain ),
 						'type'        => 'text',
+						'required'    => true,
 						'maxlength'   => 10,
 						'description' => __( 'Password to join the meeting. Max 10 characters. (Leave blank to auto generate).', $text_domain ),
 					],
