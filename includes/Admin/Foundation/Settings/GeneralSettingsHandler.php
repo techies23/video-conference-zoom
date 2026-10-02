@@ -38,12 +38,12 @@ class GeneralSettingsHandler {
 			'embed_pwd_in_join_link'             => 'embed_password_join_link',
 			'hide_join_links_non_loggedin_users' => 'hide_join_links_non_loggedin_users',
 			'hide_email_jvb'                     => 'meeting_show_email_field',
-			'vczapi_disable_invite'              => 'vczapi_disable_invite',
+			'disable_invite'                     => 'disable_invite',
 			'disable_join_via_browser'           => 'meeting_disable_join_via_browser',
 			'join_via_browser_default_lang'      => 'meeting-lang',
 			'disable_auto_pwd_generation'        => 'disable_auto_pwd_generation',
 			'debugger_logs'                      => 'zoom_api_debugger_logs',
-			'enable_direct_join_via_browser'     => 'vczapi_enable_direct_join',
+			'enable_direct_join_via_browser'     => 'enable_direct_join',
 		];
 
 		$posted_data = [];

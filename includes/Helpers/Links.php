@@ -56,13 +56,14 @@ class Links {
 			return '';
 		}
 
-		$defaults = array(
+		$directJvb = Metastore::get_plugin_settings( "enable_direct_join_via_browser" );
+		$defaults  = array(
 			'post_id'     => 0,
 			'password'    => '',
 			'seperator'   => '',
 			'redirect'    => '',
 			'link_only'   => false,
-			'direct_join' => false,
+			'direct_join' => ! empty( $directJvb ),
 			'tk'          => '',
 		);
 
@@ -93,7 +94,6 @@ class Links {
 		}
 
 		$query = JoinViaBrowser::url_for( $token );
-
 		if ( ! empty( $args['redirect'] ) ) {
 			// add_query_arg() URL encodes the value itself. Pre-encoding it here
 			// would double-encode and produce a URL that no longer decodes back to

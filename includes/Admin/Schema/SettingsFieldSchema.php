@@ -113,13 +113,13 @@ class SettingsFieldSchema {
 						'storage_key'    => 'hide_email_jvb',
 						'description'    => __( 'Checking this show will hide email field in Join via Browser window. Email field is shown if the event is a webinar because email field is required in order to join a webinar.', $text_domain ),
 					],
-					'vczapi_disable_invite'            => [
+					'disable_invite'            => [
 						'label'          => __( 'Disable Invite field when join via browser ?', $text_domain ),
 						'type'           => 'checkbox',
 						'checkbox_value' => 'yes',
 						'description'    => __( 'Checking this will disable invite button when user joins meeting via Join via Browser window.', $text_domain ),
 					],
-					'vczapi_enable_direct_join'        => [
+					'enable_direct_join'        => [
 						'label'          => __( 'Enable direct join via web browser?', $text_domain ),
 						'type'           => 'checkbox',
 						'checkbox_value' => 'yes',

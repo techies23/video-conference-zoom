@@ -378,9 +378,13 @@ final class JoinViaBrowser {
             return;
         }
 
+
         $template = $request->token()->direct_join()
                 ? 'join-web-browser-directly.php'
                 : 'join-web-browser.php';
+
+        dump($request->token()->direct_join());
+
 
         /**
          * Filter the template used for the join page.

@@ -354,7 +354,7 @@ final class JoinRequest {
 		// A signed token always contains exactly one dot and is base64url.
 		// A legacy AES ciphertext is base64 and contains none, so the shape
 		// check is enough to tell them apart before we touch the database.
-		if ( '' === $raw || false !== strpos( $raw, '.' ) ) {
+		if ( '' === $raw || str_contains( $raw, '.' ) ) {
 			return null;
 		}
 
