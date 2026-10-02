@@ -134,7 +134,6 @@ export function createSignatureService( customConfig = defaultConfig ) {
 
 		const {
 			signature,
-			sdkKey,
 			meetingNumber,
 			passWord,
 			registrantToken,
@@ -151,7 +150,6 @@ export function createSignatureService( customConfig = defaultConfig ) {
 
 		return {
 			signature,
-			sdkKey,
 			meetingNumber,
 			passWord,
 			registrantToken,

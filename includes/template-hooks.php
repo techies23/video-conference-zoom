@@ -41,7 +41,7 @@ add_action( 'vczoom_meeting_shortcode_join_links_webinar', 'video_conference_zoo
 //JBH Hooks
 //
 // Join-via-Browser no longer wires these to the deprecated procedural
-// callbacks. \Codemanas\VczApi\Browser\JoinViaBrowser owns the join page
+// callbacks. \Codemanas\VczApi\WebSDK\JoinViaBrowser owns the join page
 // document end to end and fires the same hooks itself, at the right points.
 // video_conference_zoom_before_jbh_html() and
 // video_conference_zoom_after_jbh_html() remain defined as delegates for

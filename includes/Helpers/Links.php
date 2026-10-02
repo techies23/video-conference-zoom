@@ -2,8 +2,8 @@
 
 namespace Codemanas\VczApi\Helpers;
 
-use Codemanas\VczApi\Browser\JoinToken;
-use Codemanas\VczApi\Browser\JoinViaBrowser;
+use Codemanas\VczApi\WebSDK\JoinToken;
+use Codemanas\VczApi\WebSDK\JoinViaBrowser;
 use Codemanas\VczApi\Data\Metastore;
 
 /**

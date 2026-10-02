@@ -5,53 +5,30 @@
  * This template can be overridden by copying it to
  * yourtheme/video-conferencing-zoom/join-web-browser.php.
  *
- * Rendered by \Codemanas\VczApi\Browser\JoinViaBrowser on the dedicated
- * /zoom-join/<token>/ endpoint. `$join_request` is a validated
- * \Codemanas\VczApi\Browser\JoinRequest; when it is absent the template falls
- * back to the legacy `$zoom` global so old overrides keep working.
- *
  * @package    Video Conferencing with Zoom API/Templates
  * @since      3.0.0
- * @version    3.3.1
+ * @version    4.7.0
  */
+
+use Codemanas\VczApi\Helpers\Locales;
+use Codemanas\VczApi\WebSDK\JoinRequest;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-$join_request = $join_request ?? null;
+$args         = isset( $args ) && is_array( $args ) ? $args : [];
+$join_request = $args['join_request'] ?? null;
 $current_user = wp_get_current_user();
 
-$topic          = $join_request instanceof \Codemanas\VczApi\Browser\JoinRequest
-        ? $join_request->topic()
-        : (string) ( $GLOBALS['zoom']['api']->topic ?? '' );
-$login_required = $join_request instanceof \Codemanas\VczApi\Browser\JoinRequest
-        ? $join_request->login_required()
-        : ! empty( $GLOBALS['zoom']['site_option_logged_in'] );
-$has_password   = $join_request instanceof \Codemanas\VczApi\Browser\JoinRequest
-        ? $join_request->has_password()
-        : ! empty( $GLOBALS['zoom']['password'] );
-$meeting_type   = $join_request instanceof \Codemanas\VczApi\Browser\JoinRequest
-        ? 2
-        : (int) ( $GLOBALS['zoom']['meeting_type'] ?? 2 );
-
-// The meeting password is deliberately NOT rendered into this markup. It used
-// to be pre-filled into the input's value attribute, which put it in page
-// source, browser history and any Referer header. It now stays server-side and
-// is only released by the signature endpoint, to a caller that presented the
-// join token. The field is rendered empty whenever the host set a passcode.
-$full_name = '';
-if ( is_user_logged_in() ) {
-    $full_name = trim( $current_user->first_name . ' ' . $current_user->last_name );
-    if ( '' === $full_name ) {
-        $full_name = (string) $current_user->display_name;
-    }
-}
-
-$hide_email   = get_option( 'zoom_api_hide_in_jvb' );
-$meeting_type = $join_request instanceof \Codemanas\VczApi\Browser\JoinRequest
-        ? 2
-        : (int) ( $GLOBALS['zoom']['meeting_type'] ?? 2 );
+$topic            = $join_request instanceof JoinRequest ? $join_request->topic() : $GLOBALS['zoom']['api']->topic ?? '';
+$default_lang     = $join_request instanceof JoinRequest ? $join_request->default_lang() : 'en-US';
+$has_password     = $join_request instanceof JoinRequest ? $join_request->has_password() : ! empty( $GLOBALS['zoom']['password'] );
+$full_name        = $join_request instanceof JoinRequest ? $join_request->get_user_name() : '';
+$hide_email       = $join_request instanceof JoinRequest && $join_request->hide_email_address();
+$isWebinar        = $join_request instanceof JoinRequest ? $join_request->is_webinar() : "meeting";
+$show_email_field = $isWebinar || !$hide_email;
+$user_email       = $isWebinar ? $current_user->user_email : '';
 ?>
 <div class="vczapi-jvb">
     <div class="vczapi-jvb__container">
@@ -81,88 +58,75 @@ $meeting_type = $join_request instanceof \Codemanas\VczApi\Browser\JoinRequest
                 </div>
             <?php endif; ?>
 
-            <?php if ( $login_required && ! is_user_logged_in() ) : ?>
-                <div class="vczapi-jvb__notice vczapi-jvb__notice--error" role="alert">
-                    <strong class="vczapi-jvb__notice-title"><?php esc_html_e( 'Login required', 'video-conferencing-with-zoom-api' ); ?></strong>
-                    <p class="vczapi-jvb__notice-message">
-                        <?php esc_html_e( 'You do not have enough privilege to access this meeting. Please login to continue or contact the organiser.', 'video-conferencing-with-zoom-api' ); ?>
-                    </p>
+            <form class="vczapi-jvb__form" id="vczapi-jvb-join-form" method="post" novalidate>
+                <div class="vczapi-jvb__field">
+                    <label for="vczapi-jvb-display-name" class="vczapi-jvb__label"><?php esc_html_e( 'Name', 'video-conferencing-with-zoom-api' ); ?></label>
+                    <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php esc_attr_e( 'Your Name Here', 'video-conferencing-with-zoom-api' ); ?>" class="vczapi-jvb__input" autocomplete="name" required>
                 </div>
-            <?php else : ?>
 
-                <form class="vczapi-jvb__form" id="vczapi-zoom-browser-meeting-join-form" method="post" novalidate>
+                <?php if ( $show_email_field ) { ?>
                     <div class="vczapi-jvb__field">
-                        <label for="vczapi-jvb-display-name" class="vczapi-jvb__label"><?php esc_html_e( 'Name', 'video-conferencing-with-zoom-api' ); ?></label>
-                        <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php esc_attr_e( 'Your Name Here', 'video-conferencing-with-zoom-api' ); ?>" class="vczapi-jvb__input" autocomplete="name" required>
+                        <label for="vczapi-jvb-email" class="vczapi-jvb__label">
+                            <?php esc_html_e( 'Email', 'video-conferencing-with-zoom-api' ); ?>
+                        </label>
+                        <input type="email"
+                               name="display_email"
+                               id="vczapi-jvb-email"
+                               value="<?php echo esc_attr( $user_email ); ?>"
+                               placeholder="<?php esc_attr_e( 'Your Email Here', 'video-conferencing-with-zoom-api' ); ?>"
+                               class="vczapi-jvb__input"
+                               autocomplete="email">
                     </div>
+                <?php } else { ?>
+                    <input type="hidden"
+                           name="display_email"
+                           id="vczapi-jvb-email"
+                           value="<?php echo esc_attr( $current_user->user_email ); ?>">
+                <?php } ?>
 
-                    <?php
-                    if ( empty( $hide_email ) || 2 === (int) $meeting_type ) {
-                        if ( is_user_logged_in() && ! empty( $current_user->user_email ) ) {
-                            ?>
-                            <input type="hidden" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr( $current_user->user_email ); ?>">
-                            <?php
-                        } else {
-                            ?>
-                            <div class="vczapi-jvb__field">
-                                <label for="vczapi-jvb-email" class="vczapi-jvb__label"><?php esc_html_e( 'Email', 'video-conferencing-with-zoom-api' ); ?></label>
-                                <input type="email" name="display_email" id="vczapi-jvb-email" value="" placeholder="<?php esc_attr_e( 'Your Email Here', 'video-conferencing-with-zoom-api' ); ?>" class="vczapi-jvb__input" autocomplete="email">
-                            </div>
-                            <?php
-                        }
-                    }
+                <?php if ( $has_password ) : ?>
+                    <div class="vczapi-jvb__field">
+                        <label for="vczapi-jvb-password" class="vczapi-jvb__label"><?php esc_html_e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label>
+                        <input type="password" name="meeting_password" id="vczapi-jvb-password" value="" placeholder="<?php esc_attr_e( 'Meeting Password', 'video-conferencing-with-zoom-api' ); ?>" class="vczapi-jvb__input" autocomplete="off" required>
+                    </div>
+                <?php endif; ?>
+
+                <?php
+                if ( ! empty( $default_lang ) && 'all' !== $default_lang ) {
                     ?>
-
-                    <?php if ( $has_password ) : ?>
-                        <div class="vczapi-jvb__field">
-                            <label for="meeting_password" class="vczapi-jvb__label"><?php esc_html_e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label>
-                            <input type="password" name="meeting_password" id="meeting_password" value="" placeholder="<?php esc_attr_e( 'Meeting Password', 'video-conferencing-with-zoom-api' ); ?>" class="vczapi-jvb__input" autocomplete="off" required>
-                        </div>
-                    <?php endif; ?>
-
+                    <input name="meeting-lang" class="vczapi-jvb-locale" type="hidden" value="<?php echo esc_attr( $default_lang ); ?>">
                     <?php
-                    $bypass_lang = apply_filters( 'vczapi_api_bypass_lang', false );
-                    if ( ! $bypass_lang ) {
-                        $default_jvb_lang = get_option( 'zoom_api_default_lang_jvb' );
-                        if ( ! empty( $default_jvb_lang ) && 'all' !== $default_jvb_lang ) {
-                            ?>
-                            <input name="meeting-lang" class="meeting-locale" type="hidden" value="<?php echo esc_attr( $default_jvb_lang ); ?>">
-                            <?php
-                        } else {
-                            ?>
-                            <div class="vczapi-jvb__field">
-                                <label for="vczapi-jvb-locale" class="vczapi-jvb__label"><?php esc_html_e( 'Language', 'video-conferencing-with-zoom-api' ); ?></label>
-                                <select name="meeting-lang" id="vczapi-jvb-locale" class="vczapi-jvb__select meeting-locale">
-                                    <?php
-                                    $langs = \Codemanas\VczApi\Helpers\Locales::getSupportedTranslationsForWeb();
-                                    foreach ( $langs as $k => $lang ) {
-                                        ?>
-                                        <option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $lang ); ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <?php
-                        }
-                    }
+                } else {
                     ?>
+                    <div class="vczapi-jvb__field">
+                        <label for="vczapi-jvb-locale" class="vczapi-jvb__label"><?php esc_html_e( 'Language', 'video-conferencing-with-zoom-api' ); ?></label>
+                        <select name="meeting-lang" id="vczapi-jvb-locale" class="vczapi-jvb__select meeting-locale">
+                            <?php
+                            foreach ( Locales::getSupportedTranslationsForWeb() as $k => $lang ) {
+                                ?>
+                                <option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $lang ); ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <?php
+                }
+                ?>
 
-                    <?php // Always rendered so join failures have somewhere to go. ?>
-                    <div class="vczapi-jvb__notice vczapi-jvb__notice--status vczapi-zoom-browser-meeting--info__browser"
-                         id="vczapi-zoom-browser-meeting--status"
-                         role="status"
-                         aria-live="polite"
-                         hidden></div>
+                <?php // Always rendered so join failures have somewhere to go. ?>
+                <div class="vczapi-jvb__notice vczapi-jvb__notice--status vczapi-jvb-meeting--info__browser"
+                     id="vczapi-jvb-meeting--status"
+                     role="status"
+                     aria-live="polite"
+                     hidden></div>
 
-                    <button type="submit" class="vczapi-jvb__submit" id="vczapi-zoom-browser-meeting-join-mtg">
-                        <span class="vczapi-jvb__submit-label"><?php esc_html_e( 'Join Event via Browser', 'video-conferencing-with-zoom-api' ); ?></span>
-                        <span class="vczapi-jvb__submit-spinner" aria-hidden="true"></span>
-                    </button>
-                </form>
+                <button type="submit" class="vczapi-jvb__submit" id="vczapi-jvb-btn">
+                    <span class="vczapi-jvb__submit-label"><?php esc_html_e( 'Join Event via Browser', 'video-conferencing-with-zoom-api' ); ?></span>
+                </button>
+            </form>
 
-                <div class="vczapi-jvb__notice vczapi-jvb__notice--error" id="vczapi-zoom-browser-meeting--fatal" role="alert" hidden></div>
-            <?php endif; ?>
+            <div class="vczapi-jvb__notice vczapi-jvb__notice--error" id="vczapi-jvb-meeting--fatal" role="alert" hidden></div>
         </div>
     </div>
 </div>

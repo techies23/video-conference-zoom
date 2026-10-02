@@ -10,12 +10,14 @@
  * @version    3.3.1
  */
 
+use Codemanas\VczApi\WebSDK\JoinRequest;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 /**
- * @var \Codemanas\VczApi\Browser\JoinRequest|null $join_request
+ * @var JoinRequest|null $join_request
  */
 ?>
 <div id="vczapi-zoom-browser-meeting" class="vczapi-jvb vczapi-jvb--direct">

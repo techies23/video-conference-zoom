@@ -1,18 +1,4 @@
 /**
- * Typed access to the Join-via-Browser configuration published by PHP.
- *
- * PHP prints `window.vczapiJvb` as an inline script immediately *before* the
- * bootstrap bundle (see \Codemanas\VczApi\Browser\Assets::enqueue()), so reading
- * it at module scope is safe and needs no readiness polling.
- *
- * What is deliberately absent: the meeting password. It used to be published as
- * `passWord` and as a base64 `meeting_pwd` in the `zvc_ajx` global, which put the
- * host's passcode in page source for every visitor. The password is now released
- * only by the signature endpoint, and only to a caller that presented the join
- * token.
- */
-
-/**
  * Shape of the injected configuration.
  *
  * @typedef {Object} JvbConfig
@@ -31,18 +17,18 @@
  */
 
 const DEFAULTS = {
-	joinToken: '',
-	signatureUrl: '',
-	restNonce: '',
-	clientUrl: '',
-	helperUrl: '',
-	leaveUrl: '',
-	lang: 'en-US',
-	directJoin: false,
-	userName: '',
-	userEmail: '',
-	hasPassword: false,
-	sdkVersion: '',
+    joinToken: '',
+    signatureUrl: '',
+    restNonce: '',
+    clientUrl: '',
+    helperUrl: '',
+    leaveUrl: '',
+    lang: 'en-US',
+    directJoin: false,
+    userName: '',
+    userEmail: '',
+    hasPassword: false,
+    sdkVersion: '',
 };
 
 /**
@@ -51,17 +37,17 @@ const DEFAULTS = {
  * @return {Object} The injected values, or an empty object when absent.
  */
 const readInjectedConfig = () => {
-	const injected = typeof window !== 'undefined' ? window.vczapiJvb : null;
+    const injected = typeof window !== 'undefined' ? window.vczapiWebSDK : null;
 
-	if ( ! injected || typeof injected !== 'object' ) {
-		return {};
-	}
+    if (!injected || typeof injected !== 'object') {
+        return {};
+    }
 
-	// Guard against `__proto__` reaching Object.assign via a polluted global.
-	return { ...injected };
+    // Guard against `__proto__` reaching Object.assign via a polluted global.
+    return {...injected};
 };
 
-export const config = Object.freeze( { ...DEFAULTS, ...readInjectedConfig() } );
+export const config = Object.freeze({...DEFAULTS, ...readInjectedConfig()});
 
 /**
  * Whether the configuration is complete enough to attempt a join.
@@ -69,15 +55,15 @@ export const config = Object.freeze( { ...DEFAULTS, ...readInjectedConfig() } );
  * @param {JvbConfig} [candidate] Configuration to check.
  * @return {string[]} Names of the required fields that are absent.
  */
-export const missingConfig = ( candidate = config ) => {
-	const required = [ 'joinToken', 'signatureUrl', 'clientUrl' ];
-	const absent = required.filter( ( key ) => ! candidate[ key ] );
+export const missingConfig = (candidate = config) => {
+    const required = ['joinToken', 'signatureUrl', 'clientUrl'];
+    const absent = required.filter((key) => !candidate[key]);
 
-	if ( ! candidate.helperUrl ) {
-		absent.push( 'helperUrl' );
-	}
+    if (!candidate.helperUrl) {
+        absent.push('helperUrl');
+    }
 
-	return absent;
+    return absent;
 };
 
 export default config;

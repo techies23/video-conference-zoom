@@ -1,15 +1,9 @@
 <?php
-/**
- * @package     Video Conferencing with Zoom API
- * @subpackage  Browser
- * @author      Deepen Bajracharya
- * @since       4.9.0
- */
 
-namespace Codemanas\VczApi\Browser;
+namespace Codemanas\VczApi\WebSDK;
 
 use Codemanas\VczApi\Admin\Foundation\PostType\PostTypeTemplates;
-use Codemanas\VczApi\Data\Metastore;
+use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Helpers\Templates;
 
 /**
@@ -46,7 +40,7 @@ final class JoinViaBrowser {
     /**
      * Path segment the rewrite rule hangs off.
      */
-    public const ROUTE_SLUG = 'zoom/join-event';
+    public const ROUTE_SLUG = 'zoom/join-event-web';
 
     /**
      * Option that records which revision of the rewrite rules are in the database.
@@ -58,7 +52,7 @@ final class JoinViaBrowser {
     /**
      * Option name holding the flushed rewrite version.
      */
-    private const REWRITE_OPTION = 'vczapi_jvb_rewrite_version';
+    private const REWRITE_OPTION = 'vczapi_websdk_rewrite_version';
 
     /**
      * Singleton.
@@ -80,12 +74,6 @@ final class JoinViaBrowser {
      * @var bool
      */
     private bool $rendered = false;
-
-    /**
-     * Not instantiable directly.
-     */
-    private function __construct() {
-    }
 
     /**
      * Boot the feature.
@@ -114,7 +102,6 @@ final class JoinViaBrowser {
 
         add_action( 'template_redirect', array( $this, 'maybe_render' ), 1 );
         add_filter( 'wp_headers', array( $this, 'add_isolation_headers' ) );
-        add_filter( 'body_class', array( $this, 'add_body_class' ) );
 
         Rest\SignatureEndpoint::register_routes();
     }
@@ -263,20 +250,6 @@ final class JoinViaBrowser {
     }
 
     /**
-     * Tag the document body so themes can style the join page.
-     *
-     * @param array $classes Body classes.
-     */
-    public function add_body_class( array $classes ): array {
-        if ( $this->is_join_request() ) {
-            $classes[] = 'join-via-browser-body';
-            $classes[] = 'vczapi-join-via-browser';
-        }
-
-        return $classes;
-    }
-
-    /**
      * Set the response status.
      *
      * The join token is a capability and it lives in the URL, so the response is
@@ -336,7 +309,10 @@ final class JoinViaBrowser {
             <meta name="referrer" content="no-referrer">
             <title><?php echo esc_html( $this->document_title( $request ) ); ?></title>
             <?php
+            do_action( 'wp_enqueue_scripts' );
+            wp_print_styles();
             Assets::print_styles();
+
             /**
              * Fires in the join page `<head>`, after the plugin's own styles.
              *
@@ -345,7 +321,7 @@ final class JoinViaBrowser {
             do_action( 'vczapi_join_via_browser_head' );
             ?>
         </head>
-        <body class="join-via-browser-body">
+        <body class="vczapi-join-via-browser">
         <?php
         /**
          * Fires at the top of the join page body, before any plugin content.
@@ -588,22 +564,15 @@ final class JoinViaBrowser {
         // pointing off-site falls back to the meeting post.
         $url = wp_validate_redirect( $url, $default );
 
-        return $url ? $url : $default;
+        return $url ?: $default;
     }
 
     /**
      * SDK UI language.
      */
     private static function default_language(): string {
-        $bypass = apply_filters( 'vczapi_api_bypass_lang', false );
-
-        if ( $bypass ) {
-            return 'en-US';
-        }
-
-        $lang = get_option( 'zoom_api_default_lang_jvb' );
-
-        return ( ! empty( $lang ) && 'all' !== $lang ) ? (string) $lang : 'en-US';
+        $lang = SettingsRepository::getSetting( "join_via_browser_default_lang" );
+        return ! empty( $lang ) ? $lang : 'en-US';
     }
 
     /**
@@ -622,7 +591,7 @@ final class JoinViaBrowser {
 
         $name = trim( $user->first_name . ' ' . $user->last_name );
 
-        return '' !== $name ? $name : (string) $user->display_name;
+        return '' !== $name ? $name : $user->display_name;
     }
 
     /**
@@ -633,6 +602,6 @@ final class JoinViaBrowser {
             return '';
         }
 
-        return (string) wp_get_current_user()->user_email;
+        return wp_get_current_user()->user_email;
     }
 }

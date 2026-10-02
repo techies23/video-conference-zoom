@@ -17,6 +17,6 @@
  *
  * @type {string}
  */
-export const CLIENT_GLOBAL = 'VczapiJvbClient';
+export const CLIENT_GLOBAL = 'VczapiWebSDKClient';
 
 export default CLIENT_GLOBAL;

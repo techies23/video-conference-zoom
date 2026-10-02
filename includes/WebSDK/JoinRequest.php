@@ -3,14 +3,16 @@
  * @package     Video Conferencing with Zoom API
  * @subpackage  Browser
  * @author      Deepen Bajracharya
- * @since       4.9.0
+ * @since       4.7.0
  */
 
-namespace Codemanas\VczApi\Browser;
+namespace Codemanas\VczApi\WebSDK;
 
+use Codemanas\VczApi\Admin\Repository\SettingsRepository;
 use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Common;
 use Codemanas\VczApi\Helpers\Encryption;
+use Codemanas\VczApi\Helpers\MeetingType;
 use Codemanas\VczApi\Helpers\Signature;
 use WP_Post;
 
@@ -148,23 +150,52 @@ final class JoinRequest {
 	}
 
 	/**
-	 * Whether this meeting requires a logged-in WordPress user.
+	 * Check is webinar
 	 *
-	 * The old template asked the global `$zoom['site_option_logged_in']`, which
-	 * only happened to be populated because the join page used to be rendered
-	 * from inside the single-meeting template pipeline. The dedicated endpoint
-	 * has no such pipeline, so the flag is read from the meeting's own meta.
+	 * @return bool
 	 */
-	public function login_required(): bool {
-		$post = $this->post();
+	public function is_webinar(): bool {
+		$meetingType = Metastore::getPostMeta( $this->token->post_id(), 'meeting_type' );
 
-		if ( ! $post ) {
-			return false;
+		return ! empty( $meetingType ) && $meetingType == "webinar";
+	}
+
+	/**
+	 * Default language for the Zoom event.
+	 *
+	 * @return string
+	 */
+	public function default_lang(): string {
+		$lang = Metastore::get_plugin_settings( "join_via_browser_default_lang" );
+
+		return ! empty( $lang ) ? $lang : 'en-US';
+	}
+
+	/**
+	 * Hide Email Address
+	 *
+	 * @return bool
+	 */
+	public function hide_email_address(): bool {
+		$hide = Metastore::get_plugin_settings( "hide_email_jvb" );
+
+		return ! empty( $hide );
+	}
+
+	/**
+	 * Current logged in user name.
+	 *
+	 * @return string
+	 */
+	public function get_user_name(): string {
+		if ( ! is_user_logged_in() ) {
+			return '';
 		}
 
-		$fields = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
+		$user      = wp_get_current_user();
+		$full_name = trim( "{$user->first_name} {$user->last_name}" );
 
-		return ! empty( $fields['site_option_logged_in'] );
+		return '' !== $full_name ? $full_name : $user->display_name;
 	}
 
 	/**

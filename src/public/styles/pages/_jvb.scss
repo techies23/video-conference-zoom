@@ -22,7 +22,7 @@
   &__card {
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+    border: 1px solid #e3e3e3;
     padding: 32px;
     box-sizing: border-box;
 
@@ -102,8 +102,8 @@
     background-color: #2d8cff;
     color: #fff;
     width: 100%;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -122,23 +122,6 @@
       text-decoration: none;
       margin-top: 20px;
     }
-  }
-
-  // Spinner shown while the SDK loads and the join negotiates.
-  &__submit-spinner {
-    display: none;
-    position: absolute;
-    right: 12px;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgb(255 255 255 / 45%);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: vczapi-jvb-spin .7s linear infinite;
-  }
-
-  &__submit.is-busy &__submit-spinner {
-    display: block;
   }
 
   &__submit.is-busy &__submit-label {
@@ -182,17 +165,5 @@
 
   &__notice-message {
     margin: 0;
-  }
-}
-
-@keyframes vczapi-jvb-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vczapi-jvb__submit-spinner {
-    animation: none;
   }
 }

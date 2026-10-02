@@ -83,28 +83,13 @@ const backendConfig = {
 }
 
 // Zoom Meeting SDK Configuration
-//
-// @zoom/meetingsdk ships a UMD build that externalises react, redux and
-// redux-thunk. Declaring them as webpack `externals` therefore required those
-// globals to be loaded first, but the emitted files were never written to
-// dist/vendor/zoom, so the bundle died with "React is not defined". Bundling
-// them keeps this a single self-contained script with no load-order contract.
-//
-// The entry is split in two so the ~5.5MB SDK payload is only fetched when the
-// visitor actually commits to joining:
-//   jvb-bootstrap  - small, no SDK import, drives the join form
-//   zoom-meeting   - imports the SDK, exposes window.VczapiMeeting
-// The entry names below MUST match the filenames requested by
-// \Codemanas\VczApi\Browser\Assets. They previously disagreed
-// (websdk-router/websdk-client here, jvb-bootstrap/zoom-meeting in PHP), so
-// both requests 404'd and the join page never initialised.
 const webSDKConfig = {
     mode: 'production',
     cache: false,
     devtool: false,
     entry: {
-        'jvb-bootstrap': './src/websdk/bootstrap.js',
-        'jvb-client': './src/websdk/client.js',
+        'websdk-bootstrap': './src/websdk/bootstrap.js',
+        'websdk-client': './src/websdk/client.js',
     },
     output: {
         filename: 'vendor/zoom/websdk/[name].bundle.js',

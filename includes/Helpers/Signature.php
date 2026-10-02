@@ -8,6 +8,8 @@
 
 namespace Codemanas\VczApi\Helpers;
 
+use Firebase\JWT\JWT;
+
 /**
  * Builds the Meeting SDK signatures the Join-via-Browser client needs.
  *
@@ -48,7 +50,7 @@ final class Signature {
 	 *
 	 * @return string|false The signature, or false when it cannot be built.
 	 */
-	public static function for_meeting( string $meeting_number, int $role = self::ROLE_PARTICIPANT ) {
+	public static function for_meeting( string $meeting_number, int $role = self::ROLE_PARTICIPANT ): bool|string {
 		$sdk_key    = (string) get_option( 'vczapi_sdk_key' );
 		$secret_key = (string) get_option( 'vczapi_sdk_secret_key' );
 
@@ -74,7 +76,7 @@ final class Signature {
 			return false;
 		}
 
-		return \Firebase\JWT\JWT::encode( $payload, $secret_key, 'HS256' );
+		return JWT::encode( $payload, $secret_key, 'HS256' );
 	}
 
 	/**

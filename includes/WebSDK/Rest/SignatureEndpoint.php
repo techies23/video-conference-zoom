@@ -6,10 +6,10 @@
  * @since       4.7.0
  */
 
-namespace Codemanas\VczApi\Browser\Rest;
+namespace Codemanas\VczApi\WebSDK\Rest;
 
-use Codemanas\VczApi\Browser\JoinRequest;
-use Codemanas\VczApi\Browser\JoinToken;
+use Codemanas\VczApi\WebSDK\JoinRequest;
+use Codemanas\VczApi\WebSDK\JoinToken;
 use Codemanas\VczApi\Helpers\Signature;
 use WP_Error;
 use WP_REST_Request;
@@ -172,7 +172,7 @@ final class SignatureEndpoint {
 
 		// Role is always participant. A guest who can choose its own role can
 		// start the meeting.
-		$signature = Signature::for_meeting( $token->meeting_number(), Signature::ROLE_PARTICIPANT );
+		$signature = Signature::for_meeting( $token->meeting_number() );
 
 		if ( false === $signature ) {
 			return self::fail(
@@ -185,8 +185,8 @@ final class SignatureEndpoint {
 		/**
 		 * Filter the join payload returned with the signature.
 		 *
-		 * @param array       $payload Join payload.
-		 * @param JoinToken   $token   Verified token.
+		 * @param array $payload Join payload.
+		 * @param JoinToken $token Verified token.
 		 * @param WP_REST_Request $request Incoming request.
 		 *
 		 * @since 4.9.0
@@ -197,17 +197,6 @@ final class SignatureEndpoint {
 				'signature'       => $signature,
 				'sdkKey'          => Signature::sdk_key(),
 				'meetingNumber'   => $token->meeting_number(),
-				/*
-				 * The password is released here, and only here. Reaching this
-				 * point means the caller presented a valid unexpired token that
-				 * is bound to this meeting, which is a stronger proof than the
-				 * one the old `pak` query argument offered: that value was
-				 * readable by anyone who saw the URL, and was printed into page
-				 * source for every visitor.
-				 *
-				 * A visitor-typed passcode wins, so the form can still correct a
-				 * stale password stored on the token.
-				 */
 				'passWord'        => self::resolve_password( $request, $token ),
 				'registrantToken' => $token->registrant_token(),
 				'userName'        => self::resolve_name( $request ),
@@ -376,8 +365,8 @@ final class SignatureEndpoint {
 	 * error handling keeps working.
 	 *
 	 * @param string $message Human readable reason.
-	 * @param string $code    Machine readable code.
-	 * @param int    $status  HTTP status.
+	 * @param string $code Machine readable code.
+	 * @param int $status HTTP status.
 	 */
 	private static function fail( string $message, string $code, int $status ): WP_Error {
 		return new WP_Error(

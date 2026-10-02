@@ -1,42 +1,22 @@
 <?php
-/**
- * @package     Video Conferencing with Zoom API
- * @subpackage  Browser
- * @author      Deepen Bajracharya
- * @since       4.9.0
- */
 
-namespace Codemanas\VczApi\Browser;
+namespace Codemanas\VczApi\WebSDK;
 
 use Codemanas\VczApi\Helpers\Encryption;
 use Codemanas\VczApi\Helpers\Signature;
 
 /**
- * A signed, expiring capability token that authorises exactly one meeting join.
+ * A signed, expiring capability token that authorizes exactly one meeting join.
  *
  * The Join-via-Browser link used to carry a raw AES ciphertext of the meeting
  * number in `?join=`. That value was self-issued but *unbound*: it could be
  * lifted from any public join link and replayed against any other meeting post
  * or archive URL, because nothing tied it to a post, an expiry, or a password.
  *
- * A token fixes that by signing the full set of claims with a server secret:
- *
- *   base64url( json claims ) . '.' . base64url( hmac-sha256( claims, key ) )
- *
- * Consequences that matter:
- *
- *  - The signature endpoint can require a token, so the SDK secret stops being
- *    a signing oracle for arbitrary meeting numbers.
- *  - A token is bound to `post_id`, so a token minted for meeting A cannot be
- *    replayed against meeting B.
- *  - Tokens expire, unlike the old links which were valid forever.
- *
- * The meeting password is carried *encrypted* (`Encryption::encrypt`) rather
- * than in the clear, which is what the old `pak` parameter did. The plaintext
- * is only ever produced server-side, for a caller that already proved it holds
- * a valid token, inside the signature endpoint's JSON response.
- *
- * @since 4.9.0
+ * @package     Video Conferencing with Zoom API
+ * @subpackage  Browser
+ * @author      Deepen Bajracharya
+ * @since 4.7.0
  */
 final class JoinToken {
 
@@ -73,11 +53,11 @@ final class JoinToken {
 	/**
 	 * Mint a token for a meeting.
 	 *
-	 * @param int    $post_id        Meeting post the token is bound to. 0 for
+	 * @param int $post_id Meeting post the token is bound to. 0 for
 	 *                               shortcode/archive links that have no post.
 	 * @param string $meeting_number Zoom meeting or webinar number.
-	 * @param string $password       Meeting passcode, if the host set one.
-	 * @param array  $extra          Additional claims. Supported keys are
+	 * @param string $password Meeting passcode, if the host set one.
+	 * @param array $extra Additional claims. Supported keys are
 	 *                               `tk` (registrant token) and `dj` (direct join).
 	 *
 	 * @return string The signed token, or an empty string when the meeting
@@ -90,13 +70,14 @@ final class JoinToken {
 			return '';
 		}
 
+		dump( $password );
 		$issued_at = time();
 		$claims    = array(
-			'v'     => self::VERSION,
-			'pid'   => $post_id,
-			'mn'    => $meeting_number,
-			'iat'   => $issued_at,
-			'exp'   => $issued_at + self::lifetime(),
+			'v'   => self::VERSION,
+			'pid' => $post_id,
+			'mn'  => $meeting_number,
+			'iat' => $issued_at,
+			'exp' => $issued_at + self::lifetime(),
 		);
 
 		// The password travels encrypted so the token can sit in a URL without
@@ -122,8 +103,8 @@ final class JoinToken {
 		 * Anything added here is covered by the HMAC, so it is as trustworthy
 		 * as the built-in claims.
 		 *
-		 * @param array  $claims        Token claims.
-		 * @param int    $post_id       Meeting post id.
+		 * @param array $claims Token claims.
+		 * @param int $post_id Meeting post id.
 		 * @param string $meeting_number Zoom meeting number.
 		 *
 		 * @since 4.9.0
@@ -155,7 +136,7 @@ final class JoinToken {
 
 		list( $encoded_claims, $encoded_signature ) = explode( '.', $token, 2 );
 
-		$json = self::base64url_decode( $encoded_claims );
+		$json      = self::base64url_decode( $encoded_claims );
 		$signature = self::base64url_decode( $encoded_signature );
 
 		if ( '' === $json || '' === $signature ) {
@@ -190,7 +171,7 @@ final class JoinToken {
 			return null;
 		}
 
-		$claims['mn'] = $meeting_number;
+		$claims['mn']  = $meeting_number;
 		$claims['pid'] = absint( $claims['pid'] ?? 0 );
 
 		return new self( $claims );

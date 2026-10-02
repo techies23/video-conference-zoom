@@ -7,6 +7,12 @@ use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\MeetingType;
 use WP_Post;
 
+/**
+ * Handles Zoom Event creation logic for post type Zoom Events.
+ *
+ * Sync handles data and filters them and uses Zoom API to sync meeting or webinar.
+ * Builds Zoom Event data.
+ */
 class PostTypeSyncService {
 
 	private const WEBINAR_TYPE = 2;
@@ -30,6 +36,15 @@ class PostTypeSyncService {
 		do_action( 'vczapi_admin_after_zoom_meeting_is_created', $post_id, $post );
 	}
 
+	/**
+	 * Build Event data after post for API processing.
+	 *
+	 * @param WP_Post $post
+	 * @param array $fields
+	 * @param int $meeting_type
+	 *
+	 * @return array
+	 */
 	private function buildMeetingData( WP_Post $post, array $fields, int $meeting_type ): array {
 		$raw_start_time = $fields['start_time'] ?? '';
 		$start_time     = $raw_start_time ? gmdate( "Y-m-d\TH:i:s", strtotime( $raw_start_time ) ) : '';
@@ -55,6 +70,14 @@ class PostTypeSyncService {
 		return array_merge( $common, $eventHandler->getTypeSpecificFields() );
 	}
 
+	/**
+	 * Handles auto password setting.
+	 *
+	 * @param int $post_id
+	 * @param string $password
+	 *
+	 * @return string
+	 */
 	private function resolveMeetingPassword( int $post_id, string $password ): string {
 		$autoPwd = Metastore::get_plugin_settings( "disable_auto_pwd_generation" );
 		if ( ! $autoPwd ) {
@@ -64,6 +87,15 @@ class PostTypeSyncService {
 		return $password;
 	}
 
+	/**
+	 * Handle Save metadata after post type save or update.
+	 *
+	 * @param int $post_id
+	 * @param array $meeting_data
+	 * @param string $type
+	 *
+	 * @return void
+	 */
 	private function saveMetaData( int $post_id, array $meeting_data, string $type ): void {
 		Metastore::setPostMeta( $post_id, 'meeting_fields', $meeting_data );
 		Metastore::setPostMeta( $post_id, 'meeting_type', $type );
@@ -81,6 +113,14 @@ class PostTypeSyncService {
 		Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
 	}
 
+	/**
+	 * Save to metadata after zoom Response.
+	 *
+	 * @param int $post_id
+	 * @param $response
+	 *
+	 * @return void
+	 */
 	private function persistZoomResponse( int $post_id, $response ): void {
 		if ( empty( $response ) ) {
 			return;
@@ -93,6 +133,13 @@ class PostTypeSyncService {
 		Metastore::setPostMeta( $post_id, 'meeting_id', $response_array['id'] ?? '' );
 	}
 
+	/**
+	 * Get what type of event to save and modify any different values needed for diff event type.
+	 *
+	 * @param int $meeting_type
+	 *
+	 * @return IZoomEvent
+	 */
 	private function getEventHandler( int $meeting_type ): IZoomEvent {
 		return ( $meeting_type === self::WEBINAR_TYPE ) ? new WebinarService() : new MeetingService();
 	}

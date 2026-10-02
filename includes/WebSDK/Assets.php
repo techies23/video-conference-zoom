@@ -6,7 +6,7 @@
  * @since       4.9.0
  */
 
-namespace Codemanas\VczApi\Browser;
+namespace Codemanas\VczApi\WebSDK;
 
 /**
  * Registers and prints the Join-via-Browser assets.
@@ -34,22 +34,22 @@ final class Assets {
 	/**
 	 * Handle for the bootstrap bundle, which drives the join form.
 	 */
-	public const HANDLE_BOOTSTRAP = 'vczapi-jvb-bootstrap';
+	public const HANDLE_BOOTSTRAP = 'vczapi-websdk-bootstrap';
 
 	/**
 	 * Handle for the SDK client bundle, loaded on demand.
 	 */
-	public const HANDLE_CLIENT = 'vczapi-jvb-client';
+	public const HANDLE_CLIENT = 'vczapi-websdk-client';
 
 	/**
 	 * Handle for the join page stylesheet.
 	 */
-	public const HANDLE_STYLE = 'vczapi-jvb-style';
+	public const HANDLE_STYLE = 'vczapi-websdk-style';
 
 	/**
 	 * Global the inline configuration is published under.
 	 */
-	public const CONFIG_OBJECT = 'vczapiJvb';
+	public const CONFIG_OBJECT = 'vczapiWebSDK';
 
 	/**
 	 * Not instantiable.
@@ -74,7 +74,7 @@ final class Assets {
 
 		wp_register_script(
 			self::HANDLE_BOOTSTRAP,
-			self::client_url( 'jvb-bootstrap.bundle.js' ),
+			self::client_url( 'websdk-bootstrap.bundle.js' ),
 			array(),
 			self::asset_version( self::local_client_path( 'jvb-bootstrap.bundle.js' ) ),
 			true
@@ -85,9 +85,9 @@ final class Assets {
 		// visitor who never joins never downloads 5.7MB of JavaScript.
 		wp_register_script(
 			self::HANDLE_CLIENT,
-			self::client_url( 'jvb-client.bundle.js' ),
+			self::client_url( 'websdk-client.bundle.js' ),
 			array(),
-			self::asset_version( self::local_client_path( 'jvb-client.bundle.js' ) ),
+			self::asset_version( self::local_client_path( 'websdk-client.bundle.js' ) ),
 			true
 		);
 	}
@@ -159,7 +159,7 @@ final class Assets {
 	 *
 	 * @param string $file File name.
 	 */
-	public static function client_url( string $file = 'jvb-client.bundle.js' ): string {
+	public static function client_url( string $file = 'websdk-client.bundle.js' ): string {
 		return VCZAPI_PLUGIN_SDK_URI . '/' . $file;
 	}
 

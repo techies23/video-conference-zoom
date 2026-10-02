@@ -492,51 +492,6 @@ function video_conference_zoom_get_current_theme_slug() {
 }
 
 /**
- * REMOVE WHITESPACES
- *
- * @param $buffer
- *
- * @return string|string[]|null
- *
- * @deprecated 4.9.0 Moved to \Codemanas\VczApi\Browser\JoinViaBrowser.
- */
-function vczapi_removeWhitespace( $buffer ) {
-	return preg_replace( '/\s+/', ' ', $buffer );
-}
-
-/**
- * Open the Join-via-Browser document.
- *
- * @deprecated 4.9.0 The join page is now rendered by
- *             \Codemanas\VczApi\Browser\JoinViaBrowser, which owns the whole
- *             document on its own endpoint. This is kept as a delegate because
- *             it is a public function that themes hook via
- *             `vczoom_jbh_before_content`. It no longer prints anything: the
- *             front controller emits the document itself.
- *
- * @param array|null $zoom Unused.
- */
-function video_conference_zoom_before_jbh_html( $zoom = null ) {
-	// Intentionally empty. The document is emitted by JoinViaBrowser::render_document().
-}
-
-/**
- * Close the Join-via-Browser document and print its scripts.
- *
- * @deprecated 4.9.0 Superseded by \Codemanas\VczApi\Browser\JoinViaBrowser,
- *             which prints the footer scripts and fires
- *             `vczapi_join_via_browser_footer` and
- *             `vczapi_join_via_browser_after_script_load` itself. This delegate
- *             remains so that calling it directly does not fatal, but it is no
- *             longer wired to `vczoom_jbh_after_content`.
- */
-function video_conference_zoom_after_jbh_html() {
-	if ( class_exists( '\Codemanas\VczApi\Browser\JoinViaBrowser' ) ) {
-		\Codemanas\VczApi\Browser\Assets::print_scripts();
-	}
-}
-
-/**
  * Before POST LOOP hook
  */
 function video_conference_zoom_before_post_loop() {

@@ -6,7 +6,7 @@ use Codemanas\VczApi\Admin\AdminController;
 use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
-use Codemanas\VczApi\Browser\JoinViaBrowser;
+use Codemanas\VczApi\WebSDK\JoinViaBrowser;
 use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Encryption;
 
