@@ -49,16 +49,20 @@ class PostTypeTemplates {
 			return $template;
 		}
 
-		if ( isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
-			$template = vczapi_get_template( 'join-web-browser.php' );
-		} elseif ( wp_is_block_theme() ) {
-			//use default WordPress for archive template otherwise the display gets broken.
+		if ( self::is_legacy_join_request() ) {
+			// A pre-4.9 archive join link. JoinViaBrowser::maybe_render() runs on
+			// template_redirect at priority 1 and 301s this to the canonical
+			// /zoom-join/<token>/ endpoint, so it never reaches this method.
+			// Falling through to the archive is only a safety net.
 			return $template;
-		} else {
-			$template = vczapi_get_template( 'archive-meetings.php' );
 		}
 
-		return $template;
+		if ( wp_is_block_theme() ) {
+			//use default WordPress for archive template otherwise the display gets broken.
+			return $template;
+		}
+
+		return vczapi_get_template( 'archive-meetings.php' );
 	}
 
 	/**
@@ -69,11 +73,36 @@ class PostTypeTemplates {
 	 * @return string
 	 */
 	public function template_filter( $template_name ): string {
-		if ( is_post_type_archive( $this->postType ) && isset( $_GET['type'] ) && $_GET['type'] === "meeting" && isset( $_GET['join'] ) ) {
-			$template_name = vczapi_get_template( 'join-web-browser.php' );
+		return $template_name;
+	}
+
+	/**
+	 * Whether the current request is a pre-4.9 `?type=meeting&join=` join link.
+	 *
+	 * Join links used to be served by hijacking `template_include` for both
+	 * single posts and the archive. They now live on their own endpoint, so the
+	 * only thing left to do with the legacy shape is recognise it: so
+	 * `JoinViaBrowser` can migrate it, and so the cross-origin isolation headers
+	 * the Web SDK needs are still applied to it.
+	 *
+	 * @return bool
+	 */
+	public static function is_legacy_join_request(): bool {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Detecting a public join URL; no state is read or written.
+		if ( ! isset( $_GET['type'], $_GET['join'] ) ) {
+			return false;
 		}
 
-		return $template_name;
+		if ( 'meeting' !== $_GET['type'] || ! is_scalar( $_GET['join'] ) ) {
+			return false;
+		}
+
+		if ( '' === trim( (string) $_GET['join'] ) ) {
+			return false;
+		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		return is_singular( 'zoom-meetings' ) || is_post_type_archive( 'zoom-meetings' );
 	}
 
 }

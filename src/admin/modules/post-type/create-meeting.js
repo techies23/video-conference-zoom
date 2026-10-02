@@ -8,6 +8,7 @@ export const initCreateMeeting = () => {
     const apiEndpoint = ajaxurl || window.ajaxurl || '/wp-admin/admin-ajax.php';
 
     const submitBtn = form.querySelector('.vczapi-create-meeting__submit');
+    const spinner = form.querySelector('.vczapi-spinner');
     const feedbackEl = form.querySelector('.vczapi-create-meeting__feedback');
 
     let isSubmitting = false;
@@ -132,7 +133,7 @@ export const initCreateMeeting = () => {
     const setLoading = (loading) => {
         isSubmitting = loading;
         submitBtn.disabled = loading;
-        submitBtn.classList.toggle('is-loading', loading);
+        spinner.classList.toggle('vczapi-is-loading', loading);
     };
 
     // The create modal cannot be dismissed: ignore Escape so users are not

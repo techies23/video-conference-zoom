@@ -102,18 +102,6 @@
 	&__submit-btn {
 		display: inline-flex;
 		align-items: center;
-
-		&.is-loading {
-
-			.vczapi-modal__spinner {
-				visibility: visible;
-			}
-		}
-	}
-
-	&__spinner.spinner {
-		float: none;
-		margin: 0 0 0 5px;
 	}
 }
 

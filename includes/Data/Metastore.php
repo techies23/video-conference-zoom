@@ -13,16 +13,7 @@ namespace Codemanas\VczApi\Data;
  */
 class Metastore {
 
-	/**
-	 * Check if direct join via browser is enabled
-	 *
-	 * @return bool
-	 */
-	public static function enabledDirectJoinViaBrowser(): bool {
-		$enabled = self::get_plugin_settings( 'enable_direct_join_via_browser' );
-
-		return ! empty( $enabled );
-	}
+	private const SETTINGS_OPTION_KEY = '_vczapi_zoom_settings';
 
 	public static function dettachPasswordToLink(): bool {
 		$enabled = self::get_plugin_settings( 'embed_pwd_in_join_link' );
@@ -44,12 +35,12 @@ class Metastore {
 	/**
 	 * Get Zoom Settings
 	 *
-	 * @param $type
+	 * @param string $type
 	 *
 	 * @return false|mixed
 	 */
-	public static function get_plugin_settings( $type = '' ) {
-		$settings = get_option( '_vczapi_zoom_settings' );
+	public static function get_plugin_settings( string $type = '' ): mixed {
+		$settings = get_option( self::SETTINGS_OPTION_KEY );
 		if ( ! empty( $settings ) && ! empty( $type ) ) {
 			return ! empty( $settings[ $type ] ) ? $settings[ $type ] : false;
 		}
