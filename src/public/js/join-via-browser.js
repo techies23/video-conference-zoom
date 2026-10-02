@@ -1,3 +1,5 @@
+import { parseMomentFormatToIntl } from './moment-parser'
+
 jQuery(function ($) {
 
   var video_conferencing_zoom_jbv = {
@@ -12,40 +14,40 @@ jQuery(function ($) {
     },
 
     countDown: function () {
-      var clock = this.$timer
+      const clock = this.$timer
 
       if (!clock.length) {
         return
       }
 
-      var valueDate = clock.data('date')
-      var mtgTimezone = clock.data('tz')
-
-      var userTimezone = moment.tz.guess()
+      const rawDate = clock.data('date')
+      let userTimezone = (Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'UTC') || 'UTC'
 
       if (userTimezone === 'Asia/Katmandu') {
         userTimezone = 'Asia/Kathmandu'
       }
 
-      // Meeting time in the meeting timezone
-      var meetingTime = moment.tz(valueDate, mtgTimezone)
+      // Parse meeting date to timestamp
+      const targetDate = new Date(rawDate)
+      const targetEpochMs = targetDate.getTime()
+      const diffTime = targetEpochMs - Date.now()
 
-      // Meeting time converted to the user's timezone
-      var userMeetingTime = meetingTime.clone().tz(userTimezone)
+      const lang = document.documentElement.lang || navigator.language || 'en-US'
+      const customMomentFormat = (typeof zvc_strings !== 'undefined' && zvc_strings.date_format) ? zvc_strings.date_format : 'LLLL'
+      const intlOptions = parseMomentFormatToIntl(customMomentFormat)
 
-      // Check time difference
-      var diffTime = userMeetingTime.diff(moment())
+      // Format localized meeting start time
+      try {
+        const formatter = new Intl.DateTimeFormat(lang, intlOptions)
+        $('.sidebar-start-time').html(formatter.format(targetDate))
+      } catch (e) {
+        $('.sidebar-start-time').html(targetDate.toLocaleString(lang))
+      }
 
-      var lang = document.documentElement.lang
-
-      $('.sidebar-start-time').html(
-        userMeetingTime.clone().locale(lang).format('LLLL'),
-      )
-
-      var second = 1000
-      var minute = second * 60
-      var hour = minute * 60
-      var day = hour * 24
+      const second = 1000
+      const minute = second * 60
+      const hour = minute * 60
+      const day = hour * 24
 
       // Meeting has already started
       if (diffTime <= 0) {
@@ -53,20 +55,18 @@ jQuery(function ($) {
         return
       }
 
-      var countDown = userMeetingTime.valueOf()
+      const x = setInterval(function () {
+        const distance = targetEpochMs - Date.now()
 
-      var x = setInterval(function () {
-        var distance = countDown - Date.now()
+        const days = Math.floor(distance / day)
+        const hours = Math.floor((distance % day) / hour)
+        const minutes = Math.floor((distance % hour) / minute)
+        const seconds = Math.floor((distance % minute) / second)
 
-        var days = Math.floor(distance / day)
-        var hours = Math.floor((distance % day) / hour)
-        var minutes = Math.floor((distance % hour) / minute)
-        var seconds = Math.floor((distance % minute) / second)
-
-        var daysEl = document.getElementById('dpn-zvc-timer-days')
-        var hoursEl = document.getElementById('dpn-zvc-timer-hours')
-        var minutesEl = document.getElementById('dpn-zvc-timer-minutes')
-        var secondsEl = document.getElementById('dpn-zvc-timer-seconds')
+        const daysEl = document.getElementById('dpn-zvc-timer-days')
+        const hoursEl = document.getElementById('dpn-zvc-timer-hours')
+        const minutesEl = document.getElementById('dpn-zvc-timer-minutes')
+        const secondsEl = document.getElementById('dpn-zvc-timer-seconds')
 
         if (daysEl) {
           daysEl.innerText = Math.max(0, days)

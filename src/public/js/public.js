@@ -1,12 +1,13 @@
 import '../sass/style.scss'
+import { parseMomentFormatToIntl } from './moment-parser'
 
-jQuery(function ($) {
+(function ($) {
 
   var video_conferencing_zoom_api_public = {
 
     init: function () {
       this.cacheVariables()
-      this.countDownTimerMoment()
+      this.countDownTimerNative()
       this.evntLoaders()
     },
 
@@ -17,59 +18,51 @@ jQuery(function ($) {
 
     evntLoaders: function () {
       $(document).ready(this.setTimezone.bind(this))
-      //End and Resume Meetings
       $(this.changeMeetingState).on('click', this.meetingStateChange.bind(this))
     },
 
-    countDownTimerMoment: function () {
-      var clock = this.$timer
+    countDownTimerNative: function () {
+      const clock = this.$timer
 
       if (!clock.length) {
         return
       }
 
-      var valueDate = clock.data('date')
-      var mtgTimezone = clock.data('tz')
-      var mtgState = clock.data('state')
-
-      var userTimezone = moment.tz.guess()
+      const rawDate = clock.data('date')
+      const mtgState = clock.data('state')
+      let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
 
       if (userTimezone === 'Asia/Katmandu') {
         userTimezone = 'Asia/Kathmandu'
       }
 
-      // Meeting time in the meeting timezone
-      var meetingTime = moment.tz(valueDate, mtgTimezone)
+      const targetDate = new Date(rawDate)
+      const targetEpochMs = targetDate.getTime()
+      const diffTime = targetEpochMs - Date.now()
 
-      // Meeting time converted to user's timezone
-      var userMeetingTime = meetingTime.clone().tz(userTimezone)
+      const lang = document.documentElement.lang || navigator.language || 'en-US'
 
-      // Check time difference
-      var diffTime = userMeetingTime.diff(moment())
+      // Parse the custom backend layout tokens into a Native Object config
+      const customMomentFormat = (typeof zvc_strings !== 'undefined' && zvc_strings.date_format) ? zvc_strings.date_format : 'LLLL'
+      const intlOptions = parseMomentFormatToIntl(customMomentFormat)
+      intlOptions.timeZone = userTimezone // Dynamically inject user's local timezone context
 
-      var lang = document.documentElement.lang
-      var dateFormat = zvc_strings.date_format !== ''
-        ? zvc_strings.date_format
-        : 'LLLL'
-
-      $('.sidebar-start-time').html(
-        userMeetingTime.clone().locale(lang).format(dateFormat)
-      )
+      // Format localized meeting start time safely
+      try {
+        const formatter = new Intl.DateTimeFormat(lang, intlOptions)
+        $('.sidebar-start-time').html(formatter.format(targetDate))
+      } catch (e) {
+        $('.sidebar-start-time').html(targetDate.toLocaleString(lang))
+      }
 
       $('.vczapi-single-meeting-timezone').html(userTimezone)
-
-      var second = 1000
-      var minute = second * 60
-      var hour = minute * 60
-      var day = hour * 24
 
       if (mtgState === 'ended') {
         $(clock).html(
           '<div class="dpn-zvc-meeting-ended">' +
           '<h3>' + zvc_strings.meeting_ended + '</h3>' +
-          '</div>'
+          '</div>',
         )
-
         return
       }
 
@@ -78,48 +71,38 @@ jQuery(function ($) {
         return
       }
 
-      var countDown = userMeetingTime.valueOf()
+      let second = 1000
+      let minute = second * 60
+      let hour = minute * 60
+      let day = hour * 24
 
-      var x = setInterval(function () {
-        var distance = countDown - Date.now()
+      const timerInterval = setInterval(function () {
+        var distance = targetEpochMs - Date.now()
 
         if (distance <= 0) {
-          clearInterval(x)
-
+          clearInterval(timerInterval)
           $(clock).html(
             '<div class="dpn-zvc-meeting-ended">' +
             '<h3>' + zvc_strings.meeting_starting + '</h3>' +
-            '</div>'
+            '</div>',
           )
-
           return
         }
 
-        var days = Math.floor(distance / day)
-        var hours = Math.floor((distance % day) / hour)
-        var minutes = Math.floor((distance % hour) / minute)
-        var seconds = Math.floor((distance % minute) / second)
+        const days = Math.floor(distance / day)
+        const hours = Math.floor((distance % day) / hour)
+        const minutes = Math.floor((distance % hour) / minute)
+        const seconds = Math.floor((distance % minute) / second)
 
-        var daysEl = document.getElementById('dpn-zvc-timer-days')
-        var hoursEl = document.getElementById('dpn-zvc-timer-hours')
-        var minutesEl = document.getElementById('dpn-zvc-timer-minutes')
-        var secondsEl = document.getElementById('dpn-zvc-timer-seconds')
+        const daysEl = document.getElementById('dpn-zvc-timer-days')
+        const hoursEl = document.getElementById('dpn-zvc-timer-hours')
+        const minutesEl = document.getElementById('dpn-zvc-timer-minutes')
+        const secondsEl = document.getElementById('dpn-zvc-timer-seconds')
 
-        if (daysEl) {
-          daysEl.innerText = days
-        }
-
-        if (hoursEl) {
-          hoursEl.innerText = hours
-        }
-
-        if (minutesEl) {
-          minutesEl.innerText = minutes
-        }
-
-        if (secondsEl) {
-          secondsEl.innerText = seconds
-        }
+        if (daysEl) daysEl.innerText = days
+        if (hoursEl) hoursEl.innerText = hours
+        if (minutesEl) minutesEl.innerText = minutes
+        if (secondsEl) secondsEl.innerText = seconds
       }, second)
     },
 
@@ -127,13 +110,13 @@ jQuery(function ($) {
      * Set timezone and get links accordingly
      */
     setTimezone: function () {
-      var timezone = moment.tz.guess()
+      let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
       if (timezone === 'Asia/Katmandu') {
         timezone = 'Asia/Kathmandu'
       }
 
       try {
-        if (typeof mtg_data !== undefined && mtg_data.page === 'single-meeting') {
+        if (typeof mtg_data !== 'undefined' && mtg_data.page === 'single-meeting') {
           $('.dpn-zvc-sidebar-content').after('<div class="dpn-zvc-sidebar-box remove-sidebar-loder-text"><p>Loading..Please wait..</p></div>')
           var pageData = {
             action: 'set_timezone',
@@ -142,7 +125,7 @@ jQuery(function ($) {
             mtg_timezone: mtg_data.timezone,
             start_date: mtg_data.start_date,
             meeting_type: mtg_data.meeting_type,
-            type: 'page'
+            type: 'page',
           }
 
           $.post(mtg_data.ajaxurl, pageData).done(function (response) {
@@ -160,7 +143,7 @@ jQuery(function ($) {
          * For shortcode
          * @deprecated 3.3.1
          */
-        if (typeof mtg_data !== undefined && mtg_data.type === 'shortcode') {
+        if (typeof mtg_data !== 'undefined' && mtg_data.type === 'shortcode') {
           var shortcodeData = {
             action: 'set_timezone',
             user_timezone: timezone,
@@ -168,7 +151,7 @@ jQuery(function ($) {
             join_uri: mtg_data.join_uri,
             browser_url: mtg_data.browser_url,
             start_date: mtg_data.start_date,
-            type: 'shortcode'
+            type: 'shortcode',
           }
 
           $('.zvc-table-shortcode-duration').after('<tr class="remove-shortcode-loder-text"><td colspan="2">Loading.. Please wait..</td></tr>')
@@ -189,7 +172,6 @@ jQuery(function ($) {
 
     /**
      * Change Meeting State
-     * @param e
      */
     meetingStateChange: function (e) {
       e.preventDefault()
@@ -201,7 +183,7 @@ jQuery(function ($) {
         type: $(e.currentTarget).data('type'),
         post_id: post_id ? post_id : false,
         action: 'vczapi_meeting_state_change',
-        nonce: vczapi_state.nonce
+        nonce: vczapi_state.nonce,
       }
 
       if (state === 'resume') {
@@ -218,14 +200,13 @@ jQuery(function ($) {
 
     /**
      * Change the state triggere now
-     * @param postData
      */
     changeState: function (postData) {
       $.post(vczapi_state.ajaxurl, postData).done(function (response) {
         location.reload()
       })
-    }
+    },
   }
 
   video_conferencing_zoom_api_public.init()
-})
+})(jQuery)
