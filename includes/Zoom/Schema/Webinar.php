@@ -135,8 +135,6 @@ class Webinar {
 			),
 			'compat_transform' => array(
 				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
-				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
-				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 		);
 	}
@@ -232,8 +230,6 @@ class Webinar {
 			),
 			'compat_transform' => array(
 				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
-				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
-				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 		);
 	}

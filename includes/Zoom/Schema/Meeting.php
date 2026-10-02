@@ -200,8 +200,6 @@ class Meeting {
 			'compat_transform' => array(
 				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
 				array( 'from' => 'disable_waiting_room', 'to' => 'settings.waiting_room', 'op' => 'bool_invert' ),
-				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
-				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 			'notes'            => array(
 				'start_time' => 'If start_time is omitted for type=2, Zoom may convert it to an instant meeting.',
@@ -329,8 +327,6 @@ class Meeting {
 			),
 			'compat_transform' => array(
 				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
-				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
-				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 		);
 	}
