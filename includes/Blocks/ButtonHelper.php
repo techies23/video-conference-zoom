@@ -169,12 +169,14 @@ class ButtonHelper {
 				break;
 
 			case 'browser':
-				if ( ! empty( $meeting_data['id'] ) ) {
+				//when pmi has been enabled use pmi
+				$meeting_id = $meeting_data['raw']['pmi'] ?? $meeting_data['id'] ?? null;
+				if ( ! empty( $meeting_id ) ) {
 					$browser_link = Links::getJoinViaBrowserJoinLinks( [
 						'link_only' => true,
 						'post_id'   => $post_id,
 						'password'  => $raw['password'] ?? '',
-					], $meeting_data['id'] );
+					], $meeting_id );
 
 					if ( ! empty( $browser_link ) ) {
 						return esc_url_raw( $browser_link );

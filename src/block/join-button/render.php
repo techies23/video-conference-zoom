@@ -7,16 +7,18 @@
  * @var WP_Block $block Block instance.
  */
 
+use Codemanas\VczApi\Blocks\ButtonHelper;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 // 1. Sanitize Inputs
-$action_type = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_action_type( $attributes['actionType'] ?? 'app' );
-$source_type = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_source_type( $attributes['sourceType'] ?? 'current' );
+$action_type = ButtonHelper::sanitize_action_type( $attributes['actionType'] ?? 'app' );
+$source_type = ButtonHelper::sanitize_source_type( $attributes['sourceType'] ?? 'current' );
 $open_in_new = ! empty( $attributes['openInNewTab'] );
 
-$url = \Codemanas\VczApi\Blocks\ButtonHelper::get_url( $action_type, $source_type, $attributes );
+$url = ButtonHelper::get_url( $action_type, $source_type, $attributes );
 
 // 2. Fallback Label Logic
 $default_text_map = [
@@ -37,7 +39,7 @@ if ( ! empty( $attributes['buttonText'] ) ) {
 $styles = [];
 
 if ( ! empty( $attributes['backgroundColor'] ) ) {
-    $value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['backgroundColor'] );
+    $value = ButtonHelper::sanitize_css_color( $attributes['backgroundColor'] );
 
     if ( '' !== $value ) {
         $styles[] = sprintf( '--vczapi-btn-bg: %s', $value );
@@ -45,7 +47,7 @@ if ( ! empty( $attributes['backgroundColor'] ) ) {
 }
 
 if ( ! empty( $attributes['textColor'] ) ) {
-    $value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['textColor'] );
+    $value = ButtonHelper::sanitize_css_color( $attributes['textColor'] );
 
     if ( '' !== $value ) {
         $styles[] = sprintf( '--vczapi-btn-color: %s', $value );
@@ -53,7 +55,7 @@ if ( ! empty( $attributes['textColor'] ) ) {
 }
 
 if ( ! empty( $attributes['bgHoverColor'] ) ) {
-    $value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['bgHoverColor'] );
+    $value = ButtonHelper::sanitize_css_color( $attributes['bgHoverColor'] );
 
     if ( '' !== $value ) {
         $styles[] = sprintf( '--vczapi-btn-bg-hover: %s', $value );
@@ -61,7 +63,7 @@ if ( ! empty( $attributes['bgHoverColor'] ) ) {
 }
 
 if ( ! empty( $attributes['textHoverColor'] ) ) {
-    $value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['textHoverColor'] );
+    $value = ButtonHelper::sanitize_css_color( $attributes['textHoverColor'] );
 
     if ( '' !== $value ) {
         $styles[] = sprintf( '--vczapi-btn-color-hover: %s', $value );
@@ -69,7 +71,7 @@ if ( ! empty( $attributes['textHoverColor'] ) ) {
 }
 
 if ( ! empty( $attributes['bgVisitedColor'] ) ) {
-    $value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['bgVisitedColor'] );
+    $value = ButtonHelper::sanitize_css_color( $attributes['bgVisitedColor'] );
 
     if ( '' !== $value ) {
         $styles[] = sprintf( '--vczapi-btn-bg-visited: %s', $value );
@@ -77,7 +79,7 @@ if ( ! empty( $attributes['bgVisitedColor'] ) ) {
 }
 
 if ( ! empty( $attributes['textVisitedColor'] ) ) {
-    $value = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_color( $attributes['textVisitedColor'] );
+    $value = ButtonHelper::sanitize_css_color( $attributes['textVisitedColor'] );
 
     if ( '' !== $value ) {
         $styles[] = sprintf( '--vczapi-btn-color-visited: %s', $value );
@@ -89,7 +91,7 @@ foreach ( [ 'padding', 'margin' ] as $type ) {
     if ( ! empty( $attributes[ $type ] ) && is_array( $attributes[ $type ] ) ) {
         foreach ( [ 'top', 'right', 'bottom', 'left' ] as $side ) {
             if ( isset( $attributes[ $type ][ $side ] ) && '' !== $attributes[ $type ][ $side ] ) {
-                $val = \Codemanas\VczApi\Blocks\ButtonHelper::sanitize_css_size( $attributes[ $type ][ $side ] );
+                $val = ButtonHelper::sanitize_css_size( $attributes[ $type ][ $side ] );
 
                 if ( '' !== $val ) {
                     $styles[] = sprintf( '%s-%s: %s', $type, $side, $val );
