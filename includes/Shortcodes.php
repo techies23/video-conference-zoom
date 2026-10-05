@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi;
 
+use Codemanas\VczApi\Shortcodes\Assets;
 use Codemanas\VczApi\Shortcodes\Embed;
 use Codemanas\VczApi\Shortcodes\Meetings;
 use Codemanas\VczApi\Shortcodes\Recordings;
@@ -36,8 +37,12 @@ class Shortcodes {
 	 * Zoom_Video_Conferencing_Shorcodes constructor.
 	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 100 );
+		Assets::get_instance();
+		$this->register();
+		$this->init_shortcodes();
+	}
 
+	private function register(): void {
 		$meetings         = Meetings::get_instance();
 		$webinars         = Webinars::get_instance();
 		$recordings       = Recordings::get_instance();
@@ -60,8 +65,6 @@ class Shortcodes {
 			'zoom_recordings'            => array( $recordings, 'recordings_by_user' ),
 			'zoom_recordings_by_meeting' => array( $recordings, 'recordings_by_meeting_id' )
 		);
-
-		$this->init_shortcodes();
 	}
 
 	/**
@@ -96,7 +99,7 @@ class Shortcodes {
 			'video-conferencing-with-zoom-api-datable-js'
 		], VCZAPI_PLUGIN_VERSION, true );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'loading_recordings' => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
 		) );
 		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(
