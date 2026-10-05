@@ -729,13 +729,24 @@ function vczapi_filesize_converter( $bytes ) {
  * @author Deepen
  */
 function vczapi_zoom_api_paginator( $response, $type = '' ) {
-	$actual_link = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	if ( ! empty( $response ) && $response->next_page_token ) {
-		$next_page = add_query_arg( array( 'pg' => $response->next_page_token, 'type' => $type ), $actual_link );
-		?>
-        <a href="<?php echo esc_url( $next_page ); ?>"><?php _e( 'Next Results', 'video-conferencing-with-zoom-api' ); ?></a>
-		<?php
+	if ( empty( $response ) ) {
+		return;
 	}
+
+	//4.7.0 API responses are arrays; older add-ons may still hand over objects.
+	$response       = is_array( $response ) ? $response : (array) $response;
+	$next_page_token = $response['next_page_token'] ?? '';
+
+	if ( empty( $next_page_token ) ) {
+		return;
+	}
+
+	$scheme      = ( ! empty( $_SERVER['HTTPS'] ) && 'off' !== $_SERVER['HTTPS'] ) ? 'https' : 'http';
+	$actual_link = $scheme . '://' . ( $_SERVER['HTTP_HOST'] ?? '' ) . ( $_SERVER['REQUEST_URI'] ?? '' );
+	$next_page   = add_query_arg( array( 'pg' => $next_page_token, 'type' => $type ), $actual_link );
+	?>
+        <a href="<?php echo esc_url( $next_page ); ?>"><?php _e( 'Next Results', 'video-conferencing-with-zoom-api' ); ?></a>
+	<?php
 }
 
 /**

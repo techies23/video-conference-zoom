@@ -9,6 +9,8 @@ use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\Links;
 use Codemanas\VczApi\Helpers\MeetingType;
+use Codemanas\VczApi\Shortcodes\Assets;
+use Codemanas\VczApi\Shortcodes\Support\ZoomResponse;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -87,7 +89,8 @@ if ( ! function_exists( 'video_conference_zoom_meeting_details' ) ) {
  */
 function video_conference_zoom_meeting_end_author() {
     global $post;
-    $meeting = get_post_meta( $post->ID, '_meeting_zoom_details', true );
+    //Metastore so meetings saved by the 4.7.0 admin (`vczapi_*` meta) resolve too.
+    $meeting = ZoomResponse::to_array( Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' ) );
     $author  = vczapi_check_author( $post->ID );
     if ( ! $author ) {
         return;
@@ -100,21 +103,21 @@ function video_conference_zoom_meeting_end_author() {
                     'confirm_end' => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" )
             )
     );
-    wp_localize_script( 'video-conferencing-with-zoom-api', 'vczapi_state', $data );
+    wp_localize_script( Assets::SCRIPT_HANDLE, 'vczapi_state', $data );
 
-    if ( ! empty( $meeting->code ) ) {
+    if ( ! empty( $meeting['code'] ) ) {
         return;
     }
     ?>
     <div class="dpn-zvc-sidebar-state">
-        <?php if ( empty( $meeting->state ) ) { ?>
+        <?php if ( empty( $meeting['state'] ) ) { ?>
             <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="end"
                data-postid="<?php echo $post->ID; ?>"
-               data-id="<?php echo $meeting->id ?>"><?php _e( 'End Meeting ?', 'video-conferencing-with-zoom-api' ); ?></a>
+               data-id="<?php echo esc_attr( $meeting['id'] ?? '' ); ?>"><?php _e( 'End Meeting ?', 'video-conferencing-with-zoom-api' ); ?></a>
         <?php } else { ?>
             <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="resume"
                data-postid="<?php echo $post->ID; ?>"
-               data-id="<?php echo $meeting->id ?>"><?php _e( 'Enable Meeting Join ?', 'video-conferencing-with-zoom-api' ); ?></a>
+               data-id="<?php echo esc_attr( $meeting['id'] ?? '' ); ?>"><?php _e( 'Enable Meeting Join ?', 'video-conferencing-with-zoom-api' ); ?></a>
         <?php } ?>
         <p><?php _e( 'You are seeing this because you are the author of this post.', 'video-conferencing-with-zoom-api' ); ?></p>
     </div>
@@ -148,7 +151,7 @@ function video_conference_zoom_meeting_join() {
                     'page'         => 'single-meeting'
             );
             $data               = apply_filters( 'vczapi_single_meeting_localized_data', $data );
-            wp_localize_script( 'video-conferencing-with-zoom-api', 'mtg_data', $data );
+            wp_localize_script( Assets::SCRIPT_HANDLE, 'mtg_data', $data );
         }
     } elseif ( ! empty( $zoom['api']->state ) && $zoom['api']->state == "ended" ) {
         echo "<p>" . __( 'This meeting has ended.', 'video-conferencing-with-zoom-api' ) . "</p>";
@@ -212,27 +215,21 @@ function video_conference_zoom_shortcode_join_link_webinar( $zoom_webinars ) {
         return;
     }
 
-    $now                = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_webinars->timezone ) );
+    $webinar             = ZoomResponse::to_array( $zoom_webinars );
+    $webinar_timezone    = $webinar['timezone'] ?? 'UTC';
+    $now                 = new DateTime( 'now -1 hour', new DateTimeZone( $webinar_timezone ) );
     $closest_occurrence = false;
-    if ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_fixed_time_webinar( $zoom_webinars->type ) && ! empty( $zoom_webinars->occurrences ) ) {
-        foreach ( $zoom_webinars->occurrences as $occurrence ) {
-            if ( $occurrence->status === "available" ) {
-                $start_date = new DateTime( $occurrence->start_time, new DateTimeZone( $zoom_webinars->timezone ) );
-                if ( $start_date >= $now ) {
-                    $closest_occurrence = $occurrence->start_time;
-                    break;
-                }
-            }
-        }
-    } elseif ( empty( $zoom_webinars->occurrences ) ) {
-        $zoom_webinars->start_time = false;
-    } elseif ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_no_fixed_time_webinar( $zoom_webinars->type ) ) {
-        $zoom_webinars->start_time = false;
+    $webinar_start_time  = $webinar['start_time'] ?? false;
+
+    if ( ! empty( $webinar['type'] ) && MeetingType::is_recurring_fixed_time_webinar( $webinar['type'] ) && ! empty( $webinar['occurrences'] ) ) {
+        $closest_occurrence = video_conference_zoom_closest_occurrence( $webinar['occurrences'], $webinar_timezone, $now );
+    } elseif ( empty( $webinar['occurrences'] ) || ( ! empty( $webinar['type'] ) && MeetingType::is_recurring_no_fixed_time_webinar( $webinar['type'] ) ) ) {
+        $webinar_start_time = false;
     }
 
-    $start_time = ! empty( $closest_occurrence ) ? $closest_occurrence : $zoom_webinars->start_time;
-    $start_time = new DateTime( $start_time, new DateTimeZone( $zoom_webinars->timezone ) );
-    $start_time->setTimezone( new DateTimeZone( $zoom_webinars->timezone ) );
+    $start_time = ! empty( $closest_occurrence ) ? $closest_occurrence : $webinar_start_time;
+    $start_time = new DateTime( $start_time, new DateTimeZone( $webinar_timezone ) );
+    $start_time->setTimezone( new DateTimeZone( $webinar_timezone ) );
     if ( $now <= $start_time ) {
         unset( $GLOBALS['webinars'] );
 
@@ -240,18 +237,45 @@ function video_conference_zoom_shortcode_join_link_webinar( $zoom_webinars ) {
                 'link_only' => true
         ];
 
-        if ( ! empty( $zoom_webinars->password ) ) {
-            $args['password'] = $zoom_webinars->password;
+        if ( ! empty( $webinar['password'] ) ) {
+            $args['password'] = $webinar['password'];
         }
 
-        $browser_join        = Links::getJoinViaBrowserJoinLinks( $args, $zoom_webinars->id );
-        $join_url            = ! empty( $zoom_webinars->encrypted_password ) ? Links::getPwdEmbeddedJoinLink( $zoom_webinars->join_url, $zoom_webinars->encrypted_password ) : $zoom_webinars->join_url;
+        $browser_join = Links::getJoinViaBrowserJoinLinks( $args, $webinar['id'] ?? '' );
+        $join_url     = ! empty( $webinar['encrypted_password'] ) ? Links::getPwdEmbeddedJoinLink( $webinar['join_url'] ?? '', $webinar['encrypted_password'] ) : ( $webinar['join_url'] ?? '' );
         $GLOBALS['webinars'] = array(
-                'join_uri'    => apply_filters( 'vczoom_join_webinar_via_app_shortcode', $join_url, $zoom_webinars ),
+                'join_uri'    => apply_filters( 'vczoom_join_webinar_via_app_shortcode', $join_url, $webinar ),
                 'browser_url' => ! vczapi_check_disable_joinViaBrowser() ? apply_filters( 'vczoom_join_webinar_via_browser_disable', $browser_join ) : false
         );
         vczapi_get_template( 'shortcode/webinar-join-links.php', true, false );
     }
+}
+
+/**
+ * Find the next available occurrence of a recurring meeting or webinar.
+ *
+ * @param array|DateTimeInterface $occurrences Occurrence list.
+ * @param string                  $timezone    Occurrence timezone.
+ * @param DateTimeInterface       $now         Reference point, one hour ago by default.
+ *
+ * @return string|false Start time of the next occurrence, or false when there is none.
+ */
+function video_conference_zoom_closest_occurrence( $occurrences, string $timezone, DateTimeInterface $now ) {
+    foreach ( (array) $occurrences as $occurrence ) {
+        $occurrence = ZoomResponse::to_array( $occurrence );
+
+        if ( empty( $occurrence['start_time'] ) || 'available' !== ( $occurrence['status'] ?? '' ) ) {
+            continue;
+        }
+
+        $start_date = new DateTime( $occurrence['start_time'], new DateTimeZone( $timezone ) );
+
+        if ( $start_date >= $now ) {
+            return $occurrence['start_time'];
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -271,33 +295,22 @@ function video_conference_zoom_shortcode_join_link( $zoom_meetings ) {
         return;
     }
 
-    if ( empty( $zoom_meetings->timezone ) ) {
-        $zoom_meetings->timezone = Date::get_timezone_offset();
+    $meeting              = ZoomResponse::to_array( $zoom_meetings );
+    $meeting_timezone     = ! empty( $meeting['timezone'] ) ? $meeting['timezone'] : Date::get_timezone_offset();
+    $now                  = new DateTime( 'now -1 hour', new DateTimeZone( $meeting_timezone ) );
+    $closest_occurrence  = false;
+    $meeting_start_time   = $meeting['start_time'] ?? false;
+    $meeting_type         = $meeting['type'] ?? 0;
+
+    if ( $meeting_type && MeetingType::is_recurring_meeting_or_webinar( $meeting_type ) && ! empty( $meeting['occurrences'] ) ) {
+        $closest_occurrence = video_conference_zoom_closest_occurrence( $meeting['occurrences'], $meeting_timezone, $now );
+    } elseif ( empty( $meeting['occurrences'] ) || MeetingType::is_recurring_no_fixed_time_meeting( $meeting_type ) || MeetingType::is_pmi( $meeting_type ) ) {
+        $meeting_start_time = false;
     }
 
-    $now                = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_meetings->timezone ) );
-    $closest_occurrence = false;
-    if ( ! empty( $zoom_meetings->type ) && MeetingType::is_recurring_meeting_or_webinar( $zoom_meetings->type ) && ! empty( $zoom_meetings->occurrences ) ) {
-        foreach ( $zoom_meetings->occurrences as $occurrence ) {
-            if ( $occurrence->status === "available" ) {
-                $start_date = new DateTime( $occurrence->start_time, new DateTimeZone( $zoom_meetings->timezone ) );
-                if ( $start_date >= $now ) {
-                    $closest_occurrence = $occurrence->start_time;
-                    break;
-                }
-            }
-        }
-    } elseif ( empty( $zoom_meetings->occurrences ) ) {
-        $zoom_meetings->start_time = false;
-    } elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_recurring_no_fixed_time_meeting( MeetingType::is_recurring_no_fixed_time_meeting( $zoom_meetings->type ) ) ) {
-        $zoom_meetings->start_time = false;
-    } elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_pmi( $zoom_meetings->type ) ) {
-        $zoom_meetings->start_time = false;
-    }
-
-    $start_time = ! empty( $closest_occurrence ) ? $closest_occurrence : $zoom_meetings->start_time;
-    $start_time = new DateTime( $start_time, new DateTimeZone( $zoom_meetings->timezone ) );
-    $start_time->setTimezone( new DateTimeZone( $zoom_meetings->timezone ) );
+    $start_time = ! empty( $closest_occurrence ) ? $closest_occurrence : $meeting_start_time;
+    $start_time = new DateTime( $start_time, new DateTimeZone( $meeting_timezone ) );
+    $start_time->setTimezone( new DateTimeZone( $meeting_timezone ) );
     if ( $now <= $start_time ) {
         unset( $GLOBALS['meetings'] );
 
@@ -305,14 +318,14 @@ function video_conference_zoom_shortcode_join_link( $zoom_meetings ) {
                 'link_only' => true
         ];
 
-        if ( ! empty( $zoom_meetings->password ) ) {
-            $args['password'] = $zoom_meetings->password;
+        if ( ! empty( $meeting['password'] ) ) {
+            $args['password'] = $meeting['password'];
         }
 
-        $browser_join        = Links::getJoinViaBrowserJoinLinks( $args, $zoom_meetings->id );
-        $join_url            = ! empty( $zoom_meetings->encrypted_password ) ? Links::getPwdEmbeddedJoinLink( $zoom_meetings->join_url, $zoom_meetings->encrypted_password ) : $zoom_meetings->join_url;
+        $browser_join = Links::getJoinViaBrowserJoinLinks( $args, $meeting['id'] ?? '' );
+        $join_url     = ! empty( $meeting['encrypted_password'] ) ? Links::getPwdEmbeddedJoinLink( $meeting['join_url'] ?? '', $meeting['encrypted_password'] ) : ( $meeting['join_url'] ?? '' );
         $GLOBALS['meetings'] = array(
-                'join_uri'    => apply_filters( 'vczoom_join_meeting_via_app_shortcode', $join_url, $zoom_meetings ),
+                'join_uri'    => apply_filters( 'vczoom_join_meeting_via_app_shortcode', $join_url, $meeting ),
                 'browser_url' => ! Metastore::checkDisableJoinViaBrowser() ? apply_filters( 'vczoom_join_meeting_via_browser_disable', $browser_join ) : false
         );
         vczapi_get_template( 'shortcode/join-links.php', true, false );
@@ -331,35 +344,45 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
      * @author Deepen
      */
     function video_conference_zoom_shortcode_table( $zoom_meetings ) {
+        if ( empty( $zoom_meetings ) ) {
+            echo "<p>" . __( 'Meeting is not defined. Try updating this meeting', 'video-conferencing-with-zoom-api' ) . "</p>";
+
+            return;
+        }
+
+        $meeting          = ZoomResponse::to_array( $zoom_meetings );
         $hide_join_link_nloggedusers = get_option( 'zoom_api_hide_shortcode_join_links' );
+        $meeting_timezone = $meeting['timezone'] ?? 'UTC';
         ?>
         <table class="vczapi-shortcode-meeting-table">
             <tr class="vczapi-shortcode-meeting-table--row1">
                 <td><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo $zoom_meetings->id; ?></td>
+                <td><?php echo esc_html( $meeting['id'] ?? '' ); ?></td>
             </tr>
             <tr class="vczapi-shortcode-meeting-table--row2">
                 <td><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo $zoom_meetings->topic; ?></td>
+                <td><?php echo esc_html( $meeting['topic'] ?? '' ); ?></td>
             </tr>
             <tr class="vczapi-shortcode-meeting-table--row3">
                 <td><?php _e( 'Meeting Status', 'video-conferencing-with-zoom-api' ); ?></td>
                 <td>
                     <?php
-                    if ( $zoom_meetings->status === "waiting" ) {
+                    $status = $meeting['status'] ?? '';
+                    if ( 'waiting' === $status ) {
                         _e( 'Waiting - Not started', 'video-conferencing-with-zoom-api' );
-                    } elseif ( $zoom_meetings->status === "started" ) {
+                    } elseif ( 'started' === $status ) {
                         _e( 'Meeting is in Progress', 'video-conferencing-with-zoom-api' );
                     } else {
-                        echo $zoom_meetings->status;
+                        echo esc_html( $status );
                     }
                     ?>
                     <p class="small-description"><?php _e( 'Refresh is needed to change status.', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
             <?php
-            if ( ! empty( $zoom_meetings->type ) && MeetingType::is_recurring_fixed_time_meeting( $zoom_meetings->type ) ) {
-                if ( ! empty( $zoom_meetings->occurrences ) ) {
+            $meeting_type = $meeting['type'] ?? 0;
+            if ( $meeting_type && MeetingType::is_recurring_fixed_time_meeting( $meeting_type ) ) {
+                if ( ! empty( $meeting['occurrences'] ) ) {
                     ?>
                     <tr class="vczapi-shortcode-meeting-table--row4">
                         <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
@@ -367,31 +390,17 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
                     </tr>
                     <tr class="vczapi-shortcode-meeting-table--row4">
                         <td><?php _e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
-                        <td><?php echo count( $zoom_meetings->occurrences ); ?></td>
+                        <td><?php echo count( (array) $meeting['occurrences'] ); ?></td>
                     </tr>
                     <tr class="vczapi-shortcode-meeting-table--row5">
                         <td><?php _e( 'Next Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
                         <td>
                             <?php
-                            $now               = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_meetings->timezone ) );
-                            $closest_occurence = false;
-                            if ( ! empty( $zoom_meetings->type ) && MeetingType::is_recurring_fixed_time_meeting( $zoom_meetings->type ) && ! empty( $zoom_meetings->occurrences ) ) {
-                                foreach ( $zoom_meetings->occurrences as $occurrence ) {
-                                    if ( $occurrence->status === "available" ) {
-                                        $start_date = new DateTime( $occurrence->start_time, new DateTimeZone( $zoom_meetings->timezone ) );
-                                        if ( $start_date >= $now ) {
-                                            $closest_occurence = $occurrence->start_time;
-                                            break;
-                                        }
+                            $now                 = new DateTime( 'now -1 hour', new DateTimeZone( $meeting_timezone ) );
+                            $closest_occurrence = video_conference_zoom_closest_occurrence( $meeting['occurrences'], $meeting_timezone, $now );
 
-                                        _e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if ( $closest_occurence ) {
-                                echo Date::dateConverter( $closest_occurence, $zoom_meetings->timezone, 'F j, Y @ g:i a' );
+                            if ( $closest_occurrence ) {
+                                echo esc_html( Date::dateConverter( $closest_occurrence, $meeting_timezone, 'F j, Y @ g:i a' ) );
                             } else {
                                 _e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
                             }
@@ -407,49 +416,45 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
                     </tr>
                     <?php
                 }
-            } elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_recurring_no_fixed_time_meeting( $zoom_meetings->type ) ) {
+            } elseif ( $meeting_type && MeetingType::is_recurring_no_fixed_time_meeting( $meeting_type ) ) {
                 ?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td><?php _e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
                 <?php
-            } elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_pmi( $zoom_meetings->type ) ) {
+            } elseif ( $meeting_type && MeetingType::is_pmi( $meeting_type ) ) {
                 ?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td><?php _e( 'Personal Meeting Room', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
                 <?php
-            } elseif ( ! empty( $zoom_meetings->start_time ) ) {
+            } elseif ( ! empty( $meeting['start_time'] ) ) {
                 ?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
                     <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo Date::dateConverter( $zoom_meetings->start_time, $zoom_meetings->timezone, 'F j, Y @ g:i a' ); ?></td>
+                    <td><?php echo esc_html( Date::dateConverter( $meeting['start_time'], $meeting_timezone, 'F j, Y @ g:i a' ) ); ?></td>
                 </tr>
             <?php } ?>
-            <?php if ( ! empty( $zoom_meetings->timezone ) ) { ?>
+            <?php if ( ! empty( $meeting_timezone ) ) { ?>
                 <tr class="vczapi-shortcode-meeting-table--row7">
                     <td><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo $zoom_meetings->timezone; ?></td>
+                    <td><?php echo esc_html( $meeting_timezone ); ?></td>
                 </tr>
             <?php } ?>
-            <?php if ( ! empty( $zoom_meetings->duration ) ) { ?>
+            <?php if ( ! empty( $meeting['duration'] ) ) { ?>
                 <tr class="zvc-table-shortcode-duration">
                     <td><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo $zoom_meetings->duration; ?></td>
+                    <td><?php echo esc_html( $meeting['duration'] ); ?></td>
                 </tr>
                 <?php
             }
 
-            do_action( 'vczoom_meeting_shortcode_additional_fields', $zoom_meetings );
+            do_action( 'vczoom_meeting_shortcode_additional_fields', $meeting );
 
-            if ( ! empty( $hide_join_link_nloggedusers ) ) {
-                if ( is_user_logged_in() ) {
-                    $show_join_links = true;
-                } else {
-                    $show_join_links = false;
-                }
+            if ( $hide_join_link_nloggedusers ) {
+                $show_join_links = is_user_logged_in();
             } else {
                 $show_join_links = true;
             }
@@ -461,7 +466,7 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
                  * @video_conference_zoom_shortcode_join_link - 10
                  *
                  */
-                do_action( 'vczoom_meeting_shortcode_join_links', $zoom_meetings );
+                do_action( 'vczoom_meeting_shortcode_join_links', $meeting );
             }
             ?>
         </table>
@@ -499,8 +504,10 @@ function video_conference_zoom_before_post_loop() {
     unset( $GLOBALS['zoom'] );
     $post_id               = get_the_id();
     $show_zoom_author_name = get_option( 'zoom_show_author' );
-    $GLOBALS['zoom']       = get_post_meta( $post_id, '_meeting_fields', true ); //For Backwards Compatibility ( Will be removed someday )
-    $meeting_details       = get_post_meta( $post_id, '_meeting_zoom_details', true );
+    //Read through Metastore so meetings saved by the 4.7.0 admin
+    //(`vczapi_meeting_fields`) resolve as well as legacy `_meeting_fields` posts.
+    $GLOBALS['zoom']       = ZoomResponse::to_array( Metastore::getPostMeta( $post_id, 'meeting_fields' ) );
+    $meeting_details       = Metastore::getPostMeta( $post_id, 'meeting_zoom_details' );
     $meeting_author        = get_the_author();
     if ( ! empty( $show_zoom_author_name ) ) {
         $meeting_author = vczapi_get_meeting_author( $post_id, $meeting_details, $meeting_author );
@@ -570,7 +577,9 @@ function vczapi_get_single_or_zoom_template( $post, $template = false ) {
     }
     $GLOBALS['zoom']['host_name'] = ! empty( $meeting_author ) ? $meeting_author : false;
     if ( ! empty( $meeting_details ) ) {
-        $GLOBALS['zoom']['api'] = $meeting_details;
+//Legacy meta is stored as stdClass, 4.7.0 meta as an array. Wrapping it keeps
+    //both `$zoom['api']['type']` and `$zoom['api']->type` working for templates.
+    $GLOBALS['zoom']['api'] = \Codemanas\VczApi\Shortcodes\Support\ZoomResponse::make( $meeting_details );
     }
 
     $terms = get_the_terms( $post->ID, 'zoom-meeting' );

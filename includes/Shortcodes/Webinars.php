@@ -2,23 +2,42 @@
 
 namespace Codemanas\VczApi\Shortcodes;
 
+use Codemanas\VczApi\Helpers\Config;
+use Codemanas\VczApi\Shortcodes\Support\ZoomResponse;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+/**
+ * Webinar shortcodes.
+ *
+ * Public callbacks: `show_webinar_by_ID()`, `list_cpt_webinars()`,
+ * `list_live_host_webinars()`.
+ *
+ * Webinars share the meeting custom post type and the `zoom-meeting` taxonomy
+ * with meetings; they are separated by the `_vczapi_meeting_type` post meta.
+ *
+ * @since 3.0.0
+ */
 class Webinars {
 
 	/**
-	 * Define post type
-	 *
-	 * @var string
+	 * @var Webinars|null
 	 */
-	private $post_type = 'zoom-meetings';
-
 	private static ?Webinars $_instance = null;
 
 	/**
-	 * Create only one instance so that it may not Repeat
+	 * Post type holding Zoom webinars.
 	 *
-	 * @since 2.0.0
+	 * @var string
 	 */
-	public static function get_instance() {
+	private string $post_type;
+
+	/**
+	 * @return Webinars
+	 */
+	public static function get_instance(): Webinars {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -26,153 +45,21 @@ class Webinars {
 		return self::$_instance;
 	}
 
-	/**
-	 * Get a scalar value.
-	 *
-	 * @param mixed  $value   Value to normalize.
-	 * @param string $default Default value.
-	 *
-	 * @return string
-	 */
-	private function get_scalar_value( $value, string $default = '' ): string {
-		if ( is_array( $value ) || is_object( $value ) ) {
-			return $default;
-		}
-
-		return (string) $value;
+	public function __construct() {
+		$this->post_type = Config::get( 'post_type' );
 	}
 
 	/**
-	 * Normalize a yes/no value.
+	 * Show a single webinar by Zoom webinar ID.
 	 *
-	 * @param mixed  $value   Value to normalize.
-	 * @param string $default Default value.
-	 *
-	 * @return string
-	 */
-	private function sanitize_yes_no_attribute( $value, string $default = 'no' ): string {
-		$value = strtolower( $this->get_scalar_value( $value, $default ) );
-
-		return in_array( $value, [ 'yes', 'no' ], true ) ? $value : $default;
-	}
-
-	/**
-	 * Sanitize a Zoom numeric webinar ID.
-	 *
-	 * @param mixed $value Value to sanitize.
-	 *
-	 * @return string
-	 */
-	private function sanitize_zoom_numeric_id( $value ): string {
-		return preg_replace( '/[^0-9]/', '', $this->get_scalar_value( $value ) );
-	}
-
-	/**
-	 * Sanitize a Zoom host identifier.
-	 *
-	 * Zoom host IDs are expected to be alphanumeric API identifiers or email-like
-	 * identifiers. This intentionally strips shortcode syntax.
-	 *
-	 * @param mixed $value Value to sanitize.
-	 *
-	 * @return string
-	 */
-	private function sanitize_zoom_host_id( $value ): string {
-		return preg_replace( '/[^A-Za-z0-9_\-@.]/', '', $this->get_scalar_value( $value ) );
-	}
-
-	/**
-	 * Normalize shortcode order value.
-	 *
-	 * @param mixed  $value   Value to normalize.
-	 * @param string $default Default value.
-	 *
-	 * @return string
-	 */
-	private function sanitize_order_attribute( $value, string $default = 'DESC' ): string {
-		$value = strtoupper( $this->get_scalar_value( $value, $default ) );
-
-		return in_array( $value, [ 'ASC', 'DESC' ], true ) ? $value : $default;
-	}
-
-	/**
-	 * Normalize webinar list type.
-	 *
-	 * @param mixed  $value   Value to normalize.
-	 * @param string $default Default value.
-	 *
-	 * @return string
-	 */
-	private function sanitize_list_type_attribute( $value, string $default = '' ): string {
-		$value = strtolower( $this->get_scalar_value( $value, $default ) );
-
-		return in_array( $value, [ 'upcoming', 'past' ], true ) ? $value : $default;
-	}
-
-	/**
-	 * Sanitize a comma-separated category slug list.
-	 *
-	 * @param mixed $value Value to sanitize.
-	 *
-	 * @return array
-	 */
-	private function sanitize_category_slugs( $value ): array {
-		$value = $this->get_scalar_value( $value );
-
-		if ( '' === $value ) {
-			return [];
-		}
-
-		$categories = array_map( 'trim', explode( ',', $value ) );
-		$categories = array_map( 'sanitize_title', $categories );
-		$categories = array_filter( $categories );
-
-		return array_values( array_unique( $categories ) );
-	}
-
-	/**
-	 * Normalize attributes for webinar list shortcodes.
+	 * `[zoom_api_webinar]`
 	 *
 	 * @param array $atts Shortcode attributes.
 	 *
-	 * @return array
+	 * @return string
 	 */
-	private function sanitize_list_shortcode_atts( array $atts ): array {
-		$atts['author']       = ! empty( $atts['author'] ) ? absint( $atts['author'] ) : '';
-		$atts['per_page']     = ! empty( $atts['per_page'] ) ? absint( $atts['per_page'] ) : 5;
-		$atts['category']     = implode( ',', $this->sanitize_category_slugs( $atts['category'] ?? '' ) );
-		$atts['order']        = $this->sanitize_order_attribute( $atts['order'] ?? 'DESC', 'DESC' );
-		$atts['type']         = $this->sanitize_list_type_attribute( $atts['type'] ?? '', '' );
-		$atts['filter']       = $this->sanitize_yes_no_attribute( $atts['filter'] ?? 'yes', 'yes' );
-		$atts['show_on_past'] = $this->sanitize_yes_no_attribute( $atts['show_on_past'] ?? 'yes', 'yes' );
-		$atts['cols']         = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
-
-		if ( empty( $atts['per_page'] ) ) {
-			$atts['per_page'] = 5;
-		}
-
-		if ( empty( $atts['cols'] ) ) {
-			$atts['cols'] = 3;
-		}
-
-		return $atts;
-	}
-
-	/**
-	 * Show Webinar based on Webinar ID
-	 *
-	 * @param $atts
-	 *
-	 * @return bool|false|string
-	 * @author Deepen
-	 *
-	 * @since  3.0.4
-	 */
-	public function show_webinar_by_ID( $atts ) {
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api' );
+	public function show_webinar_by_ID( $atts ): string {
+		Assets::enqueue();
 
 		$atts = shortcode_atts(
 			[
@@ -183,203 +70,170 @@ class Webinars {
 			'zoom_api_webinar'
 		);
 
-		$webinar_id = $this->sanitize_zoom_numeric_id( $atts['webinar_id'] );
-		$link_only  = $this->sanitize_yes_no_attribute( $atts['link_only'], 'no' );
+		$webinar_id = AttributeSanitizer::numeric_id( $atts['webinar_id'] );
+		$link_only  = AttributeSanitizer::yes_no( $atts['link_only'], 'no' );
 
-		unset( $GLOBALS['vanity_uri'] );
-		unset( $GLOBALS['zoom_webinars'] );
+		unset( $GLOBALS['vanity_uri'], $GLOBALS['zoom_webinars'] );
+
+		if ( empty( $webinar_id ) ) {
+			return '<h4 class="no-meeting-id"><strong style="color:red;">'
+				. esc_html__( 'ERROR: ', 'video-conferencing-with-zoom-api' )
+				. '</strong>' . esc_html__( 'No webinar id set in the shortcode', 'video-conferencing-with-zoom-api' )
+				. '</h4>';
+		}
+
+		$response = zoom_conference_v2()->webinars()->get( $webinar_id );
+		$error    = Helpers::error_message( $response );
+		$webinar  = ZoomResponse::make( $response );
+
+		$GLOBALS['vanity_uri']    = get_option( 'zoom_vanity_url' );
+		$GLOBALS['zoom_webinars'] = $webinar;
+
+		if ( ! empty( $error ) ) {
+			return '<p class="dpn-error dpn-mtg-not-found">' . esc_html( $error ) . '</p>';
+		}
 
 		ob_start();
-		if ( empty( $webinar_id ) ) {
-			echo '<h4 class="no-meeting-id"><strong style="color:red;">' . esc_html__( 'ERROR: ', 'video-conferencing-with-zoom-api' ) . '</strong>' . esc_html__( 'No webinar id set in the shortcode', 'video-conferencing-with-zoom-api' ) . '</h4>';
 
-			return false;
-		}
-
-		$vanity_uri               = get_option( 'zoom_vanity_url' );
-		$webinar                  = Helpers::fetch_webinar( $webinar_id );
-		$GLOBALS['vanity_uri']    = $vanity_uri;
-		$GLOBALS['zoom_webinars'] = $webinar;
-		if ( ! empty( $webinar ) && ! empty( $webinar->code ) ) {
-			?>
-            <p class="dpn-error dpn-mtg-not-found"><?php echo esc_html( $webinar->message ); ?></p>
-			<?php
+		if ( 'yes' === $link_only ) {
+			Helpers::generate_link_only();
+		} elseif ( $webinar ) {
+			vczapi_get_template( 'shortcode/zoom-webinar.php', true, false );
 		} else {
-			if ( ! empty( $link_only ) && $link_only === "yes" ) {
-				Helpers::generate_link_only();
-			} else {
-				if ( $webinar ) {
-					//Get Template
-					vczapi_get_template( 'shortcode/zoom-webinar.php', true, false );
-				} else {
-					printf( esc_html__( 'Please try again ! Some error occured while trying to fetch webinar with id:  %d', 'video-conferencing-with-zoom-api' ), absint( $webinar_id ) );
-				}
-			}
+			printf(
+				/* translators: %d: Zoom webinar ID */
+				esc_html__( 'Please try again ! Some error occured while trying to fetch webinar with id:  %d', 'video-conferencing-with-zoom-api' ),
+				absint( $webinar_id )
+			);
 		}
 
-		return ob_get_clean();
+		return (string) ob_get_clean();
 	}
 
 	/**
-	 * Show List of live webinars from your zoom account
+	 * List upcoming webinars of a Zoom host.
 	 *
-	 * @param $atts
+	 * `[zoom_list_host_webinars]`
 	 *
-	 * @return false|string|void
-	 * @author Deepen
+	 * @param array $atts Shortcode attributes.
 	 *
-	 * @since  3.0.4
+	 * @return string
 	 */
-	public function list_live_host_webinars( $atts ) {
+	public function list_live_host_webinars( $atts ): string {
 		$atts = shortcode_atts(
-			[
-				'host' => ''
-			],
+			[ 'host' => '' ],
 			$atts,
 			'zoom_list_host_webinars'
 		);
 
-		$host = $this->sanitize_zoom_host_id( $atts['host'] );
+		$host = AttributeSanitizer::host_id( $atts['host'] );
 
 		if ( empty( $host ) ) {
 			return esc_html__( 'Host ID should be given when defining this shortcode.', 'video-conferencing-with-zoom-api' );
 		}
 
-		wp_enqueue_style( 'video-conferencing-with-zoom-api-datable-responsive' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-responsive-js' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js' );
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
+		Assets::enqueue();
 
-		$webinars         = get_option( '_vczapi_user_webinars_for_' . $host );
-		$cache_expiration = get_option( '_vczapi_user_webinars_for_' . $host . '_expiration' );
-		if ( empty( $webinars ) || $cache_expiration < time() ) {
-			$encoded_meetings = zoom_conference()->listWebinar( $host );
-			$decoded_meetings = json_decode( $encoded_meetings );
-			if ( isset( $decoded_meetings->webinars ) ) {
-				$webinars = $decoded_meetings->webinars;
-				update_option( '_vczapi_user_webinars_for_' . $host, $webinars );
-				update_option( '_vczapi_user_webinars_for_' . $host . '_expiration', time() + 60 * 5 );
-			} else {
-				if ( ! empty( $decoded_meetings ) && ! empty( $decoded_meetings->code ) ) {
-					return '<strong>' . esc_html__( 'Zoom API Error:', 'video-conferencing-with-zoom-api' ) . '</strong>' . esc_html( $decoded_meetings->message );
-				} else {
-					return esc_html__( 'Could not retrieve webinars, check Host ID', 'video-conferencing-with-zoom-api' );
-				}
+		$webinars = Helpers::host_listing(
+			'_vczapi_user_webinars_for_' . $host,
+			'webinars',
+			__( 'Could not retrieve webinars, check Host ID', 'video-conferencing-with-zoom-api' ),
+			static function () use ( $host ) {
+				return zoom_conference_v2()->webinars()->list(
+					//Kept for back compat with the legacy `listWebinar()` argument filter.
+					apply_filters( 'vczapi_listWebinar', [
+						'user_id'   => $host,
+						'page_size' => 300,
+					] )
+				);
 			}
+		);
+
+		if ( is_wp_error( $webinars ) ) {
+			return '<strong>' . esc_html__( 'Zoom API Error:', 'video-conferencing-with-zoom-api' ) . '</strong>'
+				. esc_html( $webinars->get_error_message() );
 		}
 
 		ob_start();
-		vczapi_get_template( 'shortcode/list-webinars-host.php', true, false, $webinars );
+		vczapi_get_template( 'shortcode/list-webinars-host.php', true, false, ZoomResponse::makeList( $webinars ) ?? [] );
 
-		return ob_get_clean();
+		return (string) ob_get_clean();
 	}
 
 	/**
-	 * List webinars based on Custom Post Types
+	 * List webinars from the webinar custom post type.
 	 *
-	 * @param $atts
+	 * `[zoom_list_webinars]`
+	 *
+	 * @param array $atts Shortcode attributes.
 	 *
 	 * @return string
-	 * @since  3.6.0
-	 *
-	 * @author Deepen Bajracharya
 	 */
-	public function list_cpt_webinars( $atts ) {
-		$atts = shortcode_atts(
-			array(
-				'author'       => '',
-				'per_page'     => 5,
-				'category'     => '',
-				'order'        => 'DESC',
-				'type'         => '',
-				'filter'       => 'yes',
-				'show_on_past' => 'yes',
-				'cols'         => 3
-			),
-			$atts, 'zoom_list_webinars'
-		);
-
-		$atts = $this->sanitize_list_shortcode_atts( $atts );
-
-		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
-		if ( is_front_page() ) {
-			$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
-		} else {
-			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		}
-
-		$query_args = array(
-			'post_type'      => $this->post_type,
-			'posts_per_page' => $atts['per_page'],
-			'post_status'    => 'publish',
-			'paged'          => $paged,
-			'orderby'        => 'meta_value',
-			'meta_key'       => '_meeting_field_start_date_utc',
-			'order'          => $atts['order'],
-			'caller'         => ! empty( $atts['filter'] ) && $atts['filter'] === "yes" ? 'vczapi' : false,
-			'meta_query'     => array(
-				'relation' => 'AND',
-				array(
-					'relation' => 'OR',
-					array(
-						'key'     => '_vczapi_meeting_type',
-						'value'   => 'webinar',
-						'compare' => '='
-					)
-				)
+	public function list_cpt_webinars( $atts ): string {
+		$atts = ListingQuery::sanitize_atts(
+			shortcode_atts(
+				[
+					'author'       => '',
+					'per_page'     => 5,
+					'category'     => '',
+					'order'        => 'DESC',
+					'type'         => '',
+					'filter'       => 'yes',
+					'show_on_past' => 'yes',
+					'cols'         => 3,
+				],
+				$atts,
+				'zoom_list_webinars'
 			)
 		);
 
-		if ( ! empty( $atts['author'] ) ) {
-			$query_args['author'] = absint( $atts['author'] );
-		}
+		Assets::enqueue();
 
-		if ( ! empty( $atts['type'] ) && ! empty( $query_args['meta_query'] ) ) {
-			//NOTE !!!! When using this filter please correctly send minutes or hours otherwise it will output error
-			$threshold_limit = apply_filters( 'vczapi_list_cpt_meetings_threshold', '30 minutes' );
-			if ( $atts['show_on_past'] === "yes" && ! empty( $threshold_limit ) ) {
-				$threshold = ( $atts['type'] === "upcoming" ) ? vczapi_dateConverter( 'now -' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false ) : vczapi_dateConverter( 'now +' . $threshold_limit, 'UTC', 'Y-m-d H:i:s', false );
-			} else {
-				$threshold = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
-			}
+		//The webinar listing has always shared the meeting query filter.
+		$query = apply_filters( 'vczapi_meeting_list_query_args', $this->list_query( $atts ) );
 
-			$type       = ( $atts['type'] === "upcoming" ) ? '>=' : '<=';
-			$meta_query = array(
-				'key'     => '_meeting_field_start_date_utc',
-				'value'   => $threshold,
-				'compare' => $type,
-				'type'    => 'DATETIME'
-			);
-			array_push( $query_args['meta_query'], $meta_query );
-		}
+		$this->export_webinar_listing( new \WP_Query( $query ), $atts );
 
-		if ( ! empty( $atts['category'] ) ) {
-			$category                = $this->sanitize_category_slugs( $atts['category'] );
-			$query_args['tax_query'] = [
-				[
-					'taxonomy' => 'zoom-meeting',
-					'field'    => 'slug',
-					'terms'    => $category,
-					'operator' => 'IN'
-				]
-			];
-		}
-
-		$query         = apply_filters( 'vczapi_meeting_list_query_args', $query_args );
-		$zoom_meetings = new \WP_Query( $query );
-		$content       = '';
-
-		unset( $GLOBALS['zoom_meetings'] );
-		$GLOBALS['zoom_meetings']          = $zoom_meetings;
-		$GLOBALS['zoom_meetings']->columns = ! empty( $atts['cols'] ) ? absint( $atts['cols'] ) : 3;
-		//since list webinars shortcode is different from list meeting shortcode $atts['meeting_type'] needs to be defined explicitly here
-		//to be used in shortcode-listing.php otherwise it will cause issues.
-		//@todo: consider using singular webinar instead of webinars - must change code in list_meeting_ajax_handler function
-		$atts['meeting_type'] = 'webinars';
 		ob_start();
 		vczapi_get_template( 'shortcode-listing.php', true, false, $atts );
-		$content .= ob_get_clean();
 
-		return $content;
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * Build the listing query for the given attributes.
+	 *
+	 * @param array $atts Sanitized attributes.
+	 *
+	 * @return array
+	 */
+	private function list_query( array $atts ): array {
+		return ( new ListingQuery( ListingQuery::TYPE_WEBINARS ) )->build(
+			$atts,
+			[
+				'paged' => Meetings::current_page(),
+				'terms' => AttributeSanitizer::category_slugs( $atts['category'] ?? '' ),
+			]
+		);
+	}
+
+	/**
+	 * Expose a listing query to the listing templates.
+	 *
+	 * `$GLOBALS['zoom_meetings']` is deliberately shared with
+	 * {@see Meetings::list_cpt_meetings()}: `templates/shortcode-listing.php`
+	 * and `templates/shortcode/zoom-listing.php` read it for both entity types.
+	 *
+	 * @param \WP_Query $query Listing query.
+	 * @param array     $atts  Sanitized attributes.
+	 *
+	 * @return void
+	 */
+	private function export_webinar_listing( \WP_Query $query, array $atts ): void {
+		unset( $GLOBALS['zoom_meetings'] );
+
+		$query->columns = absint( $atts['cols'] );
+
+		$GLOBALS['zoom_meetings'] = $query;
 	}
 }

@@ -9,30 +9,35 @@
  * @version 3.9.0
  */
 
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\Encryption;
+use Codemanas\VczApi\Shortcodes\Support\ZoomResponse;
+
 global $zoom;
 
-$meeting_id = ! empty( $zoom ) && ! empty( $zoom->id ) ? $zoom->id : false;
+$zoom = ZoomResponse::to_array( $zoom );
+
+$meeting_id = $zoom['id'] ?? false;
 if ( ! $meeting_id ) {
 	return;
 }
 
-$shortcode_attributes = ! empty( $zoom->shortcode_attributes ) && is_array( $zoom->shortcode_attributes ) ? $zoom->shortcode_attributes : [];
+$attributes         = ZoomResponse::to_array( $zoom['shortcode_attributes'] ?? [] );
+$title              = $attributes['title'] ?? '';
+$passcode           = $attributes['passcode'] ?? '';
+$iframe             = $attributes['iframe'] ?? 'yes';
+$iframe_id          = $attributes['id'] ?? 'video-conferncing-embed-iframe';
+$iframe_height      = $attributes['height'] ?? '500px';
+$disable_countdown  = $attributes['disable_countdown'] ?? 'yes';
+$image              = $attributes['image'] ?? '';
 
-$title             = ! empty( $shortcode_attributes['title'] ) ? $shortcode_attributes['title'] : '';
-$passcode          = ! empty( $shortcode_attributes['passcode'] ) ? $shortcode_attributes['passcode'] : '';
-$iframe            = ! empty( $shortcode_attributes['iframe'] ) ? $shortcode_attributes['iframe'] : 'yes';
-$iframe_id         = ! empty( $shortcode_attributes['id'] ) ? $shortcode_attributes['id'] : 'video-conferncing-embed-iframe';
-$iframe_height     = ! empty( $shortcode_attributes['height'] ) ? $shortcode_attributes['height'] : '500px';
-$disable_countdown = ! empty( $shortcode_attributes['disable_countdown'] ) ? $shortcode_attributes['disable_countdown'] : 'yes';
-$image             = ! empty( $shortcode_attributes['image'] ) ? $shortcode_attributes['image'] : '';
+$topic      = $zoom['topic'] ?? '';
+$timezone   = $zoom['timezone'] ?? '';
+$password   = $zoom['password'] ?? '';
+$start_time = $zoom['start_time'] ?? '';
 
-$topic      = ! empty( $zoom->topic ) ? $zoom->topic : '';
-$timezone   = ! empty( $zoom->timezone ) ? $zoom->timezone : '';
-$password   = ! empty( $zoom->password ) ? $zoom->password : '';
-$start_time = ! empty( $zoom->start_time ) ? $zoom->start_time : '';
-
-$meeting_time_check    = ! empty( $zoom->meeting_time_check ) ? $zoom->meeting_time_check : 0;
-$meeting_timezone_time = ! empty( $zoom->meeting_timezone_time ) ? $zoom->meeting_timezone_time : 0;
+$meeting_time_check    = $zoom['meeting_time_check'] ?? 0;
+$meeting_timezone_time = $zoom['meeting_timezone_time'] ?? 0;
 
 if ( ! empty( $title ) ) {
 	?>
@@ -40,21 +45,23 @@ if ( ! empty( $title ) ) {
 	<?php
 }
 
-$post_type_link    = get_post_type_archive_link( 'zoom-meetings' );
 $browser_join_link = [
-	'join' => \Codemanas\VczApi\Helpers\Encryption::encrypt( $meeting_id ),
+	'join' => Encryption::encrypt( $meeting_id ),
 	'type' => 'meeting',
 ];
 
 if ( ! empty( $passcode ) ) {
-	$browser_join_link['pak'] = \Codemanas\VczApi\Helpers\Encryption::encrypt( $passcode );
+	$browser_join_link['pak'] = Encryption::encrypt( $passcode );
 }
 
+$post_type_link       = get_post_type_archive_link( 'zoom-meetings' );
 $join_via_browser_link = add_query_arg( $browser_join_link, $post_type_link );
 $iframe_style          = 'width:100%; height:' . $iframe_height . ';';
 
-if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ $meeting_id ]['state'] == 'ended' ) {
-	echo '<h3>' . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api ' ) . '</h3>';
+$meeting_state = $zoom['zoom_states'][ $meeting_id ]['state'] ?? '';
+
+if ( 'ended' === $meeting_state ) {
+	echo '<h3>' . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api' ) . '</h3>';
 } elseif ( $meeting_time_check > $meeting_timezone_time && 'no' === $disable_countdown ) {
 	?>
 	<div class="vczapi-jvb-countdown-wrapper">
@@ -86,9 +93,9 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php if ( 'yes' === $iframe ) {
+if ( 'yes' === $iframe ) {
 	if ( $meeting_time_check < $meeting_timezone_time || 'yes' === $disable_countdown ) {
 		?>
 		<div class="vczapi-jvb-wrapper zoom-window-wrap">
@@ -109,15 +116,13 @@ if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ 
 			<div class="vczapi-jvb-countdown-content-description">
 				<h2 class="vczapi-jvb-countdown-content-description-topic"><?php echo esc_html( $topic ); ?></h2>
 				<?php if ( ! empty( $start_time ) ) { ?>
-					<div class="vczapi-jvb-countdown-content-description-time"><strong><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $start_time, $timezone )); ?>
-                    </div>
-				<?php } ?>
+					<div class="vczapi-jvb-countdown-content-description-time"><strong><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( Date::dateConverter( $start_time, $timezone ) ); ?></div>
+                <?php } ?>
 				<div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php esc_html_e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( $timezone ); ?></div>
 				<div class="vczapi-jvb-countdown-content-description-timezone"><strong><?php esc_html_e( 'Password', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( $password ); ?></div>
 			</div>
 			<div class="vczapi-jvb-countdown-content-links">
 				<a class="btn btn-join-link btn-join-via-app" href="<?php echo esc_url( $join_via_browser_link ); ?>"><?php esc_html_e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?></a>
-				<!--            <a class="btn btn-join-link btn-join-via-browser" href="--><?php //echo $zoom->join_link; ?><!--">Join via Zoom App</a>-->
 			</div>
 		</div>
 	</div>

@@ -8,6 +8,16 @@
  * @since 3.4.0
  * @version 3.4.0
  */
+
+use Codemanas\VczApi\Helpers\Date;
+
+$meetings = ! empty( $args ) ? (array) $args : [];
+
+$status_icons = [
+	0 => '<img src="' . esc_url( ZVC_PLUGIN_IMAGES_PATH ) . '/2.png" style="width:14px;" title="Not Started" alt="Not Started">',
+	1 => '<img src="' . esc_url( ZVC_PLUGIN_IMAGES_PATH ) . '/3.png" style="width:14px;" title="Completed" alt="Completed">',
+	2 => '<img src="' . esc_url( ZVC_PLUGIN_IMAGES_PATH ) . '/1.png" style="width:14px;" title="Currently Live" alt="Live">',
+];
 ?>
 
 <table id="vczapi-show-meetings-list-table" class="responsive nowrap vczapi-user-meeting-list">
@@ -22,36 +32,29 @@
     </thead>
     <tbody>
 	<?php
-	if ( ! empty( $args ) ) {
-		foreach ( $args as $meeting ) {
-			$meeting->password = ! empty( $meeting->password ) ? $meeting->password : false;
-			$meeting_status    = '';
-			if ( ! empty( $meeting->status ) ) {
-				switch ( $meeting->status ) {
-					case 0;
-						$meeting_status = '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/2.png" style="width:14px;" title="Not Started" alt="Not Started">';
-						break;
-					case 1;
-						$meeting_status = '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/3.png" style="width:14px;" title="Completed" alt="Completed">';
-						break;
-					case 2;
-						$meeting_status = '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/1.png" style="width:14px;" title="Currently Live" alt="Live">';
-						break;
-					default;
-						break;
-				}
-			} else {
-				$meeting_status = "N/A";
-			}
+	foreach ( $meetings as $meeting ) {
+		$meeting = (array) $meeting;
 
-			echo '<td>' . $meeting->topic . '</td>';
-			echo '<td>' . $meeting_status . '</td>';
-			echo '<td>' . \Codemanas\VczApi\Helpers\Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) . '</td>';
-			echo '<td>' . $meeting->timezone . '</td>';
-			echo '<td><div class="view">
-<a href="' . $meeting->join_url . '" rel="permalink" target="_blank">' . __( 'Join via App', 'video-conferencing-with-zoom-api' ) . '</a></div><div class="view">' . vczapi_get_browser_join_shortcode( $meeting->id, $meeting->password, false, ' / ' ) . '</div></td>';
-			echo '</tr>';
+		$status = $meeting['status'] ?? null;
+		if ( null === $status || '' === $status ) {
+			$meeting_status = 'N/A';
+		} else {
+			$meeting_status = $status_icons[ (int) $status ] ?? '';
 		}
+
+		$passcode = ! empty( $meeting['password'] ) ? $meeting['password'] : false;
+		?>
+		<tr>
+			<td><?php echo esc_html( $meeting['topic'] ?? '' ); ?></td>
+			<td><?php echo wp_kses_post( $meeting_status ); ?></td>
+			<td><?php echo esc_html( Date::dateConverter( $meeting['start_time'] ?? '', $meeting['timezone'] ?? '', 'F j, Y, g:i a' ) ); ?></td>
+			<td><?php echo esc_html( $meeting['timezone'] ?? '' ); ?></td>
+			<td>
+				<div class="view"><a href="<?php echo esc_url( $meeting['join_url'] ?? '' ); ?>" rel="permalink noopener" target="_blank"><?php esc_html_e( 'Join via App', 'video-conferencing-with-zoom-api' ); ?></a></div>
+				<div class="view"><?php echo vczapi_get_browser_join_shortcode( $meeting['id'] ?? '', $passcode, false, ' / ' ); ?></div>
+			</td>
+		</tr>
+	<?php
 	}
 	?>
     </tbody>

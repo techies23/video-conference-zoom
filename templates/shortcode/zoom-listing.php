@@ -9,9 +9,15 @@
  * @version     3.6.0
  */
 
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\MeetingType;
+use Codemanas\VczApi\Shortcodes\Support\ZoomResponse;
+
 global $zoom;
 
-if ( ! vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && \Codemanas\VczApi\Helpers\MeetingType::is_recurring_meeting_or_webinar( $zoom['api']->type ) ) || empty( $zoom ) || ! empty( $zoom['api']->code ) ) {
+$api = ZoomResponse::to_array( $zoom['api'] ?? [] );
+
+if ( ! vczapi_pro_version_active() && ( ! empty( $api['type'] ) && MeetingType::is_recurring_meeting_or_webinar( $api['type'] ) ) || empty( $zoom ) || ! empty( $api['code'] ) ) {
 	return;
 }
 
@@ -35,10 +41,10 @@ $columns = ! empty( $zoom['columns'] ) ? $zoom['columns'] : 'vczapi-col-4';
                         <span><?php echo apply_filters( 'vczapi_host_name', $zoom['host_name'] ); ?></span>
                     </div>
 					<?php
-					if ( vczapi_pro_version_active() && ! empty( $zoom['api']->type ) && vczapi_pro_check_type( $zoom['api']->type ) ) {
-						$type      = ! empty( $zoom['api']->type ) ? $zoom['api']->type : false;
-						$timezone  = ! empty( $zoom['api']->timezone ) ? $zoom['api']->timezone : false;
-						$occurence = ! empty( $zoom['api']->occurrences ) ? $zoom['api']->occurrences : false;
+					if ( vczapi_pro_version_active() && ! empty( $api['type'] ) && vczapi_pro_check_type( $api['type'] ) ) {
+						$type      = $api['type'];
+						$timezone  = ! empty( $api['timezone'] ) ? $api['timezone'] : false;
+						$occurence = ! empty( $api['occurrences'] ) ? $api['occurrences'] : false;
 						if ( ! empty( $occurence ) ) {
 							$start_time = Codemanas\ZoomPro\Helpers::get_latest_occurence_by_type( $type, $timezone, $occurence );
 							?>
@@ -65,12 +71,12 @@ $columns = ! empty( $zoom['columns'] ) ? $zoom['columns'] : 'vczapi-col-4';
 						?>
                         <div class="start-date meta">
                             <strong><?php _e( 'Start', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                            <span><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
+                            <span><?php echo Date::dateConverter( $api['start_time'] ?? '', $api['timezone'] ?? 'UTC', 'F j, Y @ g:i a' ); ?></span>
                         </div>
 					<?php } ?>
                     <div class="timezone meta">
                         <strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong>
-                        <span><?php echo esc_html( $zoom['api']->timezone ); ?></span>
+                        <span><?php echo esc_html( $api['timezone'] ?? '' ); ?></span>
                     </div>
 
 					<?php do_action( 'vczapi_additional_content_inside_zoom_listing_shortcode' ); ?>

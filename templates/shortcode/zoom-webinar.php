@@ -11,11 +11,12 @@
 
 use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\MeetingType;
+use Codemanas\VczApi\Shortcodes\Support\ZoomResponse;
 
 global $zoom_webinars;
 
+$webinar = ZoomResponse::to_array( $zoom_webinars );
 ?>
-
 <div class="dpn-zvc-shortcode-op-wrapper">
 	<?php
 	$hide_join_link_nloggedusers = get_option( 'zoom_api_hide_shortcode_join_links' );
@@ -23,15 +24,15 @@ global $zoom_webinars;
     <table class="vczapi-shortcode-meeting-table">
         <tr class="vczapi-shortcode-meeting-table--row1">
             <td><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></td>
-            <td><?php echo $zoom_webinars->id; ?></td>
+            <td><?php echo esc_html( $webinar['id'] ?? '' ); ?></td>
         </tr>
         <tr class="vczapi-shortcode-meeting-table--row2">
             <td><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></td>
-            <td><?php echo $zoom_webinars->topic; ?></td>
+            <td><?php echo esc_html( $webinar['topic'] ?? '' ); ?></td>
         </tr>
 		<?php
-		if ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_fixed_time_webinar( $zoom_webinars->type ) ) {
-			if ( ! empty( $zoom_webinars->occurrences ) ) {
+		if ( ! empty( $webinar['type'] ) && MeetingType::is_recurring_fixed_time_webinar( $webinar['type'] ) ) {
+			if ( ! empty( $webinar['occurrences'] ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row4">
                     <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
@@ -39,31 +40,31 @@ global $zoom_webinars;
                 </tr>
                 <tr class="vczapi-shortcode-meeting-table--row4">
                     <td><?php _e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo count( $zoom_webinars->occurrences ); ?></td>
+                    <td><?php echo count( (array) $webinar['occurrences'] ); ?></td>
                 </tr>
                 <tr class="vczapi-shortcode-meeting-table--row5">
                     <td><?php _e( 'Next Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td>
 						<?php
-						$now               = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_webinars->timezone ) );
-						$closest_occurence = false;
-						if ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_fixed_time_webinar( $zoom_webinars->type ) && ! empty( $zoom_webinars->occurrences ) ) {
-							foreach ( $zoom_webinars->occurrences as $occurrence ) {
-								if ( $occurrence->status === "available" ) {
-									$start_date = new DateTime( $occurrence->start_time, new DateTimeZone( $zoom_webinars->timezone ) );
-									if ( $start_date >= $now ) {
-										$closest_occurence = $occurrence->start_time;
-										break;
-									}
+						$timezone            = $webinar['timezone'] ?? 'UTC';
+						$now                = new DateTime( 'now -1 hour', new DateTimeZone( $timezone ) );
+						$closest_occurrence = false;
 
-									_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
-									break;
-								}
+						foreach ( (array) $webinar['occurrences'] as $occurrence ) {
+							$status      = $occurrence['status'] ?? '';
+							$start_time  = $occurrence['start_time'] ?? '';
+							$start_date  = $start_time ? new DateTime( $start_time, new DateTimeZone( $timezone ) ) : null;
+
+							if ( 'available' !== $status || ! $start_date || $start_date < $now ) {
+								continue;
 							}
+
+							$closest_occurrence = $start_time;
+							break;
 						}
 
-						if ( $closest_occurence ) {
-							echo Date::dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' );
+						if ( $closest_occurrence ) {
+							echo esc_html( Date::dateConverter( $closest_occurrence, $timezone, 'F j, Y @ g:i a' ) );
 						} else {
 							_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 						}
@@ -79,7 +80,7 @@ global $zoom_webinars;
                 </tr>
 				<?php
 			}
-		} elseif ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_no_fixed_time_webinar( $zoom_webinars->type ) ) {
+		} elseif ( ! empty( $webinar['type'] ) && MeetingType::is_recurring_no_fixed_time_webinar( $webinar['type'] ) ) {
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
                 <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
@@ -90,27 +91,23 @@ global $zoom_webinars;
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
                 <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo Date::dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ); ?></td>
+                <td><?php echo esc_html( Date::dateConverter( $webinar['start_time'] ?? '', $webinar['timezone'] ?? 'UTC', 'F j, Y @ g:i a' ) ); ?></td>
             </tr>
 		<?php } ?>
         <tr class="vczapi-shortcode-meeting-table--row7">
             <td><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></td>
-            <td><?php echo $zoom_webinars->timezone; ?></td>
+            <td><?php echo esc_html( $webinar['timezone'] ?? '' ); ?></td>
         </tr>
-		<?php if ( ! empty( $zoom_webinars->duration ) ) { ?>
+		<?php if ( ! empty( $webinar['duration'] ) ) { ?>
             <tr class="zvc-table-shortcode-duration">
                 <td><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo $zoom_webinars->duration; ?></td>
+                <td><?php echo esc_html( $webinar['duration'] ); ?></td>
             </tr>
 			<?php
 		}
 
 		if ( ! empty( $hide_join_link_nloggedusers ) ) {
-			if ( is_user_logged_in() ) {
-				$show_join_links = true;
-			} else {
-				$show_join_links = false;
-			}
+			$show_join_links = is_user_logged_in();
 		} else {
 			$show_join_links = true;
 		}
@@ -122,7 +119,7 @@ global $zoom_webinars;
 			 * @video_conference_zoom_shortcode_join_link_webinar - 10
 			 *
 			 */
-			do_action( 'vczoom_meeting_shortcode_join_links_webinar', $zoom_webinars );
+			do_action( 'vczoom_meeting_shortcode_join_links_webinar', $webinar );
 		}
 		?>
     </table>

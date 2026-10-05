@@ -10,4 +10,4 @@
 global $zoom_meetings;
 ?>
 
-<a href="<?php echo $zoom_meetings->join_url; ?>" title="Join Meeting">Join Meeting</a>
+<a href="<?php echo esc_url( $zoom_meetings['join_url'] ?? '' ); ?>" title="<?php esc_attr_e( 'Join Meeting', 'video-conferencing-with-zoom-api' ); ?>"><?php esc_html_e( 'Join Meeting', 'video-conferencing-with-zoom-api' ); ?></a>
