@@ -2,6 +2,7 @@
 
 namespace Codemanas\VczApi\Admin\Controller;
 
+use Codemanas\VczApi\Admin\Foundation\Notification;
 use Codemanas\VczApi\Admin\Foundation\Settings\ConnectHandler;
 use Codemanas\VczApi\Admin\Foundation\Settings\GeneralSettingsHandler;
 use Codemanas\VczApi\Admin\Foundation\Settings\LogHandler;
@@ -34,17 +35,17 @@ class SettingController {
 	}
 
 	private function registerHooks(): void {
-		$connectHandler   = new ConnectHandler();
-		$settingsHandler  = new GeneralSettingsHandler( $this->settingsRepo );
-		$logHandler       = new LogHandler();
-		$noticeController = new NoticeController();
-		$adminMenu        = new MenuController( [ $this->view, 'render' ] );
+		$connectHandler  = new ConnectHandler();
+		$settingsHandler = new GeneralSettingsHandler( $this->settingsRepo );
+		$logHandler      = new LogHandler();
+		MenuController::get_instance( [ $this->view, 'render' ] );
 
-		add_action( 'admin_menu', [ $adminMenu, 'registerAdminMenus' ] );
-		add_action( 'admin_init', [ $connectHandler, 'handle' ] );
 		add_action( 'admin_init', [ $settingsHandler, 'handle' ] );
 		add_action( 'admin_init', [ $logHandler, 'handle' ] );
-		add_action( 'admin_notices', [ $noticeController, 'displayNotices' ] );
+		add_action( 'admin_notices', [ Notification::get_instance(), 'displayNotices' ] );
+
+		//Ajax Call
+		add_action( 'wp_ajax_vczapi_connect_credentials', [ $connectHandler, 'ajaxHandler' ] );
 	}
 
 	/**

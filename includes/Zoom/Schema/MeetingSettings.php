@@ -33,7 +33,7 @@ class MeetingSettings {
 			'global_dial_in_countries'             => array( 'type' => 'array', 'items' => array( 'type' => 'string' ) ),
 			'host_video'                           => array( 'type' => 'bool' ),
 
-// Join before host and timing
+			// Join before host and timing
 			'join_before_host'                     => array( 'type' => 'bool', 'default' => false ),
 			'jbh_time'                             => array( 'type' => 'int', 'enum' => array( 0, 5, 10, 15 ), 'default' => 0 ),
 
@@ -42,14 +42,14 @@ class MeetingSettings {
 			'participant_video'              => array( 'type' => 'bool' ),
 			'private_meeting'                => array( 'type' => 'bool' ),
 
-// Registration-related toggles
+			// Registration-related toggles
 			'registrants_confirmation_email' => array( 'type' => 'bool' ),
 			'registrants_email_notification' => array( 'type' => 'bool' ),
 			'registration_type'              => array( 'type' => 'int', 'enum' => array( 1, 2, 3 ), 'default' => 1 ),
 
 			'show_share_button' => array( 'type' => 'bool' ),
 
-// PMI usage (only applies to specific meeting types)
+			// PMI usage (only applies to specific meeting types)
 			'use_pmi'           => array( 'type' => 'bool', 'default' => false ),
 
 			'waiting_room'                            => array( 'type' => 'bool', 'default' => false ),
@@ -57,7 +57,7 @@ class MeetingSettings {
 			'host_save_video_order'                   => array( 'type' => 'bool' ),
 			'internal_meeting'                        => array( 'type' => 'bool', 'default' => false ),
 
-// Invitees array (flat)
+			// Invitee array (flat)
 			'meeting_invitees'                        => array(
 				'type'  => 'array',
 				'items' => array(
@@ -68,7 +68,7 @@ class MeetingSettings {
 				),
 			),
 
-// Authentication exceptions (bypass auth)
+			// Authentication exceptions (bypass auth)
 			'authentication_exception'                => array(
 				'type'  => 'array',
 				'items' => array(
@@ -83,7 +83,7 @@ class MeetingSettings {
 				),
 			),
 
-// Breakout rooms pre-assign
+			// Breakout rooms pre-assign
 			'breakout_room'                           => array(
 				'type'   => 'object',
 				'schema' => array(
@@ -101,7 +101,7 @@ class MeetingSettings {
 				),
 			),
 
-// Approved/denied regions
+			// Approved/denied regions
 			'approved_or_denied_countries_or_regions' => array(
 				'type'   => 'object',
 				'schema' => array(
@@ -112,13 +112,13 @@ class MeetingSettings {
 				),
 			),
 
-// Global dial-in numbers (shape varies; keep generic to avoid over-constraining)
+			// Global dial-in numbers (shape varies; keep generic to avoid over-constraining)
 			'global_dial_in_numbers'                  => array(
 				'type'  => 'array',
 				'items' => array( 'type' => 'object' ),
 			),
 
-// Q&A toggles (commonly used subset)
+			// Q&A toggles (commonly used subset)
 			'question_and_answer'                     => array(
 				'type'   => 'object',
 				'schema' => array(
@@ -131,7 +131,7 @@ class MeetingSettings {
 				),
 			),
 
-// Language interpretation (kept generic for now)
+			// Language interpretation (kept generic for now)
 			'language_interpretation'                 => array(
 				'type'   => 'object',
 				'schema' => array(
@@ -147,7 +147,7 @@ class MeetingSettings {
 				),
 			),
 
-// Custom keys (limited number, with key/value length caps)
+			// Custom keys (limited number, with key/value length caps)
 			'custom_keys'                             => array(
 				'type'      => 'array',
 				'max_items' => 10,
@@ -160,7 +160,7 @@ class MeetingSettings {
 				),
 			),
 
-// Continuous meeting chat (subset)
+			// Continuous meeting chat (subset)
 			'continuous_meeting_chat'                 => array(
 				'type'   => 'object',
 				'schema' => array(
@@ -180,7 +180,7 @@ class MeetingSettings {
 			'participant_focused_meeting'               => array( 'type' => 'bool', 'default' => false ),
 			'push_change_to_calendar'                   => array( 'type' => 'bool', 'default' => false ),
 
-// Resources (e.g., whiteboard)
+			// Resources (e.g., whiteboard)
 			'resources'                                 => array(
 				'type'  => 'array',
 				'items' => array(
@@ -193,18 +193,36 @@ class MeetingSettings {
 				),
 			),
 
-// AI/summary
+			// AI/summary
 			'auto_start_meeting_summary'                => array( 'type' => 'bool' ),
 			'who_will_receive_summary'                  => array( 'type' => 'int', 'enum' => array( 1, 2, 3, 4 ) ),
 			'auto_start_ai_companion_questions'         => array( 'type' => 'bool' ),
 			'who_can_ask_questions'                     => array( 'type' => 'int', 'enum' => array( 1, 2, 3, 4, 5 ) ),
 			'summary_template_id'                       => array( 'type' => 'string' ),
 
-// Device/testing & controls
+			// Device/testing & controls
 			'device_testing'                            => array( 'type' => 'bool', 'default' => false ),
 			'allow_host_control_participant_mute_state' => array( 'type' => 'bool' ),
 			'disable_participant_video'                 => array( 'type' => 'bool', 'default' => false ),
 			'email_in_attendee_report'                  => array( 'type' => 'bool' ),
+
+			// Add Screen Sharing Controls
+			'screen_sharing'                            => array(
+				'type'   => 'object',
+				'schema' => array(
+					'who_can_share'                                      => array( 'type' => 'string', 'enum' => array( 'host', 'all' ) ),
+					'who_can_start_sharing_when_someone_else_is_sharing' => array( 'type' => 'string', 'enum' => array( 'host', 'all' ) ),
+				),
+			),
+
+			// Add In-Meeting Features
+			'in_meeting'                                => array(
+				'type'   => 'object',
+				'schema' => array(
+					'e2ee' => array( 'type' => 'bool' ),
+					'aam'  => array( 'type' => 'bool' ),
+				),
+			),
 		);
 
 		if ( $isUpdate ) {

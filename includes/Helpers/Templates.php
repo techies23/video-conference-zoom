@@ -6,6 +6,7 @@ namespace Codemanas\VczApi\Helpers;
  * Generate Template URLs and related data
  *
  * @since 4.2.2
+ * @updated 4.7.0
  * @author Deepen Bajracharya
  */
 class Templates {
@@ -26,12 +27,12 @@ class Templates {
 		}
 
 		$located = false;
-		if ( file_exists( get_stylesheet_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
-			$located = get_stylesheet_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
-		} elseif ( file_exists( get_template_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name ) ) {
-			$located = get_template_directory() . '/' . ZVC_PLUGIN_SLUG . '/' . $template_name;
-		} elseif ( file_exists( ZVC_PLUGIN_DIR_PATH . 'templates/' . $template_name ) ) {
-			$located = ZVC_PLUGIN_DIR_PATH . 'templates/' . $template_name;
+		if ( file_exists( get_stylesheet_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name ) ) {
+			$located = get_stylesheet_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name;
+		} elseif ( file_exists( get_template_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name ) ) {
+			$located = get_template_directory() . '/' . VCZAPI_PLUGIN_SLUG . '/' . $template_name;
+		} elseif ( file_exists( VCZAPI_PLUGIN_DIR_PATH . 'templates/' . $template_name ) ) {
+			$located = VCZAPI_PLUGIN_DIR_PATH . 'templates/' . $template_name;
 		}
 
 		// Allow 3rd party plugin filter template file from their plugin.
@@ -56,11 +57,11 @@ class Templates {
 		if ( $name ) {
 			$template = locate_template( array(
 				"{$slug}-{$name}.php",
-				ZVC_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
+				VCZAPI_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
 			) );
 
 			if ( ! $template ) {
-				$fallback = ZVC_PLUGIN_DIR_PATH . "templates/{$slug}-{$name}.php";
+				$fallback = VCZAPI_PLUGIN_DIR_PATH . "templates/{$slug}-{$name}.php";
 				$template = file_exists( $fallback ) ? $fallback : '';
 			}
 		}
@@ -68,7 +69,7 @@ class Templates {
 		if ( ! $template ) {
 			$template = locate_template( array(
 				"{$slug}-{$name}.php",
-				ZVC_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
+				VCZAPI_PLUGIN_SLUG . '/' . "{$slug}-{$name}.php",
 			) );
 		}
 
@@ -85,9 +86,9 @@ class Templates {
 	 *
 	 * @param string $_template_file_path Absolute path to the template file.
 	 * @param array  $args                Associative array of variables to pass.
-	 * @param bool   $require_once        Whether to require_once or require.
+	 * @param bool $require_once        Whether to require_once or require.
 	 */
-	public static function includeFile( $_template_file_path, array $args = [], $require_once = false ): void {
+	public static function includeFile( string $_template_file_path, array $args = [], bool $require_once = false ): void {
 		if ( file_exists( $_template_file_path ) ) {
 			load_template( $_template_file_path, $require_once, $args );
 		}

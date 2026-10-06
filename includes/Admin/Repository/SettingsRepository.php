@@ -6,6 +6,12 @@ class SettingsRepository {
 
 	public const SETTINGS_OPTION_KEY = '_vczapi_zoom_settings';
 
+	public static function getSetting( $key ): string {
+		$settings = get_option( self::SETTINGS_OPTION_KEY, null );
+
+		return ! empty( $settings[ $key ] ) ? $settings[ $key ] : '';
+	}
+
 	/**
 	 * Retrieve options under unified key with legacy auto-migration fallback.
 	 */
@@ -28,7 +34,6 @@ class SettingsRepository {
 
 	private function migrateLegacySettings(): array {
 		$legacy_mapping = [
-			'vanity_url'                         => 'zoom_vanity_url',
 			'delete_zoom_meeting'                => 'zoom_api_donot_delete_on_zoom',
 			'join_links'                         => 'zoom_past_join_links',
 			'zoom_author_show'                   => 'zoom_show_author',
@@ -41,7 +46,7 @@ class SettingsRepository {
 			'embed_pwd_in_join_link'             => 'zoom_api_embed_pwd_join_link',
 			'hide_join_links_non_loggedin_users' => 'zoom_api_hide_shortcode_join_links',
 			'hide_email_jvb'                     => 'zoom_api_hide_in_jvb',
-			'vczapi_disable_invite'              => 'vczapi_disable_invite',
+			'disable_invite'                     => 'disable_invite',
 			'disable_join_via_browser'           => 'zoom_api_disable_jvb',
 			'join_via_browser_default_lang'      => 'zoom_api_default_lang_jvb',
 			'disable_auto_pwd_generation'        => 'zoom_api_disable_auto_meeting_pwd',

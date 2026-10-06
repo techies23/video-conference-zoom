@@ -1,0 +1,45 @@
+@use '../abstracts' as *;
+
+.vczapi-settings {
+  display: flex;
+  gap: 2em;
+
+  @include respond-to('mobile') {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__main,
+  &__sidebar {
+    margin-top: 2em;
+    border: 1px solid $vczapi-border-color;
+  }
+
+  &__main {
+    flex: 0 0 calc(70% - 1.5em);
+    min-width: 0;
+    background: #fff;
+
+    @include respond-to('mobile') {
+      flex: 1 1 100%;
+    }
+  }
+
+  &__sidebar {
+    background: $vczapi-bg-white;
+    padding: 1em 2em;
+    min-width: 0;
+    height: 100%;
+
+    @include respond-to('mobile') {
+      flex: 1 1 100%;
+      margin-top: 1em;
+    }
+  }
+
+  &__actions {
+    padding: 1em;
+    border-top: 1px solid $vczapi-border-color;
+    text-align: right;
+  }
+}

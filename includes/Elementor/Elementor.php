@@ -49,21 +49,8 @@ class Elementor {
 	 */
 	private function add_actions() {
 		// Register widget scripts.
-		#add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'widget_scripts' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'on_widgets_registered' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'widget_categories' ] );
-	}
-
-	/**
-	 * Widget Styles
-	 *
-	 * Load required plugin core files.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function widget_scripts() {
-		wp_enqueue_script( 'video-conferencing-zoom-elementor', ZVC_PLUGIN_ADMIN_ASSETS_URL . '/js/elementor.js', [ 'elementor-editor' ], ZVC_PLUGIN_VERSION, true );
 	}
 
 	/**

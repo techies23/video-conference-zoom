@@ -55,7 +55,7 @@ class Frontend {
      * @return void
      */
     public function enqueue_scripts(): void {
-        wp_register_script( 'vczapi-meeting-booker', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/booking.js', false, ZVC_PLUGIN_VERSION, true );
+        wp_register_script( 'vczapi-meeting-booker', VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/js/booking.js', false, VCZAPI_PLUGIN_VERSION, true );
         wp_localize_script( 'vczapi-meeting-booker', 'vczapiMeetingBookerParams', array(
                 'ajaxURL' => admin_url( 'admin-ajax.php' ),
         ) );

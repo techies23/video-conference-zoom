@@ -4,6 +4,8 @@ namespace Codemanas\VczApi\Admin\Service;
 
 use Codemanas\VczApi\Admin\Interface\IZoomEvent;
 use Codemanas\VczApi\Zoom\Zoom;
+use WP_Error;
+use WP_Post;
 
 class WebinarService implements IZoomEvent {
 
@@ -24,19 +26,19 @@ class WebinarService implements IZoomEvent {
 	/**
 	 * Bleh
 	 *
-	 * @param \WP_Post $post
-	 * @param array $payload
-	 * @param string $zoom_id
+	 * @param   WP_Post  $post
+	 * @param   array    $payload
+	 * @param   string   $zoom_id
 	 *
-	 * @return object|null
+	 * @return array|WP_Error
 	 */
-	public function syncWithApi( \WP_Post $post, array $payload, string $zoom_id ): ?array {
+	public function syncWithApi( WP_Post $post, array $payload, string $zoom_id ): array|WP_Error {
 		$is_update = ! empty( $zoom_id );
-		$zoomApi = new Zoom();
 		if ( $is_update ) {
-			$response = $zoomApi->webinars()->update( $zoom_id, $payload );
+			zoom_conference_v2()->webinars()->update( $zoom_id, $payload );
+			$response = zoom_conference_v2()->webinars()->get( $zoom_id );
 		} else {
-			$response = $zoomApi->webinars()->create( $payload );
+			$response = zoom_conference_v2()->webinars()->create( $payload );
 		}
 
 		return $response;

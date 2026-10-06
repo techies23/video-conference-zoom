@@ -3,6 +3,21 @@
 namespace Codemanas\VczApi\Zoom\Schema;
 
 class Meeting {
+	private static array $recurrence = array(
+		'type'     => 'object',
+		'location' => 'body',
+		'schema'   => array(
+			'type'             => array( 'type' => 'int', 'enum' => array( 1, 2, 3 ) ),
+			'repeat_interval'  => array( 'type' => 'int' ),
+			'end_date_time'    => array( 'type' => 'string' ),
+			'end_times'        => array( 'type' => 'int', 'max' => 60 ),
+			'weekly_days'      => array( 'type' => 'string' ),
+			'monthly_day'      => array( 'type' => 'int', 'min' => 1, 'max' => 31, 'default' => 1 ),
+			'monthly_week'     => array( 'type' => 'int', 'enum' => array( - 1, 1, 2, 3, 4 ) ),
+			'monthly_week_day' => array( 'type' => 'int', 'enum' => array( 1, 2, 3, 4, 5, 6, 7 ) ),
+		),
+	);
+
 	/**
 	 * Schema for listing a user's/host's meetings.
 	 *
@@ -141,20 +156,7 @@ class Meeting {
 				'schedule_for'     => array( 'type' => 'string', 'location' => 'body' ),
 
 				// Recurrence
-				'recurrence'       => array(
-					'type'     => 'object',
-					'location' => 'body',
-					'schema'   => array(
-						'type'             => array( 'type' => 'int', 'enum' => array( 1, 2, 3 ) ),
-						'repeat_interval'  => array( 'type' => 'int' ),
-						'end_date_time'    => array( 'type' => 'string' ),
-						'end_times'        => array( 'type' => 'int', 'max' => 60, 'default' => 1 ),
-						'weekly_days'      => array( 'type' => 'string' ),
-						'monthly_day'      => array( 'type' => 'int', 'min' => 1, 'max' => 31, 'default' => 1 ),
-						'monthly_week'     => array( 'type' => 'int', 'enum' => array( - 1, 1, 2, 3, 4 ) ),
-						'monthly_week_day' => array( 'type' => 'int', 'enum' => array( 1, 2, 3, 4, 5, 6, 7 ) ),
-					),
-				),
+				'recurrence'       => self::$recurrence,
 
 				// Settings now centralized
 				'settings'         => array(
@@ -198,8 +200,6 @@ class Meeting {
 			'compat_transform' => array(
 				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
 				array( 'from' => 'disable_waiting_room', 'to' => 'settings.waiting_room', 'op' => 'bool_invert' ),
-				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
-				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 			'notes'            => array(
 				'start_time' => 'If start_time is omitted for type=2, Zoom may convert it to an instant meeting.',
@@ -293,10 +293,25 @@ class Meeting {
 				'password'      => array( 'type' => 'string', 'location' => 'body', 'max_len' => 10 ),
 				'agenda'        => array( 'type' => 'string', 'location' => 'body', 'max_len' => 2000 ),
 
-				'settings' => array(
+				'settings'        => array(
 					'type'     => 'object',
 					'location' => 'body',
 					'schema'   => MeetingSettings::schema( true ),
+				),
+				// Add to Meeting::update() -> 'fields'
+				'recurrence'      => self::$recurrence,
+				'schedule_for'    => array( 'type' => 'string', 'location' => 'body' ),
+				'template_id'     => array( 'type' => 'string', 'location' => 'body' ),
+				'tracking_fields' => array(
+					'type'     => 'array',
+					'location' => 'body',
+					'items'    => array(
+						'type'   => 'object',
+						'schema' => array(
+							'field' => array( 'type' => 'string', 'required' => true ),
+							'value' => array( 'type' => 'string' ),
+						),
+					),
 				),
 			),
 			'compat'           => array(
@@ -312,8 +327,6 @@ class Meeting {
 			),
 			'compat_transform' => array(
 				array( 'from' => 'alternative_host_ids', 'to' => 'settings.alternative_hosts', 'op' => 'implode', 'args' => array( 'separator' => ';' ) ),
-				array( 'from' => 'agenda', 'to' => 'agenda', 'op' => 'truncate', 'args' => array( 'max' => 2000 ) ),
-				array( 'from' => 'password', 'to' => 'password', 'op' => 'truncate', 'args' => array( 'max' => 10 ) ),
 			),
 		);
 	}

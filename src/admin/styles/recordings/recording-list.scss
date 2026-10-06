@@ -1,0 +1,13 @@
+@use '../abstracts' as *;
+
+.vczapi-recordings {
+  &__filter-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .vczapi-recordings__date-input {
+      background: $vczapi-bg-white;
+    }
+  }
+}

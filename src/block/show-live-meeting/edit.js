@@ -159,12 +159,6 @@ export default function EditLiveMeeting(props) {
     };
   }, []);
 
-  if (preview) {
-    return (
-      <img src={vczapi_blocks.direct_meeting_preview_image} alt={"Direct Meeting from Zoom"} />
-    );
-  }
-
   // Convert meeting options format to array matching WP components
   const formattedMeetingOptions = availableMeetings.map(m => ({
     label: m.label,

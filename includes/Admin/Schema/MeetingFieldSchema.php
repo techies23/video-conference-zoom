@@ -22,34 +22,23 @@ class MeetingFieldSchema {
 		$wp_timezone = Date::get_timezone_offset();
 		$has_zoom_id = ! empty( $meeting_details ) && ! empty( $meeting_details['id'] );
 
-		// Build host choices
-		$host_options = [ '' => __( 'Type to search host...', $text_domain ) ];
-		if ( ! empty( $users ) ) {
-			foreach ( $users as $user ) {
-				$host_options[ $user->id ] = sprintf( '%s %s (%s)', $user->first_name ?? '', $user->last_name ?? '', $user->email ?? '' );
-			}
-		}
-
 		// Lock host selection if meeting is already published or has a Zoom ID
 		$host_field_config = [
-			'label'       => __( 'Meeting Host *', $text_domain ),
-			'type'        => !$has_zoom_id ? 'select' : 'placeholder',
-			'description' => __( 'This is host ID for the meeting (Required).', $text_domain ),
-			'required'    => true,
-			'options'     => $host_options,
-			'input_class' => !$has_zoom_id ? [ 'vczapi-choices' ] : [],
-//			'custom_attributes' => [
-//				'data-api-action'  => 'postTypeFetchHosts',
-//				'data-placeholder' => __( 'Search host by name or email...', $text_domain ),
-//				'data-min-search'  => '3',
-//				'data-searchable'  => 'true',
-//			],
+			'label'             => __( 'Meeting Host *', $text_domain ),
+			'type'              => ! $has_zoom_id ? 'select' : 'placeholder',
+			'description'       => $has_zoom_id ? __( 'Host cannot be changed once the event has been created.', $text_domain ) : __( 'This is host ID for the meeting (Required).', $text_domain ),
+			'required'          => ! $has_zoom_id,
+			'options'           => $users,
+			'input_class'       => ! $has_zoom_id ? [ 'vczapi-choices' ] : [],
+			'custom_attributes' => [
+				'data-api-action'  => 'postTypeFetchHosts',
+				'data-placeholder' => __( 'Search host by name or email...', $text_domain ),
+				'data-min-search'  => '3',
+				'data-searchable'  => 'true',
+				'data-remove-item' => 'true',
+				'disabled'         => $has_zoom_id,
+			],
 		];
-
-		if ( $has_zoom_id ) {
-			$host_field_config['custom_attributes']['disabled'] = 'disabled';
-			$host_field_config['description']                   = __( 'Host cannot be changed once the event has been created.', $text_domain );
-		}
 
 		$schema = [
 			'general' => [
@@ -63,12 +52,12 @@ class MeetingFieldSchema {
 					],
 					'type'       => [
 						'label'       => __( 'Type *', $text_domain ),
-						'required'    => true,
-						'type'        => 'select',
+						'required'    => ! $has_zoom_id,
+						'type'        => $has_zoom_id ? 'placeholder' : 'select',
 						'description' => __( 'Type of Event.', $text_domain ),
 						'options'     => [
-							1 => __( 'Meeting', $text_domain ),
-							2 => __( 'Webinar', $text_domain ),
+							'meeting' => __( 'Meeting', $text_domain ),
+							'webinar' => __( 'Webinar', $text_domain ),
 						],
 					],
 					'start_time' => [
@@ -76,16 +65,8 @@ class MeetingFieldSchema {
 						'type'              => 'text',
 						'description'       => __( 'Starting Date and Time of the Meeting (Required).', $text_domain ),
 						'required'          => true,
-						'input_class'       => [ 'vczapi-datetimepicker' ],
+						'input_class'       => [ 'vczapi-datetimepicker', 'vczapi-start-time-picker' ],
 						'custom_attributes' => [ 'data-enable-time' => 'true' ],
-					],
-					'timezone'   => [
-						'label'       => __( 'Timezone', $text_domain ),
-						'type'        => 'select',
-						'options'     => $tzlists,
-						'required'    => true,
-						'default'     => ! empty( $tzlists[ $wp_timezone ] ) ? $wp_timezone : '',
-						'input_class' => [ 'vczapi-choices' ],
 					],
 					'duration'   => [
 						'label'  => __( 'Duration', $text_domain ),
@@ -100,8 +81,18 @@ class MeetingFieldSchema {
 								'type'       => 'select',
 								'options'    => [ 0 => 0, 10 => 10, 15 => 15, 20 => 20, 30 => 30, 40 => 40, 45 => 45 ],
 								'after_html' => '&nbsp;' . __( 'minutes', $text_domain ),
+								'default'    => 40
 							],
 						],
+					],
+					'timezone'   => [
+						'label'             => __( 'Timezone', $text_domain ),
+						'type'              => 'select',
+						'options'           => $tzlists,
+						'required'          => true,
+						'default'           => ! empty( $tzlists[ $wp_timezone ] ) ? $wp_timezone : '',
+						'input_class'       => [ 'vczapi-choices' ],
+						'custom_attributes' => [ 'data-remove-item' => 'true' ],
 					],
 				],
 			],
@@ -112,6 +103,7 @@ class MeetingFieldSchema {
 					'password'               => [
 						'label'       => __( 'Password', $text_domain ),
 						'type'        => 'text',
+						'required'    => true,
 						'maxlength'   => 10,
 						'description' => __( 'Password to join the meeting. Max 10 characters. (Leave blank to auto generate).', $text_domain ),
 					],
@@ -177,7 +169,7 @@ class MeetingFieldSchema {
 					'alternative_hosts' => [
 						'label'             => __( 'Alternative Hosts', $text_domain ),
 						'type'              => 'select',
-						'options'           => $host_options,
+						'options'           => $users,
 						'multiple'          => true,
 						'description'       => __( 'Paid Zoom Account is required for alternative hosts.', $text_domain ),
 						'input_class'       => [ 'vczapi-choices' ],
@@ -217,10 +209,6 @@ class MeetingFieldSchema {
 			],
 		];
 
-		if ( $has_zoom_id ) {
-			$schema['general']['fields']['type']['type'] = 'placeholder';
-		}
-
-		return apply_filters( 'vczapi_admin_metabox_fields_schema', $schema, $post, $meeting_details );
+		return apply_filters( 'vczapi_admin_metabox_fields_schema', $schema, $post, $meeting_details, $has_zoom_id );
 	}
 }

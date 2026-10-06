@@ -2,15 +2,13 @@
 
 namespace Codemanas\VczApi;
 
-use Codemanas\VczApi\Admin\Controller\AdminController;
+use Codemanas\VczApi\Admin\AdminController;
 use Codemanas\VczApi\admin\Cron;
 use Codemanas\VczApi\Blocks\Blocks;
 use Codemanas\VczApi\Blocks\BlockTemplates;
+use Codemanas\VczApi\WebSDK\JoinViaBrowser;
+use Codemanas\VczApi\Data\ZoomUsersTable;
 use Codemanas\VczApi\Helpers\Encryption;
-
-if ( ! defined( 'ABSPATH' ) ) {
-    die( "Not Allowed Here !" ); // If this file is called directly, abort.
-}
 
 /**
  * Ready Main Class
@@ -36,8 +34,7 @@ final class Bootstrap {
         return self::$instance;
     }
 
-    private string $plugin_version = ZVC_PLUGIN_VERSION;
-    private string $minified;
+    private string $plugin_version = VCZAPI_PLUGIN_VERSION;
 
     /**
      * Constructor method for loading the components
@@ -48,24 +45,27 @@ final class Bootstrap {
     public function __construct() {
         $this->autoloader();
         $this->load_dependencies();
-        $this->init_api();
 
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_backend' ) );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts_backend' ] );
+        add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
         add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
+        //Ensure custom tables exist for installs that activated before this feature shipped.
+        add_action( 'admin_init', array( $this, 'ensure_custom_tables' ) );
+
         //Block Themes Compat: register scripts on init - required as block themes fire the content before page render
-        add_action( 'init', [ $this, 'register_scripts' ] );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_filter( 'plugin_action_links', array( $this, 'action_link' ), 10, 2 );
         add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
-        add_filter( 'wp_headers', [ $this, 'set_corp_headers' ], 10, 2 );
 
-        add_action( 'in_plugin_update_message-' . ZVC_PLUGIN_ABS_NAME, function ( $plugin_data ) {
-            $this->version_update_warning( ZVC_PLUGIN_VERSION, $plugin_data['new_version'] );
+        add_action( 'in_plugin_update_message-' . VCZAPI_PLUGIN_ABS_NAME, function ( $plugin_data ) {
+            $this->version_update_warning( VCZAPI_PLUGIN_VERSION, $plugin_data['new_version'] );
         } );
 
+        //Join via Browser: rewrite rule, dedicated endpoint, REST signature route.
+        JoinViaBrowser::instance()->boot();
+
         Marketplace::get_instance();
-        $this->minified = SCRIPT_DEBUG ? '' : '.min';
     }
 
     /**
@@ -101,94 +101,18 @@ final class Bootstrap {
         <?php
     }
 
-    /**
-     * Add CORP headers for Zoom Meetings join via browser page
-     *
-     * @param $headers
-     * @param $wp
-     *
-     * @return mixed
-     */
-    function set_corp_headers( $headers, $wp ): mixed {
-        $type = filter_input( INPUT_GET, 'type' );
-        if ( ( isset( $wp->query_vars['post_type'] ) && $wp->query_vars['post_type'] == 'zoom-meetings' && ! empty( $type ) ) || ( ! empty( get_post()->post_content ) && has_shortcode( get_post()->post_content, 'zoom_join_via_browser' ) ) ) {
-            $headers['Cross-Origin-Embedder-Policy'] = 'require-corp';
-            $headers['Cross-Origin-Opener-Policy']   = 'same-origin';
-        }
-
-        return $headers;
-    }
-
     public function autoloader(): void {
-        require_once ZVC_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+        require_once VCZAPI_PLUGIN_DIR_PATH . 'vendor/autoload.php';
     }
 
     /**
-     * INitialize the hooks
-     *
-     * @since    2.0.0
-     * @modified 2.1.0
-     * @author   Deepen Bajracharya
-     */
-    protected function init_api(): void {
-        //Load the Credentials
-        zoom_conference()->zoom_api_key    = get_option( 'zoom_api_key' );
-        zoom_conference()->zoom_api_secret = get_option( 'zoom_api_secret' );
-    }
-
-    /**
-     * @return void
-     */
-    public function register_scripts(): void {
-        $minified = SCRIPT_DEBUG ? '' : '.min';
-        wp_register_style( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style' . $minified . '.css', false, $this->plugin_version );
-
-        $disable_moment_js = get_option( 'zoom_api_disable_moment_js' );
-        if ( empty( $disable_moment_js ) ) {
-            //Enqueue MomentJS
-            wp_register_script( 'video-conferencing-with-zoom-api-moment', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment/moment.min.js', array( 'jquery' ), $this->plugin_version, true );
-            wp_register_script( 'video-conferencing-with-zoom-api-moment-locales', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment/moment-with-locales.min.js', array(
-                    'jquery',
-                    'video-conferencing-with-zoom-api-moment',
-            ), $this->plugin_version, true );
-            //Enqueue MomentJS Timezone
-            wp_register_script( 'video-conferencing-with-zoom-api-moment-timezone', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/moment-timezone/moment-timezone-with-data-10-year-range.min.js', array( 'jquery' ), $this->plugin_version, true );
-            wp_register_script( 'video-conferencing-with-zoom-api', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/public' . $minified . '.js', array(
-                    'jquery',
-                    'video-conferencing-with-zoom-api-moment',
-            ), $this->plugin_version, true );
-        }
-    }
-
-    /**
-     * Load Frontend Scriptsssssss
+     * Load Frontend Scripts
      *
      * @since   3.0.0
      * @author  Deepen Bajracharya
+     * @updated 4.7.0
      */
     function enqueue_scripts(): void {
-        if ( is_singular( 'zoom-meetings' ) ) {
-            wp_enqueue_style( 'video-conferencing-with-zoom-api' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-moment' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-locales' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api-moment-timezone' );
-            wp_enqueue_script( 'video-conferencing-with-zoom-api' );
-            // Localize the script with new data
-            $date_format = get_option( 'zoom_api_date_time_format' );
-            if ( $date_format == 'custom' ) {
-                $date_format = get_option( 'zoom_api_custom_date_time_format' );
-                $date_format = vczapi_convertPHPToMomentFormat( $date_format );
-            }
-
-            $zoom_going_to_start = get_option( 'zoom_going_tostart_meeting_text' );
-            $zoom_ended          = get_option( 'zoom_ended_meeting_text' );
-            $translation_array   = apply_filters( 'vczapi_meeting_event_text', array(
-                    'meeting_starting' => ! empty( $zoom_going_to_start ) ? $zoom_going_to_start : __( 'Click join button below to join the meeting now !', 'video-conferencing-with-zoom-api' ),
-                    'meeting_ended'    => ! empty( $zoom_ended ) ? $zoom_ended : __( 'This meeting has been ended by the host.', 'video-conferencing-with-zoom-api' ),
-                    'date_format'      => $date_format,
-            ) );
-            wp_localize_script( 'video-conferencing-with-zoom-api', 'zvc_strings', $translation_array );
-        }
     }
 
     /**
@@ -208,27 +132,8 @@ final class Bootstrap {
      * @author   Deepen Bajracharya
      */
     protected function load_dependencies(): void {
-        //Include the Main Class
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/class-zvc-zoom-api-v2.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/api/S2SOAuth.php';
-
         //Loading Includes
         require_once ZVC_PLUGIN_INCLUDES_PATH . '/helpers.php';
-
-        //AJAX CALLS SCRIPTS
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-ajax.php';
-
-        //Admin Classes
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-users.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-meetings.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-webinars.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-reports.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-recordings.php';
-//        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
 
         //Admin
         AdminController::get_instance();
@@ -258,6 +163,19 @@ final class Bootstrap {
     }
 
     /**
+     * Block Editor Scripts
+     *
+     * @return void
+     */
+    public function enqueue_block_editor_assets(): void {
+        if ( get_post_type() === "zoom-meetings" ) {
+            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
+                    'in_footer' => true,
+            ] );
+        }
+    }
+
+    /**
      * Enqueuing Scripts and Styles for Admin
      *
      * @param  $hook
@@ -272,35 +190,28 @@ final class Bootstrap {
         $screen = get_current_screen();
 
         //CSS
-        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" ) {
+        if ( $screen->id === "zoom-meetings" || $screen->id === "$pg-video-conferencing-settings" || $screen->id === "$pg-video-conferencing-list-users" || $screen->id === "$pg-video-conferencing-addons" || $screen->id === "$pg-video-conferencing-reports" || $screen->id === "$pg-video-conferencing-recordings" || $screen->id === "$pg-video-conferencing-sync" || $screen->id === "$pg-video-conferencing-add-meeting" ) {
             //Choices
-            wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices' . $this->minified . '.css', false, $this->plugin_version );
+            wp_enqueue_style( 'vczapi-choices', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/choices.js/public/assets/styles/choices.min.css', false, $this->plugin_version );
 
             //Flatpicker
-            wp_enqueue_style( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr' . $this->minified . '.css', false, $this->plugin_version );
+            wp_enqueue_style( 'vczapi-flatpickr', VCZAPI_PLUGIN_VENDOR_ASSETS_URI . '/flatpickr/dist/flatpickr.min.css', false, $this->plugin_version );
 
             wp_enqueue_style( 'vczapi-admin', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/css/style.min.css', false, $this->plugin_version );
         }
 
-        if ( $screen->id === "zoom-meetings" ) {
-            //Validation
-            wp_register_script( 'vczapi-admin-editor', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/editor.min.js', [], $this->plugin_version, [
-                    'in_footer' => true,
-            ] );
+        //Validation for Editor
+        wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
 
-            wp_enqueue_script( 'vczapi-vendors-js', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/vendors.min.js', [], $this->plugin_version, [
-                    'in_footer' => true,
-            ] );
-
-            wp_localize_script( 'vczapi-js', 'zvc_ajax', array(
-                    'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-                    'zvc_security' => wp_create_nonce( "_nonce_zvc_security" ),
-                    'lang'         => array(
-                            'confirm_end'    => __( "Are you sure you want to end this meeting ? Users won't be able to join this meeting shown from the shortcode.", "video-conferencing-with-zoom-api" ),
-                            'host_id_search' => __( "Add a valid Host ID or Email address.", "video-conferencing-with-zoom-api" ),
-                    ),
-            ) );
-        }
+        wp_register_script( 'vczapi-script', VCZAPI_PLUGIN_ADMIN_ASSET_URI . '/js/scripts.min.js', [], $this->plugin_version, [
+                'in_footer' => true,
+        ] );
+        wp_localize_script( 'vczapi-script', 'vczapi_ajax', array(
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                'nonce'   => wp_create_nonce( '_nonce_vczapi_security' )
+        ) );
     }
 
     /**
@@ -310,7 +221,34 @@ final class Bootstrap {
      * @author Deepen
      */
     public function load_plugin_textdomain(): void {
-        load_plugin_textdomain( 'video-conferencing-with-zoom-api', false, ZVC_PLUGIN_LANGUAGE_PATH );
+        load_plugin_textdomain( 'video-conferencing-with-zoom-api', false, VCZAPI_PLUGIN_LANGUAGE_PATH );
+    }
+
+    /**
+     * Ensure the custom zoom users table exists.
+     *
+     * Runs on admin_init so installs created before this feature shipped
+     * also get the table (dbDelta is idempotent).
+     *
+     * @since  4.8.0
+     */
+    public function ensure_custom_tables(): void {
+        if ( get_option( 'vczapi_db_version' ) !== ZoomUsersTable::DB_VERSION ) {
+            self::create_custom_tables();
+        }
+    }
+
+    /**
+     * Create custom tables and schedule recurring crons.
+     *
+     * @since  4.8.0
+     */
+    public static function create_custom_tables(): void {
+        ZoomUsersTable::create_table();
+
+        if ( ! wp_next_scheduled( 'vczapi_cron_zoom_user_sync' ) ) {
+            wp_schedule_event( time(), 'daily', 'vczapi_cron_zoom_user_sync' );
+        }
     }
 
     /**
@@ -320,13 +258,8 @@ final class Bootstrap {
      * @author Deepen
      */
     public static function activate(): void {
-        require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-post-type.php';
-        $post_type = \Zoom_Video_Conferencing_Admin_PostType::get_instance();
-        $post_type->register();
-
-        //Flush User Cache
-        update_option( '_zvc_user_lists', '' );
-        update_option( '_zvc_user_lists_expiry_time', '' );
+        //Create the custom zoom users table + schedule the user sync cron
+        self::create_custom_tables();
 
         //Flush Permalinks
         flush_rewrite_rules();
@@ -336,9 +269,11 @@ final class Bootstrap {
      * Deactivating the plugin
      */
     public static function deactivate(): void {
-        //Flush User Cache
-        update_option( '_zvc_user_lists', '' );
-        update_option( '_zvc_user_lists_expiry_time', '' );
+        //Clear the user sync cron
+        wp_clear_scheduled_hook( 'vczapi_cron_zoom_user_sync' );
+
+        //Force the join endpoint rules to be rebuilt on the next activation.
+        JoinViaBrowser::forget_rewrite_version();
 
         flush_rewrite_rules();
     }
@@ -355,7 +290,7 @@ final class Bootstrap {
         static $plugin;
 
         if ( ! isset( $plugin ) ) {
-            $plugin = ZVC_PLUGIN_ABS_NAME;
+            $plugin = VCZAPI_PLUGIN_ABS_NAME;
         }
 
         if ( $plugin == $plugin_file ) {

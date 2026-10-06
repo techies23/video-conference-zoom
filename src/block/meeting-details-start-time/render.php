@@ -8,6 +8,7 @@
  */
 
 use Codemanas\VczApi\Blocks\DetailsHelper;
+use Codemanas\VczApi\Helpers\Date;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -35,7 +36,7 @@ if ( empty( $start_time_raw ) ) {
 $utc_time = gmdate( 'Y-m-d\TH:i:s\Z', strtotime( $start_time_raw ) );
 
 // Simple PHP fallback for noscript/crawler engines
-$formatted_fallback = date_i18n( 'l, F j, Y g:i A', strtotime( $start_time_raw ) );
+$formatted_fallback = Date::dateConverter( $start_time_raw, $meeting_tz );
 
 $wrapper_attributes = get_block_wrapper_attributes( [
 	'class'                 => 'vczapi-meeting-detail-item vczapi-meeting-detail-start-time',

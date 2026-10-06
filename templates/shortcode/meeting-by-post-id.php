@@ -1,77 +1,126 @@
 <?php
+/**
+ * Shortcode template: Meeting by Post ID
+ *
+ * @var array $args Context passed via vczapi_get_template().
+ */
 
-defined( 'ABSPATH' ) || exit;
+use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\Links;
 
-global $zoom;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 
+$args = is_array( $args ?? null ) ? $args : [];
+$zoom = $args['zoom'] ?? ( $GLOBALS['zoom'] ?? [] );
+
+// Extract variables with null-coalescing fallbacks
+$postId    = absint( $args['post_id'] ?? get_the_ID() );
+$meetingId = $args['id'] ?? '';
+$joinUrl   = $args['join_url'] ?? '';
+$password  = $args['password'] ?? '';
+$startTime = $args['start_time'] ?? '';
+$timezone  = $args['timezone'] ?? '';
+$duration  = $args['duration'] ?? 0;
+$terms     = $zoom['terms'] ?? [];
+
+$hasThumbnail = has_post_thumbnail( $postId );
+$joinBtn      = ! empty( $joinUrl ) ? Links::getPwdEmbeddedJoinLink( $joinUrl, $password ) : '';
+$joinViaWeb   = ! empty( $meetingId ) ? Links::getJoinViaBrowserJoinLinks( [
+        'link_only' => true,
+        'post_id'   => $postId,
+], $meetingId ) : '';
+
+$wrapperClasses = [ 'vczapi-post-card', $hasThumbnail ? 'vczapi-post-card--has-media' : 'vczapi-post-card--no-media' ];
 ?>
-<div class="vczapi-show-by-postid">
-	<?php
-    //Only need for Fixed time recurring meeting to display the page correctly.
-	if ( vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && \Codemanas\VczApi\Helpers\MeetingType::is_recurring_fixed_time_meeting($zoom['api']->type) ) || empty( $zoom ) ) {
-		?>
-        <div class="vczapi-show-by-postid-contents">
-			<?php do_action( 'vczoom_single_content_right' ); ?>
-        </div>
-	<?php } else { ?>
-		<?php do_action( 'vczoom_single_content_right' ); ?>
-        <div class="vczapi-show-by-postid-contents vczapi-show-by-postid-flex">
-			<?php if ( ! empty( get_the_post_thumbnail_url() ) ) { ?>
-                <div class="vczapi-show-by-postid-contents-image">
-                    <img src="<?php echo esc_url( get_the_post_thumbnail_url() ); ?>" alt="<?php echo get_the_title(); ?>">
-                </div>
-			<?php } ?>
-            <div class="<?php echo empty( get_the_post_thumbnail_url() ) ? 'vczapi-show-by-postid-contents-sections vczapi-show-by-postid-contents-sections-full' : 'vczapi-show-by-postid-contents-sections'; ?>">
-                <div class="vczapi-show-by-postid-contents-sections-description">
-                    <h2 class="vczapi-show-by-postid-contents-sections-description-topic"><?php echo get_the_title(); ?></h2>
-					<?php if ( ! empty( $zoom['api']->start_time ) ) { ?>
-                        <div class="vczapi-hosted-by-start-time-wrap">
-                            <span><strong><?php _e( 'Session date', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                            <span class="sidebar-start-time"><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom['api']->start_time, $zoom['api']->timezone, 'F j, Y @ g:i a' ); ?></span>
-                        </div>
-					<?php } ?>
-					<?php if ( ! empty( $zoom['terms'] ) ) { ?>
-                        <div class="vczapi-category-wrap">
-                            <span><strong><?php _e( 'Category', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                            <span class="sidebar-category"><?php echo implode( ', ', $zoom['terms'] ); ?></span>
-                        </div>
-					<?php } ?>
-					<?php if ( ! empty( $zoom['api']->duration ) ) {
-						$duration = vczapi_convertMinutesToHM( $zoom['api']->duration, false );
-						?>
-                        <div class="vczapi-duration-wrap">
-                            <span><strong><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                            <span>
-                    <?php
-                    if ( ! empty( $duration['hr'] ) ) {
-	                    echo sprintf( _n( '%s hour', '%s hours', $duration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['hr'] ) ) . ' ' . sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) );
-                    } else {
-	                    printf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) );
-                    }
+
+<div class="<?php echo esc_attr( implode( ' ', $wrapperClasses ) ); ?>">
+    <div class="vczapi-post-card__body vczapi-meeting-by-post-id">
+        <?php if ( $hasThumbnail ) : ?>
+            <div class="vczapi-post-card__media">
+                <?php echo get_the_post_thumbnail( $postId, 'full', [
+                        'class' => 'vczapi-post-card__image',
+                        'alt'   => esc_attr( get_the_title( $postId ) ),
+                ] ); ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="vczapi-post-card__content">
+            <header class="vczapi-post-card__header">
+                <h2 class="vczapi-post-card__title"><?php echo esc_html( get_the_title( $postId ) ); ?></h2>
+            </header>
+
+            <dl class="vczapi-post-card__details">
+
+                <?php if ( ! empty( $startTime ) ) : ?>
+                    <div class="vczapi-post-card__detail-item vczapi-post-card__detail-item--start-time">
+                        <dt class="vczapi-post-card__label"><?php esc_html_e( 'Session date', 'video-conferencing-with-zoom-api' ); ?>:</dt>
+                        <dd class="vczapi-post-card__value">
+                            <?php echo esc_html( Date::dateConverter( $startTime, $timezone, 'F j, Y @ g:i a' ) ); ?>
+                        </dd>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ( ! empty( $terms ) ) : ?>
+                    <div class="vczapi-post-card__detail-item vczapi-post-card__detail-item--category">
+                        <dt class="vczapi-post-card__label"><?php esc_html_e( 'Category', 'video-conferencing-with-zoom-api' ); ?>:</dt>
+                        <dd class="vczapi-post-card__value">
+                            <?php echo esc_html( implode( ', ', (array) $terms ) ); ?>
+                        </dd>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ( ! empty( $duration ) ) :
+                    $formattedDuration = Date::convertMinutesToFormat( $duration, false );
                     ?>
-                </span>
-                        </div>
-					<?php } ?>
-					<?php if ( ! empty( $zoom['api']->timezone ) ) { ?>
-                        <div class="vczapi-timezone-wrap">
-                            <span><strong><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</strong></span>
-                            <span class="vczapi-single-meeting-timezone"><?php echo $zoom['api']->timezone; ?></span>
-                        </div>
-					<?php } ?>
+                    <div class="vczapi-post-card__detail-item vczapi-post-card__detail-item--duration">
+                        <dt class="vczapi-post-card__label"><?php esc_html_e( 'Duration', 'video-conferencing-with-zoom-api' ); ?>:</dt>
+                        <dd class="vczapi-post-card__value">
+                            <?php
+                            if ( ! empty( $formattedDuration['hr'] ) ) {
+                                printf(
+                                /* translators: 1: Hours count, 2: Minutes count */
+                                        esc_html__( '%1$s %2$s', 'video-conferencing-with-zoom-api' ),
+                                        sprintf( _n( '%s hour', '%s hours', $formattedDuration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $formattedDuration['hr'] ) ),
+                                        sprintf( _n( '%s minute', '%s minutes', $formattedDuration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $formattedDuration['min'] ) )
+                                );
+                            } else {
+                                printf(
+                                        _n( '%s minute', '%s minutes', $formattedDuration['min'], 'video-conferencing-with-zoom-api' ),
+                                        number_format_i18n( $formattedDuration['min'] )
+                                );
+                            }
+                            ?>
+                        </dd>
+                    </div>
+                <?php endif; ?>
 
-					<?php do_action( 'vczapi_html_after_meeting_details' ); ?>
-                </div>
-                <div class="dpn-zvc-sidebar-content"></div>
-            </div>
+                <?php if ( ! empty( $timezone ) ) : ?>
+                    <div class="vczapi-post-card__detail-item vczapi-post-card__detail-item--timezone">
+                        <dt class="vczapi-post-card__label"><?php esc_html_e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?>:</dt>
+                        <dd class="vczapi-post-card__value"><?php echo esc_html( $timezone ); ?></dd>
+                    </div>
+                <?php endif; ?>
+
+            </dl>
+
+            <?php if ( ! empty( $joinBtn ) || ! empty( $joinViaWeb ) ) : ?>
+                <footer class="vczapi-post-card__actions">
+                    <?php if ( ! empty( $joinBtn ) ) : ?>
+                        <a href="<?php echo esc_url( $joinBtn ); ?>" target="_blank" rel="noopener noreferrer nofollow" class="vczapi-post-card__btn vczapi-post-card__btn--join">
+                            <?php esc_html_e( 'Join Meeting', 'video-conferencing-with-zoom-api' ); ?>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if ( ! empty( $joinViaWeb ) ) : ?>
+                        <a href="<?php echo esc_url( $joinViaWeb ); ?>" target="_blank" rel="noopener noreferrer nofollow" class="vczapi-post-card__btn vczapi-post-card__btn--browser">
+                            <?php esc_html_e( 'Join via Browser', 'video-conferencing-with-zoom-api' ); ?>
+                        </a>
+                    <?php endif; ?>
+                </footer>
+            <?php endif; ?>
+
         </div>
-		<?php if ( ! empty( get_the_content() ) ) { ?>
-            <div class="vczapi-show-by-postid-contents-sections-thecontent">
-				<?php the_content(); ?>
-            </div>
-			<?php
-		}
-	}
-	?>
+    </div>
 </div>
-
-
