@@ -26,7 +26,7 @@ class Assets {
 	 *
 	 * Read by `src/public/js/shortcode.js`.
 	 */
-	const JS_GLOBAL = 'vczapi_ajax';
+	const JS_GLOBAL = 'vczapi_public_localize';
 
 	/**
 	 * DataTables i18n payload localized on the DataTables bundle.
@@ -35,14 +35,14 @@ class Assets {
 	 */
 	const DATATABLES_I18N_GLOBAL = 'vczapi_dt_i18n';
 
-	private static ?Assets $_instance = null;
+	private static ?Assets $instance = null;
 
 	public static function get_instance(): ?Assets {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	public function __construct() {

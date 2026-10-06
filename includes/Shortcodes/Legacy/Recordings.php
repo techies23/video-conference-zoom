@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Shortcodes;
+namespace Codemanas\VczApi\Shortcodes\Legacy;
 
 use Codemanas\VczApi\Helpers\MeetingType;
 use Codemanas\VczApi\Requests\Zoom;

@@ -100,7 +100,6 @@ class PostTypeSyncService {
 		Metastore::setPostMeta( $post_id, 'meeting_fields', $meeting_data );
 		Metastore::setPostMeta( $post_id, 'meeting_type', $type );
 
-		$start_utc = '';
 		if ( ! empty( $meeting_data['start_time'] ) && ! empty( $meeting_data['timezone'] ) ) {
 			try {
 				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
@@ -108,9 +107,9 @@ class PostTypeSyncService {
 			} catch ( \Exception $e ) {
 				$start_utc = $e->getMessage();
 			}
-		}
 
-		Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
+			Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
+		}
 	}
 
 	/**

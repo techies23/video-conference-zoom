@@ -3,14 +3,13 @@
 namespace Codemanas\VczApi;
 
 use Codemanas\VczApi\Shortcodes\Assets;
-use Codemanas\VczApi\Shortcodes\Embed;
-use Codemanas\VczApi\Shortcodes\Meetings;
-use Codemanas\VczApi\Shortcodes\Recordings;
-use Codemanas\VczApi\Shortcodes\Webinars;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+use Codemanas\VczApi\Shortcodes\Legacy\Embed;
+use Codemanas\VczApi\Shortcodes\Legacy\Meetings;
+use Codemanas\VczApi\Shortcodes\Legacy\Recordings;
+use Codemanas\VczApi\Shortcodes\Legacy\Webinars;
+use Codemanas\VczApi\Shortcodes\Meetings\MeetingByID;
+use Codemanas\VczApi\Shortcodes\Meetings\MeetingByPostID;
+use Codemanas\VczApi\Shortcodes\Meetings\MeetingListView;
 
 /**
  * Shortcodes Controller
@@ -20,37 +19,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Shortcodes {
 
-	public static $_instance = null;
+	public static ?Shortcodes $instance = null;
 
-	public static function get_instance() {
-		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
+	public static function get_instance(): ?Shortcodes {
+		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
 
-	/**
-	 * Shortcodes container
-	 *
-	 * @var array
-	 */
 	private array $shortcodes;
 
-	/**
-	 * Zoom_Video_Conferencing_Shorcodes constructor.
-	 */
 	public function __construct() {
 		Assets::get_instance();
-		$this->register();
+		$this->registerLegacyShortcodes();
 		$this->init_shortcodes();
 	}
 
-	private function register(): void {
-		$meetings         = Meetings::get_instance();
-		$webinars         = Webinars::get_instance();
-		$recordings       = Recordings::get_instance();
-		$embedded         = Embed::get_instance();
+	private function registerLegacyShortcodes(): void {
+//		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 100 );
+
+		$meetings   = Meetings::get_instance();
+		$webinars   = Webinars::get_instance();
+		$recordings = Recordings::get_instance();
+		$embedded   = Embed::get_instance();
+
 		$this->shortcodes = array(
-			'zoom_api_link'              => array( $meetings, 'show_meeting_by_ID' ),
-			'zoom_meeting_post'          => array( $meetings, 'show_meeting_by_postTypeID' ),
-			'zoom_list_meetings'         => array( $meetings, 'list_cpt_meetings' ),
+			'zoom_api_link'              => [ MeetingByID::get_instance(), 'render' ],
+			'zoom_meeting_post'          => [ MeetingByPostID::get_instance(), 'render' ],
+			'zoom_list_meetings'         => [ MeetingListView::get_instance(), 'render' ],
 			'zoom_list_host_meetings'    => array( $meetings, 'list_live_host_meetings' ),
 
 			//Embed Browser

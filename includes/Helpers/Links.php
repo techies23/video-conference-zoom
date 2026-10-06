@@ -173,12 +173,12 @@ class Links {
 	 * Get Join link with Password Embedded
 	 *
 	 * @param $join_url
-	 * @param $encrpyted_pwd
+	 * @param $encrypted_pwd
 	 *
 	 * @return string
 	 */
-	public static function getPwdEmbeddedJoinLink( $join_url, $encrpyted_pwd ): string {
-		if ( ! empty( $encrpyted_pwd ) ) {
+	public static function getPwdEmbeddedJoinLink( $join_url, $encrypted_pwd ): string {
+		if ( ! empty( $encrypted_pwd ) ) {
 			$explode_pwd              = array_map( 'trim', explode( '?pwd', $join_url ) );
 			$embed_password_join_link = Metastore::get_plugin_settings( 'embed_pwd_in_join_link' );
 			$password_exists          = count( $explode_pwd ) > 1;
@@ -187,7 +187,7 @@ class Links {
 					$join_url = $explode_pwd[0];
 				}
 			} else {
-				$join_url = esc_url( add_query_arg( array( 'pwd' => $encrpyted_pwd ), $join_url ) );
+				$join_url = esc_url( add_query_arg( array( 'pwd' => $encrypted_pwd ), $join_url ) );
 			}
 		}
 

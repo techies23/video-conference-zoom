@@ -14,7 +14,7 @@ class ListingQuery {
 	const TYPE_WEBINARS = 'webinars';
 
 	private const TYPE_META_KEY = '_vczapi_meeting_type';
-	private const START_DATE_META_KEY = '_meeting_field_start_date_utc';
+	private const START_DATE_META_KEY = 'vczapi_meeting_field_start_date_utc';
 
 	/**
 	 * `meetings` or `webinars`.

@@ -61,17 +61,17 @@ class Support {
 	 * host's upcoming entities, cache the result in an option for five minutes,
 	 * and fall back to a "check Host ID" message when Zoom returns nothing.
 	 *
-	 * @param string   $option_key      Option name holding the cached items.
-	 * @param string   $collection      Response key holding the items, `meetings` or `webinars`.
-	 * @param string   $fallback_message Message used when the response has no items.
-	 * @param callable $fetch           Fetcher, returns `WP_Error|array`.
-	 * @param int      $lifetime        Cache lifetime in seconds.
+	 * @param string $option_key Option name holding the cached items.
+	 * @param string $collection Response key holding the items, `meetings` or `webinars`.
+	 * @param string $fallback_message Message used when the response has no items.
+	 * @param callable $fetch Fetcher, returns `WP_Error|array`.
+	 * @param int $lifetime Cache lifetime in seconds.
 	 *
 	 * @return array|WP_Error Cached/fresh items, or `WP_Error` on failure.
 	 */
 	public static function host_listing( string $option_key, string $collection, string $fallback_message, callable $fetch, int $lifetime = 300 ): array|WP_Error {
-		$cached   = get_option( $option_key );
-		$expires  = (int) get_option( $option_key . '_expiration' );
+		$cached  = get_option( $option_key );
+		$expires = (int) get_option( $option_key . '_expiration' );
 
 		if ( ! empty( $cached ) && $expires > time() ) {
 			return (array) $cached;
@@ -91,5 +91,30 @@ class Support {
 		update_option( $option_key . '_expiration', time() + $lifetime );
 
 		return (array) $response[ $collection ];
+	}
+
+	/**
+	 * The "you forgot the id" markup shared by every id-based shortcode.
+	 *
+	 * @param string $message Reason.
+	 *
+	 * @return string
+	 */
+	public static function no_id_error( string $message ): string {
+		return '<h4 class="no-meeting-id"><strong style="color:red;">'
+		       . esc_html__( 'ERROR: ', 'video-conferencing-with-zoom-api' )
+		       . '</strong>' . esc_html( $message ) . '</h4>';
+	}
+
+	/**
+	 * Markup shown when the Zoom API returns an error.
+	 *
+	 * @param \WP_Error $error API error.
+	 *
+	 * @return string
+	 */
+	public static function api_error_notice( \WP_Error $error ): string {
+		return '<strong>' . esc_html__( 'Zoom API Error:', 'video-conferencing-with-zoom-api' ) . '</strong>'
+		       . esc_html( $error->get_error_message() );
 	}
 }
