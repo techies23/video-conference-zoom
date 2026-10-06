@@ -18,10 +18,10 @@ class PostTypeSyncService {
 	/**
 	 * When saving post.
 	 *
-	 * @param int $post_id
-	 * @param WP_Post $post
-	 * @param array $fields
-	 * @param string $meeting_type
+	 * @param   int      $post_id
+	 * @param   WP_Post  $post
+	 * @param   array    $fields
+	 * @param   string   $meeting_type
 	 *
 	 * @return void
 	 */
@@ -45,9 +45,9 @@ class PostTypeSyncService {
 	/**
 	 * Build Event data after post for API processing.
 	 *
-	 * @param WP_Post $post
-	 * @param array $fields
-	 * @param string $meeting_type
+	 * @param   WP_Post  $post
+	 * @param   array    $fields
+	 * @param   string   $meeting_type
 	 *
 	 * @return array
 	 */
@@ -59,7 +59,7 @@ class PostTypeSyncService {
 			'topic'                  => esc_html( $post->post_title ),
 			'user_id'                => (string) ( $fields['user_id'] ?? '' ),
 			'agenda'                 => $fields['agenda'] ?? '',
-			'type'                   => $meeting_type,
+			'type'                   => $meeting_type == 'meeting' ? MeetingType::TYPE_SCHEDULED : MeetingType::TYPE_WEBINAR_DEFAULT,
 			'start_time'             => $start_time,
 			'timezone'               => $fields['timezone'] ?? '',
 			'duration'               => (int) ( $fields['duration'] ?? 40 ),
@@ -79,8 +79,8 @@ class PostTypeSyncService {
 	/**
 	 * Handles auto password setting.
 	 *
-	 * @param int $post_id
-	 * @param string $password
+	 * @param   int     $post_id
+	 * @param   string  $password
 	 *
 	 * @return string
 	 */
@@ -96,9 +96,9 @@ class PostTypeSyncService {
 	/**
 	 * Handle Save metadata after post type save or update.
 	 *
-	 * @param int $post_id
-	 * @param array $meeting_data
-	 * @param string $type
+	 * @param   int     $post_id
+	 * @param   array   $meeting_data
+	 * @param   string  $type
 	 *
 	 * @return void
 	 */
@@ -110,7 +110,8 @@ class PostTypeSyncService {
 			try {
 				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
 				$start_utc = $dt->setTimezone( new \DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
-			} catch ( \Exception $e ) {
+			}
+			catch ( \Exception $e ) {
 				$start_utc = $e->getMessage();
 			}
 
@@ -121,8 +122,8 @@ class PostTypeSyncService {
 	/**
 	 * Save to metadata after zoom Response.
 	 *
-	 * @param int $post_id
-	 * @param $response
+	 * @param   int  $post_id
+	 * @param        $response
 	 *
 	 * @return void
 	 */
@@ -141,7 +142,7 @@ class PostTypeSyncService {
 	/**
 	 * Get what type of event to save and modify any different values needed for diff event type.
 	 *
-	 * @param string $meeting_type
+	 * @param   string  $meeting_type
 	 *
 	 * @return IZoomEvent
 	 */

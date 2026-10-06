@@ -15,12 +15,14 @@ class ZoomMetaboxViewRenderer {
 
 		$meeting_fields  = Metastore::getPostMeta( $post->ID, 'meeting_fields' );
 		$meeting_details = Metastore::getPostMeta( $post->ID, 'meeting_zoom_details' );
+		$meeting_type    = Metastore::getPostMeta( $post->ID, 'meeting_type' );
 		$users           = Common::getDefaultHostList();
 
 		Templates::includeFile( VCZAPI_PLUGIN_ADMIN_VIEWS_PATH . '/post-type/meta-box/meeting-fields.php', [
 			'post'            => $post,
 			'meeting_details' => $meeting_details,
 			'meeting_fields'  => is_array( $meeting_fields ) ? $meeting_fields : [],
+			'meeting_type'    => $meeting_type ?? 'meeting',
 			'field_sections'  => MeetingFieldSchema::getMeetingFieldsSchema( $post, $meeting_details, $users ),
 		] );
 	}
