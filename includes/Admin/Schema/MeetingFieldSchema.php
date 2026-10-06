@@ -56,8 +56,8 @@ class MeetingFieldSchema {
 						'type'        => $has_zoom_id ? 'placeholder' : 'select',
 						'description' => __( 'Type of Event.', $text_domain ),
 						'options'     => [
-							1 => __( 'Meeting', $text_domain ),
-							2 => __( 'Webinar', $text_domain ),
+							'meeting' => __( 'Meeting', $text_domain ),
+							'webinar' => __( 'Webinar', $text_domain ),
 						],
 					],
 					'start_time' => [

@@ -48,7 +48,6 @@ class MeetingValidator {
 
 		foreach ( $fields as $key => $value ) {
 			switch ( $key ) {
-				case 'type':
 				case 'jbh_time':
 					$normalized[ $key ] = is_numeric( $value ) ? (int) $value : (int) ( $value ?? 0 );
 					break;
@@ -92,7 +91,7 @@ class MeetingValidator {
 		}
 
 		$type = $fields['type'] ?? null;
-		if ( ! in_array( (int) $type, [ 1, 2 ], true ) ) {
+		if ( ! in_array( (string) $type, [ "meeting", "webinar" ], true ) ) {
 			$errors['type'] = __( 'Please select a valid Meeting Type.', 'video-conferencing-with-zoom-api' );
 		}
 

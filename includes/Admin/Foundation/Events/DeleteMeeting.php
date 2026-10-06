@@ -11,7 +11,6 @@ use Codemanas\VczApi\Helpers\Config;
  */
 class DeleteMeeting {
 
-	private const WEBINAR_TYPE = 2;
 	protected string $postType;
 	private static ?self $instance = null;
 
@@ -46,8 +45,7 @@ class DeleteMeeting {
 
 		do_action( 'vczapi_before_delete_meeting', $meeting_id );
 
-		$is_webinar = is_array( $meeting_details ) && isset( $meeting_details['meeting_type'] ) && $meeting_details['meeting_type'] === self::WEBINAR_TYPE;
-
+		$is_webinar = is_array( $meeting_details ) && isset( $meeting_details['meeting_type'] ) && $meeting_details['meeting_type'] === "webinar";
 		if ( $is_webinar ) {
 			zoom_conference_v2()->webinars()->delete( $meeting_id );
 		} else {
