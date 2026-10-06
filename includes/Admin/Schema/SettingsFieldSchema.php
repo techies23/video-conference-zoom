@@ -27,19 +27,6 @@ class SettingsFieldSchema {
 						'storage_key'    => 'delete_zoom_meeting',
 						'description'    => __( 'Do not delete your meetings on Zoom, when you delete your meeting from Zoom Meetings > All Meetings page.', $text_domain ),
 					],
-					'disable_countdown_timer'            => [
-						'label'          => __( 'Disable Countdown Timer', $text_domain ),
-						'type'           => 'checkbox',
-						'checkbox_value' => 'on',
-						'input_class'    => [ 'form-control' ],
-						'description'    => __( 'This setting will disable countdown timer on single Zoom Events page. Check this option if you want to disable the countdown.', $text_domain ),
-					],
-//					'disable_auto_pwd_generation'        => [
-//						'label'          => __( 'Disable Auto Password Generation ?', $text_domain ),
-//						'type'           => 'checkbox',
-//						'checkbox_value' => 'on',
-//						'description'    => __( 'Checking this option will disable auto password generation for new meetings which are created from Zoom meeting > Add new section.', $text_domain ),
-//					],
 					'hide_join_links_non_loggedin_users' => [
 						'label'          => __( 'Hide Join Links for Non-Loggedin ?', $text_domain ),
 						'type'           => 'checkbox',

@@ -116,7 +116,7 @@ class CreateMeeting {
 		}
 
 		$post         = get_post( $post_id );
-		$meeting_type = (int) ( $fields['type'] ?? 1 );
+		$meeting_type = (string) ( $fields['type'] ?? "meeting" );
 
 		( new PostTypeSyncService() )->sync( $post_id, $post, $fields, $meeting_type );
 

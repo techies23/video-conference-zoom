@@ -2,14 +2,14 @@
 
 namespace Codemanas\VczApi;
 
-use Codemanas\VczApi\Shortcodes\Embed;
-use Codemanas\VczApi\Shortcodes\Meetings;
-use Codemanas\VczApi\Shortcodes\Recordings;
-use Codemanas\VczApi\Shortcodes\Webinars;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+use Codemanas\VczApi\Shortcodes\Assets;
+use Codemanas\VczApi\Shortcodes\Legacy\Embed;
+use Codemanas\VczApi\Shortcodes\Legacy\Meetings;
+use Codemanas\VczApi\Shortcodes\Legacy\Recordings;
+use Codemanas\VczApi\Shortcodes\Legacy\Webinars;
+use Codemanas\VczApi\Shortcodes\Meetings\MeetingByID;
+use Codemanas\VczApi\Shortcodes\Meetings\MeetingByPostID;
+use Codemanas\VczApi\Shortcodes\Meetings\MeetingListView;
 
 /**
  * Shortcodes Controller
@@ -19,33 +19,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Shortcodes {
 
-	public static $_instance = null;
+	public static ?Shortcodes $instance = null;
 
-	public static function get_instance() {
-		return is_null( self::$_instance ) ? self::$_instance = new self() : self::$_instance;
+	public static function get_instance(): ?Shortcodes {
+		return is_null( self::$instance ) ? self::$instance = new self() : self::$instance;
 	}
 
-	/**
-	 * Shortcodes container
-	 *
-	 * @var array
-	 */
 	private array $shortcodes;
 
-	/**
-	 * Zoom_Video_Conferencing_Shorcodes constructor.
-	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 100 );
+		Assets::get_instance();
+		$this->registerLegacyShortcodes();
+		$this->init_shortcodes();
+	}
 
-		$meetings         = Meetings::get_instance();
-		$webinars         = Webinars::get_instance();
-		$recordings       = Recordings::get_instance();
-		$embedded         = Embed::get_instance();
+	private function registerLegacyShortcodes(): void {
+//		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 100 );
+
+		$meetings   = Meetings::get_instance();
+		$webinars   = Webinars::get_instance();
+		$recordings = Recordings::get_instance();
+		$embedded   = Embed::get_instance();
+
 		$this->shortcodes = array(
-			'zoom_api_link'              => array( $meetings, 'show_meeting_by_ID' ),
-			'zoom_meeting_post'          => array( $meetings, 'show_meeting_by_postTypeID' ),
-			'zoom_list_meetings'         => array( $meetings, 'list_cpt_meetings' ),
+			'zoom_api_link'              => [ MeetingByID::get_instance(), 'render' ],
+			'zoom_meeting_post'          => [ MeetingByPostID::get_instance(), 'render' ],
+			'zoom_list_meetings'         => [ MeetingListView::get_instance(), 'render' ],
 			'zoom_list_host_meetings'    => array( $meetings, 'list_live_host_meetings' ),
 
 			//Embed Browser
@@ -60,8 +59,6 @@ class Shortcodes {
 			'zoom_recordings'            => array( $recordings, 'recordings_by_user' ),
 			'zoom_recordings_by_meeting' => array( $recordings, 'recordings_by_meeting_id' )
 		);
-
-		$this->init_shortcodes();
 	}
 
 	/**
@@ -79,24 +76,24 @@ class Shortcodes {
 	public function enqueue_scripts() {
 		$minified = SCRIPT_DEBUG ? '' : '.min';
 		wp_enqueue_style( 'video-conferencing-with-zoom-api' );
-		wp_register_style( 'video-conferencing-with-zoom-api-datable', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.css', false, ZVC_PLUGIN_VERSION );
-		wp_register_style( 'video-conferencing-with-zoom-api-datable-responsive', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.css', [ 'video-conferencing-with-zoom-api-datable' ], ZVC_PLUGIN_VERSION );
-		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', [ 'jquery' ], ZVC_PLUGIN_VERSION, true );
+		wp_register_style( 'video-conferencing-with-zoom-api-datable', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.css', false, VCZAPI_PLUGIN_VERSION );
+		wp_register_style( 'video-conferencing-with-zoom-api-datable-responsive', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.css', [ 'video-conferencing-with-zoom-api-datable' ], VCZAPI_PLUGIN_VERSION );
+		wp_register_script( 'video-conferencing-with-zoom-api-datable-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable/jquery.dataTables.min.js', [ 'jquery' ], VCZAPI_PLUGIN_VERSION, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-dt-responsive-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/dataTables.responsive.min.js', [
 			'jquery',
 			'video-conferencing-with-zoom-api-datable-js'
-		], ZVC_PLUGIN_VERSION, true );
+		], VCZAPI_PLUGIN_VERSION, true );
 		wp_register_script( 'video-conferencing-with-zoom-api-datable-responsive-js', ZVC_PLUGIN_VENDOR_ASSETS_URL . '/datatable-responsive/responsive.dataTables.min.js', [
 			'jquery',
 			'video-conferencing-with-zoom-api-datable-js'
-		], ZVC_PLUGIN_VERSION, true );
-		wp_register_script( 'video-conferncing-with-zoom-browser-js', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/join-via-browser' . $minified . '.js', array( 'jquery' ), ZVC_PLUGIN_VERSION, true );
-		wp_register_script( 'video-conferencing-with-zoom-api-shortcode-js', ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/js/shortcode' . $minified . '.js', [
+		], VCZAPI_PLUGIN_VERSION, true );
+		wp_register_script( 'video-conferncing-with-zoom-browser-js', VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/js/join-via-browser' . $minified . '.js', array( 'jquery' ), VCZAPI_PLUGIN_VERSION, true );
+		wp_register_script( 'video-conferencing-with-zoom-api-shortcode-js', VCZAPI_PLUGIN_PUBLIC_ASSET_URI . '/js/shortcode' . $minified . '.js', [
 			'jquery',
 			'video-conferencing-with-zoom-api-datable-js'
-		], ZVC_PLUGIN_VERSION, true );
+		], VCZAPI_PLUGIN_VERSION, true );
 		wp_localize_script( 'video-conferencing-with-zoom-api-shortcode-js', 'vczapi_ajax', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'loading_recordings' => __( 'Loading recordings.. Please wait..', 'video-conferencing-with-zoom-api' )
 		) );
 		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(

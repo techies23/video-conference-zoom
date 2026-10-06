@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Shortcodes;
+namespace Codemanas\VczApi\Shortcodes\Legacy;
 
 class Webinars {
 

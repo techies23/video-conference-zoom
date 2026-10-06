@@ -261,7 +261,7 @@ class Client {
 	 * @return string
 	 */
 	protected function userAgent() {
-		$version = defined( 'ZVC_PLUGIN_VERSION' ) ? ZVC_PLUGIN_VERSION : 'unknown';
+		$version = defined( 'VCZAPI_PLUGIN_VERSION' ) ? VCZAPI_PLUGIN_VERSION : 'unknown';
 		$wp      = get_bloginfo( 'version' );
 		$php     = PHP_VERSION;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Codemanas\VczApi\Shortcodes;
+namespace Codemanas\VczApi\Shortcodes\Legacy;
 
 class Meetings {
 
@@ -39,7 +39,7 @@ class Meetings {
 	/**
 	 * Get a scalar value.
 	 *
-	 * @param mixed  $value   Value to normalize.
+	 * @param mixed $value Value to normalize.
 	 * @param string $default Default value.
 	 *
 	 * @return string
@@ -55,7 +55,7 @@ class Meetings {
 	/**
 	 * Normalize a yes/no value.
 	 *
-	 * @param mixed  $value   Value to normalize.
+	 * @param mixed $value Value to normalize.
 	 * @param string $default Default value.
 	 *
 	 * @return string
@@ -69,7 +69,7 @@ class Meetings {
 	/**
 	 * Normalize a true/false value.
 	 *
-	 * @param mixed  $value   Value to normalize.
+	 * @param mixed $value Value to normalize.
 	 * @param string $default Default value.
 	 *
 	 * @return string
@@ -106,7 +106,7 @@ class Meetings {
 	/**
 	 * Normalize shortcode order value.
 	 *
-	 * @param mixed  $value   Value to normalize.
+	 * @param mixed $value Value to normalize.
 	 * @param string $default Default value.
 	 *
 	 * @return string
@@ -120,7 +120,7 @@ class Meetings {
 	/**
 	 * Normalize meeting list type.
 	 *
-	 * @param mixed  $value   Value to normalize.
+	 * @param mixed $value Value to normalize.
 	 * @param string $default Default value.
 	 *
 	 * @return string
@@ -134,7 +134,7 @@ class Meetings {
 	/**
 	 * Normalize meeting post template.
 	 *
-	 * @param mixed  $value   Value to normalize.
+	 * @param mixed $value Value to normalize.
 	 * @param string $default Default value.
 	 *
 	 * @return string
@@ -523,7 +523,7 @@ class Meetings {
 		$data      = is_array( $data ) ? $data : [];
 		$form_data = is_array( $form_data ) ? $form_data : [];
 
-		$atts  = shortcode_atts(
+		$atts = shortcode_atts(
 			array(
 				'author'       => '',
 				'per_page'     => 5,
@@ -542,8 +542,8 @@ class Meetings {
 		);
 
 		$atts                 = $this->sanitize_list_shortcode_atts( $atts );
-		$atts['page_num']    = ! empty( $data['page_num'] ) ? absint( $data['page_num'] ) : 1;
-		$atts['base_url']    = ! empty( $data['base_url'] ) ? esc_url_raw( $this->get_scalar_value( $data['base_url'] ) ) : '';
+		$atts['page_num']     = ! empty( $data['page_num'] ) ? absint( $data['page_num'] ) : 1;
+		$atts['base_url']     = ! empty( $data['base_url'] ) ? esc_url_raw( $this->get_scalar_value( $data['base_url'] ) ) : '';
 		$atts['meeting_type'] = ! empty( $data['meeting_type'] ) && in_array( $data['meeting_type'], [ 'meetings', 'webinars' ], true ) ? $data['meeting_type'] : 'meetings';
 
 		$paged = $atts['page_num'];
@@ -602,8 +602,8 @@ class Meetings {
 				$threshold = vczapi_dateConverter( 'now', 'UTC', 'Y-m-d H:i:s', false );
 			}
 
-			$type       = ( $atts['type'] === "upcoming" ) ? '>=' : '<=';
-			$meta_query = array(
+			$type                       = ( $atts['type'] === "upcoming" ) ? '>=' : '<=';
+			$meta_query                 = array(
 				'key'     => '_meeting_field_start_date_utc',
 				'value'   => $threshold,
 				'compare' => $type,

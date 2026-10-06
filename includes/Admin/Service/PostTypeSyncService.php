@@ -15,21 +15,27 @@ use WP_Post;
  */
 class PostTypeSyncService {
 
-	private const WEBINAR_TYPE = 2;
-
-	public function sync( int $post_id, WP_Post $post, array $fields, int $meeting_type ): void {
+	/**
+	 * When saving post.
+	 *
+	 * @param int $post_id
+	 * @param WP_Post $post
+	 * @param array $fields
+	 * @param string $meeting_type
+	 *
+	 * @return void
+	 */
+	public function sync( int $post_id, WP_Post $post, array $fields, string $meeting_type ): void {
 		$eventHandler = $this->getEventHandler( $meeting_type );
 		$meeting_data = $this->buildMeetingData( $post, $fields, $meeting_type );
 
 		do_action( 'vczapi_admin_before_zoom_meeting_is_created', $meeting_data );
 
-		$event_label = ( $meeting_type === self::WEBINAR_TYPE ) ? 'webinar' : 'meeting';
-		$this->saveMetaData( $post_id, $meeting_data, $event_label );
+		$this->saveMetaData( $post_id, $meeting_data, $meeting_type );
 
-		$meeting_data['type'] = MeetingType::getCptMeetingType( $meeting_type );
-		$meeting_data         = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data, $fields );
-		$zoom_id              = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
-		$response             = $eventHandler->syncWithApi( $post, $meeting_data, $zoom_id );
+		$meeting_data = apply_filters( 'vczapi_admin_meeting_fields', $meeting_data, $fields );
+		$zoom_id      = (string) Metastore::getPostMeta( $post_id, 'meeting_id' );
+		$response     = $eventHandler->syncWithApi( $post, $meeting_data, $zoom_id );
 
 		$this->persistZoomResponse( $post_id, $response );
 
@@ -41,11 +47,11 @@ class PostTypeSyncService {
 	 *
 	 * @param WP_Post $post
 	 * @param array $fields
-	 * @param int $meeting_type
+	 * @param string $meeting_type
 	 *
 	 * @return array
 	 */
-	private function buildMeetingData( WP_Post $post, array $fields, int $meeting_type ): array {
+	private function buildMeetingData( WP_Post $post, array $fields, string $meeting_type ): array {
 		$raw_start_time = $fields['start_time'] ?? '';
 		$start_time     = $raw_start_time ? gmdate( "Y-m-d\TH:i:s", strtotime( $raw_start_time ) ) : '';
 
@@ -100,7 +106,6 @@ class PostTypeSyncService {
 		Metastore::setPostMeta( $post_id, 'meeting_fields', $meeting_data );
 		Metastore::setPostMeta( $post_id, 'meeting_type', $type );
 
-		$start_utc = '';
 		if ( ! empty( $meeting_data['start_time'] ) && ! empty( $meeting_data['timezone'] ) ) {
 			try {
 				$dt        = new \DateTimeImmutable( $meeting_data['start_time'], new \DateTimeZone( $meeting_data['timezone'] ) );
@@ -108,9 +113,9 @@ class PostTypeSyncService {
 			} catch ( \Exception $e ) {
 				$start_utc = $e->getMessage();
 			}
-		}
 
-		Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
+			Metastore::setPostMeta( $post_id, 'meeting_start_date_utc', $start_utc );
+		}
 	}
 
 	/**
@@ -136,11 +141,11 @@ class PostTypeSyncService {
 	/**
 	 * Get what type of event to save and modify any different values needed for diff event type.
 	 *
-	 * @param int $meeting_type
+	 * @param string $meeting_type
 	 *
 	 * @return IZoomEvent
 	 */
-	private function getEventHandler( int $meeting_type ): IZoomEvent {
-		return ( $meeting_type === self::WEBINAR_TYPE ) ? new WebinarService() : new MeetingService();
+	private function getEventHandler( string $meeting_type ): IZoomEvent {
+		return ( $meeting_type === "webinar" ) ? new WebinarService() : new MeetingService();
 	}
 }

@@ -168,12 +168,6 @@ export default function EditZoomRecording(props) {
     };
   }, []);
 
-  if (preview) {
-    return (
-      <img src={vczapi_blocks.recordings_preview} alt={"Zoom Recordings"} />
-    );
-  }
-
   // Map meeting list items to valid string values for SelectControl
   const formattedMeetingOptions = availableMeetings.map(m => ({
     label: m.label,

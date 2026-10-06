@@ -10,29 +10,29 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+    exit; // Exit if accessed directly
 }
 
 global $zoom_meetings;
 
 if ( ! is_object( $zoom_meetings ) && ! ( $zoom_meetings instanceof \WP_Query ) ) {
-	return;
+    return;
 }
 
 $args = isset( $args ) ? $args : [];
 $atts = shortcode_atts(
-	array(
-		'author'       => '',
-		'per_page'     => 5,
-		'category'     => '',
-		'order'        => 'DESC',
-		'type'         => '',
-		'filter'       => 'yes',
-		'show_on_past' => 'yes',
-		'cols'         => 3,
-		'meeting_type' => 'meetings',
-	),
-	$args, 'zoom_list_meetings'
+        array(
+                'author'       => '',
+                'per_page'     => 5,
+                'category'     => '',
+                'order'        => 'DESC',
+                'type'         => '',
+                'filter'       => 'yes',
+                'show_on_past' => 'yes',
+                'cols'         => 3,
+                'meeting_type' => 'meetings',
+        ),
+        $args, 'zoom_list_meetings'
 );
 
 ?>
@@ -48,45 +48,42 @@ $atts = shortcode_atts(
      data-base_url="<?php echo esc_url( get_pagenum_link( 999999999999999 ) ); ?>"
      data-meeting_type="<?php echo esc_attr( $atts['meeting_type'] ); ?>"
 >
-    <div class="vczapi-loader">
-        <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/ajax-loader.gif'; ?>" alt="loading..."/>
-    </div>
-	<?php
-	/**
-	 * BEFORE LOOP HOOK
-	 */
-	do_action( 'vczapi_before_shortcode_content_post_loop', $zoom_meetings );
+    <?php
+    /**
+     * BEFORE LOOP HOOK
+     */
+    do_action( 'vczapi_before_shortcode_content_post_loop', $zoom_meetings );
 
-	?>
+    ?>
 
     <div class="vczapi-wrap vczapi-items-wrap">
-		<?php
-		if ( $zoom_meetings->have_posts() ) {
-			while ( $zoom_meetings->have_posts() ) {
-				$zoom_meetings->the_post();
+        <?php
+        if ( $zoom_meetings->have_posts() ) {
+            while ( $zoom_meetings->have_posts() ) {
+                $zoom_meetings->the_post();
 
-				do_action( 'vczapi_main_content_post_loop' );
+                do_action( 'vczapi_main_content_post_loop' );
 
-				vczapi_get_template_part( 'shortcode/zoom', 'listing' );
-			}
-		} else {
-			echo "<p class='vczapi-no-meeting-found'>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
-		}
+                vczapi_get_template_part( 'shortcode/zoom', 'listing' );
+            }
+        } else {
+            echo "<p class='vczapi-no-meeting-found'>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
+        }
 
-		wp_reset_postdata();
-		?>
+        wp_reset_postdata();
+        ?>
     </div>
 
-	<?php
-	/**
-	 * AFTER LOOP HOOK
-	 */
-	do_action( 'vczapi_after_shortcode_content_post_loop' );
-	?>
+    <?php
+    /**
+     * AFTER LOOP HOOK
+     */
+    do_action( 'vczapi_after_shortcode_content_post_loop' );
+    ?>
 
     <div class="vczapi-list-zoom-meetings--pagination">
-		<?php \Codemanas\VczApi\Shortcodes\Helpers::pagination( $zoom_meetings ); ?>
+        <?php \Codemanas\VczApi\Shortcodes\Helpers::pagination( $zoom_meetings ); ?>
     </div>
 
-	<?php do_action( 'vczapi_after_main_content_post_loop_pagination' ); ?>
+    <?php do_action( 'vczapi_after_main_content_post_loop_pagination' ); ?>
 </div>

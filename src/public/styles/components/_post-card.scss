@@ -1,0 +1,151 @@
+// ==========================================================================
+// Variables & Configuration
+// ==========================================================================
+.vczapi-post-card {
+  --vczapi-border-color-post-card: #E0E0E0;
+  --vczapi-radius-post-card: 8px;
+  --vczapi-spacing-post-card: 1.5rem;
+
+  display: block;
+  border: 1px solid var(--vczapi-border-color-post-card);
+  border-radius: var(--vczapi-radius-post-card);
+  overflow: hidden;
+  margin-bottom: var(--vczapi-spacing-post-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  // ==========================================================================
+  // Core Layout Elements
+  // ==========================================================================
+  &__body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__media {
+    flex: 0 0 100%;
+    width: 100%;
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+      flex: 0 0 40%;
+      max-width: 40%;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__content {
+    flex: 1;
+    padding: var(--vczapi-spacing-post-card);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  // ==========================================================================
+  // Typography & Header
+  // ==========================================================================
+  &__header {
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  // ==========================================================================
+  // Metadata Definition List
+  // ==========================================================================
+  &__details {
+    margin: 0 0 var(--vczapi-spacing-post-card) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__detail-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  &__label {
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &__value {
+    margin: 0;
+  }
+
+  // ==========================================================================
+  // Action Buttons Footer
+  // ==========================================================================
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--vczapi-border-color-post-card);
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: calc(var(--vczapi-radius-post-card) / 2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    // Modifiers
+    &--join,
+    &--browser{
+      border: 1px solid #000;
+      color: #000;
+
+      &:hover,
+      &:focus {
+        background-color: #000;
+        color: #ffffff;
+      }
+    }
+  }
+
+  // ==========================================================================
+  // Block Modifiers
+  // ==========================================================================
+  &--no-media {
+    .vczapi-post-card__content {
+      width: 100%;
+    }
+  }
+}
