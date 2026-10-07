@@ -1,5 +1,8 @@
 <?php
+
+use Codemanas\VczApi\Helpers\MeetingType;
 use Codemanas\VczApi\Zoom\Zoom;
+
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -66,9 +69,9 @@ if ( ! function_exists( 'zvc_get_timezone_offset_wp' ) ) {
 
 if ( ! function_exists( 'zvc_get_timezone_options' ) ) {
 	/**
-	 * @author Deepen
+	 * @author     Deepen
 	 * @deprecated 4.2.2
-	 * @since  1.0.0
+	 * @since      1.0.0
 	 */
 	function zvc_get_timezone_options() {
 		$zones_array = array(
@@ -249,8 +252,8 @@ function vczapi_get_cache( $key ) {
  * Now reads from the {prefix}vczapi_zoom_users table (populated by the
  * manual/cron sync) instead of the legacy option-based cache.
  *
- * @since  2.1.0
- * @author Deepen
+ * @since      2.1.0
+ * @author     Deepen
  * @deprecated Replace this with Datastore::getCachedZoomUsers()
  */
 function video_conferencing_zoom_api_get_user_transients() {
@@ -286,8 +289,8 @@ function video_conferencing_zoom_api_delete_user_cache() {
 /**
  * Pagination next for Zoom API
  *
- * @param        $type
- * @param  string  $page_type
+ * @param           $type
+ * @param   string  $page_type
  *
  * @return string
  */
@@ -308,8 +311,8 @@ function video_conferencing_zoom_api_pagination_next( $type, $page_type = 'zoom-
 /**
  * Pagination for prev
  *
- * @param        $type
- * @param  string  $page_type
+ * @param           $type
+ * @param   string  $page_type
  *
  * @return string
  */
@@ -369,10 +372,10 @@ function video_conferencing_zoom_api_show_api_notice() {
 /**
  * Get the template
  *
- * @param       $template_name
- * @param  bool  $load
- * @param  bool  $require_once
- * @param  array  $args
+ * @param          $template_name
+ * @param   bool   $load
+ * @param   bool   $require_once
+ * @param   array  $args
  *
  * @return bool|string
  */
@@ -402,8 +405,8 @@ function vczapi_get_template( $template_name, $load = false, $require_once = tru
 /**
  * Get Template Parts
  *
- * @param        $slug
- * @param  string  $name
+ * @param           $slug
+ * @param   string  $name
  *
  * @since  3.0.0
  * @author Deepen
@@ -460,16 +463,16 @@ function vczapi_check_author( $post_id ) {
 /**
  * Calculate Time based on Timezone
  *
- * @param        $start_time
- * @param        $tz
- * @param  string  $format
- * @param  bool  $defaults
+ * @param           $start_time
+ * @param           $tz
+ * @param   string  $format
+ * @param   bool    $defaults
  *
  * @return DateTime|string
  * @deprecated 4.2.2
- * @author  Deepen
- * @since   1.0.0
- * @updated 3.6.7
+ * @author     Deepen
+ * @since      1.0.0
+ * @updated    3.6.7
  */
 function vczapi_dateConverter( $start_time, $tz, $format = 'F j, Y, g:i a ( T )', $defaults = true ) {
 	try {
@@ -521,7 +524,8 @@ function vczapi_dateConverter( $start_time, $tz, $format = 'F j, Y, g:i a ( T )'
 		} else {
 			return $date->format( $format );
 		}
-	} catch ( Exception $e ) {
+	}
+	catch ( Exception $e ) {
 		return $e->getMessage();
 	}
 }
@@ -582,10 +586,10 @@ if ( ! function_exists( 'vczapi_get_browser_agent_type' ) ) {
 /**
  * Get Browser join links
  *
- * @param      $post_id
- * @param      $meeting_id
- * @param  bool  $password
- * @param      $seperator
+ * @param         $post_id
+ * @param         $meeting_id
+ * @param   bool  $password
+ * @param         $seperator
  * @param
  *
  * @return string
@@ -623,11 +627,11 @@ function vczapi_get_browser_join_links( $post_id, $meeting_id, $password = false
 /**
  * Join via Shortcode
  *
- * @param      $meeting_id
- * @param  bool  $password
- * @param      $link_only
- * @param      $seperator
- * @param      $redirect
+ * @param         $meeting_id
+ * @param   bool  $password
+ * @param         $link_only
+ * @param         $seperator
+ * @param         $redirect
  *
  * @return string
  * @deprecated 4.2.2
@@ -722,8 +726,8 @@ function vczapi_filesize_converter( $bytes ) {
 /**
  * Zoom API Paginator Script Helper
  *
- * @param        $response
- * @param  string  $type
+ * @param           $response
+ * @param   string  $type
  *
  * @since  3.5.0
  * @author Deepen
@@ -744,7 +748,7 @@ function vczapi_zoom_api_paginator( $response, $type = '' ) {
  * @author Deepen
  * @since  3.6.0
  */
-function vczapi_pro_version_active() {
+function vczapi_pro_version_active(): bool {
 	$active_plugins = (array) get_option( 'active_plugins', array() );
 
 	return in_array( 'vczapi-pro/vczapi-pro.php', $active_plugins ) || array_key_exists( 'vczapi-pro/vczapi-pro.php', $active_plugins );
@@ -760,8 +764,8 @@ function vczapi_pro_version_active() {
  *
  * @author Deepen
  */
-function vczapi_pro_check_type( $type ) {
-	if ( ! empty( $type ) && ( $type === 8 || $type === 3 || $type === 6 || $type === 9 ) ) {
+function vczapi_pro_check_type( $type ): bool {
+	if ( ! empty( $type ) && ( $type === MeetingType::TYPE_RECURRING_FIXED_TIME || $type === MeetingType::TYPE_RECURRING_NO_FIXED_TIME || $type === MeetingType::TYPE_WEBINAR_RECURRING_NO_FIXED_TIME || $type === MeetingType::TYPE_WEBINAR_RECURRING_FIXED_TIME ) ) {
 		return true;
 	}
 
@@ -771,9 +775,9 @@ function vczapi_pro_check_type( $type ) {
 /**
  * Get Author details for the meeting
  *
- * @param      $post_id
- * @param  bool  $meeting_details
- * @param  bool  $wp_author
+ * @param         $post_id
+ * @param   bool  $meeting_details
+ * @param   bool  $wp_author
  *
  * @return bool|string
  */
@@ -811,7 +815,7 @@ function vczapi_get_meeting_author( $post_id, $meeting_details = false, $wp_auth
 /**
  * Get WP roles
  *
- * @param  array  $defaults
+ * @param   array  $defaults
  *
  * @return WP_User_Query
  */
@@ -917,8 +921,8 @@ function vczapi_convert_to_minutes( $hour, $minute ) {
 /**
  * Convert minutes to hour and minute format
  *
- * @param        $minutes
- * @param  string  $format
+ * @param           $minutes
+ * @param   string  $format
  *
  * @return array|bool|string
  */
