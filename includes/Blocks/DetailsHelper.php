@@ -136,14 +136,16 @@ class DetailsHelper {
 	 */
 	private static function format_meeting_data( array $data, int $post_id = 0 ): array {
 		return [
-			'post_id'    => $post_id,
-			'id'         => $data['id'] ?? '',
-			'topic'      => $data['topic'] ?? ( $post_id ? get_the_title( $post_id ) : '' ),
-			'start_time' => $data['start_time'] ?? '',
-			'timezone'   => $data['timezone'] ?? '',
-			'duration'   => $data['duration'] ?? 0,
-			'agenda'     => $data['agenda'] ?? '',
-			'raw'        => $data,
+			'post_id'     => $post_id,
+			'id'          => $data['id'] ?? '',
+			'topic'       => $data['topic'] ?? ( $post_id ? get_the_title( $post_id ) : '' ),
+			'start_time'  => $data['start_time'] ?? '',
+			'timezone'    => $data['timezone'] ?? '',
+			'duration'    => $data['duration'] ?? 0,
+			'agenda'      => $data['agenda'] ?? '',
+			'occurrences' => $data['occurrences'] ?? [],
+			'type'        => $data['type'] ?? null,
+			'raw'         => $data,
 		];
 	}
 }
