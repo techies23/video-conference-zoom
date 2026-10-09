@@ -27,12 +27,12 @@ $wrapper_attributes = get_block_wrapper_attributes( [
 	'class'                  => 'vczapi-meeting-detail-item vczapi-meeting-detail-timezone',
 	'data-vczapi-meeting-tz' => $meeting_tz,
 	'data-vczapi-tz-mode'    => $timezone_display,
-	'sourceType'            => $attributes['sourceType'] ?? 'current',
-	'selectedMeetingPostId' => $attributes['selectedMeetingPostId'] ?? 0,
-	'customMeetingId'       => $attributes['customMeetingId'] ?? '',
+	'sourceType'             => $attributes['sourceType'] ?? 'current',
+	'selectedMeetingPostId'  => $attributes['selectedMeetingPostId'] ?? 0,
+	'customMeetingId'        => $attributes['customMeetingId'] ?? '',
 ] );
 
-$start_time_raw  = $meeting_details['start_time'] ?? '';
+$start_time_raw  = apply_filters( 'vczapi_block_meeting_countdown_start_time', $meeting_details['start_time'] ?? '', $meeting_details );
 $duration        = (int) ( $meeting_details['duration'] ?? 60 );
 $layout_preset   = $attributes['layoutPreset'] ?? 'cards';
 $unit_bg         = $attributes['unitBackgroundColor'] ?? '';
