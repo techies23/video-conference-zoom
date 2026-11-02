@@ -104,7 +104,7 @@ class Recording {
 					'required' => true,
 					'location' => 'path',
 					'trim'     => true,
-					'doc'      => 'Meeting ID or double-URL-encoded Meeting UUID.',
+					'doc'      => 'Meeting ID or raw Meeting UUID. UUIDs requiring double encoding are handled by the Recording service.',
 				),
 
 				// Query

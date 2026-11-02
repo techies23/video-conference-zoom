@@ -54,7 +54,7 @@ class RecordingPayloadBuilder {
 
 	/**
 	 * Sanitize recording payload before sending.
-	 * - Double URL-encodes meeting_id if it's a UUID (contains '/' or starts with '/').
+	 * - URL-encodes meeting_id once when it is a UUID so path resolution produces Zoom's required double encoding.
 	 *
 	 * @param array $schema
 	 * @param array $data
@@ -66,8 +66,7 @@ class RecordingPayloadBuilder {
 		// Zoom requires double URL-encoding for Meeting UUIDs containing slashes
 		if ( isset( $data['meeting_id'] ) && is_string( $data['meeting_id'] ) ) {
 			if ( str_contains( $data['meeting_id'], '/' ) || str_contains( $data['meeting_id'], '=' ) ) {
-				$data['meeting_id'] = urlencode( urlencode( $data['meeting_id'] ) );
-				$warnings[]         = 'meeting_id double URL encoded per Zoom API requirement for UUIDs';
+				$data['meeting_id'] = rawurlencode( $data['meeting_id'] );
 			}
 		}
 
