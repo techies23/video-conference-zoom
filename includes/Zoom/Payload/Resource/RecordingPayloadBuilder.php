@@ -53,8 +53,8 @@ class RecordingPayloadBuilder {
 	}
 
 	/**
-	 * Sanitize recording payload before sending.
-	 * - URL-encodes meeting_id once when it is a UUID so path resolution produces Zoom's required double encoding.
+	 * Sanitize the recording payload before sending.
+	 * - URL-encodes meeting_id once when it is a UUID, so path resolution produces Zoom's required double encoding.
 	 *
 	 * @param array $schema
 	 * @param array $data
