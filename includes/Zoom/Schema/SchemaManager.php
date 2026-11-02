@@ -44,6 +44,7 @@ class SchemaManager {
 	const MEETING_LIST = 'meeting.list';
 	const MEETING_CREATE = 'meeting.create';
 	public const MEETING_GET = 'meeting.get';
+	public const MEETING_PAST_INSTANCES = 'meeting.pastInstances';
 	public const MEETING_DELETE = 'meeting.delete';
 	const MEETING_UPDATE = 'meeting.update';
 	const MEETING_STATUS = 'meeting.status';
@@ -97,6 +98,7 @@ class SchemaManager {
 			self::MEETING_LIST                => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'list' ),
 			self::MEETING_CREATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'create' ),
 			self::MEETING_GET                 => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'get' ),
+			self::MEETING_PAST_INSTANCES      => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'pastInstances' ),
 			self::MEETING_UPDATE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'update' ),
 			self::MEETING_DELETE              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'delete' ),
 			self::MEETING_STATUS              => array( 'schema' => __NAMESPACE__ . '\\Meeting', 'method' => 'updateStatus' ),

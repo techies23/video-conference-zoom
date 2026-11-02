@@ -101,6 +101,36 @@ class Meeting extends BaseService {
 	}
 
 	/**
+	 * List past instances of a meeting.
+	 *
+	 * @param   string|int|array  $meetingId  Meeting ID or payload array.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function pastInstances( $meetingId ): WP_Error|array {
+		$params = is_array( $meetingId ) ? $meetingId : array( 'meeting_id' => $meetingId );
+
+		$built = PayloadBuilder::build( SchemaManager::MEETING_PAST_INSTANCES, $params );
+		if ( is_wp_error( $built ) ) {
+			return $built;
+		}
+
+		$prepared = $this->prepareFromBuilt( $built );
+		if ( is_wp_error( $prepared ) ) {
+			return $prepared;
+		}
+
+		$prepared['query'] = apply_filters( 'vczapi_meetings_past_instances_params', $prepared['query'], $params );
+		$result           = $this->client->request( $prepared['method'], $prepared['endpoint'], $prepared['query'] );
+
+		if ( ! empty( $prepared['warnings'] ) ) {
+			do_action( 'vczapi_payload_warnings', $prepared['warnings'], SchemaManager::MEETING_PAST_INSTANCES, $params );
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Delete a meeting.
 	 *
 	 * @param   string|int|array  $meetingId  ID string or array with parameters.

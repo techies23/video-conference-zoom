@@ -83,6 +83,7 @@ class SchemaManagerTest extends TestCase {
 	 */
 	public function test_is_valid_operation(): void {
 		$this->assertTrue( SchemaManager::isValidOperation( SchemaManager::MEETING_LIST ) );
+		$this->assertTrue( SchemaManager::isValidOperation( SchemaManager::MEETING_PAST_INSTANCES ) );
 		$this->assertTrue( SchemaManager::isValidOperation( SchemaManager::USER_CREATE ) );
 		$this->assertFalse( SchemaManager::isValidOperation( 'invalid.operation' ) );
 	}
@@ -151,5 +152,14 @@ class SchemaManagerTest extends TestCase {
 		$this->assertIsArray( $result );
 		$this->assertArrayHasKey( 'http', $result );
 		$this->assertArrayHasKey( 'fields', $result );
+	}
+
+	public function test_past_instances_schema_uses_meeting_id_path(): void {
+		$result = SchemaManager::get( SchemaManager::MEETING_PAST_INSTANCES );
+
+		$this->assertIsArray( $result );
+		$this->assertSame( 'GET', $result['http']['method'] );
+		$this->assertSame( '/past_meetings/{meeting_id}/instances', $result['http']['path'] );
+		$this->assertSame( 'path', $result['fields']['meeting_id']['location'] );
 	}
 }

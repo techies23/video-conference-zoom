@@ -233,6 +233,28 @@ class Meeting {
 	}
 
 	/**
+	 * Schema for listing past instances of a meeting.
+	 * GET /past_meetings/{meeting_id}/instances
+	 */
+	public static function pastInstances(): array {
+		return array(
+			'operation' => SchemaManager::MEETING_PAST_INSTANCES,
+			'http'      => array(
+				'method'      => 'GET',
+				'path'        => '/past_meetings/{meeting_id}/instances',
+				'path_params' => array( 'meeting_id' => 'meeting_id' ),
+			),
+			'fields'    => array(
+				'meeting_id' => array( 'type' => 'string', 'required' => true, 'location' => 'path' ),
+			),
+			'compat'    => array(
+				'meetingId' => 'meeting_id',
+				'id'        => 'meeting_id',
+			),
+		);
+	}
+
+	/**
 	 * Schema for deleting a meeting.
 	 * DELETE /meetings/{meeting_id}
 	 */
