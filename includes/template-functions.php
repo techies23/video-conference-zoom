@@ -108,16 +108,20 @@ function video_conference_zoom_meeting_end_author() {
 	}
 	?>
     <div class="dpn-zvc-sidebar-state">
-		<?php if ( empty( $meeting->state ) ) { ?>
+        <?php if ( empty( $meeting->state ) ) : ?>
             <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="end"
-               data-postid="<?php echo $post->ID; ?>"
-               data-id="<?php echo $meeting->id ?>"><?php _e( 'End Meeting ?', 'video-conferencing-with-zoom-api' ); ?></a>
-		<?php } else { ?>
+               data-postid="<?php echo esc_attr( $post->ID ); ?>"
+               data-id="<?php echo esc_attr( ! empty( $meeting->id ) ? $meeting->id : '' ); ?>">
+                <?php esc_html_e( 'End Meeting ?', 'video-conferencing-with-zoom-api' ); ?>
+            </a>
+        <?php else : ?>
             <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type" data-state="resume"
-               data-postid="<?php echo $post->ID; ?>"
-               data-id="<?php echo $meeting->id ?>"><?php _e( 'Enable Meeting Join ?', 'video-conferencing-with-zoom-api' ); ?></a>
-		<?php } ?>
-        <p><?php _e( 'You are seeing this because you are the author of this post.', 'video-conferencing-with-zoom-api' ); ?></p>
+               data-postid="<?php echo esc_attr( $post->ID ); ?>"
+               data-id="<?php echo esc_attr( ! empty( $meeting->id ) ? $meeting->id : '' ); ?>">
+                <?php esc_html_e( 'Enable Meeting Join ?', 'video-conferencing-with-zoom-api' ); ?>
+            </a>
+        <?php endif; ?>
+        <p><?php esc_html_e( 'You are seeing this because you are the author of this post.', 'video-conferencing-with-zoom-api' ); ?></p>
     </div>
 	<?php
 }
@@ -136,7 +140,7 @@ function video_conference_zoom_meeting_join() {
 
 	if ( empty( $zoom['api']->state ) && video_conference_zoom_check_login() ) {
 		if ( ! empty( $zoom['api']->code ) ) {
-			echo '<p>' . $zoom['api']->message . '</p>';
+			echo '<p>' . esc_html( $zoom['api']->message ) . '</p>';
 		} else {
 			$post_id            = get_the_id();
 			$meeting_start_date = get_post_meta( $post_id, '_meeting_field_start_date_utc', true );
@@ -152,9 +156,9 @@ function video_conference_zoom_meeting_join() {
 			wp_localize_script( 'video-conferencing-with-zoom-api', 'mtg_data', $data );
 		}
 	} elseif ( ! empty( $zoom['api']->state ) && $zoom['api']->state == "ended" ) {
-		echo "<p>" . __( 'This meeting has ended.', 'video-conferencing-with-zoom-api' ) . "</p>";
+		echo "<p>" . esc_html__( 'This meeting has ended.', 'video-conferencing-with-zoom-api' ) . "</p>";
 	} else {
-		echo "<p>" . __( 'Please login to join this meeting.', 'video-conferencing-with-zoom-api' ) . "</p>";
+		echo "<p>" . esc_html__( 'Please login to join this meeting.', 'video-conferencing-with-zoom-api' ) . "</p>";
 	}
 }
 
@@ -173,7 +177,7 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
 		$join_url = ! empty( $zoom_meeting->encrypted_password ) ? Links::getPwdEmbeddedJoinLink( $zoom_meeting->join_url, $zoom_meeting->encrypted_password ) : $zoom_meeting->join_url;
 		?>
         <a target="_blank" href="<?php echo esc_url( $join_url ); ?>"
-           class="btn btn-join-link btn-join-via-app"><?php echo apply_filters( 'vczapi_join_meeting_via_app_text', __( 'Join Meeting via Zoom App', 'video-conferencing-with-zoom-api' ) ); ?></a>
+           class="btn btn-join-link btn-join-via-app"><?php echo wp_kses_post( apply_filters( 'vczapi_join_meeting_via_app_text', __( 'Join Meeting via Zoom App', 'video-conferencing-with-zoom-api' ) ) ); ?></a>
 		<?php
 	}
 
@@ -193,7 +197,7 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
 				$args['password'] = $zoom_meeting->password;
 			}
 
-			echo Links::getJoinViaBrowserJoinLinks( $args, $meeting_id );
+			echo wp_kses_post( Links::getJoinViaBrowserJoinLinks( $args, $meeting_id ) );
 		}
 	}
 }
@@ -210,7 +214,7 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
  */
 function video_conference_zoom_shortcode_join_link_webinar( $zoom_webinars ) {
 	if ( empty( $zoom_webinars ) ) {
-		echo "<p>" . __( 'Webinar is not defined. Try updating this Webinar', 'video-conferencing-with-zoom-api' ) . "</p>";
+		echo "<p>" . esc_html__( 'Webinar is not defined. Try updating this Webinar', 'video-conferencing-with-zoom-api' ) . "</p>";
 
 		return;
 	}
@@ -269,7 +273,7 @@ function video_conference_zoom_shortcode_join_link_webinar( $zoom_webinars ) {
  */
 function video_conference_zoom_shortcode_join_link( $zoom_meetings ) {
 	if ( empty( $zoom_meetings ) ) {
-		echo "<p>" . __( 'Meeting is not defined. Try updating this meeting', 'video-conferencing-with-zoom-api' ) . "</p>";
+		echo "<p>" . esc_html__( 'Meeting is not defined. Try updating this meeting', 'video-conferencing-with-zoom-api' ) . "</p>";
 
 		return;
 	}
@@ -338,26 +342,26 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
 		?>
         <table class="vczapi-shortcode-meeting-table">
             <tr class="vczapi-shortcode-meeting-table--row1">
-                <td><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo $zoom_meetings->id; ?></td>
+                <td><?php esc_html_e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php echo esc_html( $zoom_meetings->id ); ?></td>
             </tr>
             <tr class="vczapi-shortcode-meeting-table--row2">
-                <td><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo $zoom_meetings->topic; ?></td>
+                <td><?php esc_html_e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php echo esc_html( $zoom_meetings->topic ); ?></td>
             </tr>
             <tr class="vczapi-shortcode-meeting-table--row3">
-                <td><?php _e( 'Meeting Status', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php esc_html_e( 'Meeting Status', 'video-conferencing-with-zoom-api' ); ?></td>
                 <td>
 					<?php
 					if ( $zoom_meetings->status === "waiting" ) {
-						_e( 'Waiting - Not started', 'video-conferencing-with-zoom-api' );
+						esc_html_e( 'Waiting - Not started', 'video-conferencing-with-zoom-api' );
 					} elseif ( $zoom_meetings->status === "started" ) {
-						_e( 'Meeting is in Progress', 'video-conferencing-with-zoom-api' );
+						esc_html_e( 'Meeting is in Progress', 'video-conferencing-with-zoom-api' );
 					} else {
-						echo $zoom_meetings->status;
+						echo esc_html( $zoom_meetings->status );
 					}
 					?>
-                    <p class="small-description"><?php _e( 'Refresh is needed to change status.', 'video-conferencing-with-zoom-api' ); ?></p>
+                    <p class="small-description"><?php esc_html_e( 'Refresh is needed to change status.', 'video-conferencing-with-zoom-api' ); ?></p>
                 </td>
             </tr>
 			<?php
@@ -365,15 +369,15 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
 				if ( ! empty( $zoom_meetings->occurrences ) ) {
 					?>
                     <tr class="vczapi-shortcode-meeting-table--row4">
-                        <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
-                        <td><?php _e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' ); ?></td>
+                        <td><?php esc_html_e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
+                        <td><?php esc_html_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' ); ?></td>
                     </tr>
                     <tr class="vczapi-shortcode-meeting-table--row4">
-                        <td><?php _e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
-                        <td><?php echo count( $zoom_meetings->occurrences ); ?></td>
+                        <td><?php esc_html_e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
+                        <td><?php echo absint( count( $zoom_meetings->occurrences ) ); ?></td>
                     </tr>
                     <tr class="vczapi-shortcode-meeting-table--row5">
-                        <td><?php _e( 'Next Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                        <td><?php esc_html_e( 'Next Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
                         <td>
 							<?php
 							$now               = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_meetings->timezone ) );
@@ -387,16 +391,16 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
 											break;
 										}
 
-										_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
+										esc_html_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 										break;
 									}
 								}
 							}
 
 							if ( $closest_occurence ) {
-								echo Date::dateConverter( $closest_occurence, $zoom_meetings->timezone, 'F j, Y @ g:i a' );
+								echo esc_html( Date::dateConverter( $closest_occurence, $zoom_meetings->timezone, 'F j, Y @ g:i a' ) );
 							} else {
-								_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
+								esc_html_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 							}
 							?>
                         </td>
@@ -405,42 +409,42 @@ if ( ! function_exists( 'video_conference_zoom_shortcode_table' ) ) {
 				} else {
 					?>
                     <tr class="vczapi-shortcode-meeting-table--row6">
-                        <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                        <td><?php _e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' ); ?></td>
+                        <td><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                        <td><?php esc_html_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' ); ?></td>
                     </tr>
 					<?php
 				}
 			} elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_recurring_no_fixed_time_meeting( $zoom_meetings->type ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
-                    <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php _e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
 				<?php
 			} elseif ( ! empty( $zoom_meetings->type ) && MeetingType::is_pmi( $zoom_meetings->type ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
-                    <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php _e( 'Personal Meeting Room', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Personal Meeting Room', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
 				<?php
 			} elseif ( ! empty( $zoom_meetings->start_time ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
-                    <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo Date::dateConverter( $zoom_meetings->start_time, $zoom_meetings->timezone, 'F j, Y @ g:i a' ); ?></td>
+                    <td><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php echo esc_html( Date::dateConverter( $zoom_meetings->start_time, $zoom_meetings->timezone, 'F j, Y @ g:i a' ) ); ?></td>
                 </tr>
 			<?php } ?>
 			<?php if ( ! empty( $zoom_meetings->timezone ) ) { ?>
                 <tr class="vczapi-shortcode-meeting-table--row7">
-                    <td><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo $zoom_meetings->timezone; ?></td>
+                    <td><?php esc_html_e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php echo esc_html( $zoom_meetings->timezone ); ?></td>
                 </tr>
 			<?php } ?>
 			<?php if ( ! empty( $zoom_meetings->duration ) ) { ?>
                 <tr class="zvc-table-shortcode-duration">
-                    <td><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php echo $zoom_meetings->duration; ?></td>
+                    <td><?php esc_html_e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php echo esc_html( $zoom_meetings->duration ); ?></td>
                 </tr>
 				<?php
 			}
@@ -519,14 +523,14 @@ function video_conference_zoom_before_jbh_html( $zoom ) {
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="robots" content="noindex, nofollow">
-        <title><?php echo ! empty( $zoom['api']->topic ) ? $zoom['api']->topic : 'Join Meeting'; ?></title>
+        <title><?php echo esc_html( ! empty( $zoom['api']->topic ) ? $zoom['api']->topic : 'Join Meeting' ); ?></title>
         <link rel='stylesheet' type="text/css"
-              href="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/bootstrap.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
+              href="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/bootstrap.css?ver=' . ZVC_PLUGIN_VERSION ); ?>"
               media='all'>
         <link rel='stylesheet' type="text/css"
-              href="<?php echo ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.min.css?ver=' . ZVC_PLUGIN_VERSION; ?>"
+              href="<?php echo esc_url( ZVC_PLUGIN_PUBLIC_ASSETS_URL . '/css/style.min.css?ver=' . ZVC_PLUGIN_VERSION ); ?>"
               media='all'>
-        <link rel='stylesheet' type="text/css" href="<?php echo get_stylesheet_uri(); ?>" media='all'>
+        <link rel='stylesheet' type="text/css" href="<?php echo esc_url( get_stylesheet_uri() ); ?>" media='all'>
     </head><body class="join-via-browser-body">
 	<?php
 	ob_end_flush();
@@ -603,21 +607,21 @@ function video_conference_zoom_after_jbh_html() {
     </script>
 
 <?php if ( ! defined( 'VCZAPI_STATIC_CDN' ) ) { ?>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux-thunk.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/websdk.bundle.js?ver=' . ZVC_PLUGIN_VERSION; ?>" async></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/redux-thunk.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/websdk.bundle.js?ver=' . ZVC_PLUGIN_VERSION ); ?>" async></script>
 <?php } else { ?>
-    <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/react.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/redux.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/redux-thunk.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
-    <script src="<?php echo 'https://source.zoom.us/zoom-meeting-' . ZVC_ZOOM_WEBSDK_VERSION . '.min.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo esc_url( 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/react.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/react-dom.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/redux.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/redux-thunk.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( 'https://source.zoom.us/' . ZVC_ZOOM_WEBSDK_VERSION . '/lib/vendor/lodash.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
+    <script src="<?php echo esc_url( 'https://source.zoom.us/zoom-meeting-' . ZVC_ZOOM_WEBSDK_VERSION . '.min.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
 <?php } ?>
-    <script src="<?php echo ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/zoom-meeting.bundle.js?ver=' . ZVC_PLUGIN_VERSION; ?>"></script>
+    <script src="<?php echo esc_url( ZVC_PLUGIN_VENDOR_ASSETS_URL . '/zoom/websdk/zoom-meeting.bundle.js?ver=' . ZVC_PLUGIN_VERSION ); ?>"></script>
 <?php do_action( 'vczapi_join_via_browser_after_script_load' ); ?>
     </body>
     </html>

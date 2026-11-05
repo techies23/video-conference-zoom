@@ -1,4 +1,9 @@
 <?php
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The template for displaying meeting countdown timer
  *
@@ -18,7 +23,7 @@ if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['countdown'] 
 if ( ! vczapi_pro_version_active() && ( ! empty( $zoom['api']->type ) && vczapi_pro_check_type( $zoom['api']->type ) ) || empty( $zoom ) ) {
 	?>
     <div class="dpn-zvc-sidebar-box">
-        <p><?php _e( 'PRO version is required for this meeting to be displayed.', 'video-conferencing-with-zoom-api' ); ?></p>
+        <p><?php esc_html_e( 'PRO version is required for this meeting to be displayed.', 'video-conferencing-with-zoom-api' ); ?></p>
     </div>
 	<?php
 }
@@ -27,48 +32,48 @@ $countdown_html = '<div class="dpn-zvc-timer-cell">
                     <div class="dpn-zvc-timer-cell-number">
                         <div id="dpn-zvc-timer-days">00</div>
                     </div>
-                    <div class="dpn-zvc-timer-cell-string">' . __( 'days', 'video-conferencing-with-zoom-api' ) . '</div>
+                    <div class="dpn-zvc-timer-cell-string">' . esc_html__( 'days', 'video-conferencing-with-zoom-api' ) . '</div>
                 </div>
                 <div class="dpn-zvc-timer-cell">
                     <div class="dpn-zvc-timer-cell-number">
                         <div id="dpn-zvc-timer-hours">00</div>
                     </div>
-                    <div class="dpn-zvc-timer-cell-string">' . __( 'hours', 'video-conferencing-with-zoom-api' ) . '</div>
+                    <div class="dpn-zvc-timer-cell-string">' . esc_html__( 'hours', 'video-conferencing-with-zoom-api' ) . '</div>
                 </div>
                 <div class="dpn-zvc-timer-cell">
                     <div class="dpn-zvc-timer-cell-number">
                         <div id="dpn-zvc-timer-minutes">00</div>
                     </div>
-                    <div class="dpn-zvc-timer-cell-string">' . __( 'minutes', 'video-conferencing-with-zoom-api' ) . '</div>
+                    <div class="dpn-zvc-timer-cell-string">' . esc_html__( 'minutes', 'video-conferencing-with-zoom-api' ) . '</div>
                 </div>
                 <div class="dpn-zvc-timer-cell">
                     <div class="dpn-zvc-timer-cell-number">
                         <div id="dpn-zvc-timer-seconds">00</div>
                     </div>
-                    <div class="dpn-zvc-timer-cell-string">' . __( 'seconds', 'video-conferencing-with-zoom-api' ) . '</div>
+                    <div class="dpn-zvc-timer-cell-string">' . esc_html__( 'seconds', 'video-conferencing-with-zoom-api' ) . '</div>
                 </div>';
 
 if ( ! empty( $zoom['api']->start_time ) ) {
 	if ( ! empty( $zoom['shortcode_post_by_id'] ) ) {
 		?>
         <div class="vczapi-show-by-postid-countdown">
-            <h3 class="vczapi-show-by-postid-countdown-title"><?php _e( 'Meeting starts in', 'video-conferencing-with-zoom-api' ); ?>
+            <h3 class="vczapi-show-by-postid-countdown-title"><?php esc_html_e( 'Meeting starts in', 'video-conferencing-with-zoom-api' ); ?>
                 :</h3>
             <div class="dpn-zvc-timer vczapi-show-by-postid-countdown-timer" id="dpn-zvc-timer"
-                 data-date="<?php echo $zoom['api']->start_time; ?>"
-                 data-state="<?php echo ! empty( $zoom['api']->state ) ? $zoom['api']->state : false; ?>"
-                 data-tz="<?php echo $zoom['api']->timezone; ?>">
-				<?php echo $countdown_html; ?>
+                 data-date="<?php echo esc_attr( $zoom['api']->start_time ); ?>"
+                 data-state="<?php echo esc_attr( ! empty( $zoom['api']->state ) ? $zoom['api']->state : false ); ?>"
+                 data-tz="<?php echo esc_attr( $zoom['api']->timezone ); ?>">
+				<?php echo wp_kses_post( $countdown_html ); ?>
             </div>
         </div>
 		<?php
 	} else {
 		?>
         <div class="dpn-zvc-sidebar-box">
-            <div class="dpn-zvc-timer" id="dpn-zvc-timer" data-date="<?php echo $zoom['api']->start_time; ?>"
-                 data-state="<?php echo ! empty( $zoom['api']->state ) ? $zoom['api']->state : false; ?>"
-                 data-tz="<?php echo $zoom['api']->timezone; ?>">
-				<?php echo $countdown_html; ?>
+            <div class="dpn-zvc-timer" id="dpn-zvc-timer" data-date="<?php echo esc_attr( $zoom['api']->start_time ); ?>"
+                 data-state="<?php echo esc_attr( ! empty( $zoom['api']->state ) ? $zoom['api']->state : false ); ?>"
+                 data-tz="<?php echo esc_attr( $zoom['api']->timezone ); ?>">
+				<?php echo wp_kses_post( $countdown_html ); ?>
             </div>
         </div>
 		<?php

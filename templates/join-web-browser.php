@@ -18,7 +18,7 @@ global $current_user;
 
 if ( video_conference_zoom_check_login() ) {
 	if ( ! empty( $zoom['api']->state ) && $zoom['api']->state === "ended" ) {
-		echo "<h3>" . __( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api' ) . "</h3>";
+		echo "<h3>" . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api' ) . "</h3>";
 		die;
 	}
 
@@ -39,19 +39,19 @@ if ( video_conference_zoom_check_login() ) {
 							$image = wp_get_attachment_image_src( $custom_logo_id, 'full' );
 							if ( ! empty( $image ) ) {
 								?>
-                                <img src="<?php echo $image[0]; ?>" width="80px" alt="Logo">
+                                <img src="<?php echo esc_url( $image[0] ); ?>" width="80px" alt="Logo">
 								<?php
 							}
 						}
 						?>
-                        <h3><?php echo ! empty( $zoom['api']->topic ) ? $zoom['api']->topic : ''; ?></h3>
-                        <p class="mb-4"><?php _e( 'Enter below details to join this Zoom Event.', 'video-conferencing-with-zoom-api' ); ?></p>
+                        <h3><?php echo esc_html( ! empty( $zoom['api']->topic ) ? $zoom['api']->topic : '' ); ?></h3>
+                        <p class="mb-4"><?php esc_html_e( 'Enter below details to join this Zoom Event.', 'video-conferencing-with-zoom-api' ); ?></p>
                     </div>
                     <div class="mb-4">
                         <div class="vczapi-zoom-browser-meeting--info__browser">
 							<?php if ( ! is_ssl() ) { ?>
-                                <p><strong style="color:red;"><?php _e( 'NOTICE', 'video-conferencing-with-zoom-api' ); ?></strong></p>
-                                <p><?php _e(
+                                <p><strong style="color:red;"><?php esc_html_e( 'NOTICE', 'video-conferencing-with-zoom-api' ); ?></strong></p>
+                                <p><?php esc_html_e(
 										'Browser did not detect a valid SSL certificate. Audio and Video for Zoom meeting will not work on a non HTTPS site, please install a valid SSL certificate to allow audio and video in your Meetings via browser.', 'video-conferencing-with-zoom-api' ); ?>
                                 </p>
 							<?php } ?>
@@ -60,8 +60,8 @@ if ( video_conference_zoom_check_login() ) {
                     <form class="vczapi-zoom-browser-meeting--meeting-form" id="vczapi-zoom-browser-meeting-join-form" action="">
 						<?php $full_name = ! empty( $current_user->first_name ) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name; ?>
                         <div class="form-group">
-                            <label for="display_name"><?php _e( 'Name', 'video-conferencing-with-zoom-api' ); ?></label>
-                            <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php _e( "Your Name Here", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
+                            <label for="display_name"><?php esc_html_e( 'Name', 'video-conferencing-with-zoom-api' ); ?></label>
+                            <input type="text" name="display_name" id="vczapi-jvb-display-name" value="<?php echo esc_attr( $full_name ); ?>" placeholder="<?php esc_attr_e( "Your Name Here", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
                         </div>
 						<?php
 						$hide_email = get_option( 'zoom_api_hide_in_jvb' );
@@ -73,15 +73,15 @@ if ( video_conference_zoom_check_login() ) {
 							} else {
 								?>
                                 <div class="form-group">
-                                    <label for="display_email"><?php _e( 'Email', 'video-conferencing-with-zoom-api' ); ?></label>
-                                    <input type="email" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr( $current_user->user_email ); ?>" placeholder="<?php _e( "Your Email Here", "video-conferencing-with-zoom-api" ); ?>" class="form-control">
+                                    <label for="display_email"><?php esc_html_e( 'Email', 'video-conferencing-with-zoom-api' ); ?></label>
+                                    <input type="email" name="display_email" id="vczapi-jvb-email" value="<?php echo esc_attr( $current_user->user_email ); ?>" placeholder="<?php esc_attr_e( "Your Email Here", "video-conferencing-with-zoom-api" ); ?>" class="form-control">
                                 </div>
 							<?php }
 						}
 						if ( ! isset( $_GET['pak'] ) && ! empty( $zoom['password'] ) ) { ?>
                             <div class="form-group">
-                                <label for="meeting_password"><?php _e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label>
-                                <input type="password" name="meeting_password" id="meeting_password" value="<?php echo ! empty( $zoom['password'] ) ? $zoom['password'] : ''; ?>" placeholder="<?php _e( "Meeting Password", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
+                                <label for="meeting_password"><?php esc_html_e( 'Password', 'video-conferencing-with-zoom-api' ); ?></label>
+                                <input type="password" name="meeting_password" id="meeting_password" value="<?php echo esc_attr( ! empty( $zoom['password'] ) ? $zoom['password'] : '' ); ?>" placeholder="<?php esc_attr_e( "Meeting Password", "video-conferencing-with-zoom-api" ); ?>" class="form-control" required>
                             </div>
 							<?php
 						}
@@ -96,13 +96,13 @@ if ( video_conference_zoom_check_login() ) {
 							} else {
 								?>
                                 <div class="form-group">
-                                    <label for="meeting_lang"><?php _e( 'Locale', 'video-conferencing-with-zoom-api' ); ?></label>
+                                    <label for="meeting_lang"><?php esc_html_e( 'Locale', 'video-conferencing-with-zoom-api' ); ?></label>
                                     <select name="meeting-lang" class="form-control meeting-locale">
 										<?php
 										$langs = \Codemanas\VczApi\Helpers\Locales::getSupportedTranslationsForWeb();
 										foreach ( $langs as $k => $lang ) {
 											?>
-                                            <option value="<?php echo $k; ?>"><?php echo $lang; ?></option>
+                                            <option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $lang ); ?></option>
 											<?php
 										}
 										?>
@@ -113,7 +113,7 @@ if ( video_conference_zoom_check_login() ) {
 						}
 						?>
                         <button type="submit" class="btn btn-primary" id="vczapi-zoom-browser-meeting-join-mtg">
-							<?php _e( 'Join Event via Browser', 'video-conferencing-with-zoom-api' ); ?>
+							<?php esc_html_e( 'Join Event via Browser', 'video-conferencing-with-zoom-api' ); ?>
                         </button>
                     </form>
                 </div>
@@ -126,6 +126,6 @@ if ( video_conference_zoom_check_login() ) {
 	 */
 	do_action( 'vczoom_jbh_after_content' );
 } else {
-	echo "<h3>" . __( 'You do not have enough priviledge to access this page. Please login to continue or contact administrator.', 'video-conferencing-with-zoom-api' ) . "</h3>";
+	echo "<h3>" . esc_html__( 'You do not have enough priviledge to access this page. Please login to continue or contact administrator.', 'video-conferencing-with-zoom-api' ) . "</h3>";
 	die;
 }

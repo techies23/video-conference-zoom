@@ -154,7 +154,7 @@ class RecordingsByHost extends Widget_Base {
 		if ( ! empty( $host_id ) ) {
 			echo do_shortcode( '[zoom_recordings host_id=' . esc_attr( $host_id ) . ' downloadable=' . esc_attr( $downloadable ) . ']' );
 		} else {
-			_e( 'No user selected.', 'video-conferencing-with-zoom-api' );
+			esc_html_e( 'No user selected.', 'video-conferencing-with-zoom-api' );
 		}
 	}
 

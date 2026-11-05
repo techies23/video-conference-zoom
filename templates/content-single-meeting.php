@@ -19,7 +19,7 @@ global $zoom;
 do_action( 'vczoom_before_single_meeting' );
 
 if ( post_password_required() ) {
-	echo get_the_password_form(); // WPCS: XSS ok.
+	echo wp_kses_post( get_the_password_form() );
 
 	return;
 }
@@ -29,8 +29,8 @@ if ( post_password_required() ) {
  */
 do_action( 'vczoom_before_content' );
 ?>
-    <div class="vczapi-wrap dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>"
-         id="dpn-zvc-single-content-wrapper-<?php echo get_the_id(); ?>">
+    <div class="vczapi-wrap dpn-zvc-single-content-wrapper dpn-zvc-single-content-wrapper-<?php echo esc_attr( get_the_id() ); ?>"
+         id="dpn-zvc-single-content-wrapper-<?php echo esc_attr( get_the_id() ); ?>">
 		<?php
 		/**
 		 * If user wants to show only counter or remove description field this logic is applied

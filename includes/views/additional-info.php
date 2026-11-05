@@ -1,9 +1,15 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <ul class="zvc-information-sec">
     <li>
-        <a target="_blank" href="https://zoomdocs.codemanas.com"><?php _e( 'Documentation', 'video-conferencing-with-zoom-api' ); ?></a>
+        <a target="_blank" href="https://zoomdocs.codemanas.com"><?php esc_html_e( 'Documentation', 'video-conferencing-with-zoom-api' ); ?></a>
     </li>
     <li>
-        <a target="_blank" href="https://zoomdocs.codemanas.com/shortcode/"><?php _e( 'Shortcode Documentation', 'video-conferencing-with-zoom-api' ); ?></a>
+        <a target="_blank" href="https://zoomdocs.codemanas.com/shortcode/"><?php esc_html_e( 'Shortcode Documentation', 'video-conferencing-with-zoom-api' ); ?></a>
     </li>
 </ul>
 <div class="zvc-information-sec">

@@ -23,12 +23,12 @@ if ( empty( $meeting_fields['meeting_type'] ) ) {
     <?php if ( 'publish' === $post->post_status && is_object( $meeting_details ) && ! empty( $meeting_details->id ) ) : ?>
         <?php
         $shortcode = sprintf( '[zoom_meeting_post post_id="%d" template="boxed"]', (int) $post->ID );
-        $copy_msg  = esc_js( __( 'Copied to clipboard', 'video-conferencing-with-zoom-api' ) );
+        $copy_msg  = __( 'Copied to clipboard', 'video-conferencing-with-zoom-api' );
         ?>
         <tr>
             <th scope="row"><label for="meeting-shortcode"><?php esc_html_e( 'Shortcode', 'video-conferencing-with-zoom-api' ); ?></label></th>
             <td>
-                <input class="text regular-text" id="meeting-shortcode" type="text" readonly value="<?php echo esc_attr( $shortcode ); ?>" onclick="this.select(); document.execCommand('copy'); alert('<?php echo $copy_msg; ?>');"/>
+                <input class="text regular-text" id="meeting-shortcode" type="text" readonly value="<?php echo esc_attr( $shortcode ); ?>" onclick="this.select(); document.execCommand('copy'); alert('<?php echo esc_js( $copy_msg ); ?>');"/>
                 <p class="description">
                     <?php esc_html_e( 'If you need to show this meeting on another page or post please use this shortcode', 'video-conferencing-with-zoom-api' ); ?>
                 </p>

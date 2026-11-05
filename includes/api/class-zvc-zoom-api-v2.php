@@ -3,6 +3,11 @@
 use \Firebase\JWT\JWT;
 use Codemanas\VczApi\Data\Logger;
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Connecting Zoom API V2
  *

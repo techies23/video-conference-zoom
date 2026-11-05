@@ -12,6 +12,11 @@
 use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\MeetingType;
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global $zoom_webinars;
 
 ?>
@@ -22,27 +27,27 @@ global $zoom_webinars;
 	?>
     <table class="vczapi-shortcode-meeting-table">
         <tr class="vczapi-shortcode-meeting-table--row1">
-            <td><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></td>
-            <td><?php echo $zoom_webinars->id; ?></td>
+            <td><?php esc_html_e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></td>
+            <td><?php echo esc_html( $zoom_webinars->id ); ?></td>
         </tr>
         <tr class="vczapi-shortcode-meeting-table--row2">
-            <td><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></td>
-            <td><?php echo $zoom_webinars->topic; ?></td>
+            <td><?php esc_html_e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></td>
+            <td><?php echo esc_html( $zoom_webinars->topic ); ?></td>
         </tr>
 		<?php
 		if ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_fixed_time_webinar( $zoom_webinars->type ) ) {
 			if ( ! empty( $zoom_webinars->occurrences ) ) {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row4">
-                    <td><?php _e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php _e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Type', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
                 <tr class="vczapi-shortcode-meeting-table--row4">
-                    <td><?php _e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Occurrences', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td><?php echo count( $zoom_webinars->occurrences ); ?></td>
                 </tr>
                 <tr class="vczapi-shortcode-meeting-table--row5">
-                    <td><?php _e( 'Next Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Next Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
                     <td>
 						<?php
 						$now               = new DateTime( 'now -1 hour', new DateTimeZone( $zoom_webinars->timezone ) );
@@ -56,16 +61,16 @@ global $zoom_webinars;
 										break;
 									}
 
-									_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
+									esc_html_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 									break;
 								}
 							}
 						}
 
 						if ( $closest_occurence ) {
-							echo Date::dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' );
+							echo esc_html( Date::dateConverter( $closest_occurence, $zoom_webinars->timezone, 'F j, Y @ g:i a' ) );
 						} else {
-							_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
+							esc_html_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' );
 						}
 						?>
                     </td>
@@ -74,33 +79,33 @@ global $zoom_webinars;
 			} else {
 				?>
                 <tr class="vczapi-shortcode-meeting-table--row6">
-                    <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                    <td><?php _e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                    <td><?php esc_html_e( 'Meeting has ended !', 'video-conferencing-with-zoom-api' ); ?></td>
                 </tr>
 				<?php
 			}
 		} elseif ( ! empty( $zoom_webinars->type ) && MeetingType::is_recurring_no_fixed_time_webinar( $zoom_webinars->type ) ) {
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
-                <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php _e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php esc_html_e( 'This is a meeting with no Fixed Time.', 'video-conferencing-with-zoom-api' ); ?></td>
             </tr>
 			<?php
 		} else {
 			?>
             <tr class="vczapi-shortcode-meeting-table--row6">
-                <td><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo Date::dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ); ?></td>
+                <td><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php echo esc_html( Date::dateConverter( $zoom_webinars->start_time, $zoom_webinars->timezone, 'F j, Y @ g:i a' ) ); ?></td>
             </tr>
 		<?php } ?>
         <tr class="vczapi-shortcode-meeting-table--row7">
-            <td><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></td>
-            <td><?php echo $zoom_webinars->timezone; ?></td>
+            <td><?php esc_html_e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></td>
+            <td><?php echo esc_html( $zoom_webinars->timezone ); ?></td>
         </tr>
 		<?php if ( ! empty( $zoom_webinars->duration ) ) { ?>
             <tr class="zvc-table-shortcode-duration">
-                <td><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></td>
-                <td><?php echo $zoom_webinars->duration; ?></td>
+                <td><?php esc_html_e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></td>
+                <td><?php echo esc_html( $zoom_webinars->duration ); ?></td>
             </tr>
 			<?php
 		}

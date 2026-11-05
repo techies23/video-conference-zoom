@@ -1,4 +1,9 @@
 <?php
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The Template for displaying list of recordings via Host ID
  *
@@ -15,19 +20,19 @@ $downloadable = ! empty( $args['downloadable'] ) && 'yes' === $args['downloadabl
 ?>
     <div class="vczapi-recordings-range-selector-wrap">
         <form action="" class="vczapi-recording-range-selector" method="GET">
-            <label><?php _e( 'Select a month to filter:', 'video-conferencing-with-zoom-api' ); ?></label>
-            <input type="text" name="date" id="vczapi-check-recording-date" class="vczapi-check-recording-date" value="<?php echo isset( $_GET['date'] ) ? esc_html( $_GET['date'] ) : date( 'F Y' ); ?>"/> <input type="submit" name="fetch_recordings" value="<?php _e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
+            <label><?php esc_html_e( 'Select a month to filter:', 'video-conferencing-with-zoom-api' ); ?></label>
+            <input type="text" name="date" id="vczapi-check-recording-date" class="vczapi-check-recording-date" value="<?php echo esc_attr( isset( $_GET['date'] ) ? sanitize_text_field( wp_unslash( $_GET['date'] ) ) : date( 'F Y' ) ); ?>"/> <input type="submit" name="fetch_recordings" value="<?php esc_attr_e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
         </form>
     </div>
     <table id="vczapi-recordings-list-table" class="vczapi-recordings-list-table responsive nowrap">
         <thead>
         <tr>
-            <th><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Recorded', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Size', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Action', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Recorded', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Size', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Action', 'video-conferencing-with-zoom-api' ); ?></th>
         </tr>
         </thead>
         <tbody>
@@ -48,18 +53,18 @@ $downloadable = ! empty( $args['downloadable'] ) && 'yes' === $args['downloadabl
 			);
 			?>
             <tr>
-                <td><?php echo $recording->id; ?></td>
-                <td><?php echo $recording->topic; ?></td>
-                <td><?php echo $recording->duration; ?></td>
-                <td data-sort="<?php echo strtotime( $recording->start_time ); ?>"><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $recording->start_time, $recording->timezone ); ?></td>
-                <td><?php echo vczapi_filesize_converter( $recording->total_size ); ?></td>
+                <td><?php echo esc_html( $recording->id ); ?></td>
+                <td><?php echo esc_html( $recording->topic ); ?></td>
+                <td><?php echo esc_html( $recording->duration ); ?></td>
+                <td data-sort="<?php echo esc_attr( strtotime( $recording->start_time ) ); ?>"><?php echo esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $recording->start_time, $recording->timezone ) ); ?></td>
+                <td><?php echo esc_html( vczapi_filesize_converter( $recording->total_size ) ); ?></td>
                 <td>
                     <a href="javascript:void(0);" class="vczapi-view-recording"
                        data-recording-id="<?php echo esc_attr( $recording_uuid ); ?>"
                        data-token="<?php echo esc_attr( $recording_token ); ?>"
                        data-downloadable="<?php echo 'yes' === $downloadable ? 1 : 0; ?>"
                     >
-                        <?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
+                        <?php esc_html_e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
                     <div class="vczapi-modal"></div>
                 </td>
             </tr>

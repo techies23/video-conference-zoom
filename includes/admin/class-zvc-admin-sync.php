@@ -1,5 +1,10 @@
 <?php
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class for Syncing Meeting/Webinars from live to WordPress
  *
@@ -29,7 +34,7 @@ class Zoom_Video_Conferencing_Admin_Sync {
 	 */
 	public static function render() {
 		if ( ! vczapi_is_oauth_active() ) {
-			echo '<p>' . __( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) . '</p>';
+			echo '<p>' . esc_html__( 'API keys are not configured properly ! Please configure them before syncing.', 'video-conferencing-with-zoom-api' ) . '</p>';
 
 			return;
 		}

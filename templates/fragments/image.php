@@ -1,4 +1,9 @@
 <?php
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * This template can be overridden by copying it to yourtheme/video-conferencing-zoom/fragments/image.php.
  *

@@ -4,6 +4,11 @@ use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Encryption;
 use Codemanas\VczApi\Helpers\JvbToken;
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class for all the administration ajax calls
  *

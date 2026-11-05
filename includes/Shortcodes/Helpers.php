@@ -65,12 +65,12 @@ class Helpers {
 			$paged = $page_num;
 		}
 		$base_url = ! wp_doing_ajax() ? get_pagenum_link( $big ) : $base_url;
-		echo paginate_links( array(
+		echo wp_kses_post( paginate_links( array(
 			'base'    => str_replace( $big, '%#%', esc_url( $base_url ) ),
 			'format'  => '?paged=%#%',
 			'current' => max( 1, $paged ),
 			'total'   => $query->max_num_pages
-		) );
+		) ) );
 	}
 
 	/**

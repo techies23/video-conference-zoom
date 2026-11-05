@@ -49,7 +49,7 @@ $atts = shortcode_atts(
      data-meeting_type="<?php echo esc_attr( $atts['meeting_type'] ); ?>"
 >
     <div class="vczapi-loader">
-        <img src="<?php echo ZVC_PLUGIN_IMAGES_PATH . '/ajax-loader.gif'; ?>" alt="loading..."/>
+        <img src="<?php echo esc_url( ZVC_PLUGIN_IMAGES_PATH . '/ajax-loader.gif' ); ?>" alt="loading..."/>
     </div>
 	<?php
 	/**
@@ -70,7 +70,7 @@ $atts = shortcode_atts(
 				vczapi_get_template_part( 'shortcode/zoom', 'listing' );
 			}
 		} else {
-			echo "<p class='vczapi-no-meeting-found'>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
+			echo "<p class='vczapi-no-meeting-found'>" . esc_html__( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
 
 		wp_reset_postdata();

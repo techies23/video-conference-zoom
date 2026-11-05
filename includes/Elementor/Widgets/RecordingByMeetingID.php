@@ -152,7 +152,7 @@ class RecordingByMeetingID extends Widget_Base {
 		if ( ! empty( $meeting_id ) ) {
 			echo do_shortcode( '[zoom_recordings_by_meeting meeting_id=' . esc_attr( $meeting_id ) . ' passcode=' . esc_attr( $passcode ) . ' downloadable=' . esc_attr( $downloadable ) . ']' );
 		} else {
-			_e( 'No meeting ID is defined.', 'video-conferencing-with-zoom-api' );
+			esc_html_e( 'No meeting ID is defined.', 'video-conferencing-with-zoom-api' );
 		}
 	}
 

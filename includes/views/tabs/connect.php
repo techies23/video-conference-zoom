@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div id="zvc-cover" style="display: none;"></div>
 <div class="zvc-row">
     <div class="zvc-position-floater-left vczapi-connect-box"

@@ -3,6 +3,11 @@
 use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\MeetingType;
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Meeting Post Type Controller
  *

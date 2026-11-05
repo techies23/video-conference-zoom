@@ -1,4 +1,9 @@
 <?php
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The Template for displaying list of recordings via meeting ID
  *
@@ -16,20 +21,20 @@ if ( $recordings ) {
 	?>
     <div class="vczapi-recordings-meeting-id-description">
         <ul>
-            <li><strong><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $recordings[0]->id; ?></li>
-            <li><strong><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo $recordings[0]->topic; ?></li>
+            <li><strong><?php esc_html_e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( $recordings[0]->id ); ?></li>
+            <li><strong><?php esc_html_e( 'Topic', 'video-conferencing-with-zoom-api' ); ?>:</strong> <?php echo esc_html( $recordings[0]->topic ); ?></li>
         </ul>
     </div>
     <table class="responsive vczapi-recordings-by-meeting-id-table">
         <thead>
         <tr>
-            <th><?php _e( 'Recording Date', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Recording Date', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Duration', 'video-conferencing-with-zoom-api' ); ?></th>
 			<?php if ( $passcode ) { ?>
-                <th><?php _e( 'Passcode', 'video-conferencing-with-zoom-api' ); ?></th>
+                <th><?php esc_html_e( 'Passcode', 'video-conferencing-with-zoom-api' ); ?></th>
 			<?php } ?>
-            <th><?php _e( 'Size', 'video-conferencing-with-zoom-api' ); ?></th>
-            <th><?php _e( 'Action', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Size', 'video-conferencing-with-zoom-api' ); ?></th>
+            <th><?php esc_html_e( 'Action', 'video-conferencing-with-zoom-api' ); ?></th>
         </tr>
         </thead>
         <tbody>
@@ -45,16 +50,16 @@ if ( $recordings ) {
 				);
 				?>
                 <tr>
-                    <td data-sort="<?php echo strtotime( $zoom_recording->start_time ); ?>"><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom_recording->start_time, $zoom_recording->timezone ); ?></td>
-                    <td><?php echo $zoom_recording->duration; ?></td>
+                    <td data-sort="<?php echo esc_attr( strtotime( $zoom_recording->start_time ) ); ?>"><?php echo esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom_recording->start_time, $zoom_recording->timezone ) ); ?></td>
+                    <td><?php echo esc_html( $zoom_recording->duration ); ?></td>
 					<?php if ( $passcode ) { ?>
-                        <td><?php echo $zoom_recording->password; ?></td>
+                        <td><?php echo esc_html( $zoom_recording->password ); ?></td>
 					<?php } ?>
-                    <td><?php echo vczapi_filesize_converter( $zoom_recording->total_size ); ?></td>
+                    <td><?php echo esc_html( vczapi_filesize_converter( $zoom_recording->total_size ) ); ?></td>
                     <td>
-                        <a href="<?php echo $zoom_recording->share_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a> &nbsp;/&nbsp;
+                        <a href="<?php echo esc_url( $zoom_recording->share_url ); ?>" target="_blank"><?php esc_html_e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a> &nbsp;/&nbsp;
                         <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo esc_attr( $recording_uuid ); ?>" data-token="<?php echo esc_attr( $recording_token ); ?>" data-downloadable="<?php echo $downlodable ? 1 : 0; ?>">
-		                    <?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
+		                    <?php esc_html_e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
                         <div class="vczapi-modal"></div>
                     </td>
                 </tr>

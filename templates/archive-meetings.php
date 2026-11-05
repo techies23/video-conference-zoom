@@ -21,7 +21,7 @@ do_action( 'vczapi_before_main_archive_content' );
     <div id="vczapi-primary" class="vczapi-primary container">
 
         <header class="page-header">
-            <h1 class="page-title vczapi-archive-page-title"><?php _e( 'Meetings', 'video-conferencing-with-zoom-api' ); ?></h1>
+            <h1 class="page-title vczapi-archive-page-title"><?php esc_html_e( 'Meetings', 'video-conferencing-with-zoom-api' ); ?></h1>
         </header><!-- .page-header -->
 		<?php
 		/**
@@ -48,11 +48,11 @@ do_action( 'vczapi_before_main_archive_content' );
                 </div>
             </div>
             <div class="vczapi-pagination">
-				<?php echo paginate_links(); ?>
+				<?php echo wp_kses_post( paginate_links() ); ?>
             </div>
 			<?php
 		} else {
-			echo "<p class='vczapi-no-meeting-found'>" . __( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
+			echo "<p class='vczapi-no-meeting-found'>" . esc_html__( 'No Meetings found.', 'video-conferencing-with-zoom-api' ) . "</p>";
 		}
 
 		/**

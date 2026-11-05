@@ -39,6 +39,6 @@ if ( video_conference_zoom_check_login() ) {
 	 */
 	do_action( 'vczoom_jbh_after_content' );
 } else {
-	echo "<h3>" . __( 'You do not have enough priviledge to access this page. Please login to continue or contact administrator.', 'video-conferencing-with-zoom-api' ) . "</h3>";
+	echo "<h3>" . esc_html__( 'You do not have enough priviledge to access this page. Please login to continue or contact administrator.', 'video-conferencing-with-zoom-api' ) . "</h3>";
 	die;
 }

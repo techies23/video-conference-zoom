@@ -234,7 +234,7 @@ class EmbedMeetings extends Widget_Base {
 		if ( ! empty( $meeting_id ) ) {
 			echo do_shortcode( '[zoom_join_via_browser meeting_id="' . esc_attr( $meeting_id ) . '" login_required="' . esc_attr( $login_required ) . '" iframe="' . esc_attr( $iframe ) . '" title="' . esc_attr( $title_text ) . '" height="' . esc_attr( $height ) . 'px" disable_countdown="' . esc_attr( $disable_countdown ) . '" passcode="' . esc_attr( $passcode ) . '" webinar="' . esc_attr( $enable_webinar ) . '" ' . $image . ' ]' );
 		} else {
-			_e( 'No Meeting ID is defined.', 'video-conferencing-with-zoom-api' );
+			esc_html_e( 'No Meeting ID is defined.', 'video-conferencing-with-zoom-api' );
 		}
 	}
 

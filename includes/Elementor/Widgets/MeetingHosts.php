@@ -159,7 +159,7 @@ class MeetingHosts extends Widget_Base {
 				echo do_shortcode( '[zoom_list_host_webinars host=' . esc_attr( $host_id ) . ']' );
 			}
 		} else {
-			_e( 'No user selected.', 'video-conferencing-with-zoom-api' );
+			esc_html_e( 'No user selected.', 'video-conferencing-with-zoom-api' );
 		}
 	}
 

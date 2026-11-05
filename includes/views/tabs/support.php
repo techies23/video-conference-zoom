@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="vczapi-settings-admin-support-bg red">
         <h3>Need more features ?</h3>
         <p>If you need more features for Video Conferencing with Zoom extension then
-            <a href="<?php echo admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-addons' ); ?>">Check out</a> the addons here to download.
+            <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-addons' ) ); ?>">Check out</a> the addons here to download.
     </div>
 
     <div class="vczapi-settings-admin-support-bg">

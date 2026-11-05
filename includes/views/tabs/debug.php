@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <section class="zvc-position-floater-left">
 		<?php
 		if ( empty( $debug_log ) ) {
-			echo "<p class='vczapi-admin-enable-debug-log-msg'>Please check <strong><i>Enable Logs</i></strong> option from <a href='" . admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) . "'>API SETTINGS</a> page to enable new logs. Currently, new logs are not being recorded.</p>";
+			echo "<p class='vczapi-admin-enable-debug-log-msg'>Please check <strong><i>Enable Logs</i></strong> option from <a href='" . esc_url( admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) ) . "'>API SETTINGS</a> page to enable new logs. Currently, new logs are not being recorded.</p>";
 		}
 
 		if ( ! empty( $logs ) ) : ?>

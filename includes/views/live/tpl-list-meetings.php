@@ -122,7 +122,7 @@ $default_user_url = add_query_arg(
                         $zoom_host_url = apply_filters( 'video_conferencing_zoom_join_url_host', $zoom_host_url );
 
                         $shortcode = sprintf( '[zoom_api_link meeting_id="%s" link_only="no"]', esc_attr( $meeting->id ) );
-                        $copy_msg  = esc_js( __( 'Copied to clipboard', 'video-conferencing-with-zoom-api' ) );
+                        $copy_msg  = __( 'Copied to clipboard', 'video-conferencing-with-zoom-api' );
                         ?>
                         <tr>
                             <td class="zvc-text-center">
@@ -130,7 +130,7 @@ $default_user_url = add_query_arg(
                             </td>
                             <td><?php echo esc_html( $meeting->id ); ?></td>
                             <td>
-                                <input class="text" id="meeting-shortcode-<?php echo esc_attr( $meeting->id ); ?>" type="text" readonly value="<?php echo esc_attr( $shortcode ); ?>" onclick="this.select(); document.execCommand('copy'); alert('<?php echo $copy_msg; ?>');"/>
+                                <input class="text" id="meeting-shortcode-<?php echo esc_attr( $meeting->id ); ?>" type="text" readonly value="<?php echo esc_attr( $shortcode ); ?>" onclick="this.select(); document.execCommand('copy'); alert('<?php echo esc_js( $copy_msg ); ?>');"/>
                                 <p class="description"><?php esc_html_e( 'Click to Copy Shortcode !', 'video-conferencing-with-zoom-api' ); ?></p>
                             </td>
                             <td>

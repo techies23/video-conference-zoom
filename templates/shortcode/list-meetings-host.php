@@ -1,4 +1,9 @@
 <?php
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The template for displaying list of meeting hosts  table.
  *
@@ -13,11 +18,11 @@
 <table id="vczapi-show-meetings-list-table" class="responsive nowrap vczapi-user-meeting-list">
     <thead>
     <tr>
-        <th><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
-        <th><?php _e( 'Meeting Status', 'video-conferencing-with-zoom-api' ); ?></th>
-        <th><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></th>
-        <th><?php _e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></th>
-        <th><?php _e( 'Actions', 'video-conferencing-with-zoom-api' ); ?></th>
+        <th><?php esc_html_e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
+        <th><?php esc_html_e( 'Meeting Status', 'video-conferencing-with-zoom-api' ); ?></th>
+        <th><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></th>
+        <th><?php esc_html_e( 'Timezone', 'video-conferencing-with-zoom-api' ); ?></th>
+        <th><?php esc_html_e( 'Actions', 'video-conferencing-with-zoom-api' ); ?></th>
     </tr>
     </thead>
     <tbody>
@@ -44,12 +49,12 @@
 				$meeting_status = "N/A";
 			}
 
-			echo '<td>' . $meeting->topic . '</td>';
-			echo '<td>' . $meeting_status . '</td>';
-			echo '<td>' . \Codemanas\VczApi\Helpers\Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) . '</td>';
-			echo '<td>' . $meeting->timezone . '</td>';
+			echo '<td>' . esc_html( $meeting->topic ) . '</td>';
+			echo '<td>' . wp_kses_post( $meeting_status ) . '</td>';
+			echo '<td>' . esc_html( \Codemanas\VczApi\Helpers\Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) ) . '</td>';
+			echo '<td>' . esc_html( $meeting->timezone ) . '</td>';
 			echo '<td><div class="view">
-<a href="' . $meeting->join_url . '" rel="permalink" target="_blank">' . __( 'Join via App', 'video-conferencing-with-zoom-api' ) . '</a></div><div class="view">' . vczapi_get_browser_join_shortcode( $meeting->id, $meeting->password, false, ' / ' ) . '</div></td>';
+<a href="' . esc_url( $meeting->join_url ) . '" rel="permalink" target="_blank">' . esc_html__( 'Join via App', 'video-conferencing-with-zoom-api' ) . '</a></div><div class="view">' . wp_kses_post( vczapi_get_browser_join_shortcode( $meeting->id, $meeting->password, false, ' / ' ) ) . '</div></td>';
 			echo '</tr>';
 		}
 	}
