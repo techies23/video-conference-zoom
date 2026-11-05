@@ -4,3 +4,4 @@ node_modules/
 languages/*.pot~
 build
 vendor
+.agents
