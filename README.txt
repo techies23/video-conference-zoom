@@ -4,7 +4,7 @@ Tags: zoom video conference, video conference, web conferencing, online meetings
 Donate link: https://www.paypal.com/donate?hosted_button_id=2UCQKR868M9WE
 Requires at least: 6.0
 Tested up to: 7.1.0
-Stable tag: 4.6.13
+Stable tag: 4.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -161,13 +161,14 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 
 == Changelog ==
 
-= 4.6.13 =
+= 4.7.0 =
 * Security Fix: Join via browser signatures are now bound to a server-issued join token instead of a client-supplied meeting ID.
 * Security Fix: Reduced Meeting SDK signature lifetime from 24 hours to 2 hours.
 * Security: Added meeting state and login requirement checks before issuing a signature.
 * Security Fix: Unauthenticated `set_timezone` AJAX requests now enforce post type, publication status, password protection and per-meeting login requirements before returning join links.
 * Security Fix: Cloud recording AJAX requests now require a signed token bound to the page that published the recording. Arbitrary meeting IDs and recording UUIDs can no longer be used to fetch recordings or download URLs.
 * Note: Recording shortcode templates now add a `data-token` attribute. Custom theme overrides must include it, and page caches should be purged after updating.
+* Refactor: Removed unused migration scripts.
 
 = 4.6.12 =
 * Fix: Countdown timer converted to native js transformation

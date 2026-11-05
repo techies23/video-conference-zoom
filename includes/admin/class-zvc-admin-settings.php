@@ -20,58 +20,6 @@ class Zoom_Video_Conferencing_Admin_Views {
 		add_action( 'admin_menu', [ $this, 'zoom_video_conference_menus' ] );
 		add_action( 'admin_init', [ $this, 'zoomConnectHandler' ] );
 		add_action( 'admin_notices', [ $this, 'maybeShowMessage' ] );
-		$this->migration_notice();
-	}
-
-	/**
-	 * @return void
-	 * @since 4.0.0
-	 *        Show migration notice if JWT keys are still being shown
-	 */
-	public function migration_notice() {
-		$is_jwt_active   = vczapi_is_jwt_active();
-		$is_oauth_active = vczapi_is_oauth_active();
-		$is_sdk_active   = vczapi_is_sdk_enabled();
-
-		$sdk_not_active_notice_dismissed = get_option( 'vczapi_dismiss_sdk_not_active_notice' );
-
-		self::$isDismissible = true;
-		self::$messageType   = 'error';
-
-		if ( ( $is_oauth_active && ! $is_sdk_active ) && ! $sdk_not_active_notice_dismissed ) {
-			$admin_page_url  = esc_url( add_query_arg( [
-				'post_type' => 'zoom-meetings',
-				'page'      => 'zoom-video-conferencing-settings',
-			],
-				admin_url( 'edit.php' ),
-			) );
-			$admin_page_link = '<a href="' . $admin_page_url . '">here</a>';
-
-			$dismiss_button = '<a href="#" class="vczapi-dismiss-admin-notice" data-id="vczapi_dismiss_sdk_not_active_notice" data-security="' . wp_create_nonce( 'vczapi-dismiss-nonce' ) . '" >don\'t show this message again</a>.';
-			self::$message  = '<strong>Video Conferencing Zoom: </strong>' . sprintf( __( 'The SDK App credentials have not been added, without SDK app credentials - Join via Browser functionality will not work, to add SDK app credentials click %s. If you understand and don\'t want the to see this message click %s' ), $admin_page_link, $dismiss_button );
-			wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
-
-			return;
-		} elseif ( ! apply_filters( 'vczapi_show_jwt_keys', ( $is_jwt_active ) ) || $sdk_not_active_notice_dismissed ) {
-			return;
-		}
-
-		$depreciationLink = '<a href="' . esc_url( 'https://marketplace.zoom.us/docs/guides/build/jwt-app/jwt-faq/#jwt-app-type-deprecation-faq--omit-in-toc-' ) . '"
-target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ', 'video-conferencing-with-zoom-api' ) . '</a>';
-
-		$migration_wizard_url  = esc_url( add_query_arg(
-			[
-				'post_type' => 'zoom-meetings',
-				'page'      => 'zoom-video-conferencing-settings',
-				'migrate'   => 'now',
-			],
-			admin_url( 'edit.php' )
-		) );
-		$migration_wizard_link = '<a href="' . $migration_wizard_url . '">migration wizard</a>';
-		$message               = sprintf( __( 'Zoom is deprecating their JWT app from June of 2023, please see %s for more details, Until the deadline all your current settings will work, however to ensure a smooth transition to the new Server to Server OAuth system + New App SDK (required for Join Via Browser) - we recommend that you migrate as soon as possible. Run the %s now to complete the migration process in 2 easy steps ', 'video-conferencing-with-zoom-api' ), $depreciationLink, $migration_wizard_link );
-
-
-		self::$message = $message;
 	}
 
 	/**
@@ -115,10 +63,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		$vczapi_oauth_client_secret = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_oauth_client_secret' ) );
 		$vczapi_sdk_key             = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_sdk_key' ) );
 		$vczapi_sdk_secret_key      = sanitize_text_field( filter_input( INPUT_POST, 'vczapi_sdk_secret_key' ) );
-		$zoom_api_key               = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_key' ) );
-		$zoom_api_secret            = sanitize_text_field( filter_input( INPUT_POST, 'zoom_api_secret' ) );
-		$delete_jwt_keys            = sanitize_text_field( filter_input( INPUT_POST, 'vczapi-delete-jwt-keys' ) );
-
 
 		//added for Oauth S2S
 		update_option( 'vczapi_oauth_account_id', $vczapi_oauth_account_id );
@@ -127,10 +71,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 		//sdk app credentials
 		update_option( 'vczapi_sdk_key', $vczapi_sdk_key );
 		update_option( 'vczapi_sdk_secret_key', $vczapi_sdk_secret_key );
-
-		//jwt keys update
-		update_option( 'zoom_api_key', $zoom_api_key );
-		update_option( 'zoom_api_secret', $zoom_api_secret );
 
 		$OAuth_access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret, );
 
@@ -141,9 +81,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 			video_conferencing_zoom_api_delete_user_cache();
 			delete_option( 'vczapi_global_oauth_data' );
 			//error has not been displayed yet.
-		} elseif ( $delete_jwt_keys == 'on' ) {
-			delete_option( 'zoom_api_key' );
-			delete_option( 'zoom_api_secret' );
 		} else {
 			//probably need a helper function or code to save keys on save differently
 			$decoded_users = json_decode( zoom_conference()->listUsers() );
@@ -172,7 +109,7 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 	 */
 	public function zoom_video_conference_menus() {
 		if ( vczapi_is_zoom_activated() ) {
-			if ( apply_filters( 'vczapi_show_live_meetings', true ) ) {
+			if ( apply_filters( 'vczapi_show_live_meetings', false ) ) {
 				add_submenu_page( 'edit.php?post_type=zoom-meetings', __( 'Live Webinars', 'video-conferencing-with-zoom-api' ), __( 'Live Webinars', 'video-conferencing-with-zoom-api' ), 'manage_options', 'zoom-video-conferencing-webinars', array(
 					'Zoom_Video_Conferencing_Admin_Webinars',
 					'list_webinars',
@@ -290,8 +227,6 @@ target="_blank" rel="noreferrer noopener">' . __( 'JWT App Type Depreciation FAQ
 				$vczapi_sdk_key        = get_option( 'vczapi_sdk_key' );
 				$vczapi_sdk_secret_key = get_option( 'vczapi_sdk_secret_key' );
 
-				$zoom_api_key    = get_option( 'zoom_api_key' );
-				$zoom_api_secret = get_option( 'zoom_api_secret' );
 				require_once ZVC_PLUGIN_VIEWS_PATH . '/tabs/connect.php';
 			} elseif ( 'api-settings' === $active_tab ) {
 				if ( isset( $_POST['save_zoom_settings'] ) ) {

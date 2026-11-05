@@ -17,20 +17,6 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		public static $OAuth_revalidate_attempts = 0;
 
 		/**
-		 * Zoom API KEY
-		 *
-		 * @var
-		 */
-		public $zoom_api_key;
-
-		/**
-		 * Zoom API Secret
-		 *
-		 * @var
-		 */
-		public $zoom_api_secret;
-
-		/**
 		 * Hold my instance
 		 *
 		 * @var
@@ -58,22 +44,11 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		}
 
 		/**
-		 * Zoom_Video_Conferencing_Api constructor.
-		 *
-		 * @param $zoom_api_key
-		 * @param $zoom_api_secret
-		 */
-		public function __construct( $zoom_api_key = '', $zoom_api_secret = '' ) {
-			$this->zoom_api_key    = $zoom_api_key;
-			$this->zoom_api_secret = $zoom_api_secret;
-		}
-
-		/**
 		 * Send request to API
 		 *
 		 * @param        $calledFunction
 		 * @param        $data
-		 * @param  string  $request
+		 * @param string $request
 		 *
 		 * @return array|bool|string|WP_Error
 		 */
@@ -239,30 +214,8 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 			if ( ! empty( $OauthData ) ) {
 				return $OauthData->access_token;
 			} else {
-				return $this->generateJWTKey();
+				return null;
 			}
-
-		}
-
-		/**
-		 * Generate JWT key
-		 *
-		 * @return string
-		 */
-		private function generateJWTKey() {
-			$key    = $this->zoom_api_key;
-			$secret = $this->zoom_api_secret;
-
-			$token = array(
-				"iss" => $key,
-				"exp" => time() + 3600, //60 seconds as suggested
-			);
-
-			if ( empty( $secret ) ) {
-				return false;
-			}
-
-			return JWT::encode( $token, $secret, 'HS256' );
 		}
 
 		/**
@@ -358,7 +311,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		/**
 		 * Create A meeting API
 		 *
-		 * @param  array  $data
+		 * @param array $data
 		 *
 		 * @return array|bool|string|void|WP_Error
 		 */
@@ -403,7 +356,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		/**
 		 * Updating Meeting Info
 		 *
-		 * @param  array  $data
+		 * @param array $data
 		 *
 		 * @return array|bool|string|void|WP_Error
 		 */
@@ -569,7 +522,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 * Create Webinar
 		 *
 		 * @param       $userID
-		 * @param  array  $data
+		 * @param array $data
 		 *
 		 * @return array|bool|string|void|WP_Error
 		 */
@@ -583,7 +536,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 		 * Update Webinar
 		 *
 		 * @param       $webinar_id
-		 * @param  array  $data
+		 * @param array $data
 		 *
 		 * @return array|bool|string|void|WP_Error
 		 */
@@ -646,6 +599,7 @@ if ( ! class_exists( 'Zoom_Video_Conferencing_Api' ) ) {
 				$doubleEncoded = urlencode( $firstEncoded );
 				$meetingId     = $doubleEncoded;
 			}
+
 			return $this->sendRequest( 'meetings/' . $meetingId . '/recordings', false, "GET" );
 		}
 

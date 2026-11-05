@@ -318,29 +318,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	}
 
 	/**
-	 * Generate Signature
-	 *
-	 * @param $api_key
-	 * @param $api_sercet
-	 * @param $meeting_number
-	 * @param $role
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	private function generate_signature( $api_key, $api_sercet, $meeting_number, $role ) {
-		//Set the timezone to UTC
-		$date_utc = new \DateTime( "now", new \DateTimeZone( "UTC" ) );
-		$time     = $date_utc->getTimestamp() * 1000 - 30000; //time in milliclearseconds (or close enough)
-		$data     = base64_encode( $api_key . $meeting_number . $time . $role );
-		$hash     = hash_hmac( 'sha256', $data, $api_sercet, true );
-		$_sig     = $api_key . "." . $meeting_number . "." . $time . "." . $role . "." . base64_encode( $hash );
-
-		//return signature, url safe base64 encoded
-		return rtrim( strtr( base64_encode( $_sig ), '+/', '-_' ), '=' );
-	}
-
-	/**
 	 * Change State of the Meeting from here !
 	 */
 	public function state_change(): void {

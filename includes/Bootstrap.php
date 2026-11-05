@@ -49,7 +49,6 @@ final class Bootstrap
 	{
 		$this->autoloader();
 		$this->load_dependencies();
-		$this->init_api();
 
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts_backend'));
 		add_action('init', array($this, 'load_plugin_textdomain'));
@@ -124,20 +123,6 @@ final class Bootstrap
 	public function autoloader()
 	{
 		require_once ZVC_PLUGIN_DIR_PATH . 'vendor/autoload.php';
-	}
-
-	/**
-	 * INitialize the hooks
-	 *
-	 * @since    2.0.0
-	 * @modified 2.1.0
-	 * @author   Deepen Bajracharya
-	 */
-	protected function init_api()
-	{
-		//Load the Credentials
-		zoom_conference()->zoom_api_key    = get_option('zoom_api_key');
-		zoom_conference()->zoom_api_secret = get_option('zoom_api_secret');
 	}
 
 	/**
@@ -236,7 +221,6 @@ final class Bootstrap
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-settings.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-addons.php';
 		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-sync.php';
-		require_once ZVC_PLUGIN_INCLUDES_PATH . '/admin/class-zvc-admin-setup-wizard.php';
 
 		//Timezone
 		Timezone::get_instance();
