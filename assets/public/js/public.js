@@ -1,8 +1,7 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
 
-;// CONCATENATED MODULE: ./src/public/js/moment-parser.js
+;// ./src/public/js/moment-parser.js
 /**
  * Helper to map Moment tokens and native built-in preset constants to Intl options
  */
@@ -95,7 +94,7 @@ function parseMomentFormatToIntl(formatStr) {
   if (formatStr.includes('ss')) options.second = '2-digit';else if (formatStr.includes('s')) options.second = 'numeric';
   return options;
 }
-;// CONCATENATED MODULE: ./src/public/js/public.js
+;// ./src/public/js/public.js
 
 
 (function ($) {
