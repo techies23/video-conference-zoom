@@ -9,7 +9,9 @@
  */
 
 global $zoom_recordings;
-$args = $args ?? []
+$args         = $args ?? [];
+$post_id      = ! empty( $args['post_id'] ) ? absint( $args['post_id'] ) : 0;
+$downloadable = ! empty( $args['downloadable'] ) && 'yes' === $args['downloadable'] ? 'yes' : 'no';
 ?>
     <div class="vczapi-recordings-range-selector-wrap">
         <form action="" class="vczapi-recording-range-selector" method="GET">
@@ -35,8 +37,15 @@ $args = $args ?? []
 			if ( $use_meeting_id ) {
 				$recording_uuid = $recording->id;
 			} else {
-				$recording_uuid = urlencode( $recording->uuid );
+				$recording_uuid = $recording->uuid;
 			}
+
+			$recording_token = \Codemanas\VczApi\Helpers\RecordingToken::issue(
+				'recording',
+				$recording_uuid,
+				$post_id,
+				[ 'downloadable' => $downloadable ]
+			);
 			?>
             <tr>
                 <td><?php echo $recording->id; ?></td>
@@ -46,8 +55,9 @@ $args = $args ?? []
                 <td><?php echo vczapi_filesize_converter( $recording->total_size ); ?></td>
                 <td>
                     <a href="javascript:void(0);" class="vczapi-view-recording"
-                       data-recording-id="<?php echo $recording_uuid; ?>"
-                       data-downloadable="<?php echo $args['downloadable']== 'yes' ? 1: 0; ?>"
+                       data-recording-id="<?php echo esc_attr( $recording_uuid ); ?>"
+                       data-token="<?php echo esc_attr( $recording_token ); ?>"
+                       data-downloadable="<?php echo 'yes' === $downloadable ? 1 : 0; ?>"
                     >
                         <?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
                     <div class="vczapi-modal"></div>
