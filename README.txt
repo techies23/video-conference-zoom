@@ -165,6 +165,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Security Fix: Reduced Meeting SDK signature lifetime from 24 hours to 2 hours.
 * Security: Added meeting state and login requirement checks before issuing a signature.
 * Security Fix: Unauthenticated `set_timezone` AJAX requests now enforce post type, publication status, password protection and per-meeting login requirements before returning join links.
+* Security Fix: Cloud recording AJAX requests now require a signed token bound to the page that published the recording. Arbitrary meeting IDs and recording UUIDs can no longer be used to fetch recordings or download URLs.
+* Note: Recording shortcode templates now add a `data-token` attribute. Custom theme overrides must include it, and page caches should be purged after updating.
 
 = 4.6.12 =
 * Fix: Countdown timer converted to native js transformation

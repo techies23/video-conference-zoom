@@ -11,6 +11,7 @@
 $recordings  = ! empty( $args['recordings'] ) ? $args['recordings'] : false;
 $passcode    = ! empty( $args['passcode'] ) && $args['passcode'] == "yes";
 $downlodable = ! empty( $args['downloadable'] ) && $args['downloadable'] == "yes";
+$post_id     = ! empty( $args['post_id'] ) ? absint( $args['post_id'] ) : 0;
 if ( $recordings ) {
 	?>
     <div class="vczapi-recordings-meeting-id-description">
@@ -35,6 +36,13 @@ if ( $recordings ) {
 		<?php
 		if ( ! empty( $recordings ) ) {
 			foreach ( $recordings as $zoom_recording ) {
+				$recording_uuid  = ! empty( $zoom_recording->uuid ) ? $zoom_recording->uuid : $zoom_recording->id;
+				$recording_token = \Codemanas\VczApi\Helpers\RecordingToken::issue(
+					'recording',
+					$recording_uuid,
+					$post_id,
+					[ 'downloadable' => $downlodable ? 'yes' : 'no' ]
+				);
 				?>
                 <tr>
                     <td data-sort="<?php echo strtotime( $zoom_recording->start_time ); ?>"><?php echo \Codemanas\VczApi\Helpers\Date::dateConverter( $zoom_recording->start_time, $zoom_recording->timezone ); ?></td>
@@ -45,7 +53,7 @@ if ( $recordings ) {
                     <td><?php echo vczapi_filesize_converter( $zoom_recording->total_size ); ?></td>
                     <td>
                         <a href="<?php echo $zoom_recording->share_url; ?>" target="_blank"><?php _e( 'Play', 'video-conferencing-with-zoom-api' ); ?></a> &nbsp;/&nbsp;
-                        <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo $zoom_recording->uuid; ?>" data-downloadable="<?php echo $downlodable ? 1 : 0; ?>">
+                        <a href="javascript:void(0);" class="vczapi-view-recording" data-recording-id="<?php echo esc_attr( $recording_uuid ); ?>" data-token="<?php echo esc_attr( $recording_token ); ?>" data-downloadable="<?php echo $downlodable ? 1 : 0; ?>">
 		                    <?php _e( 'View Recordings', 'video-conferencing-with-zoom-api' ); ?></a>
                         <div class="vczapi-modal"></div>
                     </td>

@@ -3,6 +3,7 @@
 namespace Codemanas\VczApi\Shortcodes;
 
 use Codemanas\VczApi\Helpers\MeetingType;
+use Codemanas\VczApi\Helpers\RecordingToken;
 use Codemanas\VczApi\Requests\Zoom;
 
 class Recordings {
@@ -129,11 +130,110 @@ class Recordings {
 	}
 
 	/**
+	 * Generic error used for every rejected recording request.
+	 *
+	 * Using one message keeps the response from revealing whether a meeting,
+	 * recording or Zoom API resource exists.
+	 *
+	 * @return string
+	 */
+	private function generic_error(): string {
+		return esc_html__( 'Invalid request.', 'video-conferencing-with-zoom-api' );
+	}
+
+	/**
+	 * Resolve the post that is currently rendering a recording shortcode.
+	 *
+	 * @return int
+	 */
+	private function get_current_post_id(): int {
+		$post_id = get_the_ID();
+
+		if ( empty( $post_id ) ) {
+			$queried = get_queried_object();
+			if ( $queried instanceof \WP_Post ) {
+				$post_id = $queried->ID;
+			}
+		}
+
+		if ( empty( $post_id ) && ! empty( $GLOBALS['post']->ID ) ) {
+			$post_id = (int) $GLOBALS['post']->ID;
+		}
+
+		return absint( $post_id );
+	}
+
+	/**
+	 * Verify a recording token and its bound page.
+	 *
+	 * The token proves that the recording shortcode was rendered on a page.
+	 * The page is re-checked on every request so unpublished, password
+	 * protected or login-only pages stop working immediately.
+	 *
+	 * @param string $token  Token supplied by the browser.
+	 * @param string $scope  Required token scope.
+	 * @param string $id     Required meeting/recording identifier.
+	 *
+	 * @return array|false Verified payload on success.
+	 */
+	private function verify_recording_token( string $token, string $scope, string $id ) {
+		$payload = RecordingToken::verify( $token );
+
+		if ( empty( $payload ) || $scope !== $payload['scope'] || $id !== (string) $payload['id'] ) {
+			return false;
+		}
+
+		$post_id = ! empty( $payload['post'] ) ? absint( $payload['post'] ) : 0;
+		if ( empty( $post_id ) ) {
+			return false;
+		}
+
+		$post = get_post( $post_id );
+		if ( empty( $post ) || 'trash' === $post->post_status ) {
+			return false;
+		}
+
+		// Draft, pending and private content is only readable by capable users.
+		if ( 'publish' !== $post->post_status && ! current_user_can( 'read_post', $post->ID ) ) {
+			return false;
+		}
+
+		// Password protected pages must not disclose recordings via AJAX.
+		if ( post_password_required( $post ) ) {
+			return false;
+		}
+
+		// Honour the per-meeting "must be logged in" option.
+		if ( 'zoom-meetings' === $post->post_type ) {
+			$meeting_fields = get_post_meta( $post->ID, '_meeting_fields', true );
+			if ( ! empty( $meeting_fields['site_option_logged_in'] ) && ! is_user_logged_in() ) {
+				return false;
+			}
+		}
+
+		return $payload;
+	}
+
+	/**
 	 * Get Recordings via AJAX
 	 */
 	public function get_recordings() {
-		$meeting_id   = $this->sanitize_zoom_recording_identifier( filter_input( INPUT_GET, 'recording_id' ) );
-		$downloadable = $this->sanitize_yes_no_attribute( filter_input( INPUT_GET, 'downloadable' ), 'no' );
+		$requested_id = $this->get_scalar_value( filter_input( INPUT_GET, 'recording_id' ) );
+		$meeting_id   = $this->sanitize_zoom_recording_identifier( $requested_id );
+		$token        = $this->get_scalar_value( filter_input( INPUT_GET, 'token' ) );
+
+		// A valid token is required before the Zoom API is contacted.
+		if ( empty( $meeting_id ) || empty( $token ) ) {
+			wp_send_json_error( $this->generic_error() );
+		}
+
+		$payload = $this->verify_recording_token( $token, 'recording', trim( $requested_id ) );
+		if ( empty( $payload ) ) {
+			wp_send_json_error( $this->generic_error() );
+		}
+
+		// The token is authoritative for display options.
+		$downloadable = $this->sanitize_yes_no_attribute( $payload['downloadable'] ?? 'no', 'no' );
 
 		if ( ! empty( $meeting_id ) ) {
 			ob_start();
@@ -270,6 +370,7 @@ class Recordings {
 					true,
 					false,
 					[
+						'post_id'      => $this->get_current_post_id(),
 						'host_id'      => $host_id,
 						'per_page'     => $per_page,
 						'downloadable' => $downloadable,
@@ -313,9 +414,19 @@ class Recordings {
 
 		wp_enqueue_script( 'video-conferencing-with-zoom-api-shortcode-js' );
 
+		$token = RecordingToken::issue(
+			'meeting',
+			$meeting_id,
+			$this->get_current_post_id(),
+			[
+				'passcode'     => 'yes' === $passcode ? 'yes' : 'no',
+				'downloadable' => $downloadable,
+			]
+		);
+
 		ob_start();
 		$loading_text = esc_html__( "Loading recordings.. Please wait..", "video-conferencing-with-zoom-api" );
-		echo '<div class="vczapi-recordings-by-meeting-id" data-downloadable="' . esc_attr( $downloadable ) . '" data-meeting="' . esc_attr( $meeting_id ) . '" data-passcode="' . esc_attr( $passcode ) . '" data-loading="' . esc_attr( $loading_text ) . '"></div>';
+		echo '<div class="vczapi-recordings-by-meeting-id" data-downloadable="' . esc_attr( $downloadable ) . '" data-meeting="' . esc_attr( $meeting_id ) . '" data-passcode="' . esc_attr( $passcode ) . '" data-token="' . esc_attr( $token ) . '" data-loading="' . esc_attr( $loading_text ) . '"></div>';
 
 		return ob_get_clean();
 	}
@@ -328,19 +439,28 @@ class Recordings {
 	public function getRecordingsByMeetingID() {
 		$recordings = [];
 
-		$meeting_id   = $this->sanitize_zoom_recording_identifier( filter_input( INPUT_GET, 'meeting_id' ) );
-		$passcode     = $this->sanitize_zoom_passcode( filter_input( INPUT_GET, 'passcode' ) );
-		$downloadable = $this->sanitize_yes_no_attribute( filter_input( INPUT_GET, 'downloadable' ), 'no' );
+		$meeting_id = $this->sanitize_zoom_recording_identifier( filter_input( INPUT_GET, 'meeting_id' ) );
+		$token      = $this->get_scalar_value( filter_input( INPUT_GET, 'token' ) );
 
-		if ( empty( $meeting_id ) ) {
-			wp_send_json_error( esc_html__( 'Meeting ID is not specified', "video-conferencing-with-zoom-api" ) );
+		// A valid token is required before the Zoom API is contacted.
+		if ( empty( $meeting_id ) || empty( $token ) ) {
+			wp_send_json_error( $this->generic_error() );
 		}
+
+		$payload = $this->verify_recording_token( $token, 'meeting', $meeting_id );
+		if ( empty( $payload ) ) {
+			wp_send_json_error( $this->generic_error() );
+		}
+
+		// The token is authoritative for display options.
+		$passcode     = $this->sanitize_yes_no_attribute( $payload['passcode'] ?? 'no', 'no' );
+		$downloadable = $this->sanitize_yes_no_attribute( $payload['downloadable'] ?? 'no', 'no' );
 
 		$zoomObj      = Zoom::instance();
 		$meeting_info = json_decode( zoom_conference()->getMeetingInfo( $meeting_id ) );
 
 		if ( ! empty( $meeting_info->code ) && ! empty( $meeting_info->message ) ) {
-			wp_send_json_error( esc_html( $meeting_info->message ) );
+			wp_send_json_error( $this->generic_error() );
 		}
 
 		//if it's a regular meeting or webinar use the meeting id as it seems it's more reliable
@@ -365,12 +485,13 @@ class Recordings {
 
 		if ( ! empty( $recordings ) ) {
 			if ( ! empty( $recordings[0]->code ) && ! empty( $recordings[0]->message ) ) {
-				wp_send_json_error( esc_html( $recordings[0]->message ) );
+				wp_send_json_error( $this->generic_error() );
 			} else {
 				$template = '';
 				ob_start();
 				vczapi_get_template( 'shortcode/zoom-recordings-by-meeting.php', true, false, [
 					'recordings'   => $recordings,
+					'post_id'      => absint( $payload['post'] ),
 					'passcode'     => $passcode,
 					'downloadable' => $downloadable
 				] );

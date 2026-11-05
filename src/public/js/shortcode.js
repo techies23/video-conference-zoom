@@ -201,11 +201,11 @@
         openModal: function (e) {
             //localization no longer works with block themes have to use data attributes for this now.
             e.preventDefault();
-            var recording_id = $(e.currentTarget).data('recording-id');
+            var $trigger = $(e.currentTarget);
             var postData = {
-                recording_id: recording_id,
+                recording_id: $trigger.attr('data-recording-id'),
                 action: 'get_recording',
-                downloadable: $(e.currentTarget).data('downloadable')
+                token: $trigger.attr('data-token')
             };
 
             $('.vczapi-modal').html('<p class="vczapi-modal-loader">' + vczapi_ajax.loading_recordings + '</p>').show();
@@ -240,13 +240,25 @@ const vczapiRecordingsByMeetingID = (() => {
     }
 
     const fetchRecordings = (elem) => {
-        let {meeting, loading, passcode, downloadable} = elem.dataset;
+        let {meeting, loading, token} = elem.dataset;
+        const params = new URLSearchParams({
+            action: 'getRecordingByMeetingID',
+            meeting_id: meeting
+        });
+
+        if (token) {
+            params.set('token', token);
+        }
+
         elem.innerHTML = loading;
-        fetch(vczapi_ajax.ajaxurl + `?action=getRecordingByMeetingID&meeting_id=${meeting}&passcode=${passcode}&downloadable=${downloadable}`)
+        fetch(vczapi_ajax.ajaxurl + '?' + params.toString())
             .then(res => res.json())
             .then(result => {
                 elem.innerHTML = result.data;
             })
+            .catch(() => {
+                elem.innerHTML = '';
+            });
     }
 
     const init = () => {
