@@ -1,6 +1,8 @@
 <?php
 
+use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Encryption;
+use Codemanas\VczApi\Helpers\JvbToken;
 
 /**
  * Class for all the administration ajax calls
@@ -178,43 +180,136 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 		$referer  = wp_get_referer();
 		$home_url = home_url();
 
-		// Block requests with no referer or external referers
-		if ( ! $referer || parse_url( $referer, PHP_URL_HOST ) !== parse_url( $home_url, PHP_URL_HOST ) ) {
-			wp_send_json_error( 'Invalid request source.' );
+		// Defense-in-depth only. The referer is supplied by the client and is not
+		// the authorisation boundary; the join token below is.
+		if ( ! $referer || wp_parse_url( $referer, PHP_URL_HOST ) !== wp_parse_url( $home_url, PHP_URL_HOST ) ) {
+			wp_send_json_error( 'Invalid request source.', 403 );
 		}
 
-		// 2. Sanitize and validate the Meeting ID
-		$meeting_id = filter_input( INPUT_POST, 'meeting_id', FILTER_SANITIZE_NUMBER_INT );
+		if ( ! vczapi_is_sdk_enabled() ) {
+			wp_send_json_error( 'Service Unavailable', 503 );
+		}
+
+		// Check both the current and legacy option locations so upgrades cannot
+		// leave the endpoint enabled after an administrator disabled it.
+		if ( Metastore::checkDisableJoinViaBrowser() || vczapi_check_disable_joinViaBrowser() ) {
+			wp_send_json_error( 'Join via browser is disabled.', 403 );
+		}
+
+		$sdk_key    = get_option( 'vczapi_sdk_key' );
+		$secret_key = get_option( 'vczapi_sdk_secret_key' );
+
+		if ( empty( $sdk_key ) || empty( $secret_key ) ) {
+			wp_send_json_error( 'SDK configuration error.', 500 );
+		}
+
+		// The meeting is identified by the server-issued join token. Never trust
+		// a client-supplied meeting_id: that allowed unauthenticated callers to
+		// request a signature for any meeting ID.
+		$join_token = isset( $_POST['join_token'] ) && is_string( $_POST['join_token'] ) ? wp_unslash( $_POST['join_token'] ) : '';
+		$meeting_id = JvbToken::verify( $join_token );
 
 		if ( empty( $meeting_id ) ) {
-			wp_send_json_error( 'Invalid Meeting ID' );
+			wp_send_json_error( 'Invalid or expired join token.', 403 );
 		}
 
-		if ( vczapi_is_sdk_enabled() ) {
-			$sdk_key    = get_option( 'vczapi_sdk_key' );
-			$secret_key = get_option( 'vczapi_sdk_secret_key' );
+		if ( ! $this->is_meeting_joinable( $meeting_id ) ) {
+			wp_send_json_error( 'This meeting is not available for joining.', 403 );
+		}
 
-			if ( empty( $sdk_key ) || empty( $secret_key ) ) {
-				wp_send_json_error( 'SDK configuration error.' );
+		if ( $this->is_rate_limited( $meeting_id ) ) {
+			wp_send_json_error( 'Too many requests. Please try again later.', 429 );
+		}
+
+		// Ensure role is 0 (Participant). NEVER allow Role 1 (Host) for guests.
+		$signature = $this->generate_sdk_signature( $sdk_key, $secret_key, $meeting_id, 0 );
+
+		if ( empty( $signature ) ) {
+			wp_send_json_error( 'Signature generation failed.', 500 );
+		}
+
+		wp_send_json_success( [
+			'sig'  => $signature,
+			'type' => 'sdk'
+		] );
+	}
+
+	/**
+	 * Check that the meeting is still joinable on this site.
+	 *
+	 * @param string $meeting_id Zoom meeting ID.
+	 *
+	 * @return bool
+	 */
+	private function is_meeting_joinable( string $meeting_id ): bool {
+		// Shortcode meetings track an "ended" state in this option.
+		$options = get_option( 'zoom_api_meeting_options' );
+		$state   = '';
+		if ( is_array( $options ) && isset( $options[ $meeting_id ] ) && is_array( $options[ $meeting_id ] ) ) {
+			$state = $options[ $meeting_id ]['state'] ?? '';
+		}
+		if ( 'ended' === $state ) {
+			return false;
+		}
+
+		// If a zoom-meetings post exists for this meeting, honor its own settings.
+		$posts = get_posts( [
+			'post_type'      => 'zoom-meetings',
+			'post_status'    => [ 'publish', 'private', 'draft', 'pending', 'future', 'trash' ],
+			'meta_key'       => '_meeting_zoom_meeting_id',
+			'meta_value'     => $meeting_id,
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+		] );
+
+		if ( ! empty( $posts ) ) {
+			$post_id = (int) $posts[0];
+
+			if ( 'publish' !== get_post_status( $post_id ) && ! current_user_can( 'read_post', $post_id ) ) {
+				return false;
 			}
 
-			// Ensure role is 0 (Participant). NEVER allow Role 1 (Host) for guests.
-			$signature = $this->generate_sdk_signature( $sdk_key, $secret_key, $meeting_id, 0 );
+			$fields = get_post_meta( $post_id, '_meeting_fields', true );
+			if ( is_array( $fields ) && ! empty( $fields['site_option_logged_in'] ) && ! is_user_logged_in() ) {
+				return false;
+			}
 
-			wp_send_json_success( [
-				'sig'  => $signature,
-				'type' => 'sdk'
-			] );
-		} else {
-			wp_send_json_error( 'Service Unavailable' );
+			$details = get_post_meta( $post_id, '_meeting_zoom_details', true );
+			if ( is_object( $details ) && ! empty( $details->state ) && 'ended' === $details->state ) {
+				return false;
+			}
 		}
 
-		wp_die();
+		return (bool) apply_filters( 'vczapi_jvb_is_meeting_joinable', true, $meeting_id );
+	}
+
+	/**
+	 * Simple per-IP / per-meeting throttle for signature generation.
+	 *
+	 * @param string $meeting_id Zoom meeting ID.
+	 *
+	 * @return bool True when the caller has exceeded the limit.
+	 */
+	private function is_rate_limited( string $meeting_id ): bool {
+		$ip    = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
+		$key   = 'vczapi_jvb_rl_' . md5( $ip . '|' . $meeting_id );
+		$limit = max( 1, (int) apply_filters( 'vczapi_jvb_rate_limit', 60 ) );
+
+		$count = (int) get_transient( $key );
+		if ( $count >= $limit ) {
+			return true;
+		}
+
+		set_transient( $key, $count + 1, MINUTE_IN_SECONDS );
+
+		return false;
 	}
 
 	private function generate_sdk_signature( $sdk_key, $secret_key, $meeting_number, $role ) {
-		$iat     = round( ( time() * 1000 - 30000 ) / 1000 );
-		$exp     = $iat + 86400;
+		$iat    = time() - 30;
+		$expiry = max( 300, (int) apply_filters( 'vczapi_jvb_signature_expiry', 2 * HOUR_IN_SECONDS ) );
+		$exp    = $iat + $expiry;
 		$payload = [
 			'sdkKey'   => $sdk_key,
 			'mn'       => $meeting_number,

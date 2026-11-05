@@ -67,9 +67,13 @@ const ZoomMtgApp = {
    * @returns {Promise<any>}
    */
   generateSignature: async function () {
+    if (!zvc_ajx.join_token) {
+      return { success: false }
+    }
+
     const postData = new FormData()
     postData.append('action', 'vczapi_jvb_get_auth')
-    postData.append('meeting_id', parseInt(this.meetingID))
+    postData.append('join_token', zvc_ajx.join_token)
     postData.append('nonce', zvc_ajx.nonce)
     const response = await fetch(zvc_ajx.ajaxurl, {
       method: 'POST',
@@ -106,6 +110,8 @@ const ZoomMtgApp = {
             locale: locale,
           }
           this.prepBeforeJoin(result, validatedObjects)
+        } else {
+          this.removeLoader()
         }
       })
     }

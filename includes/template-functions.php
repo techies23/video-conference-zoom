@@ -7,6 +7,7 @@
 // If this file is called directly, abort.
 use Codemanas\VczApi\Data\Metastore;
 use Codemanas\VczApi\Helpers\Date;
+use Codemanas\VczApi\Helpers\JvbToken;
 use Codemanas\VczApi\Helpers\Links;
 use Codemanas\VczApi\Helpers\MeetingType;
 
@@ -533,6 +534,15 @@ function video_conference_zoom_before_jbh_html( $zoom ) {
  * AFter join before host
  */
 function video_conference_zoom_after_jbh_html() {
+	// The encrypted "join" parameter is the capability that authorises this meeting.
+	$join_param       = isset( $_GET['join'] ) && is_string( $_GET['join'] ) ? wp_unslash( $_GET['join'] ) : '';
+	$meeting_id_plain = \Codemanas\VczApi\Helpers\Encryption::decrypt( $join_param );
+
+	if ( empty( $meeting_id_plain ) || ! preg_match( '/^\d{9,11}$/', $meeting_id_plain ) ) {
+		// Never expose the SDK payload for an invalid or forged join link.
+		return;
+	}
+
 	do_action( 'vczapi_join_via_browser_footer' );
 
 	ob_start( 'vczapi_removeWhitespace' );
@@ -550,13 +560,15 @@ function video_conference_zoom_after_jbh_html() {
 	global $current_user;
 	$full_name                 = ! empty( $current_user->display_name ) ? $current_user->display_name : 'Guest';
 	$enable_direct_via_browser = Metastore::enabledDirectJoinViaBrowser();
-	$meeting_id                = base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( $_GET['join'] ) );
-	$meeting_pwd               = ! empty( $_GET['pak'] ) ? base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( $_GET['pak'] ) ) : '';
+
+	$meeting_id  = base64_encode( $meeting_id_plain );
+	$meeting_pwd = isset( $_GET['pak'] ) && is_string( $_GET['pak'] ) ? base64_encode( \Codemanas\VczApi\Helpers\Encryption::decrypt( wp_unslash( $_GET['pak'] ) ) ) : '';
 
 	$localize = array(
 		'ajaxurl'                        => admin_url( 'admin-ajax.php' ),
 		'redirect_page'                  => apply_filters( 'vczapi_api_redirect_join_browser', esc_url( $post_link ) ),
 		'meeting_id'                     => $meeting_id,
+		'join_token'                     => JvbToken::issue( $meeting_id_plain ),
 		'meeting_pwd'                    => $meeting_pwd,
 		'disableInvite'                  => ( get_option( 'vczapi_disable_invite' ) == 'yes' ),
 		'sdk_version'                    => ZVC_ZOOM_WEBSDK_VERSION,

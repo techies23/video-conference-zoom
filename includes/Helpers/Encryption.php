@@ -80,7 +80,12 @@ class Encryption {
 		// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
 		$iv = substr( hash( 'sha256', self::$iv ), 0, 16 );
 
-		return openssl_decrypt( base64_decode( $string ), self::$encryption_method, $key, 0, $iv );
+		$decoded = base64_decode( $string, true );
+		if ( false === $decoded ) {
+			return false;
+		}
+
+		return openssl_decrypt( $decoded, self::$encryption_method, $key, 0, $iv );
 	}
 
 	public static $instance = null;

@@ -3,7 +3,7 @@
         'name' => 'techies23/video-conferencing-with-zoom-api',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2bb3efff6b46870c986dfaecc3c8df967e4feef2',
+        'reference' => 'cb4fdc9fe902a7ce4ac347e33f50c50cd9cf35ae',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'firebase/php-jwt' => array(
-            'pretty_version' => 'v6.9.0',
-            'version' => '6.9.0.0',
-            'reference' => 'f03270e63eaccf3019ef0f32849c497385774e11',
+            'pretty_version' => 'v6.11.1',
+            'version' => '6.11.1.0',
+            'reference' => 'd1e91ecf8c598d073d0995afa8cd5c75c6e19e66',
             'type' => 'library',
             'install_path' => __DIR__ . '/../firebase/php-jwt',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'techies23/video-conferencing-with-zoom-api' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2bb3efff6b46870c986dfaecc3c8df967e4feef2',
+            'reference' => 'cb4fdc9fe902a7ce4ac347e33f50c50cd9cf35ae',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
