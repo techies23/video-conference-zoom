@@ -1,3 +1,98 @@
+= 4.6.8 - June 4th, 2026 =
+* Security Fix: Patched get_auth ajax handler.
+* Added: Periodically Re-Sync Zoom Meeting via API to avoid ZAK timeouts
+
+= 4.6.7 - April 20th, 2026 =
+* Security Fix: Patched delete action ajax.
+
+= 4.6.6 - Jan 25th, 2026 =
+* Security Fix: Patched get_auth ajax handler.
+
+= 4.6.5 - July 7th 2025 =
+* Fix: Issue with block themes - templates reverting to zoom template.
+
+= 4.6.4 - April 21st 2025 =
+* Recordings UUID needs to check for / and needs double encoding
+
+= 4.6.3 - November 27th 2024 =
+* Updated tested to version for WordPress to 6.7
+
+= 4.6.1 - 4.6.2 October 3rd, 2024 =
+* Changed name of class from I18N => Locales.
+
+= 4.6.0 September 26th, 2024 =
+* Updated: WebSDK to version 3.8.10
+* Optimized: Join via browser code.
+* Fixed: Join via browser language change.
+* Added: Join before host time.
+* Optimized: Scripts and Stylings
+* Bug Fixes related to Meeting.
+
+= 4.5.3 August 27th, 2024 =
+* Fix: No Fixed Time meeting not working with `[zoom_meeting_post post_id="1938" template="boxed"]`
+
+= 4.5.2 August 12th, 2024 =
+* Fix: Auto recording was not being set for webinars
+* Updated: Zoom WebSDK to version 2.18.3
+
+= 4.5.1 July 1st, 2024 =
+* Fixed: Undefined error $type issue.
+
+= 4.5.0 June 10, 2024 =
+* Added: Helper function for meeting types
+* Fixed bugs related to meeting types
+
+= 4.4.6 March 20, 2024 =
+* Security Update: Fixed a issue related to ajax.
+
+= 4.4.5 March 11th, 2024 =
+* Security Update: Escaping for https://zoomdocs.codemanas.com/shortcode/#10-show-recordings-based-on-meeting-id (Cross-Site Scripting via Shortcode)
+* Security Fix: Open Redirection when joining meeting with Join via Browser.
+
+= 4.4.4 February 6th, 2024 =
+* Re-Added back download button for recordings shortcode.
+
+= 4.4.3 February 5th, 2024 =
+* Fixed: Recordings fetching method changed based recurring meeting or Normal meeting. Should past meetings now be visible.
+
+= 4.4.2 January 26th, 2024 =
+*  Minor Warning issue fix.
+
+= 4.4.1 January 24th, 2024 =
+* Fixed: Gallery View should now be supported for IFrame join via browser shortcode.
+
+= 4.4.0 January 16th, 2024 =
+* Recordings hidable and bug fixes.
+* Updated: Fetch Meeting ID recordings asynchronously.
+* Updated websdk to version 2.18.2
+* Bump WP scripts version
+* Bug Fixes
+
+= 4.3.3 October 31st, 2023 =
+* Fixed: Conflict with Meow Gallery
+* Updated: Vendor Library
+
+= 4.3.2 September 25th 22nd, 2023 =
+* Fixed: Debugger log not working.
+* Added: WebSDK validator.
+* Updated: Websdk to version 2.16.0
+
+= 4.3.1 August 18th, 2023 =
+* Fixed: Timezone issue not showing correctly in backend.
+
+= 4.3.0 July 18th, 2023 =
+* Deprecated: vczapi_encrypt_decrypt() to generate dynamic key when generating value.
+* Added: New Encrypt Decrypt methods
+* Added: Helper functions
+* Updated: WebSDK to version 2.13.0
+* Few updates to Codebase into PSR-4
+
+= 4.2.1 June 19th, 2023 =
+* Updated: Admin SDK text changed to Client ID and Client Secret.
+* Fixed: Timezone Fix
+* Fixed: Spectra plugin blocks template compatibility issue.
+* Added: Join from browser directly without name, email field.
+
 = 4.2.0 May 25th, 2023 =
 * Added: FSE Support
 * Added: End meeting from backend using Zoom status api.
