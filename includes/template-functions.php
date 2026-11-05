@@ -178,8 +178,10 @@ function video_conference_zoom_meeting_join_link( $zoom_meeting ) {
 	}
 
 	if ( wp_doing_ajax() ) {
-		$post_id         = filter_input( INPUT_POST, 'post_id' );
+		// Prefer the post ID validated by the AJAX handler instead of the raw request value.
+		$post_id         = ! empty( $zoom_meeting->post_id ) ? absint( $zoom_meeting->post_id ) : absint( filter_input( INPUT_POST, 'post_id' ) );
 		$meeting_details = get_post_meta( $post_id, '_meeting_fields', true );
+		$meeting_details = is_array( $meeting_details ) ? $meeting_details : array();
 		if ( ! empty( $zoom_meeting->id ) && ! empty( $post_id ) && empty( $meeting_details['site_option_browser_join'] ) && ! vczapi_check_disable_joinViaBrowser() ) {
 			$meeting_id = ! empty( $zoom_meeting->pmi ) ? $zoom_meeting->pmi : $zoom_meeting->id;
 

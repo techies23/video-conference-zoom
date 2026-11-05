@@ -164,6 +164,7 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Security Fix: Join via browser signatures are now bound to a server-issued join token instead of a client-supplied meeting ID.
 * Security Fix: Reduced Meeting SDK signature lifetime from 24 hours to 2 hours.
 * Security: Added meeting state and login requirement checks before issuing a signature.
+* Security Fix: Unauthenticated `set_timezone` AJAX requests now enforce post type, publication status, password protection and per-meeting login requirements before returning join links.
 
 = 4.6.12 =
 * Fix: Countdown timer converted to native js transformation
