@@ -33,9 +33,9 @@ class MeetingFormHandler {
 			$fields[ $key ] = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 		}
 
-		$fields['type']              = isset( $_POST['type'] ) ? (string) $_POST['type'] : "meeting";
-		$fields['jbh_time']          = isset( $_POST['jbh_time'] ) ? absint( $_POST['jbh_time'] ) : 0;
-		$fields['alternative_hosts'] = isset( $_POST['alternative_hosts'] ) && is_array( $_POST['alternative_hosts'] )
+		$fields['type']              = ! empty( $_POST['type'] ) ? (string) $_POST['type'] : "meeting";
+		$fields['jbh_time']          = ! empty( $_POST['jbh_time'] ) ? absint( $_POST['jbh_time'] ) : 0;
+		$fields['alternative_hosts'] = ! empty( $_POST['alternative_hosts'] ) && is_array( $_POST['alternative_hosts'] )
 			? array_map( 'sanitize_text_field', wp_unslash( $_POST['alternative_hosts'] ) )
 			: [];
 

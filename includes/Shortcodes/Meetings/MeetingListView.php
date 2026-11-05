@@ -25,7 +25,7 @@ class MeetingListView {
 					'per_page'     => 5,
 					'category'     => '',
 					'order'        => 'DESC',
-					'type'         => '',
+					'type'         => 'upcoming',
 					'filter'       => 'yes',
 					'show_on_past' => 'yes',
 					'cols'         => 3,
@@ -39,22 +39,17 @@ class MeetingListView {
 
 		$query_args    = apply_filters( 'vczapi_meeting_list_query_args', $this->list_query( $atts ) );
 		$meeting_query = new \WP_Query( $query_args );
-		dump($query_args);
 
 		// Attach layout metadata to the query object for template consumption
 		$meeting_query->columns = absint( $atts['cols'] ?? 3 );
 
-		// Provide backwards-compatibility for third-party templates expecting $GLOBALS['zoom_meetings']
-		$GLOBALS['zoom_meetings'] = $meeting_query;
-
 		ob_start();
-
 		Templates::getTemplate(
-			'meeting-list-view.php',
+			'shortcode/meeting-list-view.php',
 			true,
 			false,
 			array_merge( $atts, [
-				'query' => $meeting_query,
+				'q' => $meeting_query,
 			] )
 		);
 

@@ -40,7 +40,7 @@ class UpdateMeeting {
 		}
 
 		$fields = MeetingFormHandler::gatherFromPost();
-		( new PostTypeSyncService() )->sync( $post_id, $post, $fields, (int) $fields['type'] );
+		( new PostTypeSyncService() )->sync( $post_id, $post, $fields, (string) $fields['type'] );
 	}
 
 	/**
