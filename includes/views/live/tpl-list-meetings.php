@@ -1,57 +1,89 @@
 <?php
+/**
+ * View: Meetings Listings Template
+ *
+ * @package Video_Conferencing_With_Zoom_Api
+ */
 
-// If this file is called directly, abort.
 use Codemanas\VczApi\Helpers\Date;
 use Codemanas\VczApi\Helpers\MeetingType;
 
+// If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
-//Check if any transient by name is available
-$users = video_conferencing_zoom_api_get_user_transients();
+// Check if any transient by name is available.
+$users       = video_conferencing_zoom_api_get_user_transients();
+$get_host_id = isset( $_GET['host_id'] ) ? sanitize_text_field( wp_unslash( $_GET['host_id'] ) ) : '';
 
-if ( isset( $_GET['host_id'] ) ) {
-	$encoded_meetings = zoom_conference()->listMeetings( $_GET['host_id'] );
-	$decoded_meetings = json_decode( $encoded_meetings );
-	$meetings         = ! empty( $decoded_meetings->meetings ) ? $decoded_meetings->meetings : array();
-	$meeting_states   = get_option( 'zoom_api_meeting_options' );
+if ( ! empty( $get_host_id ) ) {
+    $encoded_meetings = zoom_conference()->listMeetings( $get_host_id );
+    $decoded_meetings = json_decode( $encoded_meetings );
+    $meetings         = ! empty( $decoded_meetings->meetings ) ? $decoded_meetings->meetings : [];
+    $meeting_states   = get_option( 'zoom_api_meeting_options' );
 }
+
+$add_new_url = add_query_arg(
+        [
+                'post_type' => 'zoom-meetings',
+                'page'      => 'zoom-video-conferencing-add-meeting',
+                'host_id'   => $get_host_id,
+        ],
+        admin_url( 'edit.php' )
+);
+
+$default_user_url = add_query_arg(
+        [
+                'post_type' => 'zoom-meetings',
+                'page'      => 'zoom-video-conferencing',
+        ],
+        admin_url( 'edit.php' )
+);
 ?>
 <div id="zvc-cover" style="display: none;"></div>
 <div class="wrap">
-    <h2><?php _e( "Meetings", "video-conferencing-with-zoom-api" ); ?></h2>
-    <!--For Errors while deleteing this user-->
+    <h2><?php esc_html_e( 'Meetings', 'video-conferencing-with-zoom-api' ); ?></h2>
+    <!-- For Errors while deleting this user -->
     <div id="message" style="display:none;" class="notice notice-error show_on_meeting_delete_error"><p></p></div>
 
-	<?php
-	video_conferencing_zoom_api_show_like_popup();
-	video_conferencing_zoom_api_show_api_notice();
-	?>
+    <?php
+    video_conferencing_zoom_api_show_like_popup();
+    video_conferencing_zoom_api_show_api_notice();
+    ?>
 
-	<?php if ( ! empty( $error ) ) { ?>
-        <div id="message" class="notice notice-error"><p><?php echo $error; ?></p></div>
-	<?php } else {
-		$get_host_id = isset( $_GET['host_id'] ) ? esc_attr( $_GET['host_id'] ) : null;
-		?>
+    <?php if ( ! empty( $error ) ) : ?>
+        <div id="message" class="notice notice-error"><p><?php echo wp_kses_post( $error ); ?></p></div>
+    <?php else : ?>
         <div class="select_zvc_user_listings_wrapp">
             <div class="alignleft actions bulkactions">
-                <label for="bulk-action-selector-top" class="screen-reader-text"><?php _e( "Select bulk action", "video-conferencing-with-zoom-api" ); ?></label>
+                <label for="bulk-action-selector-top" class="screen-reader-text"><?php esc_html_e( 'Select bulk action', 'video-conferencing-with-zoom-api' ); ?></label>
                 <select name="action" id="bulk-action-selector-top">
-                    <option value="trash"><?php _e( "Move to Trash", "video-conferencing-with-zoom-api" ); ?></option>
-                </select> <input type="submit" id="bulk_delete_meeting_listings" data-type="meeting" class="button action" value="<?php _e( 'Apply', 'video-conferencing-with-zoom-api' ); ?>">
-                <a href="?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting&host_id=<?php echo esc_html( $get_host_id ); ?>" class="button action" title="Add new meeting"><?php _e( 'Add New Meeting', 'video-conferencing-with-zoom-api' ); ?></a>
+                    <option value="trash"><?php esc_html_e( 'Move to Trash', 'video-conferencing-with-zoom-api' ); ?></option>
+                </select>
+                <input type="submit" id="bulk_delete_meeting_listings" data-type="meeting" class="button action" value="<?php esc_attr_e( 'Apply', 'video-conferencing-with-zoom-api' ); ?>">
+                <a href="<?php echo esc_url( $add_new_url ); ?>" class="button action" title="<?php esc_attr_e( 'Add new meeting', 'video-conferencing-with-zoom-api' ); ?>"><?php esc_html_e( 'Add New Meeting', 'video-conferencing-with-zoom-api' ); ?></a>
             </div>
             <div class="alignright">
                 <select onchange="location = this.value;" class="zvc-hacking-select">
-                    <option value="?post_type=zoom-meetings&page=zoom-video-conferencing"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
-					<?php foreach ( $users as $user ) { ?>
-                        <option
-                                value="?post_type=zoom-meetings&page=zoom-video-conferencing&host_id=<?php echo $user->id; ?>"
-							<?php selected( $get_host_id, $user->id ); ?> >
-							<?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?>
-                        </option>
-					<?php } ?>
+                    <option value="<?php echo esc_url( $default_user_url ); ?>"><?php esc_html_e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
+                    <?php if ( ! empty( $users ) ) : ?>
+                        <?php foreach ( $users as $user ) : ?>
+                            <?php
+                            $user_url = add_query_arg(
+                                    [
+                                            'post_type' => 'zoom-meetings',
+                                            'page'      => 'zoom-video-conferencing',
+                                            'host_id'   => $user->id,
+                                    ],
+                                    admin_url( 'edit.php' )
+                            );
+                            ?>
+                            <option value="<?php echo esc_url( $user_url ); ?>" <?php selected( $get_host_id, $user->id ); ?>>
+                                <?php echo esc_html( sprintf( '%s ( %s )', $user->first_name, $user->email ) ); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </select>
             </div>
             <div class="clear"></div>
@@ -62,96 +94,130 @@ if ( isset( $_GET['host_id'] ) ) {
                 <thead>
                 <tr>
                     <th class="zvc-text-center"><input type="checkbox" id="checkall"/></th>
-                    <th class="zvc-text-left"><?php _e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></th>
-                    <th class="zvc-text-left"><?php _e( 'Shortcode', 'video-conferencing-with-zoom-api' ); ?></th>
-                    <th class="zvc-text-left"><?php _e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
-                    <th class="zvc-text-left"><?php _e( 'Status', 'video-conferencing-with-zoom-api' ); ?></th>
-                    <th class="zvc-text-left" class="zvc-text-left"><?php _e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></th>
-                    <th class="zvc-text-left"><?php _e( 'Meeting State', 'video-conferencing-with-zoom-api' ); ?></th>
-                    <th class="zvc-text-left"><?php _e( 'Created On', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Meeting ID', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Shortcode', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Topic', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Status', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Start Time', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Meeting State', 'video-conferencing-with-zoom-api' ); ?></th>
+                    <th class="zvc-text-left"><?php esc_html_e( 'Created On', 'video-conferencing-with-zoom-api' ); ?></th>
                 </tr>
                 </thead>
                 <tbody>
-				<?php
-				if ( ! empty( $meetings ) ) {
-					foreach ( $meetings as $meeting ) {
-						?>
+                <?php if ( ! empty( $meetings ) ) : ?>
+                    <?php foreach ( $meetings as $meeting ) : ?>
+                        <?php
+                        $edit_url = add_query_arg(
+                                [
+                                        'post_type' => 'zoom-meetings',
+                                        'page'      => 'zoom-video-conferencing-add-meeting',
+                                        'edit'      => $meeting->id,
+                                        'host_id'   => $meeting->host_id,
+                                ],
+                                admin_url( 'edit.php' )
+                        );
+                        $app_url  = ! empty( $meeting->start_url ) ? $meeting->start_url : $meeting->join_url;
+
+                        $zoom_host_url = 'https://zoom.us/wc/' . $meeting->id . '/start';
+                        $zoom_host_url = apply_filters( 'video_conferencing_zoom_join_url_host', $zoom_host_url );
+
+                        $shortcode = sprintf( '[zoom_api_link meeting_id="%s" link_only="no"]', esc_attr( $meeting->id ) );
+                        $copy_msg  = esc_js( __( 'Copied to clipboard', 'video-conferencing-with-zoom-api' ) );
+                        ?>
                         <tr>
                             <td class="zvc-text-center">
-                                <input type="checkbox" name="meeting_id_check[]" class="checkthis" value="<?php echo esc_attr( $meeting->id ); ?>"/></td>
-                            <td><?php echo $meeting->id; ?></td>
+                                <input type="checkbox" name="meeting_id_check[]" class="checkthis" value="<?php echo esc_attr( $meeting->id ); ?>"/>
+                            </td>
+                            <td><?php echo esc_html( $meeting->id ); ?></td>
                             <td>
-                                <input class="text" id="meeting-shortcode-<?php echo $meeting->id; ?>" type="text" readonly value='[zoom_api_link meeting_id="<?php echo $meeting->id; ?>" link_only="no"]' onclick="this.select(); document.execCommand('copy'); alert('Copied to clipboard');"/>
-                                <p class="description"><?php _e( 'Click to Copy Shortcode !', 'video-conferencing-with-zoom-api' ); ?></p>
+                                <input class="text" id="meeting-shortcode-<?php echo esc_attr( $meeting->id ); ?>" type="text" readonly value="<?php echo esc_attr( $shortcode ); ?>" onclick="this.select(); document.execCommand('copy'); alert('<?php echo $copy_msg; ?>');"/>
+                                <p class="description"><?php esc_html_e( 'Click to Copy Shortcode !', 'video-conferencing-with-zoom-api' ); ?></p>
                             </td>
                             <td>
-                                <a href="edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-add-meeting&edit=<?php echo $meeting->id; ?>&host_id=<?php echo $meeting->host_id; ?>"><?php echo $meeting->topic; ?></a>
-								<?php
-								$zoom_host_url             = 'https://zoom.us' . '/wc/' . $meeting->id . '/start';
-								$zoom_host_url             = apply_filters( 'video_conferencing_zoom_join_url_host', $zoom_host_url );
-								$start_meeting_via_browser = '<a class="start-meeting-btn reload-meeting-started-button" target="_blank" href="' . esc_url( $zoom_host_url ) . '" class="join-link">' . __( 'Start via Browser', 'video-conferencing-with-zoom-api' ) . '</a>';
-								?>
+                                <a href="<?php echo esc_url( $edit_url ); ?>"><?php echo esc_html( $meeting->topic ); ?></a>
                                 <div class="row-actionss">
-                                    <span class="trash"><a style="color:red;" href="javascript:void(0);" data-meetingid="<?php echo $meeting->id; ?>" data-type="meeting" class="submitdelete delete-meeting"><?php _e( 'Trash', 'video-conferencing-with-zoom-api' ); ?></a> | </span>
-                                    <span class="view"><a href="<?php echo ! empty( $meeting->start_url ) ? $meeting->start_url : $meeting->join_url; ?>" rel="permalink" target="_blank"><?php _e( 'Start via App', 'video-conferencing-with-zoom-api' ); ?></a></span>
-                                    <span class="view"> | <?php echo $start_meeting_via_browser; ?></span>
+									<span class="trash">
+										<a style="color:red;" href="javascript:void(0);" data-meetingid="<?php echo esc_attr( $meeting->id ); ?>" data-type="meeting" class="submitdelete delete-meeting">
+											<?php esc_html_e( 'Trash', 'video-conferencing-with-zoom-api' ); ?>
+										</a> |
+									</span>
+                                    <span class="view">
+										<a href="<?php echo esc_url( $app_url ); ?>" rel="permalink" target="_blank">
+											<?php esc_html_e( 'Start via App', 'video-conferencing-with-zoom-api' ); ?>
+										</a>
+									</span>
+                                    <span class="view"> |
+										<a class="start-meeting-btn reload-meeting-started-button" target="_blank" href="<?php echo esc_url( $zoom_host_url ); ?>">
+											<?php esc_html_e( 'Start via Browser', 'video-conferencing-with-zoom-api' ); ?>
+										</a>
+									</span>
                                 </div>
                             </td>
-                            <td><?php
-								if ( ! empty( $meeting->status ) ) {
-									switch ( $meeting->status ) {
-										case 0;
-											echo '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/2.png" style="width:14px;" title="Not Started" alt="Not Started">';
-											break;
-										case 1;
-											echo '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/3.png" style="width:14px;" title="Completed" alt="Completed">';
-											break;
-										case 2;
-											echo '<img src="' . ZVC_PLUGIN_IMAGES_PATH . '/1.png" style="width:14px;" title="Currently Live" alt="Live">';
-											break;
-										default;
-											break;
-									}
-								} else {
-									echo "N/A";
-								}
-								?>
+                            <td>
+                                <?php
+                                if ( isset( $meeting->status ) && '' !== $meeting->status ) {
+                                    switch ( (int) $meeting->status ) {
+                                        case 0:
+                                            echo '<img src="' . esc_url( ZVC_PLUGIN_IMAGES_PATH . '/2.png' ) . '" style="width:14px;" title="' . esc_attr__( 'Not Started', 'video-conferencing-with-zoom-api' ) . '" alt="' . esc_attr__( 'Not Started', 'video-conferencing-with-zoom-api' ) . '">';
+                                            break;
+                                        case 1:
+                                            echo '<img src="' . esc_url( ZVC_PLUGIN_IMAGES_PATH . '/3.png' ) . '" style="width:14px;" title="' . esc_attr__( 'Completed', 'video-conferencing-with-zoom-api' ) . '" alt="' . esc_attr__( 'Completed', 'video-conferencing-with-zoom-api' ) . '">';
+                                            break;
+                                        case 2:
+                                            echo '<img src="' . esc_url( ZVC_PLUGIN_IMAGES_PATH . '/1.png' ) . '" style="width:14px;" title="' . esc_attr__( 'Currently Live', 'video-conferencing-with-zoom-api' ) . '" alt="' . esc_attr__( 'Live', 'video-conferencing-with-zoom-api' ) . '">';
+                                            break;
+                                        default:
+                                            esc_html_e( 'N/A', 'video-conferencing-with-zoom-api' );
+                                            break;
+                                    }
+                                } else {
+                                    esc_html_e( 'N/A', 'video-conferencing-with-zoom-api' );
+                                }
+                                ?>
                             </td>
                             <td>
-								<?php
-								if ( MeetingType::is_scheduled_meeting( $meeting->type ) ) {
-									echo esc_html( Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a ( e )' ) );
-								} elseif ( MeetingType::is_recurring_no_fixed_time_meeting( $meeting->type ) ) {
-									_e( 'This is a recurring meeting with no fixed time.', 'video-conferencing-with-zoom-api' );
-								} elseif ( MeetingType::is_recurring_fixed_time_meeting( $meeting->type ) ) {
-									_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
-								} else {
-									echo "N/A";
-								}
-								?>
+                                <?php
+                                if ( MeetingType::is_scheduled_meeting( $meeting->type ) ) {
+                                    echo esc_html( Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a ( e )' ) );
+                                } elseif ( MeetingType::is_recurring_no_fixed_time_meeting( $meeting->type ) ) {
+                                    esc_html_e( 'This is a recurring meeting with no fixed time.', 'video-conferencing-with-zoom-api' );
+                                } elseif ( MeetingType::is_recurring_fixed_time_meeting( $meeting->type ) ) {
+                                    esc_html_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
+                                } else {
+                                    esc_html_e( 'N/A', 'video-conferencing-with-zoom-api' );
+                                }
+                                ?>
                             </td>
                             <td style="width: 120px;">
-								<?php if ( ! isset( $meeting_states[ $meeting->id ]['state'] ) ) { ?>
-                                    <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="shortcode" data-state="end" data-id="<?php echo $meeting->id ?>"><?php _e( 'Disable Join', 'video-conferencing-with-zoom-api' ); ?></a>
+                                <?php if ( ! isset( $meeting_states[ $meeting->id ]['state'] ) ) : ?>
+                                    <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="shortcode" data-state="end" data-id="<?php echo esc_attr( $meeting->id ); ?>">
+                                        <?php esc_html_e( 'Disable Join', 'video-conferencing-with-zoom-api' ); ?>
+                                    </a>
                                     <div class="vczapi-admin-info-tooltip">
                                         <span class="dashicons dashicons-info"></span>
-                                        <span class="vczapi-admin-info-tooltip--text"><?php _e( 'Ending this will disable users to join this meeting. Applies to any shortcode output only.', 'video-conferencing-with-zoom-api' ); ?></span>
+                                        <span class="vczapi-admin-info-tooltip--text"><?php esc_html_e( 'Ending this will disable users to join this meeting. Applies to any shortcode output only.', 'video-conferencing-with-zoom-api' ); ?></span>
                                     </div>
-								<?php } else { ?>
-                                    <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="shortcode" data-state="resume" data-id="<?php echo $meeting->id ?>"><?php _e( 'Enable Join', 'video-conferencing-with-zoom-api' ); ?></a>
+                                <?php else : ?>
+                                    <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="shortcode" data-state="resume" data-id="<?php echo esc_attr( $meeting->id ); ?>">
+                                        <?php esc_html_e( 'Enable Join', 'video-conferencing-with-zoom-api' ); ?>
+                                    </a>
                                     <div class="vczapi-admin-info-tooltip">
-                                        <span class="dashicons dashicons-info "></span>
-                                        <span class="vczapi-admin-info-tooltip--text"><?php _e( 'Resuming this will enable users to join this meeting. Applies to any shortcode output only.', 'video-conferencing-with-zoom-api' ); ?></span>
+                                        <span class="dashicons dashicons-info"></span>
+                                        <span class="vczapi-admin-info-tooltip--text"><?php esc_html_e( 'Resuming this will enable users to join this meeting. Applies to any shortcode output only.', 'video-conferencing-with-zoom-api' ); ?></span>
                                     </div>
-								<?php } ?>
+                                <?php endif; ?>
                             </td>
-                            <td><?php echo date( 'F j, Y, g:i a', strtotime( $meeting->created_at ) ); ?></td>
+                            <td>
+                                <?php
+                                $created_timestamp = ! empty( $meeting->created_at ) ? strtotime( $meeting->created_at ) : false;
+                                echo $created_timestamp ? esc_html( date_i18n( 'F j, Y, g:i a', $created_timestamp ) ) : esc_html__( 'N/A', 'video-conferencing-with-zoom-api' );
+                                ?>
+                            </td>
                         </tr>
-						<?php
-					}
-				} ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 </tbody>
             </table>
         </div>
-	<?php } ?>
+    <?php endif; ?>
 </div>

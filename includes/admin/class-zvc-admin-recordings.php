@@ -60,7 +60,7 @@ class Zoom_Video_Conferencing_Recordings {
 		}
 
 		if ( ! empty( $recordings ) && ! empty( $recordings->code ) ) {
-			echo '<p>' . $recordings->message . '</p>';
+			echo '<p>' . esc_html($recordings->message) . '</p>';
 		} else {
 			//Get Template
 			require_once ZVC_PLUGIN_VIEWS_PATH . '/live/tpl-list-recordings.php';
@@ -82,8 +82,8 @@ class Zoom_Video_Conferencing_Recordings {
 				?>
                 <div class="alignleft">
                     <form action="" class="vczapi-datepicker-admin" method="POST">
-                        <label><?php _e( 'Enter the date to check:', 'video-conferencing-with-zoom-api' ); ?></label>
-                        <input name="date" id="vczapi-check-recording-date"/> <input type="submit" name="check-recordings" value="<?php _e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
+                        <label><?php esc_html_e( 'Enter the date to check:', 'video-conferencing-with-zoom-api' ); ?></label>
+                        <input name="date" id="vczapi-check-recording-date"/> <input type="submit" name="check-recordings" value="<?php esc_attr_e( 'Check', 'video-conferencing-with-zoom-api' ); ?>">
                     </form>
                 </div>
 				<?php
@@ -91,7 +91,7 @@ class Zoom_Video_Conferencing_Recordings {
 			?>
             <div class="alignright">
                 <select onchange="location = this.value;" class="zvc-hacking-select">
-                    <option value="?post_type=zoom-meetings&page=zoom-video-conferencing"><?php _e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
+                    <option value="?post_type=zoom-meetings&page=zoom-video-conferencing"><?php esc_html_e( 'Select a User', 'video-conferencing-with-zoom-api' ); ?></option>
 					<?php
 					foreach ( $users as $user ) {
 						$host_recordings_link = add_query_arg( array(
@@ -100,7 +100,9 @@ class Zoom_Video_Conferencing_Recordings {
 							'host_id'   => $user->id
 						), admin_url( 'edit.php' ) );
 						?>
-                        <option value="<?php echo esc_url( $host_recordings_link ); ?>" <?php echo $host_id == $user->id ? 'selected' : false; ?>><?php echo $user->first_name . ' ( ' . $user->email . ' )'; ?></option>
+                        <option value="<?php echo esc_url( $host_recordings_link ); ?>" <?php selected( $host_id, $user->id ); ?>>
+                            <?php echo esc_html( $user->first_name . ' ( ' . $user->email . ' )' ); ?>
+                        </option>
 					<?php } ?>
                 </select>
             </div>
