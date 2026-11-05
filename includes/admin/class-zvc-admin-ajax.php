@@ -242,16 +242,6 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	 * @return bool
 	 */
 	private function is_meeting_joinable( string $meeting_id ): bool {
-		// Shortcode meetings track an "ended" state in this option.
-		$options = get_option( 'zoom_api_meeting_options' );
-		$state   = '';
-		if ( is_array( $options ) && isset( $options[ $meeting_id ] ) && is_array( $options[ $meeting_id ] ) ) {
-			$state = $options[ $meeting_id ]['state'] ?? '';
-		}
-		if ( 'ended' === $state ) {
-			return false;
-		}
-
 		// If a zoom-meetings post exists for this meeting, honor its own settings.
 		$posts = get_posts( [
 			'post_type'      => 'zoom-meetings',
@@ -294,7 +284,7 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	private function is_rate_limited( string $meeting_id ): bool {
 		$ip    = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
 		$key   = 'vczapi_jvb_rl_' . md5( $ip . '|' . $meeting_id );
-		$limit = max( 1, (int) apply_filters( 'vczapi_jvb_rate_limit', 60 ) );
+		$limit = max( 1, (int) apply_filters( 'vczapi_jvb_rate_limit', 30 ) );
 
 		$count = (int) get_transient( $key );
 		if ( $count >= $limit ) {
