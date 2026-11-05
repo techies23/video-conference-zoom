@@ -127,13 +127,14 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 			if ( $deleted ) {
 				wp_send_json( array(
 					'error' => 0,
+					// translators: %d: The number of deleted meetings.
 					'msg'   => sprintf( __( "Deleted %d Meeting(s).", "video-conferencing-with-zoom-api" ), $meeting_count ),
 				) );
 			}
 		} else {
 			wp_send_json( array(
 				'error' => 1,
-				'msg'   => __( "You need to select a data in order to initiate this action." ),
+				'msg'   => __( "You need to select a data in order to initiate this action.", "video-conferencing-with-zoom-api" ),
 			) );
 		}
 
@@ -302,9 +303,9 @@ class Zoom_Video_Conferencing_Admin_Ajax {
 	}
 
 	private function generate_sdk_signature( $sdk_key, $secret_key, $meeting_number, $role ) {
-		$iat    = time() - 30;
-		$expiry = max( 300, (int) apply_filters( 'vczapi_jvb_signature_expiry', 2 * HOUR_IN_SECONDS ) );
-		$exp    = $iat + $expiry;
+		$iat     = time() - 30;
+		$expiry  = max( 300, (int) apply_filters( 'vczapi_jvb_signature_expiry', 2 * HOUR_IN_SECONDS ) );
+		$exp     = $iat + $expiry;
 		$payload = [
 			'sdkKey'   => $sdk_key,
 			'mn'       => $meeting_number,

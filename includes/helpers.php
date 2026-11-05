@@ -351,7 +351,9 @@ function video_conferencing_zoom_api_show_like_popup() {
             <h3><?php esc_html_e( 'Like this plugin ?', 'video-conferencing-with-zoom-api' ); ?></h3>
             <p>
 				<?php
+				/* translators: %s: Link to the WordPress.org review page. */
 				printf( esc_html__( 'Please consider giving a %s if you found this useful at wordpress.org or ', 'video-conferencing-with-zoom-api' ), '<a href="https://wordpress.org/support/plugin/video-conferencing-with-zoom-api/reviews/#new-post">5 star thumbs up</a>' );
+				/* translators: %s: Link to the plugin settings page. */
 				printf( esc_html__( 'check %s for shortcode references.', 'video-conferencing-with-zoom-api' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=zoom-meetings&page=zoom-video-conferencing-settings' ) ) . '">settings</a>.' );
 				?>
                 <a href="<?php echo esc_url( add_query_arg( 'vczapi_dismiss', 1 ) ); ?>" class="is-dismissible">I

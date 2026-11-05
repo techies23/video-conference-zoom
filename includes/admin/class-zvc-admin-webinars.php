@@ -159,7 +159,8 @@ class Zoom_Video_Conferencing_Admin_Webinars {
 		if ( ! empty( $webinar_created->code ) ) {
 			self::set_message( 'error', $webinar_created->message );
 		} else {
-			self::set_message( 'updated', sprintf( __( "Created webinar %s at %s. Join %s", "video-conferencing-with-zoom-api" ), $webinar_created->topic, $webinar_created->created_at, "<a target='_blank' href='" . $webinar_created->join_url . "'>Here</a>" ) );
+			/* translators: 1: Webinar topic, 2: Webinar creation date and time, 3: Link to join the webinar. */
+			self::set_message( 'updated', sprintf( __( 'Created webinar %1$s at %2$s. Join %3$s', 'video-conferencing-with-zoom-api' ), $webinar_created->topic, $webinar_created->created_at, "<a target='_blank' href='" . $webinar_created->join_url . "'>Here</a>" ) );
 
 			/**
 			 * Fires after meeting has been Created

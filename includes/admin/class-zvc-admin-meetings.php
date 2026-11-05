@@ -133,7 +133,8 @@ class Zoom_Video_Conferencing_Admin_Meetings {
 		if ( ! empty( $meeting_created->code ) ) {
 			self::set_message( 'error', $meeting_created->message );
 		} else {
-			self::set_message( 'updated', sprintf( __( "Created meeting %s at %s. Join %s", "video-conferencing-with-zoom-api" ), $meeting_created->topic, $meeting_created->created_at, "<a target='_blank' href='" . $meeting_created->join_url . "'>Here</a>" ) );
+			/* translators: 1: Meeting topic, 2: Meeting creation date and time, 3: Link to join the meeting. */
+			self::set_message( 'updated', sprintf( __( 'Created meeting %1$s at %2$s. Join %3$s', 'video-conferencing-with-zoom-api' ), $meeting_created->topic, $meeting_created->created_at, "<a target='_blank' href='" . $meeting_created->join_url . "'>Here</a>" ) );
 
 			/**
 			 * Fires after meeting has been Created

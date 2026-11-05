@@ -240,9 +240,9 @@ class Zoom_Video_Conferencing_Admin_PostType {
                 break;
             case 'start_date':
                 if ( ! empty( $meeting ) && ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
-                    esc_html_e( $meeting->message );
+                    echo esc_html( $meeting->message );
                 } elseif ( ! empty( $meeting ) && ! empty( $meeting->type ) && MeetingType::is_scheduled_meeting_or_webinar( $meeting->type ) && ! empty( $meeting->start_time ) ) {
-                    esc_html_e( Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) );
+                    echo esc_html( Date::dateConverter( $meeting->start_time, $meeting->timezone, 'F j, Y, g:i a' ) );
                 } elseif ( ! empty( $meeting ) && vczapi_pro_check_type( $meeting->type ) ) {
                     esc_html_e( 'Recurring Meeting', 'video-conferencing-with-zoom-api' );
                 } else {
@@ -251,9 +251,9 @@ class Zoom_Video_Conferencing_Admin_PostType {
                 break;
             case 'meeting_id':
                 if ( ! empty( $meeting ) && ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
-                    esc_html_e( $meeting->message );
+                    echo esc_html( $meeting->message );
                 } elseif ( ! empty( $meeting ) && ! empty( $meeting->id ) ) {
-                    esc_html_e( $meeting->id );
+                    echo esc_html( $meeting->id );
                 } else {
                     esc_html_e( 'Meeting not created yet.', 'video-conferencing-with-zoom-api' );
                 }
@@ -262,7 +262,7 @@ class Zoom_Video_Conferencing_Admin_PostType {
                 wp_enqueue_script( 'video-conferencing-with-zoom-api-js' );
                 if ( ! empty( $meeting ) ) {
                     if ( ! empty( $meeting->code ) && ! empty( $meeting->message ) ) {
-                        esc_html_e( $meeting->message, 'video-conferencing-with-zoom-api' );
+                        echo esc_html( $meeting->message );
                     } elseif ( empty( $meeting->state ) ) { ?>
                         <a href="javascript:void(0);" class="vczapi-meeting-state-change" data-type="post_type"
                            data-state="end" data-postid="<?php echo esc_attr( $post_id ); ?>"

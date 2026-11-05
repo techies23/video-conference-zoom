@@ -247,6 +247,7 @@ class Embed {
 				//Get Template
 				vczapi_get_template( 'shortcode/embed-session.php', true, false );
 			} else {
+				/* translators: %d: Meeting ID. */
 				printf( esc_html__( 'Please try again ! Some error occured while trying to fetch meeting with id:  %d', 'video-conferencing-with-zoom-api' ), absint( $meeting_id ) );
 			}
 		}

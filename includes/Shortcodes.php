@@ -101,9 +101,12 @@ class Shortcodes {
 		) );
 		wp_localize_script( 'video-conferencing-with-zoom-api-datable-js', 'vczapi_dt_i18n', array(
 			'emptyTable'     => __( 'No data available in table', 'video-conferencing-with-zoom-api' ),
-			'info'           => sprintf( __( 'Showing %s to %s of %s entries', 'video-conferencing-with-zoom-api' ), '_START_', '_END_', '_TOTAL_' ),
-			'infoEmpty'      => __( '', 'video-conferencing-with-zoom-api' ),
+			/* translators: 1: First entry number, 2: Last entry number, 3: Total number of entries. */
+			'info'           => sprintf( __( 'Showing %1$s to %2$s of %3$s entries', 'video-conferencing-with-zoom-api' ), '_START_', '_END_', '_TOTAL_' ),
+			'infoEmpty'      => __( 'Nothing Found.', 'video-conferencing-with-zoom-api' ),
+			/* translators: %s: Total number of entries. */
 			'infoFiltered'   => sprintf( __( 'filtered from %s total entries', 'video-conferencing-with-zoom-api' ), '_MAX_' ),
+			/* translators: %s: Number of entries to display. */
 			'lengthMenu'     => sprintf( __( 'Show %s entries', 'video-conferencing-with-zoom-api' ), '_MENU_' ),
 			'loadingRecords' => __( 'Loading', 'video-conferencing-with-zoom-api' ),
 			'processing'     => __( 'Processing', 'video-conferencing-with-zoom-api' ),

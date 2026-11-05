@@ -253,7 +253,7 @@ class Meetings {
 
 		$zoom_states = get_option( 'zoom_api_meeting_options' );
 		if ( isset( $zoom_states[ $meeting_id ]['state'] ) && $zoom_states[ $meeting_id ]['state'] === "ended" ) {
-			echo '<h3>' . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api ' ) . '</h3>';
+			echo '<h3>' . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api' ) . '</h3>';
 
 			return;
 		}
@@ -274,6 +274,7 @@ class Meetings {
 					//Get Template
 					vczapi_get_template( 'shortcode/zoom-shortcode.php', true, false );
 				} else {
+					/* translators: %d: Meeting ID. */
 					printf( esc_html__( 'Please try again ! Some error occured while trying to fetch meeting with id:  %d', 'video-conferencing-with-zoom-api' ), absint( $meeting_id ) );
 				}
 			}

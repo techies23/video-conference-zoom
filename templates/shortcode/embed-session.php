@@ -59,7 +59,7 @@ $join_via_browser_link = add_query_arg( $browser_join_link, $post_type_link );
 $iframe_style          = 'width:100%; height:' . $iframe_height . ';';
 
 if ( isset( $zoom->zoom_states[ $meeting_id ]['state'] ) && $zoom->zoom_states[ $meeting_id ]['state'] == 'ended' ) {
-	echo '<h3>' . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api ' ) . '</h3>';
+	echo '<h3>' . esc_html__( 'This meeting has been ended by host.', 'video-conferencing-with-zoom-api' ) . '</h3>';
 } elseif ( $meeting_time_check > $meeting_timezone_time && 'no' === $disable_countdown ) {
 	?>
 	<div class="vczapi-jvb-countdown-wrapper">

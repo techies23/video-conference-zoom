@@ -44,8 +44,12 @@ global $zoom;
                             <span>
                     <?php
                     if ( ! empty( $duration['hr'] ) ) {
-	                    echo esc_html( sprintf( _n( '%s hour', '%s hours', $duration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['hr'] ) ) . ' ' . sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) ) );
+	                    /* translators: %s: Number of hours. */
+	                    echo esc_html( sprintf( _n( '%s hour', '%s hours', $duration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['hr'] ) ) );
+	                    /* translators: %s: Number of minutes. */
+	                    echo esc_html( ' ' . sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) ) );
                     } else {
+	                    /* translators: %s: Number of minutes. */
 	                    echo esc_html( sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) ) );
                     }
                     ?>

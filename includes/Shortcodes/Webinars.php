@@ -212,6 +212,7 @@ class Webinars {
 					//Get Template
 					vczapi_get_template( 'shortcode/zoom-webinar.php', true, false );
 				} else {
+					/* translators: %d: Webinar ID. */
 					printf( esc_html__( 'Please try again ! Some error occured while trying to fetch webinar with id:  %d', 'video-conferencing-with-zoom-api' ), absint( $webinar_id ) );
 				}
 			}

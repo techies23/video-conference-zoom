@@ -169,6 +169,8 @@ Yes, you should be registered in Zoom. Also, depending on the zoom account plan 
 * Security Fix: Cloud recording AJAX requests now require a signed token bound to the page that published the recording. Arbitrary meeting IDs and recording UUIDs can no longer be used to fetch recordings or download URLs.
 * Note: Recording shortcode templates now add a `data-token` attribute. Custom theme overrides must include it, and page caches should be purged after updating.
 * Refactor: Removed unused migration scripts.
+* Refactor: Translations.
+* Refactor: Sanitization and Escaping.
 
 = 4.6.12 =
 * Fix: Countdown timer converted to native js transformation

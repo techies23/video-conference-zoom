@@ -26,7 +26,7 @@ global $vczapi;
                 <select name="taxonomy" class="vczapi-taxonomy-ordering vczapi-form-control">
                     <option value="category_order"><?php esc_html_e( 'All Category', 'video-conferencing-with-zoom-api' ); ?></option>
 					<?php foreach ( $vczapi['terms'] as $term ) { ?>
-                        <option value="<?php esc_attr_e( $term->slug ); ?>" <?php echo ! empty( $vczapi['query']['tax'] ) ? selected( $term->slug, $vczapi['query']['tax'], false ) : false; ?>><?php esc_html_e( $term->name ); ?></option>
+                        <option value="<?php echo esc_attr( $term->slug ); ?>" <?php echo ! empty( $vczapi['query']['tax'] ) ? selected( $term->slug, $vczapi['query']['tax'], false ) : false; ?>><?php echo esc_html( $term->name ); ?></option>
 					<?php } ?>
                 </select>
             </div>

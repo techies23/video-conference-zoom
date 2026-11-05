@@ -65,8 +65,12 @@ if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['details'] ) 
                 <span>
                     <?php
                     if ( ! empty( $duration['hr'] ) ) {
-	                    echo esc_html( sprintf( _n( '%s hour', '%s hours', $duration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['hr'] ) ) . ' ' . sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) ) );
+	                    /* translators: %s: Number of hours. */
+	                    echo esc_html( sprintf( _n( '%s hour', '%s hours', $duration['hr'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['hr'] ) ) );
+	                    /* translators: %s: Number of minutes. */
+	                    echo esc_html( ' ' . sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) ) );
                     } else {
+	                    /* translators: %s: Number of minutes. */
 	                    echo esc_html( sprintf( _n( '%s minute', '%s minutes', $duration['min'], 'video-conferencing-with-zoom-api' ), number_format_i18n( $duration['min'] ) ) );
                     }
                     ?>
@@ -82,7 +86,10 @@ if ( ! empty( $zoom['shortcode'] ) && ! empty( $zoom['parameters']['details'] ) 
 
 		<?php do_action( 'vczapi_html_after_meeting_details' ); ?>
 
-        <p class="dpn-zvc-display-or-hide-localtimezone-notice"><?php printf( esc_html__( '%sNote%s: Countdown time is shown based on your local timezone.', 'video-conferencing-with-zoom-api' ), '<strong>', '</strong>' ); ?></p>
+        <p class="dpn-zvc-display-or-hide-localtimezone-notice"><?php
+			/* translators: 1: Opening <strong> tag, 2: Closing </strong> tag. */
+			printf( esc_html__( '%1$sNote%2$s: Countdown time is shown based on your local timezone.', 'video-conferencing-with-zoom-api' ), '<strong>', '</strong>' );
+			?></p>
     </div>
 </div>
 

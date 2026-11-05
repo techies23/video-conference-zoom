@@ -4,7 +4,7 @@ use Codemanas\VczApi\Data\Logger;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
@@ -44,8 +44,8 @@ class Zoom_Video_Conferencing_Admin_Views {
         ];
         $additionalClasses = $message_classes[ self::$messageType ] . ' ' . ( self::$isDismissible ? 'is-dismissible' : '' );
         ?>
-        <div class="vczapi-notice notice <?php esc_attr_e( $additionalClasses ) ?>">
-            <p><?php esc_html_e( self::$message ); ?></p>
+        <div class="vczapi-notice notice <?php echo esc_attr( $additionalClasses ) ?>">
+            <p><?php echo esc_html( self::$message ); ?></p>
         </div>
         <?php
     }
@@ -80,7 +80,8 @@ class Zoom_Video_Conferencing_Admin_Views {
         $OAuth_access_token = \vczapi\S2SOAuth::get_instance()->generateAndSaveAccessToken( $vczapi_oauth_account_id, $vczapi_oauth_client_id, $vczapi_oauth_client_secret );
 
         if ( is_wp_error( $OAuth_access_token ) ) {
-            self::$message     = sprintf( __( 'Zoom Oauth Error Code: "%s"  -  %s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
+            /* translators: 1: OAuth error code, 2: OAuth error message. */
+            self::$message     = sprintf( __( 'Zoom Oauth Error Code: "%1$s"  -  %2$s ', 'video-conferencing-with-zoom-api' ), $OAuth_access_token->get_error_code(), $OAuth_access_token->get_error_message() );
             self::$messageType = 'error';
 
             video_conferencing_zoom_api_delete_user_cache();
